@@ -1,0 +1,40 @@
+{
+    "react-native.packager.port": 19000,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        // 
+        ".gitattributes": true,
+        ".gitignore": true,
+        "package-lock.json": true,
+        "yarn.lock": true,
+        "node_modules": true,
+        // 
+        ".prettierrc.js": true,
+        ".watchmanconfig": true,
+        "**/.buckconfig": true,
+        ".editorconfig": true,
+        ".eslintrc.js": true,
+        "tailwind.config.js": true,
+        "metro.config.js": true,
+        ".babelrc": true,
+        "tsconfig.json": true,
+        "assets": true,
+        ".expo-shared": true,
+        ".expo": true,
+        "babel.config.js": true,
+        // 
+        "__tests__": true,
+        "app.json": true,
+        "index.js": true,
+        "android": true,
+        "ios": true,
+        "package.json": true,
+        //
+        //
+    }
+}
