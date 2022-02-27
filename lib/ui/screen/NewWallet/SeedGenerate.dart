@@ -1,8 +1,15 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
+import 'package:sats/cubit/wallets.dart';
 import 'package:sats/navigation.dart';
+import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Common/StepLine.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate.dart';
@@ -139,12 +146,12 @@ class SeedGenerateLabel extends StatelessWidget {
   }
 }
 
-class SeedGeneratePage extends StatefulWidget {
+class SeedGenerate extends StatefulWidget {
   @override
-  _SeedGeneratePageState createState() => _SeedGeneratePageState();
+  _SeedGenerateState createState() => _SeedGenerateState();
 }
 
-class _SeedGeneratePageState extends State<SeedGeneratePage> {
+class _SeedGenerateState extends State<SeedGenerate> {
   late ScrollController _scrollController;
 
   @override
@@ -239,6 +246,40 @@ class _SeedGeneratePageState extends State<SeedGeneratePage> {
           ),
         );
       },
+    );
+  }
+}
+
+class SeedGenerateScreen extends StatelessWidget {
+  const SeedGenerateScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final networkSelect = context.select((ChainSelectCubit c) => c);
+    final logger = context.select((LoggerCubit c) => c);
+    final wallets = context.select((WalletsCubit c) => c);
+
+    final seedGenerateCubit = SeedGenerateCubit(
+      locator<IStackMateCore>(),
+      networkSelect,
+      logger,
+    );
+
+    final seedGenerateWalletCubit = SeedGenerateWalletCubit(
+      locator<IStackMateCore>(),
+      locator<IStorage>(),
+      logger,
+      wallets,
+      networkSelect,
+      seedGenerateCubit,
+    );
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: seedGenerateCubit),
+        BlocProvider.value(value: seedGenerateWalletCubit),
+      ],
+      child: SeedGenerate(),
     );
   }
 }

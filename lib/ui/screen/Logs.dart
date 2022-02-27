@@ -112,7 +112,7 @@ class LogItem extends StatelessWidget {
   }
 }
 
-class LogsPage extends StatelessWidget {
+class Logs extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final logs = c.select((LoggerCubit l) => l.state.logs);
@@ -141,6 +141,20 @@ class LogsPage extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) => LogItem(logs[index]),
         itemCount: logs.length,
       ),
+    );
+  }
+}
+
+class LogsScreen extends StatelessWidget {
+  const LogsScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final logger = context.select((LoggerCubit c) => c);
+
+    return BlocProvider.value(
+      value: logger,
+      child: Logs(),
     );
   }
 }

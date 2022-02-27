@@ -1,8 +1,16 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallet/receive.dart';
+import 'package:sats/cubit/wallets.dart';
+import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/share.dart';
+import 'package:sats/pkg/vibrate.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 import 'package:sats/ui/component/common/loading.dart';
@@ -92,8 +100,8 @@ class TextAddress extends StatelessWidget {
   }
 }
 
-class ReceivePage extends StatelessWidget {
-  const ReceivePage({Key? key}) : super(key: key);
+class Receive extends StatelessWidget {
+  const Receive({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext c) {
@@ -136,6 +144,33 @@ class ReceivePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ReceiveScreen extends StatelessWidget {
+  const ReceiveScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final networkSelect = context.select((ChainSelectCubit c) => c);
+    final logger = context.select((LoggerCubit c) => c);
+    final wallets = context.select((WalletsCubit c) => c);
+    final nodeAddress = context.select((NodeAddressCubit c) => c);
+
+    final receive = ReceiveCubit(
+      wallets,
+      networkSelect,
+      logger,
+      locator<IClipBoard>(),
+      locator<IShare>(),
+      locator<IVibrate>(),
+      nodeAddress,
+    );
+
+    return BlocProvider.value(
+      value: receive,
+      child: const Receive(),
     );
   }
 }

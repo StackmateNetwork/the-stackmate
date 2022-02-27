@@ -1,8 +1,15 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
+import 'package:sats/cubit/wallets.dart';
 import 'package:sats/navigation.dart';
+import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/component/Common/StepLine.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport.dart';
 import 'package:sats/ui/component/common/header.dart';
@@ -145,7 +152,7 @@ class _SeedImportLabelState extends State<SeedImportLabel> {
   }
 }
 
-class SeedImportPage extends StatelessWidget {
+class SeedImport extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     return BlocConsumer<SeedImportWalletCubit, SeedImportWalletState>(
@@ -228,6 +235,40 @@ class SeedImportPage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class SeedImportScreen extends StatelessWidget {
+  const SeedImportScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final logger = context.select((LoggerCubit c) => c);
+    final wallets = context.select((WalletsCubit c) => c);
+    final networkSelect = context.select((ChainSelectCubit c) => c);
+
+    final importCubit = SeedImportCubit(
+      logger,
+      networkSelect,
+      locator<IStackMateCore>(),
+    );
+
+    final seedImportCubit = SeedImportWalletCubit(
+      locator<IStackMateCore>(),
+      locator<IStorage>(),
+      wallets,
+      networkSelect,
+      logger,
+      importCubit,
+    );
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: importCubit),
+        BlocProvider.value(value: seedImportCubit),
+      ],
+      child: SeedImport(),
     );
   }
 }

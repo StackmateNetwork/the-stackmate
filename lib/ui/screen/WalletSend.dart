@@ -1,7 +1,15 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallet/send.dart';
+import 'package:sats/cubit/wallets.dart';
+import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/clipboard.dart';
+import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/share.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Common/LogButton.dart';
 import 'package:sats/ui/component/common/loading.dart';
@@ -582,8 +590,8 @@ class TransactionComplete extends StatelessWidget {
   }
 }
 
-class WalletSendPage extends StatelessWidget {
-  const WalletSendPage({Key? key}) : super(key: key);
+class WalletSend extends StatelessWidget {
+  const WalletSend({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -720,6 +728,36 @@ class WalletSendPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class WalletSendScreen extends StatelessWidget {
+  const WalletSendScreen({Key? key, required this.fromQr}) : super(key: key);
+
+  final bool fromQr;
+
+  @override
+  Widget build(BuildContext context) {
+    final networkSelect = context.select((ChainSelectCubit c) => c);
+    final logger = context.select((LoggerCubit c) => c);
+    final wallets = context.select((WalletsCubit c) => c);
+    final nodeAddress = context.select((NodeAddressCubit c) => c);
+
+    final s = SendCubit(
+      fromQr,
+      wallets,
+      networkSelect,
+      logger,
+      locator<IClipBoard>(),
+      locator<IShare>(),
+      nodeAddress,
+      locator<IStackMateCore>(),
+    );
+
+    return BlocProvider.value(
+      value: s,
+      child: const WalletSend(),
     );
   }
 }

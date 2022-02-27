@@ -1,10 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:sats/api/rates.dart';
 import 'package:sats/cubit/calculator.dart';
+import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/rate.dart';
+import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/style.dart';
 import 'package:sats/pkg/validation.dart';
+import 'package:sats/pkg/vibrate.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 import 'package:sats/ui/component/common/loading.dart';
@@ -298,8 +302,8 @@ class Calculator extends StatelessWidget {
   }
 }
 
-class CalcPage extends StatelessWidget {
-  const CalcPage({Key? key}) : super(key: key);
+class Calc extends StatelessWidget {
+  const Calc({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext c) {
@@ -338,6 +342,26 @@ class CalcPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CalculatorScreen extends StatelessWidget {
+  const CalculatorScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final logger = context.select((LoggerCubit c) => c);
+
+    final calcCubit = CalculatorCubit(
+      logger,
+      locator<IVibrate>(),
+      locator<IRatesAPI>(),
+    );
+
+    return BlocProvider.value(
+      value: calcCubit,
+      child: const Calc(),
     );
   }
 }

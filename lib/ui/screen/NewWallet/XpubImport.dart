@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
+import 'package:sats/cubit/wallets.dart';
 import 'package:sats/navigation.dart';
+import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/clipboard.dart';
+import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/component/Common/BackButton2.dart';
 import 'package:sats/ui/component/Common/StepLine.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport.dart';
@@ -100,7 +108,7 @@ class XpubLabel extends StatelessWidget {
   }
 }
 
-class XpubImportPage extends StatelessWidget {
+class XpubImport extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     return BlocConsumer<XpubImportWalletCubit, XpubImportWalletState>(
@@ -178,6 +186,38 @@ class XpubImportPage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class XPubImportScreen extends StatelessWidget {
+  const XPubImportScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final networkSelect = context.select((ChainSelectCubit c) => c);
+    final logger = context.select((LoggerCubit c) => c);
+    final wallets = context.select((WalletsCubit c) => c);
+
+    final xpubCub = XpubImportCubit(
+      logger,
+      locator<IClipBoard>(),
+    );
+    final xpubCubit = XpubImportWalletCubit(
+      locator<IStackMateCore>(),
+      logger,
+      locator<IStorage>(),
+      wallets,
+      networkSelect,
+      xpubCub,
+    );
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: xpubCub),
+        BlocProvider.value(value: xpubCubit),
+      ],
+      child: XpubImport(),
     );
   }
 }

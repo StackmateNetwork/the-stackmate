@@ -1,12 +1,20 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallet/wallet.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/navigation.dart';
+import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/launcher.dart';
+import 'package:sats/pkg/share.dart';
+import 'package:sats/pkg/storage.dart';
+import 'package:sats/pkg/vibrate.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/common/loading.dart';
 
@@ -897,8 +905,8 @@ class WalletInfo extends StatelessWidget {
   }
 }
 
-class WalletPage extends StatelessWidget {
-  const WalletPage({Key? key}) : super(key: key);
+class OneWallet extends StatelessWidget {
+  const OneWallet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext c) {
@@ -1146,5 +1154,33 @@ class WalletPage extends StatelessWidget {
     if (delete != null && delete) {
       c.read<WalletCubit>().deleteClicked();
     }
+  }
+}
+
+class WalletScreen extends StatelessWidget {
+  const WalletScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final logger = context.select((LoggerCubit c) => c);
+    final wallets = context.select((WalletsCubit c) => c);
+    final nodeAddress = context.select((NodeAddressCubit c) => c);
+    final networkSelect = context.select((ChainSelectCubit c) => c);
+
+    final history = WalletCubit(
+      wallets,
+      locator<IStorage>(),
+      logger,
+      locator<ILauncher>(),
+      locator<IShare>(),
+      locator<IVibrate>(),
+      nodeAddress,
+      networkSelect,
+    );
+
+    return BlocProvider.value(
+      value: history,
+      child: const OneWallet(),
+    );
   }
 }

@@ -84,8 +84,8 @@ class WalletSelection extends StatelessWidget {
   }
 }
 
-class AddWalletPage extends StatelessWidget {
-  const AddWalletPage({Key? key}) : super(key: key);
+class AddWalletScreen extends StatelessWidget {
+  const AddWalletScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext c) {

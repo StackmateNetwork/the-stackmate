@@ -3,12 +3,16 @@ import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
+import 'package:sats/api/reddit.dart';
+import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/reddit.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/reddit-post.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/navigation.dart';
+import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/launcher.dart';
 
 class HeaderRow extends StatelessWidget {
   @override
@@ -488,7 +492,7 @@ class FeedItem extends StatelessWidget {
   }
 }
 
-class NewHomePage extends StatelessWidget {
+class NewHome extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final isRearranging = c.select((WalletsCubit wc) => wc.state.isRearranging);
@@ -499,11 +503,10 @@ class NewHomePage extends StatelessWidget {
           slivers: [
             SliverAppBar(
               stretch: true,
-              pinned: true,              
+              pinned: true,
               expandedHeight: !isRearranging ? 350 : 80,
               automaticallyImplyLeading: false,
               backgroundColor: c.colours.secondary,
-
               flexibleSpace: FlexibleSpaceBar(
                 stretchModes: const [
                   // StretchMode.blurBackground,
@@ -532,5 +535,25 @@ class NewHomePage extends StatelessWidget {
       );
 
     return const ReorderCards();
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final logger = context.select((LoggerCubit l) => l);
+
+    final redditBloc = RedditCubit(
+      locator<IRedditAPI>(),
+      logger,
+      locator<ILauncher>(),
+    );
+
+    return BlocProvider.value(
+      value: redditBloc,
+      child: NewHome(),
+    );
   }
 }

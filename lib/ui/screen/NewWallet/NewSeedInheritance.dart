@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
+import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/inheritance-with-new-seed.dart';
+import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/wallets.dart';
 import 'package:sats/navigation.dart';
+import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/clipboard.dart';
+import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Common/LogButton.dart';
 import 'package:sats/ui/component/Common/StepLine.dart';
@@ -227,14 +237,14 @@ class ShareDetails extends StatelessWidget {
   }
 }
 
-class InheritanceNewSeedPage extends StatefulWidget {
-  const InheritanceNewSeedPage({Key? key}) : super(key: key);
+class InheritanceNewSeed extends StatefulWidget {
+  const InheritanceNewSeed({Key? key}) : super(key: key);
 
   @override
-  State<InheritanceNewSeedPage> createState() => _InheritanceNewSeedPageState();
+  State<InheritanceNewSeed> createState() => _InheritanceNewSeedState();
 }
 
-class _InheritanceNewSeedPageState extends State<InheritanceNewSeedPage> {
+class _InheritanceNewSeedState extends State<InheritanceNewSeed> {
   late ScrollController _scrollController;
 
   @override
@@ -345,6 +355,49 @@ class _InheritanceNewSeedPageState extends State<InheritanceNewSeedPage> {
           ),
         );
       },
+    );
+  }
+}
+
+class InheritanceNewSeedScreen extends StatelessWidget {
+  const InheritanceNewSeedScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final networkSelect = context.select((ChainSelectCubit c) => c);
+    final logger = context.select((LoggerCubit c) => c);
+    final wallets = context.select((WalletsCubit c) => c);
+    final nodeAddress = context.select((NodeAddressCubit c) => c);
+
+    final seedGenerateCubit = SeedGenerateCubit(
+      locator<IStackMateCore>(),
+      networkSelect,
+      logger,
+    );
+
+    final xpubCub = XpubImportCubit(
+      logger,
+      locator<IClipBoard>(),
+    );
+
+    final inheritance = InteritanceWithNewSeedCubit(
+      locator<IStackMateCore>(),
+      locator<IStorage>(),
+      logger,
+      wallets,
+      networkSelect,
+      seedGenerateCubit,
+      xpubCub,
+      nodeAddress,
+    );
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: seedGenerateCubit),
+        BlocProvider.value(value: xpubCub),
+        BlocProvider.value(value: inheritance),
+      ],
+      child: const InheritanceNewSeed(),
     );
   }
 }
