@@ -19,44 +19,43 @@ class _Home extends StatelessWidget {
       (WalletsCubit wc) => wc.state.isRearranging,
     );
 
-    if (!isRearranging)
-      return Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              stretch: true,
-              pinned: true,
-              expandedHeight: !isRearranging ? 350 : 80,
-              automaticallyImplyLeading: false,
-              backgroundColor: c.colours.secondary,
-              flexibleSpace: FlexibleSpaceBar(
-                stretchModes: const [
-                  // StretchMode.blurBackground,
-                  StretchMode.fadeTitle,
+    if (isRearranging) return const ReorderCards();
+
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            stretch: true,
+            pinned: true,
+            expandedHeight: !isRearranging ? 350 : 80,
+            automaticallyImplyLeading: false,
+            backgroundColor: c.colours.secondary,
+            flexibleSpace: FlexibleSpaceBar(
+              stretchModes: const [
+                // StretchMode.blurBackground,
+                StretchMode.fadeTitle,
+              ],
+              // collapseMode: CollapseMode.parallax,
+              background: Column(
+                children: [
+                  Header(),
+                  Accounts(),
                 ],
-                // collapseMode: CollapseMode.parallax,
-                background: Column(
-                  children: [
-                    Header(),
-                    Accounts(),
-                  ],
-                ),
-              ),
-              bottom: PreferredSize(
-                preferredSize: Size(c.width, 20),
-                child: HomeActions(),
               ),
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [RedditFeed()],
-              ),
-            )
-          ],
-        ),
-      );
-
-    return const ReorderCards();
+            bottom: PreferredSize(
+              preferredSize: Size(c.width, 20),
+              child: HomeActions(),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [RedditFeed()],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
 
