@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
 import 'package:sats/navigation.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/common/back-button2.dart';
+import 'package:sats/ui/component/Common/BackButton2.dart';
+import 'package:sats/ui/component/Common/StepLine.dart';
+import 'package:sats/ui/component/NewWallet/XpubImport.dart';
 import 'package:sats/ui/component/common/header.dart';
 import 'package:sats/ui/component/common/loading.dart';
-import 'package:sats/ui/component/common/step-line.dart';
-import 'package:sats/ui/component/new-wallet/xpub-import.dart';
 
 class XPubImportStepper extends StatelessWidget {
   const XPubImportStepper({Key? key}) : super(key: key);

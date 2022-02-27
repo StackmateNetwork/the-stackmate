@@ -239,8 +239,7 @@ class ConfirmStepCell extends StatelessWidget {
           child: Text(
             text,
             style: c.fonts.caption!.copyWith(
-              color:
-                  isSelected ? c.colours.secondary : c.colours.secondaryVariant,
+              color: isSelected ? c.colours.secondary : c.colours.secondary,
             ),
           ),
         )

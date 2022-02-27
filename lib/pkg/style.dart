@@ -5,9 +5,10 @@ ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.latoTextTheme(),
       colorScheme: ColorScheme(
         primary: Colors.orange[400]!,
-        primaryVariant: const Color(0xFF0745ff),
-        secondary: const Color(0xFF13161f),
-        secondaryVariant: const Color(0xFF87888a),
+        // primaryVariant: const Color(0xFF0745ff),
+        secondary: const Color(0xFF87888a),
+        //  const Color(0xFF13161f),
+        // secondaryVariant: const Color(0xFF87888a),
         surface: Colors.blue.withOpacity(0.1),
         background: const Color(0xFF13161f),
         error: const Color(0xFFff0000),

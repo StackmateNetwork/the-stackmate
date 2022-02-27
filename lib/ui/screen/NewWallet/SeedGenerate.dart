@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/navigation.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/common/back-button.dart';
-import 'package:sats/ui/component/common/step-line.dart';
-import 'package:sats/ui/component/new-wallet/seed-generate.dart';
+import 'package:sats/ui/component/Common/BackButton.dart';
+import 'package:sats/ui/component/Common/StepLine.dart';
+import 'package:sats/ui/component/NewWallet/SeedGenerate.dart';
 
 class GenerateWalletStepper extends StatelessWidget {
   @override

@@ -5,7 +5,7 @@ import 'package:sats/model/rate.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/style.dart';
 import 'package:sats/pkg/validation.dart';
-import 'package:sats/ui/component/common/back-button.dart';
+import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 import 'package:sats/ui/component/common/loading.dart';
 

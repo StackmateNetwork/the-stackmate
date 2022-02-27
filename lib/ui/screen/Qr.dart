@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/navigation.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/common/back-button.dart';
-import 'package:sats/ui/component/common/log-button.dart';
-import 'package:sats/ui/screen/home-page.dart';
+import 'package:sats/ui/component/Common/BackButton.dart';
+import 'package:sats/ui/screen/Home.dart';
+
+import '../component/Common/LogButton.dart';
 
 class AccountsRowSelection extends StatelessWidget {
   @override

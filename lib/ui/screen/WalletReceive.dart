@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sats/cubit/wallet/receive.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/common/back-button.dart';
+import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 import 'package:sats/ui/component/common/loading.dart';
 
