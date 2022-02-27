@@ -1,0 +1,79 @@
+class Validation {
+  static bool isNumeric(String s) {
+    try {
+      double.parse(s);
+      return true;
+    } catch (e) {
+      //logger.addExpectionToLog(e, 'Validation.isNumeric', s);
+    }
+    return false;
+    // return double.parse(s) != null;
+  }
+
+  static bool isEmail(String email) {
+    final emailCheck = RegExp(
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
+    );
+
+    if (email != '') {
+      if (emailCheck.hasMatch(email)) return true;
+    }
+    return false;
+  }
+
+  static bool isBtcAddress(String address) {
+    if (address.startsWith('1') ||
+            address.startsWith('3') ||
+            address.startsWith('2') ||
+            address.startsWith('tb') ||
+            address.startsWith('m') ||
+            address.startsWith('n') ||
+            address.startsWith('tb')
+        // &&
+        // address.length >= 25 &&
+        // address.length <= 35
+
+        ) return true;
+
+    if ((address.startsWith('bc1') || address.startsWith('tb')) &&
+        address.length > 25 &&
+        address.length < 62) return true;
+
+    return false;
+  }
+
+  static String toBtc(int sats) {
+    final btc = (sats / 100000000).toStringAsFixed(8);
+    return btc;
+  }
+
+  // static String addCommas(String amt) {
+  //   final str = amt.replaceAll(',', '');
+  //   return str.replaceAllMapped(
+  //     RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+  //     (Match m) {
+  //       // if(amt.split('.')
+  //       // )
+  //       return '${m[1]},';
+  //     },
+  //   );
+  // }
+
+  static String addCommas(String amt) {
+    var str = amt.replaceAll(',', '');
+    str = str.replaceAll(r'(\\d)(?=(\\d{3})+$)', str);
+    print('---amt: $str');
+    return str;
+  }
+
+  static String removeCommas(String amt) {
+    return amt.replaceAll(',', '');
+  }
+
+  static bool toBoolean(String str, [bool strict = false]) {
+    if (strict == true) {
+      return str == '1' || str == 'true';
+    }
+    return str != '0' && str != 'false' && str != '';
+  }
+}

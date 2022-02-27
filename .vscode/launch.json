@@ -1,0 +1,37 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Current Device - Debug",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-v"
+            ],
+            "program": "${workspaceFolder}/lib/main.dart",
+        },
+        {
+            "name": "Current Device - Release",
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceFolder}/lib/main.dart",
+            "flutterMode": "release",
+        },
+        {
+            "name": "Profiler",
+            "flutterMode": "profile",
+            "args": [
+                "--trace-skia"
+            ],
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceFolder}/lib/main.dart"
+        },
+    ],
+    "compounds": [
+        {
+            "name": "All Devices",
+            "configurations": [],
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+{
+    "editor.tokenColorCustomizations": {
+        "comments": "#229977"
+    },
+    "files.exclude": {
+        "**/.metadata": true,
+        ".gitignore": true,
+        "**/.packages": true,
+        "**/pubspec.lock": true,
+        "**/.flutter-plugins": true,
+        "**/.dart_tool": true,
+        "**/.flutter-plugins-dependencies": true,
+        "**/generated_plugin_registrant.dart": true,
+        "**/CHANGELOG.md": true,
+        "l10n.yaml": true,
+        "LICENSE": true,
+        "demo.png": true,
+        //
+        //
+        // 
+        "**/build": true,
+        //
+        //
+        "assets": true,
+        "integration_test": true,
+        "**/test": true,
+        ".gitlab-ci.yml": true,
+        //
+        "**/assets": true,
+        //
+        //
+        "**/**.g.dart": true,
+        "**/**.freezed.dart": true,
+        "android": true,
+        // "ios": true,
+        "**/android": true,
+        "**/ios": true,
+        //
+        //
+        "**/analysis_options.yaml": true,
+        "**/packages": true,
+        // "**/pubspec.yaml": true,
+        "README.md": true,
+        //
+        //
+        //
+    },
+}

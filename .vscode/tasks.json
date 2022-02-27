@@ -1,0 +1,70 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Enable Freezed",
+            "type": "shell",
+            "command": "flutter pub run build_runner watch --delete-conflicting-outputs"
+        },
+        {
+            "label": "Update bitcoin-core from source",
+            "type": "shell",
+            "command": "sh update-core.sh",
+            "options": {
+                "cwd": "${workspaceRoot}/packages/bitcoin"
+            },
+        },
+        // ////
+        // ////
+        // FIREBASE DISTRIBUTION
+        // ////
+        {
+            "label": "Sats Android: Build & Ditribute",
+            "type": "shell",
+            "command": "flutter clean && flutter build apk --release && cd build/app/outputs/apk/release && firebase appdistribution:distribute app-release.apk --app <API-KEY> --release-notes  \"${input:release-note}\"  --groups \"${input:release-group}\"  --groups \"${input:release-group}\"",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            }
+        },
+        {
+            "label": "Sats iOS: Build & Ditribute",
+            "type": "shell",
+            "command": "flutter clean && flutter build ios && rm -rf build/export && mkdir -p build/export  && cd ios &&  xcodebuild -workspace Runner.xcworkspace -scheme Runner -sdk iphoneos -configuration Release archive -archivePath $PWD/build/Runner.xcarchive && xcodebuild -exportArchive -archivePath $PWD/build/Runner.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build/Runner.ipa -allowProvisioningUpdates &&  cd .. && cp ios/build/Runner.ipa/Runner.ipa build/export && cd build/export && firebase appdistribution:distribute Runner.ipa --app <API-KEY> --release-notes  \"${input:release-note}\"  --groups \"${input:release-group}\"",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            }
+        },
+        {
+            "label": "Sats Android: Ditribute",
+            "type": "shell",
+            "command": "cd build/app/outputs/apk/release && firebase appdistribution:distribute app-release.apk --app <>API-KEY --release-notes  \"${input:release-note}\"  --groups \"dev\"",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            }
+        },
+    ],
+    "inputs": [
+        {
+            "id": "release-note",
+            "type": "promptString",
+            "description": "Firebase - Release Note",
+            "default": "new release"
+        },
+        {
+            "id": "release-group",
+            "type": "promptString",
+            "description": "Firebase - Release Group",
+            "default": "dev"
+        },
+    ],
+}
+// flutter clean 
+// flutter build ios 
+// rm -rf build/export 
+// mkdir -p build/export  
+// cd ios 
+// xcodebuild -workspace Runner.xcworkspace -scheme Runner -sdk iphoneos -configuration Release archive -archivePath $PWD/build/Runner.xcarchive 
+// xcodebuild -exportArchive -archivePath $PWD/build/Runner.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build/Runner.ipa -allowProvisioningUpdates
+// cd .. && cp ios/build/Runner.ipa/Runner.ipa build/export
+// cd build/export 
+// firebase appdistribution:distribute Runner.ipa --app <API-KEY> --release-notes  \"${input:release-note}\"  --groups \"${input:release-group}\"
