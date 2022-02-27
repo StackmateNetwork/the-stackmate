@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
-import 'package:sats/ui/screen/AddressBook.dart';
+import 'package:sats/ui/screen/zAddressBook.dart';
 import 'package:sats/ui/screen/Calculator.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Logs.dart';
