@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:sats/api/logger.dart';
 import 'package:sats/api/rates.dart';
 import 'package:sats/api/reddit.dart';
+import 'package:sats/cubit/logger.dart';
 import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/launcher.dart';
@@ -23,18 +24,23 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<IStackMateCore>(() => BitcoinFFI());
     locator.registerLazySingleton<ILocalAuth>(() => LocalAuth());
     locator.registerLazySingleton<ILogAPI>(() => DummyLogAPI());
-
-    return;
+  } else {
+    locator.registerLazySingleton<IShare>(() => Sharer());
+    locator.registerLazySingleton<ILauncher>(() => Launcher());
+    locator.registerLazySingleton<IRedditAPI>(() => RedditAPI());
+    locator.registerLazySingleton<IClipBoard>(() => ClipBoardd());
+    locator.registerLazySingleton<IStorage>(() => HiveStore());
+    locator.registerLazySingleton<IStackMateCore>(() => BitcoinFFI());
+    locator.registerLazySingleton<IVibrate>(() => Vibrate());
+    locator.registerLazySingleton<ILocalAuth>(() => LocalAuth());
+    locator.registerLazySingleton<IRatesAPI>(() => RatesAPI());
+    locator.registerLazySingleton<ILogAPI>(() => SentryLogger());
   }
 
-  locator.registerLazySingleton<IShare>(() => Sharer());
-  locator.registerLazySingleton<ILauncher>(() => Launcher());
-  locator.registerLazySingleton<IRedditAPI>(() => RedditAPI());
-  locator.registerLazySingleton<IClipBoard>(() => ClipBoardd());
-  locator.registerLazySingleton<IStorage>(() => HiveStore());
-  locator.registerLazySingleton<IStackMateCore>(() => BitcoinFFI());
-  locator.registerLazySingleton<IVibrate>(() => Vibrate());
-  locator.registerLazySingleton<ILocalAuth>(() => LocalAuth());
-  locator.registerLazySingleton<IRatesAPI>(() => RatesAPI());
-  locator.registerLazySingleton<ILogAPI>(() => SentryLogger());
+  final loggerCubit = LoggerCubit(
+    locator<IClipBoard>(),
+    locator<ILogAPI>(),
+  );
+
+  locator.registerLazySingleton<LoggerCubit>(() => loggerCubit);
 }

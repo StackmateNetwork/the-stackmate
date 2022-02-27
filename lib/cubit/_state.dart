@@ -11,11 +11,6 @@ import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/storage.dart';
 // import 'package:sats/pkg/vibrate.dart';
 
-final loggerCubit = LoggerCubit(
-  locator<IClipBoard>(),
-  locator<ILogAPI>(),
-);
-
 class Cubits extends StatelessWidget {
   const Cubits({Key? key, required this.child}) : super(key: key);
 
@@ -23,35 +18,37 @@ class Cubits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final logger = locator<LoggerCubit>();
+
     final networkSelectCubit = ChainSelectCubit(
       locator<IStorage>(),
-      loggerCubit,
+      logger,
       // walletsCubit,
     );
 
     final walletsCubit = WalletsCubit(
       locator<IStorage>(),
-      loggerCubit,
+      logger,
       networkSelectCubit,
       locator<IClipBoard>(),
     );
 
     final addressBookCubit = AddressBookCubit(
       locator<IStorage>(),
-      loggerCubit,
+      logger,
       // locator<IVibrate>(),
       locator<IClipBoard>(),
     );
 
     final nodeAddressCubit = NodeAddressCubit(
       locator<IStorage>(),
-      loggerCubit,
+      logger,
     );
 
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: networkSelectCubit),
-        BlocProvider.value(value: loggerCubit),
+        BlocProvider.value(value: logger),
         BlocProvider.value(value: walletsCubit),
         BlocProvider.value(value: addressBookCubit),
         BlocProvider.value(value: nodeAddressCubit),
