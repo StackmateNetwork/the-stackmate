@@ -85,7 +85,7 @@ class Routes {
         page = const CalculatorScreen();
         break;
       case setting:
-        page = const SettingsPage();
+        page = const SettingsScreen();
         break;
       case logs:
         page = const LogsScreen();
