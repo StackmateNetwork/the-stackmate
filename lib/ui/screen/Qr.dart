@@ -1,99 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
-import 'package:sats/ui/component/Home/WalletCard.dart';
-
-import '../component/Common/LogButton.dart';
-
-class AccountsRowSelection extends StatelessWidget {
-  @override
-  Widget build(BuildContext c) {
-    final state = c.select((WalletsCubit w) => w.state);
-    final wallets = state.wallets;
-    final selected = state.selectedWallet;
-
-    if (wallets.isEmpty)
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(height: 66),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Text(
-              'No\nwallets\nadded',
-              style: c.fonts.caption!.copyWith(
-                color: c.colours.onBackground,
-              ),
-            ),
-          ),
-        ],
-      );
-    return Container(
-      width: c.width,
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(width: 16),
-            for (var w in wallets)
-              AnimatedOpacity(
-                opacity: (selected != null && selected == w) ? 1.0 : 0.4,
-                duration: const Duration(milliseconds: 300),
-                child: WalletCard(wallet: w, isSelection: true),
-              ),
-            const SizedBox(width: 16),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Buttons extends StatelessWidget {
-  const Buttons({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext c) {
-    final selected = c.select((WalletsCubit w) => w.state.selectedWallet);
-
-    return Opacity(
-      opacity: selected != null ? 1.0 : 0.5,
-      child: Column(
-        children: [
-          TextButton(
-            onPressed: () {
-              if (selected != null)
-                Navigator.pushNamed(
-                  c,
-                  Routes.receive,
-                  // arguments: state.wallet!,
-                );
-            },
-            child: Text('receive'.toUpperCase()),
-          ),
-          const SizedBox(height: 24),
-          TextButton(
-            onPressed: () {
-              if (selected != null)
-                Navigator.pushNamed(
-                  c,
-                  Routes.sendFromQR,
-                  // arguments: state.wallet!,
-                );
-            },
-            child: Text('send'.toUpperCase()),
-          ),
-        ],
-      ),
-    );
-  }
-}
+import 'package:sats/ui/component/Common/LogButton.dart';
+import 'package:sats/ui/component/Qr/Actions.dart';
+import 'package:sats/ui/component/Qr/SelectAccount.dart';
 
 class QRScreen extends StatelessWidget {
   const QRScreen({Key? key}) : super(key: key);
@@ -150,7 +61,7 @@ class QRScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                AccountsRowSelection(),
+                SelectAccount(),
                 const SizedBox(height: 40),
                 if (showActions) ...[
                   Center(
@@ -162,7 +73,7 @@ class QRScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  const Buttons(),
+                  const AccountActions(),
                 ],
               ],
             ),
