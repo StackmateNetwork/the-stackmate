@@ -16,31 +16,6 @@ final loggerCubit = LoggerCubit(
   locator<ILogAPI>(),
 );
 
-final networkSelectCubit = ChainSelectCubit(
-  locator<IStorage>(),
-  loggerCubit,
-  // walletsCubit,
-);
-
-final walletsCubit = WalletsCubit(
-  locator<IStorage>(),
-  loggerCubit,
-  networkSelectCubit,
-  locator<IClipBoard>(),
-);
-
-final addressBookCubit = AddressBookCubit(
-  locator<IStorage>(),
-  loggerCubit,
-  // locator<IVibrate>(),
-  locator<IClipBoard>(),
-);
-
-final nodeAddressCubit = NodeAddressCubit(
-  locator<IStorage>(),
-  loggerCubit,
-);
-
 class Cubits extends StatelessWidget {
   const Cubits({Key? key, required this.child}) : super(key: key);
 
@@ -48,6 +23,31 @@ class Cubits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final networkSelectCubit = ChainSelectCubit(
+      locator<IStorage>(),
+      loggerCubit,
+      // walletsCubit,
+    );
+
+    final walletsCubit = WalletsCubit(
+      locator<IStorage>(),
+      loggerCubit,
+      networkSelectCubit,
+      locator<IClipBoard>(),
+    );
+
+    final addressBookCubit = AddressBookCubit(
+      locator<IStorage>(),
+      loggerCubit,
+      // locator<IVibrate>(),
+      locator<IClipBoard>(),
+    );
+
+    final nodeAddressCubit = NodeAddressCubit(
+      locator<IStorage>(),
+      loggerCubit,
+    );
+
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: networkSelectCubit),
