@@ -94,7 +94,7 @@ class Routes {
         page = const WalletScreen();
         break;
       case receive:
-        page = const Receive();
+        page = const ReceiveScreen();
         break;
       case send:
         page = const WalletSendScreen(fromQr: false);
@@ -103,10 +103,10 @@ class Routes {
         page = const WalletSendScreen(fromQr: true);
         break;
       case qr:
-        page = const QRPage();
+        page = const QRScreen();
         break;
       case addressBook:
-        page = const AddressBookPage();
+        page = const AddressBookScreen();
         break;
     }
 

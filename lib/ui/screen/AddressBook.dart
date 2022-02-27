@@ -634,8 +634,8 @@ class _KeyValueFieldState extends State<KeyValueField> {
   }
 }
 
-class AddressBookPage extends StatelessWidget {
-  const AddressBookPage({Key? key}) : super(key: key);
+class AddressBookScreen extends StatelessWidget {
+  const AddressBookScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

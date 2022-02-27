@@ -9,7 +9,7 @@ import 'package:sats/cubit/reddit.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/reddit-post.dart';
 import 'package:sats/model/wallet.dart';
-import 'package:sats/navigation.dart';
+import 'package:sats/routes.dart';
 import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/launcher.dart';

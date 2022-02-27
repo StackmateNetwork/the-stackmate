@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/navigation.dart';
+import 'package:sats/routes.dart';
 
 class LogButton extends StatelessWidget {
   const LogButton({

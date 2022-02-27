@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sats/navigation.dart';
+import 'package:sats/routes.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Common/LogButton.dart';

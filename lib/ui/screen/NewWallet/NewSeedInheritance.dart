@@ -7,7 +7,7 @@ import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/inheritance-with-new-seed.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/navigation.dart';
+import 'package:sats/routes.dart';
 import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/core.dart';

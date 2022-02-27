@@ -5,7 +5,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/navigation.dart';
+import 'package:sats/routes.dart';
 import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';

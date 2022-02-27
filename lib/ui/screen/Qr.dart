@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/navigation.dart';
+import 'package:sats/routes.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/screen/Home.dart';
@@ -95,8 +95,8 @@ class Buttons extends StatelessWidget {
   }
 }
 
-class QRPage extends StatelessWidget {
-  const QRPage({Key? key}) : super(key: key);
+class QRScreen extends StatelessWidget {
+  const QRScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
