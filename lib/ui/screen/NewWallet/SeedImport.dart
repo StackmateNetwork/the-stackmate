@@ -5,154 +5,19 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sats/ui/component/Common/StepLine.dart';
+import 'package:sats/routes.dart';
+import 'package:sats/ui/component/Common/BackButton2.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport.dart';
+import 'package:sats/ui/component/NewWallet/SeedImport/Label.dart';
+import 'package:sats/ui/component/NewWallet/SeedImport/Stepper.dart';
+import 'package:sats/ui/component/NewWallet/SeedImport/Warning.dart';
 import 'package:sats/ui/component/common/header.dart';
 
-import '../../component/Common/BackButton2.dart';
-
-class NewImportStepper extends StatelessWidget {
-  const NewImportStepper();
-  @override
-  Widget build(BuildContext c) {
-    return BlocBuilder<SeedImportWalletCubit, SeedImportWalletState>(
-      buildWhen: (previous, current) =>
-          previous.currentStep != current.currentStep,
-      builder: (context, state) {
-        final steps = SeedImportWalletSteps.values.length;
-        final idx = state.currentStep.index;
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            StepLine(length: steps, idx: idx),
-            const SizedBox(height: 24),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class SeedImportWarning extends StatelessWidget {
-  const SeedImportWarning();
-  @override
-  Widget build(BuildContext c) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Security\nInformation'.toUpperCase(),
-            style: c.fonts.headline5!.copyWith(
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            '''
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              ''',
-            style: c.fonts.caption!.copyWith(
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 24),
-          TextButton(
-            onPressed: () {
-              c.read<SeedImportWalletCubit>().nextClicked();
-            },
-            child: Text('I Understand'.toUpperCase()),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class SeedImportLabel extends StatefulWidget {
-  const SeedImportLabel({Key? key}) : super(key: key);
-
-  @override
-  State<SeedImportLabel> createState() => _SeedImportLabelState();
-}
-
-class _SeedImportLabelState extends State<SeedImportLabel> {
-  TextEditingController? _controller;
-
-  @override
-  void initState() {
-    _controller = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext c) {
-    return BlocBuilder<SeedImportWalletCubit, SeedImportWalletState>(
-      buildWhen: (previous, current) =>
-          previous.walletLabelError != current.walletLabelError,
-      builder: (context, state) {
-        if (state.walletLabel != _controller!.text)
-          _controller!.text = state.walletLabel;
-
-        final isFixed = state.labelFixed;
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 24),
-            Text(
-              isFixed ? 'Label' : 'Label your wallet',
-              style: c.fonts.headline4!.copyWith(
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Padding(
-              padding: EdgeInsets.zero,
-              child: IgnorePointer(
-                ignoring: isFixed,
-                child: TextField(
-                  controller: _controller,
-                  onChanged: (text) {
-                    if (!isFixed)
-                      c.read<SeedImportWalletCubit>().labelChanged(text);
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Wallet Name',
-                    labelStyle: TextStyle(color: Colors.transparent),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            if (state.walletLabelError != '')
-              Text(
-                state.walletLabelError,
-                style: c.fonts.caption!.copyWith(color: c.colours.error),
-              ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextButton(
-                onPressed: () {
-                  c.read<SeedImportWalletCubit>().nextClicked();
-                },
-                child: const Text('Confirm'),
-              ),
-            )
-          ],
-        );
-      },
-    );
-  }
-}
-
-class SeedImport extends StatelessWidget {
+class _SeedImport extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     return BlocConsumer<SeedImportWalletCubit, SeedImportWalletState>(
@@ -268,7 +133,7 @@ class SeedImportScreen extends StatelessWidget {
         BlocProvider.value(value: importCubit),
         BlocProvider.value(value: seedImportCubit),
       ],
-      child: SeedImport(),
+      child: _SeedImport(),
     );
   }
 }

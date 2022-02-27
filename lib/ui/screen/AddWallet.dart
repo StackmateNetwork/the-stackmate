@@ -1,88 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/routes.dart';
+import 'package:sats/ui/component/AddWallet/SelectButton.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Common/LogButton.dart';
-
-class WalletSelection extends StatelessWidget {
-  const WalletSelection({
-    Key? key,
-    required this.text,
-    required this.description,
-    required this.colour,
-    required this.onPressed,
-  }) : super(key: key);
-
-  final String text;
-  final String description;
-  final Color colour;
-  final Function onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        onPressed();
-      },
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        // borderRadius: BorderRadius.circular(8),
-        // shadowColor: Colors.,
-        // color: colour,
-
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-        primary: colour,
-      ),
-      child: Container(
-        // height: 100,
-        padding: const EdgeInsets.only(
-          // left: 0,
-          top: 24,
-          bottom: 24,
-          // right: 0,
-        ),
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  text.toUpperCase(),
-                  style: context.fonts.button!.copyWith(
-                    color: context.colours.primary,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Container(
-                  width: 240,
-                  // height: 45,
-                  child: Text(
-                    description,
-                    maxLines: 3,
-                    // softWrap: true,
-                    // overflow: TextOverflow.fade,
-                    style: context.fonts.caption!.copyWith(
-                      color: context.colours.onSurface.withOpacity(0.7),
-                      // fontWeight: FontWeight.w100,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            Icon(
-              Icons.navigate_next_sharp,
-              size: 40,
-              color: context.colours.primary,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class AddWalletScreen extends StatelessWidget {
   const AddWalletScreen({Key? key}) : super(key: key);
@@ -159,7 +81,7 @@ class AddWalletScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                WalletSelection(
+                SelectButton(
                   text: 'Seed',
                   description:
                       'Easy to use, Easy to Backup.\n12 word phase as private key.',
@@ -169,7 +91,7 @@ class AddWalletScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 16),
-                WalletSelection(
+                SelectButton(
                   text: 'Relocate',
                   description: 'Move your funds.\nImport an existing seed.',
                   colour: c.colours.surface,
@@ -178,7 +100,7 @@ class AddWalletScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 16),
-                WalletSelection(
+                SelectButton(
                   text: 'Observe',
                   description:
                       'Public View, Maximum Privacy.\nImport your public key.',
@@ -199,7 +121,7 @@ class AddWalletScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    WalletSelection(
+                    SelectButton(
                       text: 'Inheritance - New',
                       description:
                           'Time protect you assets.\nSelect your hier.',
@@ -209,7 +131,7 @@ class AddWalletScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 16),
-                    WalletSelection(
+                    SelectButton(
                       text: 'Inheritance - Import',
                       description: 'Import an existing time protected wallet.',
                       colour: c.colours.surface,
@@ -220,7 +142,7 @@ class AddWalletScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     Opacity(
                       opacity: 0.5,
-                      child: WalletSelection(
+                      child: SelectButton(
                         text: 'Co Sign',
                         description: ' ',
                         colour: c.colours.surface,

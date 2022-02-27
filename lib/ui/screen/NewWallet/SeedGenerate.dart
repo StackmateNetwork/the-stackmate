@@ -5,153 +5,23 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
+import 'package:sats/routes.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
-import 'package:sats/ui/component/Common/StepLine.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate.dart';
+import 'package:sats/ui/component/NewWallet/SeedGenerate/Label.dart';
+import 'package:sats/ui/component/NewWallet/SeedGenerate/Stepper.dart';
+import 'package:sats/ui/component/NewWallet/SeedGenerate/Warning.dart';
 
-class GenerateWalletStepper extends StatelessWidget {
-  @override
-  Widget build(BuildContext c) {
-    return BlocBuilder<SeedGenerateWalletCubit, SeedGenerateWalletState>(
-      buildWhen: (previous, current) =>
-          previous.currentStep != current.currentStep,
-      builder: (context, state) {
-        // final stepLabel = state.currentStepLabel();
-        final steps = SeedGenerateWalletSteps.values.length;
-        final idx = state.currentStep.index;
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // const SizedBox(height: 24),
-            StepLine(length: steps, idx: idx),
-            const SizedBox(height: 24),
-            // Text(
-            //   stepLabel.toUpperCase(),
-            //   style: c.fonts.headline6!.copyWith(color: Colors.white),
-            // ),
-            // const SizedBox(height: 24),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class SeedGenerateWarning extends StatelessWidget {
-  @override
-  Widget build(BuildContext c) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox(height: 16),
-        Text(
-          'Security\nInformation'.toUpperCase(),
-          style: c.fonts.headline5!.copyWith(
-            color: Colors.white,
-            // fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 32),
-        Text(
-          '''
-Write down your seed phrase on a piece of paper
-and store in a safe place.
-
-Don’t risk losing your funds. protect your wallet
-by saving your Seed Phrase in a place you trust.
-
-It’s the only way to recover your wallet if you are 
-locked out of the app or get a new device.
-
-For maximum security, you will be forced to turn off
-all networking for your device during this process.
-      ''',
-          style: c.fonts.caption!.copyWith(color: Colors.white),
-        ),
-        const SizedBox(height: 24),
-        TextButton(
-          onPressed: () {
-            c.read<SeedGenerateWalletCubit>().nextClicked();
-          },
-          child: Text(
-            'I Understand'.toUpperCase().notLocalised(),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class SeedGenerateLabel extends StatelessWidget {
-  const SeedGenerateLabel({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext c) {
-    return BlocBuilder<SeedGenerateWalletCubit, SeedGenerateWalletState>(
-      buildWhen: (previous, current) =>
-          previous.walletLabelError != current.walletLabelError,
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 24),
-            Text(
-              'Name your wallet',
-              style: c.fonts.headline4!.copyWith(
-                color: Colors.white,
-                // fontWeight: FontWeight.bold,
-              ),
-            ),
-            // const HeaderTextDark(text: 'Name your wallet'),
-            const SizedBox(height: 24),
-            Padding(
-              padding: EdgeInsets.zero,
-              child: TextField(
-                onChanged: (text) {
-                  c.read<SeedGenerateWalletCubit>().labelChanged(text);
-                },
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  labelText: 'Wallet Name',
-                  labelStyle: TextStyle(color: Colors.transparent),
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            if (state.walletLabelError != '')
-              Text(
-                state.walletLabelError,
-                style: c.fonts.caption!.copyWith(color: c.colours.error),
-              ),
-            const SizedBox(height: 24),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextButton(
-                onPressed: () {
-                  c.read<SeedGenerateWalletCubit>().nextClicked();
-                },
-                child: Text('Confirm'.toUpperCase()),
-              ),
-            )
-          ],
-        );
-      },
-    );
-  }
-}
-
-class SeedGenerate extends StatefulWidget {
+class _SeedGenerate extends StatefulWidget {
   @override
   _SeedGenerateState createState() => _SeedGenerateState();
 }
 
-class _SeedGenerateState extends State<SeedGenerate> {
+class _SeedGenerateState extends State<_SeedGenerate> {
   late ScrollController _scrollController;
 
   @override
@@ -279,7 +149,7 @@ class SeedGenerateScreen extends StatelessWidget {
         BlocProvider.value(value: seedGenerateCubit),
         BlocProvider.value(value: seedGenerateWalletCubit),
       ],
-      child: SeedGenerate(),
+      child: _SeedGenerate(),
     );
   }
 }

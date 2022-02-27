@@ -7,244 +7,30 @@ import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/inheritance-with-new-seed.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
+import 'package:sats/routes.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Common/LogButton.dart';
-import 'package:sats/ui/component/Common/StepLine.dart';
+import 'package:sats/ui/component/NewWallet/NewSeedInheritance/Info.dart';
+import 'package:sats/ui/component/NewWallet/NewSeedInheritance/Label.dart';
+import 'package:sats/ui/component/NewWallet/NewSeedInheritance/Share.dart';
+import 'package:sats/ui/component/NewWallet/NewSeedInheritance/Stepper.dart';
+import 'package:sats/ui/component/NewWallet/NewSeedInheritance/Timer.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport.dart';
-import 'package:sats/ui/component/common/loading.dart';
 
-class InheritanceStepper extends StatelessWidget {
-  const InheritanceStepper({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext c) {
-    return BlocBuilder<InteritanceWithNewSeedCubit,
-        InheritanceWithNewSeedState>(
-      builder: (context, state) {
-        // final stepLabel = state.currentStepLabel();
-        final steps = InteritanceWithNewSeedWalletSteps.values.length;
-        final idx = state.currentStep.index;
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Text(
-            //   stepLabel,
-            //   style: c.fonts.headline6!.copyWith(color: Colors.white),
-            // ),
-            // const SizedBox(height: 24),
-            StepLine(length: steps, idx: idx),
-            const SizedBox(height: 24),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class InheritanceWalletInfo extends StatelessWidget {
-  @override
-  Widget build(BuildContext c) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox(height: 16),
-        Text(
-          'STEPS'.toUpperCase(),
-          style: c.fonts.headline5!.copyWith(
-            color: Colors.white,
-            // fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 32),
-        Text(
-          '''
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-      ''',
-          style: c.fonts.caption!.copyWith(color: Colors.white),
-        ),
-        const SizedBox(height: 24),
-        TextButton(
-          onPressed: () {
-            c.read<InteritanceWithNewSeedCubit>().nextClicked();
-          },
-          child: Text(
-            'I Understand'.toUpperCase().notLocalised(),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class TimerSettings extends StatelessWidget {
-  const TimerSettings({Key? key}) : super(key: key);
-
-  void _selectDate(BuildContext c, {DateTime? date}) async {
-    final dt = await showDatePicker(
-      context: c,
-      initialDate: date ?? DateTime(2022),
-      firstDate: DateTime(2022),
-      lastDate: DateTime(3000),
-    );
-
-    if (dt != null && dt != date) {
-      c.read<InteritanceWithNewSeedCubit>().dateSelected(dt);
-    }
-  }
+class _InheritanceNewSeed extends StatefulWidget {
+  const _InheritanceNewSeed({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
-    final date = c.select((InteritanceWithNewSeedCubit itc) => itc.state.date);
-    final err =
-        c.select((InteritanceWithNewSeedCubit itc) => itc.state.errDate);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox(height: 24),
-        if (date == null)
-          Text(
-            '   No Date Selected',
-            style: c.fonts.caption!.copyWith(
-              color: c.colours.onBackground,
-            ),
-          )
-        else
-          Text(
-            '   ' + date.toString(),
-            style: c.fonts.caption!.copyWith(
-              color: c.colours.onBackground,
-            ),
-          ),
-        const SizedBox(height: 24),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: TextButton(
-            onPressed: () {
-              _selectDate(c, date: date);
-            },
-            child: Text(
-              'Select Inheritance Unlock Date'.toUpperCase(),
-            ),
-          ),
-        ),
-        const SizedBox(height: 80),
-        if (err != '') ...[
-          Text(
-            err,
-            style: c.fonts.caption!.copyWith(
-              color: c.colours.error,
-            ),
-          ),
-          const SizedBox(height: 8),
-        ],
-        TextButton(
-          onPressed: () {
-            c.read<InteritanceWithNewSeedCubit>().nextClicked();
-          },
-          child: const Text(
-            'Confirm',
-          ),
-        ),
-        const SizedBox(height: 24),
-      ],
-    );
-  }
+  State<_InheritanceNewSeed> createState() => _InheritanceNewSeedState();
 }
 
-class InheritanceWalletLabel extends StatelessWidget {
-  const InheritanceWalletLabel({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext c) {
-    return BlocBuilder<InteritanceWithNewSeedCubit,
-        InheritanceWithNewSeedState>(
-      builder: (context, state) {
-        return IgnorePointer(
-          ignoring: state.savingWallet,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 24),
-              Text(
-                'Label your wallet',
-                style: c.fonts.headline4!.copyWith(
-                  color: Colors.white,
-                  // fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Padding(
-                padding: EdgeInsets.zero,
-                child: TextField(
-                  onChanged: (text) {
-                    c.read<InteritanceWithNewSeedCubit>().labelChanged(text);
-                  },
-                  style: c.fonts.bodyText2!
-                      .copyWith(color: c.colours.onBackground),
-                  decoration: const InputDecoration(
-                    labelText: 'Wallet Name',
-                    labelStyle: TextStyle(
-                      color: Colors.transparent,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 40),
-              if (state.errSavingWallet != '')
-                Text(
-                  state.errSavingWallet,
-                  style: c.fonts.caption!.copyWith(color: c.colours.error),
-                ),
-              if (!state.savingWallet)
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextButton(
-                    onPressed: () {
-                      c.read<InteritanceWithNewSeedCubit>().nextClicked();
-                    },
-                    child: const Text('Confirm'),
-                  ),
-                )
-              else
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Loading(text: 'Saving Wallet'),
-                )
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class ShareDetails extends StatelessWidget {
-  const ShareDetails({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class InheritanceNewSeed extends StatefulWidget {
-  const InheritanceNewSeed({Key? key}) : super(key: key);
-
-  @override
-  State<InheritanceNewSeed> createState() => _InheritanceNewSeedState();
-}
-
-class _InheritanceNewSeedState extends State<InheritanceNewSeed> {
+class _InheritanceNewSeedState extends State<_InheritanceNewSeed> {
   late ScrollController _scrollController;
 
   @override
@@ -320,7 +106,7 @@ class _InheritanceNewSeedState extends State<InheritanceNewSeed> {
                 controller: _scrollController,
                 child: Column(
                   children: [
-                    const InheritanceStepper(),
+                    const Inheritance2Stepper(),
                     Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 16,
@@ -334,17 +120,17 @@ class _InheritanceNewSeedState extends State<InheritanceNewSeed> {
                       child: () {
                         switch (state.currentStep) {
                           case InteritanceWithNewSeedWalletSteps.info:
-                            return InheritanceWalletInfo();
+                            return Inheritance2WalletInfo();
                           case InteritanceWithNewSeedWalletSteps.settings:
-                            return const TimerSettings();
+                            return const Timer2Settings();
                           case InteritanceWithNewSeedWalletSteps.seed:
                             return const SeedGenerateStepSelect();
                           case InteritanceWithNewSeedWalletSteps.import:
                             return const XpubFieldsImport();
                           case InteritanceWithNewSeedWalletSteps.label:
-                            return const InheritanceWalletLabel();
+                            return const Inheritance2WalletLabel();
                           case InteritanceWithNewSeedWalletSteps.share:
-                            return const ShareDetails();
+                            return const Share2Details();
                         }
                       }(),
                     )
@@ -397,7 +183,7 @@ class InheritanceNewSeedScreen extends StatelessWidget {
         BlocProvider.value(value: xpubCub),
         BlocProvider.value(value: inheritance),
       ],
-      child: const InheritanceNewSeed(),
+      child: const _InheritanceNewSeed(),
     );
   }
 }
