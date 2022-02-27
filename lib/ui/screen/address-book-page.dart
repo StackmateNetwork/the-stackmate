@@ -2,7 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/address-book.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/view/common/back-button.dart';
+import 'package:sats/ui/component/common/back-button.dart';
 
 class UserList extends StatelessWidget {
   const UserList({Key? key}) : super(key: key);

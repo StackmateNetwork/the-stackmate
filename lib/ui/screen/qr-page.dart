@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/navigation.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/view/common/back-button.dart';
-import 'package:sats/view/common/log-button.dart';
-import 'package:sats/view/home-page.dart';
+import 'package:sats/ui/component/common/back-button.dart';
+import 'package:sats/ui/component/common/log-button.dart';
+import 'package:sats/ui/screen/home-page.dart';
 
 class AccountsRowSelection extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final state = c.select((WalletsCubit w) => w.state);    
+    final state = c.select((WalletsCubit w) => w.state);
     final wallets = state.wallets;
     final selected = state.selectedWallet;
 

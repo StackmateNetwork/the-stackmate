@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/navigation.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/view/common/back-button2.dart';
-import 'package:sats/view/common/header.dart';
-import 'package:sats/view/common/step-line.dart';
-import 'package:sats/view/new-wallet/common/seed-import.dart';
+import 'package:sats/ui/component/common/back-button2.dart';
+import 'package:sats/ui/component/common/header.dart';
+import 'package:sats/ui/component/common/step-line.dart';
+import 'package:sats/ui/component/new-wallet/seed-import.dart';
 
 class NewImportStepper extends StatelessWidget {
   const NewImportStepper();

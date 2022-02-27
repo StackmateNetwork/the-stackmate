@@ -2,9 +2,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/view/common/back-button.dart';
-import 'package:sats/view/common/loading.dart';
-import 'package:sats/view/common/log-button.dart';
+import 'package:sats/ui/component/common/back-button.dart';
+import 'package:sats/ui/component/common/loading.dart';
+import 'package:sats/ui/component/common/log-button.dart';
 
 class Loader extends StatelessWidget {
   const Loader({Key? key}) : super(key: key);

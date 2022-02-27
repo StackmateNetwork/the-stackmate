@@ -3,8 +3,8 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/view/common/back-button.dart';
-import 'package:sats/view/common/header.dart';
+import 'package:sats/ui/component/common/back-button.dart';
+import 'package:sats/ui/component/common/header.dart';
 
 class BlockchainRow extends StatelessWidget {
   const BlockchainRow({Key? key}) : super(key: key);

@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sats/cubit/new-wallet/inheritance-with-old-seed.dart';
+import 'package:sats/cubit/new-wallet/inheritance-with-new-seed.dart';
 import 'package:sats/navigation.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/view/common/back-button.dart';
-import 'package:sats/view/common/loading.dart';
-import 'package:sats/view/common/log-button.dart';
-import 'package:sats/view/common/step-line.dart';
-import 'package:sats/view/new-wallet/common/seed-import.dart';
-import 'package:sats/view/new-wallet/common/xpub-import.dart';
+import 'package:sats/ui/component/common/back-button.dart';
+import 'package:sats/ui/component/common/loading.dart';
+import 'package:sats/ui/component/common/log-button.dart';
+import 'package:sats/ui/component/common/step-line.dart';
+import 'package:sats/ui/component/new-wallet/seed-generate.dart';
+import 'package:sats/ui/component/new-wallet/xpub-import.dart';
 
 class InheritanceStepper extends StatelessWidget {
   const InheritanceStepper({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext c) {
-    return BlocBuilder<InheritanceWithOldSeedCubit, InheritanceWithOldSeedState>(
+    return BlocBuilder<InteritanceWithNewSeedCubit,
+        InheritanceWithNewSeedState>(
       builder: (context, state) {
         // final stepLabel = state.currentStepLabel();
-        final steps = InteritanceWithOldSeedWalletSteps.values.length;
+        final steps = InteritanceWithNewSeedWalletSteps.values.length;
         final idx = state.currentStep.index;
 
         return Column(
@@ -63,7 +64,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         const SizedBox(height: 24),
         TextButton(
           onPressed: () {
-            c.read<InheritanceWithOldSeedCubit>().nextClicked();
+            c.read<InteritanceWithNewSeedCubit>().nextClicked();
           },
           child: Text(
             'I Understand'.toUpperCase().notLocalised(),
@@ -86,14 +87,15 @@ class TimerSettings extends StatelessWidget {
     );
 
     if (dt != null && dt != date) {
-      c.read<InheritanceWithOldSeedCubit>().dateSelected(dt);
+      c.read<InteritanceWithNewSeedCubit>().dateSelected(dt);
     }
   }
 
   @override
   Widget build(BuildContext c) {
-    final date = c.select((InheritanceWithOldSeedCubit itc) => itc.state.date);
-    final err = c.select((InheritanceWithOldSeedCubit itc) => itc.state.errDate);
+    final date = c.select((InteritanceWithNewSeedCubit itc) => itc.state.date);
+    final err =
+        c.select((InteritanceWithNewSeedCubit itc) => itc.state.errDate);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -137,7 +139,7 @@ class TimerSettings extends StatelessWidget {
         ],
         TextButton(
           onPressed: () {
-            c.read<InheritanceWithOldSeedCubit>().nextClicked();
+            c.read<InteritanceWithNewSeedCubit>().nextClicked();
           },
           child: const Text(
             'Confirm',
@@ -154,7 +156,8 @@ class InheritanceWalletLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    return BlocBuilder<InheritanceWithOldSeedCubit, InheritanceWithOldSeedState>(
+    return BlocBuilder<InteritanceWithNewSeedCubit,
+        InheritanceWithNewSeedState>(
       builder: (context, state) {
         return IgnorePointer(
           ignoring: state.savingWallet,
@@ -174,8 +177,10 @@ class InheritanceWalletLabel extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 child: TextField(
                   onChanged: (text) {
-                    c.read<InheritanceWithOldSeedCubit>().labelChanged(text);
+                    c.read<InteritanceWithNewSeedCubit>().labelChanged(text);
                   },
+                  style: c.fonts.bodyText2!
+                      .copyWith(color: c.colours.onBackground),
                   decoration: const InputDecoration(
                     labelText: 'Wallet Name',
                     labelStyle: TextStyle(
@@ -195,7 +200,7 @@ class InheritanceWalletLabel extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: TextButton(
                     onPressed: () {
-                      c.read<InheritanceWithOldSeedCubit>().nextClicked();
+                      c.read<InteritanceWithNewSeedCubit>().nextClicked();
                     },
                     child: const Text('Confirm'),
                   ),
@@ -222,14 +227,14 @@ class ShareDetails extends StatelessWidget {
   }
 }
 
-class InheritanceOldSeedPage extends StatefulWidget {
-  const InheritanceOldSeedPage({Key? key}) : super(key: key);
+class InheritanceNewSeedPage extends StatefulWidget {
+  const InheritanceNewSeedPage({Key? key}) : super(key: key);
 
   @override
-  State<InheritanceOldSeedPage> createState() => _InheritanceOldSeedPageState();
+  State<InheritanceNewSeedPage> createState() => _InheritanceNewSeedPageState();
 }
 
-class _InheritanceOldSeedPageState extends State<InheritanceOldSeedPage> {
+class _InheritanceNewSeedPageState extends State<InheritanceNewSeedPage> {
   late ScrollController _scrollController;
 
   @override
@@ -240,7 +245,8 @@ class _InheritanceOldSeedPageState extends State<InheritanceOldSeedPage> {
 
   @override
   Widget build(BuildContext c) {
-    return BlocConsumer<InheritanceWithOldSeedCubit, InheritanceWithOldSeedState>(
+    return BlocConsumer<InteritanceWithNewSeedCubit,
+        InheritanceWithNewSeedState>(
       listenWhen: (previous, current) =>
           previous.currentStep != current.currentStep ||
           previous.newWalletSaved != current.newWalletSaved,
@@ -317,17 +323,17 @@ class _InheritanceOldSeedPageState extends State<InheritanceOldSeedPage> {
                       ),
                       child: () {
                         switch (state.currentStep) {
-                          case InteritanceWithOldSeedWalletSteps.info:
+                          case InteritanceWithNewSeedWalletSteps.info:
                             return InheritanceWalletInfo();
-                          case InteritanceWithOldSeedWalletSteps.settings:
+                          case InteritanceWithNewSeedWalletSteps.settings:
                             return const TimerSettings();
-                          case InteritanceWithOldSeedWalletSteps.seedimport:
-                            return const SeedImportSteps();
-                          case InteritanceWithOldSeedWalletSteps.import:
+                          case InteritanceWithNewSeedWalletSteps.seed:
+                            return const SeedGenerateStepSelect();
+                          case InteritanceWithNewSeedWalletSteps.import:
                             return const XpubFieldsImport();
-                          case InteritanceWithOldSeedWalletSteps.label:
+                          case InteritanceWithNewSeedWalletSteps.label:
                             return const InheritanceWalletLabel();
-                          case InteritanceWithOldSeedWalletSteps.share:
+                          case InteritanceWithNewSeedWalletSteps.share:
                             return const ShareDetails();
                         }
                       }(),
