@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/routes.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
-import 'package:sats/ui/screen/Home.dart';
+import 'package:sats/ui/component/Home/WalletCard.dart';
 
 import '../component/Common/LogButton.dart';
 
