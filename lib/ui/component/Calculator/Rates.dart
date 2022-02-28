@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/calculator.dart';
 import 'package:sats/model/rate.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/style.dart';
+import 'package:sats/ui/style.dart';
 
 class Rates extends StatelessWidget {
   const Rates({

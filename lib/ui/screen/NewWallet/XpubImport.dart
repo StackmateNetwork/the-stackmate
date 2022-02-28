@@ -15,6 +15,7 @@ import 'package:sats/ui/component/NewWallet/XpubImport.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Stepper.dart';
 import 'package:sats/ui/component/common/header.dart';
+import 'package:go_router/go_router.dart';
 
 class _XpubImport extends StatelessWidget {
   @override
@@ -25,11 +26,12 @@ class _XpubImport extends StatelessWidget {
           previous.newWalletSaved != current.newWalletSaved,
       listener: (context, state) {
         if (state.newWalletSaved) {
+          context.pop();
+          // GoRouter.of(context).go(location);
           Navigator.pushReplacementNamed(context, Routes.home);
         }
       },
-      buildWhen: (previous, current) =>
-          previous.currentStep != current.currentStep,
+      buildWhen: (previous, current) => previous.currentStep != current.currentStep,
       builder: (context, state) {
         return WillPopScope(
           onWillPop: () async {
