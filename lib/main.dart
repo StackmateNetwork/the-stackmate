@@ -74,9 +74,6 @@ class Stackmate extends StatelessWidget {
 
   late final _router = GoRouter(
     debugLogDiagnostics: true,
-    redirect: (state) {
-      return null;
-    },
     routes: [
       GoRoute(path: '/', builder: (_, __) => const HomeScreen()),
       //
