@@ -7,7 +7,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:sats/cubit/_state.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
@@ -102,16 +101,3 @@ class Stackmate extends StatelessWidget {
     ],
   );
 }
-
-// return PageRouteBuilder(
-//     pageBuilder: (_, __, ___) => page,
-//     transitionDuration: const Duration(milliseconds: 400),
-//     transitionsBuilder: (_, anim, anim2, child) {
-//       return FadeThroughTransition(
-//         fillColor: Colors.transparent,
-//         animation: anim,
-//         secondaryAnimation: anim2,
-//         child: child,
-//       );
-//     },
-//   // )

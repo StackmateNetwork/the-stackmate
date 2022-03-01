@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
@@ -12,7 +13,6 @@ import 'package:sats/pkg/launcher.dart';
 import 'package:sats/pkg/share.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/pkg/vibrate.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Wallet/Balance.dart';
 import 'package:sats/ui/component/Wallet/Info.dart';
@@ -99,8 +99,7 @@ class _Wallett extends StatelessWidget {
                                     onPressed: () {
                                       _deleteWalletClicked(c, zeroBal, wallet);
                                     },
-                                    icon:
-                                        const Icon(Icons.delete_sweep_outlined),
+                                    icon: const Icon(Icons.delete_sweep_outlined),
                                   ),
                                 ),
                                 // const SizedBox(height: 24),
@@ -114,19 +113,12 @@ class _Wallett extends StatelessWidget {
                                 ),
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
-                                  opacity: (zeroBal || !wallet.isNotWatchOnly())
-                                      ? 0.4
-                                      : 1,
+                                  opacity: (zeroBal || !wallet.isNotWatchOnly()) ? 0.4 : 1,
                                   child: IconButton(
                                     // alignment: Alignment.centerRight,
                                     color: c.colours.primary,
                                     onPressed: () {
-                                      if (!zeroBal && wallet.isNotWatchOnly())
-                                        Navigator.pushNamed(
-                                          c,
-                                          Routes.send,
-                                          // arguments: state.wallet!,
-                                        );
+                                      if (!zeroBal && wallet.isNotWatchOnly()) c.push('/send');
                                     },
                                     icon: const Icon(
                                       Icons.call_missed_outgoing_outlined,
@@ -137,11 +129,7 @@ class _Wallett extends StatelessWidget {
                                   // alignment: Alignment.centerRight,
                                   color: c.colours.primary,
                                   onPressed: () {
-                                    Navigator.pushNamed(
-                                      c,
-                                      Routes.receive,
-                                      // arguments: state.wallet!,
-                                    );
+                                    c.push('/receive');
                                   },
                                   icon: const Icon(Icons.call_received),
                                 ),
@@ -192,13 +180,12 @@ class _Wallett extends StatelessWidget {
               child: CupertinoActionSheetAction(
                 child: Text(
                   'SEND',
-                  style:
-                      c.fonts.button!.copyWith(color: c.colours.onBackground),
+                  style: c.fonts.button!.copyWith(color: c.colours.onBackground),
                 ),
                 onPressed: () async {
                   Navigator.pop(context, true);
                   await Future.delayed(const Duration(milliseconds: 200));
-                  Navigator.pushNamed(c, Routes.send);
+                  c.push('/send');
                 },
               ),
             ),
@@ -211,8 +198,7 @@ class _Wallett extends StatelessWidget {
                 },
                 child: Text(
                   'BACK',
-                  style:
-                      c.fonts.button!.copyWith(color: c.colours.onBackground),
+                  style: c.fonts.button!.copyWith(color: c.colours.onBackground),
                 ),
               ),
             ),

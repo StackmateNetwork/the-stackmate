@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/ui/component/AddWallet/SelectButton.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Common/LogButton.dart';
@@ -83,11 +83,10 @@ class AddWalletScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 SelectButton(
                   text: 'Seed',
-                  description:
-                      'Easy to use, Easy to Backup.\n12 word phase as private key.',
+                  description: 'Easy to use, Easy to Backup.\n12 word phase as private key.',
                   colour: c.colours.surface,
                   onPressed: () {
-                    Navigator.pushNamed(c, Routes.generateSeed);
+                    c.push('/generate-seed');
                   },
                 ),
                 const SizedBox(height: 16),
@@ -96,17 +95,16 @@ class AddWalletScreen extends StatelessWidget {
                   description: 'Move your funds.\nImport an existing seed.',
                   colour: c.colours.surface,
                   onPressed: () {
-                    Navigator.pushNamed(c, Routes.importSeed);
+                    c.push('/import-seed');
                   },
                 ),
                 const SizedBox(height: 16),
                 SelectButton(
                   text: 'Observe',
-                  description:
-                      'Public View, Maximum Privacy.\nImport your public key.',
+                  description: 'Public View, Maximum Privacy.\nImport your public key.',
                   colour: c.colours.surface,
                   onPressed: () {
-                    Navigator.pushNamed(c, Routes.watchOnly);
+                    c.push('/watch-only');
                   },
                 ),
                 const SizedBox(height: 48),
@@ -123,11 +121,10 @@ class AddWalletScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     SelectButton(
                       text: 'Inheritance - New',
-                      description:
-                          'Time protect you assets.\nSelect your hier.',
+                      description: 'Time protect you assets.\nSelect your hier.',
                       colour: c.colours.surface,
                       onPressed: () {
-                        Navigator.pushNamed(c, Routes.inheritanceNewSeed);
+                        c.push('/inheritance-new-seed');
                       },
                     ),
                     const SizedBox(height: 16),
@@ -136,7 +133,7 @@ class AddWalletScreen extends StatelessWidget {
                       description: 'Import an existing time protected wallet.',
                       colour: c.colours.surface,
                       onPressed: () {
-                        Navigator.pushNamed(c, Routes.inheritanceOldSeed);
+                        c.push('/inheritance-old-seed');
                       },
                     ),
                     const SizedBox(height: 16),

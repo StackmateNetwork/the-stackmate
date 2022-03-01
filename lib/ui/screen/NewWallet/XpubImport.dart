@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
@@ -9,13 +10,11 @@ import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/ui/component/Common/BackButton2.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Stepper.dart';
 import 'package:sats/ui/component/common/header.dart';
-import 'package:go_router/go_router.dart';
 
 class _XpubImport extends StatelessWidget {
   @override
@@ -26,9 +25,7 @@ class _XpubImport extends StatelessWidget {
           previous.newWalletSaved != current.newWalletSaved,
       listener: (context, state) {
         if (state.newWalletSaved) {
-          context.pop();
-          // GoRouter.of(context).go(location);
-          Navigator.pushReplacementNamed(context, Routes.home);
+          context.go('/');
         }
       },
       buildWhen: (previous, current) => previous.currentStep != current.currentStep,

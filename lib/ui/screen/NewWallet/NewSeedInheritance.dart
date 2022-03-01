@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
@@ -12,7 +13,6 @@ import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Common/LogButton.dart';
 import 'package:sats/ui/component/NewWallet/NewSeedInheritance/Info.dart';
@@ -41,8 +41,7 @@ class _InheritanceNewSeedState extends State<_InheritanceNewSeed> {
 
   @override
   Widget build(BuildContext c) {
-    return BlocConsumer<InteritanceWithNewSeedCubit,
-        InheritanceWithNewSeedState>(
+    return BlocConsumer<InteritanceWithNewSeedCubit, InheritanceWithNewSeedState>(
       listenWhen: (previous, current) =>
           previous.currentStep != current.currentStep ||
           previous.newWalletSaved != current.newWalletSaved,
@@ -54,7 +53,7 @@ class _InheritanceNewSeedState extends State<_InheritanceNewSeed> {
         );
 
         if (state.newWalletSaved) {
-          Navigator.pushReplacementNamed(context, Routes.home);
+          context.go('/');
         }
       },
       builder: (context, state) {
@@ -62,8 +61,7 @@ class _InheritanceNewSeedState extends State<_InheritanceNewSeed> {
           body: SafeArea(
             child: NestedScrollView(
               floatHeaderSlivers: true,
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
+              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
                     backgroundColor: Colors.transparent,

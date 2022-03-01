@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:sats/cubit/_state.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/pkg/_deps.dart';
 

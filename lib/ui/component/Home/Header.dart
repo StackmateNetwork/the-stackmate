@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/ui/component/Home/RedditLoader.dart';
 
 class Header extends StatelessWidget {
@@ -46,7 +46,7 @@ class Header extends StatelessWidget {
                   const SizedBox(width: 16),
                   IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(c, Routes.setting);
+                      c.push('/settins');
                     },
                     icon: Icon(
                       Icons.settings,

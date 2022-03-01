@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/routes.dart';
+import 'package:go_router/go_router.dart';
 
 class LogButton extends StatelessWidget {
   const LogButton({
@@ -13,7 +13,7 @@ class LogButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        Navigator.pushNamed(context, Routes.logs);
+        context.push('/logs');
       },
       child: child,
     );

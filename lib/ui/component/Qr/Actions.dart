@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/routes.dart';
 
 class AccountActions extends StatelessWidget {
   const AccountActions({
@@ -18,24 +18,14 @@ class AccountActions extends StatelessWidget {
         children: [
           TextButton(
             onPressed: () {
-              if (selected != null)
-                Navigator.pushNamed(
-                  c,
-                  Routes.receive,
-                  // arguments: state.wallet!,
-                );
+              if (selected != null) c.push('/receive');
             },
             child: Text('receive'.toUpperCase()),
           ),
           const SizedBox(height: 24),
           TextButton(
             onPressed: () {
-              if (selected != null)
-                Navigator.pushNamed(
-                  c,
-                  Routes.sendFromQR,
-                  // arguments: state.wallet!,
-                );
+              if (selected != null) c.push('/send-from-qr');
             },
             child: Text('send'.toUpperCase()),
           ),

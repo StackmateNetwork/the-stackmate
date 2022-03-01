@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/routes.dart';
 
 class HomeActions extends StatelessWidget {
   @override
@@ -12,19 +12,19 @@ class HomeActions extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, Routes.qr);
+              context.push('/qr');
             },
             icon: Icon(Icons.qr_code, size: 32, color: context.colours.primary),
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, Routes.addWallet);
+              context.push('/add-wallet');
             },
             icon: Icon(Icons.add, size: 32, color: context.colours.primary),
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, Routes.addressBook);
+              context.push('/address-book');
             },
             icon: Icon(
               Icons.schema_outlined,
@@ -34,7 +34,7 @@ class HomeActions extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, Routes.calc);
+              context.push('/calc');
             },
             icon: Icon(
               Icons.calculate_sharp,

@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
@@ -9,7 +10,6 @@ import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sats/routes.dart';
 import 'package:sats/ui/component/Common/BackButton2.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Label.dart';
@@ -26,11 +26,10 @@ class _SeedImport extends StatelessWidget {
           previous.newWalletSaved != current.newWalletSaved,
       listener: (context, state) {
         if (state.newWalletSaved) {
-          Navigator.pushReplacementNamed(context, Routes.home);
+          context.go('/');
         }
       },
-      buildWhen: (previous, current) =>
-          previous.currentStep != current.currentStep,
+      buildWhen: (previous, current) => previous.currentStep != current.currentStep,
       builder: (context, state) {
         return WillPopScope(
           onWillPop: () async {

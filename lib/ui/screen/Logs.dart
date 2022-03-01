@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/model/log.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Logs/Item.dart';
 
