@@ -1,5 +1,5 @@
 import 'package:bitcoin/bitcoin.dart';
-import 'package:sats/model/cypherpost.dart';
+import 'package:sats/model/cypher-post.dart';
 
 abstract class ICypherPostAPI {
   Future<bool> registerIdentity({
