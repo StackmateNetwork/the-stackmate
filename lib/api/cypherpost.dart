@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:bitcoin/bitcoin.dart';
 import 'package:sats/model/cypherpost.dart';
 
 abstract class ICypherPostAPI {
@@ -8,42 +8,35 @@ abstract class ICypherPostAPI {
   });
 
   Future<List<CypherPostIdentity>> getAllIdentities({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
   });
 
   Future<bool> deleteMyIdentity({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
   });
 
   Future<List<CypherPostBadge>> getAllBadges({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
   });
 
   Future<List<CypherPostBadge>> getMyBadges({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
   });
 
   Future<bool> giveBadge({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
     required String reciever,
     required String badgeType,
   });
 
   Future<bool> revokeBadge({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
     required String reciever,
     required String badgeType,
   });
 
   Future<String> createPost({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
     required String cypherJson,
     required String derivationScheme,
     required int expiry,
@@ -51,25 +44,21 @@ abstract class ICypherPostAPI {
   });
 
   Future<bool> setPostVisibility({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
     required String postId,
     required List<CypherPostDecryptionKey> decryptionKeys,
   });
 
   Future<List<CypherPost>> getMyPosts({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
   });
 
   Future<List<CypherPost>> getPostsForMe({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
   });
 
   Future<bool> deletePost({
-    required String pubkey,
-    required String privKey,
+    required XOnlyPair keyPair,
     required String postId,
   });
 }

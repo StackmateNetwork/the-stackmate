@@ -17,6 +17,13 @@ class Nmeu {
   List<String> get neuList => mnemonic.split(' ');
 }
 
+class XOnlyPair {
+  XOnlyPair(this.privKey, this.pubKey);
+
+  final String privKey;
+  final String pubKey;
+}
+
 class DerivedWallet {
   const DerivedWallet(
     this.fingerPrint,

@@ -6,6 +6,29 @@ import 'package:bitcoin/bitcoin.dart';
 import 'package:sats/model/transaction.dart';
 
 abstract class IStackMateCore {
+  DerivedWallet derivePathStr({
+    required String masterXPriv,
+    required String derivationPath,
+  });
+
+  XOnlyPair xPrivToEc({required String masterXPriv});
+
+  String sharedSecret({
+    required String localPriv,
+    required String remotePub,
+  });
+
+  String signMessage({
+    required String message,
+    required String secKey,
+  });
+
+  bool verifySignature({
+    required String signature,
+    required String message,
+    required String pubkey,
+  });
+
   Nmeu generateMaster({
     required String length,
     required String passphrase,
@@ -103,9 +126,8 @@ abstract class IStackMateCore {
 class BitcoinFFI implements IStackMateCore {
   BitcoinFFI() {
     _bitcoin = FFFI(
-      binary: Platform.isAndroid
-          ? DynamicLibrary.open('libstackmate.so')
-          : DynamicLibrary.executable(),
+      binary:
+          Platform.isAndroid ? DynamicLibrary.open('libstackmate.so') : DynamicLibrary.executable(),
     );
   }
 
@@ -212,8 +234,7 @@ class BitcoinFFI implements IStackMateCore {
     final List<Transaction> transactions = [];
     for (final t in json['history'] as List) {
       var tx = Transaction.fromJson(t as Map<String, dynamic>);
-      if (!tx.isReceive())
-        tx = tx.copyWith(sent: tx.sent - tx.received - tx.fee);
+      if (!tx.isReceive()) tx = tx.copyWith(sent: tx.sent - tx.received - tx.fee);
 
       transactions.add(tx);
     }
@@ -358,5 +379,36 @@ class BitcoinFFI implements IStackMateCore {
     if (resp.startsWith('Error')) throw resp;
     final data = jsonDecode(resp);
     return data['height'] as int;
+  }
+
+  @override
+  DerivedWallet derivePathStr({required String masterXPriv, required String derivationPath}) {
+    // TODO: implement derivePathStr
+    throw UnimplementedError();
+  }
+
+  @override
+  String sharedSecret({required String localPriv, required String remotePub}) {
+    // TODO: implement sharedSecret
+    throw UnimplementedError();
+  }
+
+  @override
+  String signMessage({required String message, required String secKey}) {
+    // TODO: implement signMessage
+    throw UnimplementedError();
+  }
+
+  @override
+  bool verifySignature(
+      {required String signature, required String message, required String pubkey}) {
+    // TODO: implement verifySignature
+    throw UnimplementedError();
+  }
+
+  @override
+  XOnlyPair xPrivToEc({required String masterXPriv}) {
+    // TODO: implement xPrivToEc
+    throw UnimplementedError();
   }
 }
