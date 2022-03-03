@@ -6,7 +6,8 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
-import 'package:sats/pkg/clipboard.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 
 part 'wallets.freezed.dart';
@@ -102,6 +103,5 @@ class WalletsCubit extends Cubit<WalletsState> {
     clearSelectedWallet();
   }
 
-  void copyDescriptor(String text) async =>
-      await _clipBoard.copyToClipBoard(text);
+  void copyDescriptor(String text) async => await _clipBoard.copyToClipBoard(text);
 }

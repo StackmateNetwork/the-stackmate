@@ -3,11 +3,11 @@ import 'dart:math' as math;
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:petitparser/petitparser.dart';
-import 'package:sats/api/coincap.dart';
+import 'package:sats/api/interface/coincap.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/rate.dart';
+import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/pkg/validation.dart';
-import 'package:sats/pkg/vibrate.dart';
 
 part 'calculator.freezed.dart';
 

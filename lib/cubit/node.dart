@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/node.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 
 part 'node.freezed.dart';
@@ -16,12 +17,9 @@ class NodeAddressState with _$NodeAddressState {
   }) = _NodeAddressState;
   const NodeAddressState._();
 
-  String getAddress() => address == ''
-      ? 'default'
-      : 'https://$address:$port';
+  String getAddress() => address == '' ? 'default' : 'https://$address:$port';
 
-  String mainString() =>
-      address == '' ? 'ELECTRUM (Default)' : '$address:$port (Custom)';
+  String mainString() => address == '' ? 'ELECTRUM (Default)' : '$address:$port (Custom)';
 }
 
 class NodeAddressCubit extends Cubit<NodeAddressState> {

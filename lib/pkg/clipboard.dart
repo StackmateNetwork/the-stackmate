@@ -1,10 +1,6 @@
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:oktoast/oktoast.dart';
-
-abstract class IClipBoard {
-  Future<bool> copyToClipBoard(String tex);
-  Future<String> pasteFromClipBoard();
-}
+import 'package:sats/pkg/interface/clipboard.dart';
 
 class ClipBoardd implements IClipBoard {
   @override

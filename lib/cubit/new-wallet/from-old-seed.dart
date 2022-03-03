@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/wallet.dart';
-import 'package:sats/pkg/core.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 
 part 'from-old-seed.freezed.dart';
@@ -42,12 +43,10 @@ class SeedImportWalletState with _$SeedImportWalletState {
     return false;
   }
 
-  double completePercent() =>
-      currentStep.index / SeedImportWalletSteps.values.length;
+  double completePercent() => currentStep.index / SeedImportWalletSteps.values.length;
 
   String completePercentLabel() =>
-      ((currentStep.index / SeedImportWalletSteps.values.length) * 100)
-          .toStringAsFixed(0);
+      ((currentStep.index / SeedImportWalletSteps.values.length) * 100).toStringAsFixed(0);
 
   String currentStepLabel() {
     switch (currentStep) {
@@ -167,9 +166,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       final wallet = istate.wallet;
       if (wallet == null) return;
 
-      final policy =
-          'pk([${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}/0/*)'
-              .replaceFirst('/m', '');
+      final policy = 'pk([${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}/0/*)'
+          .replaceFirst('/m', '');
 
       final com = _core.compile(
         policy: policy,

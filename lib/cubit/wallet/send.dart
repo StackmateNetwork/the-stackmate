@@ -5,15 +5,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallet/wallet.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
-import 'package:sats/pkg/clipboard.dart';
-import 'package:sats/pkg/core.dart';
-import 'package:sats/pkg/share.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
+import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/validation.dart';
 
 part 'send.freezed.dart';
@@ -488,8 +489,7 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
   final json = jsonDecode(resp)['outputs'];
 
   final List<DecodedTxOutput> decoded = [];
-  for (final out in json)
-    decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
+  for (final out in json) decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
 
   return decoded;
 }

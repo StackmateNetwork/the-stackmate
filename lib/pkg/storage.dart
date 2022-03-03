@@ -7,6 +7,7 @@ import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/model/reddit-post.dart';
 import 'package:sats/model/wallet.dart';
+import 'package:sats/pkg/interface/storage.dart';
 
 enum StoreKeys {
   RedditPost,
@@ -47,19 +48,6 @@ Future<void> initializeHive() async {
   await Hive.openBox<AddressBookUser>(StoreKeys.AddressBookUser.name);
   await Hive.openBox<AddressBookKey>(StoreKeys.AddressBookKey.name);
   await Hive.openBox<Node>(StoreKeys.Node.name);
-}
-
-abstract class IStorage {
-  Future<int> saveItem<T>(String cls, T obj);
-  Future<void> saveItemAt<T>(String cls, int idx, T obj);
-
-  void deleteItem<T>(String cls, dynamic key);
-  void deleteItemAt<T>(String cls, int idx);
-  Future<void> clearAll<T>(String cls);
-
-  T getItem<T>(String cls, String key);
-  T getFirstItem<T>(String cls);
-  List<T> getAll<T>(String cls);
 }
 
 class HiveStore implements IStorage {

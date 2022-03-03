@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 
 part 'chain-select.freezed.dart';
@@ -33,8 +34,7 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
       emit(BlockchainState(blockchain: blockchain));
       await Future.delayed(const Duration(milliseconds: 50));
     } catch (e, s) {
-      if (e.toString() != 'empty')
-        _logger.logException(e, 'BlockchainCubit._init', s);
+      if (e.toString() != 'empty') _logger.logException(e, 'BlockchainCubit._init', s);
     }
   }
 

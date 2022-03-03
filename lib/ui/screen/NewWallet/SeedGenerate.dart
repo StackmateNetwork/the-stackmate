@@ -1,15 +1,15 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_deps.dart';
-import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/storage.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Label.dart';

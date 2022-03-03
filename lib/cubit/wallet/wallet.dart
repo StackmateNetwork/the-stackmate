@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
@@ -8,11 +9,11 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
-import 'package:sats/pkg/core.dart';
-import 'package:sats/pkg/launcher.dart';
-import 'package:sats/pkg/share.dart';
+import 'package:sats/pkg/interface/launcher.dart';
+import 'package:sats/pkg/interface/share.dart';
+import 'package:sats/pkg/interface/storage.dart';
+import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sats/pkg/vibrate.dart';
 
 part 'wallet.freezed.dart';
 
@@ -103,8 +104,7 @@ class WalletCubit extends Cubit<WalletState> {
       );
 
       final transactions = await compute(computeHistory, {
-        'depositDesc':
-            _walletsCubit.state.selectedWallet!.mainWallet.descriptor,
+        'depositDesc': _walletsCubit.state.selectedWallet!.mainWallet.descriptor,
         'nodeAddress': node,
         // 'network': _blockchain.state.blockchain.name,
       });

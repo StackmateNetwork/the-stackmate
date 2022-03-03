@@ -3,10 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:retry/retry.dart';
 import 'package:sats/api/_helpers.dart';
-
-abstract class IRedditAPI {
-  Future<Response> fetchPosts(String topic);
-}
+import 'package:sats/api/interface/reddit.dart';
 
 class RedditAPI implements IRedditAPI {
   @override

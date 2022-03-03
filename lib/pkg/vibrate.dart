@@ -1,9 +1,6 @@
 // import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:flutter/services.dart';
-
-abstract class IVibrate {
-  void vibe();
-}
+import 'package:sats/pkg/interface/vibrate.dart';
 
 class Vibrate implements IVibrate {
   @override

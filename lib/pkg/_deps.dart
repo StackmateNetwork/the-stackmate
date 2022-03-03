@@ -1,12 +1,20 @@
 import 'package:get_it/get_it.dart';
 import 'package:sats/api/coincap.dart';
+import 'package:sats/api/interface/coincap.dart';
+import 'package:sats/api/interface/logger.dart';
+import 'package:sats/api/interface/reddit.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/logger.dart';
 import 'package:sats/api/reddit.dart';
+import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/pkg/clipboard.dart';
-import 'package:sats/pkg/core.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
+import 'package:sats/pkg/interface/launcher.dart';
+import 'package:sats/pkg/interface/share.dart';
+import 'package:sats/pkg/interface/storage.dart';
+import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/pkg/launcher.dart';
-import 'package:sats/pkg/local-auth.dart';
 import 'package:sats/pkg/share.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/pkg/vibrate.dart';
@@ -22,7 +30,6 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<IRedditAPI>(() => RedditAPI());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
     locator.registerLazySingleton<IStackMateCore>(() => BitcoinFFI());
-    locator.registerLazySingleton<ILocalAuth>(() => LocalAuth());
     locator.registerLazySingleton<ILogAPI>(() => DummyLogAPI());
   } else {
     locator.registerLazySingleton<IShare>(() => Sharer());
@@ -32,7 +39,6 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<IStorage>(() => HiveStore());
     locator.registerLazySingleton<IStackMateCore>(() => BitcoinFFI());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
-    locator.registerLazySingleton<ILocalAuth>(() => LocalAuth());
     locator.registerLazySingleton<IRatesAPI>(() => RatesAPI());
     locator.registerLazySingleton<ILogAPI>(() => SentryLogger());
   }

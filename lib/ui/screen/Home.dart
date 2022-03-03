@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sats/api/reddit.dart';
+import 'package:sats/api/interface/reddit.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/reddit.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/launcher.dart';
+import 'package:sats/pkg/interface/launcher.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/Header.dart';

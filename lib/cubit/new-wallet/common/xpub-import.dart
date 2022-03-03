@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/pkg/clipboard.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'xpub-import.freezed.dart';
 
@@ -19,8 +19,7 @@ class XpubImportState with _$XpubImportState {
   const XpubImportState._();
 
   bool showOtherDetails() {
-    if (xpub.startsWith('[') && xpub.contains(']') && xpub.contains('/'))
-      return false;
+    if (xpub.startsWith('[') && xpub.contains(']') && xpub.contains('/')) return false;
     return true;
   }
 }

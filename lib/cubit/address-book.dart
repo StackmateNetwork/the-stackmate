@@ -9,7 +9,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/address-book.dart';
-import 'package:sats/pkg/clipboard.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 
 part 'address-book.freezed.dart';
@@ -70,8 +71,7 @@ class AddressBookCubit extends Cubit<AddressBookState> {
 
   void loadAddressUsers() {
     try {
-      final users =
-          _storage.getAll<AddressBookUser>(StoreKeys.AddressBookUser.name);
+      final users = _storage.getAll<AddressBookUser>(StoreKeys.AddressBookUser.name);
       emit(state.copyWith(users: users));
     } catch (e, s) {
       _logger.logException(e, 'AddressBookCubit.loadAddresses', s);
@@ -423,8 +423,7 @@ class AddressBookCubit extends Cubit<AddressBookState> {
   }
 
   void exportAddressBook() async {
-    final addressBook =
-        _storage.getAll<AddressBookUser>(StoreKeys.AddressBookUser.name);
+    final addressBook = _storage.getAll<AddressBookUser>(StoreKeys.AddressBookUser.name);
     if (addressBook.isEmpty) {
       showToast('Address Book is empty.');
       return;
@@ -435,8 +434,7 @@ class AddressBookCubit extends Cubit<AddressBookState> {
     jsonStr += ']}';
     final bin = Uint8List.fromList(jsonStr.codeUnits);
     final date = DateTime.now().millisecondsSinceEpoch.toString();
-    await FileSaver.instance
-        .saveAs('backup-$date.sm9', bin, '', MimeType.OTHER);
+    await FileSaver.instance.saveAs('backup-$date.sm9', bin, '', MimeType.OTHER);
     showToast('Backup Saved.');
   }
 

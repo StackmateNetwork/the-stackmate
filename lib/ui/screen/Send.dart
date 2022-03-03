@@ -1,15 +1,15 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_deps.dart';
-import 'package:sats/pkg/clipboard.dart';
-import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/share.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
+import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Common/LogButton.dart';
 import 'package:sats/ui/component/Send/Address.dart';
@@ -48,8 +48,7 @@ class _WalletSend extends StatelessWidget {
                     Navigator.pop(context);
                   }
                 },
-                listenWhen: (p, c) =>
-                    p.zeroBalanceAmt().not(c.zeroBalanceAmt()),
+                listenWhen: (p, c) => p.zeroBalanceAmt().not(c.zeroBalanceAmt()),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -62,8 +61,7 @@ class _WalletSend extends StatelessWidget {
                         children: [
                           Back(
                             onPressed: () {
-                              if (step == SendSteps.address ||
-                                  step == SendSteps.sent) {
+                              if (step == SendSteps.address || step == SendSteps.sent) {
                                 Navigator.pop(context);
                                 return;
                               }

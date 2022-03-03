@@ -1,13 +1,6 @@
 import 'package:open_mail_app/open_mail_app.dart';
+import 'package:sats/pkg/interface/launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-abstract class ILauncher {
-  Future<bool> canLaunchApp(String link);
-  Future launchApp(String link);
-  Future openInAppStore(String link);
-  Future sentSupportEmail(String loggedInEmail, String name);
-  Future openEmailInbox();
-}
 
 class Launcher implements ILauncher {
   @override

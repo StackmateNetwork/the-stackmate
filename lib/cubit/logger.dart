@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:sats/api/logger.dart';
+import 'package:sats/api/interface/logger.dart';
 import 'package:sats/model/log.dart';
-import 'package:sats/pkg/clipboard.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'logger.freezed.dart';
 

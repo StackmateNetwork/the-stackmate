@@ -6,8 +6,8 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_deps.dart';
-import 'package:sats/pkg/clipboard.dart';
-import 'package:sats/pkg/storage.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
+import 'package:sats/pkg/interface/storage.dart';
 // import 'package:sats/pkg/vibrate.dart';
 
 class Cubits extends StatelessWidget {

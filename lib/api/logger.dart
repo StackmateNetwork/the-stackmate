@@ -1,6 +1,4 @@
-abstract class ILogAPI {
-  Future<void> log(String log);
-}
+import 'package:sats/api/interface/logger.dart';
 
 class SentryLogger implements ILogAPI {
   @override

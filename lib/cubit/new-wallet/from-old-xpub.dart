@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/wallet.dart';
-import 'package:sats/pkg/core.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 
 part 'from-old-xpub.freezed.dart';
@@ -26,12 +27,10 @@ class XpubImportWalletState with _$XpubImportWalletState {
   }) = _SeedImportXpubState;
   const XpubImportWalletState._();
 
-  double completePercent() =>
-      currentStep.index / XpubImportWalletStep.values.length;
+  double completePercent() => currentStep.index / XpubImportWalletStep.values.length;
 
   String completePercentLabel() =>
-      ((currentStep.index / XpubImportWalletStep.values.length) * 100)
-          .toStringAsFixed(0);
+      ((currentStep.index / XpubImportWalletStep.values.length) * 100).toStringAsFixed(0);
 
   String currentStepLabel() {
     switch (currentStep) {

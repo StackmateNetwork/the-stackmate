@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/wallet.dart';
-import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 
 part 'from-new-seed.freezed.dart';
@@ -22,8 +23,7 @@ enum SeedGenerateWalletSteps {
 @freezed
 class SeedGenerateWalletState with _$SeedGenerateWalletState {
   const factory SeedGenerateWalletState({
-    @Default(SeedGenerateWalletSteps.warning)
-        SeedGenerateWalletSteps currentStep,
+    @Default(SeedGenerateWalletSteps.warning) SeedGenerateWalletSteps currentStep,
     @Default('') String walletLabel,
     @Default('') String walletLabelError,
     @Default(false) bool savinngWallet,
@@ -42,12 +42,10 @@ class SeedGenerateWalletState with _$SeedGenerateWalletState {
     return false;
   }
 
-  double completePercent() =>
-      currentStep.index / SeedGenerateWalletSteps.values.length;
+  double completePercent() => currentStep.index / SeedGenerateWalletSteps.values.length;
 
   String completePercentLabel() =>
-      ((currentStep.index / SeedGenerateWalletSteps.values.length) * 100)
-          .toStringAsFixed(0);
+      ((currentStep.index / SeedGenerateWalletSteps.values.length) * 100).toStringAsFixed(0);
 }
 
 class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
@@ -127,9 +125,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       final wallet = _generateCubit.state.wallet;
       if (wallet == null) return;
 
-      final policy =
-          'pk([${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}/0/*)'
-              .replaceFirst('/m', '');
+      final policy = 'pk([${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}/0/*)'
+          .replaceFirst('/m', '');
 
       final com = _core.compile(
         policy: policy,

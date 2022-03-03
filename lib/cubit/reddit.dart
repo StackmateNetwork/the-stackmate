@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sats/api/reddit.dart';
+import 'package:sats/api/interface/reddit.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/reddit-post.dart';
-import 'package:sats/pkg/launcher.dart';
+import 'package:sats/pkg/interface/launcher.dart';
+
 // import 'package:sats/pkg/storage.dart';
 
 part 'reddit.freezed.dart';

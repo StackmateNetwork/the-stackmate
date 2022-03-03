@@ -1,11 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:sats/api/coincap.dart';
+import 'package:sats/api/interface/coincap.dart';
 import 'package:sats/cubit/calculator.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/pkg/_deps.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/vibrate.dart';
+import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/ui/component/Calculator/Keyboard.dart';
 import 'package:sats/ui/component/Calculator/Rates.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';

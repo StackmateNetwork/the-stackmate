@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
@@ -9,8 +10,8 @@ import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
-import 'package:sats/pkg/core.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 
 part 'inheritance-with-old-seed.freezed.dart';
@@ -27,8 +28,7 @@ enum InteritanceWithOldSeedWalletSteps {
 @freezed
 class InheritanceWithOldSeedState with _$InheritanceWithOldSeedState {
   const factory InheritanceWithOldSeedState({
-    @Default(InteritanceWithOldSeedWalletSteps.info)
-        InteritanceWithOldSeedWalletSteps currentStep,
+    @Default(InteritanceWithOldSeedWalletSteps.info) InteritanceWithOldSeedWalletSteps currentStep,
     DateTime? date,
     @Default('') String errDate,
     @Default('') String walletLabel,
@@ -157,8 +157,7 @@ class InheritanceWithOldSeedCubit extends Cubit<InheritanceWithOldSeedState> {
     }
   }
 
-  void dateSelected(DateTime date) =>
-      emit(state.copyWith(date: date, errDate: ''));
+  void dateSelected(DateTime date) => emit(state.copyWith(date: date, errDate: ''));
 
   void labelChanged(String label) {
     emit(
@@ -193,8 +192,7 @@ class InheritanceWithOldSeedCubit extends Cubit<InheritanceWithOldSeedState> {
       if (!xpubState.showOtherDetails())
         backupPolicy = 'pk($xpub/0/*)';
       else
-        backupPolicy =
-            'pk([$fingerprint/$path]$xpub/0/*)'.replaceFirst('/m', '');
+        backupPolicy = 'pk([$fingerprint/$path]$xpub/0/*)'.replaceFirst('/m', '');
 
       final from = DateTime.now();
       final to = state.date!;
@@ -209,8 +207,7 @@ class InheritanceWithOldSeedCubit extends Cubit<InheritanceWithOldSeedState> {
       // final combinedPolicy =
       //     'or($mainPolicy,and($backupPolicy, after($height)))';
 
-      final combinedPolicy =
-          'thresh(1,$mainPolicy,and($backupPolicy,after($height)))';
+      final combinedPolicy = 'thresh(1,$mainPolicy,and($backupPolicy,after($height)))';
 
       final com = _core.compile(
         policy: combinedPolicy,

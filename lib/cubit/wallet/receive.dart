@@ -2,15 +2,15 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
-import 'package:sats/pkg/clipboard.dart';
-import 'package:sats/pkg/core.dart';
-import 'package:sats/pkg/share.dart';
-import 'package:sats/pkg/vibrate.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
+import 'package:sats/pkg/interface/share.dart';
+import 'package:sats/pkg/interface/vibrate.dart';
 
 part 'receive.freezed.dart';
 
@@ -81,9 +81,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
       _logger.logAPI(
         'get address',
-        'desc: $w\nnetwork: ' +
-            _blockchain.state.blockchain.name +
-            '\n\nresp:\n$address',
+        'desc: $w\nnetwork: ' + _blockchain.state.blockchain.name + '\n\nresp:\n$address',
         000,
       );
 
