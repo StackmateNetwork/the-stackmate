@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:petitparser/petitparser.dart';
-import 'package:sats/api/rates.dart';
+import 'package:sats/api/coincap.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/rate.dart';
 import 'package:sats/pkg/validation.dart';
@@ -179,13 +179,11 @@ class CalculatorCubit extends Cubit<CalculatorState> {
             final newExp = str + (key == 'x' ? '*' : key);
             emit(
               state.copyWith(
-                satsAmt:
-                    state.btcSelected ? newExp : Validation.addCommas(newExp),
+                satsAmt: state.btcSelected ? newExp : Validation.addCommas(newExp),
               ),
             );
           } else {
-            if ('.'.allMatches(state.currencyAmt).length == 1 && key == '.')
-              return;
+            if ('.'.allMatches(state.currencyAmt).length == 1 && key == '.') return;
             str = _isZero(state.currencyAmt) ? '' : state.currencyAmt;
             final newExp = str + (key == 'x' ? '*' : key);
             emit(state.copyWith(currencyAmt: Validation.addCommas(newExp)));
@@ -205,8 +203,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
           if (calc.startsWith('.')) calc = '0' + calc;
           for (var i = 0; i < calc.length; i++)
             if (calc[i] == '.' && !Validation.isNumeric(calc[i - 1]))
-              calc =
-                  calc.substring(0, i) + '0' + calc.substring(i, calc.length);
+              calc = calc.substring(0, i) + '0' + calc.substring(i, calc.length);
 
           calc = parser.parse(calc).value.toString();
 
@@ -256,8 +253,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
         amt = double.parse(Validation.removeCommas(calc));
         // else
         // amt = 0;
-        final finalVal = (state.btcSelected ? amt : amt / 100000000) *
-            state.selectedRate!.rate;
+        final finalVal = (state.btcSelected ? amt : amt / 100000000) * state.selectedRate!.rate;
         emit(
           state.copyWith(
             currencyAmt: Validation.addCommas(
@@ -333,9 +329,7 @@ ExpressionBuilder _expBuilder() {
 
   builder.group().prefix(char('-').trim(), (String op, num a) => -a);
 
-  builder
-      .group()
-      .right(char('^').trim(), (num a, String op, num b) => math.pow(a, b));
+  builder.group().right(char('^').trim(), (num a, String op, num b) => math.pow(a, b));
 
   builder.group()
     ..left(char('*').trim(), (num a, String op, num b) => a * b)

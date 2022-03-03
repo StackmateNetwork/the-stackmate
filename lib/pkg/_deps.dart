@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:sats/api/coincap.dart';
 import 'package:sats/api/logger.dart';
-import 'package:sats/api/rates.dart';
 import 'package:sats/api/reddit.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/pkg/clipboard.dart';

@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:sats/api/rates.dart';
+import 'package:sats/api/coincap.dart';
 import 'package:sats/cubit/calculator.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/pkg/_deps.dart';
