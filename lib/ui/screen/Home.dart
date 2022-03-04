@@ -29,7 +29,7 @@ class _Home extends StatelessWidget {
             pinned: true,
             expandedHeight: !isRearranging ? 350 : 80,
             automaticallyImplyLeading: false,
-            backgroundColor: c.colours.secondary,
+            backgroundColor: c.colours.background,
             flexibleSpace: FlexibleSpaceBar(
               stretchModes: const [
                 // StretchMode.blurBackground,

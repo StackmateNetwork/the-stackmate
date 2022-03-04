@@ -81,12 +81,3 @@ class CypherPost {
   final String derivationScheme;
   final String? decryptionKey;
 }
-
-//  id: string;
-//   reference: string;
-//   genesis: number;
-//   expiry: number;
-//   owner: string;
-//   cypher_json: string;
-//   derivation_scheme: string;
-//   decryption_key?: string;

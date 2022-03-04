@@ -18,9 +18,9 @@ class SettingsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Header(
-                cornerTitle: 'STACKMATE',
+                cornerTitle: '',
                 children: [
-                  const SizedBox(height: 8),
+                  // const SizedBox(height: 8),
                   const Back(),
                   const SizedBox(height: 60),
                   Text(

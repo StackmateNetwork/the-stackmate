@@ -46,7 +46,7 @@ class Header extends StatelessWidget {
                   const SizedBox(width: 16),
                   IconButton(
                     onPressed: () {
-                      c.push('/settins');
+                      c.push('/settings');
                     },
                     icon: Icon(
                       Icons.settings,

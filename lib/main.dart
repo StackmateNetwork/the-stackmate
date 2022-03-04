@@ -31,7 +31,7 @@ void main() async {
   setupDependencies(useDummies: false);
 
   WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = SimpleBlocObserver();
+  // Bloc.observer = SimpleBlocObserver();
 
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -96,5 +96,6 @@ class Stackmate extends StatelessWidget {
       //
       GoRoute(path: '/logs', builder: (_, __) => const LogsScreen()),
     ],
+    errorBuilder: (context, state) => Container(color: Colors.red),
   );
 }
