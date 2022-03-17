@@ -20,6 +20,7 @@ linter:
     use_build_context_synchronously: false
     depend_on_referenced_packages: false
     join_return_with_assignment: false
+    avoid_dynamic_calls: false
 
 analyzer:
   # errors:
