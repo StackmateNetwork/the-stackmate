@@ -7,7 +7,7 @@ part of 'log.dart';
 // **************************************************************************
 
 _$_Log _$$_LogFromJson(Map<String, dynamic> json) => _$_Log(
-      type: _$enumDecode(_$LogTypeEnumMap, json['type']),
+      type: $enumDecode(_$LogTypeEnumMap, json['type']),
       path: json['path'] as String?,
       response: json['response'] as String?,
       statusCode: json['statusCode'] as String?,
@@ -29,32 +29,6 @@ Map<String, dynamic> _$$_LogToJson(_$_Log instance) => <String, dynamic>{
       'exceptionSource': instance.exceptionSource,
       'stackTrace': instance.stackTrace,
     };
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
 
 const _$LogTypeEnumMap = {
   LogType.api: 'api',

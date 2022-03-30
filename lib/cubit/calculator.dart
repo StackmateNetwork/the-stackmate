@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:petitparser/petitparser.dart';
@@ -320,23 +318,23 @@ ExpressionBuilder _expBuilder() {
           .flatten()
           .trim()
           .map((a) => num.tryParse(a)),
-    )
-    ..wrapper(
-      char('(').trim(),
-      char(')').trim(),
-      (String l, num a, String r) => a,
     );
+  // ..wrapper(
+  //   char('(').trim(),
+  //   char(')').trim(),
+  //   (String l, num a, String r) => a,
+  // );
 
-  builder.group().prefix(char('-').trim(), (String op, num a) => -a);
+  // builder.group().prefix(char('-').trim(), (String op, num a) => -a);
 
-  builder.group().right(char('^').trim(), (num a, String op, num b) => math.pow(a, b));
+  // builder.group().right(char('^').trim(), (num a, String op, num b) => math.pow(a, b));
 
-  builder.group()
-    ..left(char('*').trim(), (num a, String op, num b) => a * b)
-    ..left(char('/').trim(), (num a, String op, num b) => a / b);
-  builder.group()
-    ..left(char('+').trim(), (num a, String op, num b) => a + b)
-    ..left(char('-').trim(), (num a, String op, num b) => a - b);
+  // builder.group()
+  //   ..left(char('*').trim(), (num a, String op, num b) => a * b)
+  //   ..left(char('/').trim(), (num a, String op, num b) => a / b);
+  // builder.group()
+  //   ..left(char('+').trim(), (num a, String op, num b) => a + b)
+  //   ..left(char('-').trim(), (num a, String op, num b) => a - b);
 
   return builder;
 }

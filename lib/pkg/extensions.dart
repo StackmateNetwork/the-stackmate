@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 export 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +9,7 @@ extension ContextUtils on BuildContext {
   ThemeData get theme => Theme.of(this);
   double get width => MediaQuery.of(this).size.width;
   double get height => MediaQuery.of(this).size.height;
-  AppLocalizations get word => AppLocalizations.of(this);
+  // AppLocalizations get word => AppLocalizations.of(this);
 }
 
 extension Strings on String {
