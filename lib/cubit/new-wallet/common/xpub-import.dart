@@ -33,7 +33,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
 
   final IClipBoard _clipboard;
   // final ISoloWalletAPI _soloWalletAPI;
-  final LoggerCubit _logger;
+  final Logger _logger;
 
   void toggleCamera() async {
     try {

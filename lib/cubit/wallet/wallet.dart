@@ -62,7 +62,7 @@ class WalletCubit extends Cubit<WalletState> {
   final WalletsCubit _walletsCubit;
   // final IBitcoin _bitcoin;
   final IStorage _storage;
-  final LoggerCubit _logger;
+  final Logger _logger;
   // final BlockchainCubit _blockchain;
   final IShare _share;
   final ILauncher _launcher;

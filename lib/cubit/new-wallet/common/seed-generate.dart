@@ -49,7 +49,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
 
   final IStackMateCore _bitcoin;
   final ChainSelectCubit _blockchainCubit;
-  final LoggerCubit _logger;
+  final Logger _logger;
 
   void passPhrasedChanged(String text) => emit(state.copyWith(passPhrase: text));
 

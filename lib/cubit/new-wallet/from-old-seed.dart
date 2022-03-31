@@ -90,7 +90,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   final IStackMateCore _core;
 
   final IStorage _storage;
-  final LoggerCubit _logger;
+  final Logger _logger;
   final WalletsCubit _wallets;
   final ChainSelectCubit _blockchainCubit;
   final SeedImportCubit _importCubit;

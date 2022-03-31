@@ -17,7 +17,7 @@ class Cubits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logger = locator<LoggerCubit>();
+    final logger = locator<Logger>();
 
     final networkSelectCubit = ChainSelectCubit(
       locator<IStorage>(),

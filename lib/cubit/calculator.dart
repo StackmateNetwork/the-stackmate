@@ -34,7 +34,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   }
 
   // final IStorage _storage;
-  final LoggerCubit _logger;
+  final Logger _logger;
   final IVibrate _vibrate;
   final IRatesAPI _ratesAPI;
 
@@ -43,20 +43,39 @@ class CalculatorCubit extends Cubit<CalculatorState> {
       emit(state.copyWith(loadingRates: true));
 
       final usdResp = await _ratesAPI.getRate(symbol: 'usd');
-      final usdRate = usdResp.data['data'][0]['priceQuote'] as String;
+      if (usdResp.hasError) {
+        emit(
+          state.copyWith(
+            loadingRates: false,
+            loadingRatesError: usdResp.error!,
+          ),
+        );
+        return;
+      }
+
+      final inrResp = await _ratesAPI.getRate(symbol: 'inr');
+      if (inrResp.hasError) {
+        emit(
+          state.copyWith(
+            loadingRates: false,
+            loadingRatesError: inrResp.error!,
+          ),
+        );
+        return;
+      }
+
       final usd = Rate(
         symbol: 'USD',
         name: 'U.S. Dollar',
-        rate: double.parse(usdRate),
+        rate: usdResp.result!,
       );
 
-      final inrResp = await _ratesAPI.getRate(symbol: 'inr');
-      final inrRate = inrResp.data['data'][0]['priceQuote'] as String;
       final inr = Rate(
         symbol: 'INR',
         name: 'Indian Ruppee',
-        rate: double.parse(inrRate),
+        rate: inrResp.result!,
       );
+
       final rates = [usd, inr];
 
       await Future.delayed(const Duration(seconds: 1));

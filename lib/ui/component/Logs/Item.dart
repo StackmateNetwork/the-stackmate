@@ -54,7 +54,7 @@ class LogItem extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: GestureDetector(
               onLongPress: () {
-                context.read<LoggerCubit>().copyToClipboard(log.response!);
+                context.read<Logger>().copyToClipboard(log.response!);
               },
               child: Text(
                 log.response!,

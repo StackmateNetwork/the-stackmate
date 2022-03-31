@@ -72,7 +72,7 @@ class InheritanceWithOldSeedCubit extends Cubit<InheritanceWithOldSeedState> {
   final IStackMateCore _core;
 
   final IStorage _storage;
-  final LoggerCubit _logger;
+  final Logger _logger;
 
   final WalletsCubit _wallets;
   final ChainSelectCubit _blockchainCubit;

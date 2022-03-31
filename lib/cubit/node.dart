@@ -31,7 +31,7 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
   }
 
   final IStorage _storage;
-  final LoggerCubit _logger;
+  final Logger _logger;
 
   Future init() async {
     try {

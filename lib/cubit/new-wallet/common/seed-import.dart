@@ -39,7 +39,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
 
   final IStackMateCore _core;
 
-  final LoggerCubit logger;
+  final Logger logger;
   final ChainSelectCubit _blockchainCubit;
 
   void backOnPassphaseClicked() {

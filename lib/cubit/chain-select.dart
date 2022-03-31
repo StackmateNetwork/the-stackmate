@@ -23,7 +23,7 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
   }
 
   final IStorage _storage;
-  final LoggerCubit _logger;
+  final Logger _logger;
 
   void _init() async {
     try {

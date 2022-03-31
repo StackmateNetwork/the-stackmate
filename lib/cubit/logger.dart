@@ -17,8 +17,8 @@ class LoggerState with _$LoggerState {
   }) = _LoggerState;
 }
 
-class LoggerCubit extends Cubit<LoggerState> {
-  LoggerCubit(
+class Logger extends Cubit<LoggerState> {
+  Logger(
     this._clipBoard,
     this._logAPI,
   ) : super(const LoggerState());

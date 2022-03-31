@@ -61,7 +61,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     });
   }
 
-  final LoggerCubit _logger;
+  final Logger _logger;
   final IStorage _storage;
   final IStackMateCore _bitcoin;
   final WalletsCubit _wallets;

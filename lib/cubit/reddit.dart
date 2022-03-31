@@ -30,7 +30,7 @@ class RedditCubit extends Cubit<RedditState> {
   }
 
   final IRedditAPI _reddit;
-  final LoggerCubit _logger;
+  final Logger _logger;
   final ILauncher _launcher;
   // final IStorage _storage;
 

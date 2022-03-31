@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logger = context.select((LoggerCubit l) => l);
+    final logger = context.select((Logger l) => l);
 
     final redditBloc = RedditCubit(
       locator<IRedditAPI>(),

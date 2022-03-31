@@ -43,10 +43,10 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<ILogAPI>(() => SentryLogger());
   }
 
-  final loggerCubit = LoggerCubit(
+  final loggerCubit = Logger(
     locator<IClipBoard>(),
     locator<ILogAPI>(),
   );
 
-  locator.registerLazySingleton<LoggerCubit>(() => loggerCubit);
+  locator.registerLazySingleton<Logger>(() => loggerCubit);
 }

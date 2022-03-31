@@ -33,7 +33,7 @@ class WalletsCubit extends Cubit<WalletsState> {
   }
 
   final IStorage _storage;
-  final LoggerCubit _logger;
+  final Logger _logger;
   final ChainSelectCubit _blockchain;
   final IClipBoard _clipBoard;
 

@@ -65,7 +65,7 @@ class AddressBookCubit extends Cubit<AddressBookState> {
   }
 
   final IStorage _storage;
-  final LoggerCubit _logger;
+  final Logger _logger;
   // final IVibrate _vibrate;
   final IClipBoard _clipBoard;
 

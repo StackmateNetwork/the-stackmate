@@ -169,7 +169,7 @@ class WalletSendScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final networkSelect = context.select((ChainSelectCubit c) => c);
-    final logger = context.select((LoggerCubit c) => c);
+    final logger = context.select((Logger c) => c);
     final wallets = context.select((WalletsCubit c) => c);
     final nodeAddress = context.select((NodeAddressCubit c) => c);
 

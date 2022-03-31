@@ -39,7 +39,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
   final WalletsCubit _walletCubit;
   // final IBitcoin _bitcoin;
-  final LoggerCubit _logger;
+  final Logger _logger;
   final ChainSelectCubit _blockchain;
   final IShare _share;
   final IClipBoard _clipBoard;

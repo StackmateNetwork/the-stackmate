@@ -6,7 +6,7 @@ import 'package:sats/ui/component/Logs/Item.dart';
 class _Logs extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final logs = c.select((LoggerCubit l) => l.state.logs);
+    final logs = c.select((Logger l) => l.state.logs);
     return Scaffold(
       backgroundColor: c.colours.background,
       appBar: AppBar(
@@ -41,7 +41,7 @@ class LogsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logger = context.select((LoggerCubit c) => c);
+    final logger = context.select((Logger c) => c);
 
     return BlocProvider.value(
       value: logger,
