@@ -1,3 +1,5 @@
+import 'package:sats/model/result.dart';
+
 abstract class IShare {
-  Future share({required String text, required String subjectForEmail});
+  Future<R<bool>> share({required String text, required String subjectForEmail});
 }

@@ -1,4 +1,6 @@
+import 'package:sats/model/result.dart';
+
 abstract class IClipBoard {
-  Future<bool> copyToClipBoard(String tex);
-  Future<String> pasteFromClipBoard();
+  Future<R<bool>> copyToClipBoard(String tex);
+  Future<R<String>> pasteFromClipBoard();
 }

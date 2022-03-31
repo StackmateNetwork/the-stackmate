@@ -1,12 +1,14 @@
+import 'package:sats/model/result.dart';
+
 abstract class IStorage {
-  Future<int> saveItem<T>(String cls, T obj);
-  Future<void> saveItemAt<T>(String cls, int idx, T obj);
-
-  void deleteItem<T>(String cls, dynamic key);
-  void deleteItemAt<T>(String cls, int idx);
-  Future<void> clearAll<T>(String cls);
-
-  T getItem<T>(String cls, String key);
-  T getFirstItem<T>(String cls);
-  List<T> getAll<T>(String cls);
+  R<bool> saveItem<T>(String cls, T obj);
+  R<bool> deleteItem<T>(String cls, String key);
+  Future<R<bool>> clearAll<T>(String cls);
+  R<T> getItem<T>(String cls, String key);
+  R<List<T>> getAll<T>(String cls);
+  Future<R<bool>> saveOrUpdateOne(String key, String value);
+  Future<R<String>> getOne(String key);
+  Future<R<bool>> deleteOne(String key);
+  R<T> getFirstItem<T>(String cls);
+  R<T?> getFirstItemOrNull<T>(String cls);
 }

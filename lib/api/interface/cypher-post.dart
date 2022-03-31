@@ -1,41 +1,42 @@
 import 'package:bitcoin/bitcoin.dart';
 import 'package:sats/model/cypher-post.dart';
+import 'package:sats/model/result.dart';
 
 abstract class ICypherPostAPI {
-  Future<bool> registerIdentity({
+  Future<R<bool>> registerIdentity({
     required CypherPostHeader headers,
     required String username,
   });
 
-  Future<List<CypherPostIdentity>> getAllIdentities({
+  Future<R<List<CypherPostIdentity>>> getAllIdentities({
     required XOnlyPair keyPair,
   });
 
-  Future<bool> deleteMyIdentity({
+  Future<R<bool>> deleteMyIdentity({
     required XOnlyPair keyPair,
   });
 
-  Future<List<CypherPostBadge>> getAllBadges({
+  Future<R<List<CypherPostBadge>>> getAllBadges({
     required XOnlyPair keyPair,
   });
 
-  Future<List<CypherPostBadge>> getMyBadges({
+  Future<R<List<CypherPostBadge>>> getMyBadges({
     required XOnlyPair keyPair,
   });
 
-  Future<bool> giveBadge({
-    required XOnlyPair keyPair,
-    required String reciever,
-    required String badgeType,
-  });
-
-  Future<bool> revokeBadge({
+  Future<R<bool>> giveBadge({
     required XOnlyPair keyPair,
     required String reciever,
     required String badgeType,
   });
 
-  Future<String> createPost({
+  Future<R<bool>> revokeBadge({
+    required XOnlyPair keyPair,
+    required String reciever,
+    required String badgeType,
+  });
+
+  Future<R<String>> createPost({
     required XOnlyPair keyPair,
     required String cypherJson,
     required String derivationScheme,
@@ -43,21 +44,21 @@ abstract class ICypherPostAPI {
     required String reference,
   });
 
-  Future<bool> setPostVisibility({
+  Future<R<bool>> setPostVisibility({
     required XOnlyPair keyPair,
     required String postId,
     required List<CypherPostDecryptionKey> decryptionKeys,
   });
 
-  Future<List<CypherPost>> getMyPosts({
+  Future<R<List<CypherPost>>> getMyPosts({
     required XOnlyPair keyPair,
   });
 
-  Future<List<CypherPost>> getPostsForMe({
+  Future<R<List<CypherPost>>> getPostsForMe({
     required XOnlyPair keyPair,
   });
 
-  Future<bool> deletePost({
+  Future<R<bool>> deletePost({
     required XOnlyPair keyPair,
     required String postId,
   });

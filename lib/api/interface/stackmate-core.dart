@@ -1,91 +1,92 @@
 import 'package:bitcoin/bitcoin.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
 
 abstract class IStackMateCore {
-  DerivedWallet derivePathStr({
+  R<DerivedWallet> derivePathStr({
     required String masterXPriv,
     required String derivationPath,
   });
 
-  XOnlyPair xPrivToEc({required String masterXPriv});
+  R<XOnlyPair> xPrivToEc({required String masterXPriv});
 
-  String sharedSecret({
+  R<String> sharedSecret({
     required String localPriv,
     required String remotePub,
   });
 
-  String signMessage({
+  R<String> signMessage({
     required String message,
     required String secKey,
   });
 
-  bool verifySignature({
+  R<bool> verifySignature({
     required String signature,
     required String message,
     required String pubkey,
   });
 
-  Nmeu generateMaster({
+  R<Nmeu> generateMaster({
     required String length,
     required String passphrase,
     required String network,
   });
 
-  Nmeu importMaster({
+  R<Nmeu> importMaster({
     required String mnemonic,
     required String passphrase,
     required String network,
   });
 
-  DerivedWallet deriveHardened({
+  R<DerivedWallet> deriveHardened({
     required String masterXPriv,
     required String account,
     required String purpose,
   });
 
-  Compile compile({
+  R<Compile> compile({
     required String policy,
     required String scriptType,
   });
 
-  double estimateNetworkFee({
+  R<double> estimateNetworkFee({
     required String targetSize,
     required String network,
     required String nodeAddress,
   });
 
-  int getWeight({
+  R<int> getWeight({
     required String depositDesc,
     required String psbt,
   });
 
-  AbsoluteFees feeAbsoluteToRate({
+  R<AbsoluteFees> feeAbsoluteToRate({
     required String feeAbsolute,
     required String weight,
   });
 
-  AbsoluteFees feeRateToAbsolute({
+  R<AbsoluteFees> feeRateToAbsolute({
     required String feeRate,
     required String weight,
   });
 
-  int syncBalance({
+  R<int> syncBalance({
     required String depositDesc,
     required String nodeAddress,
   });
 
-  List<Transaction> getHistory({
+  R<List<Transaction>> getHistory({
     required String depositDesc,
     required String nodeAddress,
   });
 
-  String getAddress({
+  R<String> getAddress({
     required String depositDesc,
     required String nodeAddress,
     required String index,
   });
 
-  String buildTransaction({
+  R<String> buildTransaction({
     required String depositDesc,
     required String nodeAddress,
     required String toAddress,
@@ -94,27 +95,27 @@ abstract class IStackMateCore {
     required String sweep,
   });
 
-  String decodePsbt({
+  R<String> decodePsbt({
     required String network,
     required String psbt,
   });
 
-  String signTransaction({
+  R<String> signTransaction({
     required String depositDesc,
     required String nodeAddress,
     required String unsignedPSBT,
   });
 
-  String broadcastTransaction({
+  R<String> broadcastTransaction({
     required String depositDesc,
     required String nodeAddress,
     required String signedPSBT,
   });
 
-  int getHeight({
+  R<int> getHeight({
     required String network,
     required String nodeAddress,
   });
 
-  int daysToBlocks({required String days});
+  R<int> daysToBlocks({required String days});
 }

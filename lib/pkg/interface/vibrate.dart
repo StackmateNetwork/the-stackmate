@@ -1,3 +1,5 @@
+import 'package:sats/model/result.dart';
+
 abstract class IVibrate {
-  void vibe();
+  R<bool> vibe();
 }

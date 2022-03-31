@@ -1,7 +1,6 @@
 import 'dart:async';
-
-import 'package:dio/dio.dart';
+import 'package:sats/model/result.dart';
 
 abstract class IRatesAPI {
-  Future<Response> getRate({required String symbol});
+  Future<R<double>> getRate({required String symbol});
 }
