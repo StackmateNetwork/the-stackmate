@@ -1,33 +1,34 @@
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:oktoast/oktoast.dart';
+import 'package:sats/cubit/logger.dart';
+import 'package:sats/model/result.dart';
+import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 
 class ClipBoardd implements IClipBoard {
   @override
-  Future<bool> copyToClipBoard(String text) async {
-    await Clipboard.setData(ClipboardData(text: text));
-    showToast('COPIED');
-    return true;
-  }
-
-  @override
-  Future<String> pasteFromClipBoard() async {
-    final data = await Clipboard.getData('text/plain');
-    if (data == null || data.text == null) {
-      return '';
+  Future<R<bool>> copyToClipBoard(String text) async {
+    try {
+      await Clipboard.setData(ClipboardData(text: text));
+      showToast('COPIED');
+      return const R(result: true);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
     }
-    return data.text!;
-  }
-}
-
-class DummyClipBoard implements IClipBoard {
-  @override
-  Future<bool> copyToClipBoard(String text) async {
-    return true;
   }
 
   @override
-  Future<String> pasteFromClipBoard() async {
-    return '';
+  Future<R<String>> pasteFromClipBoard() async {
+    try {
+      final data = await Clipboard.getData('text/plain');
+      if (data == null || data.text == null) {
+        return const R(result: '');
+      }
+      return R(result: data.text);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 }

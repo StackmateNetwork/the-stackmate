@@ -4,7 +4,10 @@ import 'dart:io';
 
 import 'package:bitcoin/bitcoin.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/cubit/logger.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
+import 'package:sats/pkg/_locator.dart';
 
 class BitcoinFFI implements IStackMateCore {
   BitcoinFFI() {
@@ -17,118 +20,153 @@ class BitcoinFFI implements IStackMateCore {
   late FFFI _bitcoin;
 
   @override
-  Nmeu generateMaster({
+  R<Nmeu> generateMaster({
     required String length,
     required String passphrase,
     required String network,
   }) {
-    final resp = _bitcoin.generateMaster(
-      length: length,
-      passphrase: passphrase,
-      network: network,
-    );
+    try {
+      final resp = _bitcoin.generateMaster(
+        length: length,
+        passphrase: passphrase,
+        network: network,
+      );
 
-    if (resp.startsWith('Error')) throw resp;
-    return Nmeu.fromJson(resp);
+      if (resp.startsWith('Error')) throw resp;
+      return R(result: Nmeu.fromJson(resp));
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  Nmeu importMaster({
+  R<Nmeu> importMaster({
     required String mnemonic,
     required String passphrase,
     required String network,
   }) {
-    final resp = _bitcoin.importMaster(
-      mnemonic: mnemonic,
-      passphrase: passphrase,
-      network: network,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    return Nmeu.fromJson(resp);
+    try {
+      final resp = _bitcoin.importMaster(
+        mnemonic: mnemonic,
+        passphrase: passphrase,
+        network: network,
+      );
+      if (resp.startsWith('Error')) throw resp;
+      return R(result: Nmeu.fromJson(resp));
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  DerivedWallet deriveHardened({
+  R<DerivedWallet> deriveHardened({
     required String masterXPriv,
     required String account,
     required String purpose,
   }) {
-    final resp = _bitcoin.deriveHardened(
-      masterXPriv: masterXPriv,
-      account: account,
-      purpose: purpose,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    return DerivedWallet.fromJson(resp);
+    try {
+      final resp = _bitcoin.deriveHardened(
+        masterXPriv: masterXPriv,
+        account: account,
+        purpose: purpose,
+      );
+      if (resp.startsWith('Error')) throw resp;
+      return R(result: DerivedWallet.fromJson(resp));
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  Compile compile({
+  R<Compile> compile({
     required String policy,
     required String scriptType,
   }) {
-    final resp = _bitcoin.compile(
-      policy: policy,
-      scriptType: scriptType,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    return Compile.fromJson(resp);
+    try {
+      final resp = _bitcoin.compile(
+        policy: policy,
+        scriptType: scriptType,
+      );
+      if (resp.startsWith('Error')) throw resp;
+      return R(result: Compile.fromJson(resp));
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  int syncBalance({
+  R<int> syncBalance({
     required String depositDesc,
     required String nodeAddress,
   }) {
-    final resp = _bitcoin.syncBalance(
-      depositDesc: depositDesc,
-      nodeAddress: nodeAddress,
-    );
-    if (resp.contains('Error')) throw resp;
-    final bal = jsonDecode(resp)['balance'];
+    try {
+      final resp = _bitcoin.syncBalance(
+        depositDesc: depositDesc,
+        nodeAddress: nodeAddress,
+      );
+      if (resp.contains('Error')) throw resp;
+      final bal = jsonDecode(resp)['balance'];
 
-    return bal as int;
+      return R(result: bal as int);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  String getAddress({
+  R<String> getAddress({
     required String depositDesc,
     required String nodeAddress,
     required String index,
   }) {
-    final resp = _bitcoin.getAddress(
-      depositDesc: depositDesc,
-      nodeAddress: nodeAddress,
-      index: index,
-    );
-    return resp;
+    try {
+      final resp = _bitcoin.getAddress(
+        depositDesc: depositDesc,
+        nodeAddress: nodeAddress,
+        index: index,
+      );
+      return R(result: resp);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  List<Transaction> getHistory({
+  R<List<Transaction>> getHistory({
     required String depositDesc,
     required String nodeAddress,
   }) {
-    final resp = _bitcoin.getHistory(
-      depositDesc: depositDesc,
-      nodeAddress: nodeAddress,
-    );
-    final json = jsonDecode(resp);
-    final List<Transaction> transactions = [];
-    for (final t in json['history'] as List) {
-      var tx = Transaction.fromJson(t as Map<String, dynamic>);
-      if (!tx.isReceive()) tx = tx.copyWith(sent: tx.sent - tx.received - tx.fee);
+    try {
+      final resp = _bitcoin.getHistory(
+        depositDesc: depositDesc,
+        nodeAddress: nodeAddress,
+      );
+      final json = jsonDecode(resp);
+      final List<Transaction> transactions = [];
+      for (final t in json['history'] as List) {
+        var tx = Transaction.fromJson(t as Map<String, dynamic>);
+        if (!tx.isReceive()) tx = tx.copyWith(sent: tx.sent - tx.received - tx.fee);
 
-      transactions.add(tx);
+        transactions.add(tx);
+      }
+
+      transactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+      return R(result: transactions);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
     }
-
-    transactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
-
-    return transactions;
   }
 
   @override
-  String buildTransaction({
+  R<String> buildTransaction({
     required String depositDesc,
     required String nodeAddress,
     required String toAddress,
@@ -136,165 +174,240 @@ class BitcoinFFI implements IStackMateCore {
     required String feeAbsolute,
     required String sweep,
   }) {
-    final resp = _bitcoin.buildTransaction(
-      depositDesc: depositDesc,
-      nodeAddress: nodeAddress,
-      toAddress: toAddress,
-      amount: amount,
-      feeAbsolute: feeAbsolute,
-      sweep: sweep,
-    );
-    final data = jsonDecode(resp);
-    return data['psbt'] as String;
+    try {
+      final resp = _bitcoin.buildTransaction(
+        depositDesc: depositDesc,
+        nodeAddress: nodeAddress,
+        toAddress: toAddress,
+        amount: amount,
+        feeAbsolute: feeAbsolute,
+        sweep: sweep,
+      );
+      final data = jsonDecode(resp);
+      return R(result: data['psbt'] as String);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  String decodePsbt({required String network, required String psbt}) {
-    final resp = _bitcoin.decodePsbt(network: network, psbt: psbt);
-    return resp;
+  R<String> decodePsbt({required String network, required String psbt}) {
+    try {
+      final resp = _bitcoin.decodePsbt(network: network, psbt: psbt);
+      return R(result: resp);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  String signTransaction({
+  R<String> signTransaction({
     required String depositDesc,
     required String nodeAddress,
     required String unsignedPSBT,
   }) {
-    final resp = _bitcoin.signTransaction(
-      depositDesc: depositDesc,
-      nodeAddress: nodeAddress,
-      unsignedPSBT: unsignedPSBT,
-    );
-    final data = jsonDecode(resp);
-    return data['psbt'] as String;
+    try {
+      final resp = _bitcoin.signTransaction(
+        depositDesc: depositDesc,
+        nodeAddress: nodeAddress,
+        unsignedPSBT: unsignedPSBT,
+      );
+      final data = jsonDecode(resp);
+      return R(result: data['psbt'] as String);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  String broadcastTransaction({
+  R<String> broadcastTransaction({
     required String depositDesc,
     required String nodeAddress,
     required String signedPSBT,
   }) {
-    final resp = _bitcoin.broadcastTransaction(
-      depositDesc: depositDesc,
-      nodeAddress: nodeAddress,
-      signedPSBT: signedPSBT,
-    );
-    final data = jsonDecode(resp);
-    return data['txid'] as String;
+    try {
+      final resp = _bitcoin.broadcastTransaction(
+        depositDesc: depositDesc,
+        nodeAddress: nodeAddress,
+        signedPSBT: signedPSBT,
+      );
+      final data = jsonDecode(resp);
+      return R(result: data['txid'] as String);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  double estimateNetworkFee({
+  R<double> estimateNetworkFee({
     required String targetSize,
     required String network,
     required String nodeAddress,
   }) {
-    final resp = _bitcoin.estimateNetworkFee(
-      targetSize: targetSize,
-      network: network,
-      nodeAddress: nodeAddress,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    final data = jsonDecode(resp);
-    return data['rate'] as double;
+    try {
+      final resp = _bitcoin.estimateNetworkFee(
+        targetSize: targetSize,
+        network: network,
+        nodeAddress: nodeAddress,
+      );
+      if (resp.startsWith('Error')) throw resp;
+      final data = jsonDecode(resp);
+      return R(result: data['rate'] as double);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  int getWeight({
+  R<int> getWeight({
     required String depositDesc,
     required String psbt,
   }) {
-    final resp = _bitcoin.getWeight(
-      depositDesc: depositDesc,
-      psbt: psbt,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    final data = jsonDecode(resp);
-    return data['weight'] as int;
+    try {
+      final resp = _bitcoin.getWeight(
+        depositDesc: depositDesc,
+        psbt: psbt,
+      );
+      if (resp.startsWith('Error')) throw resp;
+      final data = jsonDecode(resp);
+      return R(result: data['weight'] as int);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  AbsoluteFees feeAbsoluteToRate({
+  R<AbsoluteFees> feeAbsoluteToRate({
     required String feeAbsolute,
     required String weight,
   }) {
-    final resp = _bitcoin.feeAbsoluteToRate(
-      feeAbs: feeAbsolute,
-      weight: weight,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    return AbsoluteFees.fromJson(resp);
+    try {
+      final resp = _bitcoin.feeAbsoluteToRate(
+        feeAbs: feeAbsolute,
+        weight: weight,
+      );
+      if (resp.startsWith('Error')) throw resp;
+      return R(result: AbsoluteFees.fromJson(resp));
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  AbsoluteFees feeRateToAbsolute({
+  R<AbsoluteFees> feeRateToAbsolute({
     required String feeRate,
     required String weight,
   }) {
-    final resp = _bitcoin.feeRateToAbsolute(
-      feeRate: feeRate,
-      weight: weight,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    return AbsoluteFees.fromJson(resp);
+    try {
+      final resp = _bitcoin.feeRateToAbsolute(
+        feeRate: feeRate,
+        weight: weight,
+      );
+      if (resp.startsWith('Error')) throw resp;
+      return R(result: AbsoluteFees.fromJson(resp));
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  int daysToBlocks({required String days}) {
-    final resp = _bitcoin.daysToBlocks(
-      days: days,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    final data = jsonDecode(resp);
-    return data['height'] as int;
+  R<int> daysToBlocks({required String days}) {
+    try {
+      final resp = _bitcoin.daysToBlocks(
+        days: days,
+      );
+      if (resp.startsWith('Error')) throw resp;
+      final data = jsonDecode(resp);
+      return R(result: data['height'] as int);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  int getHeight({
+  R<int> getHeight({
     required String network,
     required String nodeAddress,
   }) {
-    final resp = _bitcoin.getHeight(
-      network: network,
-      nodeAddress: nodeAddress,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    final data = jsonDecode(resp);
-    return data['height'] as int;
+    try {
+      final resp = _bitcoin.getHeight(
+        network: network,
+        nodeAddress: nodeAddress,
+      );
+      if (resp.startsWith('Error')) throw resp;
+      final data = jsonDecode(resp);
+      return R(result: data['height'] as int);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  DerivedWallet derivePathStr({required String masterXPriv, required String derivationPath}) {
-    // TODO: implement derivePathStr
-    throw UnimplementedError();
+  R<DerivedWallet> derivePathStr({required String masterXPriv, required String derivationPath}) {
+    try {
+      // TODO: implement derivePathStr
+      throw UnimplementedError();
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  String sharedSecret({required String localPriv, required String remotePub}) {
-    // TODO: implement sharedSecret
-    throw UnimplementedError();
+  R<String> sharedSecret({required String localPriv, required String remotePub}) {
+    try {
+      // TODO: implement sharedSecret
+      throw UnimplementedError();
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  String signMessage({required String message, required String secKey}) {
-    // TODO: implement signMessage
-    throw UnimplementedError();
+  R<String> signMessage({required String message, required String secKey}) {
+    try {
+      // TODO: implement signMessage
+      throw UnimplementedError();
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  bool verifySignature({
+  R<bool> verifySignature({
     required String signature,
     required String message,
     required String pubkey,
   }) {
-    // TODO: implement verifySignature
-    throw UnimplementedError();
+    try {
+      // TODO: implement verifySignature
+      throw UnimplementedError();
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 
   @override
-  XOnlyPair xPrivToEc({required String masterXPriv}) {
-    // TODO: implement xPrivToEc
-    throw UnimplementedError();
+  R<XOnlyPair> xPrivToEc({required String masterXPriv}) {
+    try {
+      // TODO: implement xPrivToEc
+      throw UnimplementedError();
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
   }
 }
