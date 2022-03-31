@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/_locator.dart';
 
 final client = Dio(BaseOptions(validateStatus: (status) => true));
 

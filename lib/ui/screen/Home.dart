@@ -3,7 +3,7 @@ import 'package:sats/api/interface/reddit.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/reddit.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/launcher.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';

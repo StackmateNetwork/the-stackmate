@@ -5,7 +5,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallet/receive.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';

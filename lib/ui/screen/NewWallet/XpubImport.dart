@@ -6,7 +6,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sats/api/interface/coincap.dart';
 import 'package:sats/cubit/calculator.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/ui/component/Calculator/Keyboard.dart';

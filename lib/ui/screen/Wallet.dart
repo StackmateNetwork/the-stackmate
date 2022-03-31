@@ -7,7 +7,7 @@ import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallet/wallet.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
-import 'package:sats/pkg/_deps.dart';
+import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/launcher.dart';
 import 'package:sats/pkg/interface/share.dart';
