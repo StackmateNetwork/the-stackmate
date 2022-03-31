@@ -237,11 +237,14 @@ class InteritanceWithNewSeedCubit extends Cubit<InheritanceWithNewSeedState> {
         walletType: 'INHERITANCE',
       );
 
-      final id = await _storage.saveItem<Wallet>(
+      final savedId = await _storage.saveItem<Wallet>(
         StoreKeys.Wallet.name,
         newWallet,
       );
 
+      if (savedId.hasError) return;
+
+      final id = savedId.result!;
       newWallet = newWallet.copyWith(id: id);
 
       await _storage.saveItemAt<Wallet>(

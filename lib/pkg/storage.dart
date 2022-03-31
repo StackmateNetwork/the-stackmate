@@ -57,9 +57,20 @@ class HiveStore implements IStorage {
   final _box = Hive.box<String>('storage');
 
   @override
-  R<bool> saveItem<T>(String cls, T obj) {
+  Future<R<int>> saveItem<T>(String cls, T obj) async {
     try {
-      Hive.box<T>(cls).add(obj);
+      final id = await Hive.box<T>(cls).add(obj);
+      return R(result: id);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  Future<R<bool>> saveItemAt<T>(String cls, int idx, T obj) async {
+    try {
+      await Hive.box<T>(cls).put(idx, obj);
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -194,6 +205,17 @@ class HiveStore implements IStorage {
       if (len == 0) return throw '';
       final obj = bx.getAt(0);
       return R(result: obj);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  R<bool> deleteItemAt<T>(String cls, int idx) {
+    try {
+      Hive.box<T>(cls).delete(idx);
+      return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
       return R(error: e.toString());

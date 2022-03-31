@@ -123,7 +123,6 @@ class SeedImportScreen extends StatelessWidget {
       locator<IStorage>(),
       wallets,
       networkSelect,
-      logger,
       importCubit,
     );
 

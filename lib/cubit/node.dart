@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -25,35 +24,25 @@ class NodeAddressState with _$NodeAddressState {
 class NodeAddressCubit extends Cubit<NodeAddressState> {
   NodeAddressCubit(
     this._storage,
-    this._logger,
   ) : super(const NodeAddressState()) {
     init();
   }
 
   final IStorage _storage;
-  final Logger _logger;
 
   Future init() async {
-    try {
-      final node = _storage.getFirstItem<Node>(StoreKeys.Node.name);
-
-      emit(
-        state.copyWith(
-          address: node.address,
-          port: node.port,
-        ),
-      );
-    } catch (e, s) {
-      if (e.toString() == 'empty') {
-        return;
-      }
-      emit(
-        state.copyWith(
-          errNodeState: e.toString(),
-        ),
-      );
-      _logger.logException(e, 'NodeAddressCubit.init', s);
+    final node = _storage.getFirstItem<Node>(StoreKeys.Node.name);
+    if (node.hasError) {
+      if (node.error! == 'empty') return;
+      emit(state.copyWith(errNodeState: node.error.toString()));
     }
+
+    emit(
+      state.copyWith(
+        address: node.result!.address,
+        port: node.result!.port,
+      ),
+    );
   }
 
   void toggleIsEditting() async {
@@ -70,19 +59,24 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
   }
 
   void saveClicked() async {
-    try {
-      final node = Node(
-        address: state.address,
-        port: state.port,
-      );
+    final node = Node(
+      address: state.address,
+      port: state.port,
+    );
 
-      await _storage.clearAll<Node>(StoreKeys.Node.name);
-      await _storage.saveItem<Node>(StoreKeys.Node.name, node);
-      await Future.delayed(const Duration(milliseconds: 200));
-      toggleIsEditting();
-    } catch (e, s) {
-      emit(state.copyWith(errNodeState: e.toString()));
-      _logger.logException(e, 'NodeAddressCubit.saveClicked', s);
+    final cleared = await _storage.clearAll<Node>(StoreKeys.Node.name);
+    if (cleared.hasError) {
+      emit(state.copyWith(errNodeState: cleared.error.toString()));
+      return;
     }
+
+    final saved = await _storage.saveItem<Node>(StoreKeys.Node.name, node);
+    if (saved.hasError) {
+      emit(state.copyWith(errNodeState: saved.error.toString()));
+      return;
+    }
+
+    await Future.delayed(const Duration(milliseconds: 200));
+    toggleIsEditting();
   }
 }

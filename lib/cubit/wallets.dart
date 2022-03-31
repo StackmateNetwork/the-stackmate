@@ -39,7 +39,10 @@ class WalletsCubit extends Cubit<WalletsState> {
 
   void refresh() {
     try {
-      final wallets = _storage.getAll<Wallet>(StoreKeys.Wallet.name);
+      final storedWallets = _storage.getAll<Wallet>(StoreKeys.Wallet.name);
+      if (storedWallets.hasError) return;
+
+      final wallets = storedWallets.result!;
 
       wallets.removeWhere(
         (w) => w.blockchain != _blockchain.state.blockchain.name,

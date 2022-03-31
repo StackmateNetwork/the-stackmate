@@ -154,10 +154,14 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         walletType: 'WATCH ONLY',
       );
 
-      final id = await _storage.saveItem<Wallet>(
+      final savedId = await _storage.saveItem<Wallet>(
         StoreKeys.Wallet.name,
         newWallet,
       );
+
+      if (savedId.hasError) return;
+
+      final id = savedId.result!;
 
       newWallet = newWallet.copyWith(id: id);
 

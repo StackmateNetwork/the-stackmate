@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
-import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/node.dart';
@@ -44,7 +43,6 @@ class InheritanceWithOldSeedCubit extends Cubit<InheritanceWithOldSeedState> {
   InheritanceWithOldSeedCubit(
     this._core,
     this._storage,
-    this._logger,
     this._wallets,
     this._blockchainCubit,
     this._importSeedCubit,
@@ -72,7 +70,6 @@ class InheritanceWithOldSeedCubit extends Cubit<InheritanceWithOldSeedState> {
   final IStackMateCore _core;
 
   final IStorage _storage;
-  final Logger _logger;
 
   final WalletsCubit _wallets;
   final ChainSelectCubit _blockchainCubit;
@@ -169,99 +166,98 @@ class InheritanceWithOldSeedCubit extends Cubit<InheritanceWithOldSeedState> {
   }
 
   void saveClicked() async {
-    try {
-      if (state.walletLabel.length < 4 ||
-          state.walletLabel.length > 10 ||
-          state.walletLabel.contains(' ')) {
-        emit(state.copyWith(errWalletLabel: 'Invalid Label'));
-        return;
-      }
-
-      final imsState = _importSeedCubit.state;
-      final mainWallet = imsState.wallet;
-      if (mainWallet == null) return;
-      final mainPolicy =
-          'pk([${mainWallet.fingerPrint}/${mainWallet.hardenedPath}]${mainWallet.xprv}/0/*)'
-              .replaceFirst('/m', '');
-
-      final xpubState = _importXpubCubit.state;
-      final fingerprint = xpubState.fingerPrint;
-      final path = xpubState.path;
-      final xpub = xpubState.xpub;
-      String backupPolicy = '';
-      if (!xpubState.showOtherDetails())
-        backupPolicy = 'pk($xpub/0/*)';
-      else
-        backupPolicy = 'pk([$fingerprint/$path]$xpub/0/*)'.replaceFirst('/m', '');
-
-      final from = DateTime.now();
-      final to = state.date!;
-      final days = (to.difference(from).inHours / 24).round();
-      final blocks = _core.daysToBlocks(days: days.toString());
-      final currentHeight = _core.getHeight(
-        network: _blockchainCubit.state.blockchain.name,
-        nodeAddress: _nodeAddressCubit.state.getAddress(),
-      );
-      final height = currentHeight + blocks;
-
-      // final combinedPolicy =
-      //     'or($mainPolicy,and($backupPolicy, after($height)))';
-
-      final combinedPolicy = 'thresh(1,$mainPolicy,and($backupPolicy,after($height)))';
-
-      final com = _core.compile(
-        policy: combinedPolicy,
-        scriptType: 'wsh',
-      );
-
-      final exportWallet = _core.deriveHardened(
-        masterXPriv: _importSeedCubit.state.masterXpriv!,
-        account: '',
-        purpose: '92',
-      );
-
-      var newWallet = Wallet(
-        label: state.walletLabel,
-        mainWallet: InternalWallet(
-          xPub: mainWallet.xpub,
-          fingerPrint: mainWallet.fingerPrint,
-          path: mainWallet.hardenedPath,
-          descriptor: com.descriptor.split('#')[0],
-        ),
-        exportWallet: InternalWallet(
-          xPub: exportWallet.xpub,
-          fingerPrint: exportWallet.fingerPrint,
-          path: exportWallet.hardenedPath,
-        ),
-        blockchain: _blockchainCubit.state.blockchain.name,
-        walletType: 'INHERITANCE',
-      );
-
-      final id = await _storage.saveItem<Wallet>(
-        StoreKeys.Wallet.name,
-        newWallet,
-      );
-
-      newWallet = newWallet.copyWith(id: id);
-
-      await _storage.saveItemAt<Wallet>(
-        StoreKeys.Wallet.name,
-        id,
-        newWallet,
-      );
-
-      _wallets.refresh();
-
-      emit(
-        state.copyWith(
-          savingWallet: false,
-          newWalletSaved: true,
-          currentStep: InteritanceWithOldSeedWalletSteps.share,
-        ),
-      );
-    } catch (e, s) {
-      _logger.logException(e, 'InheritanceWithOldSeedCubit.saveClicked', s);
+    if (state.walletLabel.length < 4 ||
+        state.walletLabel.length > 10 ||
+        state.walletLabel.contains(' ')) {
+      emit(state.copyWith(errWalletLabel: 'Invalid Label'));
+      return;
     }
+
+    final imsState = _importSeedCubit.state;
+    final mainWallet = imsState.wallet;
+    if (mainWallet == null) return;
+    final mainPolicy =
+        'pk([${mainWallet.fingerPrint}/${mainWallet.hardenedPath}]${mainWallet.xprv}/0/*)'
+            .replaceFirst('/m', '');
+
+    final xpubState = _importXpubCubit.state;
+    final fingerprint = xpubState.fingerPrint;
+    final path = xpubState.path;
+    final xpub = xpubState.xpub;
+    String backupPolicy = '';
+    if (!xpubState.showOtherDetails())
+      backupPolicy = 'pk($xpub/0/*)';
+    else
+      backupPolicy = 'pk([$fingerprint/$path]$xpub/0/*)'.replaceFirst('/m', '');
+
+    final from = DateTime.now();
+    final to = state.date!;
+    final days = (to.difference(from).inHours / 24).round();
+    final blocks = _core.daysToBlocks(days: days.toString());
+    final currentHeight = _core.getHeight(
+      network: _blockchainCubit.state.blockchain.name,
+      nodeAddress: _nodeAddressCubit.state.getAddress(),
+    );
+    final height = currentHeight + blocks;
+
+    // final combinedPolicy =
+    //     'or($mainPolicy,and($backupPolicy, after($height)))';
+
+    final combinedPolicy = 'thresh(1,$mainPolicy,and($backupPolicy,after($height)))';
+
+    final com = _core.compile(
+      policy: combinedPolicy,
+      scriptType: 'wsh',
+    );
+
+    final exportWallet = _core.deriveHardened(
+      masterXPriv: _importSeedCubit.state.masterXpriv!,
+      account: '',
+      purpose: '92',
+    );
+
+    var newWallet = Wallet(
+      label: state.walletLabel,
+      mainWallet: InternalWallet(
+        xPub: mainWallet.xpub,
+        fingerPrint: mainWallet.fingerPrint,
+        path: mainWallet.hardenedPath,
+        descriptor: com.descriptor.split('#')[0],
+      ),
+      exportWallet: InternalWallet(
+        xPub: exportWallet.xpub,
+        fingerPrint: exportWallet.fingerPrint,
+        path: exportWallet.hardenedPath,
+      ),
+      blockchain: _blockchainCubit.state.blockchain.name,
+      walletType: 'INHERITANCE',
+    );
+
+    final savedId = await _storage.saveItem<Wallet>(
+      StoreKeys.Wallet.name,
+      newWallet,
+    );
+    if (savedId.hasError) return;
+
+    final id = savedId.result!;
+
+    newWallet = newWallet.copyWith(id: id);
+
+    await _storage.saveItemAt<Wallet>(
+      StoreKeys.Wallet.name,
+      id,
+      newWallet,
+    );
+
+    _wallets.refresh();
+
+    emit(
+      state.copyWith(
+        savingWallet: false,
+        newWalletSaved: true,
+        currentStep: InteritanceWithOldSeedWalletSteps.share,
+      ),
+    );
   }
 
   @override

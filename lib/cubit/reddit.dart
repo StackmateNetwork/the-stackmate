@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/reddit.dart';
-import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/reddit-post.dart';
 import 'package:sats/pkg/interface/launcher.dart';
 
@@ -22,7 +21,6 @@ class RedditState with _$RedditState {
 class RedditCubit extends Cubit<RedditState> {
   RedditCubit(
     this._reddit,
-    this._logger,
     this._launcher,
     // this._storage,
   ) : super(const RedditState()) {
@@ -30,56 +28,45 @@ class RedditCubit extends Cubit<RedditState> {
   }
 
   final IRedditAPI _reddit;
-  final Logger _logger;
   final ILauncher _launcher;
   // final IStorage _storage;
 
   void getPosts() async {
-    try {
-      // final storedPosts =
-      //     _storage.getAll<RedditPost>(StoreKeys.RedditPost.name);
-      // if (storedPosts.length > 0) {
-      //   emit(state.copyWith(posts: storedPosts, loading: false));
-      //   return;
-      // }
+    // final storedPosts =
+    //     _storage.getAll<RedditPost>(StoreKeys.RedditPost.name);
+    // if (storedPosts.length > 0) {
+    //   emit(state.copyWith(posts: storedPosts, loading: false));
+    //   return;
+    // }
 
-      emit(state.copyWith(loading: true, error: ''));
-      final response = await _reddit.fetchPosts('bitcoin');
-      if (response.data == null || response.statusCode != 200) throw '';
-
-      final posts = await compute(_parsePosts, response.data);
-
-      emit(state.copyWith(posts: posts, loading: false));
-
-      // for (final p in posts) _storage.saveItem(StoreKeys.RedditPost.name, p);
-    } catch (e, s) {
-      _logger.logException(e, 'RedditBloc._mapGetPostsToState', s);
-      emit(state.copyWith(loading: false, error: 'Error Occured.'));
+    emit(state.copyWith(loading: true, error: ''));
+    final posts = await _reddit.fetchPosts('bitcoin');
+    if (posts.hasError) {
+      emit(state.copyWith(loading: false, error: posts.error!));
+      return;
     }
+
+    // final posts = await compute(_parsePosts, response.data);
+
+    emit(state.copyWith(posts: posts.result!, loading: false));
+
+    // for (final p in posts) _storage.saveItem(StoreKeys.RedditPost.name, p);
   }
 
   void openPostLink(RedditPost post) {
-    try {
-      _launcher.launchApp(post.link());
-    } catch (e, s) {
-      _logger.logException(e, 'FeedItem._linkClicked', s);
-    }
+    _launcher.launchApp(post.link());
   }
 
   void openLink(String link) {
-    try {
-      _launcher.launchApp(link);
-    } catch (e, s) {
-      _logger.logException(e, 'HomeInfoPage._openLink:' + link, s);
-    }
+    _launcher.launchApp(link);
   }
 }
 
-List<RedditPost> _parsePosts(dynamic body) {
-  final List<RedditPost> posts = [];
-  for (final post in body['data']['children'])
-    posts.add(RedditPost.fromJson(post['data'] as Map<String, dynamic>));
-  posts.removeWhere((post) => post.score < 100);
+// List<RedditPost> _parsePosts(dynamic body) {
+//   final List<RedditPost> posts = [];
+//   for (final post in body['data']['children'])
+//     posts.add(RedditPost.fromJson(post['data'] as Map<String, dynamic>));
+//   posts.removeWhere((post) => post.score < 100);
 
-  return posts;
-}
+//   return posts;
+// }

@@ -141,7 +141,8 @@ class SendCubit extends Cubit<SendState> {
 
   void pasteAddress() async {
     final text = await _clipBoard.pasteFromClipBoard();
-    emit(state.copyWith(address: text));
+    if (text.hasError) return;
+    emit(state.copyWith(address: text.result!));
   }
 
   void scanAddress(bool onStart) async {

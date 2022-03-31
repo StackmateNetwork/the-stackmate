@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:sats/model/reddit-post.dart';
 import 'package:sats/model/result.dart';
 

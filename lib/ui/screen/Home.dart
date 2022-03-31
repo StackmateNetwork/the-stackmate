@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sats/api/interface/reddit.dart';
-import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/reddit.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -64,11 +63,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logger = context.select((Logger l) => l);
-
     final redditBloc = RedditCubit(
       locator<IRedditAPI>(),
-      logger,
       locator<ILauncher>(),
     );
 

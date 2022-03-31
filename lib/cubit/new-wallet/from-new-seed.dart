@@ -156,10 +156,13 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         blockchain: _blockchainCubit.state.blockchain.name,
       );
 
-      final id = await _storage.saveItem<Wallet>(
+      final savedid = await _storage.saveItem<Wallet>(
         StoreKeys.Wallet.name,
         newWallet,
       );
+      if (savedid.hasError) return;
+
+      final id = savedid.result!;
 
       newWallet = newWallet.copyWith(id: id);
 

@@ -57,12 +57,9 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   }
 
   void xpubPasteClicked() async {
-    try {
-      final text = await _clipboard.pasteFromClipBoard();
-      emit(state.copyWith(xpub: text, errXpub: ''));
-    } catch (e, s) {
-      _logger.logException(e, 'BtcSendAddressBloc._mapPasteAddressEvent', s);
-    }
+    final text = await _clipboard.pasteFromClipBoard();
+    if (text.hasError) return;
+    emit(state.copyWith(xpub: text.result!, errXpub: ''));
   }
 
   void xpubChanged(String text) {
@@ -74,12 +71,9 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   }
 
   void fingerPrintPastedClicked() async {
-    try {
-      final text = await _clipboard.pasteFromClipBoard();
-      emit(state.copyWith(fingerPrint: text, errXpub: ''));
-    } catch (e, s) {
-      _logger.logException(e, 'BtcSendAddressBloc.fingerPrintPastedClicked', s);
-    }
+    final text = await _clipboard.pasteFromClipBoard();
+    if (text.hasError) return;
+    emit(state.copyWith(fingerPrint: text.result!, errXpub: ''));
   }
 
   void pathChanged(String text) {
@@ -87,12 +81,10 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   }
 
   void pathPasteClicked() async {
-    try {
-      final text = await _clipboard.pasteFromClipBoard();
-      emit(state.copyWith(path: text, errXpub: ''));
-    } catch (e, s) {
-      _logger.logException(e, 'BtcSendAddressBloc.pathPasteClicked', s);
-    }
+    final text = await _clipboard.pasteFromClipBoard();
+    if (text.hasError) return;
+
+    emit(state.copyWith(path: text.result!, errXpub: ''));
   }
 
   void checkDetails() {

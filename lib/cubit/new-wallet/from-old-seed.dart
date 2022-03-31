@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
-import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
@@ -71,7 +70,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     this._storage,
     this._wallets,
     this._blockchainCubit,
-    this._logger,
     this._importCubit, {
     String walletLabel = '',
   }) : super(
@@ -90,7 +88,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   final IStackMateCore _core;
 
   final IStorage _storage;
-  final Logger _logger;
+
   final WalletsCubit _wallets;
   final ChainSelectCubit _blockchainCubit;
   final SeedImportCubit _importCubit;
@@ -161,73 +159,74 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     }
 
     emit(state.copyWith(walletLabelError: ''));
-    try {
-      final istate = _importCubit.state;
-      final wallet = istate.wallet;
-      if (wallet == null) return;
 
-      final policy = 'pk([${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}/0/*)'
-          .replaceFirst('/m', '');
+    final istate = _importCubit.state;
+    final wallet = istate.wallet;
+    if (wallet == null) return;
 
-      final com = _core.compile(
-        policy: policy,
-        scriptType: 'wpkh',
-      );
+    final policy = 'pk([${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}/0/*)'
+        .replaceFirst('/m', '');
 
-      final exportWallet = _core.deriveHardened(
-        masterXPriv: istate.masterXpriv!,
-        account: '',
-        purpose: '92',
-      );
+    final com = _core.compile(
+      policy: policy,
+      scriptType: 'wpkh',
+    );
 
-      // public descriptor
+    final exportWallet = _core.deriveHardened(
+      masterXPriv: istate.masterXpriv!,
+      account: '',
+      purpose: '92',
+    );
 
-      var newWallet = Wallet(
-        label: state.walletLabel,
-        walletType: 'SINGLE SIGNATURE',
-        mainWallet: InternalWallet(
-          xPub: wallet.xpub,
-          fingerPrint: wallet.fingerPrint,
-          path: wallet.hardenedPath,
-          descriptor: com.descriptor.split('#')[0],
-        ),
-        exportWallet: InternalWallet(
-          xPub: exportWallet.xpub,
-          fingerPrint: exportWallet.fingerPrint,
-          path: exportWallet.hardenedPath,
-        ),
-        blockchain: _blockchainCubit.state.blockchain.name,
-      );
+    // public descriptor
 
-      final id = await _storage.saveItem<Wallet>(
-        StoreKeys.Wallet.name,
-        newWallet,
-      );
+    var newWallet = Wallet(
+      label: state.walletLabel,
+      walletType: 'SINGLE SIGNATURE',
+      mainWallet: InternalWallet(
+        xPub: wallet.xpub,
+        fingerPrint: wallet.fingerPrint,
+        path: wallet.hardenedPath,
+        descriptor: com.descriptor.split('#')[0],
+      ),
+      exportWallet: InternalWallet(
+        xPub: exportWallet.xpub,
+        fingerPrint: exportWallet.fingerPrint,
+        path: exportWallet.hardenedPath,
+      ),
+      blockchain: _blockchainCubit.state.blockchain.name,
+    );
 
-      newWallet = newWallet.copyWith(id: id);
+    final savedId = await _storage.saveItem<Wallet>(
+      StoreKeys.Wallet.name,
+      newWallet,
+    );
 
-      await _storage.saveItemAt<Wallet>(
-        StoreKeys.Wallet.name,
-        id,
-        newWallet,
-      );
+    if (savedId.hasError) return;
 
-      if (state.labelFixed) {
-        emit(state.copyWith(newWalletSaved: true));
-        return;
-      }
+    final id = savedId.result!;
 
-      _wallets.refresh();
+    newWallet = newWallet.copyWith(id: id);
 
-      emit(
-        state.copyWith(
-          savingWallet: false,
-          newWalletSaved: true,
-        ),
-      );
-    } catch (e, s) {
-      _logger.logException(e, 'SeedImportCubit._saveWalletLocally', s);
+    await _storage.saveItemAt<Wallet>(
+      StoreKeys.Wallet.name,
+      id,
+      newWallet,
+    );
+
+    if (state.labelFixed) {
+      emit(state.copyWith(newWalletSaved: true));
+      return;
     }
+
+    _wallets.refresh();
+
+    emit(
+      state.copyWith(
+        savingWallet: false,
+        newWalletSaved: true,
+      ),
+    );
   }
 
   @override

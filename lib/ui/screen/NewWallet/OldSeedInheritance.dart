@@ -167,7 +167,7 @@ class InheritanceOldSeedScreen extends StatelessWidget {
     final inheritance = InheritanceWithOldSeedCubit(
       locator<IStackMateCore>(),
       locator<IStorage>(),
-      logger,
+      // logger,
       wallets,
       networkSelect,
       seedImportCubit,
