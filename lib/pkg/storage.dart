@@ -51,6 +51,8 @@ Future<void> initializeHive() async {
   await Hive.openBox<AddressBookUser>(StoreKeys.AddressBookUser.name);
   await Hive.openBox<AddressBookKey>(StoreKeys.AddressBookKey.name);
   await Hive.openBox<Node>(StoreKeys.Node.name);
+
+  await Hive.openBox<String>('storage');
 }
 
 class HiveStore implements IStorage {
