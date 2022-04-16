@@ -75,15 +75,15 @@ class Logger extends Cubit<LoggerState> {
         stackTrace: (s as StackTrace).toString(),
       );
 
-      print(
-        '\n\nERROR @ ' +
-            log.exceptionSource! +
-            '\nMessage: ' +
-            log.exceptionType! +
-            '\nTrace: ' +
-            log.stackTrace! +
-            '\n\n',
-      );
+      // print(
+      //   '\n\nERROR @ ' +
+      //       log.exceptionSource! +
+      //       '\nMessage: ' +
+      //       log.exceptionType! +
+      //       '\nTrace: ' +
+      //       log.stackTrace! +
+      //       '\n\n',
+      // );
 
       _addToLog(log);
 
