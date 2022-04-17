@@ -65,7 +65,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       // await Future.delayed(const Duration(seconds: 1));
 
       // final w = _walletCubit.state.selectedWallet!.descriptor.split('#')[0];
-      final w = _walletCubit.state.selectedWallet!.mainWallet.descriptor;
+      final w = _walletCubit.state.selectedWallet!.descriptor;
       final node = _nodeAddressCubit.state.getAddress();
 
       final address = await compute(getAdrr, {
@@ -81,7 +81,9 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
       _logger.logAPI(
         'get address',
-        'desc: $w\nnetwork: ' + _blockchain.state.blockchain.name + '\n\nresp:\n$address',
+        'desc: $w\nnetwork: ' +
+            _blockchain.state.blockchain.name +
+            '\n\nresp:\n$address',
         000,
       );
 

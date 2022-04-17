@@ -27,7 +27,8 @@ enum InteritanceWithOldSeedWalletSteps {
 @freezed
 class InheritanceWithOldSeedState with _$InheritanceWithOldSeedState {
   const factory InheritanceWithOldSeedState({
-    @Default(InteritanceWithOldSeedWalletSteps.info) InteritanceWithOldSeedWalletSteps currentStep,
+    @Default(InteritanceWithOldSeedWalletSteps.info)
+        InteritanceWithOldSeedWalletSteps currentStep,
     DateTime? date,
     @Default('') String errDate,
     @Default('') String walletLabel,
@@ -154,7 +155,8 @@ class InheritanceWithOldSeedCubit extends Cubit<InheritanceWithOldSeedState> {
     }
   }
 
-  void dateSelected(DateTime date) => emit(state.copyWith(date: date, errDate: ''));
+  void dateSelected(DateTime date) =>
+      emit(state.copyWith(date: date, errDate: ''));
 
   void labelChanged(String label) {
     emit(
@@ -176,19 +178,23 @@ class InheritanceWithOldSeedCubit extends Cubit<InheritanceWithOldSeedState> {
     final imsState = _importSeedCubit.state;
     final mainWallet = imsState.wallet;
     if (mainWallet == null) return;
-    final mainPolicy =
-        'pk([${mainWallet.fingerPrint}/${mainWallet.hardenedPath}]${mainWallet.xprv}/0/*)'
-            .replaceFirst('/m', '');
+    final fullPrimaryXPrv =
+        '[${mainWallet.fingerPrint}/${mainWallet.hardenedPath}]${mainWallet.xprv}';
+    final fullPrimaryXPub =
+        '[${mainWallet.fingerPrint}/${mainWallet.hardenedPath}]${mainWallet.xpub}';
+    final mainPolicy = 'pk($fullPrimaryXPrv/0/*)'.replaceFirst('/m', '');
 
     final xpubState = _importXpubCubit.state;
     final fingerprint = xpubState.fingerPrint;
     final path = xpubState.path;
     final xpub = xpubState.xpub;
-    String backupPolicy = '';
-    if (!xpubState.showOtherDetails())
-      backupPolicy = 'pk($xpub/0/*)';
-    else
-      backupPolicy = 'pk([$fingerprint/$path]$xpub/0/*)'.replaceFirst('/m', '');
+    String fullSecondaryXPub = xpub;
+
+    String backupSigner = '';
+    if (xpubState.showOtherDetails())
+      fullSecondaryXPub = '[$fingerprint/$path]$xpub';
+
+    backupSigner = 'pk($fullSecondaryXPub/0/*)';
 
     final from = DateTime.now();
     final to = state.date!;
@@ -199,36 +205,27 @@ class InheritanceWithOldSeedCubit extends Cubit<InheritanceWithOldSeedState> {
       nodeAddress: _nodeAddressCubit.state.getAddress(),
     );
     final height = currentHeight + blocks;
+    final backupPolicy = 'and($backupSigner,after($height)))';
 
     // final combinedPolicy =
     //     'or($mainPolicy,and($backupPolicy, after($height)))';
 
-    final combinedPolicy = 'thresh(1,$mainPolicy,and($backupPolicy,after($height)))';
+    final combinedPolicy = 'thresh(1,$mainPolicy,$backupPolicy)';
 
     final com = _core.compile(
       policy: combinedPolicy,
       scriptType: 'wsh',
     );
 
-    final exportWallet = _core.deriveHardened(
-      masterXPriv: _importSeedCubit.state.masterXpriv!,
-      account: '',
-      purpose: '92',
-    );
+    const readable =
+        'thresh(1,__newbie__,and(__defender__,after(__some-time__)))';
 
     var newWallet = Wallet(
       label: state.walletLabel,
-      mainWallet: InternalWallet(
-        xPub: mainWallet.xpub,
-        fingerPrint: mainWallet.fingerPrint,
-        path: mainWallet.hardenedPath,
-        descriptor: com.descriptor.split('#')[0],
-      ),
-      exportWallet: InternalWallet(
-        xPub: exportWallet.xpub,
-        fingerPrint: exportWallet.fingerPrint,
-        path: exportWallet.hardenedPath,
-      ),
+      descriptor: com.descriptor,
+      policy: readable,
+      requiredPolicyElements: 3,
+      policyElements: [fullPrimaryXPub, fullSecondaryXPub, height.toString()],
       blockchain: _blockchainCubit.state.blockchain.name,
       walletType: 'INHERITANCE',
     );

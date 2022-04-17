@@ -42,10 +42,12 @@ class SeedImportWalletState with _$SeedImportWalletState {
     return false;
   }
 
-  double completePercent() => currentStep.index / SeedImportWalletSteps.values.length;
+  double completePercent() =>
+      currentStep.index / SeedImportWalletSteps.values.length;
 
   String completePercentLabel() =>
-      ((currentStep.index / SeedImportWalletSteps.values.length) * 100).toStringAsFixed(0);
+      ((currentStep.index / SeedImportWalletSteps.values.length) * 100)
+          .toStringAsFixed(0);
 
   String currentStepLabel() {
     switch (currentStep) {
@@ -163,19 +165,19 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     final istate = _importCubit.state;
     final wallet = istate.wallet;
     if (wallet == null) return;
+    final fullXPrv =
+        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
 
-    final policy = 'pk([${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}/0/*)'
-        .replaceFirst('/m', '');
+    final fullXPub =
+        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}';
+
+    final policy = 'pk([$fullXPrv/0/*)'.replaceFirst('/m', '');
+
+    const readable = 'pk(__main__)';
 
     final com = _core.compile(
       policy: policy,
       scriptType: 'wpkh',
-    );
-
-    final exportWallet = _core.deriveHardened(
-      masterXPriv: istate.masterXpriv!,
-      account: '',
-      purpose: '92',
     );
 
     // public descriptor
@@ -183,17 +185,10 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     var newWallet = Wallet(
       label: state.walletLabel,
       walletType: 'SINGLE SIGNATURE',
-      mainWallet: InternalWallet(
-        xPub: wallet.xpub,
-        fingerPrint: wallet.fingerPrint,
-        path: wallet.hardenedPath,
-        descriptor: com.descriptor.split('#')[0],
-      ),
-      exportWallet: InternalWallet(
-        xPub: exportWallet.xpub,
-        fingerPrint: exportWallet.fingerPrint,
-        path: exportWallet.hardenedPath,
-      ),
+      descriptor: com.descriptor,
+      policy: readable,
+      requiredPolicyElements: 1,
+      policyElements: [fullXPub],
       blockchain: _blockchainCubit.state.blockchain.name,
     );
 

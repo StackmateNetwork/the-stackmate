@@ -89,7 +89,7 @@ class WalletCubit extends Cubit<WalletState> {
       final wallet = _walletsCubit.state.selectedWallet!;
 
       final bal = await compute(computeBalance, {
-        'depositDesc': wallet.mainWallet.descriptor,
+        'depositDesc': wallet.descriptor,
         'nodeAddress': node,
       });
 
@@ -104,7 +104,7 @@ class WalletCubit extends Cubit<WalletState> {
       );
 
       final transactions = await compute(computeHistory, {
-        'depositDesc': _walletsCubit.state.selectedWallet!.mainWallet.descriptor,
+        'depositDesc': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': node,
         // 'network': _blockchain.state.blockchain.name,
       });

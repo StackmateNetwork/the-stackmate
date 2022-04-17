@@ -27,10 +27,12 @@ class XpubImportWalletState with _$XpubImportWalletState {
   }) = _SeedImportXpubState;
   const XpubImportWalletState._();
 
-  double completePercent() => currentStep.index / XpubImportWalletStep.values.length;
+  double completePercent() =>
+      currentStep.index / XpubImportWalletStep.values.length;
 
   String completePercentLabel() =>
-      ((currentStep.index / XpubImportWalletStep.values.length) * 100).toStringAsFixed(0);
+      ((currentStep.index / XpubImportWalletStep.values.length) * 100)
+          .toStringAsFixed(0);
 
   String currentStepLabel() {
     switch (currentStep) {
@@ -117,11 +119,15 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       final fingerprint = xpubState.fingerPrint;
       final path = xpubState.path;
       final xpub = xpubState.xpub;
-      String policy = '';
-      if (!xpubState.showOtherDetails())
-        policy = 'pk($xpub/0/*)';
-      else
-        policy = 'pk([$fingerprint/$path]$xpub/0/*)'.replaceFirst('/m', '');
+      String fullXPub = xpub;
+
+      if (xpubState.showOtherDetails())
+        fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst('/m', '');
+
+      final policy = 'pk($fullXPub/0/*)';
+
+      const readable = 'pk(__main__)';
+
       final com = _bitcoin.compile(
         policy: policy,
         scriptType: 'wpkh',
@@ -129,27 +135,14 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       // final len = _storage.getAll<Wallet>(StoreKeys.Wallet.name).length;
 
-      final exportWallet = _bitcoin.deriveHardened(
-        masterXPriv: xpub,
-        account: '',
-        purpose: '92',
-      );
-
       // public descriptor
 
       var newWallet = Wallet(
         label: state.label,
-        mainWallet: InternalWallet(
-          xPub: xpub,
-          fingerPrint: fingerprint,
-          path: path,
-          descriptor: com.descriptor.split('#')[0],
-        ),
-        exportWallet: InternalWallet(
-          xPub: exportWallet.xpub,
-          fingerPrint: exportWallet.fingerPrint,
-          path: exportWallet.hardenedPath,
-        ),
+        descriptor: com.descriptor,
+        policy: readable,
+        requiredPolicyElements: 1,
+        policyElements: [fullXPub],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: 'WATCH ONLY',
       );

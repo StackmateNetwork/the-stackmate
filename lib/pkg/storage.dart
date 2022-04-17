@@ -35,8 +35,7 @@ extension StoreKeysFunctions on StoreKeys {
 Future<void> initializeHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(RedditPostClassAdapter());
-  Hive.registerAdapter(WalletClassAdaper());
-  Hive.registerAdapter(InternalWalletClassAdaper());
+  Hive.registerAdapter(WalletClassAdapter());
   Hive.registerAdapter(BlockchainClassAdaper());
   Hive.registerAdapter(AddressBookUserClassAdaper());
   Hive.registerAdapter(AddressBookValueClassAdaper());

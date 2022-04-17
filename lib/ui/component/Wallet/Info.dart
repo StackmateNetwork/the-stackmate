@@ -40,7 +40,7 @@ class WalletInfo extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     Text(
-                      wallet.mainWallet.xPub,
+                      wallet.policy,
                       style: c.fonts.caption!.copyWith(
                         color: c.colours.onBackground,
                       ),
@@ -51,9 +51,7 @@ class WalletInfo extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                       ),
                       onPressed: () {
-                        c
-                            .read<WalletsCubit>()
-                            .copyDescriptor(wallet.mainWallet.xPub);
+                        c.read<WalletsCubit>().copyDescriptor(wallet.policy);
                       },
                       child: const Text('COPY'),
                     ),
@@ -68,7 +66,7 @@ class WalletInfo extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     Text(
-                      wallet.mainWallet.fingerPrint,
+                      wallet.policy,
                       style: c.fonts.caption!.copyWith(
                         color: c.colours.onBackground,
                       ),
@@ -79,9 +77,7 @@ class WalletInfo extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                       ),
                       onPressed: () {
-                        c
-                            .read<WalletsCubit>()
-                            .copyDescriptor(wallet.mainWallet.fingerPrint);
+                        c.read<WalletsCubit>().copyDescriptor(wallet.policy);
                       },
                       child: const Text('COPY'),
                     ),
@@ -94,7 +90,7 @@ class WalletInfo extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      wallet.mainWallet.path,
+                      wallet.policy,
                       style: c.fonts.caption!.copyWith(
                         color: c.colours.onBackground,
                       ),
@@ -105,9 +101,7 @@ class WalletInfo extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                       ),
                       onPressed: () {
-                        c
-                            .read<WalletsCubit>()
-                            .copyDescriptor(wallet.mainWallet.path);
+                        c.read<WalletsCubit>().copyDescriptor(wallet.policy);
                       },
                       child: const Text('COPY'),
                     ),
@@ -159,27 +153,23 @@ class WalletInfo extends StatelessWidget {
                     const SizedBox(height: 16),
 
                     Text(
-                      'RESCUE WALLET INFORMATION',
+                      'WALLET INFORMATION',
                       style: c.fonts.overline!.copyWith(
                         color: c.colours.onBackground,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    if (wallet.exportWallet.rescueDate != null) ...[
+                    if (wallet.policy != null) ...[
                       const SizedBox(height: 24),
                       Text(
-                        'Rescue Date',
+                        'Primary Public Key',
                         style: c.fonts.overline!.copyWith(
                           color: c.colours.onBackground,
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        wallet.exportWallet.rescueDate!.day.toString() +
-                            '/' +
-                            wallet.exportWallet.rescueDate!.month.toString() +
-                            '/' +
-                            wallet.exportWallet.rescueDate!.year.toString(),
+                        wallet.policyElements[0],
                         style: c.fonts.caption!.copyWith(
                           color: c.colours.onBackground,
                         ),
@@ -187,7 +177,7 @@ class WalletInfo extends StatelessWidget {
                     ],
                     const SizedBox(height: 24),
                     Text(
-                      'Public Key',
+                      'Secondary Extended Public Key',
                       style: c.fonts.overline!.copyWith(
                         color: c.colours.onBackground,
                       ),
@@ -195,7 +185,7 @@ class WalletInfo extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     Text(
-                      wallet.exportWallet.xPub,
+                      wallet.policyElements[1],
                       style: c.fonts.caption!.copyWith(
                         color: c.colours.onBackground,
                       ),
@@ -206,16 +196,14 @@ class WalletInfo extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                       ),
                       onPressed: () {
-                        c
-                            .read<WalletsCubit>()
-                            .copyDescriptor(wallet.exportWallet.xPub);
+                        c.read<WalletsCubit>().copyDescriptor(wallet.policy);
                       },
                       child: const Text('COPY'),
                     ),
                     const SizedBox(height: 24),
 
                     Text(
-                      'Fingerprint',
+                      'TimeLock',
                       style: c.fonts.overline!.copyWith(
                         color: c.colours.onBackground,
                       ),
@@ -223,7 +211,7 @@ class WalletInfo extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     Text(
-                      wallet.exportWallet.fingerPrint,
+                      wallet.policyElements[2],
                       style: c.fonts.caption!.copyWith(
                         color: c.colours.onBackground,
                       ),
@@ -234,38 +222,11 @@ class WalletInfo extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                       ),
                       onPressed: () {
-                        c
-                            .read<WalletsCubit>()
-                            .copyDescriptor(wallet.exportWallet.fingerPrint);
+                        c.read<WalletsCubit>().copyDescriptor(wallet.policy);
                       },
                       child: const Text('COPY'),
                     ),
                     const SizedBox(height: 24),
-                    Text(
-                      'Path',
-                      style: c.fonts.overline!.copyWith(
-                        color: c.colours.onBackground,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      wallet.exportWallet.path,
-                      style: c.fonts.caption!.copyWith(
-                        color: c.colours.onBackground,
-                      ),
-                    ),
-                    TextButton(
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(EdgeInsets.zero),
-                        alignment: Alignment.centerLeft,
-                      ),
-                      onPressed: () {
-                        c
-                            .read<WalletsCubit>()
-                            .copyDescriptor(wallet.exportWallet.path);
-                      },
-                      child: const Text('COPY'),
-                    ),
 
                     // Container(
                     //   padding: const EdgeInsets.only(left: 16),
@@ -330,7 +291,7 @@ class WalletInfo extends StatelessWidget {
 
             const SizedBox(height: 24),
             Text(
-              'Public Key',
+              'Extended Public Key',
               style: c.fonts.overline!.copyWith(
                 color: c.colours.onBackground,
               ),
@@ -338,7 +299,7 @@ class WalletInfo extends StatelessWidget {
             const SizedBox(height: 8),
 
             Text(
-              wallet.mainWallet.xPub,
+              wallet.policyElements[0],
               style: c.fonts.caption!.copyWith(
                 color: c.colours.onBackground,
               ),
@@ -349,61 +310,17 @@ class WalletInfo extends StatelessWidget {
                 alignment: Alignment.centerLeft,
               ),
               onPressed: () {
-                c.read<WalletsCubit>().copyDescriptor(wallet.mainWallet.xPub);
+                c.read<WalletsCubit>().copyDescriptor(wallet.policy);
               },
               child: const Text('COPY'),
             ),
             const SizedBox(height: 24),
 
             Text(
-              'Fingerprint',
-              style: c.fonts.overline!.copyWith(
-                color: c.colours.onBackground,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            Text(
-              wallet.mainWallet.fingerPrint,
+              'Only your mnemonic and passphrase are enough to recover this wallet.',
               style: c.fonts.caption!.copyWith(
-                color: c.colours.onBackground,
+                color: c.colours.onPrimary,
               ),
-            ),
-            TextButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.zero),
-                alignment: Alignment.centerLeft,
-              ),
-              onPressed: () {
-                c
-                    .read<WalletsCubit>()
-                    .copyDescriptor(wallet.mainWallet.fingerPrint);
-              },
-              child: const Text('COPY'),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Path',
-              style: c.fonts.overline!.copyWith(
-                color: c.colours.onBackground,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              wallet.mainWallet.path,
-              style: c.fonts.caption!.copyWith(
-                color: c.colours.onBackground,
-              ),
-            ),
-            TextButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.zero),
-                alignment: Alignment.centerLeft,
-              ),
-              onPressed: () {
-                c.read<WalletsCubit>().copyDescriptor(wallet.mainWallet.path);
-              },
-              child: const Text('COPY'),
             ),
 
             // Container(

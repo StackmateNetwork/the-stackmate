@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'package:sats/model/transaction.dart';
@@ -9,17 +11,18 @@ const satsInBTC = 100000000;
 
 @freezed
 class Wallet with _$Wallet {
-  @HiveType(typeId: 1, adapterName: 'WalletClassAdaper')
+  @HiveType(typeId: 1, adapterName: 'WalletClassAdapter')
   const factory Wallet({
     @HiveField(0) required String label,
     @HiveField(1) required String descriptor,
-    @HiveField(2) required int requiredPolicyElements,
-    @HiveField(2) required List<String> policyElements,
-    @HiveField(4) required String blockchain,
-    @HiveField(5) List<Transaction>? transactions,
-    @HiveField(6) int? id,
-    @HiveField(7) int? balance,
-    @HiveField(8) required String walletType,
+    @HiveField(2) required String policy,
+    @HiveField(3) required int requiredPolicyElements,
+    @HiveField(4) required List<String> policyElements,
+    @HiveField(5) required String blockchain,
+    @HiveField(6) List<Transaction>? transactions,
+    @HiveField(7) int? id,
+    @HiveField(8) int? balance,
+    @HiveField(9) required String walletType,
     // @Default(false) @HiveField(7) bool watchOnly,
   }) = _Wallet;
   const Wallet._();
@@ -30,13 +33,18 @@ class Wallet with _$Wallet {
       balance == null ? '0' : (balance! / satsInBTC).toStringAsFixed(8);
 
   bool isNotWatchOnly() => label != 'WATCH ONLY';
-}
 
-enum policyElements {
-  publicKey("[fingerprint/path]xkey"),
-  timeLock("7894564"),
-  hashLock("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08");
-  
-  const policyElements(this.value);
-  final String value;
+  int pendingPolicyElements() {
+    return policyElements.length - requiredPolicyElements;
+  }
 }
+// enum PolicyElement <T extends Object> {
+//   // Example Policy: 
+//   // or(pk($main),and(after($exit-timelock),hash160($exit-secret)))
+//   publicKey<String,String>("[fingerprint/path]xkey","$main"),
+//   timeLock<String,String>("7894564","$exit-timelock"),
+//   hashLock<String,String>("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08","$exit-secret");
+  
+//   const PolicyElement(this.value, this,.identifier);
+//   final T <value, identifier>;
+// }
