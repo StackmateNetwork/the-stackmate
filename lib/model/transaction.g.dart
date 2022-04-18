@@ -6,7 +6,7 @@ part of 'transaction.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TransactionClassAdaper extends TypeAdapter<_$_Transaction> {
+class TransactionClassAdapter extends TypeAdapter<_$_Transaction> {
   @override
   final int typeId = 3;
 
@@ -53,7 +53,7 @@ class TransactionClassAdaper extends TypeAdapter<_$_Transaction> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TransactionClassAdaper &&
+      other is TransactionClassAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

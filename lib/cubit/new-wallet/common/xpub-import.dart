@@ -19,7 +19,8 @@ class XpubImportState with _$XpubImportState {
   const XpubImportState._();
 
   bool showOtherDetails() {
-    if (xpub.startsWith('[') && xpub.contains(']') && xpub.contains('/')) return false;
+    if (xpub.startsWith('[') && xpub.contains(']') && xpub.contains('/'))
+      return false;
     return true;
   }
 }

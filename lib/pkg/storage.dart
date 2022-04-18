@@ -36,10 +36,10 @@ Future<void> initializeHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(RedditPostClassAdapter());
   Hive.registerAdapter(WalletClassAdapter());
-  Hive.registerAdapter(BlockchainClassAdaper());
-  Hive.registerAdapter(AddressBookUserClassAdaper());
-  Hive.registerAdapter(AddressBookValueClassAdaper());
-  Hive.registerAdapter(NodeClassAdaper());
+  Hive.registerAdapter(BlockchainClassAdapter());
+  Hive.registerAdapter(AddressBookUserClassAdapter());
+  Hive.registerAdapter(AddressBookValueClassAdapter());
+  Hive.registerAdapter(NodeClassAdapter());
 
   await Hive.openBox<RedditPost>(
     StoreKeys.RedditPost.name,

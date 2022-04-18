@@ -194,13 +194,11 @@ class InteritanceWithNewSeedCubit extends Cubit<InheritanceWithNewSeedState> {
       final fingerprint = xpubState.fingerPrint;
       final path = xpubState.path;
       final xpub = xpubState.xpub;
-      String fullSecondaryXPub = xpub;
+      final String fullSecondaryXPub = !xpubState.showOtherDetails()
+          ? xpub
+          : '[$fingerprint/$path]$xpub'.replaceFirst('/m', '');
 
-      String backupSigner = '';
-      if (xpubState.showOtherDetails())
-        fullSecondaryXPub = '[$fingerprint/$path]$xpub';
-
-      backupSigner = 'pk($fullSecondaryXPub/0/*)';
+      final backupSigner = 'pk($fullSecondaryXPub/0/*)';
       final from = DateTime.now();
       final to = state.date!;
       final days = (to.difference(from).inHours / 24).round();
