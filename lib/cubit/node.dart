@@ -9,8 +9,8 @@ part 'node.freezed.dart';
 @freezed
 class NodeAddressState with _$NodeAddressState {
   const factory NodeAddressState({
-    @Default('') String address,
-    @Default('') String port,
+    @Default('ssl://electrum.blockstream.info') String address,
+    @Default('60002') String port,
     @Default('') String errNodeState,
     @Default(false) bool isEditing,
   }) = _NodeAddressState;
@@ -18,7 +18,8 @@ class NodeAddressState with _$NodeAddressState {
 
   String getAddress() => address == '' ? 'default' : 'https://$address:$port';
 
-  String mainString() => address == '' ? 'ELECTRUM (Default)' : '$address:$port (Custom)';
+  String mainString() =>
+      address == '' ? 'ELECTRUM (Default)' : '$address:$port (Custom)';
 }
 
 class NodeAddressCubit extends Cubit<NodeAddressState> {
@@ -33,8 +34,15 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
   Future init() async {
     final node = _storage.getFirstItem<Node>(StoreKeys.Node.name);
     if (node.hasError) {
-      if (node.error! == 'empty') return;
-      emit(state.copyWith(errNodeState: node.error.toString()));
+      if (node.error! == 'empty')
+        emit(
+          state.copyWith(
+            address: 'default',
+            port: '60002',
+          ),
+        );
+      else
+        emit(state.copyWith(errNodeState: node.error.toString()));
     }
 
     emit(

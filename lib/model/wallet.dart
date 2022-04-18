@@ -40,10 +40,10 @@ class Wallet with _$Wallet {
 }
 // enum PolicyElement <T extends Object> {
 //   // Example Policy: 
-//   // or(pk($main),and(after($exit-timelock),hash160($exit-secret)))
-//   publicKey<String,String>("[fingerprint/path]xkey","$main"),
-//   timeLock<String,String>("7894564","$exit-timelock"),
-//   hashLock<String,String>("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08","$exit-secret");
+//   // or(pk(___main___),and(after(___exit-timelock___),hash160(___exit-secret___)))
+//   publicKey<String,String>("[fingerprint/path]xkey","___main___"),
+//   timeLock<String,String>("7894564","___exit-timelock___"),
+//   hashLock<String,String>("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08","___exit-secret___");
   
 //   const PolicyElement(this.value, this,.identifier);
 //   final T <value, identifier>;

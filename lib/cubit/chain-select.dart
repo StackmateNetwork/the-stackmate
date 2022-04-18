@@ -26,11 +26,15 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
   final Logger _logger;
 
   void _init() async {
-    final blockchain = _storage.getFirstItem<Blockchain>(
-      StoreKeys.Blockchain.name,
-    );
-    if (blockchain.hasError) return;
-
+    final blockchain =
+        _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name);
+    if (blockchain.hasError) {
+      if (blockchain.error! == 'empty') {
+        emit(const BlockchainState(blockchain: Blockchain.testNet));
+        await Future.delayed(const Duration(milliseconds: 50));
+      } else
+        return;
+    }
     emit(BlockchainState(blockchain: blockchain.result!));
     await Future.delayed(const Duration(milliseconds: 50));
   }
