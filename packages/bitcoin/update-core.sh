@@ -1,5 +1,5 @@
 echo 'fetching stackmate-core'
-git clone https://github.com/i5hi/stackmate-core.git
+git clone https://github.com/StackmateNetwork/stackmate-core.git
 
 echo 'building stackmate-core for android'
 echo 'this might take a while ..'
