@@ -37,7 +37,7 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
       if (node.error! == 'empty')
         emit(
           state.copyWith(
-            address: 'default',
+            address: 'ssl://electrum.blockstream.info',
             port: '60002',
           ),
         );
