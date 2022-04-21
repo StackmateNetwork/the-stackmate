@@ -1,32 +1,38 @@
-echo 'fetching stackmate-core'
-git clone https://github.com/i5hi/stackmate-core.git
+#!/bin/bash -e
 
-echo 'building stackmate-core for android'
-echo 'this might take a while ..'
-cd stackmate-core
-make android
+RELEASE=0.8.0
+
+rm -rf releases
+mkdir -p releases
+cd releases
+echo "fetching stackmate-core release $RELEASE"
+wget https://github.com/StackmateNetwork/stackmate-core/releases/download/v$RELEASE/$RELEASE.tar 
+tar -xzf $RELEASE.tar 
+rm -rf $RELEASE.tar
+cd ..
 
 echo 'updating to new jni binaries'
-mv -f ./target/aarch64-linux-android/release/libstackmate.so ../android/src/main/jniLibs/arm64-v8a
-mv -f ./target/armv7-linux-androideabi/release/libstackmate.so ../android/src/main/jniLibs/armeabi-v7a
-mv -f ./target/i686-linux-android/release/libstackmate.so ../android/src/main/jniLibs/x86
-mv -f ./target/x86_64-linux-android/release/libstackmate.so ../android/src/main/jniLibs/x86_64
+
+mv -f ./releases/$RELEASE/aarch64-linux-android/libstackmate.so ../android/src/main/jniLibs/arm64-v8a
+mv -f ./releases/$RELEASE/armv7-linux-androideabi/libstackmate.so ../android/src/main/jniLibs/armeabi-v7a
+mv -f ./releases/$RELEASE/i686-linux-android/libstackmate.so ../android/src/main/jniLibs/x86
+mv -f ./releases/$RELEASE/x86_64-linux-android/libstackmate.so ../android/src/main/jniLibs/x86_64
 
 
-echo 'build stackmate-core for android'
-echo 'this might take a while ..'
-# cargo lipo --release
+# echo 'build stackmate-core for android'
+# echo 'this might take a while ..'
+# # cargo lipo --release
 
-echo 'updating to new ios binaries'
-# mv -f ./target/universal/release/libstackmate.a ../ios
+# echo 'updating to new ios binaries'
+# # mv -f ./target/universal/libstackmate.a ../ios
 
-echo 'cleaning up ..'
-cd ..
-rm -f -r stackmate-core
+# echo 'cleaning up ..'
+# cd ..
+# rm -f -r stackmate-core
 
-echo '\n\nstackmate-core for android and ios updated !\n\n'
+# echo '\n\nstackmate-core for android and ios updated !\n\n'
 
-echo '-- Add new functions to ios/Classes/BitcoinPlugin.h \n'
-echo '-- Call new functions in ios/Classes/BitcoinPlugin.swift\n'
-echo '-- Open XCode and link the new .a binary\n\n'
+# echo '-- Add new functions to ios/Classes/BitcoinPlugin.h \n'
+# echo '-- Call new functions in ios/Classes/BitcoinPlugin.swift\n'
+# echo '-- Open XCode and link the new .a binary\n\n'
 
