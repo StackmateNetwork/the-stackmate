@@ -1,34 +1,23 @@
-// import 'package:bitcoin/bitcoin.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'dart:ffi';
+import 'dart:ffi';
 
-// void main() {
-//   late BitcoinFFFI ffi;
+import 'package:bitcoin/bitcoin.dart';
+import 'package:flutter_test/flutter_test.dart';
+void main() {
+  late FFFI ffi;
 
-//   setUp(() {
-//     ffi = BitcoinFFFI(
-//       binary: DynamicLibrary.open('libstackmate.dylib'),
-//     );
-//   });
+  setUp(() {
+    ffi = FFFI(
+      binary: DynamicLibrary.open('libstackmate.dylib'),
+    );
+  });
 
-//   test('test generate flow', () async {
-//     final neu = await ffi.generateMaster(
-//       mnemonic: '12',
-//       passphrase: '',
-//       network: '',
-//     );
+  test('test generate flow', () async {
+    final neu = await ffi.generateMaster(
+      network: 'test',
+      length: '12',
+      passphrase: '',
+    );
 
-//     final der = await ffi.deriveHardened(
-//       masterXPriv: neu.xprv,
-//       account: '',
-//       purpose: '',
-//     );
-
-//     final com = await ffi.compile(
-//       policy: der.policy,
-//       scriptType: 'wsh',
-//     );
-
-//     print('com');
-//   });
-// }
+    print(neu);
+  });
+}
