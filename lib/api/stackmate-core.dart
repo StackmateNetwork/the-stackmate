@@ -99,7 +99,6 @@ class BitcoinFFI implements IStackMateCore {
   }) {
     final resp = _bitcoin.getAddress(
       descriptor: descriptor,
-      nodeAddress: nodeAddress,
       index: index,
     );
     return resp;

@@ -42,6 +42,7 @@ void main() {
 
     final accountParent = DerivedKeys.fromJson(ffiAccountParent);
 
+    final readablePolicy = 'wpkh(___MYKEY___)';
     final spenderPolicy =
         'pk([${accountParent.fingerPrint}${accountParent.hardenedPath.substring(1)}]${accountParent.xprv}/*)';
     final watcherPolicy =
