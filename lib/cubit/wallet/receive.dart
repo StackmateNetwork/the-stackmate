@@ -130,7 +130,6 @@ String getAdrr(dynamic msg) {
   final data = msg as Map<String, String?>;
   final resp = BitcoinFFI().getAddress(
     descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
     index: '0',
   );
   return resp;

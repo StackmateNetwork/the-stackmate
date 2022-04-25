@@ -81,7 +81,6 @@ abstract class IStackMateCore {
 
   String getAddress({
     required String descriptor,
-    required String nodeAddress,
     required String index,
   });
 

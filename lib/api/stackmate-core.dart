@@ -94,7 +94,6 @@ class BitcoinFFI implements IStackMateCore {
   @override
   String getAddress({
     required String descriptor,
-    required String nodeAddress,
     required String index,
   }) {
     final resp = _bitcoin.getAddress(
