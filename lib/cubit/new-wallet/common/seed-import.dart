@@ -23,7 +23,7 @@ class SeedImportState with _$SeedImportState {
     @Default('') String errPassPhrase,
     @Default(false) bool seedReady,
     String? masterXpriv,
-    DerivedWallet? wallet,
+    DerivedKeys? wallet,
   }) = _SeedImportState;
   const SeedImportState._();
 

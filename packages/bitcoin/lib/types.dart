@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-class Nmeu {
-  const Nmeu(this.mnemonic, this.fingerprint, this.xprv);
-  factory Nmeu.fromJson(String data) {
+class Seed {
+  const Seed(this.mnemonic, this.fingerprint, this.xprv);
+  factory Seed.fromJson(String data) {
     final json = jsonDecode(data);
-    return Nmeu(
+    return Seed(
       json['mnemonic'] as String,
       json['fingerprint'] as String,
       json['xprv'] as String,
@@ -19,21 +19,20 @@ class Nmeu {
 
 class XOnlyPair {
   XOnlyPair(this.privKey, this.pubKey);
-
   final String privKey;
   final String pubKey;
 }
 
-class DerivedWallet {
-  const DerivedWallet(
+class DerivedKeys {
+  const DerivedKeys(
     this.fingerPrint,
     this.hardenedPath,
     this.xprv,
     this.xpub,
   );
-  factory DerivedWallet.fromJson(String data) {
+  factory DerivedKeys.fromJson(String data) {
     final json = jsonDecode(data);
-    return DerivedWallet(
+    return DerivedKeys(
       json['fingerprint'] as String,
       json['hardened_path'] as String,
       json['xprv'] as String,
@@ -84,11 +83,11 @@ class AbsoluteFees {
 //   final int amount;
 // }
 
-class Compile {
-  const Compile(this.policy, this.descriptor);
-  factory Compile.fromJson(String data) {
+class Descriptor {
+  const Descriptor(this.policy, this.descriptor);
+  factory Descriptor.fromJson(String data) {
     final json = jsonDecode(data);
-    return Compile(
+    return Descriptor(
       json['policy'] as String,
       json['descriptor'] as String,
     );

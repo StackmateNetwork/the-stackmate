@@ -69,11 +69,11 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       final node = _nodeAddressCubit.state.getAddress();
 
       final address = await compute(getAdrr, {
-        'depositDesc': w,
+        'descriptor': w,
         'nodeAddress': node,
       });
       //await _bitcoin.getAddress(
-      //   depositDesc: w,
+      //   descriptor: w,
       //   network: _blockchain.state.blockchain.name,
       //   index: '0',
       // );
@@ -129,7 +129,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 String getAdrr(dynamic msg) {
   final data = msg as Map<String, String?>;
   final resp = BitcoinFFI().getAddress(
-    depositDesc: data['depositDesc']!,
+    descriptor: data['descriptor']!,
     nodeAddress: data['nodeAddress']!,
     index: '0',
   );

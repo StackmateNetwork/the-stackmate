@@ -114,7 +114,7 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final bal = await compute(computeBalance, {
-        'depositDesc': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
       });
 
@@ -221,7 +221,7 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final psbt = await compute(buildTx, {
-        'depositDesc': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'toAddress': state.address,
         'amount': state.sweepWallet ? '0' : state.amount,
@@ -230,7 +230,7 @@ class SendCubit extends Cubit<SendState> {
       });
 
       final weight = await compute(getWeight, {
-        'depositDesc': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'psbt': psbt,
       });
 
@@ -337,7 +337,7 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final psbt = await compute(buildTx, {
-        'depositDesc': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'toAddress': state.address,
         'amount': state.sweepWallet ? '0' : state.amount,
@@ -402,13 +402,13 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final signed = await compute(signTx, {
-        'depositDesc': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'unsignedPSBT': state.psbt,
       });
 
       final txid = await compute(broadcastTx, {
-        'depositDesc': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'signedPSBT': signed,
       });
@@ -453,7 +453,7 @@ double estimateFeees(dynamic data) {
 int getWeight(dynamic data) {
   final obj = data as Map<String, String?>;
   final resp = BitcoinFFI().getWeight(
-    depositDesc: obj['depositDesc']!,
+    descriptor: obj['descriptor']!,
     psbt: obj['psbt']!,
   );
   return resp;
@@ -473,7 +473,7 @@ String buildTx(dynamic data) {
   final resp = BitcoinFFI().buildTransaction(
     nodeAddress: obj['nodeAddress']!,
     amount: obj['amount']!,
-    depositDesc: obj['depositDesc']!,
+    descriptor: obj['descriptor']!,
     feeAbsolute: obj['feeAbsolute']!,
     toAddress: obj['toAddress']!,
     sweep: obj['sweep']!,
@@ -501,7 +501,7 @@ String signTx(dynamic data) {
 
   final resp = BitcoinFFI().signTransaction(
     nodeAddress: obj['nodeAddress']!,
-    depositDesc: obj['depositDesc']!,
+    descriptor: obj['descriptor']!,
     unsignedPSBT: obj['unsignedPSBT']!,
   );
   return resp;
@@ -512,7 +512,7 @@ String broadcastTx(dynamic data) {
 
   final resp = BitcoinFFI().broadcastTransaction(
     nodeAddress: obj['nodeAddress']!,
-    depositDesc: obj['depositDesc']!,
+    descriptor: obj['descriptor']!,
     signedPSBT: obj['signedPSBT']!,
   );
   return resp;

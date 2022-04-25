@@ -23,7 +23,7 @@
         //
         "assets": true,
         "integration_test": true,
-        "**/test": true,
+        "**/test": false,
         ".gitlab-ci.yml": true,
         //
         "**/assets": true,

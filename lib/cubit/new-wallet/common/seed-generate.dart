@@ -24,7 +24,7 @@ class SeedGenerateState with _$SeedGenerateState {
     String? masterXpriv,
     String? xpriv,
     String? fingerPrint,
-    DerivedWallet? wallet,
+    DerivedKeys? wallet,
     @Default(false) bool generatingSeed,
     @Default(12) int seedLength,
     @Default('') String seedError,

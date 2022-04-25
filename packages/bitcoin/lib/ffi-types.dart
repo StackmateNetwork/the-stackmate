@@ -27,18 +27,17 @@ typedef CompileT = Pointer<Utf8> Function(
 );
 
 typedef SyncT = Pointer<Utf8> Function(
-  Pointer<Utf8> deposit_desc,
+  Pointer<Utf8> descriptor,
   Pointer<Utf8> node_address,
 );
 
 typedef AddressT = Pointer<Utf8> Function(
-  Pointer<Utf8> deposit_desc,
-  Pointer<Utf8> node_address,
+  Pointer<Utf8> descriptor,
   Pointer<Utf8> index,
 );
 
 typedef BuildT = Pointer<Utf8> Function(
-  Pointer<Utf8> deposit_desc,
+  Pointer<Utf8> descriptor,
   Pointer<Utf8> node_address,
   Pointer<Utf8> to_address,
   Pointer<Utf8> amount,
@@ -52,13 +51,13 @@ typedef DecodeT = Pointer<Utf8> Function(
 );
 
 typedef SignT = Pointer<Utf8> Function(
-  Pointer<Utf8> deposit_desc,
+  Pointer<Utf8> descriptor,
   Pointer<Utf8> node_address,
   Pointer<Utf8> unsigned_psbt,
 );
 
 typedef BroadcastT = Pointer<Utf8> Function(
-  Pointer<Utf8> deposit_desc,
+  Pointer<Utf8> descriptor,
   Pointer<Utf8> node_address,
   Pointer<Utf8> signed_psbt,
 );
@@ -70,7 +69,7 @@ typedef EstimateFeeT = Pointer<Utf8> Function(
 );
 
 typedef WeightT = Pointer<Utf8> Function(
-  Pointer<Utf8> deposit_desc,
+  Pointer<Utf8> descriptor,
   Pointer<Utf8> psbt,
 );
 
