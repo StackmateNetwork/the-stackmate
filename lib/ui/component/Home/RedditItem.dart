@@ -15,7 +15,7 @@ class FeedItem extends StatelessWidget {
   Widget build(BuildContext c) {
     return FadeIn(
       child: GestureDetector(
-        onTap: () {
+        onTap: () async{
           c.read<RedditCubit>().openPostLink(post);
         },
         child: Container(

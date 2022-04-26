@@ -32,11 +32,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-<<<<<<< HEAD
-    compileSdkVersion 32
-=======
     compileSdkVersion 31
->>>>>>> 0b7b756c5b1f2abbbfb5e06e475f1a8d008e0b7b
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -54,15 +50,10 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.sats.stackmate"
-<<<<<<< HEAD
-        minSdkVersion 20
-        targetSdkVersion 32
-=======
         minSdkVersion 28
         // targetSdkVersion 30
         // minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
->>>>>>> 0b7b756c5b1f2abbbfb5e06e475f1a8d008e0b7b
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -24,7 +24,7 @@ class Launcher implements ILauncher {
       if (can)
         await launch(
           link,
-          // forceWebView: true
+          // forceWebView: true,
           // universalLinksOnly: true,
         );
       return const R(result: true);
