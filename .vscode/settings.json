@@ -4,7 +4,7 @@
     },
     "files.exclude": {
         "**/.metadata": true,
-        ".gitignore": true,
+        ".gitignore": false,
         "**/.packages": true,
         "**/pubspec.lock": true,
         "**/.flutter-plugins": true,
