@@ -34,9 +34,10 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
         await Future.delayed(const Duration(milliseconds: 50));
       } else
         return;
+    } else {
+      emit(BlockchainState(blockchain: blockchain.result!));
+      await Future.delayed(const Duration(milliseconds: 50));
     }
-    emit(BlockchainState(blockchain: blockchain.result!));
-    await Future.delayed(const Duration(milliseconds: 50));
   }
 
   void changeBlockchain(Blockchain blockchain) async {

@@ -23,7 +23,7 @@ class _$SeedGenerateStateTearOff {
       String? masterXpriv,
       String? xpriv,
       String? fingerPrint,
-      DerivedWallet? wallet,
+      DerivedKeys? wallet,
       bool generatingSeed = false,
       int seedLength = 12,
       String seedError = '',
@@ -67,7 +67,7 @@ mixin _$SeedGenerateState {
   String? get masterXpriv => throw _privateConstructorUsedError;
   String? get xpriv => throw _privateConstructorUsedError;
   String? get fingerPrint => throw _privateConstructorUsedError;
-  DerivedWallet? get wallet => throw _privateConstructorUsedError;
+  DerivedKeys? get wallet => throw _privateConstructorUsedError;
   bool get generatingSeed => throw _privateConstructorUsedError;
   int get seedLength => throw _privateConstructorUsedError;
   String get seedError => throw _privateConstructorUsedError;
@@ -97,7 +97,7 @@ abstract class $SeedGenerateStateCopyWith<$Res> {
       String? masterXpriv,
       String? xpriv,
       String? fingerPrint,
-      DerivedWallet? wallet,
+      DerivedKeys? wallet,
       bool generatingSeed,
       int seedLength,
       String seedError,
@@ -164,7 +164,7 @@ class _$SeedGenerateStateCopyWithImpl<$Res>
       wallet: wallet == freezed
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
-              as DerivedWallet?,
+              as DerivedKeys?,
       generatingSeed: generatingSeed == freezed
           ? _value.generatingSeed
           : generatingSeed // ignore: cast_nullable_to_non_nullable
@@ -226,7 +226,7 @@ abstract class _$SeedGenerateStateCopyWith<$Res>
       String? masterXpriv,
       String? xpriv,
       String? fingerPrint,
-      DerivedWallet? wallet,
+      DerivedKeys? wallet,
       bool generatingSeed,
       int seedLength,
       String seedError,
@@ -292,7 +292,7 @@ class __$SeedGenerateStateCopyWithImpl<$Res>
       wallet: wallet == freezed
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
-              as DerivedWallet?,
+              as DerivedKeys?,
       generatingSeed: generatingSeed == freezed
           ? _value.generatingSeed
           : generatingSeed // ignore: cast_nullable_to_non_nullable
@@ -376,7 +376,7 @@ class _$_SeedGenerateState extends _SeedGenerateState {
   @override
   final String? fingerPrint;
   @override
-  final DerivedWallet? wallet;
+  final DerivedKeys? wallet;
   @JsonKey(defaultValue: false)
   @override
   final bool generatingSeed;
@@ -506,7 +506,7 @@ abstract class _SeedGenerateState extends SeedGenerateState {
       String? masterXpriv,
       String? xpriv,
       String? fingerPrint,
-      DerivedWallet? wallet,
+      DerivedKeys? wallet,
       bool generatingSeed,
       int seedLength,
       String seedError,
@@ -531,7 +531,7 @@ abstract class _SeedGenerateState extends SeedGenerateState {
   @override
   String? get fingerPrint => throw _privateConstructorUsedError;
   @override
-  DerivedWallet? get wallet => throw _privateConstructorUsedError;
+  DerivedKeys? get wallet => throw _privateConstructorUsedError;
   @override
   bool get generatingSeed => throw _privateConstructorUsedError;
   @override

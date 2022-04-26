@@ -5,7 +5,7 @@
     "files.exclude": {
         "**/.metadata": true,
         ".gitignore": true,
-        "**/.packages": false,
+        "**/.packages": true,
         "**/pubspec.lock": true,
         "**/.flutter-plugins": true,
         "**/.dart_tool": true,
@@ -23,7 +23,7 @@
         //
         "assets": true,
         "integration_test": true,
-        "**/test": false,
+        "**/test": true,
         ".gitlab-ci.yml": true,
         //
         "**/assets": true,
@@ -33,7 +33,7 @@
         "**/**.freezed.dart": true,
         "android": false,
         "ios": true,
-        "**/android": false,
+        "**/android": true,
         "**/ios": true,
         //
         //

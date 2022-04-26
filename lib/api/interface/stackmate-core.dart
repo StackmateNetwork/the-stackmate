@@ -87,10 +87,10 @@ abstract class IStackMateCore {
   String buildTransaction({
     required String descriptor,
     required String nodeAddress,
-    required String toAddress,
-    required String amount,
+    required String txOutputs,
     required String feeAbsolute,
     required String sweep,
+    required String policyPath,
   });
 
   String decodePsbt({

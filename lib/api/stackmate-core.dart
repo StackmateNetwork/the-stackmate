@@ -131,18 +131,18 @@ class BitcoinFFI implements IStackMateCore {
   String buildTransaction({
     required String descriptor,
     required String nodeAddress,
-    required String toAddress,
-    required String amount,
+    required String txOutputs,
     required String feeAbsolute,
     required String sweep,
+    required String policyPath,
   }) {
     final resp = _bitcoin.buildTransaction(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
-      toAddress: toAddress,
-      amount: amount,
+      txOutputs: txOutputs,
       feeAbsolute: feeAbsolute,
       sweep: sweep,
+      policyPath: policyPath,
     );
     final data = jsonDecode(resp);
     return data['psbt'] as String;

@@ -74,7 +74,7 @@ class AddWalletScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    'SINGLE ACCOUNT',
+                    'SOLO ACCOUNT',
                     style: c.fonts.overline!.copyWith(
                       color: Colors.white,
                     ),
@@ -83,7 +83,8 @@ class AddWalletScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 SelectButton(
                   text: 'Seed',
-                  description: 'Easy to use, Easy to Backup.\n12 word phase as private key.',
+                  description:
+                      'Easy to use, Easy to Backup.\n12 word phase as private key.',
                   colour: c.colours.surface,
                   onPressed: () {
                     c.push('/generate-seed');
@@ -101,54 +102,14 @@ class AddWalletScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 SelectButton(
                   text: 'Observe',
-                  description: 'Public View, Maximum Privacy.\nImport your public key.',
+                  description:
+                      'Public View, Maximum Privacy.\nImport your public key.',
                   colour: c.colours.surface,
                   onPressed: () {
                     c.push('/watch-only');
                   },
                 ),
                 const SizedBox(height: 48),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        'MULTI ACCOUNT',
-                        style: c.fonts.overline!.copyWith(color: Colors.white),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    SelectButton(
-                      text: 'Inheritance - New',
-                      description: 'Time protect you assets.\nSelect your hier.',
-                      colour: c.colours.surface,
-                      onPressed: () {
-                        c.push('/inheritance-new-seed');
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    SelectButton(
-                      text: 'Inheritance - Import',
-                      description: 'Import an existing time protected wallet.',
-                      colour: c.colours.surface,
-                      onPressed: () {
-                        c.push('/inheritance-old-seed');
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    Opacity(
-                      opacity: 0.5,
-                      child: SelectButton(
-                        text: 'Co Sign',
-                        description: ' ',
-                        colour: c.colours.surface,
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 32)
               ],
             ),
           ),

@@ -43,14 +43,13 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
         );
       else
         emit(state.copyWith(errNodeState: node.error.toString()));
-    }
-
-    emit(
-      state.copyWith(
-        address: node.result!.address,
-        port: node.result!.port,
-      ),
-    );
+    } else
+      emit(
+        state.copyWith(
+          address: node.result!.address,
+          port: node.result!.port,
+        ),
+      );
   }
 
   void toggleIsEditting() async {

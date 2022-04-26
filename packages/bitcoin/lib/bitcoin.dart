@@ -109,19 +109,19 @@ class FFFI {
   String buildTransaction({
     required String descriptor,
     required String nodeAddress,
-    required String toAddress,
-    required String amount,
+    required String txOutputs,
     required String feeAbsolute,
     required String sweep,
+    required String policyPath,
   }) {
     final func = binary.lookupFunction<BuildT, BuildT>('build_tx');
     final resp = func(
       descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
-      toAddress.toNativeUtf8(),
-      amount.toNativeUtf8(),
+      txOutputs.toNativeUtf8(),
       feeAbsolute.toNativeUtf8(),
       sweep.toNativeUtf8(),
+      policyPath.toNativeUtf8(),
     ).toDartString();
     if (resp.startsWith('Error')) throw resp;
     return resp;

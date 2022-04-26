@@ -39,6 +39,8 @@ class SendState with _$SendState {
     @Default('') String errAddress,
     @Default('') String errAmount,
     @Default('') String errFees,
+    @Default('') String policyPath,
+    @Default('') String txOutputs,
     @Default('') String address,
     @Default('') String amount,
     @Default(0) int weight,
@@ -54,6 +56,7 @@ class SendState with _$SendState {
     int? finalAmount,
     @Default(false) bool sweepWallet,
   }) = _SendState;
+
   const SendState._();
 
   // bool confirmStep() => psbt != '' && txId == '';
@@ -223,10 +226,10 @@ class SendCubit extends Cubit<SendState> {
       final psbt = await compute(buildTx, {
         'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
-        'toAddress': state.address,
-        'amount': state.sweepWallet ? '0' : state.amount,
+        'txOutputs': state.txOutputs,
         'feeAbsolute': '1000',
         'sweep': state.sweepWallet.toString(),
+        'policyPath': state.policyPath.toString(),
       });
 
       final weight = await compute(getWeight, {
@@ -339,7 +342,7 @@ class SendCubit extends Cubit<SendState> {
       final psbt = await compute(buildTx, {
         'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
-        'toAddress': state.address,
+        'txOutputs': state.txOutputs,
         'amount': state.sweepWallet ? '0' : state.amount,
         'feeAbsolute': state.finalFee.toString(),
         'sweep': state.sweepWallet.toString(),
@@ -472,11 +475,11 @@ String buildTx(dynamic data) {
   final obj = data as Map<String, String?>;
   final resp = BitcoinFFI().buildTransaction(
     nodeAddress: obj['nodeAddress']!,
-    amount: obj['amount']!,
     descriptor: obj['descriptor']!,
+    txOutputs: obj['txOutputs']!,
     feeAbsolute: obj['feeAbsolute']!,
-    toAddress: obj['toAddress']!,
     sweep: obj['sweep']!,
+    policyPath: obj['policyPath']!,
   );
   return resp;
 }

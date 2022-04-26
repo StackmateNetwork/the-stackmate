@@ -27,6 +27,8 @@ class _$SendStateTearOff {
       String errAddress = '',
       String errAmount = '',
       String errFees = '',
+      String policyPath = '',
+      String txOutputs = '',
       String address = '',
       String amount = '',
       int weight = 0,
@@ -51,6 +53,8 @@ class _$SendStateTearOff {
       errAddress: errAddress,
       errAmount: errAmount,
       errFees: errFees,
+      policyPath: policyPath,
+      txOutputs: txOutputs,
       address: address,
       amount: amount,
       weight: weight,
@@ -83,6 +87,8 @@ mixin _$SendState {
   String get errAddress => throw _privateConstructorUsedError;
   String get errAmount => throw _privateConstructorUsedError;
   String get errFees => throw _privateConstructorUsedError;
+  String get policyPath => throw _privateConstructorUsedError;
+  String get txOutputs => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   String get amount => throw _privateConstructorUsedError;
   int get weight => throw _privateConstructorUsedError;
@@ -117,6 +123,8 @@ abstract class $SendStateCopyWith<$Res> {
       String errAddress,
       String errAmount,
       String errFees,
+      String policyPath,
+      String txOutputs,
       String address,
       String amount,
       int weight,
@@ -152,6 +160,8 @@ class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
     Object? errAddress = freezed,
     Object? errAmount = freezed,
     Object? errFees = freezed,
+    Object? policyPath = freezed,
+    Object? txOutputs = freezed,
     Object? address = freezed,
     Object? amount = freezed,
     Object? weight = freezed,
@@ -203,6 +213,14 @@ class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
       errFees: errFees == freezed
           ? _value.errFees
           : errFees // ignore: cast_nullable_to_non_nullable
+              as String,
+      policyPath: policyPath == freezed
+          ? _value.policyPath
+          : policyPath // ignore: cast_nullable_to_non_nullable
+              as String,
+      txOutputs: txOutputs == freezed
+          ? _value.txOutputs
+          : txOutputs // ignore: cast_nullable_to_non_nullable
               as String,
       address: address == freezed
           ? _value.address
@@ -280,6 +298,8 @@ abstract class _$SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
       String errAddress,
       String errAmount,
       String errFees,
+      String policyPath,
+      String txOutputs,
       String address,
       String amount,
       int weight,
@@ -316,6 +336,8 @@ class __$SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
     Object? errAddress = freezed,
     Object? errAmount = freezed,
     Object? errFees = freezed,
+    Object? policyPath = freezed,
+    Object? txOutputs = freezed,
     Object? address = freezed,
     Object? amount = freezed,
     Object? weight = freezed,
@@ -367,6 +389,14 @@ class __$SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
       errFees: errFees == freezed
           ? _value.errFees
           : errFees // ignore: cast_nullable_to_non_nullable
+              as String,
+      policyPath: policyPath == freezed
+          ? _value.policyPath
+          : policyPath // ignore: cast_nullable_to_non_nullable
+              as String,
+      txOutputs: txOutputs == freezed
+          ? _value.txOutputs
+          : txOutputs // ignore: cast_nullable_to_non_nullable
               as String,
       address: address == freezed
           ? _value.address
@@ -441,6 +471,8 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
       this.errAddress = '',
       this.errAmount = '',
       this.errFees = '',
+      this.policyPath = '',
+      this.txOutputs = '',
       this.address = '',
       this.amount = '',
       this.weight = 0,
@@ -486,6 +518,12 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
   final String errFees;
   @JsonKey(defaultValue: '')
   @override
+  final String policyPath;
+  @JsonKey(defaultValue: '')
+  @override
+  final String txOutputs;
+  @JsonKey(defaultValue: '')
+  @override
   final String address;
   @JsonKey(defaultValue: '')
   @override
@@ -523,7 +561,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SendState(currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, errLoading: $errLoading, errAddress: $errAddress, errAmount: $errAmount, errFees: $errFees, address: $address, amount: $amount, weight: $weight, fees: $fees, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
+    return 'SendState(currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, errLoading: $errLoading, errAddress: $errAddress, errAmount: $errAmount, errFees: $errFees, policyPath: $policyPath, txOutputs: $txOutputs, address: $address, amount: $amount, weight: $weight, fees: $fees, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
   }
 
   @override
@@ -540,6 +578,8 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('errAddress', errAddress))
       ..add(DiagnosticsProperty('errAmount', errAmount))
       ..add(DiagnosticsProperty('errFees', errFees))
+      ..add(DiagnosticsProperty('policyPath', policyPath))
+      ..add(DiagnosticsProperty('txOutputs', txOutputs))
       ..add(DiagnosticsProperty('address', address))
       ..add(DiagnosticsProperty('amount', amount))
       ..add(DiagnosticsProperty('weight', weight))
@@ -587,6 +627,12 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
             (identical(other.errFees, errFees) ||
                 const DeepCollectionEquality()
                     .equals(other.errFees, errFees)) &&
+            (identical(other.policyPath, policyPath) ||
+                const DeepCollectionEquality()
+                    .equals(other.policyPath, policyPath)) &&
+            (identical(other.txOutputs, txOutputs) ||
+                const DeepCollectionEquality()
+                    .equals(other.txOutputs, txOutputs)) &&
             (identical(other.address, address) ||
                 const DeepCollectionEquality()
                     .equals(other.address, address)) &&
@@ -621,9 +667,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
             (identical(other.finalAmount, finalAmount) ||
                 const DeepCollectionEquality()
                     .equals(other.finalAmount, finalAmount)) &&
-            (identical(other.sweepWallet, sweepWallet) ||
-                const DeepCollectionEquality()
-                    .equals(other.sweepWallet, sweepWallet)));
+            (identical(other.sweepWallet, sweepWallet) || const DeepCollectionEquality().equals(other.sweepWallet, sweepWallet)));
   }
 
   @override
@@ -638,6 +682,8 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(errAddress) ^
       const DeepCollectionEquality().hash(errAmount) ^
       const DeepCollectionEquality().hash(errFees) ^
+      const DeepCollectionEquality().hash(policyPath) ^
+      const DeepCollectionEquality().hash(txOutputs) ^
       const DeepCollectionEquality().hash(address) ^
       const DeepCollectionEquality().hash(amount) ^
       const DeepCollectionEquality().hash(weight) ^
@@ -670,6 +716,8 @@ abstract class _SendState extends SendState {
       String errAddress,
       String errAmount,
       String errFees,
+      String policyPath,
+      String txOutputs,
       String address,
       String amount,
       int weight,
@@ -704,6 +752,10 @@ abstract class _SendState extends SendState {
   String get errAmount => throw _privateConstructorUsedError;
   @override
   String get errFees => throw _privateConstructorUsedError;
+  @override
+  String get policyPath => throw _privateConstructorUsedError;
+  @override
+  String get txOutputs => throw _privateConstructorUsedError;
   @override
   String get address => throw _privateConstructorUsedError;
   @override
