@@ -33,7 +33,7 @@
         "**/**.freezed.dart": true,
         "android": false,
         "ios": true,
-        "**/android": true,
+        "**/android": false,
         "**/ios": true,
         //
         //
