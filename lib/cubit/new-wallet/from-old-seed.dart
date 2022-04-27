@@ -166,7 +166,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     final wallet = istate.wallet;
     if (wallet == null) return;
     final fullXPrv =
-        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
+        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
+            .replaceFirst('/m', '');
 
     final fullXPub =
         '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
@@ -182,6 +183,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     );
 
     // public descriptor
+    // Check history and whether this wallet needs to update its address index
 
     var newWallet = Wallet(
       label: state.walletLabel,

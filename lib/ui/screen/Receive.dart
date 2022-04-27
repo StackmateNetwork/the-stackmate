@@ -1,8 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallet/receive.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -70,18 +69,17 @@ class ReceiveScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final networkSelect = context.select((ChainSelectCubit c) => c);
     final logger = context.select((Logger c) => c);
     final wallets = context.select((WalletsCubit c) => c);
 
     final receive = ReceiveCubit(
       wallets,
-      networkSelect,
       logger,
       locator<IClipBoard>(),
       locator<IShare>(),
       locator<IVibrate>(),
       locator<IStorage>(),
+      locator<IStackMateCore>(),
     );
 
     return BlocProvider.value(

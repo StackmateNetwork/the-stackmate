@@ -19,17 +19,16 @@ class SeedGenerateWarning extends StatelessWidget {
         const SizedBox(height: 32),
         Text(
           '''
-Write down your seed phrase on a piece of paper
+Write down your seed phrase on a piece of paper/card
 and store in a safe place.
 
-Don’t risk losing your funds. protect your wallet
-by saving your Seed Phrase in a place you trust.
+These words represent your master key.
 
 It’s the only way to recover your wallet if you are 
 locked out of the app or get a new device.
 
-For maximum security, you will be forced to turn off
-all networking for your device during this process.
+To protect the integrity of your seed, we recommend
+doing on airplane mode during this process.
       ''',
           style: c.fonts.caption!.copyWith(color: Colors.white),
         ),

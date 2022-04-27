@@ -49,7 +49,7 @@ class XpubImportWalletState with _$XpubImportWalletState {
 class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
   XpubImportWalletCubit(
     // this._soloWalletAPI,
-    this._bitcoin,
+    this._core,
     this._logger,
     this._storage,
     this._wallets,
@@ -65,7 +65,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
   final Logger _logger;
   final IStorage _storage;
-  final IStackMateCore _bitcoin;
+  final IStackMateCore _core;
   final WalletsCubit _wallets;
   final ChainSelectCubit _blockchainCubit;
   final XpubImportCubit _importCubit;
@@ -128,7 +128,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       const readable = 'pk(__primary__)';
 
-      final descriptor = _bitcoin.compile(
+      final descriptor = _core.compile(
         policy: policy,
         scriptType: 'wpkh',
       );
@@ -136,7 +136,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       // final len = _storage.getAll<Wallet>(StoreKeys.Wallet.name).length;
 
       // public descriptor
-
+      // check balance and see if last address index needs update
       var newWallet = Wallet(
         label: state.label,
         descriptor: descriptor,

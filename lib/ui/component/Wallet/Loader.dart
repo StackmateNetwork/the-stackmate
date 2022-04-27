@@ -10,12 +10,12 @@ class WalletLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final history = context.select((WalletCubit hc) => hc.state);
-
+    const String syncing = 'Updating wallet...';
     if (!history.loadingTransactions && !history.loadingBalance)
       return Container();
 
     return Loading(
-      text: history.loadingTransactions ? 'Loading History' : 'Loading Balance',
+      text: syncing,
     );
   }
 }
