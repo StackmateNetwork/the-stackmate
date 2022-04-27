@@ -117,7 +117,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   }
 
   void saveClicked() async {
-    if (state.walletLabel.length < 4 ||
+    if (state.walletLabel.length < 3 ||
         state.walletLabel.length > 10 ||
         state.walletLabel.contains(' ')) {
       emit(state.copyWith(walletLabelError: 'Invalid Label'));
@@ -138,7 +138,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
 
       const readable = 'pk(___primary___)';
 
-      final com = _core.compile(
+      final descriptor = _core.compile(
         policy: policy,
         scriptType: 'wpkh',
       );
@@ -146,7 +146,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       var newWallet = Wallet(
         label: state.walletLabel,
         walletType: 'SIGNER',
-        descriptor: com.descriptor,
+        descriptor: descriptor,
         policy: readable,
         requiredPolicyElements: 1,
         policyElements: [
@@ -180,6 +180,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         ),
       );
     } catch (e, s) {
+      final error = e;
+      print(error);
       _logger.logException(
         e,
         'SeedGenerateWalletCubit._createNewLocalWallet',

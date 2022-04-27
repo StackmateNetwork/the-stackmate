@@ -13,10 +13,15 @@ cd ..
 
 echo 'updating to new jni binaries'
 
-mv -f ./releases/$RELEASE/aarch64-linux-android/libstackmate.so ../android/src/main/jniLibs/arm64-v8a
-mv -f ./releases/$RELEASE/armv7-linux-androideabi/libstackmate.so ../android/src/main/jniLibs/armeabi-v7a
-mv -f ./releases/$RELEASE/i686-linux-android/libstackmate.so ../android/src/main/jniLibs/x86
-mv -f ./releases/$RELEASE/x86_64-linux-android/libstackmate.so ../android/src/main/jniLibs/x86_64
+mkdir -p android/src/main/jniLibs/arm64-v8a
+mkdir -p android/src/main/jniLibs/armeabi-v7a
+mkdir -p android/src/main/jniLibs/x86
+mkdir -p android/src/main/jniLibs/x86_64
+
+mv -f releases/$RELEASE/aarch64-linux-android/libstackmate.so android/src/main/jniLibs/arm64-v8a
+mv -f releases/$RELEASE/armv7-linux-androideabi/libstackmate.so android/src/main/jniLibs/armeabi-v7a
+mv -f releases/$RELEASE/i686-linux-android/libstackmate.so android/src/main/jniLibs/x86
+mv -f releases/$RELEASE/x86_64-linux-android/libstackmate.so android/src/main/jniLibs/x86_64
 
 
 # echo 'build stackmate-core for android'

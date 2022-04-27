@@ -175,7 +175,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
     const readable = 'pk(___primary___)';
 
-    final com = _core.compile(
+    final descriptor = _core.compile(
       policy: policy,
       scriptType: 'wpkh',
     );
@@ -185,7 +185,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     var newWallet = Wallet(
       label: state.walletLabel,
       walletType: 'SIGNER',
-      descriptor: com.descriptor,
+      descriptor: descriptor,
       policy: readable,
       requiredPolicyElements: 1,
       policyElements: ['primary:$fullXPub'],

@@ -128,7 +128,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       const readable = 'pk(__primary__)';
 
-      final com = _bitcoin.compile(
+      final descriptor = _bitcoin.compile(
         policy: policy,
         scriptType: 'wpkh',
       );
@@ -139,7 +139,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       var newWallet = Wallet(
         label: state.label,
-        descriptor: com.descriptor,
+        descriptor: descriptor,
         policy: readable,
         requiredPolicyElements: 1,
         policyElements: ['primary:$fullXPub'],

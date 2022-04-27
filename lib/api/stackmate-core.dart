@@ -64,7 +64,7 @@ class BitcoinFFI implements IStackMateCore {
   }
 
   @override
-  Descriptor compile({
+  String compile({
     required String policy,
     required String scriptType,
   }) {
@@ -73,7 +73,7 @@ class BitcoinFFI implements IStackMateCore {
       scriptType: scriptType,
     );
     if (resp.startsWith('Error')) throw resp;
-    return Descriptor.fromJson(resp);
+    return resp;
   }
 
   @override

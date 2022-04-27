@@ -43,7 +43,7 @@ abstract class IStackMateCore {
     required String purpose,
   });
 
-  Descriptor compile({
+  String compile({
     required String policy,
     required String scriptType,
   });
