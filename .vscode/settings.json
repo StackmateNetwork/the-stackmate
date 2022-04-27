@@ -40,7 +40,7 @@
         "**/analysis_options.yaml": true,
         "**/packages": false,
         "**/pubspec.yaml": true,
-        "README.md": true,
+        "README.md": false,
         //
         //
         //
