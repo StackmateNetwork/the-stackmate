@@ -159,7 +159,7 @@ class WalletInfo extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    if (wallet.policy != null) ...[
+                    if (true) ...[
                       const SizedBox(height: 24),
                       Text(
                         'Primary Public Key',
@@ -299,7 +299,7 @@ class WalletInfo extends StatelessWidget {
             const SizedBox(height: 8),
 
             Text(
-              wallet.policyElements[0],
+              wallet.descriptor,
               style: c.fonts.caption!.copyWith(
                 color: c.colours.onBackground,
               ),

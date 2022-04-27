@@ -66,12 +66,6 @@ class SeedImportCubit extends Cubit<SeedImportState> {
   }
 
   void checkPassPhrase() {
-    if (state.passPhrase.length > 8 || state.passPhrase.contains(' ')) {
-      //what is this?
-      emit(state.copyWith(errPassPhrase: 'Invalid Passphrase'));
-      return;
-    }
-
     emit(
       state.copyWith(
         currentStep: SeedImportStep.import,
