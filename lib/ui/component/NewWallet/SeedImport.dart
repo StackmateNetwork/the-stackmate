@@ -139,7 +139,7 @@ class SeedImportPassphrase extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: TextButton(
                 onPressed: () {
-                  c.read<SeedImportCubit>().checkPassPhrase();
+                  c.read<SeedImportCubit>().checkSeed();
                 },
                 child: const Text('Confirm'),
               ),
