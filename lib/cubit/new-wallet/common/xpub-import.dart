@@ -18,7 +18,7 @@ class XpubImportState with _$XpubImportState {
   }) = _SeedImportXpubState;
   const XpubImportState._();
 
-  bool showOtherDetails() {
+  bool hasNoKeySource() {
     if (xpub.startsWith('[') && xpub.contains(']') && xpub.contains('/'))
       return false;
     return true;
@@ -97,7 +97,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
       );
       return;
     }
-    if (state.showOtherDetails() && state.fingerPrint.length < 8) {
+    if (state.hasNoKeySource() && state.fingerPrint.length < 8) {
       emit(
         state.copyWith(
           errXpub: 'Invalid Fingerprint. Try again.',
@@ -105,7 +105,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
       );
       return;
     }
-    if (state.showOtherDetails() && state.path == '') {
+    if (state.hasNoKeySource() && state.path == '') {
       emit(
         state.copyWith(
           errXpub: 'Invalid Path. Try again.',

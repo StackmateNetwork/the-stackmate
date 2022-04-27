@@ -121,12 +121,12 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       final xpub = xpubState.xpub;
       String fullXPub = xpub;
 
-      if (xpubState.showOtherDetails())
+      if (xpubState.hasNoKeySource())
         fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst('/m', '');
 
-      final policy = 'pk($fullXPub/0/*)';
+      final policy = 'pk($fullXPub/*)';
 
-      const readable = 'pk(__main__)';
+      const readable = 'pk(__primary__)';
 
       final com = _bitcoin.compile(
         policy: policy,
@@ -142,9 +142,9 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         descriptor: com.descriptor,
         policy: readable,
         requiredPolicyElements: 1,
-        policyElements: [fullXPub],
+        policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
-        walletType: 'WATCH ONLY',
+        walletType: 'WATCHER',
       );
 
       final savedId = await _storage.saveItem<Wallet>(

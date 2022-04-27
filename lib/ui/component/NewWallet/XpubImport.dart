@@ -102,7 +102,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
               ),
             ),
             const SizedBox(height: 40),
-            if (state.showOtherDetails()) ...[
+            if (state.hasNoKeySource()) ...[
               Text(
                 'Fingerprint'.toUpperCase().notLocalised(),
                 style: c.fonts.overline!.copyWith(

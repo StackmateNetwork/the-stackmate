@@ -171,9 +171,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     final fullXPub =
         '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}';
 
-    final policy = 'pk([$fullXPrv/0/*)'.replaceFirst('/m', '');
+    final policy = 'pk([$fullXPrv/*)'.replaceFirst('/m', '');
 
-    const readable = 'pk(__main__)';
+    const readable = 'pk(___primary___)';
 
     final com = _core.compile(
       policy: policy,
@@ -184,11 +184,11 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
     var newWallet = Wallet(
       label: state.walletLabel,
-      walletType: 'SINGLE SIGNATURE',
+      walletType: 'SIGNER',
       descriptor: com.descriptor,
       policy: readable,
       requiredPolicyElements: 1,
-      policyElements: [fullXPub],
+      policyElements: ['primary:$fullXPub'],
       blockchain: _blockchainCubit.state.blockchain.name,
     );
 
