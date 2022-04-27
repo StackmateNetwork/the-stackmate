@@ -16,7 +16,7 @@ class NodeAddressState with _$NodeAddressState {
   }) = _NodeAddressState;
   const NodeAddressState._();
 
-  String getAddress() => address == '' ? 'default' : 'https://$address:$port';
+  String getAddress() => address == '' ? 'default' : 'ssl://$address:$port';
 
   String mainString() =>
       address == '' ? 'ELECTRUM (Default)' : '$address:$port (Custom)';
@@ -37,7 +37,7 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
       if (node.error! == 'empty')
         emit(
           state.copyWith(
-            address: 'ssl://electrum.blockstream.info',
+            address: 'electrum.blockstream.info',
             port: '60002',
           ),
         );
