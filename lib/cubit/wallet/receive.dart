@@ -10,7 +10,11 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
+
+import '../../model/wallet.dart';
+import '../../pkg/storage.dart';
 
 part 'receive.freezed.dart';
 
@@ -25,14 +29,15 @@ class ReceiveState with _$ReceiveState {
 
 class ReceiveCubit extends Cubit<ReceiveState> {
   ReceiveCubit(
-    this._walletCubit,
-    // this._bitcoin,
-    this._blockchain,
-    this._logger,
-    this._clipBoard,
-    this._share,
-    this._vibrate,
-  ) : super(const ReceiveState()) {
+      this._walletCubit,
+      // this._bitcoin,
+      this._blockchain,
+      this._logger,
+      this._clipBoard,
+      this._share,
+      this._vibrate,
+      this._storage)
+      : super(const ReceiveState()) {
     _init();
   }
 
@@ -43,6 +48,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   final IShare _share;
   final IClipBoard _clipBoard;
   final IVibrate _vibrate;
+  final IStorage _storage;
 
   void _init() async {
     await Future.delayed(const Duration(milliseconds: 1000));
@@ -63,6 +69,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       // await Future.delayed(const Duration(seconds: 1));
 
       // final w = _walletCubit.state.selectedWallet!.descriptor.split('#')[0];
+
       final w = _walletCubit.state.selectedWallet!.descriptor;
       final index = _walletCubit.state.selectedWallet!.lastAddressIndex;
 
@@ -87,6 +94,18 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
       _vibrate.vibe();
       // Update wallet state here
+
+      final wallet = _walletCubit.state.selectedWallet!;
+      final updated =
+          wallet.copyWith(lastAddressIndex: wallet.lastAddressIndex! + 1);
+
+      await _storage.saveItemAt<Wallet>(
+        StoreKeys.Wallet.name,
+        updated.id!,
+        updated,
+      );
+
+      _walletCubit.walletSelected(updated);
 
       emit(
         state.copyWith(

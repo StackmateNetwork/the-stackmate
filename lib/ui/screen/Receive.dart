@@ -9,6 +9,7 @@ import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Receive/Loader.dart';
@@ -80,6 +81,7 @@ class ReceiveScreen extends StatelessWidget {
       locator<IClipBoard>(),
       locator<IShare>(),
       locator<IVibrate>(),
+      locator<IStorage>(),
     );
 
     return BlocProvider.value(
