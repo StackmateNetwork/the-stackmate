@@ -39,6 +39,8 @@ class SendState with _$SendState {
     @Default('') String errAddress,
     @Default('') String errAmount,
     @Default('') String errFees,
+    @Default('') String policyPath,
+    @Default('') String txOutputs,
     @Default('') String address,
     @Default('') String amount,
     @Default(0) int weight,
@@ -54,6 +56,7 @@ class SendState with _$SendState {
     int? finalAmount,
     @Default(false) bool sweepWallet,
   }) = _SendState;
+
   const SendState._();
 
   // bool confirmStep() => psbt != '' && txId == '';
@@ -114,7 +117,7 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final bal = await compute(computeBalance, {
-        'depositDesc': _walletCubit.state.selectedWallet!.mainWallet.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
       });
 
@@ -221,16 +224,16 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final psbt = await compute(buildTx, {
-        'depositDesc': _walletCubit.state.selectedWallet!.mainWallet.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
-        'toAddress': state.address,
-        'amount': state.sweepWallet ? '0' : state.amount,
+        'txOutputs': state.txOutputs,
         'feeAbsolute': '1000',
         'sweep': state.sweepWallet.toString(),
+        'policyPath': state.policyPath.toString(),
       });
 
       final weight = await compute(getWeight, {
-        'depositDesc': _walletCubit.state.selectedWallet!.mainWallet.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'psbt': psbt,
       });
 
@@ -337,9 +340,9 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final psbt = await compute(buildTx, {
-        'depositDesc': _walletCubit.state.selectedWallet!.mainWallet.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
-        'toAddress': state.address,
+        'txOutputs': state.txOutputs,
         'amount': state.sweepWallet ? '0' : state.amount,
         'feeAbsolute': state.finalFee.toString(),
         'sweep': state.sweepWallet.toString(),
@@ -402,13 +405,13 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final signed = await compute(signTx, {
-        'depositDesc': _walletCubit.state.selectedWallet!.mainWallet.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'unsignedPSBT': state.psbt,
       });
 
       final txid = await compute(broadcastTx, {
-        'depositDesc': _walletCubit.state.selectedWallet!.mainWallet.descriptor,
+        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'signedPSBT': signed,
       });
@@ -453,7 +456,7 @@ double estimateFeees(dynamic data) {
 int getWeight(dynamic data) {
   final obj = data as Map<String, String?>;
   final resp = BitcoinFFI().getWeight(
-    depositDesc: obj['depositDesc']!,
+    descriptor: obj['descriptor']!,
     psbt: obj['psbt']!,
   );
   return resp;
@@ -472,11 +475,11 @@ String buildTx(dynamic data) {
   final obj = data as Map<String, String?>;
   final resp = BitcoinFFI().buildTransaction(
     nodeAddress: obj['nodeAddress']!,
-    amount: obj['amount']!,
-    depositDesc: obj['depositDesc']!,
+    descriptor: obj['descriptor']!,
+    txOutputs: obj['txOutputs']!,
     feeAbsolute: obj['feeAbsolute']!,
-    toAddress: obj['toAddress']!,
     sweep: obj['sweep']!,
+    policyPath: obj['policyPath']!,
   );
   return resp;
 }
@@ -490,7 +493,8 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
   final json = jsonDecode(resp)['outputs'];
 
   final List<DecodedTxOutput> decoded = [];
-  for (final out in json) decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
+  for (final out in json)
+    decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
 
   return decoded;
 }
@@ -500,7 +504,7 @@ String signTx(dynamic data) {
 
   final resp = BitcoinFFI().signTransaction(
     nodeAddress: obj['nodeAddress']!,
-    depositDesc: obj['depositDesc']!,
+    descriptor: obj['descriptor']!,
     unsignedPSBT: obj['unsignedPSBT']!,
   );
   return resp;
@@ -511,7 +515,7 @@ String broadcastTx(dynamic data) {
 
   final resp = BitcoinFFI().broadcastTransaction(
     nodeAddress: obj['nodeAddress']!,
-    depositDesc: obj['depositDesc']!,
+    descriptor: obj['descriptor']!,
     signedPSBT: obj['signedPSBT']!,
   );
   return resp;

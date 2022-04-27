@@ -9,15 +9,16 @@ import 'package:sats/model/transaction.dart';
 class BitcoinFFI implements IStackMateCore {
   BitcoinFFI() {
     _bitcoin = FFFI(
-      binary:
-          Platform.isAndroid ? DynamicLibrary.open('libstackmate.so') : DynamicLibrary.executable(),
+      binary: Platform.isAndroid
+          ? DynamicLibrary.open('libstackmate.so')
+          : DynamicLibrary.executable(),
     );
   }
 
   late FFFI _bitcoin;
 
   @override
-  Nmeu generateMaster({
+  Seed generateMaster({
     required String length,
     required String passphrase,
     required String network,
@@ -29,11 +30,11 @@ class BitcoinFFI implements IStackMateCore {
     );
 
     if (resp.startsWith('Error')) throw resp;
-    return Nmeu.fromJson(resp);
+    return Seed.fromJson(resp);
   }
 
   @override
-  Nmeu importMaster({
+  Seed importMaster({
     required String mnemonic,
     required String passphrase,
     required String network,
@@ -44,11 +45,11 @@ class BitcoinFFI implements IStackMateCore {
       network: network,
     );
     if (resp.startsWith('Error')) throw resp;
-    return Nmeu.fromJson(resp);
+    return Seed.fromJson(resp);
   }
 
   @override
-  DerivedWallet deriveHardened({
+  DerivedKeys deriveHardened({
     required String masterXPriv,
     required String account,
     required String purpose,
@@ -59,11 +60,11 @@ class BitcoinFFI implements IStackMateCore {
       purpose: purpose,
     );
     if (resp.startsWith('Error')) throw resp;
-    return DerivedWallet.fromJson(resp);
+    return DerivedKeys.fromJson(resp);
   }
 
   @override
-  Compile compile({
+  String compile({
     required String policy,
     required String scriptType,
   }) {
@@ -72,16 +73,16 @@ class BitcoinFFI implements IStackMateCore {
       scriptType: scriptType,
     );
     if (resp.startsWith('Error')) throw resp;
-    return Compile.fromJson(resp);
+    return resp;
   }
 
   @override
   int syncBalance({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
   }) {
     final resp = _bitcoin.syncBalance(
-      depositDesc: depositDesc,
+      descriptor: descriptor,
       nodeAddress: nodeAddress,
     );
     if (resp.contains('Error')) throw resp;
@@ -92,13 +93,11 @@ class BitcoinFFI implements IStackMateCore {
 
   @override
   String getAddress({
-    required String depositDesc,
-    required String nodeAddress,
+    required String descriptor,
     required String index,
   }) {
     final resp = _bitcoin.getAddress(
-      depositDesc: depositDesc,
-      nodeAddress: nodeAddress,
+      descriptor: descriptor,
       index: index,
     );
     return resp;
@@ -106,18 +105,19 @@ class BitcoinFFI implements IStackMateCore {
 
   @override
   List<Transaction> getHistory({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
   }) {
     final resp = _bitcoin.getHistory(
-      depositDesc: depositDesc,
+      descriptor: descriptor,
       nodeAddress: nodeAddress,
     );
     final json = jsonDecode(resp);
     final List<Transaction> transactions = [];
     for (final t in json['history'] as List) {
       var tx = Transaction.fromJson(t as Map<String, dynamic>);
-      if (!tx.isReceive()) tx = tx.copyWith(sent: tx.sent - tx.received - tx.fee);
+      if (!tx.isReceive())
+        tx = tx.copyWith(sent: tx.sent - tx.received - tx.fee);
 
       transactions.add(tx);
     }
@@ -129,20 +129,20 @@ class BitcoinFFI implements IStackMateCore {
 
   @override
   String buildTransaction({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
-    required String toAddress,
-    required String amount,
+    required String txOutputs,
     required String feeAbsolute,
     required String sweep,
+    required String policyPath,
   }) {
     final resp = _bitcoin.buildTransaction(
-      depositDesc: depositDesc,
+      descriptor: descriptor,
       nodeAddress: nodeAddress,
-      toAddress: toAddress,
-      amount: amount,
+      txOutputs: txOutputs,
       feeAbsolute: feeAbsolute,
       sweep: sweep,
+      policyPath: policyPath,
     );
     final data = jsonDecode(resp);
     return data['psbt'] as String;
@@ -156,12 +156,12 @@ class BitcoinFFI implements IStackMateCore {
 
   @override
   String signTransaction({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
     required String unsignedPSBT,
   }) {
     final resp = _bitcoin.signTransaction(
-      depositDesc: depositDesc,
+      descriptor: descriptor,
       nodeAddress: nodeAddress,
       unsignedPSBT: unsignedPSBT,
     );
@@ -171,12 +171,12 @@ class BitcoinFFI implements IStackMateCore {
 
   @override
   String broadcastTransaction({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
     required String signedPSBT,
   }) {
     final resp = _bitcoin.broadcastTransaction(
-      depositDesc: depositDesc,
+      descriptor: descriptor,
       nodeAddress: nodeAddress,
       signedPSBT: signedPSBT,
     );
@@ -202,11 +202,11 @@ class BitcoinFFI implements IStackMateCore {
 
   @override
   int getWeight({
-    required String depositDesc,
+    required String descriptor,
     required String psbt,
   }) {
     final resp = _bitcoin.getWeight(
-      depositDesc: depositDesc,
+      descriptor: descriptor,
       psbt: psbt,
     );
     if (resp.startsWith('Error')) throw resp;
@@ -265,7 +265,8 @@ class BitcoinFFI implements IStackMateCore {
   }
 
   @override
-  DerivedWallet derivePathStr({required String masterXPriv, required String derivationPath}) {
+  DerivedKeys derivePathStr(
+      {required String masterXPriv, required String derivationPath}) {
     // TODO: implement derivePathStr
     throw UnimplementedError();
   }

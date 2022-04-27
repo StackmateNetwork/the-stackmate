@@ -6,7 +6,7 @@ part of 'node.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NodeClassAdaper extends TypeAdapter<_$_Node> {
+class NodeClassAdapter extends TypeAdapter<_$_Node> {
   @override
   final int typeId = 5;
 
@@ -38,7 +38,7 @@ class NodeClassAdaper extends TypeAdapter<_$_Node> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NodeClassAdaper &&
+      other is NodeClassAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -12,8 +12,6 @@ import 'package:sats/ui/screen/AddWallet.dart';
 import 'package:sats/ui/screen/Calculator.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Logs.dart';
-import 'package:sats/ui/screen/NewWallet/NewSeedInheritance.dart';
-import 'package:sats/ui/screen/NewWallet/OldSeedInheritance.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
 import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
@@ -81,16 +79,22 @@ class Stackmate extends StatelessWidget {
       GoRoute(path: '/network', builder: (_, __) => Container()),
       //
       GoRoute(path: '/add-wallet', builder: (_, __) => const AddWalletScreen()),
-      GoRoute(path: '/generate-seed', builder: (_, __) => const SeedGenerateScreen()),
-      GoRoute(path: '/import-seed', builder: (_, __) => const SeedImportScreen()),
-      GoRoute(path: '/watch-only', builder: (_, __) => const XPubImportScreen()),
-      GoRoute(path: '/inheritance-new-seed', builder: (_, __) => const InheritanceNewSeedScreen()),
-      GoRoute(path: '/inheritance-old-seed', builder: (_, __) => const InheritanceOldSeedScreen()),
-      //
+      GoRoute(
+          path: '/generate-seed',
+          builder: (_, __) => const SeedGenerateScreen()),
+      GoRoute(
+          path: '/import-seed', builder: (_, __) => const SeedImportScreen()),
+      GoRoute(
+          path: '/watch-only', builder: (_, __) => const XPubImportScreen()),
+
       GoRoute(path: '/wallet', builder: (_, __) => const WalletScreen()),
       GoRoute(path: '/receive', builder: (_, __) => const ReceiveScreen()),
-      GoRoute(path: '/send', builder: (_, __) => const WalletSendScreen(fromQr: false)),
-      GoRoute(path: '/send', builder: (_, __) => const WalletSendScreen(fromQr: true)),
+      GoRoute(
+          path: '/send',
+          builder: (_, __) => const WalletSendScreen(fromQr: false)),
+      GoRoute(
+          path: '/send',
+          builder: (_, __) => const WalletSendScreen(fromQr: true)),
       //
       GoRoute(path: '/logs', builder: (_, __) => const LogsScreen()),
     ],

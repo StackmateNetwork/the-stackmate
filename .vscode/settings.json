@@ -4,7 +4,7 @@
     },
     "files.exclude": {
         "**/.metadata": true,
-        ".gitignore": true,
+        ".gitignore": false,
         "**/.packages": true,
         "**/pubspec.lock": true,
         "**/.flutter-plugins": true,
@@ -18,12 +18,11 @@
         //
         //
         // 
-        "**/build": true,
+        "**/build": false,
         //
         //
         "assets": true,
         "integration_test": true,
-        "**/test": true,
         ".gitlab-ci.yml": true,
         //
         "**/assets": true,
@@ -31,16 +30,16 @@
         //
         "**/**.g.dart": true,
         "**/**.freezed.dart": true,
-        "android": true,
+        "android": false,
         "ios": true,
-        "**/android": true,
+        "**/android": false,
         "**/ios": true,
         //
         //
         "**/analysis_options.yaml": true,
-        "**/packages": true,
+        "**/packages": false,
         "**/pubspec.yaml": true,
-        "README.md": true,
+        "README.md": false,
         //
         //
         //

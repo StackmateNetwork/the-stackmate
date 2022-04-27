@@ -35,12 +35,11 @@ extension StoreKeysFunctions on StoreKeys {
 Future<void> initializeHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(RedditPostClassAdapter());
-  Hive.registerAdapter(WalletClassAdaper());
-  Hive.registerAdapter(InternalWalletClassAdaper());
-  Hive.registerAdapter(BlockchainClassAdaper());
-  Hive.registerAdapter(AddressBookUserClassAdaper());
-  Hive.registerAdapter(AddressBookValueClassAdaper());
-  Hive.registerAdapter(NodeClassAdaper());
+  Hive.registerAdapter(WalletClassAdapter());
+  Hive.registerAdapter(BlockchainClassAdapter());
+  Hive.registerAdapter(AddressBookUserClassAdapter());
+  Hive.registerAdapter(AddressBookValueClassAdapter());
+  Hive.registerAdapter(NodeClassAdapter());
 
   await Hive.openBox<RedditPost>(
     StoreKeys.RedditPost.name,
@@ -142,7 +141,7 @@ class HiveStore implements IStorage {
     try {
       final str = _box.get(key);
       if (str == null) {
-        throw 'empty';
+        return R(error: 'empty');
       }
       return R(result: str);
     } catch (e, s) {
@@ -153,10 +152,10 @@ class HiveStore implements IStorage {
     // var result = _box.get(key);
     // try {
     //   final obj = Hive.box<String>(key).getAt(0);
-    //   if (obj == null) throw 'empty';
+    //   if (obj == null) return R(error: 'empty');
     //   return obj;
     // } catch (e) {
-    //   throw 'empty';
+    //   return R(error: 'empty');
     // }
     // if ((key == StoreKeys.token.name || key == StoreKeys.phone.name) &&
     //     (result == null || result == '')) {
@@ -187,11 +186,11 @@ class HiveStore implements IStorage {
   R<T> getFirstItem<T>(String cls) {
     try {
       final bx = Hive.box<T>(cls);
-      // if (bx.isEmpty) throw 'empty';
+      // if (bx.isEmpty) return R(error: 'empty');
       final len = bx.length;
-      if (len == 0) throw 'empty';
+      if (len == 0) return R(error: 'empty');
       final obj = bx.getAt(0);
-      if (obj == null) throw 'empty';
+      if (obj == null) return R(error: 'empty');
       return R(result: obj);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);

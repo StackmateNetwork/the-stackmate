@@ -11,8 +11,7 @@ part of 'seed-generate.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 class _$SeedGenerateStateTearOff {
@@ -24,7 +23,7 @@ class _$SeedGenerateStateTearOff {
       String? masterXpriv,
       String? xpriv,
       String? fingerPrint,
-      DerivedWallet? wallet,
+      DerivedKeys? wallet,
       bool generatingSeed = false,
       int seedLength = 12,
       String seedError = '',
@@ -68,7 +67,7 @@ mixin _$SeedGenerateState {
   String? get masterXpriv => throw _privateConstructorUsedError;
   String? get xpriv => throw _privateConstructorUsedError;
   String? get fingerPrint => throw _privateConstructorUsedError;
-  DerivedWallet? get wallet => throw _privateConstructorUsedError;
+  DerivedKeys? get wallet => throw _privateConstructorUsedError;
   bool get generatingSeed => throw _privateConstructorUsedError;
   int get seedLength => throw _privateConstructorUsedError;
   String get seedError => throw _privateConstructorUsedError;
@@ -76,13 +75,15 @@ mixin _$SeedGenerateState {
   String get quizSeedAnswer => throw _privateConstructorUsedError;
   int get quizSeedAnswerIdx => throw _privateConstructorUsedError;
   List<String> get quizSeedList => throw _privateConstructorUsedError;
-  List<String> get quizSeedCompletedAnswers => throw _privateConstructorUsedError;
+  List<String> get quizSeedCompletedAnswers =>
+      throw _privateConstructorUsedError;
   String get quizSeedError => throw _privateConstructorUsedError;
   String get passPhrase => throw _privateConstructorUsedError;
   String get errPassphrase => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SeedGenerateStateCopyWith<SeedGenerateState> get copyWith => throw _privateConstructorUsedError;
+  $SeedGenerateStateCopyWith<SeedGenerateState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -96,7 +97,7 @@ abstract class $SeedGenerateStateCopyWith<$Res> {
       String? masterXpriv,
       String? xpriv,
       String? fingerPrint,
-      DerivedWallet? wallet,
+      DerivedKeys? wallet,
       bool generatingSeed,
       int seedLength,
       String seedError,
@@ -111,7 +112,8 @@ abstract class $SeedGenerateStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SeedGenerateStateCopyWithImpl<$Res> implements $SeedGenerateStateCopyWith<$Res> {
+class _$SeedGenerateStateCopyWithImpl<$Res>
+    implements $SeedGenerateStateCopyWith<$Res> {
   _$SeedGenerateStateCopyWithImpl(this._value, this._then);
 
   final SeedGenerateState _value;
@@ -162,7 +164,7 @@ class _$SeedGenerateStateCopyWithImpl<$Res> implements $SeedGenerateStateCopyWit
       wallet: wallet == freezed
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
-              as DerivedWallet?,
+              as DerivedKeys?,
       generatingSeed: generatingSeed == freezed
           ? _value.generatingSeed
           : generatingSeed // ignore: cast_nullable_to_non_nullable
@@ -212,7 +214,8 @@ class _$SeedGenerateStateCopyWithImpl<$Res> implements $SeedGenerateStateCopyWit
 }
 
 /// @nodoc
-abstract class _$SeedGenerateStateCopyWith<$Res> implements $SeedGenerateStateCopyWith<$Res> {
+abstract class _$SeedGenerateStateCopyWith<$Res>
+    implements $SeedGenerateStateCopyWith<$Res> {
   factory _$SeedGenerateStateCopyWith(
           _SeedGenerateState value, $Res Function(_SeedGenerateState) then) =
       __$SeedGenerateStateCopyWithImpl<$Res>;
@@ -223,7 +226,7 @@ abstract class _$SeedGenerateStateCopyWith<$Res> implements $SeedGenerateStateCo
       String? masterXpriv,
       String? xpriv,
       String? fingerPrint,
-      DerivedWallet? wallet,
+      DerivedKeys? wallet,
       bool generatingSeed,
       int seedLength,
       String seedError,
@@ -238,7 +241,8 @@ abstract class _$SeedGenerateStateCopyWith<$Res> implements $SeedGenerateStateCo
 }
 
 /// @nodoc
-class __$SeedGenerateStateCopyWithImpl<$Res> extends _$SeedGenerateStateCopyWithImpl<$Res>
+class __$SeedGenerateStateCopyWithImpl<$Res>
+    extends _$SeedGenerateStateCopyWithImpl<$Res>
     implements _$SeedGenerateStateCopyWith<$Res> {
   __$SeedGenerateStateCopyWithImpl(
       _SeedGenerateState _value, $Res Function(_SeedGenerateState) _then)
@@ -288,7 +292,7 @@ class __$SeedGenerateStateCopyWithImpl<$Res> extends _$SeedGenerateStateCopyWith
       wallet: wallet == freezed
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
-              as DerivedWallet?,
+              as DerivedKeys?,
       generatingSeed: generatingSeed == freezed
           ? _value.generatingSeed
           : generatingSeed // ignore: cast_nullable_to_non_nullable
@@ -372,7 +376,7 @@ class _$_SeedGenerateState extends _SeedGenerateState {
   @override
   final String? fingerPrint;
   @override
-  final DerivedWallet? wallet;
+  final DerivedKeys? wallet;
   @JsonKey(defaultValue: false)
   @override
   final bool generatingSeed;
@@ -417,42 +421,55 @@ class _$_SeedGenerateState extends _SeedGenerateState {
     return identical(this, other) ||
         (other is _SeedGenerateState &&
             (identical(other.currentStep, currentStep) ||
-                const DeepCollectionEquality().equals(other.currentStep, currentStep)) &&
+                const DeepCollectionEquality()
+                    .equals(other.currentStep, currentStep)) &&
             (identical(other.seed, seed) ||
                 const DeepCollectionEquality().equals(other.seed, seed)) &&
             (identical(other.masterXpriv, masterXpriv) ||
-                const DeepCollectionEquality().equals(other.masterXpriv, masterXpriv)) &&
+                const DeepCollectionEquality()
+                    .equals(other.masterXpriv, masterXpriv)) &&
             (identical(other.xpriv, xpriv) ||
                 const DeepCollectionEquality().equals(other.xpriv, xpriv)) &&
             (identical(other.fingerPrint, fingerPrint) ||
-                const DeepCollectionEquality().equals(other.fingerPrint, fingerPrint)) &&
+                const DeepCollectionEquality()
+                    .equals(other.fingerPrint, fingerPrint)) &&
             (identical(other.wallet, wallet) ||
                 const DeepCollectionEquality().equals(other.wallet, wallet)) &&
             (identical(other.generatingSeed, generatingSeed) ||
-                const DeepCollectionEquality().equals(other.generatingSeed, generatingSeed)) &&
+                const DeepCollectionEquality()
+                    .equals(other.generatingSeed, generatingSeed)) &&
             (identical(other.seedLength, seedLength) ||
-                const DeepCollectionEquality().equals(other.seedLength, seedLength)) &&
+                const DeepCollectionEquality()
+                    .equals(other.seedLength, seedLength)) &&
             (identical(other.seedError, seedError) ||
-                const DeepCollectionEquality().equals(other.seedError, seedError)) &&
+                const DeepCollectionEquality()
+                    .equals(other.seedError, seedError)) &&
             (identical(other.quizSeedCompleted, quizSeedCompleted) ||
                 const DeepCollectionEquality()
                     .equals(other.quizSeedCompleted, quizSeedCompleted)) &&
             (identical(other.quizSeedAnswer, quizSeedAnswer) ||
-                const DeepCollectionEquality().equals(other.quizSeedAnswer, quizSeedAnswer)) &&
+                const DeepCollectionEquality()
+                    .equals(other.quizSeedAnswer, quizSeedAnswer)) &&
             (identical(other.quizSeedAnswerIdx, quizSeedAnswerIdx) ||
                 const DeepCollectionEquality()
                     .equals(other.quizSeedAnswerIdx, quizSeedAnswerIdx)) &&
             (identical(other.quizSeedList, quizSeedList) ||
-                const DeepCollectionEquality().equals(other.quizSeedList, quizSeedList)) &&
-            (identical(other.quizSeedCompletedAnswers, quizSeedCompletedAnswers) ||
                 const DeepCollectionEquality()
-                    .equals(other.quizSeedCompletedAnswers, quizSeedCompletedAnswers)) &&
+                    .equals(other.quizSeedList, quizSeedList)) &&
+            (identical(
+                    other.quizSeedCompletedAnswers, quizSeedCompletedAnswers) ||
+                const DeepCollectionEquality().equals(
+                    other.quizSeedCompletedAnswers,
+                    quizSeedCompletedAnswers)) &&
             (identical(other.quizSeedError, quizSeedError) ||
-                const DeepCollectionEquality().equals(other.quizSeedError, quizSeedError)) &&
+                const DeepCollectionEquality()
+                    .equals(other.quizSeedError, quizSeedError)) &&
             (identical(other.passPhrase, passPhrase) ||
-                const DeepCollectionEquality().equals(other.passPhrase, passPhrase)) &&
+                const DeepCollectionEquality()
+                    .equals(other.passPhrase, passPhrase)) &&
             (identical(other.errPassphrase, errPassphrase) ||
-                const DeepCollectionEquality().equals(other.errPassphrase, errPassphrase)));
+                const DeepCollectionEquality()
+                    .equals(other.errPassphrase, errPassphrase)));
   }
 
   @override
@@ -489,7 +506,7 @@ abstract class _SeedGenerateState extends SeedGenerateState {
       String? masterXpriv,
       String? xpriv,
       String? fingerPrint,
-      DerivedWallet? wallet,
+      DerivedKeys? wallet,
       bool generatingSeed,
       int seedLength,
       String seedError,
@@ -514,7 +531,7 @@ abstract class _SeedGenerateState extends SeedGenerateState {
   @override
   String? get fingerPrint => throw _privateConstructorUsedError;
   @override
-  DerivedWallet? get wallet => throw _privateConstructorUsedError;
+  DerivedKeys? get wallet => throw _privateConstructorUsedError;
   @override
   bool get generatingSeed => throw _privateConstructorUsedError;
   @override
@@ -530,7 +547,8 @@ abstract class _SeedGenerateState extends SeedGenerateState {
   @override
   List<String> get quizSeedList => throw _privateConstructorUsedError;
   @override
-  List<String> get quizSeedCompletedAnswers => throw _privateConstructorUsedError;
+  List<String> get quizSeedCompletedAnswers =>
+      throw _privateConstructorUsedError;
   @override
   String get quizSeedError => throw _privateConstructorUsedError;
   @override

@@ -18,8 +18,8 @@ class _$NodeAddressStateTearOff {
   const _$NodeAddressStateTearOff();
 
   _NodeAddressState call(
-      {String address = '',
-      String port = '',
+      {String address = 'ssl://electrum.blockstream.info',
+      String port = '60002',
       String errNodeState = '',
       bool isEditing = false}) {
     return _NodeAddressState(
@@ -144,16 +144,16 @@ class __$NodeAddressStateCopyWithImpl<$Res>
 
 class _$_NodeAddressState extends _NodeAddressState {
   const _$_NodeAddressState(
-      {this.address = '',
-      this.port = '',
+      {this.address = 'ssl://electrum.blockstream.info',
+      this.port = '60002',
       this.errNodeState = '',
       this.isEditing = false})
       : super._();
 
-  @JsonKey(defaultValue: '')
+  @JsonKey(defaultValue: 'ssl://electrum.blockstream.info')
   @override
   final String address;
-  @JsonKey(defaultValue: '')
+  @JsonKey(defaultValue: '60002')
   @override
   final String port;
   @JsonKey(defaultValue: '')

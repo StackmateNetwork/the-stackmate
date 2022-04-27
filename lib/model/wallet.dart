@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'package:sats/model/transaction.dart';
@@ -5,19 +7,22 @@ import 'package:sats/model/transaction.dart';
 part 'wallet.g.dart';
 part 'wallet.freezed.dart';
 
+const satsInBTC = 100000000;
+
 @freezed
 class Wallet with _$Wallet {
-  @HiveType(typeId: 1, adapterName: 'WalletClassAdaper')
+  @HiveType(typeId: 1, adapterName: 'WalletClassAdapter')
   const factory Wallet({
     @HiveField(0) required String label,
-    @HiveField(1) required InternalWallet mainWallet,
-    @HiveField(2) required InternalWallet exportWallet,
-    @HiveField(3) InternalWallet? backedupWallet,
-    @HiveField(4) required String blockchain,
-    @HiveField(5) List<Transaction>? transactions,
-    @HiveField(6) int? id,
-    @HiveField(7) int? balance,
-    @HiveField(8) required String walletType,
+    @HiveField(1) required String descriptor,
+    @HiveField(2) required String policy,
+    @HiveField(3) required int requiredPolicyElements,
+    @HiveField(4) required List<String> policyElements,
+    @HiveField(5) required String blockchain,
+    @HiveField(6) List<Transaction>? transactions,
+    @HiveField(7) int? id,
+    @HiveField(8) int? balance,
+    @HiveField(9) required String walletType,
     // @Default(false) @HiveField(7) bool watchOnly,
   }) = _Wallet;
   const Wallet._();
@@ -25,24 +30,21 @@ class Wallet with _$Wallet {
   factory Wallet.fromJson(Map<String, dynamic> json) => _$WalletFromJson(json);
 
   String balanceToBtc() =>
-      balance == null ? '0' : (balance! / 100000000).toStringAsFixed(8);
+      balance == null ? '0' : (balance! / satsInBTC).toStringAsFixed(8);
 
   bool isNotWatchOnly() => label != 'WATCH ONLY';
-}
 
-@freezed
-class InternalWallet with _$InternalWallet {
-  @HiveType(typeId: 2, adapterName: 'InternalWalletClassAdaper')
-  const factory InternalWallet({
-    @HiveField(0) String? xPriv,
-    @HiveField(1) required String xPub,
-    @HiveField(2) required String fingerPrint,
-    @HiveField(3) required String path,
-    @HiveField(4) String? descriptor,
-    @HiveField(5) DateTime? rescueDate,
-  }) = _InternalWallet;
-  const InternalWallet._();
-
-  factory InternalWallet.fromJson(Map<String, dynamic> json) =>
-      _$InternalWalletFromJson(json);
+  int pendingPolicyElements() {
+    return policyElements.length - requiredPolicyElements;
+  }
 }
+// enum PolicyElement <T extends Object> {
+//   // Example Policy: 
+//   // or(pk(___main___),and(after(___exit-timelock___),hash160(___exit-secret___)))
+//   publicKey<String,String>("[fingerprint/path]xkey","___main___"),
+//   timeLock<String,String>("7894564","___exit-timelock___"),
+//   hashLock<String,String>("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08","___exit-secret___");
+  
+//   const PolicyElement(this.value, this,.identifier);
+//   final T <value, identifier>;
+// }

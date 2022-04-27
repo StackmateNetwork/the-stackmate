@@ -2,7 +2,7 @@ import 'package:bitcoin/bitcoin.dart';
 import 'package:sats/model/transaction.dart';
 
 abstract class IStackMateCore {
-  DerivedWallet derivePathStr({
+  DerivedKeys derivePathStr({
     required String masterXPriv,
     required String derivationPath,
   });
@@ -25,25 +25,25 @@ abstract class IStackMateCore {
     required String pubkey,
   });
 
-  Nmeu generateMaster({
+  Seed generateMaster({
     required String length,
     required String passphrase,
     required String network,
   });
 
-  Nmeu importMaster({
+  Seed importMaster({
     required String mnemonic,
     required String passphrase,
     required String network,
   });
 
-  DerivedWallet deriveHardened({
+  DerivedKeys deriveHardened({
     required String masterXPriv,
     required String account,
     required String purpose,
   });
 
-  Compile compile({
+  String compile({
     required String policy,
     required String scriptType,
   });
@@ -55,7 +55,7 @@ abstract class IStackMateCore {
   });
 
   int getWeight({
-    required String depositDesc,
+    required String descriptor,
     required String psbt,
   });
 
@@ -70,28 +70,27 @@ abstract class IStackMateCore {
   });
 
   int syncBalance({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
   });
 
   List<Transaction> getHistory({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
   });
 
   String getAddress({
-    required String depositDesc,
-    required String nodeAddress,
+    required String descriptor,
     required String index,
   });
 
   String buildTransaction({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
-    required String toAddress,
-    required String amount,
+    required String txOutputs,
     required String feeAbsolute,
     required String sweep,
+    required String policyPath,
   });
 
   String decodePsbt({
@@ -100,13 +99,13 @@ abstract class IStackMateCore {
   });
 
   String signTransaction({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
     required String unsignedPSBT,
   });
 
   String broadcastTransaction({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
     required String signedPSBT,
   });

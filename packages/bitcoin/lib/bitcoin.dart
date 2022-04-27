@@ -44,7 +44,8 @@ class FFFI {
     required String account,
     required String purpose,
   }) {
-    final func = binary.lookupFunction<DeriveT, DeriveT>('derive_hardened');
+    final func =
+        binary.lookupFunction<DeriveT, DeriveT>('derive_wallet_account');
     final resp = func(
       masterXPriv.toNativeUtf8(),
       purpose.toNativeUtf8(),
@@ -66,24 +67,24 @@ class FFFI {
   }
 
   String syncBalance({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
   }) {
     final func = binary.lookupFunction<SyncT, SyncT>('sync_balance');
     final response = func(
-      depositDesc.toNativeUtf8(),
+      descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
     );
     return response.toDartString();
   }
 
   String getHistory({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
   }) {
     final func = binary.lookupFunction<SyncT, SyncT>('sync_history');
     final resp = func(
-      depositDesc.toNativeUtf8(),
+      descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
     ).toDartString();
     if (resp.startsWith('Error')) throw resp;
@@ -91,14 +92,12 @@ class FFFI {
   }
 
   String getAddress({
-    required String depositDesc,
-    required String nodeAddress,
+    required String descriptor,
     required String index,
   }) {
     final func = binary.lookupFunction<AddressT, AddressT>('get_address');
     final resp = func(
-      depositDesc.toNativeUtf8(),
-      nodeAddress.toNativeUtf8(),
+      descriptor.toNativeUtf8(),
       index.toNativeUtf8(),
     ).toDartString();
     if (resp.startsWith('Error')) throw resp;
@@ -108,21 +107,21 @@ class FFFI {
   }
 
   String buildTransaction({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
-    required String toAddress,
-    required String amount,
+    required String txOutputs,
     required String feeAbsolute,
     required String sweep,
+    required String policyPath,
   }) {
     final func = binary.lookupFunction<BuildT, BuildT>('build_tx');
     final resp = func(
-      depositDesc.toNativeUtf8(),
+      descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
-      toAddress.toNativeUtf8(),
-      amount.toNativeUtf8(),
+      txOutputs.toNativeUtf8(),
       feeAbsolute.toNativeUtf8(),
       sweep.toNativeUtf8(),
+      policyPath.toNativeUtf8(),
     ).toDartString();
     if (resp.startsWith('Error')) throw resp;
     return resp;
@@ -142,13 +141,13 @@ class FFFI {
   }
 
   String signTransaction({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
     required String unsignedPSBT,
   }) {
     final func = binary.lookupFunction<SignT, SignT>('sign_tx');
     final resp = func(
-      depositDesc.toNativeUtf8(),
+      descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
       unsignedPSBT.toNativeUtf8(),
     ).toDartString();
@@ -157,7 +156,7 @@ class FFFI {
   }
 
   String broadcastTransaction({
-    required String depositDesc,
+    required String descriptor,
     required String nodeAddress,
     required String signedPSBT,
   }) {
@@ -165,7 +164,7 @@ class FFFI {
       'broadcast_tx',
     );
     final resp = func(
-      depositDesc.toNativeUtf8(),
+      descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
       signedPSBT.toNativeUtf8(),
     ).toDartString();
@@ -189,12 +188,12 @@ class FFFI {
   }
 
   String getWeight({
-    required String depositDesc,
+    required String descriptor,
     required String psbt,
   }) {
     final func = binary.lookupFunction<WeightT, WeightT>('get_weight');
     final resp = func(
-      depositDesc.toNativeUtf8(),
+      descriptor.toNativeUtf8(),
       psbt.toNativeUtf8(),
     ).toDartString();
     return resp;

@@ -24,7 +24,7 @@ class SeedGenerateState with _$SeedGenerateState {
     String? masterXpriv,
     String? xpriv,
     String? fingerPrint,
-    DerivedWallet? wallet,
+    DerivedKeys? wallet,
     @Default(false) bool generatingSeed,
     @Default(12) int seedLength,
     @Default('') String seedError,
@@ -51,7 +51,8 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   final ChainSelectCubit _blockchainCubit;
   final Logger _logger;
 
-  void passPhrasedChanged(String text) => emit(state.copyWith(passPhrase: text));
+  void passPhrasedChanged(String text) =>
+      emit(state.copyWith(passPhrase: text));
 
   void confirmPassphrase() {
     if (state.passPhrase.length > 8 || state.passPhrase.contains(' ')) {
@@ -69,7 +70,8 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
     );
   }
 
-  void seedLengthChanged(String len) => emit(state.copyWith(seedLength: int.parse(len)));
+  void seedLengthChanged(String len) =>
+      emit(state.copyWith(seedLength: int.parse(len)));
 
   void generateSeed() async {
     try {
@@ -125,11 +127,13 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
     String answer = '';
     while (answer == '') {
       final idx = Random().nextInt(quizList.length);
-      if (!state.quizSeedCompletedAnswers.contains(quizList[idx])) answer = quizList[idx];
+      if (!state.quizSeedCompletedAnswers.contains(quizList[idx]))
+        answer = quizList[idx];
     }
     final answerIdx = quizList.indexOf(answer);
 
-    for (final completed in state.quizSeedCompletedAnswers) quizList.remove(completed);
+    for (final completed in state.quizSeedCompletedAnswers)
+      quizList.remove(completed);
 
     final List<String> answerList = [answer];
     quizList.remove(answer);
@@ -165,7 +169,8 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
     }
     emit(state.copyWith(quizSeedError: ''));
 
-    final List<String> completedAnswers = state.quizSeedCompletedAnswers.toList();
+    final List<String> completedAnswers =
+        state.quizSeedCompletedAnswers.toList();
     completedAnswers.add(text);
 
     emit(
@@ -177,10 +182,10 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
 
     if (completedAnswers.length == 3) {
       _quizCompleted();
-      return;
+    } else {
+      _updateQuiz();
     }
-
-    _updateQuiz();
+    return;
   }
 
   void _quizCompleted() {

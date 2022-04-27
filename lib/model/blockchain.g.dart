@@ -6,7 +6,7 @@ part of 'blockchain.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class BlockchainClassAdaper extends TypeAdapter<Blockchain> {
+class BlockchainClassAdapter extends TypeAdapter<Blockchain> {
   @override
   final int typeId = 4;
 
@@ -40,7 +40,7 @@ class BlockchainClassAdaper extends TypeAdapter<Blockchain> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is BlockchainClassAdaper &&
+      other is BlockchainClassAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

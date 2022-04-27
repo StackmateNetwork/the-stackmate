@@ -20,9 +20,6 @@ app/typescript/dist/
 #RUST
 app/rust/target
 
-
-
-
 #DART
 # Miscellaneous
 *.class
@@ -63,3 +60,8 @@ app.*.map.json
 
 **/target
 # /packages/bitcoin/ios/libstackmate.a
+android/src/main/jniLibs/x86_64/libstackmate.so
+android/src/main/jniLibs/x86/libstackmate.so
+android/src/main/jniLibs/armeabi-v7a/libstackmate.so
+android/src/main/jniLibs/arm64-v8a/libstackmate.so
+packages/bitcoin/test/libstackmate.dylib

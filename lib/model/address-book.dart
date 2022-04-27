@@ -6,7 +6,7 @@ part 'address-book.g.dart';
 
 @freezed
 class AddressBookUser with _$AddressBookUser {
-  @HiveType(typeId: 6, adapterName: 'AddressBookUserClassAdaper')
+  @HiveType(typeId: 6, adapterName: 'AddressBookUserClassAdapter')
   const factory AddressBookUser({
     @HiveField(2) int? id,
     @HiveField(0) required String name,
@@ -19,7 +19,7 @@ class AddressBookUser with _$AddressBookUser {
 
 @freezed
 class AddressBookKey with _$AddressBookKey {
-  @HiveType(typeId: 7, adapterName: 'AddressBookValueClassAdaper')
+  @HiveType(typeId: 7, adapterName: 'AddressBookValueClassAdapter')
   const factory AddressBookKey({
     @HiveField(0) required String name,
     @HiveField(1) required String publicKey,

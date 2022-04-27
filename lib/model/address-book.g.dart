@@ -6,7 +6,7 @@ part of 'address-book.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class AddressBookUserClassAdaper extends TypeAdapter<_$_AddressBookUser> {
+class AddressBookUserClassAdapter extends TypeAdapter<_$_AddressBookUser> {
   @override
   final int typeId = 6;
 
@@ -41,12 +41,12 @@ class AddressBookUserClassAdaper extends TypeAdapter<_$_AddressBookUser> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AddressBookUserClassAdaper &&
+      other is AddressBookUserClassAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
 
-class AddressBookValueClassAdaper extends TypeAdapter<_$_AddressBookKey> {
+class AddressBookValueClassAdapter extends TypeAdapter<_$_AddressBookKey> {
   @override
   final int typeId = 7;
 
@@ -90,7 +90,7 @@ class AddressBookValueClassAdaper extends TypeAdapter<_$_AddressBookKey> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AddressBookValueClassAdaper &&
+      other is AddressBookValueClassAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

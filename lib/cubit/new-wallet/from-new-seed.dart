@@ -23,7 +23,8 @@ enum SeedGenerateWalletSteps {
 @freezed
 class SeedGenerateWalletState with _$SeedGenerateWalletState {
   const factory SeedGenerateWalletState({
-    @Default(SeedGenerateWalletSteps.warning) SeedGenerateWalletSteps currentStep,
+    @Default(SeedGenerateWalletSteps.warning)
+        SeedGenerateWalletSteps currentStep,
     @Default('') String walletLabel,
     @Default('') String walletLabelError,
     @Default(false) bool savinngWallet,
@@ -42,10 +43,12 @@ class SeedGenerateWalletState with _$SeedGenerateWalletState {
     return false;
   }
 
-  double completePercent() => currentStep.index / SeedGenerateWalletSteps.values.length;
+  double completePercent() =>
+      currentStep.index / SeedGenerateWalletSteps.values.length;
 
   String completePercentLabel() =>
-      ((currentStep.index / SeedGenerateWalletSteps.values.length) * 100).toStringAsFixed(0);
+      ((currentStep.index / SeedGenerateWalletSteps.values.length) * 100)
+          .toStringAsFixed(0);
 }
 
 class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
@@ -114,7 +117,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   }
 
   void saveClicked() async {
-    if (state.walletLabel.length < 4 ||
+    if (state.walletLabel.length < 3 ||
         state.walletLabel.length > 10 ||
         state.walletLabel.contains(' ')) {
       emit(state.copyWith(walletLabelError: 'Invalid Label'));
@@ -125,34 +128,30 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       final wallet = _generateCubit.state.wallet;
       if (wallet == null) return;
 
-      final policy = 'pk([${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}/0/*)'
-          .replaceFirst('/m', '');
+      final fullXPrv =
+          '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
 
-      final com = _core.compile(
+      final fullXPub =
+          '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}';
+
+      final policy = 'pk($fullXPrv/*)'.replaceFirst('/m', '');
+
+      const readable = 'pk(___primary___)';
+
+      final descriptor = _core.compile(
         policy: policy,
         scriptType: 'wpkh',
       );
 
-      final exportWallet = _core.deriveHardened(
-        masterXPriv: _generateCubit.state.masterXpriv!,
-        account: '',
-        purpose: '92',
-      );
-
       var newWallet = Wallet(
         label: state.walletLabel,
-        walletType: 'SINGLE ACCOUNT',
-        mainWallet: InternalWallet(
-          xPub: wallet.xpub,
-          fingerPrint: wallet.fingerPrint,
-          path: wallet.hardenedPath,
-          descriptor: com.descriptor.split('#')[0],
-        ),
-        exportWallet: InternalWallet(
-          xPub: exportWallet.xpub,
-          fingerPrint: exportWallet.fingerPrint,
-          path: exportWallet.hardenedPath,
-        ),
+        walletType: 'SIGNER',
+        descriptor: descriptor,
+        policy: readable,
+        requiredPolicyElements: 1,
+        policyElements: [
+          'primary:$fullXPub',
+        ],
         blockchain: _blockchainCubit.state.blockchain.name,
       );
 
@@ -181,6 +180,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         ),
       );
     } catch (e, s) {
+      final error = e;
+      print(error);
       _logger.logException(
         e,
         'SeedGenerateWalletCubit._createNewLocalWallet',

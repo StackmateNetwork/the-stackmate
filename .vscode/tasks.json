@@ -12,6 +12,7 @@
             "command": "sh update-core.sh",
             "options": {
                 "cwd": "${workspaceRoot}/packages/bitcoin"
+                
             },
         },
         // ////

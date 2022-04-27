@@ -147,7 +147,7 @@ class __$AddressBookUserCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-@HiveType(typeId: 6, adapterName: 'AddressBookUserClassAdaper')
+@HiveType(typeId: 6, adapterName: 'AddressBookUserClassAdapter')
 class _$_AddressBookUser implements _AddressBookUser {
   const _$_AddressBookUser(
       {@HiveField(2) this.id,
@@ -408,7 +408,7 @@ class __$AddressBookKeyCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-@HiveType(typeId: 7, adapterName: 'AddressBookValueClassAdaper')
+@HiveType(typeId: 7, adapterName: 'AddressBookValueClassAdapter')
 class _$_AddressBookKey implements _AddressBookKey {
   const _$_AddressBookKey(
       {@HiveField(0) required this.name,
