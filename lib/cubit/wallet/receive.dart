@@ -32,7 +32,6 @@ class ReceiveCubit extends Cubit<ReceiveState> {
     this._clipBoard,
     this._share,
     this._vibrate,
-    this._nodeAddressCubit,
   ) : super(const ReceiveState()) {
     _init();
   }
@@ -44,7 +43,6 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   final IShare _share;
   final IClipBoard _clipBoard;
   final IVibrate _vibrate;
-  final NodeAddressCubit _nodeAddressCubit;
 
   void _init() async {
     await Future.delayed(const Duration(milliseconds: 1000));
@@ -66,11 +64,11 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
       // final w = _walletCubit.state.selectedWallet!.descriptor.split('#')[0];
       final w = _walletCubit.state.selectedWallet!.descriptor;
-      final node = _nodeAddressCubit.state.getAddress();
+      final index = _walletCubit.state.selectedWallet!.lastAddressIndex;
 
       final address = await compute(getAdrr, {
         'descriptor': w,
-        'nodeAddress': node,
+        'index': index.toString(),
       });
       //await _bitcoin.getAddress(
       //   descriptor: w,
@@ -88,6 +86,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       );
 
       _vibrate.vibe();
+      // Update wallet state here
 
       emit(
         state.copyWith(
@@ -130,7 +129,7 @@ String getAdrr(dynamic msg) {
   final data = msg as Map<String, String?>;
   final resp = BitcoinFFI().getAddress(
     descriptor: data['descriptor']!,
-    index: '0',
+    index: data['index']!,
   );
   return resp;
 }

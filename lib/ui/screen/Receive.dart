@@ -72,7 +72,6 @@ class ReceiveScreen extends StatelessWidget {
     final networkSelect = context.select((ChainSelectCubit c) => c);
     final logger = context.select((Logger c) => c);
     final wallets = context.select((WalletsCubit c) => c);
-    final nodeAddress = context.select((NodeAddressCubit c) => c);
 
     final receive = ReceiveCubit(
       wallets,
@@ -81,7 +80,6 @@ class ReceiveScreen extends StatelessWidget {
       locator<IClipBoard>(),
       locator<IShare>(),
       locator<IVibrate>(),
-      nodeAddress,
     );
 
     return BlocProvider.value(

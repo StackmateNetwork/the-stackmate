@@ -80,21 +80,28 @@ class Stackmate extends StatelessWidget {
       //
       GoRoute(path: '/add-wallet', builder: (_, __) => const AddWalletScreen()),
       GoRoute(
-          path: '/generate-seed',
-          builder: (_, __) => const SeedGenerateScreen()),
+        path: '/generate-seed',
+        builder: (_, __) => const SeedGenerateScreen(),
+      ),
       GoRoute(
-          path: '/import-seed', builder: (_, __) => const SeedImportScreen()),
+        path: '/import-seed',
+        builder: (_, __) => const SeedImportScreen(),
+      ),
       GoRoute(
-          path: '/watch-only', builder: (_, __) => const XPubImportScreen()),
+        path: '/watch-only',
+        builder: (_, __) => const XPubImportScreen(),
+      ),
 
       GoRoute(path: '/wallet', builder: (_, __) => const WalletScreen()),
       GoRoute(path: '/receive', builder: (_, __) => const ReceiveScreen()),
       GoRoute(
-          path: '/send',
-          builder: (_, __) => const WalletSendScreen(fromQr: false)),
+        path: '/send',
+        builder: (_, __) => const WalletSendScreen(fromQr: false),
+      ),
       GoRoute(
-          path: '/send',
-          builder: (_, __) => const WalletSendScreen(fromQr: true)),
+        path: '/send',
+        builder: (_, __) => const WalletSendScreen(fromQr: true),
+      ),
       //
       GoRoute(path: '/logs', builder: (_, __) => const LogsScreen()),
     ],

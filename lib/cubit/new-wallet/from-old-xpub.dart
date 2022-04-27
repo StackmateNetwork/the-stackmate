@@ -145,6 +145,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: 'WATCHER',
+        lastAddressIndex: 0,
       );
 
       final savedId = await _storage.saveItem<Wallet>(

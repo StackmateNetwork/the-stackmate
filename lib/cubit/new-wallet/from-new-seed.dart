@@ -153,6 +153,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
           'primary:$fullXPub',
         ],
         blockchain: _blockchainCubit.state.blockchain.name,
+        lastAddressIndex: 0,
       );
 
       final savedid = await _storage.saveItem<Wallet>(

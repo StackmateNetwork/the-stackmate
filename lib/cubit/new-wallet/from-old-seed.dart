@@ -190,6 +190,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       requiredPolicyElements: 1,
       policyElements: ['primary:$fullXPub'],
       blockchain: _blockchainCubit.state.blockchain.name,
+      lastAddressIndex: 0,
     );
 
     final savedId = await _storage.saveItem<Wallet>(

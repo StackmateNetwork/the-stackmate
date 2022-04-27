@@ -22,7 +22,8 @@ class Wallet with _$Wallet {
     @HiveField(6) List<Transaction>? transactions,
     @HiveField(7) int? id,
     @HiveField(8) int? balance,
-    @HiveField(9) required String walletType,
+    @HiveField(9) int? lastAddressIndex,
+    @HiveField(10) required String walletType,
     // @Default(false) @HiveField(7) bool watchOnly,
   }) = _Wallet;
   const Wallet._();
