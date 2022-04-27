@@ -23,6 +23,7 @@ mv -f releases/$RELEASE/armv7-linux-androideabi/libstackmate.so android/src/main
 mv -f releases/$RELEASE/i686-linux-android/libstackmate.so android/src/main/jniLibs/x86
 mv -f releases/$RELEASE/x86_64-linux-android/libstackmate.so android/src/main/jniLibs/x86_64
 
+rm -rf releases
 
 # echo 'build stackmate-core for android'
 # echo 'this might take a while ..'
