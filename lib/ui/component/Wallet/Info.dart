@@ -299,7 +299,7 @@ class WalletInfo extends StatelessWidget {
             const SizedBox(height: 8),
 
             Text(
-              wallet.descriptor,
+              wallet.policyElements[0],
               style: c.fonts.caption!.copyWith(
                 color: c.colours.onBackground,
               ),
