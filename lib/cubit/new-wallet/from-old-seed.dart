@@ -169,9 +169,10 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
 
     final fullXPub =
-        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}';
+        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
+            .replaceFirst('/m', '');
 
-    final policy = 'pk($fullXPrv/*)'.replaceFirst('/m', '');
+    final policy = 'pk($fullXPrv/*)';
 
     const readable = 'pk(___primary___)';
 

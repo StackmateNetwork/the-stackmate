@@ -29,15 +29,15 @@ class ReceiveState with _$ReceiveState {
 
 class ReceiveCubit extends Cubit<ReceiveState> {
   ReceiveCubit(
-      this._walletCubit,
-      // this._bitcoin,
-      this._blockchain,
-      this._logger,
-      this._clipBoard,
-      this._share,
-      this._vibrate,
-      this._storage)
-      : super(const ReceiveState()) {
+    this._walletCubit,
+    // this._bitcoin,
+    this._blockchain,
+    this._logger,
+    this._clipBoard,
+    this._share,
+    this._vibrate,
+    this._storage,
+  ) : super(const ReceiveState()) {
     _init();
   }
 
@@ -94,7 +94,6 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
       _vibrate.vibe();
       // Update wallet state here
-
       final wallet = _walletCubit.state.selectedWallet!;
       final updated =
           wallet.copyWith(lastAddressIndex: wallet.lastAddressIndex! + 1);

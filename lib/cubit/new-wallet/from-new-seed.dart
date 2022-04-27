@@ -132,7 +132,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
 
       final fullXPub =
-          '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}';
+          '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
+              .replaceFirst('/m', '');
 
       final policy = 'pk($fullXPrv/*)'.replaceFirst('/m', '');
 

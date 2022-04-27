@@ -88,6 +88,15 @@ class WalletCubit extends Cubit<WalletState> {
       final node = _nodeAddressCubit.state.getAddress();
       final wallet = _walletsCubit.state.selectedWallet!;
 
+      emit(
+        state.copyWith(
+          loadingBalance: true,
+          loadingTransactions: true,
+          balance: wallet.balance,
+          transactions: wallet.transactions,
+        ),
+      );
+
       final bal = await compute(computeBalance, {
         'descriptor': wallet.descriptor,
         'nodeAddress': node,
@@ -120,6 +129,8 @@ class WalletCubit extends Cubit<WalletState> {
       );
 
       _walletsCubit.addBalanceToSelectedWallet(bal);
+      _walletsCubit.addTransactionsToSelectedWallet(transactions);
+      return;
     } catch (e, s) {
       emit(
         state.copyWith(

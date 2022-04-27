@@ -119,7 +119,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       final fingerprint = xpubState.fingerPrint;
       final path = xpubState.path;
       final xpub = xpubState.xpub;
-      String fullXPub = xpub;
+      String fullXPub = xpub.replaceFirst('/*', '');
 
       if (xpubState.hasNoKeySource())
         fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst('/m', '');

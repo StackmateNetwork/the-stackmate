@@ -310,7 +310,9 @@ class WalletInfo extends StatelessWidget {
                 alignment: Alignment.centerLeft,
               ),
               onPressed: () {
-                c.read<WalletsCubit>().copyDescriptor(wallet.policy);
+                c
+                    .read<WalletsCubit>()
+                    .copyDescriptor(wallet.policyElements[0].split(':')[1]);
               },
               child: const Text('COPY'),
             ),
