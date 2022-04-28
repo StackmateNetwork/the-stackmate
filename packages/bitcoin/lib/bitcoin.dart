@@ -120,8 +120,8 @@ class FFFI {
       nodeAddress.toNativeUtf8(),
       txOutputs.toNativeUtf8(),
       feeAbsolute.toNativeUtf8(),
-      sweep.toNativeUtf8(),
       policyPath.toNativeUtf8(),
+      sweep.toNativeUtf8(),
     ).toDartString();
     if (resp.startsWith('Error')) throw resp;
     return resp;

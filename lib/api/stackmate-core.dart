@@ -145,6 +145,8 @@ class BitcoinFFI implements IStackMateCore {
       policyPath: policyPath,
     );
     final data = jsonDecode(resp);
+
+    if (data['error'] != null) return data['error'] as String;
     return data['psbt'] as String;
   }
 

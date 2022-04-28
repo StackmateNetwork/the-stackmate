@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-RELEASE=0.8.0
+RELEASE=0.8.1
 
 rm -rf releases
 mkdir -p releases

@@ -209,12 +209,15 @@ class SendCubit extends Cubit<SendState> {
         emit(state.copyWith(errAmount: 'Please enter a valid amount'));
         return;
       }
+      final txOutputs = '${state.address}:${state.amount.toString}';
+
       emit(
         state.copyWith(
-          calculatingFees: true,
-          currentStep: SendSteps.fees,
-          // buildingTx: false,
-        ),
+            calculatingFees: true,
+            currentStep: SendSteps.fees,
+            txOutputs: txOutputs
+            // buildingTx: false,
+            ),
       );
 
       // await Future.delayed(const Duration(milliseconds: 100));
@@ -226,10 +229,10 @@ class SendCubit extends Cubit<SendState> {
       final psbt = await compute(buildTx, {
         'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
-        'txOutputs': state.txOutputs,
+        'txOutputs': txOutputs,
         'feeAbsolute': '1000',
         'sweep': state.sweepWallet.toString(),
-        'policyPath': state.policyPath.toString(),
+        'policyPath': state.policyPath,
       });
 
       final weight = await compute(getWeight, {
@@ -346,6 +349,7 @@ class SendCubit extends Cubit<SendState> {
         'amount': state.sweepWallet ? '0' : state.amount,
         'feeAbsolute': state.finalFee.toString(),
         'sweep': state.sweepWallet.toString(),
+        'policyPath': state.policyPath,
       });
 
       final decode = await compute(decodePSBT, {
@@ -474,12 +478,12 @@ AbsoluteFees getAbsoluteFees(dynamic data) {
 String buildTx(dynamic data) {
   final obj = data as Map<String, String?>;
   final resp = BitcoinFFI().buildTransaction(
-    nodeAddress: obj['nodeAddress']!,
     descriptor: obj['descriptor']!,
+    nodeAddress: obj['nodeAddress']!,
     txOutputs: obj['txOutputs']!,
     feeAbsolute: obj['feeAbsolute']!,
-    sweep: obj['sweep']!,
     policyPath: obj['policyPath']!,
+    sweep: obj['sweep']!,
   );
   return resp;
 }
