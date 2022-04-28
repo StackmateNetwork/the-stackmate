@@ -33,10 +33,14 @@ class Wallet with _$Wallet {
   String balanceToBtc() =>
       balance == null ? '0' : (balance! / satsInBTC).toStringAsFixed(8);
 
-  bool isNotWatchOnly() => label != 'WATCH ONLY';
+  bool isNotWatchOnly() => label != 'WATCHER';
 
   int pendingPolicyElements() {
     return policyElements.length - requiredPolicyElements;
+  }
+
+  bool isScript() {
+    return requiredPolicyElements > 1;
   }
 }
 // enum PolicyElement <T extends Object> {
