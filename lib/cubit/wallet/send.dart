@@ -102,11 +102,11 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void getBalance() async {
-    emit(
-      state.copyWith(
-        loadingStart: true,
-      ),
-    );
+    // emit(
+    //   state.copyWith(
+    //     loadingStart: true,
+    //   ),
+    // );
 
     try {
       emit(
@@ -245,17 +245,13 @@ class SendCubit extends Cubit<SendState> {
         'targetSize': '1',
       });
 
-      final mediumRate = await compute(estimateFeees, {
-        'network': _blockchain.state.blockchain.name,
-        'nodeAddress': nodeAddress,
-        'targetSize': '6',
-      });
-
       final slowRate = await compute(estimateFeees, {
         'network': _blockchain.state.blockchain.name,
         'nodeAddress': nodeAddress,
         'targetSize': '21',
       });
+
+      final mediumRate = (fastRate + slowRate) / 2;
 
       final fast = _core.feeRateToAbsolute(
         feeRate: fastRate.toString(),
