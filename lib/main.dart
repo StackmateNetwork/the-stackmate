@@ -99,7 +99,7 @@ class Stackmate extends StatelessWidget {
         builder: (_, __) => const WalletSendScreen(fromQr: false),
       ),
       GoRoute(
-        path: '/send',
+        path: '/send-from-qr',
         builder: (_, __) => const WalletSendScreen(fromQr: true),
       ),
       //
