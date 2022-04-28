@@ -111,9 +111,12 @@ class SendCubit extends Cubit<SendState> {
     try {
       emit(
         state.copyWith(
+          balance: _walletCubit.state.selectedWallet!.balance,
+          loadingStart: false,
           errLoading: '',
         ),
       );
+
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final bal = await compute(computeBalance, {
@@ -209,16 +212,12 @@ class SendCubit extends Cubit<SendState> {
         emit(state.copyWith(errAmount: 'Please enter a valid amount'));
         return;
       }
-      final txOutputs = '${state.address}:${state.amount.toString}';
+      final txOutputs = '${state.address}:${state.amount}';
 
-      emit(
-        state.copyWith(
-            calculatingFees: true,
-            currentStep: SendSteps.fees,
-            txOutputs: txOutputs
-            // buildingTx: false,
-            ),
-      );
+      emit(state.copyWith(
+          calculatingFees: true,
+          currentStep: SendSteps.fees,
+          txOutputs: txOutputs));
 
       // await Future.delayed(const Duration(milliseconds: 100));
 
@@ -231,8 +230,8 @@ class SendCubit extends Cubit<SendState> {
         'nodeAddress': nodeAddress,
         'txOutputs': txOutputs,
         'feeAbsolute': '1000',
-        'sweep': state.sweepWallet.toString(),
         'policyPath': state.policyPath,
+        'sweep': state.sweepWallet.toString(),
       });
 
       final weight = await compute(getWeight, {
@@ -241,21 +240,21 @@ class SendCubit extends Cubit<SendState> {
       });
 
       final fastRate = await compute(estimateFeees, {
-        'targetSize': '1',
         'network': _blockchain.state.blockchain.name,
         'nodeAddress': nodeAddress,
+        'targetSize': '1',
       });
 
       final mediumRate = await compute(estimateFeees, {
-        'targetSize': '3',
         'network': _blockchain.state.blockchain.name,
         'nodeAddress': nodeAddress,
+        'targetSize': '6',
       });
 
       final slowRate = await compute(estimateFeees, {
-        'targetSize': '6',
         'network': _blockchain.state.blockchain.name,
         'nodeAddress': nodeAddress,
+        'targetSize': '21',
       });
 
       final fast = _core.feeRateToAbsolute(
@@ -346,10 +345,9 @@ class SendCubit extends Cubit<SendState> {
         'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'txOutputs': state.txOutputs,
-        'amount': state.sweepWallet ? '0' : state.amount,
         'feeAbsolute': state.finalFee.toString(),
-        'sweep': state.sweepWallet.toString(),
         'policyPath': state.policyPath,
+        'sweep': state.sweepWallet.toString(),
       });
 
       final decode = await compute(decodePSBT, {
@@ -408,9 +406,10 @@ class SendCubit extends Cubit<SendState> {
       emit(state.copyWith(sendingTx: true, errLoading: ''));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
+      // final unsigned = state.psbt;
+      final descriptor = _walletCubit.state.selectedWallet!.descriptor;
       final signed = await compute(signTx, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
-        'nodeAddress': nodeAddress,
+        'descriptor': descriptor,
         'unsignedPSBT': state.psbt,
       });
 
@@ -450,9 +449,9 @@ class SendCubit extends Cubit<SendState> {
 double estimateFeees(dynamic data) {
   final obj = data as Map<String, String?>;
   final resp = BitcoinFFI().estimateNetworkFee(
-    targetSize: obj['targetSize']!,
     network: obj['network']!,
     nodeAddress: obj['nodeAddress']!,
+    targetSize: obj['targetSize']!,
   );
   return resp;
 }
@@ -507,7 +506,6 @@ String signTx(dynamic data) {
   final obj = data as Map<String, String?>;
 
   final resp = BitcoinFFI().signTransaction(
-    nodeAddress: obj['nodeAddress']!,
     descriptor: obj['descriptor']!,
     unsignedPSBT: obj['unsignedPSBT']!,
   );
