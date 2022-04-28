@@ -82,9 +82,8 @@ class AddWalletScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 SelectButton(
-                  text: 'Seed',
-                  description:
-                      'Easy to use, Easy to Backup.\n12 word phase as private key.',
+                  text: 'New',
+                  description: 'Generate a new mnemonic seed.',
                   colour: c.colours.surface,
                   onPressed: () {
                     c.push('/generate-seed');
@@ -92,8 +91,8 @@ class AddWalletScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 SelectButton(
-                  text: 'Relocate',
-                  description: 'Move your funds.\nImport an existing seed.',
+                  text: 'Recover',
+                  description: 'Import an existing wallet.',
                   colour: c.colours.surface,
                   onPressed: () {
                     c.push('/import-seed');
@@ -101,9 +100,8 @@ class AddWalletScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 SelectButton(
-                  text: 'Observe',
-                  description:
-                      'Public View, Maximum Privacy.\nImport your public key.',
+                  text: 'Watcher',
+                  description: 'Import a public key.',
                   colour: c.colours.surface,
                   onPressed: () {
                     c.push('/watch-only');

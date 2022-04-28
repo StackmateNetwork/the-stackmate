@@ -28,7 +28,8 @@ class _XpubImport extends StatelessWidget {
           context.go('/');
         }
       },
-      buildWhen: (previous, current) => previous.currentStep != current.currentStep,
+      buildWhen: (previous, current) =>
+          previous.currentStep != current.currentStep,
       builder: (context, state) {
         return WillPopScope(
           onWillPop: () async {
@@ -46,7 +47,7 @@ class _XpubImport extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Header(
-                      cornerTitle: 'IMPORT XPUB',
+                      cornerTitle: 'WATCHER',
                       children: [
                         BckButton(
                           text: 'EXIT',

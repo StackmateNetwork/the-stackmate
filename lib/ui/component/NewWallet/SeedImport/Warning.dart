@@ -19,9 +19,9 @@ class SeedImportWarning extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             '''
-You will now be prompted to write down your seed.
+You will now be prompted to enter your private key data.
 
-Stackmate can currently only recovers segwit native wallets.
+Use whatever you have and we will attempt to recover any associated spendable funds.
       ''',
             style: c.fonts.caption!.copyWith(
               color: Colors.white,
