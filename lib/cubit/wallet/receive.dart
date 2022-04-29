@@ -55,20 +55,14 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
   void getAddress() async {
     try {
-      // await Future.delayed(const Duration(milliseconds: 500));
       final wallet = _walletCubit.state.selectedWallet!;
-      _vibrate.vibe();
-
-      // await Future.delayed(const Duration(seconds: 1));
-
-      // final w = _walletCubit.state.selectedWallet!.descriptor.split('#')[0];
       final nextIndex = wallet.lastAddressIndex! + 1;
-
       final latestAddress = _core.getAddress(
         descriptor: wallet.descriptor,
         index: nextIndex.toString(),
       );
 
+      _vibrate.vibe();
       // _logger.logAPI(
       //   'get address',
       //   'desc: $w\nnetwork: ' +
@@ -77,7 +71,6 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       //   000,
       // );
 
-      // Update wallet state here
       emit(
         state.copyWith(
           loadingAddress: false,
@@ -88,13 +81,11 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       final updated = wallet.copyWith(
         lastAddressIndex: nextIndex,
       );
-
       await _storage.saveItemAt<Wallet>(
         StoreKeys.Wallet.name,
         updated.id!,
         updated,
       );
-
       _walletCubit.walletSelected(updated);
       return;
     } catch (e, s) {
