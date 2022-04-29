@@ -49,8 +49,9 @@ class FeedItem extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         post.title,
-                        style: GoogleFonts.openSans(
-                            fontStyle: FontStyle.normal, color: Colors.grey),
+                        style: TextStyle(fontFamily: 'FontAwesome',
+                        fontStyle: FontStyle.normal, 
+                        color: Colors.grey),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),

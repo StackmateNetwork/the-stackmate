@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallet/wallet.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:intl/intl.dart';
 
 class TransactionItem extends StatefulWidget {
   const TransactionItem({Key? key, required this.transaction})
@@ -55,7 +56,7 @@ class _TransactionItemState extends State<TransactionItem> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            widget.transaction.received.toString() + ' sats',
+                            NumberFormat('###,000').format(double.parse(widget.transaction.received.toString())) + ' sats',
                             style: c.fonts.headline6!.copyWith(
                               color: c.colours.onBackground,
                             ),
@@ -182,7 +183,7 @@ class _TransactionItemState extends State<TransactionItem> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          widget.transaction.sent.toString() + ' sats',
+                         NumberFormat('###,000').format(double.parse((widget.transaction.sent + widget.transaction.fee).toString()))  + ' sats',
                           style: c.fonts.headline6!.copyWith(
                             color: c.colours.onBackground,
                           ),
@@ -262,9 +263,7 @@ class _TransactionItemState extends State<TransactionItem> {
                   ),
                 ),
                 Text(
-                  (widget.transaction.sent - widget.transaction.fee)
-                          .toString() +
-                      ' sats',
+                NumberFormat('###,000').format(double.parse(widget.transaction.sent.toString())) + ' sats',
                   style: c.fonts.caption!.copyWith(
                     color: c.colours.onBackground,
                   ),
@@ -277,7 +276,7 @@ class _TransactionItemState extends State<TransactionItem> {
                   ),
                 ),
                 Text(
-                  widget.transaction.fee.toString() + ' sats',
+                 NumberFormat('###,000').format(double.parse( widget.transaction.fee.toString())) + ' sats',
                   style: c.fonts.caption!.copyWith(
                     color: c.colours.onBackground,
                   ),

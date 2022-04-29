@@ -23,7 +23,7 @@ class SelectNode extends StatelessWidget {
         primary: c.colours.surface,
       ),
       child: Container(
-        height: 100,
+        height: 120,
         padding: const EdgeInsets.only(
           top: 16,
           bottom: 16,
@@ -34,7 +34,7 @@ class SelectNode extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Change Electrum Node'.toUpperCase(),
+                  'Change Electrum Node',
                   style: c.fonts.button!.copyWith(
                     color: c.colours.primary,
                     fontSize: 16,

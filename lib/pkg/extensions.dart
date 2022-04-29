@@ -32,13 +32,14 @@ extension Strings on String {
     return this != other;
   }
 
+  
   String toBtc() {
     try {
       if (this == '') return '0.00000000';
       final amt = int.parse(this);
       return amt.toBtc();
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
       return '0.00000000';
     }
   }
@@ -58,6 +59,7 @@ extension Nums on num {
 
 extension Ints on int? {
   String toBtc() => this == null ? '0' : (this! / 100000000).toStringAsFixed(8);
+  //String toComma() => this == null ? '0':(this)
 }
 
 class CCC {}

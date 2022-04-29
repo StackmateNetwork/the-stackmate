@@ -24,7 +24,7 @@ class Header extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  'STACKMATE',
+                  'Stackmate',
                   style: c.fonts.headline5!.copyWith(
                     color: Colors.white,
                   ),
