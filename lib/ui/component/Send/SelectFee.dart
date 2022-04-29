@@ -58,7 +58,7 @@ class _SelectFeeState extends State<SelectFee> {
                           ),
                         ),
                         Text(
-                          '~ 60 minutes\n($slow sats)',
+                          '~ 2 - 3 hours\n($slow sats)',
                           textAlign: TextAlign.center,
                           style: context.fonts.caption!.copyWith(
                             fontSize: 10,
@@ -80,7 +80,7 @@ class _SelectFeeState extends State<SelectFee> {
                           ),
                         ),
                         Text(
-                          '~ 30 minutes\n($medium sats)',
+                          '~ 60 - 90 minutes \n($medium sats)',
                           textAlign: TextAlign.center,
                           style: context.fonts.caption!.copyWith(
                             fontSize: 10,
@@ -102,7 +102,7 @@ class _SelectFeeState extends State<SelectFee> {
                           ),
                         ),
                         Text(
-                          '~ 10 minutes\n($fast sats)',
+                          '~ 20 minutes\n($fast sats)',
                           textAlign: TextAlign.center,
                           style: context.fonts.caption!.copyWith(
                             fontSize: 10,

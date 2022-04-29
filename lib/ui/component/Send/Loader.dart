@@ -19,7 +19,7 @@ class Loader extends StatelessWidget {
     if (loadingStart) return const Loading(text: 'Loading Balance');
     if (calculating) return const Loading(text: 'Calculating Fees');
     if (buildingTx) return const Loading(text: 'Building Transaction');
-    if (sendingTx) return const Loading(text: 'Sending Amount');
+    if (sendingTx) return const Loading(text: 'Signed & Broadcasting');
 
     return Container();
   }
