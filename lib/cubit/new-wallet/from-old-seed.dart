@@ -153,7 +153,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   }
 
   void _saveClicked() async {
-    if (state.walletLabel.length < 4 ||
+    if (state.walletLabel.length < 3 ||
         state.walletLabel.length > 10 ||
         state.walletLabel.contains(' ')) {
       emit(state.copyWith(walletLabelError: 'Invalid Label'));
@@ -166,12 +166,14 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     final wallet = istate.wallet;
     if (wallet == null) return;
     final fullXPrv =
-        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
+        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
+            .replaceFirst('/m', '');
 
     final fullXPub =
-        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}';
+        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
+            .replaceFirst('/m', '');
 
-    final policy = 'pk([$fullXPrv/*)'.replaceFirst('/m', '');
+    final policy = 'pk($fullXPrv/*)';
 
     const readable = 'pk(___primary___)';
 
@@ -181,6 +183,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     );
 
     // public descriptor
+    // Check history and whether this wallet needs to update its address index
 
     var newWallet = Wallet(
       label: state.walletLabel,
@@ -190,6 +193,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       requiredPolicyElements: 1,
       policyElements: ['primary:$fullXPub'],
       blockchain: _blockchainCubit.state.blockchain.name,
+      lastAddressIndex: 0,
     );
 
     final savedId = await _storage.saveItem<Wallet>(

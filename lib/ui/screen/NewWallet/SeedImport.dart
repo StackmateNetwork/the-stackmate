@@ -29,7 +29,8 @@ class _SeedImport extends StatelessWidget {
           context.go('/');
         }
       },
-      buildWhen: (previous, current) => previous.currentStep != current.currentStep,
+      buildWhen: (previous, current) =>
+          previous.currentStep != current.currentStep,
       builder: (context, state) {
         return WillPopScope(
           onWillPop: () async {
@@ -46,7 +47,7 @@ class _SeedImport extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Header(
-                      cornerTitle: 'IMPORT SEED',
+                      cornerTitle: 'RECOVER',
                       children: [
                         BckButton(
                           text: 'EXIT',

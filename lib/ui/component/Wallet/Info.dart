@@ -159,7 +159,7 @@ class WalletInfo extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    if (wallet.policy != null) ...[
+                    if (true) ...[
                       const SizedBox(height: 24),
                       Text(
                         'Primary Public Key',
@@ -299,7 +299,7 @@ class WalletInfo extends StatelessWidget {
             const SizedBox(height: 8),
 
             Text(
-              wallet.policyElements[0],
+              wallet.policyElements[0].split(':')[1],
               style: c.fonts.caption!.copyWith(
                 color: c.colours.onBackground,
               ),
@@ -310,7 +310,9 @@ class WalletInfo extends StatelessWidget {
                 alignment: Alignment.centerLeft,
               ),
               onPressed: () {
-                c.read<WalletsCubit>().copyDescriptor(wallet.policy);
+                c
+                    .read<WalletsCubit>()
+                    .copyDescriptor(wallet.policyElements[0].split(':')[1]);
               },
               child: const Text('COPY'),
             ),

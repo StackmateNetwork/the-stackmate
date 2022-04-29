@@ -120,8 +120,8 @@ class FFFI {
       nodeAddress.toNativeUtf8(),
       txOutputs.toNativeUtf8(),
       feeAbsolute.toNativeUtf8(),
-      sweep.toNativeUtf8(),
       policyPath.toNativeUtf8(),
+      sweep.toNativeUtf8(),
     ).toDartString();
     if (resp.startsWith('Error')) throw resp;
     return resp;
@@ -142,13 +142,11 @@ class FFFI {
 
   String signTransaction({
     required String descriptor,
-    required String nodeAddress,
     required String unsignedPSBT,
   }) {
     final func = binary.lookupFunction<SignT, SignT>('sign_tx');
     final resp = func(
       descriptor.toNativeUtf8(),
-      nodeAddress.toNativeUtf8(),
       unsignedPSBT.toNativeUtf8(),
     ).toDartString();
     if (resp.startsWith('Error')) throw resp;

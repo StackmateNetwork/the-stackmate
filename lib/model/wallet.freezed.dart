@@ -31,7 +31,8 @@ class _$WalletTearOff {
       @HiveField(6) List<Transaction>? transactions,
       @HiveField(7) int? id,
       @HiveField(8) int? balance,
-      @HiveField(9) required String walletType}) {
+      @HiveField(9) int? lastAddressIndex,
+      @HiveField(10) required String walletType}) {
     return _Wallet(
       label: label,
       descriptor: descriptor,
@@ -42,6 +43,7 @@ class _$WalletTearOff {
       transactions: transactions,
       id: id,
       balance: balance,
+      lastAddressIndex: lastAddressIndex,
       walletType: walletType,
     );
   }
@@ -75,6 +77,8 @@ mixin _$Wallet {
   @HiveField(8)
   int? get balance => throw _privateConstructorUsedError;
   @HiveField(9)
+  int? get lastAddressIndex => throw _privateConstructorUsedError;
+  @HiveField(10)
   String get walletType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -96,7 +100,8 @@ abstract class $WalletCopyWith<$Res> {
       @HiveField(6) List<Transaction>? transactions,
       @HiveField(7) int? id,
       @HiveField(8) int? balance,
-      @HiveField(9) String walletType});
+      @HiveField(9) int? lastAddressIndex,
+      @HiveField(10) String walletType});
 }
 
 /// @nodoc
@@ -118,6 +123,7 @@ class _$WalletCopyWithImpl<$Res> implements $WalletCopyWith<$Res> {
     Object? transactions = freezed,
     Object? id = freezed,
     Object? balance = freezed,
+    Object? lastAddressIndex = freezed,
     Object? walletType = freezed,
   }) {
     return _then(_value.copyWith(
@@ -157,6 +163,10 @@ class _$WalletCopyWithImpl<$Res> implements $WalletCopyWith<$Res> {
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int?,
+      lastAddressIndex: lastAddressIndex == freezed
+          ? _value.lastAddressIndex
+          : lastAddressIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
       walletType: walletType == freezed
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
@@ -180,7 +190,8 @@ abstract class _$WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
       @HiveField(6) List<Transaction>? transactions,
       @HiveField(7) int? id,
       @HiveField(8) int? balance,
-      @HiveField(9) String walletType});
+      @HiveField(9) int? lastAddressIndex,
+      @HiveField(10) String walletType});
 }
 
 /// @nodoc
@@ -203,6 +214,7 @@ class __$WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
     Object? transactions = freezed,
     Object? id = freezed,
     Object? balance = freezed,
+    Object? lastAddressIndex = freezed,
     Object? walletType = freezed,
   }) {
     return _then(_Wallet(
@@ -242,6 +254,10 @@ class __$WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int?,
+      lastAddressIndex: lastAddressIndex == freezed
+          ? _value.lastAddressIndex
+          : lastAddressIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
       walletType: walletType == freezed
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
@@ -264,7 +280,8 @@ class _$_Wallet extends _Wallet {
       @HiveField(6) this.transactions,
       @HiveField(7) this.id,
       @HiveField(8) this.balance,
-      @HiveField(9) required this.walletType})
+      @HiveField(9) this.lastAddressIndex,
+      @HiveField(10) required this.walletType})
       : super._();
 
   factory _$_Wallet.fromJson(Map<String, dynamic> json) =>
@@ -299,11 +316,14 @@ class _$_Wallet extends _Wallet {
   final int? balance;
   @override
   @HiveField(9)
+  final int? lastAddressIndex;
+  @override
+  @HiveField(10)
   final String walletType;
 
   @override
   String toString() {
-    return 'Wallet(label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, id: $id, balance: $balance, walletType: $walletType)';
+    return 'Wallet(label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, id: $id, balance: $balance, lastAddressIndex: $lastAddressIndex, walletType: $walletType)';
   }
 
   @override
@@ -334,6 +354,9 @@ class _$_Wallet extends _Wallet {
             (identical(other.balance, balance) ||
                 const DeepCollectionEquality()
                     .equals(other.balance, balance)) &&
+            (identical(other.lastAddressIndex, lastAddressIndex) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastAddressIndex, lastAddressIndex)) &&
             (identical(other.walletType, walletType) ||
                 const DeepCollectionEquality()
                     .equals(other.walletType, walletType)));
@@ -351,6 +374,7 @@ class _$_Wallet extends _Wallet {
       const DeepCollectionEquality().hash(transactions) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(balance) ^
+      const DeepCollectionEquality().hash(lastAddressIndex) ^
       const DeepCollectionEquality().hash(walletType);
 
   @JsonKey(ignore: true)
@@ -375,7 +399,8 @@ abstract class _Wallet extends Wallet {
       @HiveField(6) List<Transaction>? transactions,
       @HiveField(7) int? id,
       @HiveField(8) int? balance,
-      @HiveField(9) required String walletType}) = _$_Wallet;
+      @HiveField(9) int? lastAddressIndex,
+      @HiveField(10) required String walletType}) = _$_Wallet;
   const _Wallet._() : super._();
 
   factory _Wallet.fromJson(Map<String, dynamic> json) = _$_Wallet.fromJson;
@@ -409,6 +434,9 @@ abstract class _Wallet extends Wallet {
   int? get balance => throw _privateConstructorUsedError;
   @override
   @HiveField(9)
+  int? get lastAddressIndex => throw _privateConstructorUsedError;
+  @override
+  @HiveField(10)
   String get walletType => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

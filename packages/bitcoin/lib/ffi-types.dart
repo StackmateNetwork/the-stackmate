@@ -37,12 +37,13 @@ typedef AddressT = Pointer<Utf8> Function(
 );
 
 typedef BuildT = Pointer<Utf8> Function(
-    Pointer<Utf8> descriptor,
-    Pointer<Utf8> node_address,
-    Pointer<Utf8> tx_outputs,
-    Pointer<Utf8> fee_absolute,
-    Pointer<Utf8> sweep,
-    Pointer<Utf8> policyPath);
+  Pointer<Utf8> descriptor,
+  Pointer<Utf8> node_address,
+  Pointer<Utf8> tx_outputs,
+  Pointer<Utf8> fee_absolute,
+  Pointer<Utf8> policyPath,
+  Pointer<Utf8> sweep,
+);
 
 typedef DecodeT = Pointer<Utf8> Function(
   Pointer<Utf8> network,
@@ -51,7 +52,6 @@ typedef DecodeT = Pointer<Utf8> Function(
 
 typedef SignT = Pointer<Utf8> Function(
   Pointer<Utf8> descriptor,
-  Pointer<Utf8> node_address,
   Pointer<Utf8> unsigned_psbt,
 );
 

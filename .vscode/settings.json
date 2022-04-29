@@ -21,7 +21,7 @@
         "**/build": false,
         //
         //
-        "assets": true,
+        "assets": false,
         "integration_test": true,
         ".gitlab-ci.yml": true,
         //
@@ -38,7 +38,7 @@
         //
         "**/analysis_options.yaml": true,
         "**/packages": false,
-        "**/pubspec.yaml": true,
+        "**/pubspec.yaml": false,
         "README.md": false,
         //
         //

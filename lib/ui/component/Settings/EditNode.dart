@@ -50,7 +50,7 @@ class _EditNodeState extends State<EditNode> {
           ),
           const SizedBox(height: 4),
           Text(
-            'All communication will be sent via selected node',
+            'Only enter domain/ip. Defaults to ssl.',
             maxLines: 3,
             style: c.fonts.caption!.copyWith(
               color: c.colours.onSurface.withOpacity(0.7),

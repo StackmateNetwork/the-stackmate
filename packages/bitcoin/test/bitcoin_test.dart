@@ -59,5 +59,9 @@ void main() {
         await ffi.getAddress(descriptor: publicDescriptor, index: '0');
     print(ffiAddress0);
     assert(ffiAddress0 == myAddress0);
+
+    final balance =
+        ffi.syncBalance(descriptor: publicDescriptor, nodeAddress: "default");
+    print(balance);
   });
 }

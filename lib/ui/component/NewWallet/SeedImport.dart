@@ -31,8 +31,8 @@ class SeedImportPhrase extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Enter your seed\nphrase',
-              style: c.fonts.headline4!.copyWith(
+              'Enter recovery info',
+              style: c.fonts.headline5!.copyWith(
                 color: Colors.white,
                 // fontWeight: FontWeight.bold,
               ),
@@ -49,7 +49,7 @@ class SeedImportPhrase extends StatelessWidget {
                 },
                 maxLines: 8,
                 decoration: InputDecoration(
-                  hintText: 'Seed Phrase',
+                  hintText: 'Seed Phrase/Private Key/Descriptor',
                   fillColor: c.colours.surface,
                   errorText: state.seedError.nullIfEmpty(),
                 ),
@@ -139,7 +139,7 @@ class SeedImportPassphrase extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: TextButton(
                 onPressed: () {
-                  c.read<SeedImportCubit>().checkPassPhrase();
+                  c.read<SeedImportCubit>().checkSeed();
                 },
                 child: const Text('Confirm'),
               ),

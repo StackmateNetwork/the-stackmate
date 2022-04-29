@@ -10,7 +10,12 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
+
+import '../../model/wallet.dart';
+import '../../pkg/storage.dart';
 
 part 'receive.freezed.dart';
 
@@ -26,75 +31,72 @@ class ReceiveState with _$ReceiveState {
 class ReceiveCubit extends Cubit<ReceiveState> {
   ReceiveCubit(
     this._walletCubit,
-    // this._bitcoin,
-    this._blockchain,
     this._logger,
     this._clipBoard,
     this._share,
     this._vibrate,
-    this._nodeAddressCubit,
+    this._storage,
+    this._core,
   ) : super(const ReceiveState()) {
     _init();
   }
 
   final WalletsCubit _walletCubit;
-  // final IBitcoin _bitcoin;
   final Logger _logger;
-  final ChainSelectCubit _blockchain;
   final IShare _share;
   final IClipBoard _clipBoard;
   final IVibrate _vibrate;
-  final NodeAddressCubit _nodeAddressCubit;
+  final IStorage _storage;
+  final IStackMateCore _core;
 
-  void _init() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
+  void _init() {
     getAddress();
   }
 
   void getAddress() async {
     try {
       // await Future.delayed(const Duration(milliseconds: 500));
-
-      emit(
-        state.copyWith(
-          loadingAddress: true,
-          errLoadingAddress: '',
-        ),
-      );
+      final wallet = _walletCubit.state.selectedWallet!;
+      _vibrate.vibe();
 
       // await Future.delayed(const Duration(seconds: 1));
 
       // final w = _walletCubit.state.selectedWallet!.descriptor.split('#')[0];
-      final w = _walletCubit.state.selectedWallet!.descriptor;
-      final node = _nodeAddressCubit.state.getAddress();
+      final nextIndex = wallet.lastAddressIndex! + 1;
 
-      final address = await compute(getAdrr, {
-        'descriptor': w,
-        'nodeAddress': node,
-      });
-      //await _bitcoin.getAddress(
-      //   descriptor: w,
-      //   network: _blockchain.state.blockchain.name,
-      //   index: '0',
-      // );
-      // await Future.delayed(const Duration(seconds: 1));
-
-      _logger.logAPI(
-        'get address',
-        'desc: $w\nnetwork: ' +
-            _blockchain.state.blockchain.name +
-            '\n\nresp:\n$address',
-        000,
+      final latestAddress = _core.getAddress(
+        descriptor: wallet.descriptor,
+        index: nextIndex.toString(),
       );
 
-      _vibrate.vibe();
+      // _logger.logAPI(
+      //   'get address',
+      //   'desc: $w\nnetwork: ' +
+      //       _blockchain.state.blockchain.name +
+      //       '\n\nresp:\n$address',
+      //   000,
+      // );
 
+      // Update wallet state here
       emit(
         state.copyWith(
           loadingAddress: false,
-          address: address,
+          address: latestAddress,
         ),
       );
+
+      final updated = wallet.copyWith(
+        lastAddressIndex: nextIndex,
+      );
+
+      await _storage.saveItemAt<Wallet>(
+        StoreKeys.Wallet.name,
+        updated.id!,
+        updated,
+      );
+
+      _walletCubit.walletSelected(updated);
+      return;
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -130,7 +132,7 @@ String getAdrr(dynamic msg) {
   final data = msg as Map<String, String?>;
   final resp = BitcoinFFI().getAddress(
     descriptor: data['descriptor']!,
-    index: '0',
+    index: data['index']!,
   );
   return resp;
 }

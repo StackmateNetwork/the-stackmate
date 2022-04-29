@@ -47,7 +47,8 @@ class _SeedGenerateState extends State<_SeedGenerate> {
           context.go('/');
         }
       },
-      buildWhen: (previous, current) => previous.currentStep != current.currentStep,
+      buildWhen: (previous, current) =>
+          previous.currentStep != current.currentStep,
       builder: (context, state) {
         return WillPopScope(
           onWillPop: () async {
@@ -58,7 +59,6 @@ class _SeedGenerateState extends State<_SeedGenerate> {
             return true;
           },
           child: Scaffold(
-            backgroundColor: c.colours.secondary,
             body: SafeArea(
               child: SingleChildScrollView(
                 controller: _scrollController,

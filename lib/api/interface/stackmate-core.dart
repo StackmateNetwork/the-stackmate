@@ -100,7 +100,6 @@ abstract class IStackMateCore {
 
   String signTransaction({
     required String descriptor,
-    required String nodeAddress,
     required String unsignedPSBT,
   });
 

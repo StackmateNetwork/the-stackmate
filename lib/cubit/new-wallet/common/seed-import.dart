@@ -66,11 +66,6 @@ class SeedImportCubit extends Cubit<SeedImportState> {
   }
 
   void checkPassPhrase() {
-    if (state.passPhrase.length > 8 || state.passPhrase.contains(' ')) {
-      emit(state.copyWith(errPassPhrase: 'Invalid Passphrase'));
-      return;
-    }
-
     emit(
       state.copyWith(
         currentStep: SeedImportStep.import,
@@ -115,8 +110,8 @@ class SeedImportCubit extends Cubit<SeedImportState> {
 
       final wallet = _core.deriveHardened(
         masterXPriv: neu.xprv,
-        account: '',
-        purpose: '',
+        account: state.accountNumber.toString(),
+        purpose: '84',
       );
 
       emit(

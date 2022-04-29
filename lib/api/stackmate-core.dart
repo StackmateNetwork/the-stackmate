@@ -145,6 +145,7 @@ class BitcoinFFI implements IStackMateCore {
       policyPath: policyPath,
     );
     final data = jsonDecode(resp);
+    if (data['error'] != null) return data['error'] as String;
     return data['psbt'] as String;
   }
 
@@ -157,15 +158,14 @@ class BitcoinFFI implements IStackMateCore {
   @override
   String signTransaction({
     required String descriptor,
-    required String nodeAddress,
     required String unsignedPSBT,
   }) {
     final resp = _bitcoin.signTransaction(
       descriptor: descriptor,
-      nodeAddress: nodeAddress,
       unsignedPSBT: unsignedPSBT,
     );
     final data = jsonDecode(resp);
+    if (data['error'] != null) return data['error'] as String;
     return data['psbt'] as String;
   }
 
@@ -186,17 +186,21 @@ class BitcoinFFI implements IStackMateCore {
 
   @override
   double estimateNetworkFee({
-    required String targetSize,
     required String network,
     required String nodeAddress,
+    required String targetSize,
   }) {
     final resp = _bitcoin.estimateNetworkFee(
-      targetSize: targetSize,
       network: network,
       nodeAddress: nodeAddress,
+      targetSize: targetSize,
     );
-    if (resp.startsWith('Error')) throw resp;
     final data = jsonDecode(resp);
+    if (data['error'] != null) {
+      print(data);
+      return 3.0;
+    }
+
     return data['rate'] as double;
   }
 

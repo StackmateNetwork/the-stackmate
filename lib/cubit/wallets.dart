@@ -65,6 +65,8 @@ class WalletsCubit extends Cubit<WalletsState> {
       transactions: transactions,
     );
     emit(state.copyWith(selectedWallet: wallet));
+    _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
+    refresh();
   }
 
   Future<void> addBalanceToSelectedWallet(int balance) async {
@@ -106,5 +108,6 @@ class WalletsCubit extends Cubit<WalletsState> {
     clearSelectedWallet();
   }
 
-  void copyDescriptor(String text) async => await _clipBoard.copyToClipBoard(text);
+  void copyDescriptor(String text) async =>
+      await _clipBoard.copyToClipBoard(text);
 }
