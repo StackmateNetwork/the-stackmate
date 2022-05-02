@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 ThemeData mainTheme() => ThemeData(
        fontFamily: 'FontAwesome',
-     // textTheme:  GoogleFonts.interTextTheme(),
+      textTheme:  GoogleFonts.aldrichTextTheme(),
       colorScheme: ColorScheme(
         primary: Colors.orange[400]!,
         // primaryVariant: const Color(0xFF0745ff),

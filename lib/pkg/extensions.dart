@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 export 'package:flutter_bloc/flutter_bloc.dart';
 
 extension ContextUtils on BuildContext {
@@ -59,7 +58,6 @@ extension Nums on num {
 
 extension Ints on int? {
   String toBtc() => this == null ? '0' : (this! / 100000000).toStringAsFixed(8);
-  //String toComma() => this == null ? '0':(this)
 }
 
 class CCC {}
