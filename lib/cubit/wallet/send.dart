@@ -246,8 +246,11 @@ class SendCubit extends Cubit<SendState> {
         'psbt': psbt,
       });
 
+      final now = DateTime.now().millisecondsSinceEpoch;
+      const tenMinutes = 600000;
       var feesComplete = _fees.getFees();
-      if (feesComplete.fast == 0.0) {
+      if (feesComplete.fast == 0.0 ||
+          feesComplete.timestamp < now - tenMinutes) {
         await _fees.update();
       }
       feesComplete = _fees.getFees();

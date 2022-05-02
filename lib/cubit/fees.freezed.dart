@@ -18,7 +18,7 @@ class _$FeesStateTearOff {
   const _$FeesStateTearOff();
 
   _FeesState call(
-      {Fees fees = const Fees(timestamp: 0, slow: 1.0, medium: 5.0, fast: 10.0),
+      {Fees fees = const Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0),
       bool updating = false,
       String errUpdating = ''}) {
     return _FeesState(
@@ -138,13 +138,12 @@ class __$FeesStateCopyWithImpl<$Res> extends _$FeesStateCopyWithImpl<$Res>
 
 class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
   const _$_FeesState(
-      {this.fees = const Fees(timestamp: 0, slow: 1.0, medium: 5.0, fast: 10.0),
+      {this.fees = const Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0),
       this.updating = false,
       this.errUpdating = ''});
 
   @JsonKey(
-      defaultValue:
-          const Fees(timestamp: 0, slow: 1.0, medium: 5.0, fast: 10.0))
+      defaultValue: const Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0))
   @override
   final Fees fees;
   @JsonKey(defaultValue: false)
