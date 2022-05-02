@@ -246,7 +246,11 @@ class SendCubit extends Cubit<SendState> {
         'psbt': psbt,
       });
 
-      final feesComplete = _fees.getFees();
+      var feesComplete = _fees.getFees();
+      if (feesComplete.fast == 0.0) {
+        await _fees.update();
+      }
+      feesComplete = _fees.getFees();
 
       final fast = _core.feeRateToAbsolute(
         feeRate: feesComplete.fast.toString(),
