@@ -17,7 +17,7 @@ class Header extends StatelessWidget {
           const RedditLoader(),
           Padding(
             padding: EdgeInsets.only(
-              top: 8,
+              top: 12,
               left: 24,
               right: !isRearranging ? 16 : 0,
             ),
