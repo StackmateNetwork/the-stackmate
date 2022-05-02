@@ -399,6 +399,9 @@ class SendCubit extends Cubit<SendState> {
 
   void sendClicked() async {
     try {
+      if (state.sendingTx == true) {
+        return;
+      }
       emit(state.copyWith(sendingTx: true, errLoading: ''));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
