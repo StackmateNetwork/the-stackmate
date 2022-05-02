@@ -9,6 +9,7 @@ import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/vibrate.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'dart:io';
 
 main() {
   group('Calculator Bloc', () {
@@ -32,12 +33,13 @@ main() {
     test('initial state should be blank', () {
       expect(bloc.state.currencyAmt, '0');
     });
-
-    blocTest('should add numbers',
-        build: () => bloc,
-        act: (CalculatorCubit bloc) {
-          bloc.getRates();
-        },
-        expect: () => []);
+    test('getRates', () {
+      bloc.getRates();
+      expect(bloc.state.loadingRates, true);
+      sleep(Duration(seconds: 12));
+      // await Future.delayed(Duration(seconds: 5));
+      // expect(bloc.state.rates.length, 1);
+      expect(bloc.state.rates!.length, 2);
+    });
   });
 }
