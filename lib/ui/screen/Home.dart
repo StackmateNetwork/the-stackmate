@@ -17,7 +17,7 @@ class _Home extends StatelessWidget {
           SliverAppBar(
             stretch: true,
             pinned: true,
-            expandedHeight: 350,
+            expandedHeight: 100,
             automaticallyImplyLeading: false,
             backgroundColor: c.colours.background,
             flexibleSpace: FlexibleSpaceBar(
@@ -29,22 +29,19 @@ class _Home extends StatelessWidget {
               background: Column(
                 children: [
                   Header(),
-                  Accounts(),
+                  // Balance(),
                 ],
               ),
-            ),
-            bottom: PreferredSize(
-              preferredSize: Size(c.width, 20),
-              child: HomeActions(),
             ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
-              [],
+              [Accounts()],
             ),
-          )
+          ),
         ],
       ),
+      bottomNavigationBar: HomeActions(),
     );
   }
 }

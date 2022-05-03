@@ -40,9 +40,9 @@ class WalletCard extends StatelessWidget {
               tileMode: TileMode.mirror,
             ),
             child: Container(
-              height: 180,
-              width: 150,
-              padding: const EdgeInsets.all(16),
+              height: 90,
+              width: MediaQuery.of(context).size.width - 40,
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -57,39 +57,12 @@ class WalletCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 16),
                   Text(
                     wallet.label,
                     style: context.fonts.subtitle1!.copyWith(
                       color: context.colours.primary,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  if (wallet.balance != null) ...[
-                    const Spacer(),
-
-                    // const SizedBox(height: 8),
-                    Text(
-                      'BALANCE',
-                      style: context.fonts.overline!.copyWith(
-                        color: context.colours.onBackground,
-                        fontSize: 8,
-                      ),
-                    ),
-                    Text(
-                    NumberFormat('###,000').format(double.parse(wallet.balance.toString()))  + ' sats',
-
-                      
-                      // overflow: TextOverflow.ellipsis,
-                      maxLines: 10,
-
-                      style: context.fonts.caption!.copyWith(
-                        color: context.colours.onBackground.withOpacity(0.8),
-                        // fontSize: 8,
-                      ),
-                    ),
-                  ],
-                  const Spacer(flex: 4),
                   Text(
                     wallet.walletType,
                     overflow: TextOverflow.ellipsis,
@@ -100,6 +73,21 @@ class WalletCard extends StatelessWidget {
                       fontSize: 8,
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  if (wallet.balance != null) ...[
+                    Text(
+                      NumberFormat('###,000')
+                              .format(double.parse(wallet.balance.toString())) +
+                          ' sats',
+
+                      // overflow: TextOverflow.ellipsis,
+                      maxLines: 10,
+                      style: context.fonts.caption!.copyWith(
+                        color: context.colours.onBackground.withOpacity(0.8),
+                        // fontSize: 8,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
