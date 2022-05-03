@@ -7,24 +7,17 @@ import 'package:sats/pkg/interface/launcher.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/Header.dart';
-import 'package:sats/ui/component/Home/ReorderCards.dart';
 
 class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final isRearranging = c.select(
-      (WalletsCubit wc) => wc.state.isRearranging,
-    );
-
-    if (isRearranging) return const ReorderCards();
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             stretch: true,
             pinned: true,
-            expandedHeight: !isRearranging ? 350 : 80,
+            expandedHeight: 350,
             automaticallyImplyLeading: false,
             backgroundColor: c.colours.background,
             flexibleSpace: FlexibleSpaceBar(

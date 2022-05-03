@@ -31,37 +31,16 @@ class Header extends StatelessWidget {
                 ),
                 const Spacer(),
                 // const SizedBox(width: 16),
-                if (!isRearranging) ...[
-                  IconButton(
-                    onPressed: () {
-                      c.read<WalletsCubit>().toggleRearranging();
-                      // Navigator.pushNamed(c, Routes.setting);
-                    },
-                    icon: Icon(
-                      Icons.sort,
-                      size: 32,
-                      color: c.colours.primary,
-                    ),
+                IconButton(
+                  onPressed: () {
+                    c.push('/settings');
+                  },
+                  icon: Icon(
+                    Icons.settings,
+                    size: 32,
+                    color: c.colours.primary,
                   ),
-                  const SizedBox(width: 16),
-                  IconButton(
-                    onPressed: () {
-                      c.push('/settings');
-                    },
-                    icon: Icon(
-                      Icons.settings,
-                      size: 32,
-                      color: c.colours.primary,
-                    ),
-                  ),
-                ] else ...[
-                  TextButton(
-                    onPressed: () {
-                      c.read<WalletsCubit>().toggleRearranging();
-                    },
-                    child: const Text('DONE'),
-                  )
-                ]
+                ),
 
                 // LogButton(
                 //   child: IconButton(
