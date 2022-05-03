@@ -62,21 +62,21 @@ abstract class IStackMateCore {
     required String index,
   });
 
-  R<String> buildTransaction({
+  R<PSBT> buildTransaction({
     required String descriptor,
     required String nodeAddress,
     required String txOutputs,
     required String feeAbsolute,
-    required String sweep,
     required String policyPath,
+    required String sweep,
   });
 
-  R<String> decodePsbt({
+  R<List<DecodedTxOutput>> decodePsbt({
     required String network,
     required String psbt,
   });
 
-  R<String> signTransaction({
+  R<PSBT> signTransaction({
     required String descriptor,
     required String unsignedPSBT,
   });

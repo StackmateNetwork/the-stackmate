@@ -413,11 +413,13 @@ class SendCubit extends Cubit<SendState> {
         'descriptor': descriptor,
         'unsignedPSBT': state.psbt,
       });
-
+      if (!signed.isFinalized) {
+        throw "PSBT signatures not finalized.";
+      }
       final txid = await compute(broadcastTx, {
         'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
-        'signedPSBT': signed,
+        'signedPSBT': signed.psbt,
       });
 
       emit(
@@ -497,7 +499,7 @@ String buildTx(dynamic data) {
   if (resp.hasError) {
     throw SMError.fromJson(resp.error!);
   }
-  return resp.result!;
+  return resp.result!.psbt;
 }
 
 List<DecodedTxOutput> decodePSBT(dynamic data) {
@@ -510,16 +512,16 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
   if (resp.hasError) {
     throw SMError.fromJson(resp.error!);
   }
-  final json = jsonDecode(resp.result!)['outputs'];
+  // final json = jsonDecode(resp.result!)['outputs'];
 
-  final List<DecodedTxOutput> decoded = [];
-  for (final out in json)
-    decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
+  // final List<DecodedTxOutput> decoded = [];
+  // for (final out in json)
+  //   decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
 
-  return decoded;
+  return resp.result!;
 }
 
-String signTx(dynamic data) {
+PSBT signTx(dynamic data) {
   final obj = data as Map<String, String?>;
 
   final resp = BitcoinFFI().signTransaction(

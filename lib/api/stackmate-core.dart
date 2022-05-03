@@ -149,40 +149,46 @@ class BitcoinFFI implements IStackMateCore {
   }
 
   @override
-  R<String> buildTransaction({
+  R<PSBT> buildTransaction({
     required String descriptor,
     required String nodeAddress,
     required String txOutputs,
     required String feeAbsolute,
-    required String sweep,
     required String policyPath,
+    required String sweep,
   }) {
     final resp = _bitcoin.buildTransaction(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
       txOutputs: txOutputs,
       feeAbsolute: feeAbsolute,
-      sweep: sweep,
       policyPath: policyPath,
+      sweep: sweep,
     );
     if (resp.contains('Error')) {
       return R(error: resp);
     }
-    final data = jsonDecode(resp);
-    return R(result: data['psbt'] as String);
+    return R(result: PSBT.fromJson(resp));
   }
 
   @override
-  R<String> decodePsbt({required String network, required String psbt}) {
+  R<List<DecodedTxOutput>> decodePsbt(
+      {required String network, required String psbt}) {
     final resp = _bitcoin.decodePsbt(network: network, psbt: psbt);
     if (resp.contains('Error')) {
       return R(error: resp);
     }
-    return R(result: resp);
+    final json = jsonDecode(resp)['outputs'];
+
+    final List<DecodedTxOutput> decoded = [];
+    for (final out in json)
+      decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
+
+    return R(result: decoded);
   }
 
   @override
-  R<String> signTransaction({
+  R<PSBT> signTransaction({
     required String descriptor,
     required String unsignedPSBT,
   }) {
@@ -193,8 +199,7 @@ class BitcoinFFI implements IStackMateCore {
     if (resp.contains('Error')) {
       return R(error: resp);
     }
-    final data = jsonDecode(resp);
-    return R(result: data['psbt'] as String);
+    return R(result: PSBT.fromJson(resp));
   }
 
   @override

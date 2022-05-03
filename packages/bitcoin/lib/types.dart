@@ -11,6 +11,21 @@ class SMError {
   }
   final String kind;
   final String message;
+
+  String get oneliner => '$kind:$message';
+}
+
+class PSBT {
+  const PSBT(this.psbt, this.isFinalized);
+  factory PSBT.fromJson(String data) {
+    final json = jsonDecode(data);
+    return PSBT(
+      json['psbt'] as String,
+      json['is_finalized'] as bool,
+    );
+  }
+  final String psbt;
+  final bool isFinalized;
 }
 
 class Seed {
