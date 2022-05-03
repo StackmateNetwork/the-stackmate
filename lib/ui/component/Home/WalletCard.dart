@@ -138,7 +138,12 @@ class WalletCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<WalletsCubit>().walletSelected(wallet);
+                          if (!isSelection) {
+                            context.push('/receive');
+                          }
+                        },
                         icon: Icon(
                           Icons.call_received,
                           size: 24,
@@ -192,7 +197,12 @@ class WalletCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<WalletsCubit>().walletSelected(wallet);
+                          if (!isSelection) {
+                            context.push('/send');
+                          }
+                        },
                         icon: Icon(
                           Icons.send,
                           size: 24,
