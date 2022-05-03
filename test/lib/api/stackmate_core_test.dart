@@ -1,6 +1,5 @@
 // ignore: avoid_escaping_inner_quotes
 import 'package:bitcoin/types.dart';
-
 import 'package:sats/api/stackmate-core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sats/model/transaction.dart';
@@ -162,6 +161,7 @@ void main() {
       }
     }
 
+    // THE ONLY OCCASION A PRIVATE DESCRIPTOR IS NEEDED
     final signedPsbt = libstackmate.signTransaction(
       descriptor: expPrivateDesc,
       unsignedPSBT: finalBuildPsbt.result!.psbt,
