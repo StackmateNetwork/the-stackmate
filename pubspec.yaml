@@ -35,6 +35,7 @@ dependencies:
   oktoast: ^3.1.5
   open_mail_app: ^0.4.5
   path_provider: ^2.0.1
+  pattern_formatter: ^2.0.0
   petitparser: ^5.0.0
   qr_flutter: ^4.0.0
   retry: ^3.1.0

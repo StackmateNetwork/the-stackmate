@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+//import 'package:intl/intl.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -37,6 +39,7 @@ class _AmountRowState extends State<AmountRow> {
             child: TextField(
               controller: _controller,
               keyboardType: TextInputType.number,
+              inputFormatters: [ThousandsFormatter()],
               style: TextStyle(color: c.colours.onBackground),
               decoration: InputDecoration(
                 hintText: isSweep
