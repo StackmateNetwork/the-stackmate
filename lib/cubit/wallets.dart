@@ -17,7 +17,6 @@ class WalletsState with _$WalletsState {
   const factory WalletsState({
     @Default([]) List<Wallet> wallets,
     Wallet? selectedWallet,
-    @Default(false) bool isRearranging,
     @Default('') String errDeleting,
   }) = _WalletsState;
 }
@@ -85,27 +84,6 @@ class WalletsCubit extends Cubit<WalletsState> {
   void clearSelectedWallet() async {
     await Future.delayed(const Duration(milliseconds: 500));
     emit(state.copyWith(selectedWallet: null));
-  }
-
-  void toggleRearranging() {
-    emit(state.copyWith(isRearranging: !state.isRearranging));
-  }
-
-  void rearrange(int oldIdx, int newIdx) async {
-    var oldwallet = state.wallets.elementAt(oldIdx);
-    var newwallet = state.wallets.elementAt(newIdx);
-
-    final oldId = oldwallet.id;
-    final newId = newwallet.id;
-
-    oldwallet = oldwallet.copyWith(id: newId);
-    newwallet = newwallet.copyWith(id: oldId);
-
-    await _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, newId!, oldwallet);
-    await _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, oldId!, newwallet);
-
-    refresh();
-    clearSelectedWallet();
   }
 
   void copyDescriptor(String text) async =>
