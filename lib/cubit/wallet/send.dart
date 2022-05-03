@@ -95,6 +95,16 @@ class SendCubit extends Cubit<SendState> {
   final NodeAddressCubit _nodeAddressCubit;
   final IStackMateCore _core;
   final FeesCubit _fees;
+
+  static const emailShareSubject = 'Transaction ID';
+  static const invalidAddressError = 'Invalid Address';
+  static const invalidAmountError = 'Invalid Amount';
+  static const invalidFeeError = 'Invalid Fee';
+  static const psbtNotFinalizedError = 'Transaction signatures not satisfied.';
+  static const dummyFeeValue = '1000';
+  static const minerOutput = 'miner';
+  static const emptyString = '';
+
   void _init(bool withQR) async {
     if (withQR) {
       await Future.delayed(const Duration(milliseconds: 500));
@@ -117,7 +127,7 @@ class SendCubit extends Cubit<SendState> {
         state.copyWith(
           balance: _walletCubit.state.selectedWallet!.balance,
           loadingStart: false,
-          errLoading: '',
+          errLoading: emptyString,
         ),
       );
 
@@ -163,7 +173,7 @@ class SendCubit extends Cubit<SendState> {
         false,
         ScanMode.QR,
       );
-      if (barcodeScanRes == '-1') barcodeScanRes = '';
+      if (barcodeScanRes == '-1') barcodeScanRes = emptyString;
 
       emit(state.copyWith(address: barcodeScanRes));
 
@@ -183,22 +193,22 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void addressConfirmedClicked() async {
-    emit(state.copyWith(errAddress: ''));
+    emit(state.copyWith(errAddress: emptyString));
 
     if (!Validation.isBtcAddress(state.address)) {
-      emit(state.copyWith(errAddress: 'Invalid Wallet Address'));
+      emit(state.copyWith(errAddress: invalidAddressError));
       return;
     }
     emit(state.copyWith(currentStep: SendSteps.amount));
   }
 
   void amountChanged(String amount) {
-    final checked = amount.replaceAll('.', '');
+    final checked = amount.replaceAll('.', emptyString);
     emit(state.copyWith(amount: checked));
   }
 
   void toggleSweep() {
-    emit(state.copyWith(sweepWallet: !state.sweepWallet, amount: ''));
+    emit(state.copyWith(sweepWallet: !state.sweepWallet, amount: emptyString));
   }
 
   bool _checkAmount() {
@@ -210,10 +220,10 @@ class SendCubit extends Cubit<SendState> {
     //get fees
 
     try {
-      emit(state.copyWith(errAmount: ''));
+      emit(state.copyWith(errAmount: emptyString));
 
       if (!_checkAmount()) {
-        emit(state.copyWith(errAmount: 'Please enter a valid amount'));
+        emit(state.copyWith(errAmount: invalidAmountError));
         return;
       }
       final txOutputs = '${state.address}:${state.amount}';
@@ -228,7 +238,7 @@ class SendCubit extends Cubit<SendState> {
 
       // await Future.delayed(const Duration(milliseconds: 100));
 
-      // emit(state.copyWith(buildingTx: true, errLoading: ''));
+      // emit(state.copyWith(buildingTx: true, errLoading: emptyString));
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
@@ -236,7 +246,7 @@ class SendCubit extends Cubit<SendState> {
         'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'txOutputs': txOutputs,
-        'feeAbsolute': '1000',
+        'feeAbsolute': dummyFeeValue,
         'policyPath': state.policyPath,
         'sweep': state.sweepWallet.toString(),
       });
@@ -308,11 +318,11 @@ class SendCubit extends Cubit<SendState> {
         finalFee = state.feeFast!;
         break;
     }
-    emit(state.copyWith(finalFee: finalFee, fees: ''));
+    emit(state.copyWith(finalFee: finalFee, fees: emptyString));
   }
 
   void feeChanged(String fee) {
-    final checked = fee.replaceAll('.', '');
+    final checked = fee.replaceAll('.', emptyString);
     emit(state.copyWith(fees: checked, feesOption: 4));
     final fees = _core.feeAbsoluteToRate(
       feeAbsolute: checked,
@@ -327,15 +337,15 @@ class SendCubit extends Cubit<SendState> {
 
   void feeConfirmedClicked() async {
     try {
-      emit(state.copyWith(errFees: ''));
+      emit(state.copyWith(errFees: emptyString));
 
       if (!_checkFee()) {
-        emit(state.copyWith(errAmount: 'Please enter a valid fee amount'));
+        emit(state.copyWith(errAmount: invalidFeeError));
         return;
       }
       await Future.delayed(const Duration(milliseconds: 100));
 
-      emit(state.copyWith(buildingTx: true, errLoading: ''));
+      emit(state.copyWith(buildingTx: true, errLoading: emptyString));
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
@@ -354,7 +364,7 @@ class SendCubit extends Cubit<SendState> {
       });
 
       final amtoutput = decode.firstWhere((o) => o.to == state.address);
-      final feeoutput = decode.firstWhere((o) => o.to == 'miner');
+      final feeoutput = decode.firstWhere((o) => o.to == minerOutput);
 
       emit(
         state.copyWith(
@@ -378,7 +388,7 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void clearPsbt() {
-    emit(state.copyWith(psbt: '', finalAmount: null, finalFee: null));
+    emit(state.copyWith(psbt: emptyString, finalAmount: null, finalFee: null));
   }
 
   void backClicked() {
@@ -404,7 +414,7 @@ class SendCubit extends Cubit<SendState> {
       if (state.sendingTx == true) {
         return;
       }
-      emit(state.copyWith(sendingTx: true, errLoading: ''));
+      emit(state.copyWith(sendingTx: true, errLoading: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       // final unsigned = state.psbt;
@@ -414,7 +424,7 @@ class SendCubit extends Cubit<SendState> {
         'unsignedPSBT': state.psbt,
       });
       if (!signed.isFinalized) {
-        throw "PSBT signatures not finalized.";
+        throw psbtNotFinalizedError;
       }
       final txid = await compute(broadcastTx, {
         'descriptor': _walletCubit.state.selectedWallet!.descriptor,
@@ -425,7 +435,7 @@ class SendCubit extends Cubit<SendState> {
       emit(
         state.copyWith(
           sendingTx: false,
-          errLoading: '',
+          errLoading: emptyString,
           txId: txid,
           currentStep: SendSteps.sent,
         ),
@@ -443,8 +453,8 @@ class SendCubit extends Cubit<SendState> {
 
   void shareTxId() {
     _share.share(
-      text: 'This is the txid: ' + state.txId,
-      subjectForEmail: 'transaction',
+      text: state.txId,
+      subjectForEmail: emailShareSubject,
     );
   }
 }

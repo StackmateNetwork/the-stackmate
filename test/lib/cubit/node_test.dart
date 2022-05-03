@@ -10,19 +10,30 @@ import 'package:sats/pkg/storage.dart';
 
 class _MockStorage extends Mock implements IStorage {}
 
+class _MockNode extends Mock implements Node {}
+
 main() {
   group('nodeCubit', () {
-    late IStorage storage;
+    late IStorage _storage;
+    late Node mockNode;
     late NodeAddressCubit nodeAddressCubit;
 
     setUp(() {
-      storage = _MockStorage();
-      nodeAddressCubit = NodeAddressCubit(storage);
+      _storage = _MockStorage();
+      mockNode = _MockNode();
+      nodeAddressCubit = NodeAddressCubit(_storage);
+
+      // when(
+      //   _storage.getFirstItem<Node>(StoreKeys.Node.name),
+      // ).thenAnswer((_) => R(result: mockNode));
     });
 
     tearDown(() {});
     blocTest<NodeAddressCubit, NodeAddressState>(
       'Should init node address',
+      // setUp: () => when(
+      //   _storage.getFirstItem<Node>(StoreKeys.Node.name),
+      // ).thenAnswer((_) => R(result: mockNode)),
       build: () => nodeAddressCubit,
       act: (cubit) {
         cubit.init();
@@ -33,9 +44,9 @@ main() {
           port: '60002',
         ),
       ],
-      // verify: (cubit) => [
-      //       verify(storage.getFirstItem<Node>(StoreKeys.Node.name)).called(1),
-      //     ]);
+      verify: (cubit) => [
+        verify(_storage.getFirstItem<Node>(StoreKeys.Node.name)).called(1),
+      ],
     );
   });
 }

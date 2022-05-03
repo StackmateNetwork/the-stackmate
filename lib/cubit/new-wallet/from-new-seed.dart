@@ -78,6 +78,11 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   final SeedGenerateCubit _generateCubit;
   late StreamSubscription _generateSub;
 
+  static const invalidLabelError = 'Invalid Label';
+  static const signerWalletType = 'SIGNER';
+  static const wpkhScript = 'wpkh';
+  static const emptyString = '';
+
   void backClicked() {
     switch (state.currentStep) {
       case SeedGenerateWalletSteps.warning:
@@ -114,14 +119,14 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   }
 
   void labelChanged(String text) {
-    emit(state.copyWith(walletLabel: text, walletLabelError: ''));
+    emit(state.copyWith(walletLabel: text, walletLabelError: emptyString));
   }
 
   void saveClicked() async {
     if (state.walletLabel.length < 3 ||
         state.walletLabel.length > 10 ||
         state.walletLabel.contains(' ')) {
-      emit(state.copyWith(walletLabelError: 'Invalid Label'));
+      emit(state.copyWith(walletLabelError: invalidLabelError));
       return;
     }
 
@@ -134,15 +139,15 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
 
       final fullXPub =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
-              .replaceFirst('/m', '');
+              .replaceFirst('/m', emptyString);
 
-      final policy = 'pk($fullXPrv/*)'.replaceFirst('/m', '');
+      final policy = 'pk($fullXPrv/*)'.replaceFirst('/m', emptyString);
 
       const readable = 'pk(___primary___)';
 
       final descriptor = _core.compile(
         policy: policy,
-        scriptType: 'wpkh',
+        scriptType: wpkhScript,
       );
       if (descriptor.hasError) {
         throw SMError.fromJson(descriptor.error!);
@@ -150,7 +155,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
 
       var newWallet = Wallet(
         label: state.walletLabel,
-        walletType: 'SIGNER',
+        walletType: signerWalletType,
         descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,
@@ -180,7 +185,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       _wallets.refresh();
       emit(
         state.copyWith(
-          savingWalletError: '',
+          savingWalletError: emptyString,
           savinngWallet: false,
           newWalletSaved: true,
         ),

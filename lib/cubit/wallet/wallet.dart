@@ -71,6 +71,11 @@ class WalletCubit extends Cubit<WalletState> {
   final ChainSelectCubit _blockchainCubit;
   final NodeAddressCubit _nodeAddressCubit;
 
+  static const blockstreamTestnetURL = 'https://blockstream.info/testnet/tx/';
+  static const blockstreamMainnetURL = 'https://blockstream.info/tx/';
+  static const emailShareSubject = 'Transaction Details';
+  static const walletHasFunds = 'Wallet has funds';
+
   void _init() async {
     // await Future.delayed(const Duration(millis .econds: 1000));
 
@@ -148,9 +153,9 @@ class WalletCubit extends Cubit<WalletState> {
     try {
       String url = '';
       if (_blockchainCubit.state.blockchain == Blockchain.testNet)
-        url = 'https://blockstream.info/testnet/tx/';
+        url = blockstreamTestnetURL;
       else
-        url = 'https://blockstream.info/tx/';
+        url = blockstreamMainnetURL;
 
       url += transaction.txid;
 
@@ -169,7 +174,7 @@ class WalletCubit extends Cubit<WalletState> {
       // text += '\nAddress: ' + transaction.address;
       text += '\nFee: ' + transaction.feesToBtc() + ' BTC';
 
-      _share.share(text: text, subjectForEmail: 'Transaction');
+      _share.share(text: text, subjectForEmail: emailShareSubject);
     } catch (e, s) {
       _logger.logException(e, 'HistoryCubit.shareTransaction', s);
     }
@@ -179,7 +184,7 @@ class WalletCubit extends Cubit<WalletState> {
     emit(state.copyWith(errDeleting: ''));
 
     if (state.balance == null || state.balance! > 0) {
-      emit(state.copyWith(errDeleting: 'Empty wallet first'));
+      emit(state.copyWith(errDeleting: walletHasFunds));
       return;
     }
 

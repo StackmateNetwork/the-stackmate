@@ -50,6 +50,8 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   final IStorage _storage;
   final IStackMateCore _core;
 
+  static const emailShareSubject = 'Bitcoin Address';
+
   void _init() {
     getAddress();
   }
@@ -115,8 +117,8 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   void shareAddress() {
     try {
       final address = state.address!;
-      final text = 'This is my bitcoin address:\n$address';
-      _share.share(text: text, subjectForEmail: 'Bitcoin Address');
+      final text = address;
+      _share.share(text: text, subjectForEmail: emailShareSubject);
     } catch (e, s) {
       _logger.logException(e, 'WalletCubit.shareAddress', s);
     }

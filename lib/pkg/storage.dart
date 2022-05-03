@@ -193,9 +193,9 @@ class HiveStore implements IStorage {
       final bx = Hive.box<T>(cls);
       // if (bx.isEmpty) return R(error: 'empty');
       final len = bx.length;
-      if (len == 0) return R(error: 'empty');
+      if (len == 0) throw 'empty';
       final obj = bx.getAt(0);
-      if (obj == null) return R(error: 'empty');
+      if (obj == null) throw 'empty';
       return R(result: obj);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
