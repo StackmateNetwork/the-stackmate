@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/api/interface/reddit.dart';
 import 'package:sats/cubit/fees.dart';
-import 'package:sats/cubit/reddit.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -9,7 +7,6 @@ import 'package:sats/pkg/interface/launcher.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/Header.dart';
-import 'package:sats/ui/component/Home/RedditFeed.dart';
 import 'package:sats/ui/component/Home/ReorderCards.dart';
 
 class _Home extends StatelessWidget {
@@ -50,7 +47,7 @@ class _Home extends StatelessWidget {
           ),
           SliverList(
             delegate: SliverChildListDelegate(
-              [RedditFeed()],
+              [],
             ),
           )
         ],
@@ -64,14 +61,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final redditBloc = RedditCubit(
-      locator<IRedditAPI>(),
-      locator<ILauncher>(),
-    );
-
-    return BlocProvider.value(
-      value: redditBloc,
-      child: _Home(),
-    );
+    return _Home();
   }
 }

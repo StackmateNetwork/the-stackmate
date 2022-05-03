@@ -115,10 +115,13 @@ class BitcoinFFI implements IStackMateCore {
       descriptor: descriptor,
       index: index,
     );
+
     if (resp.contains('Error')) {
       return R(error: resp);
     }
-    return R(result: resp);
+
+    final address = jsonDecode(resp)['address'];
+    return R(result: address as String);
   }
 
   @override
