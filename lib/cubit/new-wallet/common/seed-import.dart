@@ -38,16 +38,19 @@ class SeedImportCubit extends Cubit<SeedImportState> {
   ) : super(const SeedImportState());
 
   final IStackMateCore _core;
-
   final Logger logger;
   final ChainSelectCubit _blockchainCubit;
+
+  static const segwitNativePurpose = '84';
+  static const invalidSeedError = 'Invalid Seed Words.';
+  static const emptyString = '';
 
   void backOnPassphaseClicked() {
     emit(
       state.copyWith(
         currentStep: SeedImportStep.passphrase,
-        passPhrase: '',
-        errPassPhrase: '',
+        passPhrase: emptyString,
+        errPassPhrase: emptyString,
       ),
     );
   }
@@ -69,7 +72,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     emit(
       state.copyWith(
         currentStep: SeedImportStep.import,
-        errPassPhrase: '',
+        errPassPhrase: emptyString,
       ),
     );
   }
@@ -78,8 +81,8 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     emit(
       state.copyWith(
         currentStep: SeedImportStep.passphrase,
-        seed: '',
-        seedError: '',
+        seed: emptyString,
+        seedError: emptyString,
       ),
     );
   }
@@ -88,7 +91,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     emit(
       state.copyWith(
         seed: seed,
-        seedError: '',
+        seedError: emptyString,
       ),
     );
   }
@@ -98,7 +101,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
       final seed = state.seed;
 
       if (seed.split(' ').length != 12) {
-        emit(state.copyWith(seedError: 'Invalid Seed.'));
+        emit(state.copyWith(seedError: invalidSeedError));
         return;
       }
 
@@ -114,7 +117,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
       final wallet = _core.deriveHardened(
         masterXPriv: root.result!.xprv,
         account: state.accountNumber.toString(),
-        purpose: '84',
+        purpose: segwitNativePurpose,
       );
 
       if (wallet.hasError) {

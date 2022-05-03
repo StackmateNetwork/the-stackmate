@@ -54,7 +54,6 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   static const accountZero = '0';
   static const segwitNativePurpose = '84';
   static const incorerctWordError = 'Incorrect Word Selected.';
-  static const invalidPassphraseError = 'Invalid Passphrase';
   static const unableToDeriveError =
       'Unable to derive child keys from this seed.';
   static const emptyString = '';
@@ -199,6 +198,11 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
     if (wallet.hasError) {
       final smError = SMError.fromJson(wallet.error!);
       emit(state.copyWith(seedError: unableToDeriveError));
+      _logger.logException(
+        smError.oneliner,
+        'SeedImportWalletCubit._createNewLocalWallet',
+        emptyString,
+      );
     } else
       emit(state.copyWith(wallet: wallet.result!));
   }
