@@ -29,7 +29,7 @@ class WalletCard extends StatelessWidget {
             }
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: const EdgeInsets.only(left: 12, top: 12),
             child: Material(
               elevation: 4,
               borderRadius: BorderRadius.circular(16),
@@ -43,7 +43,7 @@ class WalletCard extends StatelessWidget {
                 ),
                 child: Container(
                   height: 92,
-                  width: MediaQuery.of(context).size.width - 200,
+                  width: MediaQuery.of(context).size.width - 192,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -106,7 +106,7 @@ class WalletCard extends StatelessWidget {
             }
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: const EdgeInsets.only(left: 6, top: 12),
             child: Material(
               elevation: 4,
               borderRadius: BorderRadius.circular(16),
@@ -120,7 +120,7 @@ class WalletCard extends StatelessWidget {
                 ),
                 child: Container(
                   height: 90,
-                  width: 75,
+                  width: 76,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -165,7 +165,7 @@ class WalletCard extends StatelessWidget {
             }
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: const EdgeInsets.only(left: 6, top: 12),
             child: Material(
               elevation: 4,
               borderRadius: BorderRadius.circular(16),
@@ -179,7 +179,7 @@ class WalletCard extends StatelessWidget {
                 ),
                 child: Container(
                   height: 90,
-                  width: 75,
+                  width: 76,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -205,7 +205,7 @@ class WalletCard extends StatelessWidget {
                         },
                         icon: Icon(
                           Icons.send,
-                          size: 24,
+                          size: 21,
                           color: context.colours.primary,
                         ),
                       ),

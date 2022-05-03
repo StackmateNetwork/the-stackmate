@@ -17,7 +17,7 @@ class Network extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(
               left: 24,
-              right: 24,
+              right: 32,
             ),
             child: Row(
               children: [
