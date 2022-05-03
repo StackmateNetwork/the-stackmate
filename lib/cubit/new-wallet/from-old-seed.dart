@@ -99,7 +99,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
   static const invalidLabelError = 'Invalid Label';
   static const signerWalletType = 'SIGNER';
-  static const watcherWalletType = 'WATCHER';
   static const wpkhScript = 'wpkh';
   static const emptyString = '';
 
