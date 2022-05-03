@@ -211,7 +211,9 @@ class SendCubit extends Cubit<SendState> {
     emit(state.copyWith(sweepWallet: !state.sweepWallet, amount: emptyString));
   }
 
-  bool _checkAmount() {
+  bool _checkAmount(String amount) {
+    final checked = amount.replaceAll(',', emptyString);
+    emit(state.copyWith(amount: checked));
     return true;
   }
 
@@ -222,7 +224,7 @@ class SendCubit extends Cubit<SendState> {
     try {
       emit(state.copyWith(errAmount: emptyString));
 
-      if (!_checkAmount()) {
+      if (!_checkAmount(state.amount)) {
         emit(state.copyWith(errAmount: invalidAmountError));
         return;
       }
