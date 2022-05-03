@@ -72,8 +72,14 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
   final XpubImportCubit _importCubit;
   late StreamSubscription _importSub;
 
+  static const invalidLabelError = 'Invalid Label';
+  static const internalError = 'Internal Error';
+  static const watcherWalletType = 'WATCHER';
+  static const wpkhScript = 'wpkh';
+  static const emptyString = '';
+
   void labelChanged(String text) {
-    emit(state.copyWith(label: text, errSavingWallet: ''));
+    emit(state.copyWith(label: text, errSavingWallet: emptyString));
   }
 
   void nextClicked() async {
@@ -82,8 +88,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         break;
 
       case XpubImportWalletStep.label:
-        if (state.label == '' || state.label.length < 5) {
-          emit(state.copyWith(errSavingWallet: 'Invalid Label.'));
+        if (state.label == emptyString || state.label.length < 5) {
+          emit(state.copyWith(errSavingWallet: invalidLabelError));
           return;
         }
         _saveWallet();
@@ -100,7 +106,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         emit(
           state.copyWith(
             currentStep: XpubImportWalletStep.import,
-            label: '',
+            label: emptyString,
           ),
         );
         break;
@@ -111,7 +117,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     emit(
       state.copyWith(
         savingWallet: true,
-        errSavingWallet: '',
+        errSavingWallet: emptyString,
       ),
     );
 
@@ -120,10 +126,10 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       final fingerprint = xpubState.fingerPrint;
       final path = xpubState.path;
       final xpub = xpubState.xpub;
-      String fullXPub = xpub.replaceFirst('/*', '');
+      String fullXPub = xpub.replaceFirst('/*', emptyString);
 
       if (xpubState.hasNoKeySource())
-        fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst('/m', '');
+        fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
 
       final policy = 'pk($fullXPub/*)';
 
@@ -131,7 +137,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       final descriptor = _core.compile(
         policy: policy,
-        scriptType: 'wpkh',
+        scriptType: wpkhScript,
       );
       if (descriptor.hasError) {
         throw SMError.fromJson(descriptor.error!);
@@ -148,7 +154,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         requiredPolicyElements: 1,
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
-        walletType: 'WATCHER',
+        walletType: watcherWalletType,
         lastAddressIndex: 0,
       );
 
@@ -184,7 +190,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       emit(
         state.copyWith(
-          errSavingWallet: 'Error Occured.',
+          errSavingWallet: internalError,
           newWalletSaved: true,
         ),
       );

@@ -97,6 +97,12 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   final SeedImportCubit _importCubit;
   late StreamSubscription _importSub;
 
+  static const invalidLabelError = 'Invalid Label';
+  static const signerWalletType = 'SIGNER';
+  static const watcherWalletType = 'WATCHER';
+  static const wpkhScript = 'wpkh';
+  static const emptyString = '';
+
   void nextClicked() async {
     switch (state.currentStep) {
       case SeedImportWalletSteps.warning:
@@ -157,22 +163,22 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     if (state.walletLabel.length < 3 ||
         state.walletLabel.length > 10 ||
         state.walletLabel.contains(' ')) {
-      emit(state.copyWith(walletLabelError: 'Invalid Label'));
+      emit(state.copyWith(walletLabelError: invalidLabelError));
       return;
     }
 
-    emit(state.copyWith(walletLabelError: ''));
+    emit(state.copyWith(walletLabelError: emptyString));
 
     final istate = _importCubit.state;
     final wallet = istate.wallet;
     if (wallet == null) return;
     final fullXPrv =
         '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
-            .replaceFirst('/m', '');
+            .replaceFirst('/m', emptyString);
 
     final fullXPub =
         '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
-            .replaceFirst('/m', '');
+            .replaceFirst('/m', emptyString);
 
     final policy = 'pk($fullXPrv/*)';
 
@@ -180,7 +186,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
     final descriptor = _core.compile(
       policy: policy,
-      scriptType: 'wpkh',
+      scriptType: wpkhScript,
     );
     if (descriptor.hasError) {
       throw SMError.fromJson(descriptor.error!);
@@ -191,7 +197,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
     var newWallet = Wallet(
       label: state.walletLabel,
-      walletType: 'SIGNER',
+      walletType: signerWalletType,
       descriptor: descriptor.result!,
       policy: readable,
       requiredPolicyElements: 1,
