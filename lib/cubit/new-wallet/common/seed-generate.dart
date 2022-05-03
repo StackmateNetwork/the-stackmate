@@ -63,17 +63,12 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       emit(state.copyWith(passPhrase: text));
 
   void confirmPassphrase() {
-    if (state.passPhrase.length > 8 || state.passPhrase.contains(' ')) {
-      emit(state.copyWith(errPassphrase: invalidPassphraseError));
-      return;
-    }
-
     generateSeed();
 
     emit(
       state.copyWith(
         currentStep: SeedGenerateSteps.generate,
-        errPassphrase: '',
+        errPassphrase: emptyString,
       ),
     );
   }
