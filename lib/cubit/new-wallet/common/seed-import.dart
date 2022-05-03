@@ -113,7 +113,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
 
       final wallet = _core.deriveHardened(
         masterXPriv: root.result!.xprv,
-        account: '0',
+        account: state.accountNumber.toString(),
         purpose: '84',
       );
 
