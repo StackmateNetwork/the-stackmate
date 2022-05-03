@@ -1,9 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sats/cubit/reddit.dart';
 import 'package:sats/model/reddit-post.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class FeedItem extends StatelessWidget {
   const FeedItem({
@@ -49,8 +49,9 @@ class FeedItem extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         post.title,
-                        style: GoogleFonts.geo(
-                            fontStyle: FontStyle.normal, color: Colors.grey),
+                        style: TextStyle(fontFamily: 'FontAwesome',
+                        fontStyle: FontStyle.normal, 
+                        color: Colors.grey),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),

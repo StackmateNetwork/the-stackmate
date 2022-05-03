@@ -22,7 +22,7 @@ class SelectNetwork extends StatelessWidget {
         primary: c.colours.surface,
       ),
       child: Container(
-        height: 100,
+        height: 120,
         padding: const EdgeInsets.only(
           top: 16,
           bottom: 16,
@@ -33,7 +33,7 @@ class SelectNetwork extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Change Network'.toUpperCase(),
+                  'Change Network',
                   style: c.fonts.button!.copyWith(
                     color: c.colours.primary,
                     fontSize: 16,

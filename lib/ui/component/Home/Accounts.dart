@@ -7,6 +7,7 @@ class Accounts extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final wallets = c.select((WalletsCubit w) => w.state.wallets);
+
     if (wallets.isEmpty)
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

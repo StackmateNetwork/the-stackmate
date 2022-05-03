@@ -3,11 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/RedditLoader.dart';
+import 'package:sats/cubit/fees.dart';
 
 class Header extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final isRearranging = c.select((WalletsCubit wc) => wc.state.isRearranging);
+    c.select((FeesCubit wc) => wc.update());
 
     return Padding(
       padding: const EdgeInsets.only(top: 32, bottom: 16),
@@ -17,14 +19,14 @@ class Header extends StatelessWidget {
           const RedditLoader(),
           Padding(
             padding: EdgeInsets.only(
-              top: 8,
+              top: 12,
               left: 24,
               right: !isRearranging ? 16 : 0,
             ),
             child: Row(
               children: [
                 Text(
-                  'STACKMATE',
+                  'Stackmate',
                   style: c.fonts.headline5!.copyWith(
                     color: Colors.white,
                   ),

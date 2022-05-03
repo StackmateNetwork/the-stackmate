@@ -42,7 +42,7 @@ class _EditNodeState extends State<EditNode> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Change Electrum Node'.toUpperCase(),
+            'Change Electrum Node.'.toUpperCase(),
             style: c.fonts.button!.copyWith(
               color: c.colours.onBackground,
               fontSize: 16,

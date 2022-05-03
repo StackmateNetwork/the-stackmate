@@ -8,8 +8,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/fees.dart';
+
 import 'package:sats/cubit/wallet/wallet.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
@@ -69,16 +72,17 @@ class SendState with _$SendState {
 
 class SendCubit extends Cubit<SendState> {
   SendCubit(
-    bool withQR,
-    this._walletCubit,
-    // this._bitcoin,
-    this._blockchain,
-    this._logger,
-    this._clipBoard,
-    this._share,
-    this._nodeAddressCubit,
-    this._core,
-  ) : super(const SendState()) {
+      bool withQR,
+      this._walletCubit,
+      // this._bitcoin,
+      this._blockchain,
+      this._logger,
+      this._clipBoard,
+      this._share,
+      this._nodeAddressCubit,
+      this._core,
+      this._fees)
+      : super(const SendState()) {
     _init(withQR);
   }
 
@@ -90,7 +94,7 @@ class SendCubit extends Cubit<SendState> {
   final IClipBoard _clipBoard;
   final NodeAddressCubit _nodeAddressCubit;
   final IStackMateCore _core;
-
+  final FeesCubit _fees;
   void _init(bool withQR) async {
     if (withQR) {
       await Future.delayed(const Duration(milliseconds: 500));
@@ -214,10 +218,13 @@ class SendCubit extends Cubit<SendState> {
       }
       final txOutputs = '${state.address}:${state.amount}';
 
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           calculatingFees: true,
           currentStep: SendSteps.fees,
-          txOutputs: txOutputs));
+          txOutputs: txOutputs,
+        ),
+      );
 
       // await Future.delayed(const Duration(milliseconds: 100));
 
@@ -239,32 +246,27 @@ class SendCubit extends Cubit<SendState> {
         'psbt': psbt,
       });
 
-      final fastRate = await compute(estimateFeees, {
-        'network': _blockchain.state.blockchain.name,
-        'nodeAddress': nodeAddress,
-        'targetSize': '1',
-      });
-
-      final slowRate = await compute(estimateFeees, {
-        'network': _blockchain.state.blockchain.name,
-        'nodeAddress': nodeAddress,
-        'targetSize': '21',
-      });
-
-      final mediumRate = (fastRate + slowRate) / 2;
+      final now = DateTime.now().millisecondsSinceEpoch;
+      const tenMinutes = 600000;
+      var feesComplete = _fees.getFees();
+      if (feesComplete.fast == 0.0 ||
+          feesComplete.timestamp < now - tenMinutes) {
+        await _fees.update();
+      }
+      feesComplete = _fees.getFees();
 
       final fast = _core.feeRateToAbsolute(
-        feeRate: fastRate.toString(),
+        feeRate: feesComplete.fast.toString(),
         weight: weight.toString(),
       );
 
       final medium = _core.feeRateToAbsolute(
-        feeRate: mediumRate.toString(),
+        feeRate: feesComplete.medium.toString(),
         weight: weight.toString(),
       );
 
       final slow = _core.feeRateToAbsolute(
-        feeRate: slowRate.toString(),
+        feeRate: feesComplete.slow.toString(),
         weight: weight.toString(),
       );
 
@@ -399,6 +401,9 @@ class SendCubit extends Cubit<SendState> {
 
   void sendClicked() async {
     try {
+      if (state.sendingTx == true) {
+        return;
+      }
       emit(state.copyWith(sendingTx: true, errLoading: ''));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 

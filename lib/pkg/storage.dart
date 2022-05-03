@@ -8,6 +8,7 @@ import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/model/reddit-post.dart';
 import 'package:sats/model/result.dart';
+import 'package:sats/model/fees.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -19,6 +20,7 @@ enum StoreKeys {
   Node,
   AddressBookUser,
   AddressBookKey,
+  Fees,
 }
 
 extension StoreKeysFunctions on StoreKeys {
@@ -28,7 +30,8 @@ extension StoreKeysFunctions on StoreKeys {
         StoreKeys.Blockchain: 'blockchain',
         StoreKeys.Node: 'node',
         StoreKeys.AddressBookUser: 'address-book-user',
-        StoreKeys.AddressBookKey: 'address-book-key'
+        StoreKeys.AddressBookKey: 'address-book-key',
+        StoreKeys.Fees: 'fees',
       }[this]!;
 }
 
@@ -40,6 +43,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(AddressBookUserClassAdapter());
   Hive.registerAdapter(AddressBookValueClassAdapter());
   Hive.registerAdapter(NodeClassAdapter());
+  Hive.registerAdapter(FeesClassAdapter());
 
   await Hive.openBox<RedditPost>(
     StoreKeys.RedditPost.name,
@@ -50,6 +54,7 @@ Future<void> initializeHive() async {
   await Hive.openBox<AddressBookUser>(StoreKeys.AddressBookUser.name);
   await Hive.openBox<AddressBookKey>(StoreKeys.AddressBookKey.name);
   await Hive.openBox<Node>(StoreKeys.Node.name);
+  await Hive.openBox<Fees>(StoreKeys.Fees.name);
 
   await Hive.openBox<String>('storage');
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/api/interface/reddit.dart';
+import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/reddit.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';

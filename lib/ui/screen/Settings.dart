@@ -22,9 +22,9 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   // const SizedBox(height: 8),
                   const Back(),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 40),
                   Text(
-                    ' Settings'.toUpperCase(),
+                    ' Settings',
                     style: c.fonts.headline4!.copyWith(
                       color: Colors.white,
                     ),
