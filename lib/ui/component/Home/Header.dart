@@ -9,7 +9,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final isRearranging = c.select((WalletsCubit wc) => wc.state.isRearranging);
-    c.select((FeesCubit wc) => wc.update());
+    // c.select((FeesCubit wc) => wc.update());
 
     return Padding(
       padding: const EdgeInsets.only(top: 32, bottom: 16),

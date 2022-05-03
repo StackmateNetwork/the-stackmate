@@ -1,5 +1,33 @@
 import 'dart:convert';
 
+class SMError {
+  const SMError(this.kind, this.message);
+  factory SMError.fromJson(String data) {
+    final json = jsonDecode(data);
+    return SMError(
+      json['kind'] as String,
+      json['message'] as String,
+    );
+  }
+  final String kind;
+  final String message;
+
+  String get oneliner => '$kind:$message';
+}
+
+class PSBT {
+  const PSBT(this.psbt, this.isFinalized);
+  factory PSBT.fromJson(String data) {
+    final json = jsonDecode(data);
+    return PSBT(
+      json['psbt'] as String,
+      json['is_finalized'] as bool,
+    );
+  }
+  final String psbt;
+  final bool isFinalized;
+}
+
 class Seed {
   const Seed(this.mnemonic, this.fingerprint, this.xprv);
   factory Seed.fromJson(String data) {

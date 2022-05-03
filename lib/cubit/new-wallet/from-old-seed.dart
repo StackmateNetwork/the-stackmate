@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
@@ -181,6 +182,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       policy: policy,
       scriptType: 'wpkh',
     );
+    if (descriptor.hasError) {
+      throw SMError.fromJson(descriptor.error!);
+    }
 
     // public descriptor
     // Check history and whether this wallet needs to update its address index
@@ -188,7 +192,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     var newWallet = Wallet(
       label: state.walletLabel,
       walletType: 'SIGNER',
-      descriptor: descriptor,
+      descriptor: descriptor.result!,
       policy: readable,
       requiredPolicyElements: 1,
       policyElements: ['primary:$fullXPub'],

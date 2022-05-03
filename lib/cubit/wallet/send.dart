@@ -272,10 +272,10 @@ class SendCubit extends Cubit<SendState> {
 
       emit(
         state.copyWith(
-          feeFast: fast.absolute,
-          feeMedium: medium.absolute,
-          feeSlow: slow.absolute,
-          finalFee: medium.absolute,
+          feeFast: fast.result!.absolute,
+          feeMedium: medium.result!.absolute,
+          feeSlow: slow.result!.absolute,
+          finalFee: medium.result!.absolute,
           weight: weight,
           calculatingFees: false,
           currentStep: SendSteps.fees,
@@ -318,7 +318,7 @@ class SendCubit extends Cubit<SendState> {
       feeAbsolute: checked,
       weight: state.weight.toString(),
     );
-    emit(state.copyWith(finalFee: fees.absolute));
+    emit(state.copyWith(finalFee: fees.result!.absolute));
   }
 
   bool _checkFee() {
@@ -413,11 +413,13 @@ class SendCubit extends Cubit<SendState> {
         'descriptor': descriptor,
         'unsignedPSBT': state.psbt,
       });
-
+      if (!signed.isFinalized) {
+        throw "PSBT signatures not finalized.";
+      }
       final txid = await compute(broadcastTx, {
         'descriptor': _walletCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
-        'signedPSBT': signed,
+        'signedPSBT': signed.psbt,
       });
 
       emit(
@@ -454,7 +456,10 @@ double estimateFeees(dynamic data) {
     nodeAddress: obj['nodeAddress']!,
     targetSize: obj['targetSize']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 
 int getWeight(dynamic data) {
@@ -463,7 +468,10 @@ int getWeight(dynamic data) {
     descriptor: obj['descriptor']!,
     psbt: obj['psbt']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 
 AbsoluteFees getAbsoluteFees(dynamic data) {
@@ -472,7 +480,10 @@ AbsoluteFees getAbsoluteFees(dynamic data) {
     feeAbsolute: obj['feeRate']!,
     weight: obj['weight']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 
 String buildTx(dynamic data) {
@@ -485,7 +496,10 @@ String buildTx(dynamic data) {
     policyPath: obj['policyPath']!,
     sweep: obj['sweep']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!.psbt;
 }
 
 List<DecodedTxOutput> decodePSBT(dynamic data) {
@@ -494,23 +508,30 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
     network: obj['network']!,
     psbt: obj['psbt']!,
   );
-  final json = jsonDecode(resp)['outputs'];
 
-  final List<DecodedTxOutput> decoded = [];
-  for (final out in json)
-    decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  // final json = jsonDecode(resp.result!)['outputs'];
 
-  return decoded;
+  // final List<DecodedTxOutput> decoded = [];
+  // for (final out in json)
+  //   decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
+
+  return resp.result!;
 }
 
-String signTx(dynamic data) {
+PSBT signTx(dynamic data) {
   final obj = data as Map<String, String?>;
 
   final resp = BitcoinFFI().signTransaction(
     descriptor: obj['descriptor']!,
     unsignedPSBT: obj['unsignedPSBT']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 
 String broadcastTx(dynamic data) {
@@ -521,6 +542,9 @@ String broadcastTx(dynamic data) {
     descriptor: obj['descriptor']!,
     signedPSBT: obj['signedPSBT']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 // tb1qcd0dej2spq73nlkr4d5w3scksqagz0nzmdnzgg

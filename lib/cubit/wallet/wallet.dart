@@ -1,3 +1,4 @@
+import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -203,7 +204,11 @@ List<Transaction> computeHistory(dynamic obj) {
     descriptor: data['descriptor']!,
     nodeAddress: data['nodeAddress']!,
   );
-  return resp;
+
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 
 int computeBalance(dynamic obj) {
@@ -212,5 +217,8 @@ int computeBalance(dynamic obj) {
     descriptor: data['descriptor']!,
     nodeAddress: data['nodeAddress']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }

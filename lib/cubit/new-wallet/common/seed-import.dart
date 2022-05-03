@@ -102,27 +102,38 @@ class SeedImportCubit extends Cubit<SeedImportState> {
         return;
       }
 
-      final neu = _core.importMaster(
+      final root = _core.importMaster(
         mnemonic: state.seed,
         passphrase: state.passPhrase,
         network: _blockchainCubit.state.blockchain.name,
       );
+      if (root.hasError) {
+        throw SMError.fromJson(root.error!);
+      }
 
       final wallet = _core.deriveHardened(
-        masterXPriv: neu.xprv,
+        masterXPriv: root.result!.xprv,
         account: state.accountNumber.toString(),
         purpose: '84',
       );
 
+      if (wallet.hasError) {
+        throw SMError.fromJson(wallet.error!);
+      }
+
       emit(
         state.copyWith(
           seedReady: true,
-          masterXpriv: neu.xprv,
-          wallet: wallet,
+          masterXpriv: root.result!.xprv,
+          wallet: wallet.result,
         ),
       );
-    } catch (e) {
-      print(e.toString());
+    } catch (e, s) {
+      logger.logException(
+        e,
+        'SeedImportWalletCubit._createNewLocalWallet',
+        s,
+      );
     }
   }
 

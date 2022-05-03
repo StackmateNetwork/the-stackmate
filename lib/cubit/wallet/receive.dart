@@ -1,3 +1,4 @@
+import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,6 +62,9 @@ class ReceiveCubit extends Cubit<ReceiveState> {
         descriptor: wallet.descriptor,
         index: nextIndex.toString(),
       );
+      if (latestAddress.hasError) {
+        throw SMError.fromJson(latestAddress.error!);
+      }
 
       _vibrate.vibe();
       // _logger.logAPI(
@@ -74,7 +78,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       emit(
         state.copyWith(
           loadingAddress: false,
-          address: latestAddress,
+          address: latestAddress.result!,
         ),
       );
 
@@ -125,5 +129,8 @@ String getAdrr(dynamic msg) {
     descriptor: data['descriptor']!,
     index: data['index']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
