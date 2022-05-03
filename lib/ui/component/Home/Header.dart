@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/Home/RedditLoader.dart';
 import 'package:sats/cubit/fees.dart';
 
 class Header extends StatelessWidget {
@@ -16,7 +15,6 @@ class Header extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const RedditLoader(),
           Padding(
             padding: EdgeInsets.only(
               top: 12,
