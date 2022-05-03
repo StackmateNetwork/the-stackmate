@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bitcoin/types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -143,11 +144,14 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         policy: policy,
         scriptType: 'wpkh',
       );
+      if (descriptor.hasError) {
+        throw SMError.fromJson(descriptor.error!);
+      }
 
       var newWallet = Wallet(
         label: state.walletLabel,
         walletType: 'SIGNER',
-        descriptor: descriptor,
+        descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,
         policyElements: [

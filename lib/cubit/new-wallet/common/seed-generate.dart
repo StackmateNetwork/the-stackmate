@@ -82,19 +82,22 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
         ),
       );
 
-      final neu = _bitcoin.generateMaster(
+      final root = _bitcoin.generateMaster(
         length: state.seedLength.toString(),
         passphrase: state.passPhrase,
         network: _blockchainCubit.state.blockchain.name,
       );
+      if (root.hasError) {
+        throw SMError.fromJson(root.error!);
+      }
 
       emit(
         state.copyWith(
           generatingSeed: false,
           currentStep: SeedGenerateSteps.generate,
-          seed: neu.neuList,
-          masterXpriv: neu.xprv,
-          fingerPrint: neu.fingerprint,
+          seed: root.result!.neuList,
+          masterXpriv: root.result!.xprv,
+          fingerPrint: root.result!.fingerprint,
         ),
       );
     } catch (e, s) {
@@ -192,11 +195,14 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
     try {
       final wallet = _bitcoin.deriveHardened(
         masterXPriv: state.masterXpriv!,
-        account: '',
-        purpose: '',
+        account: '0',
+        purpose: '84',
       );
+      if (wallet.hasError) {
+        throw SMError.fromJson(wallet.error!);
+      }
 
-      emit(state.copyWith(wallet: wallet));
+      emit(state.copyWith(wallet: wallet.result!));
     } catch (e, s) {
       _logger.logException(
         e,

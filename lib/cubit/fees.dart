@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:bitcoin/types.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
@@ -41,74 +42,86 @@ class FeesCubit extends Cubit<FeesState> {
   final NodeAddressCubit _nodeAddressCubit;
 
   Future init() async {
-    emit(state.copyWith(updating: true, errUpdating: ''));
-    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    try {
+      emit(state.copyWith(updating: true, errUpdating: ''));
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
 
-    final fees = _storage.getFirstItem<Fees>(StoreKeys.Fees.name);
-    if (fees.hasError) {
-      if (fees.error! == 'empty') {
-        // make network call
-        final defaultFees =
-            Fees(timestamp: timestamp, slow: 0.000, medium: 0.000, fast: 0.000);
+      final fees = _storage.getFirstItem<Fees>(StoreKeys.Fees.name);
+      if (fees.hasError) {
+        if (fees.error! == 'empty') {
+          // make network call
+          final defaultFees = Fees(
+              timestamp: timestamp, slow: 0.000, medium: 0.000, fast: 0.000);
+          emit(
+            state.copyWith(fees: defaultFees),
+          );
+        } else
+          emit(state.copyWith(errUpdating: fees.error.toString()));
+      } else {
         emit(
-          state.copyWith(fees: defaultFees),
+          state.copyWith(
+            // ignore: unnecessary_null_checks
+            fees: fees.result!,
+          ),
         );
-      } else
-        emit(state.copyWith(errUpdating: fees.error.toString()));
-    } else {
+      }
+
+      final nodeAddress = _nodeAddressCubit.state.getAddress();
+
+      final fastRate = BitcoinFFI().estimateNetworkFee(
+        network: _blockchain.state.blockchain.name,
+        nodeAddress: nodeAddress,
+        targetSize: '1',
+      );
+
+      if (fastRate.hasError) {
+        throw SMError.fromJson(fastRate.error!);
+      }
+
+      final slowRate = BitcoinFFI().estimateNetworkFee(
+        network: _blockchain.state.blockchain.name,
+        nodeAddress: nodeAddress,
+        targetSize: '21',
+      );
+
+      if (slowRate.hasError) {
+        throw SMError.fromJson(slowRate.error!);
+      }
+
+      final mediumRate = (fastRate.result! + slowRate.result!) / 2;
+
+      final feesUpdated = Fees(
+        timestamp: timestamp,
+        slow: slowRate.result!,
+        medium: mediumRate,
+        fast: fastRate.result!,
+      );
+
       emit(
         state.copyWith(
-          // ignore: unnecessary_null_checks
-          fees: fees.result!,
+          fees: feesUpdated,
         ),
       );
-    }
 
-    final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final cleared = await _storage.clearAll<Fees>(StoreKeys.Fees.name);
+      if (cleared.hasError) {
+        emit(state.copyWith(errUpdating: cleared.error.toString()));
+        return;
+      }
 
-    final fastRate = BitcoinFFI().estimateNetworkFee(
-      network: _blockchain.state.blockchain.name,
-      nodeAddress: nodeAddress,
-      targetSize: '1',
-    );
-
-    final slowRate = BitcoinFFI().estimateNetworkFee(
-      network: _blockchain.state.blockchain.name,
-      nodeAddress: nodeAddress,
-      targetSize: '21',
-    );
-
-    final mediumRate = (fastRate + slowRate) / 2;
-
-    final feesUpdated = Fees(
-      timestamp: timestamp,
-      slow: slowRate,
-      medium: mediumRate,
-      fast: fastRate,
-    );
-
-    emit(
-      state.copyWith(
-        fees: feesUpdated,
-      ),
-    );
-
-    final cleared = await _storage.clearAll<Fees>(StoreKeys.Fees.name);
-    if (cleared.hasError) {
-      emit(state.copyWith(errUpdating: cleared.error.toString()));
+      final saved =
+          await _storage.saveItem<Fees>(StoreKeys.Fees.name, feesUpdated);
+      if (saved.hasError) {
+        emit(state.copyWith(errUpdating: saved.error.toString()));
+        return;
+      }
+      emit(
+        state.copyWith(updating: false, errUpdating: ''),
+      );
       return;
+    } catch (e) {
+      print(e.toString());
     }
-
-    final saved =
-        await _storage.saveItem<Fees>(StoreKeys.Fees.name, feesUpdated);
-    if (saved.hasError) {
-      emit(state.copyWith(errUpdating: saved.error.toString()));
-      return;
-    }
-    emit(
-      state.copyWith(updating: false, errUpdating: ''),
-    );
-    return;
   }
 
   Fees getFees() {
@@ -116,52 +129,56 @@ class FeesCubit extends Cubit<FeesState> {
   }
 
   Future update() async {
-    emit(state.copyWith(updating: true, errUpdating: ''));
-    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    try {
+      emit(state.copyWith(updating: true, errUpdating: ''));
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
 
-    final nodeAddress = _nodeAddressCubit.state.getAddress();
-    final fastRate = BitcoinFFI().estimateNetworkFee(
-      network: _blockchain.state.blockchain.name,
-      nodeAddress: nodeAddress,
-      targetSize: '1',
-    );
+      final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final fastRate = BitcoinFFI().estimateNetworkFee(
+        network: _blockchain.state.blockchain.name,
+        nodeAddress: nodeAddress,
+        targetSize: '1',
+      );
 
-    final slowRate = BitcoinFFI().estimateNetworkFee(
-      network: _blockchain.state.blockchain.name,
-      nodeAddress: nodeAddress,
-      targetSize: '21',
-    );
+      final slowRate = BitcoinFFI().estimateNetworkFee(
+        network: _blockchain.state.blockchain.name,
+        nodeAddress: nodeAddress,
+        targetSize: '21',
+      );
 
-    final mediumRate = (fastRate + slowRate) / 2;
+      final mediumRate = (fastRate.result! + slowRate.result!) / 2;
 
-    final feesUpdated = Fees(
-      timestamp: timestamp,
-      slow: slowRate,
-      medium: mediumRate,
-      fast: fastRate,
-    );
+      final feesUpdated = Fees(
+        timestamp: timestamp,
+        slow: slowRate.result!,
+        medium: mediumRate,
+        fast: fastRate.result!,
+      );
 
-    emit(
-      state.copyWith(
-        fees: feesUpdated,
-      ),
-    );
+      emit(
+        state.copyWith(
+          fees: feesUpdated,
+        ),
+      );
 
-    final cleared = await _storage.clearAll<Fees>(StoreKeys.Fees.name);
-    if (cleared.hasError) {
-      emit(state.copyWith(errUpdating: cleared.error.toString()));
+      final cleared = await _storage.clearAll<Fees>(StoreKeys.Fees.name);
+      if (cleared.hasError) {
+        emit(state.copyWith(errUpdating: cleared.error.toString()));
+        return;
+      }
+
+      final saved =
+          await _storage.saveItem<Fees>(StoreKeys.Fees.name, feesUpdated);
+      if (saved.hasError) {
+        emit(state.copyWith(errUpdating: saved.error.toString()));
+        return;
+      }
+      emit(
+        state.copyWith(updating: false, errUpdating: ''),
+      );
       return;
+    } catch (e) {
+      print(e.toString());
     }
-
-    final saved =
-        await _storage.saveItem<Fees>(StoreKeys.Fees.name, feesUpdated);
-    if (saved.hasError) {
-      emit(state.copyWith(errUpdating: saved.error.toString()));
-      return;
-    }
-    emit(
-      state.copyWith(updating: false, errUpdating: ''),
-    );
-    return;
   }
 }

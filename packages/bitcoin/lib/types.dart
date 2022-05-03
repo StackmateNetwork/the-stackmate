@@ -1,5 +1,18 @@
 import 'dart:convert';
 
+class SMError {
+  const SMError(this.kind, this.message);
+  factory SMError.fromJson(String data) {
+    final json = jsonDecode(data);
+    return SMError(
+      json['kind'] as String,
+      json['message'] as String,
+    );
+  }
+  final String kind;
+  final String message;
+}
+
 class Seed {
   const Seed(this.mnemonic, this.fingerprint, this.xprv);
   factory Seed.fromJson(String data) {

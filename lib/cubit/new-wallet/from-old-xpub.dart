@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
@@ -132,6 +133,9 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         policy: policy,
         scriptType: 'wpkh',
       );
+      if (descriptor.hasError) {
+        throw SMError.fromJson(descriptor.error!);
+      }
 
       // final len = _storage.getAll<Wallet>(StoreKeys.Wallet.name).length;
 
@@ -139,7 +143,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       // check balance and see if last address index needs update
       var newWallet = Wallet(
         label: state.label,
-        descriptor: descriptor,
+        descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,
         policyElements: ['primary:$fullXPub'],
