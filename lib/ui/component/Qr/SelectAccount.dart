@@ -30,8 +30,8 @@ class SelectAccount extends StatelessWidget {
       width: c.width,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        child: Row(
+        scrollDirection: Axis.vertical,
+        child: Column(
           // mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(width: 16),

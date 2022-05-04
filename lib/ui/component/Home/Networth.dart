@@ -38,17 +38,6 @@ class Networth extends StatelessWidget {
                     color: c.colours.primary,
                   ),
                 ),
-
-                // LogButton(
-                //   child: IconButton(
-                //     onPressed: () {},
-                //     icon: Icon(
-                //       Icons.lightbulb_outline_sharp,
-                //       size: 32,
-                //       color: c.colours.primary,
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
