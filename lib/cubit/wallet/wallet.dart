@@ -103,38 +103,37 @@ class WalletCubit extends Cubit<WalletState> {
         ),
       );
 
-      final bal = await compute(computeBalance, {
-        'descriptor': wallet.descriptor,
-        'nodeAddress': node,
-      });
-
-      _vibrate.vibe();
-
-      emit(
-        state.copyWith(
-          loadingBalance: false,
-          loadingTransactions: true,
-          balance: bal,
-        ),
-      );
-
       final transactions = await compute(computeHistory, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': node,
         // 'network': _blockchain.state.blockchain.name,
       });
 
+      final int totalIn = transactions.fold(
+        0,
+        (int sum, Transaction item) =>
+            (item.sent == 0) ? sum + item.received : sum + 0,
+      );
+      final int totalOut = transactions.fold(
+        0,
+        (int sum, Transaction item) =>
+            (item.sent == 0) ? sum + item.sent : sum + item.sent + item.fee,
+      );
+      final inferredBalance = totalIn - totalOut;
+
       _vibrate.vibe();
 
       emit(
         state.copyWith(
           loadingTransactions: false,
+          loadingBalance: false,
           transactions: transactions,
           errLoadingTransactions: '',
+          balance: inferredBalance,
         ),
       );
 
-      _walletsCubit.addBalanceToSelectedWallet(bal);
+      _walletsCubit.addBalanceToSelectedWallet(inferredBalance);
       _walletsCubit.addTransactionsToSelectedWallet(transactions);
       return;
     } catch (e, s) {
