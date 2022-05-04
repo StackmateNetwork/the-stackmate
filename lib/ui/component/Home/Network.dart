@@ -4,41 +4,38 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/cubit/fees.dart';
 
-class Header extends StatelessWidget {
+class Network extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     // c.select((FeesCubit wc) => wc.update());
 
     return Padding(
-      padding: const EdgeInsets.only(top: 42, bottom: 12),
+      padding: const EdgeInsets.only(top: 1, bottom: 1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: 16,
               left: 24,
               right: 32,
             ),
             child: Row(
               children: [
-                Container(
-                  width: 59,
-                  height: 59,
-                  child: const Image(
-                    image: AssetImage('assets/icon/stackmate.png'),
+                Text(
+                  'NETWORK STATUS: Low Traffic',
+                  style: c.fonts.bodyMedium!.copyWith(
+                    color: Colors.white,
+                    fontSize: 14,
                   ),
                 ),
                 const Spacer(),
                 // const SizedBox(width: 16),
                 IconButton(
-                  onPressed: () {
-                    c.push('/settings');
-                  },
+                  onPressed: () {},
                   icon: Icon(
-                    Icons.settings,
-                    size: 32,
-                    color: c.colours.primary,
+                    Icons.language_sharp,
+                    size: 24,
+                    color: Colors.blue,
                   ),
                 ),
 

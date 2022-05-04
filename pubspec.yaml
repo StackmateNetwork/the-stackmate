@@ -69,6 +69,9 @@ flutter:
     - family: FontAwesome
       fonts:
         - asset: assets/fontawesome-webfont.ttf
+  assets:
+    - assets/icon/stackmate.png
+
 # dev_dependencies:
 
 #flutter_test:

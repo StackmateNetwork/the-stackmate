@@ -7,6 +7,8 @@ import 'package:sats/pkg/interface/launcher.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/Header.dart';
+import 'package:sats/ui/component/Home/Network.dart';
+import 'package:sats/ui/component/Home/Networth.dart';
 
 class _Home extends StatelessWidget {
   @override
@@ -17,7 +19,7 @@ class _Home extends StatelessWidget {
           SliverAppBar(
             stretch: true,
             pinned: true,
-            expandedHeight: 350,
+            expandedHeight: 192,
             automaticallyImplyLeading: false,
             backgroundColor: c.colours.background,
             flexibleSpace: FlexibleSpaceBar(
@@ -29,22 +31,20 @@ class _Home extends StatelessWidget {
               background: Column(
                 children: [
                   Header(),
-                  Accounts(),
+                  Network(),
+                  Networth(),
                 ],
               ),
-            ),
-            bottom: PreferredSize(
-              preferredSize: Size(c.width, 20),
-              child: HomeActions(),
             ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
-              [],
+              [Accounts()],
             ),
-          )
+          ),
         ],
       ),
+      bottomNavigationBar: HomeActions(),
     );
   }
 }
