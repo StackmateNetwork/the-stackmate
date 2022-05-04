@@ -44,7 +44,8 @@ class WalletCard extends StatelessWidget {
                 child: Container(
                   height: 92,
                   width: MediaQuery.of(context).size.width - 192,
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.only(
+                      top: 21, left: 12, right: 12, bottom: 12),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -63,6 +64,7 @@ class WalletCard extends StatelessWidget {
                         wallet.label,
                         style: context.fonts.subtitle1!.copyWith(
                           color: context.colours.primary,
+                          fontSize: 16,
                         ),
                       ),
                       Text(
@@ -72,7 +74,7 @@ class WalletCard extends StatelessWidget {
                         maxLines: 10,
                         style: context.fonts.caption!.copyWith(
                           color: context.colours.onBackground,
-                          fontSize: 8,
+                          fontSize: 10,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -87,7 +89,7 @@ class WalletCard extends StatelessWidget {
                           style: context.fonts.caption!.copyWith(
                             color:
                                 context.colours.onBackground.withOpacity(0.8),
-                            // fontSize: 8,
+                            fontSize: 16,
                           ),
                         ),
                       ],

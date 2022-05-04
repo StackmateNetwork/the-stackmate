@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -27,9 +25,8 @@ class Header extends StatelessWidget {
                 Container(
                   width: 59,
                   height: 59,
-                  child: Image(
+                  child: const Image(
                     image: AssetImage('assets/icon/stackmate.png'),
-                    color: Colors.white,
                   ),
                 ),
                 const Spacer(),

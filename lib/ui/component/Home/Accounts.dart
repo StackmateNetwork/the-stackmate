@@ -14,7 +14,7 @@ class Accounts extends StatelessWidget {
         children: [
           const SizedBox(height: 15),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: Text(
               'No\nwallets\nadded',
               style: c.fonts.caption!.copyWith(
