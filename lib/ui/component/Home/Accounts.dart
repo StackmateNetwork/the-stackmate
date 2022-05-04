@@ -24,20 +24,21 @@ class Accounts extends StatelessWidget {
           ),
         ],
       );
-    return Container(
-      width: c.width,
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            for (var w in wallets) WalletCard(wallet: w),
-            const SizedBox(height: 10),
-          ],
+    else
+      return Container(
+        width: c.width,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              for (var w in wallets) WalletCard(wallet: w),
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
-      ),
-    );
+      );
   }
 }

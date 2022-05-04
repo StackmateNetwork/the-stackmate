@@ -22,7 +22,7 @@ class Network extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  'NETWORK STATUS: Low Traffic',
+                  'Low Network Traffic',
                   style: c.fonts.bodyMedium!.copyWith(
                     color: Colors.white,
                     fontSize: 14,

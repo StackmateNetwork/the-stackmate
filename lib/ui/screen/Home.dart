@@ -54,6 +54,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final wallets = context.select((WalletsCubit c) => c);
+
     return _Home();
   }
 }
