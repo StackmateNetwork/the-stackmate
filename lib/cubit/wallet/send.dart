@@ -13,7 +13,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/fees.dart';
 
-import 'package:sats/cubit/wallet/wallet.dart';
+import 'package:sats/cubit/wallet/history.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/pkg/interface/clipboard.dart';

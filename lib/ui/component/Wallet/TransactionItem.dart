@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/wallet/wallet.dart';
+import 'package:sats/cubit/wallet/history.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:intl/intl.dart';
@@ -56,7 +56,9 @@ class _TransactionItemState extends State<TransactionItem> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            NumberFormat('###,000').format(double.parse(widget.transaction.received.toString())) + ' sats',
+                            NumberFormat('###,000').format(double.parse(
+                                    widget.transaction.received.toString())) +
+                                ' sats',
                             style: c.fonts.headline6!.copyWith(
                               color: c.colours.onBackground,
                             ),
@@ -82,7 +84,7 @@ class _TransactionItemState extends State<TransactionItem> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    c.read<WalletCubit>().openLink(widget.transaction);
+                    c.read<HistoryCubit>().openLink(widget.transaction);
                   },
                   child: Container(
                     width: c.width / 2,
@@ -132,7 +134,7 @@ class _TransactionItemState extends State<TransactionItem> {
                         child: TextButton(
                           onPressed: () {
                             c
-                                .read<WalletCubit>()
+                                .read<HistoryCubit>()
                                 .shareTransaction(widget.transaction);
                           },
                           child: Text(
@@ -183,7 +185,11 @@ class _TransactionItemState extends State<TransactionItem> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                         NumberFormat('###,000').format(double.parse((widget.transaction.sent + widget.transaction.fee).toString()))  + ' sats',
+                          NumberFormat('###,000').format(double.parse(
+                                  (widget.transaction.sent +
+                                          widget.transaction.fee)
+                                      .toString())) +
+                              ' sats',
                           style: c.fonts.headline6!.copyWith(
                             color: c.colours.onBackground,
                           ),
@@ -209,7 +215,7 @@ class _TransactionItemState extends State<TransactionItem> {
               ),
               GestureDetector(
                 onTap: () {
-                  c.read<WalletCubit>().openLink(widget.transaction);
+                  c.read<HistoryCubit>().openLink(widget.transaction);
                 },
                 child: Container(
                   width: c.width / 2,
@@ -263,7 +269,9 @@ class _TransactionItemState extends State<TransactionItem> {
                   ),
                 ),
                 Text(
-                NumberFormat('###,000').format(double.parse(widget.transaction.sent.toString())) + ' sats',
+                  NumberFormat('###,000').format(
+                          double.parse(widget.transaction.sent.toString())) +
+                      ' sats',
                   style: c.fonts.caption!.copyWith(
                     color: c.colours.onBackground,
                   ),
@@ -276,7 +284,9 @@ class _TransactionItemState extends State<TransactionItem> {
                   ),
                 ),
                 Text(
-                 NumberFormat('###,000').format(double.parse( widget.transaction.fee.toString())) + ' sats',
+                  NumberFormat('###,000').format(
+                          double.parse(widget.transaction.fee.toString())) +
+                      ' sats',
                   style: c.fonts.caption!.copyWith(
                     color: c.colours.onBackground,
                   ),
@@ -301,7 +311,7 @@ class _TransactionItemState extends State<TransactionItem> {
                     TextButton(
                       onPressed: () {
                         c
-                            .read<WalletCubit>()
+                            .read<HistoryCubit>()
                             .shareTransaction(widget.transaction);
                       },
                       child: Text('SHARE'.notLocalised()),

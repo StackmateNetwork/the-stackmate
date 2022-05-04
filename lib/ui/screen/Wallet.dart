@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/wallet/wallet.dart';
+import 'package:sats/cubit/wallet/history.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -20,18 +20,18 @@ import 'package:sats/ui/component/Wallet/Loader.dart';
 import 'package:sats/ui/component/Wallet/Name.dart';
 import 'package:sats/ui/component/Wallet/TransactionList.dart';
 
-class _Wallett extends StatelessWidget {
-  const _Wallett({Key? key}) : super(key: key);
+class _Wallet extends StatelessWidget {
+  const _Wallet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext c) {
-    final zeroBal = c.select((WalletCubit wc) => wc.state.zeroBalance());
-    final showInfo = c.select((WalletCubit wc) => wc.state.showInfo);
+    final zeroBal = c.select((HistoryCubit wc) => wc.state.zeroBalance());
+    final showInfo = c.select((HistoryCubit wc) => wc.state.showInfo);
     final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet);
 
     if (wallet == null) return Container();
 
-    return BlocListener<WalletCubit, WalletState>(
+    return BlocListener<HistoryCubit, HistoryState>(
       listener: (c, s) {
         if (s.deleted) Navigator.pop(c);
       },
@@ -44,7 +44,7 @@ class _Wallett extends StatelessWidget {
           body: SafeArea(
             child: RefreshIndicator(
               onRefresh: () async {
-                c.read<WalletCubit>().getHistory();
+                c.read<HistoryCubit>().getHistory();
                 return;
               },
               child: SingleChildScrollView(
@@ -99,7 +99,8 @@ class _Wallett extends StatelessWidget {
                                     onPressed: () {
                                       _deleteWalletClicked(c, zeroBal, wallet);
                                     },
-                                    icon: const Icon(Icons.delete_sweep_outlined),
+                                    icon:
+                                        const Icon(Icons.delete_sweep_outlined),
                                   ),
                                 ),
                                 // const SizedBox(height: 24),
@@ -107,18 +108,21 @@ class _Wallett extends StatelessWidget {
                                   // alignment: Alignment.centerRight,
                                   color: c.colours.primary,
                                   onPressed: () {
-                                    c.read<WalletCubit>().toggleShowInfo();
+                                    c.read<HistoryCubit>().toggleShowInfo();
                                   },
                                   icon: const Icon(Icons.info_outline),
                                 ),
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
-                                  opacity: (zeroBal || !wallet.isNotWatchOnly()) ? 0.4 : 1,
+                                  opacity: (zeroBal || !wallet.isNotWatchOnly())
+                                      ? 0.4
+                                      : 1,
                                   child: IconButton(
                                     // alignment: Alignment.centerRight,
                                     color: c.colours.primary,
                                     onPressed: () {
-                                      if (!zeroBal && wallet.isNotWatchOnly()) c.push('/send');
+                                      if (!zeroBal && wallet.isNotWatchOnly())
+                                        c.push('/send');
                                     },
                                     icon: const Icon(
                                       Icons.call_missed_outgoing_outlined,
@@ -180,7 +184,8 @@ class _Wallett extends StatelessWidget {
               child: CupertinoActionSheetAction(
                 child: Text(
                   'SEND',
-                  style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+                  style:
+                      c.fonts.button!.copyWith(color: c.colours.onBackground),
                 ),
                 onPressed: () async {
                   Navigator.pop(context, true);
@@ -198,7 +203,8 @@ class _Wallett extends StatelessWidget {
                 },
                 child: Text(
                   'BACK',
-                  style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+                  style:
+                      c.fonts.button!.copyWith(color: c.colours.onBackground),
                 ),
               ),
             ),
@@ -253,7 +259,7 @@ class _Wallett extends StatelessWidget {
     );
 
     if (delete != null && delete) {
-      c.read<WalletCubit>().deleteClicked();
+      c.read<HistoryCubit>().deleteClicked();
     }
   }
 }
@@ -268,7 +274,7 @@ class WalletScreen extends StatelessWidget {
     final nodeAddress = context.select((NodeAddressCubit c) => c);
     final networkSelect = context.select((ChainSelectCubit c) => c);
 
-    final history = WalletCubit(
+    final history = HistoryCubit(
       wallets,
       locator<IStorage>(),
       logger,
@@ -281,7 +287,7 @@ class WalletScreen extends StatelessWidget {
 
     return BlocProvider.value(
       value: history,
-      child: const _Wallett(),
+      child: const _Wallet(),
     );
   }
 }
