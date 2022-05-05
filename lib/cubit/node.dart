@@ -25,7 +25,7 @@ class NodeAddressState with _$NodeAddressState {
 class NodeAddressCubit extends Cubit<NodeAddressState> {
   NodeAddressCubit(
     this._storage,
-  ) : super(const NodeAddressState()) {}
+  ) : super(const NodeAddressState());
 
   final IStorage _storage;
 

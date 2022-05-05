@@ -30,6 +30,8 @@ class _CubitsState extends State<Cubits> {
       // walletsCubit,
     );
 
+    networkSelectCubit.init();
+
     final walletsCubit = WalletsCubit(
       locator<IStorage>(),
       logger,
