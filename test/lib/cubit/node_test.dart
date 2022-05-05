@@ -21,7 +21,7 @@ void main() {
 
     tearDown(() {});
     blocTest<NodeAddressCubit, NodeAddressState>(
-      'WHEN storage is empty THEN default to blockstream testnet node.',
+      'WHEN init and storage is empty THEN default to blockstream testnet node.',
       build: () {
         when(
           () => _storage.getFirstItem<Node>(StoreKeys.Node.name),

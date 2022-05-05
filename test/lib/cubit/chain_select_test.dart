@@ -37,7 +37,7 @@ void main() {
 
     tearDown(() {});
     blocTest<ChainSelectCubit, BlockchainState>(
-      'WHEN storage is empty THEN default to testnet on initialization.',
+      'WHEN init and storage is empty THEN default to testnet.',
       build: () {
         when(
           () => _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name),
@@ -55,6 +55,50 @@ void main() {
         verify(() =>
                 _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name))
             .called(1),
+      ],
+    );
+    blocTest<ChainSelectCubit, BlockchainState>(
+      'WHEN changed to mainnet THEN change to mainnet.',
+      build: () {
+        when(
+          () => _storage.saveItemAt<Blockchain>(
+            StoreKeys.Blockchain.name,
+            0,
+            Blockchain.mainNet,
+          ),
+        ).thenAnswer((_) => Future.value(const R(result: true)));
+        when(
+          () => _storage.saveItemAt<Blockchain>(
+            StoreKeys.Blockchain.name,
+            0,
+            Blockchain.testNet,
+          ),
+        ).thenAnswer((_) => Future.value(const R(result: true)));
+        return chainSelectCubit;
+      },
+      act: (cubit) async {
+        cubit.changeBlockchain(Blockchain.mainNet);
+        cubit.changeBlockchain(Blockchain.testNet);
+      },
+      expect: () => <BlockchainState>[
+        const BlockchainState(blockchain: Blockchain.mainNet),
+        const BlockchainState(blockchain: Blockchain.testNet),
+      ],
+      verify: (cubit) => [
+        verify(
+          () => _storage.saveItemAt<Blockchain>(
+            StoreKeys.Blockchain.name,
+            0,
+            Blockchain.mainNet,
+          ),
+        ).called(1),
+        verify(
+          () => _storage.saveItemAt<Blockchain>(
+            StoreKeys.Blockchain.name,
+            0,
+            Blockchain.testNet,
+          ),
+        ).called(1),
       ],
     );
   });
