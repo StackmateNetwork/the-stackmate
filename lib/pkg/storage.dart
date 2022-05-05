@@ -3,10 +3,8 @@
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/model/address-book.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/node.dart';
-import 'package:sats/model/reddit-post.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/model/fees.dart';
 import 'package:sats/model/wallet.dart';
@@ -14,45 +12,30 @@ import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/storage.dart';
 
 enum StoreKeys {
-  RedditPost,
   Wallet,
   Blockchain,
   Node,
-  AddressBookUser,
-  AddressBookKey,
   Fees,
 }
 
 extension StoreKeysFunctions on StoreKeys {
   String get name => const {
-        StoreKeys.RedditPost: 'reddit-post',
         StoreKeys.Wallet: 'wallet',
         StoreKeys.Blockchain: 'blockchain',
         StoreKeys.Node: 'node',
-        StoreKeys.AddressBookUser: 'address-book-user',
-        StoreKeys.AddressBookKey: 'address-book-key',
         StoreKeys.Fees: 'fees',
       }[this]!;
 }
 
 Future<void> initializeHive() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(RedditPostClassAdapter());
   Hive.registerAdapter(WalletClassAdapter());
   Hive.registerAdapter(BlockchainClassAdapter());
-  Hive.registerAdapter(AddressBookUserClassAdapter());
-  Hive.registerAdapter(AddressBookValueClassAdapter());
   Hive.registerAdapter(NodeClassAdapter());
   Hive.registerAdapter(FeesClassAdapter());
 
-  await Hive.openBox<RedditPost>(
-    StoreKeys.RedditPost.name,
-    compactionStrategy: (entries, deletedEntries) => deletedEntries > 50,
-  );
   await Hive.openBox<Wallet>(StoreKeys.Wallet.name);
   await Hive.openBox<Blockchain>(StoreKeys.Blockchain.name);
-  await Hive.openBox<AddressBookUser>(StoreKeys.AddressBookUser.name);
-  await Hive.openBox<AddressBookKey>(StoreKeys.AddressBookKey.name);
   await Hive.openBox<Node>(StoreKeys.Node.name);
   await Hive.openBox<Fees>(StoreKeys.Fees.name);
 

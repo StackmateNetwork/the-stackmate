@@ -292,19 +292,6 @@ class BitcoinFFI implements IStackMateCore {
   }
 
   @override
-  R<int> daysToBlocks({required String days}) {
-    final resp = _bitcoin.daysToBlocks(
-      days: days,
-    );
-    if (resp.contains('Error')) {
-      return R(error: resp);
-    }
-
-    final data = jsonDecode(resp);
-    return R(result: data['height'] as int);
-  }
-
-  @override
   R<int> getHeight({
     required String network,
     required String nodeAddress,

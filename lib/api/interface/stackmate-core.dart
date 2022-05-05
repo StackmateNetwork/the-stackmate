@@ -91,6 +91,4 @@ abstract class IStackMateCore {
     required String network,
     required String nodeAddress,
   });
-
-  R<int> daysToBlocks({required String days});
 }
