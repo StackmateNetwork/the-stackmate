@@ -43,6 +43,8 @@ dependencies:
   stream_transform: ^2.0.0
   url_launcher: ^6.0.3
   wasm: ^0.1.0+1
+  equatable: ^0.6.0
+
 
 dev_dependencies:
   build_runner: ^2.0.5

@@ -71,6 +71,16 @@ class DerivedKeys {
   final String hardenedPath;
   final String xprv;
   final String xpub;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DerivedKeys &&
+          runtimeType == other.runtimeType &&
+          xprv == other.xprv;
+
+  @override
+  int get hashCode => xprv.hashCode;
 }
 
 class AbsoluteFees {
