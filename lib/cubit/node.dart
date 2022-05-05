@@ -25,13 +25,11 @@ class NodeAddressState with _$NodeAddressState {
 class NodeAddressCubit extends Cubit<NodeAddressState> {
   NodeAddressCubit(
     this._storage,
-  ) : super(const NodeAddressState()) {
-    init();
-  }
+  ) : super(const NodeAddressState()) {}
 
   final IStorage _storage;
 
-  Future init() async {
+  void init() async {
     final node = _storage.getFirstItem<Node>(StoreKeys.Node.name);
     if (node.hasError) {
       if (node.error! == 'empty')
@@ -53,7 +51,7 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
   }
 
   void toggleIsEditting() async {
-    await init();
+    init();
     emit(state.copyWith(isEditing: !state.isEditing));
   }
 

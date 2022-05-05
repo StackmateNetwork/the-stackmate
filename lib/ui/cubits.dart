@@ -40,6 +40,7 @@ class _CubitsState extends State<Cubits> {
     final nodeAddressCubit = NodeAddressCubit(
       locator<IStorage>(),
     );
+    nodeAddressCubit.init();
 
     final feesCubit =
         FeesCubit(locator<IStorage>(), networkSelectCubit, nodeAddressCubit);
