@@ -1,4 +1,3 @@
-// import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:flutter/services.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/result.dart';
@@ -11,10 +10,6 @@ class Vibrate implements IVibrate {
     try {
       HapticFeedback.selectionClick();
       return const R(result: true);
-      // bool canVibrate = await Vibrate.canVibrate;
-      // if (canVibrate) {
-      //   Vibrate.feedback(FeedbackType.impact);
-      // }
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
       return R(error: e.toString());

@@ -18,24 +18,19 @@ main() {
     late Node mockNode;
     late NodeAddressCubit nodeAddressCubit;
 
-    setUp(() {
+    setUp(() async {
       _storage = _MockStorage();
       mockNode = _MockNode();
+      when(_storage.getFirstItem<Node>(StoreKeys.Node.name))
+          .thenAnswer((_) => R(result: mockNode));
       nodeAddressCubit = NodeAddressCubit(_storage);
-
-      // when(
-      //   _storage.getFirstItem<Node>(StoreKeys.Node.name),
-      // ).thenAnswer((_) => R(result: mockNode));
     });
 
     tearDown(() {});
     blocTest<NodeAddressCubit, NodeAddressState>(
       'Should init node address',
-      // setUp: () => when(
-      //   _storage.getFirstItem<Node>(StoreKeys.Node.name),
-      // ).thenAnswer((_) => R(result: mockNode)),
       build: () => nodeAddressCubit,
-      act: (cubit) {
+      act: (cubit) async {
         cubit.init();
       },
       expect: () => <NodeAddressState>[
