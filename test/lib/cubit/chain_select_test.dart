@@ -22,7 +22,7 @@ class _MockLogApi extends Mock implements ILogAPI {}
 class _MockClipboard extends Mock implements IClipBoard {}
 
 void main() {
-  group('chainSelectCubit', () {
+  group('chainSelectCubit: Mainnet or Testnet?', () {
     late IStorage _storage;
     final clipboard = _MockClipboard();
     final logAPI = _MockLogApi();
@@ -37,13 +37,11 @@ void main() {
 
     tearDown(() {});
     blocTest<ChainSelectCubit, BlockchainState>(
-      'Should init chain selector',
+      'WHEN storage is empty THEN default to testnet on initialization.',
       build: () {
-        const testNet = Blockchain.testNet;
-        const r = R(result: testNet);
         when(
           () => _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name),
-        ).thenReturn(r);
+        ).thenReturn(const R(error: 'empty'));
 
         return chainSelectCubit;
       },

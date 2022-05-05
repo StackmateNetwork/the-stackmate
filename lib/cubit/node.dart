@@ -6,17 +6,20 @@ import 'package:sats/pkg/storage.dart';
 
 part 'node.freezed.dart';
 
+const blockstreamTestNetAddress = 'ssl://electrum.blockstream.info';
+const blockstreamTestNetPort = '60002';
+
 @freezed
 class NodeAddressState with _$NodeAddressState {
   const factory NodeAddressState({
-    @Default('ssl://electrum.blockstream.info') String address,
-    @Default('60002') String port,
+    @Default(blockstreamTestNetAddress) String address,
+    @Default(blockstreamTestNetPort) String port,
     @Default('') String errNodeState,
     @Default(false) bool isEditing,
   }) = _NodeAddressState;
   const NodeAddressState._();
 
-  String getAddress() => address == '' ? 'default' : 'ssl://$address:$port';
+  String getAddress() => address == '' ? 'default' : '$address:$port';
 
   String mainString() =>
       address == '' ? 'ELECTRUM (Default)' : '$address:$port (Custom)';
@@ -35,8 +38,8 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
       if (node.error! == 'empty')
         emit(
           state.copyWith(
-            address: 'electrum.blockstream.info',
-            port: '60002',
+            address: blockstreamTestNetAddress,
+            port: blockstreamTestNetPort,
           ),
         );
       else

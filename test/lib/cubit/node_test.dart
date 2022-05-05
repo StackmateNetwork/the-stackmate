@@ -10,7 +10,7 @@ import 'package:test/test.dart';
 class _MockStorage extends Mock implements IStorage {}
 
 void main() {
-  group('nodeCubit', () {
+  group('nodeCubit: Which node to connect to?', () {
     late IStorage _storage;
     late NodeAddressCubit nodeAddressCubit;
 
@@ -21,16 +21,11 @@ void main() {
 
     tearDown(() {});
     blocTest<NodeAddressCubit, NodeAddressState>(
-      'Should init node address',
+      'WHEN storage is empty THEN default to blockstream testnet node.',
       build: () {
-        const node = Node(
-          address: 'electrum.blockstream.info',
-          port: '60002',
-        );
-        const r = R(result: node);
         when(
           () => _storage.getFirstItem<Node>(StoreKeys.Node.name),
-        ).thenReturn(r);
+        ).thenReturn(const R(error: 'empty'));
 
         return nodeAddressCubit;
       },
@@ -39,8 +34,8 @@ void main() {
       },
       expect: () => <NodeAddressState>[
         const NodeAddressState(
-          address: 'electrum.blockstream.info',
-          port: '60002',
+          address: blockstreamTestNetAddress,
+          port: blockstreamTestNetPort,
         ),
       ],
       verify: (cubit) => [
