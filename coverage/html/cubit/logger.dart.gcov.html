@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">13</td>
             <td class="headerCovTableEntry">29</td>
-            <td class="headerCovTableEntryLo">6.9 %</td>
+            <td class="headerCovTableEntryLo">44.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-05-05 22:51:20</td>
+            <td class="headerValue">2022-05-06 00:33:07</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -80,10 +80,10 @@
 <a name="18"><span class="lineNum">      18 </span>            : }</a>
 <a name="19"><span class="lineNum">      19 </span>            : </a>
 <a name="20"><span class="lineNum">      20 </span>            : class Logger extends Cubit&lt;LoggerState&gt; {</a>
-<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          2 :   Logger(</span></a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          3 :   Logger(</span></a>
 <a name="22"><span class="lineNum">      22 </span>            :     this._clipBoard,</a>
 <a name="23"><span class="lineNum">      23 </span>            :     this._logAPI,</a>
-<a name="24"><span class="lineNum">      24 </span><span class="lineCov">          2 :   ) : super(const LoggerState());</span></a>
+<a name="24"><span class="lineNum">      24 </span><span class="lineCov">          3 :   ) : super(const LoggerState());</span></a>
 <a name="25"><span class="lineNum">      25 </span>            : </a>
 <a name="26"><span class="lineNum">      26 </span>            :   final IClipBoard _clipBoard;</a>
 <a name="27"><span class="lineNum">      27 </span>            :   final ILogAPI _logAPI;</a>
@@ -124,17 +124,17 @@
 <a name="62"><span class="lineNum">      62 </span>            :     }</a>
 <a name="63"><span class="lineNum">      63 </span>            :   }</a>
 <a name="64"><span class="lineNum">      64 </span>            : </a>
-<a name="65"><span class="lineNum">      65 </span><span class="lineNoCov">          0 :   void logException(</span></a>
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          1 :   void logException(</span></a>
 <a name="66"><span class="lineNum">      66 </span>            :     dynamic e,</a>
 <a name="67"><span class="lineNum">      67 </span>            :     String source,</a>
 <a name="68"><span class="lineNum">      68 </span>            :     dynamic s,</a>
 <a name="69"><span class="lineNum">      69 </span>            :   ) async {</a>
 <a name="70"><span class="lineNum">      70 </span>            :     try {</a>
-<a name="71"><span class="lineNum">      71 </span><span class="lineNoCov">          0 :       final log = Log(</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineCov">          1 :       final log = Log(</span></a>
 <a name="72"><span class="lineNum">      72 </span>            :         type: LogType.exception,</a>
 <a name="73"><span class="lineNum">      73 </span>            :         exceptionSource: source,</a>
-<a name="74"><span class="lineNum">      74 </span><span class="lineNoCov">          0 :         exceptionType: e.toString(),</span></a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineNoCov">          0 :         stackTrace: (s as StackTrace).toString(),</span></a>
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">          1 :         exceptionType: e.toString(),</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          1 :         stackTrace: (s as StackTrace).toString(),</span></a>
 <a name="76"><span class="lineNum">      76 </span>            :       );</a>
 <a name="77"><span class="lineNum">      77 </span>            : </a>
 <a name="78"><span class="lineNum">      78 </span>            :       // print(</a>
@@ -147,7 +147,7 @@
 <a name="85"><span class="lineNum">      85 </span>            :       //       '\n\n',</a>
 <a name="86"><span class="lineNum">      86 </span>            :       // );</a>
 <a name="87"><span class="lineNum">      87 </span>            : </a>
-<a name="88"><span class="lineNum">      88 </span><span class="lineNoCov">          0 :       _addToLog(log);</span></a>
+<a name="88"><span class="lineNum">      88 </span><span class="lineCov">          1 :       _addToLog(log);</span></a>
 <a name="89"><span class="lineNum">      89 </span>            : </a>
 <a name="90"><span class="lineNum">      90 </span>            :       //await Sentry.captureException(</a>
 <a name="91"><span class="lineNum">      91 </span>            :       //  event.e,</a>
@@ -155,7 +155,7 @@
 <a name="93"><span class="lineNum">      93 </span>            :       //  hint: event.source,</a>
 <a name="94"><span class="lineNum">      94 </span>            :       //);</a>
 <a name="95"><span class="lineNum">      95 </span>            :     } catch (e) {</a>
-<a name="96"><span class="lineNum">      96 </span><span class="lineNoCov">          0 :       print(e.toString());</span></a>
+<a name="96"><span class="lineNum">      96 </span><span class="lineCov">          2 :       print(e.toString());</span></a>
 <a name="97"><span class="lineNum">      97 </span>            :     }</a>
 <a name="98"><span class="lineNum">      98 </span>            :   }</a>
 <a name="99"><span class="lineNum">      99 </span>            : </a>
@@ -164,11 +164,11 @@
 <a name="102"><span class="lineNum">     102 </span><span class="lineNoCov">          0 :     showToast('COPIED');</span></a>
 <a name="103"><span class="lineNum">     103 </span>            :   }</a>
 <a name="104"><span class="lineNum">     104 </span>            : </a>
-<a name="105"><span class="lineNum">     105 </span><span class="lineNoCov">          0 :   void _addToLog(Log log) {</span></a>
-<a name="106"><span class="lineNum">     106 </span><span class="lineNoCov">          0 :     final List&lt;Log&gt; logs = state.logs.toList();</span></a>
-<a name="107"><span class="lineNum">     107 </span><span class="lineNoCov">          0 :     logs.add(log);</span></a>
-<a name="108"><span class="lineNum">     108 </span><span class="lineNoCov">          0 :     emit(state.copyWith(logs: logs));</span></a>
-<a name="109"><span class="lineNum">     109 </span><span class="lineNoCov">          0 :     _logAPI.log(log.toString());</span></a>
+<a name="105"><span class="lineNum">     105 </span><span class="lineCov">          1 :   void _addToLog(Log log) {</span></a>
+<a name="106"><span class="lineNum">     106 </span><span class="lineCov">          3 :     final List&lt;Log&gt; logs = state.logs.toList();</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          1 :     logs.add(log);</span></a>
+<a name="108"><span class="lineNum">     108 </span><span class="lineCov">          4 :     emit(state.copyWith(logs: logs));</span></a>
+<a name="109"><span class="lineNum">     109 </span><span class="lineCov">          3 :     _logAPI.log(log.toString());</span></a>
 <a name="110"><span class="lineNum">     110 </span>            :   }</a>
 <a name="111"><span class="lineNum">     111 </span>            : }</a>
 </pre>

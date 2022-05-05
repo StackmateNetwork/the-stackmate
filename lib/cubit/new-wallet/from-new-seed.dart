@@ -20,6 +20,10 @@ enum SeedGenerateWalletSteps {
   generate,
   label,
 }
+const invalidLabelError = 'Invalid Label';
+const signerWalletType = 'SIGNER';
+const wpkhScript = 'wpkh';
+const emptyString = '';
 
 @freezed
 class SeedGenerateWalletState with _$SeedGenerateWalletState {
@@ -77,11 +81,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   final ChainSelectCubit _blockchainCubit;
   final SeedGenerateCubit _generateCubit;
   late StreamSubscription _generateSub;
-
-  static const invalidLabelError = 'Invalid Label';
-  static const signerWalletType = 'SIGNER';
-  static const wpkhScript = 'wpkh';
-  static const emptyString = '';
 
   void backClicked() {
     switch (state.currentStep) {
