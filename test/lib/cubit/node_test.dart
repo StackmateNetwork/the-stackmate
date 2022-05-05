@@ -15,14 +15,17 @@ class _MockNode extends Mock implements Node {}
 main() {
   group('nodeCubit', () {
     late IStorage _storage;
-    late Node mockNode;
+    const node = Node(
+      address: 'electrum.blockstream.info',
+      port: '60002',
+    );
+
     late NodeAddressCubit nodeAddressCubit;
 
     setUp(() async {
       _storage = _MockStorage();
-      mockNode = _MockNode();
       when(_storage.getFirstItem<Node>(StoreKeys.Node.name))
-          .thenAnswer((_) => R(result: mockNode));
+          .thenAnswer((_) => R(result: node));
       nodeAddressCubit = NodeAddressCubit(_storage);
     });
 
