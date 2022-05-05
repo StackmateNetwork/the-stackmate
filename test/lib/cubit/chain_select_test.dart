@@ -2,17 +2,12 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sats/api/interface/logger.dart';
 import 'package:sats/cubit/chain-select.dart';
-import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
-import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
-
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sats/cubit/logger.dart';
-import 'package:sats/api/interface/logger.dart';
-
 import 'package:test/test.dart';
 
 class _MockStorage extends Mock implements IStorage {}
@@ -23,7 +18,7 @@ class _MockClipboard extends Mock implements IClipBoard {}
 
 void main() {
   group('chainSelectCubit: Mainnet or Testnet?', () {
-    late IStorage _storage;
+    final IStorage _storage = _MockStorage();
     final clipboard = _MockClipboard();
     final logAPI = _MockLogApi();
     final logger = Logger(clipboard, logAPI);
@@ -31,7 +26,6 @@ void main() {
     late ChainSelectCubit chainSelectCubit;
 
     setUp(() async {
-      _storage = _MockStorage();
       chainSelectCubit = ChainSelectCubit(_storage, logger);
     });
 

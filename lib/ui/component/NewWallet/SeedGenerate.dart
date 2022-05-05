@@ -20,7 +20,8 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
   Widget build(BuildContext c) {
     return BlocBuilder<SeedGenerateCubit, SeedGenerateState>(
       builder: (context, state) {
-        if (_textController.text != state.passPhrase) _textController.text = state.passPhrase;
+        if (_textController.text != state.passPhrase)
+          _textController.text = state.passPhrase;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -36,7 +37,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
             // const HeaderTextDark(text: 'Enter an\noptional\npassphrase'),
             const SizedBox(height: 24),
             Text(
-              'Add an extra security layer to your seed.\nDo not write down your passphrase.\nThis passphrase should be added as the last word of your seed.',
+              'Add an (optional) security layer to your seed.\n\nThis passphrase should be added as the last word of your seed.\n\If set, you cannot recover funds without it.',
               style: c.fonts.caption!.copyWith(color: Colors.white),
             ),
             const SizedBox(height: 32),
@@ -158,7 +159,8 @@ class SeedGenerate extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Make sure that no one can view,\nwhat you are writing'.notLocalised(),
+            'Make sure that no one can view,\nwhat you are writing'
+                .notLocalised(),
             style: c.fonts.caption!.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 16),
@@ -253,7 +255,8 @@ class SeedConfirm extends StatelessWidget {
       (SeedGenerateCubit c) => c.state.quizSeedAnswerIdx.toString(),
     );
 
-    final completedIdx = c.select((SeedGenerateCubit c) => c.state.quizSeedCompleted);
+    final completedIdx =
+        c.select((SeedGenerateCubit c) => c.state.quizSeedCompleted);
 
     final words = c.select((SeedGenerateCubit c) => c.state.quizSeedList);
 

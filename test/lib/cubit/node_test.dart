@@ -37,8 +37,8 @@ void main() {
       },
       expect: () => <NodeAddressState>[
         const NodeAddressState(
-          address: blockstreamTestNetAddress,
-          port: blockstreamTestNetPort,
+          address: blockstreamNodeAddress,
+          port: blockstreamTestnetPort,
         ),
       ],
       verify: (cubit) => [
@@ -67,13 +67,13 @@ void main() {
       },
       expect: () => <NodeAddressState>[
         const NodeAddressState(
-          address: blockstreamTestNetAddress,
-          port: blockstreamTestNetPort,
+          address: blockstreamNodeAddress,
+          port: blockstreamTestnetPort,
           isEditing: true,
         ),
         const NodeAddressState(
           address: myAltTestAddress,
-          port: blockstreamTestNetPort,
+          port: blockstreamTestnetPort,
           isEditing: true,
         ),
         const NodeAddressState(
