@@ -6,23 +6,25 @@ import 'package:sats/pkg/storage.dart';
 
 part 'node.freezed.dart';
 
-const blockstreamTestNetAddress = 'ssl://electrum.blockstream.info';
-const blockstreamTestNetPort = '60002';
+const blockstreamNodeAddress = 'ssl://electrum.blockstream.info';
+const blockstreamTestnetPort = '60002';
 
 @freezed
 class NodeAddressState with _$NodeAddressState {
   const factory NodeAddressState({
-    @Default(blockstreamTestNetAddress) String address,
-    @Default(blockstreamTestNetPort) String port,
+    @Default(blockstreamNodeAddress) String address,
+    @Default(blockstreamTestnetPort) String port,
     @Default('') String errNodeState,
     @Default(false) bool isEditing,
   }) = _NodeAddressState;
   const NodeAddressState._();
 
-  String getAddress() => address == '' ? 'default' : '$address:$port';
+  String getAddress() =>
+      address == (blockstreamNodeAddress) ? 'default' : '$address:$port';
 
-  String mainString() =>
-      address == '' ? 'BLOCKSTREAM (Default)' : '$address:$port (Custom)';
+  String mainString() => address == (blockstreamNodeAddress)
+      ? 'BLOCKSTREAM (default)'
+      : '$address:$port';
 }
 
 class NodeAddressCubit extends Cubit<NodeAddressState> {
@@ -38,8 +40,8 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
       if (node.error! == 'empty')
         emit(
           state.copyWith(
-            address: blockstreamTestNetAddress,
-            port: blockstreamTestNetPort,
+            address: blockstreamNodeAddress,
+            port: blockstreamTestnetPort,
           ),
         );
       else
@@ -83,7 +85,6 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
       return;
     }
     toggleIsEditting();
-
     await Future.delayed(const Duration(milliseconds: 200));
   }
 }
