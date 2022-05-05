@@ -66,25 +66,24 @@ void main() {
         ).thenReturn(
           const R(result: expectedSeed),
         );
-        when(
-          () => _bitcoin.importMaster(
-            mnemonic: expectedSeed.mnemonic,
-            passphrase: '',
-            network: 'test',
-          ),
-        ).thenReturn(
-          const R(result: expectedSeed),
-        );
-
         return seedGenerateCubit;
       },
       act: (cubit) async {
-        cubit.generateSeed();
         cubit.passPhrasedChanged('test');
         cubit.passPhrasedChanged('');
-        cubit.confirmPassphrase();
+        cubit.generateSeed();
       },
       expect: () => <SeedGenerateState>[
+        const SeedGenerateState(
+          passPhrase: 'test',
+          generatingSeed: false,
+          currentStep: SeedGenerateSteps.passphrase,
+        ),
+        const SeedGenerateState(
+          passPhrase: '',
+          generatingSeed: false,
+          currentStep: SeedGenerateSteps.passphrase,
+        ),
         const SeedGenerateState(
           generatingSeed: true,
           currentStep: SeedGenerateSteps.generate,
@@ -93,39 +92,7 @@ void main() {
           generatingSeed: false,
           currentStep: SeedGenerateSteps.generate,
           masterXpriv: expectedSeed.xprv,
-          seed: expectedSeed.mnemonic.split(' '),
-          fingerPrint: expectedSeed.fingerprint,
-        ),
-        SeedGenerateState(
-          passPhrase: 'test',
-          generatingSeed: false,
-          currentStep: SeedGenerateSteps.generate,
-          masterXpriv: expectedSeed.xprv,
-          seed: expectedSeed.mnemonic.split(' '),
-          fingerPrint: expectedSeed.fingerprint,
-        ),
-        SeedGenerateState(
-          passPhrase: '',
-          generatingSeed: false,
-          currentStep: SeedGenerateSteps.generate,
-          masterXpriv: expectedSeed.xprv,
-          seed: expectedSeed.mnemonic.split(' '),
-          fingerPrint: expectedSeed.fingerprint,
-        ),
-        SeedGenerateState(
-          passPhrase: '',
-          generatingSeed: true,
-          currentStep: SeedGenerateSteps.generate,
-          masterXpriv: expectedSeed.xprv,
-          seed: expectedSeed.mnemonic.split(' '),
-          fingerPrint: expectedSeed.fingerprint,
-        ),
-        SeedGenerateState(
-          passPhrase: '',
-          generatingSeed: false,
-          currentStep: SeedGenerateSteps.generate,
-          masterXpriv: expectedSeed.xprv,
-          seed: expectedSeed.mnemonic.split(' '),
+          seed: expectedSeed.neuList,
           fingerPrint: expectedSeed.fingerprint,
         ),
       ],

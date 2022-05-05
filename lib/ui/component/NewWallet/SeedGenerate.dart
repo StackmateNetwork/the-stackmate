@@ -68,7 +68,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
               padding: const EdgeInsets.all(16.0),
               child: TextButton(
                 onPressed: () {
-                  c.read<SeedGenerateCubit>().confirmPassphrase();
+                  c.read<SeedGenerateCubit>().generateSeed();
                 },
                 child: Text('Confirm'.toUpperCase()),
               ),

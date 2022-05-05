@@ -59,15 +59,6 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     emit(state.copyWith(passPhrase: text));
   }
 
-  void accountNumberChanged(String number) {
-    try {
-      final val = int.parse(number);
-      emit(state.copyWith(accountNumber: val));
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
   void checkPassPhrase() {
     emit(
       state.copyWith(

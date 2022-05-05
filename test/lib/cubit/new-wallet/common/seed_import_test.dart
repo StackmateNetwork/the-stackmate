@@ -69,16 +69,35 @@ void main() {
         return seedImportCubit;
       },
       act: (cubit) async {
+        cubit.backOnSeedClicked();
+        cubit.backOnPassphaseClicked();
+        cubit.passPhraseChanged('text');
+        cubit.passPhraseChanged('');
         cubit.seedTextChanged(expectedSeed.mnemonic);
+        cubit.checkPassPhrase();
         cubit.checkSeed();
       },
       expect: () => <SeedImportState>[
+        const SeedImportState(
+          currentStep: SeedImportStep.passphrase,
+        ),
+        const SeedImportState(
+          passPhrase: 'text',
+        ),
+        const SeedImportState(
+          passPhrase: '',
+        ),
         SeedImportState(
           seedReady: false,
           seed: expectedSeed.mnemonic,
         ),
         SeedImportState(
+          currentStep: SeedImportStep.import,
+          seed: expectedSeed.mnemonic,
+        ),
+        SeedImportState(
           seedReady: true,
+          currentStep: SeedImportStep.import,
           seed: expectedSeed.mnemonic,
           masterXpriv: expectedSeed.xprv,
           wallet: testDerivedAccount,

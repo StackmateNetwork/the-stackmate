@@ -61,8 +61,8 @@ class SeedImportPhrase extends StatelessWidget {
               duration: const Duration(milliseconds: 300),
               child: TextButton(
                 onPressed: () {
-                  if (state.showSeedCompleteButton())
-                    c.read<SeedImportCubit>().checkPassPhrase();
+                  // if (state.showSeedCompleteButton())
+                  c.read<SeedImportCubit>().checkPassPhrase();
                 },
                 child: const Text('Next'),
               ),
@@ -108,27 +108,6 @@ class SeedImportPassphrase extends StatelessWidget {
                 decoration: const InputDecoration(labelText: 'Passphrase'),
               ),
             ),
-            // const SizedBox(height: 80),
-            // Text(
-            //   'Select an\naccount\nnumber'.toUpperCase(),
-            //   style: c.fonts.headline5!.copyWith(
-            //     color: Colors.white,
-            //     // fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-            // const SizedBox(height: 24),
-            // Padding(
-            //   padding: EdgeInsets.zero,
-            //   child: TextField(
-            //     enableSuggestions: false,
-            //     autocorrect: false,
-            //     onChanged: (text) {
-            //       c.read<SeedImportCubit>().accountNumberChanged(text);
-            //     },
-            //     keyboardType: TextInputType.number,
-            //     decoration: const InputDecoration(labelText: 'Account Number'),
-            //   ),
-            // ),
             const SizedBox(height: 40),
             if (state.errPassPhrase != '')
               Text(

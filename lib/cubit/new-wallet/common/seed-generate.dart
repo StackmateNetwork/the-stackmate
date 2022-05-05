@@ -61,44 +61,6 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   void passPhrasedChanged(String text) =>
       emit(state.copyWith(passPhrase: text));
 
-  void confirmPassphrase() async {
-    emit(
-      state.copyWith(
-        generatingSeed: true,
-        seedError: emptyString,
-        currentStep: SeedGenerateSteps.generate,
-        errPassphrase: emptyString,
-      ),
-    );
-    final mnemonic = state.seed!.join(' ');
-    final root = _bitcoin.importMaster(
-      mnemonic: mnemonic,
-      passphrase: state.passPhrase,
-      network: _blockchainCubit.state.blockchain.name,
-    );
-    if (root.hasError) {
-      final smError = SMError.fromJson(root.error!);
-      emit(
-        state.copyWith(
-          generatingSeed: false,
-          seedError: smError.message,
-          currentStep: SeedGenerateSteps.generate,
-        ),
-      );
-      return;
-    }
-    emit(
-      state.copyWith(
-        generatingSeed: false,
-        currentStep: SeedGenerateSteps.generate,
-        seed: root.result!.neuList,
-        masterXpriv: root.result!.xprv,
-        fingerPrint: root.result!.fingerprint,
-      ),
-    );
-    return;
-  }
-
   void seedLengthChanged(String len) =>
       emit(state.copyWith(seedLength: int.parse(len)));
 

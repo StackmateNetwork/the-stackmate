@@ -30,7 +30,7 @@ class _Receive extends StatelessWidget {
             children: [
               const Loader(),
               Header(
-                cornerTitle: 'STACKMATE',
+                cornerTitle: '',
                 children: [
                   const SizedBox(height: 8),
                   const Back(),
