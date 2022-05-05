@@ -130,6 +130,12 @@ void main() {
     );
     assert(!absoluteFees.hasError);
 
+    final feeRate = libstackmate.feeAbsoluteToRate(
+      feeAbsolute: absoluteFees.result!.absolute.toString(),
+      weight: weight.result!.toString(),
+    );
+    assert(!feeRate.hasError);
+
     final finalBuildPsbt = libstackmate.buildTransaction(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,

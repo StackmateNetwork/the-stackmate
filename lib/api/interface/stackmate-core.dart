@@ -86,9 +86,4 @@ abstract class IStackMateCore {
     required String nodeAddress,
     required String signedPSBT,
   });
-
-  R<int> getHeight({
-    required String network,
-    required String nodeAddress,
-  });
 }

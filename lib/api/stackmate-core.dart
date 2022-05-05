@@ -290,21 +290,4 @@ class BitcoinFFI implements IStackMateCore {
 
     return R(result: AbsoluteFees.fromJson(resp));
   }
-
-  @override
-  R<int> getHeight({
-    required String network,
-    required String nodeAddress,
-  }) {
-    final resp = _bitcoin.getHeight(
-      network: network,
-      nodeAddress: nodeAddress,
-    );
-    if (resp.contains('Error')) {
-      return R(error: resp);
-    }
-
-    final data = jsonDecode(resp);
-    return R(result: data['height'] as int);
-  }
 }
