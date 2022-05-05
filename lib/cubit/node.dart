@@ -22,7 +22,7 @@ class NodeAddressState with _$NodeAddressState {
   String getAddress() => address == '' ? 'default' : '$address:$port';
 
   String mainString() =>
-      address == '' ? 'ELECTRUM (Default)' : '$address:$port (Custom)';
+      address == '' ? 'BLOCKSTREAM (Default)' : '$address:$port (Custom)';
 }
 
 class NodeAddressCubit extends Cubit<NodeAddressState> {
@@ -54,7 +54,6 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
   }
 
   void toggleIsEditting() async {
-    init();
     emit(state.copyWith(isEditing: !state.isEditing));
   }
 
@@ -83,8 +82,8 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
       emit(state.copyWith(errNodeState: saved.error.toString()));
       return;
     }
+    toggleIsEditting();
 
     await Future.delayed(const Duration(milliseconds: 200));
-    toggleIsEditting();
   }
 }

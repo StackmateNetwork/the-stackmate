@@ -58,7 +58,7 @@ void main() {
       ],
     );
     blocTest<ChainSelectCubit, BlockchainState>(
-      'WHEN changed to mainnet THEN change to mainnet.',
+      'changeBlockchain flow.',
       build: () {
         when(
           () => _storage.saveItemAt<Blockchain>(

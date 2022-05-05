@@ -13,6 +13,9 @@ void main() {
   group('nodeCubit: Which node to connect to?', () {
     late IStorage _storage;
     late NodeAddressCubit nodeAddressCubit;
+    const myAltTestAddress = 'https://dummy.stackmate.net';
+    const myAltTestPort = '61002';
+    const node = Node(address: myAltTestAddress, port: myAltTestPort);
 
     setUp(() async {
       _storage = _MockStorage();
@@ -40,6 +43,53 @@ void main() {
       ],
       verify: (cubit) => [
         verify(() => _storage.getFirstItem<Node>(StoreKeys.Node.name))
+            .called(1),
+      ],
+    );
+
+    blocTest<NodeAddressCubit, NodeAddressState>(
+      'Editing and Saving flow.',
+      build: () {
+        when(() => _storage.clearAll<Node>(StoreKeys.Node.name))
+            .thenAnswer((invocation) => Future.value(const R(result: true)));
+        when(() => _storage.saveItem<Node>(StoreKeys.Node.name, node))
+            .thenAnswer((invocation) => Future.value(const R(result: 1)));
+        when(
+          () => _storage.getFirstItem<Node>(StoreKeys.Node.name),
+        ).thenReturn(const R(error: 'empty'));
+        return nodeAddressCubit;
+      },
+      act: (cubit) async {
+        cubit.toggleIsEditting();
+        cubit.addressChanged(myAltTestAddress);
+        cubit.portChanged(myAltTestPort);
+        cubit.saveClicked();
+      },
+      expect: () => <NodeAddressState>[
+        const NodeAddressState(
+          address: blockstreamTestNetAddress,
+          port: blockstreamTestNetPort,
+          isEditing: true,
+        ),
+        const NodeAddressState(
+          address: myAltTestAddress,
+          port: blockstreamTestNetPort,
+          isEditing: true,
+        ),
+        const NodeAddressState(
+          address: myAltTestAddress,
+          port: myAltTestPort,
+          isEditing: true,
+        ),
+        const NodeAddressState(
+          address: myAltTestAddress,
+          port: myAltTestPort,
+          isEditing: false,
+        ),
+      ],
+      verify: (cubit) => [
+        verify(() => _storage.clearAll<Node>(StoreKeys.Node.name)).called(1),
+        verify(() => _storage.saveItem<Node>(StoreKeys.Node.name, node))
             .called(1),
       ],
     );
