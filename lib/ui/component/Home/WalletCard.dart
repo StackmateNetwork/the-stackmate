@@ -80,9 +80,11 @@ class WalletCard extends StatelessWidget {
                       const SizedBox(height: 8),
                       if (wallet.balance != null) ...[
                         Text(
-                          NumberFormat('###,000').format(
-                                  double.parse(wallet.balance.toString())) +
-                              ' sats',
+                          (wallet.balance! > 0)
+                              ? NumberFormat('###,000').format(
+                                  double.parse(wallet.balance.toString()),
+                                )
+                              : '0' + ' sats',
 
                           // overflow: TextOverflow.ellipsis,
                           maxLines: 10,
