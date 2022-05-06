@@ -183,14 +183,13 @@ class _Wallet extends StatelessWidget {
               color: c.colours.background,
               child: CupertinoActionSheetAction(
                 child: Text(
-                  'SEND',
-                  style:
-                      c.fonts.button!.copyWith(color: c.colours.onBackground),
+                  'DELETE ANYWAY.',
+                  style: c.fonts.button!.copyWith(color: c.colours.error),
                 ),
                 onPressed: () async {
                   Navigator.pop(context, true);
                   await Future.delayed(const Duration(milliseconds: 200));
-                  c.push('/send');
+                  c.read<InfoCubit>().deleteClicked();
                 },
               ),
             ),
