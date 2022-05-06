@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-05-06 02:38:31</td>
+            <td class="headerValue">2022-05-07 02:27:01</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -84,13 +84,13 @@
 <a name="22"><span class="lineNum">      22 </span>            : }</a>
 <a name="23"><span class="lineNum">      23 </span>            : </a>
 <a name="24"><span class="lineNum">      24 </span>            : class WalletsCubit extends Cubit&lt;WalletsState&gt; {</a>
-<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          1 :   WalletsCubit(</span></a>
+<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          2 :   WalletsCubit(</span></a>
 <a name="26"><span class="lineNum">      26 </span>            :     this._storage,</a>
 <a name="27"><span class="lineNum">      27 </span>            :     this._logger,</a>
 <a name="28"><span class="lineNum">      28 </span>            :     this._blockchain,</a>
 <a name="29"><span class="lineNum">      29 </span>            :     this._clipBoard,</a>
-<a name="30"><span class="lineNum">      30 </span><span class="lineCov">          1 :   ) : super(const WalletsState()) {</span></a>
-<a name="31"><span class="lineNum">      31 </span><span class="lineCov">          1 :     refresh();</span></a>
+<a name="30"><span class="lineNum">      30 </span><span class="lineCov">          2 :   ) : super(const WalletsState()) {</span></a>
+<a name="31"><span class="lineNum">      31 </span><span class="lineCov">          2 :     refresh();</span></a>
 <a name="32"><span class="lineNum">      32 </span>            :   }</a>
 <a name="33"><span class="lineNum">      33 </span>            : </a>
 <a name="34"><span class="lineNum">      34 </span>            :   final IStorage _storage;</a>
@@ -98,9 +98,9 @@
 <a name="36"><span class="lineNum">      36 </span>            :   final ChainSelectCubit _blockchain;</a>
 <a name="37"><span class="lineNum">      37 </span>            :   final IClipBoard _clipBoard;</a>
 <a name="38"><span class="lineNum">      38 </span>            : </a>
-<a name="39"><span class="lineNum">      39 </span><span class="lineCov">          1 :   void refresh() {</span></a>
+<a name="39"><span class="lineNum">      39 </span><span class="lineCov">          2 :   void refresh() {</span></a>
 <a name="40"><span class="lineNum">      40 </span>            :     try {</a>
-<a name="41"><span class="lineNum">      41 </span><span class="lineCov">          3 :       final storedWallets = _storage.getAll&lt;Wallet&gt;(StoreKeys.Wallet.name);</span></a>
+<a name="41"><span class="lineNum">      41 </span><span class="lineCov">          6 :       final storedWallets = _storage.getAll&lt;Wallet&gt;(StoreKeys.Wallet.name);</span></a>
 <a name="42"><span class="lineNum">      42 </span><span class="lineNoCov">          0 :       if (storedWallets.hasError) return;</span></a>
 <a name="43"><span class="lineNum">      43 </span>            : </a>
 <a name="44"><span class="lineNum">      44 </span><span class="lineNoCov">          0 :       final wallets = storedWallets.result!;</span></a>
@@ -113,7 +113,7 @@
 <a name="51"><span class="lineNum">      51 </span>            : </a>
 <a name="52"><span class="lineNum">      52 </span><span class="lineNoCov">          0 :       emit(state.copyWith(wallets: wallets));</span></a>
 <a name="53"><span class="lineNum">      53 </span>            :     } catch (e, s) {</a>
-<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          2 :       _logger.logException(e, 'WalletsCubit.refresh', s);</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          4 :       _logger.logException(e, 'WalletsCubit.refresh', s);</span></a>
 <a name="55"><span class="lineNum">      55 </span>            :     }</a>
 <a name="56"><span class="lineNum">      56 </span>            :   }</a>
 <a name="57"><span class="lineNum">      57 </span>            : </a>

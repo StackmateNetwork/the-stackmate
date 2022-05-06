@@ -61,8 +61,8 @@ class SeedImportPhrase extends StatelessWidget {
               duration: const Duration(milliseconds: 300),
               child: TextButton(
                 onPressed: () {
-                  // if (state.showSeedCompleteButton())
-                  c.read<SeedImportCubit>().checkPassPhrase();
+                  if (state.showSeedCompleteButton())
+                    c.read<SeedImportCubit>().checkPassPhrase();
                 },
                 child: const Text('Next'),
               ),
