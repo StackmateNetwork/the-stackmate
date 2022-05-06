@@ -146,7 +146,7 @@ class BitcoinFFI implements IStackMateCore {
       transactions.add(tx);
     }
 
-    transactions.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+    transactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
     return R(result: transactions);
   }
