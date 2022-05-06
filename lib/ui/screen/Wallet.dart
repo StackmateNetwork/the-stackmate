@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/wallet/history.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -25,13 +25,13 @@ class _Wallet extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    final zeroBal = c.select((HistoryCubit wc) => wc.state.zeroBalance());
-    final showInfo = c.select((HistoryCubit wc) => wc.state.showInfo);
+    final zeroBal = c.select((InfoCubit wc) => wc.state.zeroBalance());
+    final showInfo = c.select((InfoCubit wc) => wc.state.showInfo);
     final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet);
 
     if (wallet == null) return Container();
 
-    return BlocListener<HistoryCubit, HistoryState>(
+    return BlocListener<InfoCubit, InfoState>(
       listener: (c, s) {
         if (s.deleted) Navigator.pop(c);
       },
@@ -44,7 +44,7 @@ class _Wallet extends StatelessWidget {
           body: SafeArea(
             child: RefreshIndicator(
               onRefresh: () async {
-                c.read<HistoryCubit>().getHistory();
+                c.read<InfoCubit>().getHistory();
                 return;
               },
               child: SingleChildScrollView(
@@ -108,7 +108,7 @@ class _Wallet extends StatelessWidget {
                                   // alignment: Alignment.centerRight,
                                   color: c.colours.primary,
                                   onPressed: () {
-                                    c.read<HistoryCubit>().toggleShowInfo();
+                                    c.read<InfoCubit>().toggleShowInfo();
                                   },
                                   icon: const Icon(Icons.info_outline),
                                 ),
@@ -259,7 +259,7 @@ class _Wallet extends StatelessWidget {
     );
 
     if (delete != null && delete) {
-      c.read<HistoryCubit>().deleteClicked();
+      c.read<InfoCubit>().deleteClicked();
     }
   }
 }
@@ -274,7 +274,7 @@ class WalletScreen extends StatelessWidget {
     final nodeAddress = context.select((NodeAddressCubit c) => c);
     final networkSelect = context.select((ChainSelectCubit c) => c);
 
-    final history = HistoryCubit(
+    final history = InfoCubit(
       wallets,
       locator<IStorage>(),
       logger,

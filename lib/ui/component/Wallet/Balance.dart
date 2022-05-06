@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sats/cubit/wallet/history.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class Balance extends StatelessWidget {
@@ -11,7 +11,7 @@ class Balance extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    final balance = c.select((HistoryCubit hc) => hc.state.balance);
+    final balance = c.select((InfoCubit hc) => hc.state.balance);
     if (balance == null) return Container();
 
     return FadeIn(

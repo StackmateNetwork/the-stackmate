@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/wallet/history.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/loading.dart';
 
@@ -9,7 +9,7 @@ class WalletLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final history = context.select((HistoryCubit hc) => hc.state);
+    final history = context.select((InfoCubit hc) => hc.state);
     const String syncing = 'Updating wallet...';
     if (!history.loadingTransactions && !history.loadingBalance)
       return Container();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/wallet/history.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:intl/intl.dart';
@@ -84,7 +84,7 @@ class _TransactionItemState extends State<TransactionItem> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    c.read<HistoryCubit>().openLink(widget.transaction);
+                    c.read<InfoCubit>().openLink(widget.transaction);
                   },
                   child: Container(
                     width: c.width / 2,
@@ -134,7 +134,7 @@ class _TransactionItemState extends State<TransactionItem> {
                         child: TextButton(
                           onPressed: () {
                             c
-                                .read<HistoryCubit>()
+                                .read<InfoCubit>()
                                 .shareTransaction(widget.transaction);
                           },
                           child: Text(
@@ -215,7 +215,7 @@ class _TransactionItemState extends State<TransactionItem> {
               ),
               GestureDetector(
                 onTap: () {
-                  c.read<HistoryCubit>().openLink(widget.transaction);
+                  c.read<InfoCubit>().openLink(widget.transaction);
                 },
                 child: Container(
                   width: c.width / 2,
@@ -311,7 +311,7 @@ class _TransactionItemState extends State<TransactionItem> {
                     TextButton(
                       onPressed: () {
                         c
-                            .read<HistoryCubit>()
+                            .read<InfoCubit>()
                             .shareTransaction(widget.transaction);
                       },
                       child: Text('SHARE'.notLocalised()),

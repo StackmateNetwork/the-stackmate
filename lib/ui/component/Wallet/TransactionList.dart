@@ -1,14 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/wallet/history.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Wallet/TransactionItem.dart';
 
 class TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final transactions = c.select((HistoryCubit w) => w.state.transactions);
+    final transactions = c.select((InfoCubit w) => w.state.transactions);
 
     if (transactions == null || transactions.isEmpty) return Container();
 
