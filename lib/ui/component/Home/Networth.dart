@@ -33,8 +33,9 @@ class Networth extends StatelessWidget {
                 Text(
                   (networth > 0)
                       ? NumberFormat('###,000')
-                          .format(double.parse(networth.toString()))
-                      : '0' + ' sats',
+                              .format(double.parse(networth.toString())) +
+                          ' sats'
+                      : '0 sats',
                   style: c.fonts.bodyMedium!.copyWith(
                     color: Colors.white,
                     fontSize: 21,

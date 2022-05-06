@@ -56,8 +56,11 @@ class _TransactionItemState extends State<TransactionItem> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            NumberFormat('###,000').format(double.parse(
-                                    widget.transaction.received.toString())) +
+                            NumberFormat('###,000').format(
+                                  double.parse(
+                                    widget.transaction.received.toString(),
+                                  ),
+                                ) +
                                 ' sats',
                             style: c.fonts.headline6!.copyWith(
                               color: c.colours.onBackground,
@@ -185,10 +188,13 @@ class _TransactionItemState extends State<TransactionItem> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          NumberFormat('###,000').format(double.parse(
+                          NumberFormat('###,000').format(
+                                double.parse(
                                   (widget.transaction.sent +
                                           widget.transaction.fee)
-                                      .toString())) +
+                                      .toString(),
+                                ),
+                              ) +
                               ' sats',
                           style: c.fonts.headline6!.copyWith(
                             color: c.colours.onBackground,

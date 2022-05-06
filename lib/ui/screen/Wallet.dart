@@ -125,7 +125,7 @@ class _Wallet extends StatelessWidget {
                                         c.push('/send');
                                     },
                                     icon: const Icon(
-                                      Icons.call_missed_outgoing_outlined,
+                                      Icons.send,
                                     ),
                                   ),
                                 ),
@@ -135,7 +135,10 @@ class _Wallet extends StatelessWidget {
                                   onPressed: () {
                                     c.push('/receive');
                                   },
-                                  icon: const Icon(Icons.call_received),
+                                  icon: const Icon(
+                                    Icons.call_received,
+                                    color: Colors.blue,
+                                  ),
                                 ),
                               ],
                             ),

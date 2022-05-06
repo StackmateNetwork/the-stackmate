@@ -30,8 +30,9 @@ class Balance extends StatelessWidget {
             Text(
               (balance > 0)
                   ? NumberFormat('###,000')
-                      .format(double.parse(balance.toString()))
-                  : '0' + ' sats',
+                          .format(double.parse(balance.toString())) +
+                      ' sats'
+                  : '0 sats',
               style: c.fonts.headline6!.copyWith(
                 color: Colors.white,
               ),
