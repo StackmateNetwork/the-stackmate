@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">24</td>
-            <td class="headerCovTableEntry">44</td>
-            <td class="headerCovTableEntryLo">54.5 %</td>
+            <td class="headerCovTableEntry">35</td>
+            <td class="headerCovTableEntry">40</td>
+            <td class="headerCovTableEntryMed">87.5 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-05-06 02:22:46</td>
+            <td class="headerValue">2022-05-06 02:38:31</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -107,9 +107,9 @@
 <a name="45"><span class="lineNum">      45 </span>            :   static const invalidSeedError = 'Invalid Seed Words.';</a>
 <a name="46"><span class="lineNum">      46 </span>            :   static const emptyString = '';</a>
 <a name="47"><span class="lineNum">      47 </span>            : </a>
-<a name="48"><span class="lineNum">      48 </span><span class="lineNoCov">          0 :   void backOnPassphaseClicked() {</span></a>
-<a name="49"><span class="lineNum">      49 </span><span class="lineNoCov">          0 :     emit(</span></a>
-<a name="50"><span class="lineNum">      50 </span><span class="lineNoCov">          0 :       state.copyWith(</span></a>
+<a name="48"><span class="lineNum">      48 </span><span class="lineCov">          1 :   void backOnPassphaseClicked() {</span></a>
+<a name="49"><span class="lineNum">      49 </span><span class="lineCov">          1 :     emit(</span></a>
+<a name="50"><span class="lineNum">      50 </span><span class="lineCov">          3 :       state.copyWith(</span></a>
 <a name="51"><span class="lineNum">      51 </span>            :         currentStep: SeedImportStep.passphrase,</a>
 <a name="52"><span class="lineNum">      52 </span>            :         passPhrase: emptyString,</a>
 <a name="53"><span class="lineNum">      53 </span>            :         errPassPhrase: emptyString,</a>
@@ -117,93 +117,84 @@
 <a name="55"><span class="lineNum">      55 </span>            :     );</a>
 <a name="56"><span class="lineNum">      56 </span>            :   }</a>
 <a name="57"><span class="lineNum">      57 </span>            : </a>
-<a name="58"><span class="lineNum">      58 </span><span class="lineNoCov">          0 :   void passPhraseChanged(String text) {</span></a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineNoCov">          0 :     emit(state.copyWith(passPhrase: text));</span></a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          1 :   void passPhraseChanged(String text) {</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          4 :     emit(state.copyWith(passPhrase: text));</span></a>
 <a name="60"><span class="lineNum">      60 </span>            :   }</a>
 <a name="61"><span class="lineNum">      61 </span>            : </a>
-<a name="62"><span class="lineNum">      62 </span><span class="lineNoCov">          0 :   void accountNumberChanged(String number) {</span></a>
-<a name="63"><span class="lineNum">      63 </span>            :     try {</a>
-<a name="64"><span class="lineNum">      64 </span><span class="lineNoCov">          0 :       final val = int.parse(number);</span></a>
-<a name="65"><span class="lineNum">      65 </span><span class="lineNoCov">          0 :       emit(state.copyWith(accountNumber: val));</span></a>
-<a name="66"><span class="lineNum">      66 </span>            :     } catch (e) {</a>
-<a name="67"><span class="lineNum">      67 </span><span class="lineNoCov">          0 :       print(e.toString());</span></a>
-<a name="68"><span class="lineNum">      68 </span>            :     }</a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">          1 :   void checkPassPhrase() {</span></a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          1 :     emit(</span></a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          3 :       state.copyWith(</span></a>
+<a name="65"><span class="lineNum">      65 </span>            :         currentStep: SeedImportStep.import,</a>
+<a name="66"><span class="lineNum">      66 </span>            :         errPassPhrase: emptyString,</a>
+<a name="67"><span class="lineNum">      67 </span>            :       ),</a>
+<a name="68"><span class="lineNum">      68 </span>            :     );</a>
 <a name="69"><span class="lineNum">      69 </span>            :   }</a>
 <a name="70"><span class="lineNum">      70 </span>            : </a>
-<a name="71"><span class="lineNum">      71 </span><span class="lineNoCov">          0 :   void checkPassPhrase() {</span></a>
-<a name="72"><span class="lineNum">      72 </span><span class="lineNoCov">          0 :     emit(</span></a>
-<a name="73"><span class="lineNum">      73 </span><span class="lineNoCov">          0 :       state.copyWith(</span></a>
-<a name="74"><span class="lineNum">      74 </span>            :         currentStep: SeedImportStep.import,</a>
-<a name="75"><span class="lineNum">      75 </span>            :         errPassPhrase: emptyString,</a>
-<a name="76"><span class="lineNum">      76 </span>            :       ),</a>
-<a name="77"><span class="lineNum">      77 </span>            :     );</a>
-<a name="78"><span class="lineNum">      78 </span>            :   }</a>
-<a name="79"><span class="lineNum">      79 </span>            : </a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineNoCov">          0 :   void backOnSeedClicked() {</span></a>
-<a name="81"><span class="lineNum">      81 </span><span class="lineNoCov">          0 :     emit(</span></a>
-<a name="82"><span class="lineNum">      82 </span><span class="lineNoCov">          0 :       state.copyWith(</span></a>
-<a name="83"><span class="lineNum">      83 </span>            :         currentStep: SeedImportStep.passphrase,</a>
-<a name="84"><span class="lineNum">      84 </span>            :         seed: emptyString,</a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineCov">          1 :   void backOnSeedClicked() {</span></a>
+<a name="72"><span class="lineNum">      72 </span><span class="lineCov">          1 :     emit(</span></a>
+<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          3 :       state.copyWith(</span></a>
+<a name="74"><span class="lineNum">      74 </span>            :         currentStep: SeedImportStep.passphrase,</a>
+<a name="75"><span class="lineNum">      75 </span>            :         seed: emptyString,</a>
+<a name="76"><span class="lineNum">      76 </span>            :         seedError: emptyString,</a>
+<a name="77"><span class="lineNum">      77 </span>            :       ),</a>
+<a name="78"><span class="lineNum">      78 </span>            :     );</a>
+<a name="79"><span class="lineNum">      79 </span>            :   }</a>
+<a name="80"><span class="lineNum">      80 </span>            : </a>
+<a name="81"><span class="lineNum">      81 </span><span class="lineCov">          1 :   void seedTextChanged(String seed) {</span></a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          1 :     emit(</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineCov">          3 :       state.copyWith(</span></a>
+<a name="84"><span class="lineNum">      84 </span>            :         seed: seed,</a>
 <a name="85"><span class="lineNum">      85 </span>            :         seedError: emptyString,</a>
 <a name="86"><span class="lineNum">      86 </span>            :       ),</a>
 <a name="87"><span class="lineNum">      87 </span>            :     );</a>
 <a name="88"><span class="lineNum">      88 </span>            :   }</a>
 <a name="89"><span class="lineNum">      89 </span>            : </a>
-<a name="90"><span class="lineNum">      90 </span><span class="lineCov">          1 :   void seedTextChanged(String seed) {</span></a>
-<a name="91"><span class="lineNum">      91 </span><span class="lineCov">          1 :     emit(</span></a>
-<a name="92"><span class="lineNum">      92 </span><span class="lineCov">          3 :       state.copyWith(</span></a>
-<a name="93"><span class="lineNum">      93 </span>            :         seed: seed,</a>
-<a name="94"><span class="lineNum">      94 </span>            :         seedError: emptyString,</a>
-<a name="95"><span class="lineNum">      95 </span>            :       ),</a>
-<a name="96"><span class="lineNum">      96 </span>            :     );</a>
-<a name="97"><span class="lineNum">      97 </span>            :   }</a>
+<a name="90"><span class="lineNum">      90 </span><span class="lineCov">          1 :   void checkSeed() {</span></a>
+<a name="91"><span class="lineNum">      91 </span>            :     try {</a>
+<a name="92"><span class="lineNum">      92 </span><span class="lineCov">          2 :       final seed = state.seed;</span></a>
+<a name="93"><span class="lineNum">      93 </span>            : </a>
+<a name="94"><span class="lineNum">      94 </span><span class="lineCov">          3 :       if (seed.split(' ').length != 12) {</span></a>
+<a name="95"><span class="lineNum">      95 </span><span class="lineNoCov">          0 :         emit(state.copyWith(seedError: invalidSeedError));</span></a>
+<a name="96"><span class="lineNum">      96 </span>            :         return;</a>
+<a name="97"><span class="lineNum">      97 </span>            :       }</a>
 <a name="98"><span class="lineNum">      98 </span>            : </a>
-<a name="99"><span class="lineNum">      99 </span><span class="lineCov">          1 :   void checkSeed() {</span></a>
-<a name="100"><span class="lineNum">     100 </span>            :     try {</a>
-<a name="101"><span class="lineNum">     101 </span><span class="lineCov">          2 :       final seed = state.seed;</span></a>
-<a name="102"><span class="lineNum">     102 </span>            : </a>
-<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          3 :       if (seed.split(' ').length != 12) {</span></a>
-<a name="104"><span class="lineNum">     104 </span><span class="lineNoCov">          0 :         emit(state.copyWith(seedError: invalidSeedError));</span></a>
-<a name="105"><span class="lineNum">     105 </span>            :         return;</a>
+<a name="99"><span class="lineNum">      99 </span><span class="lineCov">          2 :       final root = _core.importMaster(</span></a>
+<a name="100"><span class="lineNum">     100 </span><span class="lineCov">          2 :         mnemonic: state.seed,</span></a>
+<a name="101"><span class="lineNum">     101 </span><span class="lineCov">          2 :         passphrase: state.passPhrase,</span></a>
+<a name="102"><span class="lineNum">     102 </span><span class="lineCov">          4 :         network: _blockchainCubit.state.blockchain.name,</span></a>
+<a name="103"><span class="lineNum">     103 </span>            :       );</a>
+<a name="104"><span class="lineNum">     104 </span><span class="lineCov">          1 :       if (root.hasError) {</span></a>
+<a name="105"><span class="lineNum">     105 </span><span class="lineNoCov">          0 :         throw SMError.fromJson(root.error!);</span></a>
 <a name="106"><span class="lineNum">     106 </span>            :       }</a>
 <a name="107"><span class="lineNum">     107 </span>            : </a>
-<a name="108"><span class="lineNum">     108 </span><span class="lineCov">          2 :       final root = _core.importMaster(</span></a>
-<a name="109"><span class="lineNum">     109 </span><span class="lineCov">          2 :         mnemonic: state.seed,</span></a>
-<a name="110"><span class="lineNum">     110 </span><span class="lineCov">          2 :         passphrase: state.passPhrase,</span></a>
-<a name="111"><span class="lineNum">     111 </span><span class="lineCov">          4 :         network: _blockchainCubit.state.blockchain.name,</span></a>
+<a name="108"><span class="lineNum">     108 </span><span class="lineCov">          2 :       final wallet = _core.deriveHardened(</span></a>
+<a name="109"><span class="lineNum">     109 </span><span class="lineCov">          2 :         masterXPriv: root.result!.xprv,</span></a>
+<a name="110"><span class="lineNum">     110 </span><span class="lineCov">          3 :         account: state.accountNumber.toString(),</span></a>
+<a name="111"><span class="lineNum">     111 </span>            :         purpose: segwitNativePurpose,</a>
 <a name="112"><span class="lineNum">     112 </span>            :       );</a>
-<a name="113"><span class="lineNum">     113 </span><span class="lineCov">          1 :       if (root.hasError) {</span></a>
-<a name="114"><span class="lineNum">     114 </span><span class="lineNoCov">          0 :         throw SMError.fromJson(root.error!);</span></a>
-<a name="115"><span class="lineNum">     115 </span>            :       }</a>
-<a name="116"><span class="lineNum">     116 </span>            : </a>
-<a name="117"><span class="lineNum">     117 </span><span class="lineCov">          2 :       final wallet = _core.deriveHardened(</span></a>
-<a name="118"><span class="lineNum">     118 </span><span class="lineCov">          2 :         masterXPriv: root.result!.xprv,</span></a>
-<a name="119"><span class="lineNum">     119 </span><span class="lineCov">          3 :         account: state.accountNumber.toString(),</span></a>
-<a name="120"><span class="lineNum">     120 </span>            :         purpose: segwitNativePurpose,</a>
-<a name="121"><span class="lineNum">     121 </span>            :       );</a>
-<a name="122"><span class="lineNum">     122 </span>            : </a>
-<a name="123"><span class="lineNum">     123 </span><span class="lineCov">          1 :       if (wallet.hasError) {</span></a>
-<a name="124"><span class="lineNum">     124 </span><span class="lineNoCov">          0 :         throw SMError.fromJson(wallet.error!);</span></a>
-<a name="125"><span class="lineNum">     125 </span>            :       }</a>
-<a name="126"><span class="lineNum">     126 </span>            : </a>
-<a name="127"><span class="lineNum">     127 </span><span class="lineCov">          1 :       emit(</span></a>
-<a name="128"><span class="lineNum">     128 </span><span class="lineCov">          3 :         state.copyWith(</span></a>
-<a name="129"><span class="lineNum">     129 </span>            :           seedReady: true,</a>
-<a name="130"><span class="lineNum">     130 </span><span class="lineCov">          2 :           masterXpriv: root.result!.xprv,</span></a>
-<a name="131"><span class="lineNum">     131 </span><span class="lineCov">          1 :           wallet: wallet.result,</span></a>
-<a name="132"><span class="lineNum">     132 </span>            :         ),</a>
-<a name="133"><span class="lineNum">     133 </span>            :       );</a>
-<a name="134"><span class="lineNum">     134 </span>            :     } catch (e, s) {</a>
-<a name="135"><span class="lineNum">     135 </span><span class="lineNoCov">          0 :       logger.logException(</span></a>
-<a name="136"><span class="lineNum">     136 </span>            :         e,</a>
-<a name="137"><span class="lineNum">     137 </span>            :         'SeedImportWalletCubit._createNewLocalWallet',</a>
-<a name="138"><span class="lineNum">     138 </span>            :         s,</a>
-<a name="139"><span class="lineNum">     139 </span>            :       );</a>
-<a name="140"><span class="lineNum">     140 </span>            :     }</a>
-<a name="141"><span class="lineNum">     141 </span>            :   }</a>
-<a name="142"><span class="lineNum">     142 </span>            : </a>
-<a name="143"><span class="lineNum">     143 </span><span class="lineCov">          2 :   void clear() =&gt; emit(const SeedImportState());</span></a>
-<a name="144"><span class="lineNum">     144 </span>            : }</a>
+<a name="113"><span class="lineNum">     113 </span>            : </a>
+<a name="114"><span class="lineNum">     114 </span><span class="lineCov">          1 :       if (wallet.hasError) {</span></a>
+<a name="115"><span class="lineNum">     115 </span><span class="lineNoCov">          0 :         throw SMError.fromJson(wallet.error!);</span></a>
+<a name="116"><span class="lineNum">     116 </span>            :       }</a>
+<a name="117"><span class="lineNum">     117 </span>            : </a>
+<a name="118"><span class="lineNum">     118 </span><span class="lineCov">          1 :       emit(</span></a>
+<a name="119"><span class="lineNum">     119 </span><span class="lineCov">          3 :         state.copyWith(</span></a>
+<a name="120"><span class="lineNum">     120 </span>            :           seedReady: true,</a>
+<a name="121"><span class="lineNum">     121 </span><span class="lineCov">          2 :           masterXpriv: root.result!.xprv,</span></a>
+<a name="122"><span class="lineNum">     122 </span><span class="lineCov">          1 :           wallet: wallet.result,</span></a>
+<a name="123"><span class="lineNum">     123 </span>            :         ),</a>
+<a name="124"><span class="lineNum">     124 </span>            :       );</a>
+<a name="125"><span class="lineNum">     125 </span>            :     } catch (e, s) {</a>
+<a name="126"><span class="lineNum">     126 </span><span class="lineNoCov">          0 :       logger.logException(</span></a>
+<a name="127"><span class="lineNum">     127 </span>            :         e,</a>
+<a name="128"><span class="lineNum">     128 </span>            :         'SeedImportWalletCubit._createNewLocalWallet',</a>
+<a name="129"><span class="lineNum">     129 </span>            :         s,</a>
+<a name="130"><span class="lineNum">     130 </span>            :       );</a>
+<a name="131"><span class="lineNum">     131 </span>            :     }</a>
+<a name="132"><span class="lineNum">     132 </span>            :   }</a>
+<a name="133"><span class="lineNum">     133 </span>            : </a>
+<a name="134"><span class="lineNum">     134 </span><span class="lineCov">          2 :   void clear() =&gt; emit(const SeedImportState());</span></a>
+<a name="135"><span class="lineNum">     135 </span>            : }</a>
 </pre>
       </td>
     </tr>

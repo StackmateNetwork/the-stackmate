@@ -228,7 +228,8 @@ class SendCubit extends Cubit<SendState> {
         emit(state.copyWith(errAmount: invalidAmountError));
         return;
       }
-      final txOutputs = '${state.address}:${state.amount}';
+      final txOutputs =
+          '${state.address}:${(state.sweepWallet ? 0 : state.amount)}';
 
       emit(
         state.copyWith(
