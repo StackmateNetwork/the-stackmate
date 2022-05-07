@@ -1,55 +1,42 @@
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // ignore_for_file: constant_identifier_names
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/model/address-book.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/fees.dart';
 import 'package:sats/model/node.dart';
-import 'package:sats/model/reddit-post.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/storage.dart';
 
 enum StoreKeys {
-  RedditPost,
   Wallet,
   Blockchain,
   Node,
-  AddressBookUser,
-  AddressBookKey,
+  Fees,
 }
 
 extension StoreKeysFunctions on StoreKeys {
   String get name => const {
-        StoreKeys.RedditPost: 'reddit-post',
         StoreKeys.Wallet: 'wallet',
         StoreKeys.Blockchain: 'blockchain',
         StoreKeys.Node: 'node',
-        StoreKeys.AddressBookUser: 'address-book-user',
-        StoreKeys.AddressBookKey: 'address-book-key'
+        StoreKeys.Fees: 'fees',
       }[this]!;
 }
 
 Future<void> initializeHive() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(RedditPostClassAdapter());
   Hive.registerAdapter(WalletClassAdapter());
   Hive.registerAdapter(BlockchainClassAdapter());
-  Hive.registerAdapter(AddressBookUserClassAdapter());
-  Hive.registerAdapter(AddressBookValueClassAdapter());
   Hive.registerAdapter(NodeClassAdapter());
+  Hive.registerAdapter(FeesClassAdapter());
 
-  await Hive.openBox<RedditPost>(
-    StoreKeys.RedditPost.name,
-    compactionStrategy: (entries, deletedEntries) => deletedEntries > 50,
-  );
   await Hive.openBox<Wallet>(StoreKeys.Wallet.name);
   await Hive.openBox<Blockchain>(StoreKeys.Blockchain.name);
-  await Hive.openBox<AddressBookUser>(StoreKeys.AddressBookUser.name);
-  await Hive.openBox<AddressBookKey>(StoreKeys.AddressBookKey.name);
   await Hive.openBox<Node>(StoreKeys.Node.name);
+  await Hive.openBox<Fees>(StoreKeys.Fees.name);
 
   await Hive.openBox<String>('storage');
 }
@@ -130,10 +117,6 @@ class HiveStore implements IStorage {
       locator<Logger>().logException(e, '', s);
       return R(error: e.toString());
     }
-    // Hive.box<String>(key).add(value);
-
-    // var _box = await Hive.openBox(_store);
-    // await _box.put(key, value);
   }
 
   @override
@@ -148,33 +131,13 @@ class HiveStore implements IStorage {
       locator<Logger>().logException(e, '', s);
       return R(error: e.toString());
     }
-    // var _box = await Hive.openBox<String>(_store);
-    // var result = _box.get(key);
-    // try {
-    //   final obj = Hive.box<String>(key).getAt(0);
-    //   if (obj == null) return R(error: 'empty');
-    //   return obj;
-    // } catch (e) {
-    //   return R(error: 'empty');
-    // }
-    // if ((key == StoreKeys.token.name || key == StoreKeys.phone.name) &&
-    //     (result == null || result == '')) {
-    //   throw 'No key';
-    // }
-
-    // if (result == null) throw 'no key';
-
-    // return result;
   }
 
   @override
   Future<R<bool>> deleteOne(String key) async {
     try {
       _box.delete(key);
-      // final b = Hive.box<String>(key);
-      // b.deleteAt(0); //.delete(key);
-      // var _box = await Hive.openBox(_store);
-      // await _box.delete(key);
+
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -186,11 +149,10 @@ class HiveStore implements IStorage {
   R<T> getFirstItem<T>(String cls) {
     try {
       final bx = Hive.box<T>(cls);
-      // if (bx.isEmpty) return R(error: 'empty');
       final len = bx.length;
-      if (len == 0) return R(error: 'empty');
+      if (len == 0) throw 'empty';
       final obj = bx.getAt(0);
-      if (obj == null) return R(error: 'empty');
+      if (obj == null) throw 'empty';
       return R(result: obj);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);

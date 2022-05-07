@@ -5,7 +5,8 @@ import 'package:sats/ui/component/Common/CornerTitle.dart';
 import 'package:sats/ui/component/Common/LogButton.dart';
 
 class Header extends StatelessWidget {
-  const Header({Key? key, required this.cornerTitle, required this.children}) : super(key: key);
+  const Header({Key? key, required this.cornerTitle, required this.children})
+      : super(key: key);
 
   final String cornerTitle;
   final List<Widget> children;
@@ -25,13 +26,6 @@ class Header extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: c.colours.background,
-          //boxShadow: [
-          //  BoxShadow(
-          //    offset: Offset(0, 2),
-          //    blurRadius: 3,
-          //    spreadRadius: 3,
-          //  ),
-          //],
         ),
         child: Stack(
           children: [

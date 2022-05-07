@@ -25,29 +25,11 @@ class Transaction with _$Transaction {
 
   String timeStr() {
     if (timestamp == 0) return '';
-    // String date = '';
     final t = timestamp;
     final dt = DateTime.fromMillisecondsSinceEpoch(
       t * 1000,
-      // isUtc: true,
     ).toString();
     return dt;
-    //date += DateFormat.EEEE().format(dt) + ', ';
-
-    // date += dt.day.toString() +
-    //     '-' +
-    //     dt.month.toString() +
-    //     '-' +
-    //     dt.year.toString() +
-    //     ' ';
-
-    // date += dt.hour.toString() + ':' + dt.minute.toString() + ' ';
-
-    // date += dt.hour < 12 ? 'AM' : 'PM';
-
-    // date += ' GMT';
-
-    // return date;
   }
 
   String amountToBtc() =>

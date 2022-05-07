@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 ThemeData mainTheme() => ThemeData(
+<<<<<<< HEAD
        fontFamily: 'FontAwesome',
       textTheme:  GoogleFonts.aldrichTextTheme(),
+=======
+      textTheme: GoogleFonts.aldrichTextTheme(),
+>>>>>>> c0a8f98ad9b7f54b9c9cd38df4817ec0439712ad
       colorScheme: ColorScheme(
         primary: Colors.orange[400]!,
         // primaryVariant: const Color(0xFF0745ff),
         secondary: const Color(0xFF87888a),
         //  const Color(0xFF13161f),
         // secondaryVariant: const Color(0xFF87888a),
-        surface: Colors.blue.withOpacity(0.1),
+        surface: Colors.blue.withOpacity(0.05),
         background: const Color(0xFF13161f),
         error: const Color(0xFFff0000),
         onPrimary: Colors.white,
@@ -60,15 +64,6 @@ ThemeData derivedTheme(ThemeData theme) {
     ),
   );
 }
-
-// BoxLooseDecoration pinInputDecoration = BoxLooseDecoration(
-//   obscureStyle: ObscureStyle(obscureText: '*', isTextObscure: true),
-//   bgColorBuilder:
-//       PinListenColorBuilder(Colors.pink, Colors.purple), //_white, _white),
-//   strokeColorBuilder:
-//       PinListenColorBuilder(_secondary.withAlpha(0), _textfieldBorder),
-//   radius: Radius.circular(2),
-// );
 
 Widget buttonToLoaderTransition({
   required Widget child,

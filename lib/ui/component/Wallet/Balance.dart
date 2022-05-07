@@ -1,8 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sats/cubit/wallet/wallet.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/pkg/extensions.dart';
+
 class Balance extends StatelessWidget {
   const Balance({
     Key? key,
@@ -10,7 +11,7 @@ class Balance extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    final balance = c.select((WalletCubit hc) => hc.state.balance);
+    final balance = c.select((InfoCubit hc) => hc.state.balance);
     if (balance == null) return Container();
     
         return FadeIn(
@@ -27,7 +28,15 @@ class Balance extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
+<<<<<<< HEAD
               NumberFormat('###,000').format(double.parse(balance.toString())) + ' sats',
+=======
+              (balance > 0)
+                  ? NumberFormat('###,000')
+                          .format(double.parse(balance.toString())) +
+                      ' sats'
+                  : '0 sats',
+>>>>>>> c0a8f98ad9b7f54b9c9cd38df4817ec0439712ad
               style: c.fonts.headline6!.copyWith(
                 color: Colors.white,
               ),

@@ -5,7 +5,7 @@ import 'package:sats/model/result.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 
-class ClipBoardd implements IClipBoard {
+class ClipBoard implements IClipBoard {
   @override
   Future<R<bool>> copyToClipBoard(String text) async {
     try {

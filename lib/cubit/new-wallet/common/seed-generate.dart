@@ -51,81 +51,75 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   final ChainSelectCubit _blockchainCubit;
   final Logger _logger;
 
+  static const accountZero = '0';
+  static const segwitNativePurpose = '84';
+  static const incorerctWordError = 'Incorrect Word Selected.';
+  static const unableToDeriveError =
+      'Unable to derive child keys from this seed.';
+  static const emptyString = '';
+
   void passPhrasedChanged(String text) =>
       emit(state.copyWith(passPhrase: text));
-
-  void confirmPassphrase() {
-    if (state.passPhrase.length > 8 || state.passPhrase.contains(' ')) {
-      emit(state.copyWith(errPassphrase: 'Invalid Passphrase'));
-      return;
-    }
-
-    generateSeed();
-
-    emit(
-      state.copyWith(
-        currentStep: SeedGenerateSteps.generate,
-        errPassphrase: '',
-      ),
-    );
-  }
 
   void seedLengthChanged(String len) =>
       emit(state.copyWith(seedLength: int.parse(len)));
 
   void generateSeed() async {
-    try {
-      emit(
-        state.copyWith(
-          generatingSeed: true,
-          seedError: '',
-        ),
-      );
-
-      final neu = _bitcoin.generateMaster(
-        length: state.seedLength.toString(),
-        passphrase: state.passPhrase,
-        network: _blockchainCubit.state.blockchain.name,
-      );
-
+    emit(
+      state.copyWith(
+        generatingSeed: true,
+        seedError: emptyString,
+        currentStep: SeedGenerateSteps.generate,
+        errPassphrase: emptyString,
+      ),
+    );
+    final root = _bitcoin.generateMaster(
+      length: state.seedLength.toString(),
+      passphrase: state.passPhrase,
+      network: _blockchainCubit.state.blockchain.name,
+    );
+    if (root.hasError) {
+      final smError = SMError.fromJson(root.error!);
       emit(
         state.copyWith(
           generatingSeed: false,
+          seedError: smError.message,
           currentStep: SeedGenerateSteps.generate,
-          seed: neu.neuList,
-          masterXpriv: neu.xprv,
-          fingerPrint: neu.fingerprint,
         ),
       );
-    } catch (e, s) {
-      _logger.logException(e, 'SeedGenerateWalletCubit._generateSeed', s);
-
-      emit(
-        state.copyWith(
-          generatingSeed: false,
-          seedError: 'Error Occured.',
-        ),
-      );
-      _logger.logException(e, 'SeedGenerateWalletCubit._generateSeed', s);
+      return;
     }
+    emit(
+      state.copyWith(
+        generatingSeed: false,
+        currentStep: SeedGenerateSteps.generate,
+        seed: root.result!.neuList,
+        masterXpriv: root.result!.xprv,
+        fingerPrint: root.result!.fingerprint,
+      ),
+    );
+    return;
   }
 
   void startQuiz() {
-    emit(
-      state.copyWith(
-        currentStep: SeedGenerateSteps.quiz,
-        quizSeedCompleted: 0,
-      ),
-    );
-
-    _updateQuiz();
+    if (state.seed!.isNotEmpty) {
+      emit(
+        state.copyWith(
+          currentStep: SeedGenerateSteps.quiz,
+          quizSeedCompleted: 0,
+        ),
+      );
+      _updateQuiz();
+    } else {
+      return;
+    }
   }
 
   void _updateQuiz() {
     final List<String> quizList = [...state.seed!];
 
-    String answer = '';
-    while (answer == '') {
+    String answer = emptyString;
+    while (answer == emptyString) {
       final idx = Random().nextInt(quizList.length);
       if (!state.quizSeedCompletedAnswers.contains(quizList[idx]))
         answer = quizList[idx];
@@ -148,17 +142,18 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
 
     emit(
       state.copyWith(
-        quizSeedError: '',
+        quizSeedError: emptyString,
         quizSeedAnswer: answer,
         quizSeedList: answerList,
         quizSeedAnswerIdx: answerIdx + 1,
       ),
     );
+    return;
   }
 
   void seedWordSelected(String text) async {
     if (text != state.quizSeedAnswer) {
-      emit(state.copyWith(quizSeedError: 'Incorrect Word Selected'));
+      emit(state.copyWith(quizSeedError: incorerctWordError));
       await Future.delayed(const Duration(seconds: 1));
       emit(
         state.copyWith(
@@ -167,7 +162,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       );
       return;
     }
-    emit(state.copyWith(quizSeedError: ''));
+    // emit(state.copyWith(quizSeedError: emptyString));
 
     final List<String> completedAnswers =
         state.quizSeedCompletedAnswers.toList();
@@ -189,21 +184,30 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   }
 
   void _quizCompleted() {
-    try {
-      final wallet = _bitcoin.deriveHardened(
-        masterXPriv: state.masterXpriv!,
-        account: '',
-        purpose: '',
-      );
+    final wallet = _bitcoin.deriveHardened(
+      masterXPriv: state.masterXpriv!,
+      account: accountZero,
+      purpose: segwitNativePurpose,
+    );
 
-      emit(state.copyWith(wallet: wallet));
-    } catch (e, s) {
+    if (wallet.hasError) {
+      final smError = SMError.fromJson(wallet.error!);
+      emit(state.copyWith(seedError: unableToDeriveError));
       _logger.logException(
-        e,
-        'SeedGenerateWalletCubit._createNewLocalWallet',
-        s,
+        smError.oneliner,
+        'SeedImportWalletCubit._createNewLocalWallet',
+        emptyString,
       );
-    }
+    } else
+      emit(
+        state.copyWith(
+          wallet: wallet.result,
+          seed: [],
+          passPhrase: '',
+          quizSeedCompletedAnswers: [],
+          quizSeedAnswer: '',
+        ),
+      );
   }
 
   void clear() => emit(const SeedGenerateState());

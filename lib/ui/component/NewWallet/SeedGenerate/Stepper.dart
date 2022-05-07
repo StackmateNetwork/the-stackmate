@@ -10,21 +10,14 @@ class GenerateWalletStepper extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.currentStep != current.currentStep,
       builder: (context, state) {
-        // final stepLabel = state.currentStepLabel();
         final steps = SeedGenerateWalletSteps.values.length;
         final idx = state.currentStep.index;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // const SizedBox(height: 24),
             StepLine(length: steps, idx: idx),
             const SizedBox(height: 24),
-            // Text(
-            //   stepLabel.toUpperCase(),
-            //   style: c.fonts.headline6!.copyWith(color: Colors.white),
-            // ),
-            // const SizedBox(height: 24),
           ],
         );
       },

@@ -10,18 +10,12 @@ class XPubImportStepper extends StatelessWidget {
   Widget build(BuildContext c) {
     return BlocBuilder<XpubImportWalletCubit, XpubImportWalletState>(
       builder: (context, state) {
-        // final stepLabel = state.currentStepLabel();
         final steps = XpubImportWalletStep.values.length;
         final idx = state.currentStep.index;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Text(
-            //   stepLabel,
-            //   style: c.fonts.headline6!.copyWith(color: Colors.white),
-            // ),
-            // const SizedBox(height: 24),
             StepLine(length: steps, idx: idx),
             const SizedBox(height: 24),
           ],

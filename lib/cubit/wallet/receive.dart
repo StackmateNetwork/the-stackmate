@@ -1,3 +1,4 @@
+import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,26 +50,31 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   final IStorage _storage;
   final IStackMateCore _core;
 
+  static const emailShareSubject = 'Bitcoin Address';
+
   void _init() {
     getAddress();
   }
 
   void getAddress() async {
     try {
-      // await Future.delayed(const Duration(milliseconds: 500));
+      emit(
+        state.copyWith(
+          loadingAddress: true,
+          errLoadingAddress: '',
+        ),
+      );
       final wallet = _walletCubit.state.selectedWallet!;
-      _vibrate.vibe();
-
-      // await Future.delayed(const Duration(seconds: 1));
-
-      // final w = _walletCubit.state.selectedWallet!.descriptor.split('#')[0];
       final nextIndex = wallet.lastAddressIndex! + 1;
-
       final latestAddress = _core.getAddress(
         descriptor: wallet.descriptor,
         index: nextIndex.toString(),
       );
+      if (latestAddress.hasError) {
+        throw SMError.fromJson(latestAddress.error!);
+      }
 
+      _vibrate.vibe();
       // _logger.logAPI(
       //   'get address',
       //   'desc: $w\nnetwork: ' +
@@ -77,25 +83,28 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       //   000,
       // );
 
-      // Update wallet state here
       emit(
         state.copyWith(
-          loadingAddress: false,
-          address: latestAddress,
+          loadingAddress: true,
+          address: latestAddress.result!,
         ),
       );
 
       final updated = wallet.copyWith(
         lastAddressIndex: nextIndex,
       );
+      _walletCubit.walletSelected(updated);
 
       await _storage.saveItemAt<Wallet>(
         StoreKeys.Wallet.name,
         updated.id!,
         updated,
       );
-
-      _walletCubit.walletSelected(updated);
+      emit(
+        state.copyWith(
+          loadingAddress: false,
+        ),
+      );
       return;
     } catch (e, s) {
       emit(
@@ -120,8 +129,8 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   void shareAddress() {
     try {
       final address = state.address!;
-      final text = 'This is my bitcoin address:\n$address';
-      _share.share(text: text, subjectForEmail: 'Bitcoin Address');
+      final text = address;
+      _share.share(text: text, subjectForEmail: emailShareSubject);
     } catch (e, s) {
       _logger.logException(e, 'WalletCubit.shareAddress', s);
     }
@@ -134,5 +143,8 @@ String getAdrr(dynamic msg) {
     descriptor: data['descriptor']!,
     index: data['index']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }

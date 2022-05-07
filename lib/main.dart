@@ -15,7 +15,6 @@ import 'package:sats/ui/screen/Logs.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
 import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
-import 'package:sats/ui/screen/Qr.dart';
 import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
@@ -28,7 +27,6 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   // Bloc.observer = SimpleBlocObserver();
-
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
@@ -73,7 +71,6 @@ class Stackmate extends StatelessWidget {
     routes: [
       GoRoute(path: '/', builder: (_, __) => const HomeScreen()),
       //
-      GoRoute(path: '/qr', builder: (_, __) => const QRScreen()),
       GoRoute(path: '/calc', builder: (_, __) => const CalculatorScreen()),
       GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
       GoRoute(path: '/network', builder: (_, __) => Container()),

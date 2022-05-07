@@ -18,14 +18,12 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
   ChainSelectCubit(
     this._storage,
     this._logger,
-  ) : super(const BlockchainState()) {
-    _init();
-  }
+  ) : super(const BlockchainState());
 
   final IStorage _storage;
   final Logger _logger;
 
-  void _init() async {
+  void init() async {
     final blockchain =
         _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name);
     if (blockchain.hasError) {

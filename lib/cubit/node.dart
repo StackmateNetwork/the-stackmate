@@ -6,39 +6,42 @@ import 'package:sats/pkg/storage.dart';
 
 part 'node.freezed.dart';
 
+const blockstreamNodeAddress = 'ssl://electrum.blockstream.info';
+const blockstreamTestnetPort = '60002';
+
 @freezed
 class NodeAddressState with _$NodeAddressState {
   const factory NodeAddressState({
-    @Default('ssl://electrum.blockstream.info') String address,
-    @Default('60002') String port,
+    @Default(blockstreamNodeAddress) String address,
+    @Default(blockstreamTestnetPort) String port,
     @Default('') String errNodeState,
     @Default(false) bool isEditing,
   }) = _NodeAddressState;
   const NodeAddressState._();
 
-  String getAddress() => address == '' ? 'default' : 'ssl://$address:$port';
+  String getAddress() =>
+      address == (blockstreamNodeAddress) ? 'default' : '$address:$port';
 
-  String mainString() =>
-      address == '' ? 'ELECTRUM (Default)' : '$address:$port (Custom)';
+  String mainString() => address == (blockstreamNodeAddress)
+      ? 'BLOCKSTREAM (default)'
+      : '$address:$port';
 }
 
 class NodeAddressCubit extends Cubit<NodeAddressState> {
   NodeAddressCubit(
     this._storage,
-  ) : super(const NodeAddressState()) {
-    init();
-  }
+  ) : super(const NodeAddressState());
 
   final IStorage _storage;
 
-  Future init() async {
+  void init() async {
     final node = _storage.getFirstItem<Node>(StoreKeys.Node.name);
     if (node.hasError) {
       if (node.error! == 'empty')
         emit(
           state.copyWith(
-            address: 'electrum.blockstream.info',
-            port: '60002',
+            address: blockstreamNodeAddress,
+            port: blockstreamTestnetPort,
           ),
         );
       else
@@ -53,7 +56,6 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
   }
 
   void toggleIsEditting() async {
-    await init();
     emit(state.copyWith(isEditing: !state.isEditing));
   }
 
@@ -82,8 +84,7 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
       emit(state.copyWith(errNodeState: saved.error.toString()));
       return;
     }
-
-    await Future.delayed(const Duration(milliseconds: 200));
     toggleIsEditting();
+    await Future.delayed(const Duration(milliseconds: 200));
   }
 }

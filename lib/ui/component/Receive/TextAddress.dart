@@ -15,11 +15,12 @@ class TextAddress extends StatelessWidget {
       // crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          width: c.width / 3,
+          width: c.width / 2,
           child: Text(
             address,
             style: c.fonts.caption!.copyWith(
-              color: c.colours.onBackground,
+              color: Colors.white,
+              fontSize: 18,
             ),
           ),
         ),
@@ -28,7 +29,13 @@ class TextAddress extends StatelessWidget {
             c.read<ReceiveCubit>().copyAddress();
             //.copyAddress(address);
           },
-          child: const Text('COPY'),
+          child: Text(
+            'COPY',
+            style: c.fonts.caption!.copyWith(
+              color: Colors.blue,
+              fontSize: 18,
+            ),
+          ),
         ),
         const SizedBox(height: 48),
         SizedBox(

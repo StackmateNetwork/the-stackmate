@@ -22,6 +22,7 @@ class _Receive extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final state = c.select((ReceiveCubit h) => h.state);
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -30,7 +31,7 @@ class _Receive extends StatelessWidget {
             children: [
               const Loader(),
               Header(
-                cornerTitle: 'STACKMATE',
+                cornerTitle: '',
                 children: [
                   const SizedBox(height: 8),
                   const Back(),

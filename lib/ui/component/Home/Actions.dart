@@ -12,9 +12,9 @@ class HomeActions extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              context.push('/qr');
+              context.push('/');
             },
-            icon: Icon(Icons.qr_code, size: 32, color: context.colours.primary),
+            icon: Icon(Icons.home, size: 32, color: context.colours.primary),
           ),
           IconButton(
             onPressed: () {

@@ -2,8 +2,10 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -48,7 +50,8 @@ class _WalletSend extends StatelessWidget {
                     Navigator.pop(context);
                   }
                 },
-                listenWhen: (p, c) => p.zeroBalanceAmt().not(c.zeroBalanceAmt()),
+                listenWhen: (p, c) =>
+                    p.zeroBalanceAmt().not(c.zeroBalanceAmt()),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -61,17 +64,18 @@ class _WalletSend extends StatelessWidget {
                         children: [
                           Back(
                             onPressed: () {
-                              if (step == SendSteps.address || step == SendSteps.sent) {
+                              if (step == SendSteps.address ||
+                                  step == SendSteps.sent) {
                                 Navigator.pop(context);
                                 return;
                               }
 
-                              // if (step != SendSteps.fees) {
-                              context.read<SendCubit>().backClicked();
-                              // return;
-                              // }
-                              // if (confirmedStep)
-                              //   context.read<HistoryCubit>().getHistory();
+                              if (step != SendSteps.fees) {
+                                context.read<SendCubit>().backClicked();
+                                return;
+                              }
+                              if (step == SendSteps.confirm)
+                                context.read<InfoCubit>().getHistory();
                             },
                           ),
                           LogButton(
@@ -103,16 +107,6 @@ class _WalletSend extends StatelessWidget {
                         child: WalletDetails(),
                       ),
                       const SizedBox(height: 80),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 16),
-                      //   child: Text(
-                      //     'Amount'.toUpperCase(),
-                      //     style: context.fonts.overline!.copyWith(
-                      //       color: context.colours.onBackground,
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 16),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: AmountRow(),
@@ -172,17 +166,18 @@ class WalletSendScreen extends StatelessWidget {
     final logger = context.select((Logger c) => c);
     final wallets = context.select((WalletsCubit c) => c);
     final nodeAddress = context.select((NodeAddressCubit c) => c);
+    final fees = context.select((FeesCubit c) => c);
 
     final s = SendCubit(
-      fromQr,
-      wallets,
-      networkSelect,
-      logger,
-      locator<IClipBoard>(),
-      locator<IShare>(),
-      nodeAddress,
-      locator<IStackMateCore>(),
-    );
+        fromQr,
+        wallets,
+        networkSelect,
+        logger,
+        locator<IClipBoard>(),
+        locator<IShare>(),
+        nodeAddress,
+        locator<IStackMateCore>(),
+        fees);
 
     return BlocProvider.value(
       value: s,

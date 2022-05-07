@@ -7,13 +7,14 @@ class Accounts extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final wallets = c.select((WalletsCubit w) => w.state.wallets);
+
     if (wallets.isEmpty)
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 66),
+          const SizedBox(height: 15),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: Text(
               'No\nwallets\nadded',
               style: c.fonts.caption!.copyWith(
@@ -23,20 +24,21 @@ class Accounts extends StatelessWidget {
           ),
         ],
       );
-    return Container(
-      width: c.width,
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(width: 16),
-            for (var w in wallets) WalletCard(wallet: w),
-            const SizedBox(width: 16),
-          ],
+    else
+      return Container(
+        width: c.width,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              for (var w in wallets) WalletCard(wallet: w),
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
-      ),
-    );
+      );
   }
 }

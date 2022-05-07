@@ -12,8 +12,6 @@ Response parseResponse(Response res) {
       jsonEncode(res.data),
       res.statusCode!,
     );
-
-    // if (res.statusCode == 401) userCubit.logOut();
   } catch (e, s) {
     locator<Logger>().logException(e, 'api.logresponse', s);
   }
@@ -26,7 +24,6 @@ const timeOut = Duration(seconds: 5);
 void checkAPIStatus(Response response) {
   final statusCode = response.statusCode;
   if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
-    // locator<UserCubit>().logOut();
     throw 'Unauthorised';
   }
   if (statusCode == 500) throw 'Error Occured. Try Again';

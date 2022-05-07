@@ -25,7 +25,7 @@
         "integration_test": true,
         ".gitlab-ci.yml": true,
         //
-        "**/assets": true,
+        "**/assets": false,
         //
         //
         "**/**.g.dart": true,

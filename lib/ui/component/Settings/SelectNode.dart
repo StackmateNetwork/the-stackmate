@@ -41,12 +41,15 @@ class SelectNode extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  'All communication will be sent via selected node\n\nCurrent node:   ' +
-                      nodeString,
-                  maxLines: 3,
-                  style: c.fonts.caption!.copyWith(
-                    color: c.colours.onSurface.withOpacity(0.7),
+                Expanded(
+                  child: Text(
+                    'Wallet public will sync via selected node\n\nCurrent node:   ' +
+                        nodeString,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: c.fonts.caption!.copyWith(
+                      color: c.colours.onSurface.withOpacity(0.7),
+                    ),
                   ),
                 ),
               ],

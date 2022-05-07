@@ -85,7 +85,6 @@ class _SeedGenerateState extends State<_SeedGenerate> {
                       child: GenerateWalletStepper(),
                     ),
                     FadeInLeft(
-                      // key: Key(state.currentStepLabel()),
                       child: Container(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 16,

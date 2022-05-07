@@ -25,7 +25,6 @@ class CalculatorState with _$CalculatorState {
 
 class CalculatorCubit extends Cubit<CalculatorState> {
   CalculatorCubit(
-    // this._storage,
     this._logger,
     this._vibrate,
     this._ratesAPI,
@@ -33,7 +32,6 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     getRates();
   }
 
-  // final IStorage _storage;
   final Logger _logger;
   final IVibrate _vibrate;
   final IRatesAPI _ratesAPI;
@@ -90,7 +88,6 @@ class CalculatorCubit extends Cubit<CalculatorState> {
           loadingRates: false,
         ),
       );
-      // await Future.delayed(const Duration(milliseconds: 1000));
       calcKeyPressed('1');
     } catch (e, s) {
       _logger.logException(e, 'CalculatorBloc._mapGetRates', s);
@@ -196,11 +193,13 @@ class CalculatorCubit extends Cubit<CalculatorState> {
             final newExp = str + (key == 'x' ? '*' : key);
             emit(
               state.copyWith(
-                satsAmt: state.btcSelected ? newExp : Validation.addCommas(newExp),
+                satsAmt:
+                    state.btcSelected ? newExp : Validation.addCommas(newExp),
               ),
             );
           } else {
-            if ('.'.allMatches(state.currencyAmt).length == 1 && key == '.') return;
+            if ('.'.allMatches(state.currencyAmt).length == 1 && key == '.')
+              return;
             str = _isZero(state.currencyAmt) ? '' : state.currencyAmt;
             final newExp = str + (key == 'x' ? '*' : key);
             emit(state.copyWith(currencyAmt: Validation.addCommas(newExp)));
@@ -220,7 +219,8 @@ class CalculatorCubit extends Cubit<CalculatorState> {
           if (calc.startsWith('.')) calc = '0' + calc;
           for (var i = 0; i < calc.length; i++)
             if (calc[i] == '.' && !Validation.isNumeric(calc[i - 1]))
-              calc = calc.substring(0, i) + '0' + calc.substring(i, calc.length);
+              calc =
+                  calc.substring(0, i) + '0' + calc.substring(i, calc.length);
 
           calc = parser.parse(calc).value.toString();
 
@@ -270,7 +270,8 @@ class CalculatorCubit extends Cubit<CalculatorState> {
         amt = double.parse(Validation.removeCommas(calc));
         // else
         // amt = 0;
-        final finalVal = (state.btcSelected ? amt : amt / 100000000) * state.selectedRate!.rate;
+        final finalVal = (state.btcSelected ? amt : amt / 100000000) *
+            state.selectedRate!.rate;
         emit(
           state.copyWith(
             currencyAmt: Validation.addCommas(
@@ -329,6 +330,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
 ExpressionBuilder _expBuilder() {
   final builder = ExpressionBuilder();
+  // ignore: avoid_single_cascade_in_expression_statements
   builder.group()
     ..primitive(
       digit()
@@ -338,22 +340,6 @@ ExpressionBuilder _expBuilder() {
           .trim()
           .map((a) => num.tryParse(a)),
     );
-  // ..wrapper(
-  //   char('(').trim(),
-  //   char(')').trim(),
-  //   (String l, num a, String r) => a,
-  // );
-
-  // builder.group().prefix(char('-').trim(), (String op, num a) => -a);
-
-  // builder.group().right(char('^').trim(), (num a, String op, num b) => math.pow(a, b));
-
-  // builder.group()
-  //   ..left(char('*').trim(), (num a, String op, num b) => a * b)
-  //   ..left(char('/').trim(), (num a, String op, num b) => a / b);
-  // builder.group()
-  //   ..left(char('+').trim(), (num a, String op, num b) => a + b)
-  //   ..left(char('-').trim(), (num a, String op, num b) => a - b);
 
   return builder;
 }

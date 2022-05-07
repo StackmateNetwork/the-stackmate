@@ -87,7 +87,6 @@ class FFFI {
       descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
     ).toDartString();
-    if (resp.startsWith('Error')) throw resp;
     return resp;
   }
 
@@ -100,10 +99,8 @@ class FFFI {
       descriptor.toNativeUtf8(),
       index.toNativeUtf8(),
     ).toDartString();
-    if (resp.startsWith('Error')) throw resp;
-    final obj = jsonDecode(resp);
 
-    return obj['address'] as String;
+    return resp;
   }
 
   String buildTransaction({
@@ -123,7 +120,6 @@ class FFFI {
       policyPath.toNativeUtf8(),
       sweep.toNativeUtf8(),
     ).toDartString();
-    if (resp.startsWith('Error')) throw resp;
     return resp;
   }
 
@@ -136,7 +132,6 @@ class FFFI {
       network.toNativeUtf8(),
       psbt.toNativeUtf8(),
     ).toDartString();
-    if (resp.startsWith('Error')) throw resp;
     return resp;
   }
 
@@ -149,7 +144,6 @@ class FFFI {
       descriptor.toNativeUtf8(),
       unsignedPSBT.toNativeUtf8(),
     ).toDartString();
-    if (resp.startsWith('Error')) throw resp;
     return resp;
   }
 
@@ -166,7 +160,6 @@ class FFFI {
       nodeAddress.toNativeUtf8(),
       signedPSBT.toNativeUtf8(),
     ).toDartString();
-    if (resp.startsWith('Error')) throw resp;
     return resp;
   }
 
