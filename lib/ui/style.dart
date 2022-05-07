@@ -60,15 +60,6 @@ ThemeData derivedTheme(ThemeData theme) {
   );
 }
 
-// BoxLooseDecoration pinInputDecoration = BoxLooseDecoration(
-//   obscureStyle: ObscureStyle(obscureText: '*', isTextObscure: true),
-//   bgColorBuilder:
-//       PinListenColorBuilder(Colors.pink, Colors.purple), //_white, _white),
-//   strokeColorBuilder:
-//       PinListenColorBuilder(_secondary.withAlpha(0), _textfieldBorder),
-//   radius: Radius.circular(2),
-// );
-
 Widget buttonToLoaderTransition({
   required Widget child,
   required Animation<double> animation,

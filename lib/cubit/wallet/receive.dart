@@ -58,6 +58,12 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
   void getAddress() async {
     try {
+      emit(
+        state.copyWith(
+          loadingAddress: true,
+          errLoadingAddress: '',
+        ),
+      );
       final wallet = _walletCubit.state.selectedWallet!;
       final nextIndex = wallet.lastAddressIndex! + 1;
       final latestAddress = _core.getAddress(
@@ -79,7 +85,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
       emit(
         state.copyWith(
-          loadingAddress: false,
+          loadingAddress: true,
           address: latestAddress.result!,
         ),
       );
@@ -87,12 +93,18 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       final updated = wallet.copyWith(
         lastAddressIndex: nextIndex,
       );
+      _walletCubit.walletSelected(updated);
+
       await _storage.saveItemAt<Wallet>(
         StoreKeys.Wallet.name,
         updated.id!,
         updated,
       );
-      _walletCubit.walletSelected(updated);
+      emit(
+        state.copyWith(
+          loadingAddress: false,
+        ),
+      );
       return;
     } catch (e, s) {
       emit(

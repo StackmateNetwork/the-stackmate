@@ -22,6 +22,7 @@ class _Receive extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final state = c.select((ReceiveCubit h) => h.state);
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

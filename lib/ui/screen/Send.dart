@@ -5,6 +5,7 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -69,12 +70,12 @@ class _WalletSend extends StatelessWidget {
                                 return;
                               }
 
-                              // if (step != SendSteps.fees) {
-                              context.read<SendCubit>().backClicked();
-                              // return;
-                              // }
-                              // if (confirmedStep)
-                              //   context.read<HistoryCubit>().getHistory();
+                              if (step != SendSteps.fees) {
+                                context.read<SendCubit>().backClicked();
+                                return;
+                              }
+                              if (step == SendSteps.confirm)
+                                context.read<InfoCubit>().getHistory();
                             },
                           ),
                           LogButton(
@@ -106,16 +107,6 @@ class _WalletSend extends StatelessWidget {
                         child: WalletDetails(),
                       ),
                       const SizedBox(height: 80),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 16),
-                      //   child: Text(
-                      //     'Amount'.toUpperCase(),
-                      //     style: context.fonts.overline!.copyWith(
-                      //       color: context.colours.onBackground,
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 16),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: AmountRow(),

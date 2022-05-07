@@ -43,7 +43,6 @@ class _Calc extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Rates(),
             ),
-            // const SizedBox(height: 40),
             const Spacer(flex: 4),
             if (!loading)
               FadeInUp(

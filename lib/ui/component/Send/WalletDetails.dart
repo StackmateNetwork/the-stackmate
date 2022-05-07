@@ -10,20 +10,10 @@ class WalletDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final walletName = context.select(
-    //   (WalletsCubit wc) => wc.state.selectedWallet!.label,
-    // );
     final balance = context.select((SendCubit sc) => sc.state.balance);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Text(
-        //   walletName,
-        //   style: context.fonts.headline5!.copyWith(
-        //     color: context.colours.onBackground,
-        //   ),
-        // ),
-        // const SizedBox(height: 40),
         if (balance != null) ...[
           Text(
             'Balance'.toUpperCase(),
@@ -32,7 +22,9 @@ class WalletDetails extends StatelessWidget {
             ),
           ),
           Text(
-            NumberFormat.decimalPattern().format(double.parse(balance.toString()))  + ' sats',
+            NumberFormat.decimalPattern()
+                    .format(double.parse(balance.toString())) +
+                ' sats',
             style: context.fonts.headline6!.copyWith(
               color: context.colours.onBackground,
             ),

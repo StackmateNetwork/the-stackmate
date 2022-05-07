@@ -142,10 +142,6 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       if (descriptor.hasError) {
         throw SMError.fromJson(descriptor.error!);
       }
-
-      // final len = _storage.getAll<Wallet>(StoreKeys.Wallet.name).length;
-
-      // public descriptor
       // check balance and see if last address index needs update
       var newWallet = Wallet(
         label: state.label,
@@ -174,8 +170,6 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         id,
         newWallet,
       );
-
-      // _storage.saveItem(StoreKeys.Wallet.name, newWallet);
 
       _wallets.refresh();
 

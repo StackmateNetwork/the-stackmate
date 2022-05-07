@@ -49,7 +49,6 @@ class FeesCubit extends Cubit<FeesState> {
       final fees = _storage.getFirstItem<Fees>(StoreKeys.Fees.name);
       if (fees.hasError) {
         if (fees.error! == 'empty') {
-          // make network call
           final defaultFees = Fees(
               timestamp: timestamp, slow: 0.000, medium: 0.000, fast: 0.000);
           emit(

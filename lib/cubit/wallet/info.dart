@@ -61,10 +61,8 @@ class InfoCubit extends Cubit<InfoState> {
   }
 
   final WalletsCubit _walletsCubit;
-  // final IBitcoin _bitcoin;
   final IStorage _storage;
   final Logger _logger;
-  // final BlockchainCubit _blockchain;
   final IShare _share;
   final ILauncher _launcher;
   final IVibrate _vibrate;
@@ -77,8 +75,6 @@ class InfoCubit extends Cubit<InfoState> {
   static const walletHasFunds = 'Wallet has funds';
 
   void _init() async {
-    // await Future.delayed(const Duration(millis .econds: 1000));
-
     getHistory();
   }
 
@@ -106,7 +102,6 @@ class InfoCubit extends Cubit<InfoState> {
       final transactions = await compute(computeHistory, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': node,
-        // 'network': _blockchain.state.blockchain.name,
       });
 
       final int totalIn = transactions.fold(
@@ -170,7 +165,6 @@ class InfoCubit extends Cubit<InfoState> {
 
       text += 'Amount: ' + transaction.amountToBtc() + ' BTC';
       text += '\nTxId: ' + transaction.txid;
-      // text += '\nAddress: ' + transaction.address;
       text += '\nFee: ' + transaction.feesToBtc() + ' BTC';
 
       _share.share(text: text, subjectForEmail: emailShareSubject);
@@ -181,10 +175,7 @@ class InfoCubit extends Cubit<InfoState> {
 
   void deleteClicked() {
     emit(state.copyWith(errDeleting: ''));
-    // if (state.balance == null || state.balance! > 0) {
-    //   emit(state.copyWith(errDeleting: walletHasFunds));
-    //   return;
-    // }
+
     _storage.deleteItemAt<Wallet>(
       StoreKeys.Wallet.name,
       _walletsCubit.state.selectedWallet!.id!,

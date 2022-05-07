@@ -22,7 +22,7 @@ GetIt locator = GetIt.instance;
 void setupDependencies({required bool useDummies}) {
   if (useDummies) {
     locator.registerLazySingleton<IStorage>(() => HiveStore());
-    locator.registerLazySingleton<IClipBoard>(() => ClipBoardd());
+    locator.registerLazySingleton<IClipBoard>(() => ClipBoard());
     locator.registerLazySingleton<IShare>(() => Sharer());
     locator.registerSingleton<ILauncher>(Launcher());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
@@ -31,7 +31,7 @@ void setupDependencies({required bool useDummies}) {
   } else {
     locator.registerLazySingleton<IShare>(() => Sharer());
     locator.registerLazySingleton<ILauncher>(() => Launcher());
-    locator.registerLazySingleton<IClipBoard>(() => ClipBoardd());
+    locator.registerLazySingleton<IClipBoard>(() => ClipBoard());
     locator.registerLazySingleton<IStorage>(() => HiveStore());
     locator.registerLazySingleton<IStackMateCore>(() => BitcoinFFI());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());

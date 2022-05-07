@@ -28,17 +28,7 @@ class TransactionsList extends StatelessWidget {
           ),
           for (var transaction in transactions)
             TransactionItem(transaction: transaction),
-
-          // if (!state.loadingTransactions) ...[
           const SizedBox(height: 24),
-          //   Center(
-          //       child: TextButton(
-          //           onPressed: () {
-          //             c.read<HistoryCubit>().getHistory();
-          //           },
-          //           child: Text('Load More'))),
-          //   SizedBox(height: 24),
-          // ]
         ],
       ),
     );

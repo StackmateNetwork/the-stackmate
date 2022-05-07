@@ -148,13 +148,11 @@ class SeedGenerate extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 16),
-
-          // HeaderTextDark(text: 'Write down your\nseed phrase'.notLocalised()),
           Text(
             'Write down your\nseed phrase'.toUpperCase(),
             style: c.fonts.headline5!.copyWith(
               color: Colors.white,
-              // fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 16),

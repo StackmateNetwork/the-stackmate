@@ -24,10 +24,8 @@ class _Home extends StatelessWidget {
             backgroundColor: c.colours.background,
             flexibleSpace: FlexibleSpaceBar(
               stretchModes: const [
-                // StretchMode.blurBackground,
                 StretchMode.fadeTitle,
               ],
-              // collapseMode: CollapseMode.parallax,
               background: Column(
                 children: [
                   Header(),
@@ -54,8 +52,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final wallets = context.select((WalletsCubit c) => c);
-
     return _Home();
   }
 }

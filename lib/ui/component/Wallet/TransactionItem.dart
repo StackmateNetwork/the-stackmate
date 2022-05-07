@@ -39,7 +39,6 @@ class _TransactionItemState extends State<TransactionItem> {
               color: c.colours.surface,
             ),
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
@@ -101,7 +100,6 @@ class _TransactionItemState extends State<TransactionItem> {
                     ),
                   ),
                 ),
-                //SizedBox(height: 16),
                 if (_isExpanded) ...[
                   if (widget.transaction.timeStr() != '') ...[
                     const SizedBox(height: 16),
@@ -123,15 +121,6 @@ class _TransactionItemState extends State<TransactionItem> {
                   Row(
                     children: [
                       const Spacer(),
-                      // Expanded(
-                      //     child: Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.stretch,
-                      //         children: const [
-                      //       // Text('ADDRESS'.notLocalised(),
-                      //       //     style: c.fonts.overline),
-                      //       // Text(widget.transaction.txid,
-                      //       //     style: c.fonts.caption)
-                      //     ])),
                       SizedBox(
                         width: c.width / 4,
                         child: TextButton(

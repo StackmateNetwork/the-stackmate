@@ -27,7 +27,6 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   // Bloc.observer = SimpleBlocObserver();
-
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };

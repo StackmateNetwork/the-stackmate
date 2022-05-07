@@ -1,12 +1,11 @@
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // ignore_for_file: constant_identifier_names
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/fees.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/model/result.dart';
-import 'package:sats/model/fees.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -118,10 +117,6 @@ class HiveStore implements IStorage {
       locator<Logger>().logException(e, '', s);
       return R(error: e.toString());
     }
-    // Hive.box<String>(key).add(value);
-
-    // var _box = await Hive.openBox(_store);
-    // await _box.put(key, value);
   }
 
   @override
@@ -136,33 +131,13 @@ class HiveStore implements IStorage {
       locator<Logger>().logException(e, '', s);
       return R(error: e.toString());
     }
-    // var _box = await Hive.openBox<String>(_store);
-    // var result = _box.get(key);
-    // try {
-    //   final obj = Hive.box<String>(key).getAt(0);
-    //   if (obj == null) return R(error: 'empty');
-    //   return obj;
-    // } catch (e) {
-    //   return R(error: 'empty');
-    // }
-    // if ((key == StoreKeys.token.name || key == StoreKeys.phone.name) &&
-    //     (result == null || result == '')) {
-    //   throw 'No key';
-    // }
-
-    // if (result == null) throw 'no key';
-
-    // return result;
   }
 
   @override
   Future<R<bool>> deleteOne(String key) async {
     try {
       _box.delete(key);
-      // final b = Hive.box<String>(key);
-      // b.deleteAt(0); //.delete(key);
-      // var _box = await Hive.openBox(_store);
-      // await _box.delete(key);
+
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -174,7 +149,6 @@ class HiveStore implements IStorage {
   R<T> getFirstItem<T>(String cls) {
     try {
       final bx = Hive.box<T>(cls);
-      // if (bx.isEmpty) return R(error: 'empty');
       final len = bx.length;
       if (len == 0) throw 'empty';
       final obj = bx.getAt(0);

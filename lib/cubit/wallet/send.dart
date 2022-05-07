@@ -116,12 +116,6 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void getBalance() async {
-    // emit(
-    //   state.copyWith(
-    //     loadingStart: true,
-    //   ),
-    // );
-
     try {
       emit(
         state.copyWith(
@@ -525,11 +519,6 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
   if (resp.hasError) {
     throw SMError.fromJson(resp.error!);
   }
-  // final json = jsonDecode(resp.result!)['outputs'];
-
-  // final List<DecodedTxOutput> decoded = [];
-  // for (final out in json)
-  //   decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
 
   return resp.result!;
 }

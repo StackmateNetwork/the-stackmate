@@ -57,7 +57,6 @@ class _Wallet extends StatelessWidget {
                     const WalletLoader(),
                     const SizedBox(height: 16),
                     Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         const SizedBox(width: 8),
                         Back(
@@ -70,7 +69,6 @@ class _Wallet extends StatelessWidget {
                         const SizedBox(width: 8),
                       ],
                     ),
-                    // const SizedBox(height: 40),
                     Row(
                       children: [
                         Expanded(
@@ -88,13 +86,11 @@ class _Wallet extends StatelessWidget {
                             padding: const EdgeInsets.only(right: 8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
-                              // mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Opacity(
                                   opacity: 0.4,
                                   child: IconButton(
                                     iconSize: 28,
-                                    // alignment: Alignment.centerRight,
                                     color: c.colours.error,
                                     onPressed: () {
                                       _deleteWalletClicked(c, zeroBal, wallet);
@@ -103,9 +99,7 @@ class _Wallet extends StatelessWidget {
                                         const Icon(Icons.delete_sweep_outlined),
                                   ),
                                 ),
-                                // const SizedBox(height: 24),
                                 IconButton(
-                                  // alignment: Alignment.centerRight,
                                   color: c.colours.primary,
                                   onPressed: () {
                                     c.read<InfoCubit>().toggleShowInfo();
@@ -118,7 +112,6 @@ class _Wallet extends StatelessWidget {
                                       ? 0.4
                                       : 1,
                                   child: IconButton(
-                                    // alignment: Alignment.centerRight,
                                     color: c.colours.primary,
                                     onPressed: () {
                                       if (!zeroBal && wallet.isNotWatchOnly())
@@ -130,7 +123,6 @@ class _Wallet extends StatelessWidget {
                                   ),
                                 ),
                                 IconButton(
-                                  // alignment: Alignment.centerRight,
                                   color: c.colours.primary,
                                   onPressed: () {
                                     c.push('/receive');
@@ -147,11 +139,7 @@ class _Wallet extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 40),
-                    if (!showInfo)
-                      // const SizedBox(height: 48),
-                      TransactionsList()
-                    else
-                      const WalletInfo()
+                    if (!showInfo) TransactionsList() else const WalletInfo()
                   ],
                 ),
               ),
@@ -170,8 +158,6 @@ class _Wallet extends StatelessWidget {
     if (!zeroBalance && wallet.isNotWatchOnly()) {
       await showCupertinoModalPopup<bool>(
         context: c,
-        // barrierColor: c.colours.background,
-
         builder: (BuildContext context) => CupertinoActionSheet(
           title: Text(
             'Wallet is not empty'.toUpperCase(),
@@ -199,7 +185,6 @@ class _Wallet extends StatelessWidget {
             Container(
               color: c.colours.background,
               child: CupertinoActionSheetAction(
-                // isDestructiveAction: true,
                 onPressed: () {
                   Navigator.pop(context, true);
                 },
@@ -210,8 +195,6 @@ class _Wallet extends StatelessWidget {
                 ),
               ),
             ),
-
-            // const SizedBox(height: 24),
           ],
         ),
       );
