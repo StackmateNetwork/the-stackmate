@@ -160,7 +160,6 @@ class _TransactionItemState extends State<TransactionItem> {
             color: c.colours.surface,
           ),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
@@ -226,18 +225,6 @@ class _TransactionItemState extends State<TransactionItem> {
               ),
               if (_isExpanded) ...[
                 const SizedBox(height: 16),
-                //if (!widget.transaction.confirmed) ...[
-                // Text('CONFIRMATIONS'.notLocalised(),
-                //     style: c.fonts.overline),
-                // Text(widget.transaction.confirmations.toString(),
-                //     style: c.fonts.caption),
-                //] else ...[
-                //  Text('CONFIRMED'.notLocalised(),
-                //      style: c.fonts.overline),
-                //  Align(
-                //      alignment: Alignment.centerLeft,
-                //      child: Icon(Icons.check_rounded)),
-                //],
                 if (widget.transaction.timeStr() != '') ...[
                   const SizedBox(height: 16),
                   Text(
@@ -254,8 +241,6 @@ class _TransactionItemState extends State<TransactionItem> {
                   ),
                 ],
                 const SizedBox(height: 16),
-                // Text('TO ADDRESS'.notLocalised(), style: c.fonts.overline),
-                // Text(widget.transaction.txid, style: c.fonts.caption),
                 const SizedBox(height: 16),
                 Text(
                   'AMOUNT'.notLocalised(),
@@ -290,19 +275,6 @@ class _TransactionItemState extends State<TransactionItem> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // if (widget.transaction.comment != null)
-                    //   Expanded(
-                    //     child: Column(
-                    //       crossAxisAlignment:
-                    //           CrossAxisAlignment.stretch,
-                    //       children: [
-                    //         Text('COMMENT'.notLocalised(),
-                    //             style: c.fonts.overline),
-                    //         Text(widget.transaction.comment!,
-                    //             style: c.fonts.caption)
-                    //       ],
-                    //     ),
-                    //   ),
                     TextButton(
                       onPressed: () {
                         c

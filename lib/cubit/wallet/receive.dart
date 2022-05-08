@@ -75,13 +75,6 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       }
 
       _vibrate.vibe();
-      // _logger.logAPI(
-      //   'get address',
-      //   'desc: $w\nnetwork: ' +
-      //       _blockchain.state.blockchain.name +
-      //       '\n\nresp:\n$address',
-      //   000,
-      // );
 
       emit(
         state.copyWith(
