@@ -96,6 +96,13 @@ void main() {
     );
     assert(!balance.hasError);
     assert(balance.result! == inferredBalance);
+
+    final utxos = libstackmate.getUtxoSet(
+      descriptor: expPublicDesc,
+      nodeAddress: nodeAddress,
+    );
+
+    assert(!utxos.hasError);
   });
 
   test('Wallet Transaction Flow', () async {

@@ -90,6 +90,18 @@ class FFFI {
     return resp;
   }
 
+  String getUnspent({
+    required String descriptor,
+    required String nodeAddress,
+  }) {
+    final func = binary.lookupFunction<SyncT, SyncT>('list_unspent');
+    final resp = func(
+      descriptor.toNativeUtf8(),
+      nodeAddress.toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
+
   String getAddress({
     required String descriptor,
     required String index,

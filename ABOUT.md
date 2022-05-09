@@ -1,8 +1,14 @@
 # stackmate 
 
-stackmate is a native bitcoin descriptor wallet made by bitcoiners for everyone.
+stackmate is a bitcoin descriptor wallet made by bitcoiners for everyone.
 
-bitcoin wallets are an area of ongoing research and stackmate finds its place in brining simplicity to the wallet interface.
+within open source wallet software research & development, stackmate finds its place through a primary focus on simplicity.. 
+
+simplicity here is for:
+
+- users: through friendly application interface design; users have an intuitive experience with money.
+- developers: through use of simple, tried and tested coding patterns and practices; devs find it easy to understand and 
+contribute to the project.
 
 # features
 
@@ -30,7 +36,7 @@ stackmate supports broadcasting psbt's as a standalone tool (cold card pair).
 
 stackmate requires an electrum backend to interact with the bitcoin network.
 
-stackmate allows users to use their own node and defaults to blockstream.
+stackmate allows users to use their own node or defaults to blockstream.
 
 ## Tor
 
@@ -40,11 +46,17 @@ This is especially important if you are not using your own node..
 
 ## Script Signature Wallets
 
-stackmate supports 3 types of bitcoin scripts:
+stackmate supports the creation and complete management of 3 types of bitcoin scripts:
 
 1. Inheritance: 1/2 w/timelocked
 2. Escrow: 2/3 multisig
 3. Team: n/7 multisig
+
+### Script Recovery 
+
+It is also possible to recover arbitraty scripts, as long as they are in the descriptor format. Additionally, to move funds
+out of such a wallet all the minimum private keys will need to be present - either within the descriptor or imported in
+addition to the descriptor.
 
 ## E2EE Comms
 
@@ -67,12 +79,5 @@ allow parties in a script to easily share wallet data and stay in sync with each
 
 For natively created scripts, all script wallets have their own respective cypherpost group chat.
 
-## Script Recovery
-
-It is also possible to recover arbitraty scripts, as long as they are in the descriptor format. Additionally, to move funds 
-out of such a wallet all the minimum private keys will need to be present - either within the descriptor or imported in 
-addition to the descriptor.
-
-It is possible to manage a script wallet on stackmate WITHOUT cypherpost, and coordinate through other means.
 
 

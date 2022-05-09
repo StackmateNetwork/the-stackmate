@@ -152,6 +152,28 @@ class BitcoinFFI implements IStackMateCore {
   }
 
   @override
+  R<List<UTXO>> getUtxoSet({
+    required String descriptor,
+    required String nodeAddress,
+  }) {
+    final resp = _bitcoin.getUnspent(
+      descriptor: descriptor,
+      nodeAddress: nodeAddress,
+    );
+    if (resp.contains('Error')) {
+      return R(error: resp);
+    }
+    final json = jsonDecode(resp);
+    final List<UTXO> utxos = [];
+    for (final t in json['utxos'] as List) {
+      var utxo = UTXO.fromJson(t as Map<String, dynamic>);
+      utxos.add(utxo);
+    }
+
+    return R(result: utxos);
+  }
+
+  @override
   R<PSBT> buildTransaction({
     required String descriptor,
     required String nodeAddress,
