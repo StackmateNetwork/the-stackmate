@@ -1,13 +1,13 @@
 #!/bin/bash -e
 
-RELEASE=0.8.1
+RELEASE=v0.8.3
 
 rm -rf releases
 mkdir -p releases
 cd releases
 echo "fetching stackmate-core release $RELEASE"
-wget https://github.com/StackmateNetwork/stackmate-core/releases/download/v$RELEASE/$RELEASE.tar 
-tar -xzf $RELEASE.tar 
+wget https://github.com/StackmateNetwork/stackmate-core/releases/download/$RELEASE/$RELEASE.tar 
+tar -xf $RELEASE.tar 
 rm -rf $RELEASE.tar
 cd ..
 

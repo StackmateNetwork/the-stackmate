@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:ffi';
 import 'package:bitcoin/ffi-types.dart';
 import 'package:ffi/ffi.dart';
