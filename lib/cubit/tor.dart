@@ -15,18 +15,18 @@ class TorState with _$TorState {
 
 class TorCubit extends Cubit<TorState> {
   TorCubit() : super(const TorState());
-  void start() async {
+  Future<void> start() async {
     try {
       final port = await UtopicTorOnionProxy.startTor();
       emit(
-        state.copyWith(port: port!),
+        state.copyWith(port: port!, isRunning: true),
       );
     } on PlatformException catch (e) {
       print('Failed to get port. Message: ${e.message}');
     }
   }
 
-  void checkStatus() async {
+  Future<void> checkStatus() async {
     try {
       final isRunning = await UtopicTorOnionProxy.isTorRunning();
       emit(
@@ -37,7 +37,7 @@ class TorCubit extends Cubit<TorState> {
     }
   }
 
-  void stop() async {
+  Future<void> stop() async {
     try {
       final isStopped = await UtopicTorOnionProxy.stopTor();
       emit(

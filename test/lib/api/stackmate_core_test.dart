@@ -217,5 +217,6 @@ void main() {
     assert(response.hasError);
     structuredError = SMError.fromJson(response.error!);
     print(structuredError.oneliner);
+    return;
   });
 }

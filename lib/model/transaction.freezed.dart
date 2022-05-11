@@ -24,7 +24,7 @@ class _$TransactionTearOff {
   _Transaction call(
       {@HiveField(0) required int timestamp,
       @HiveField(1) required int height,
-      @HiveField(2) required bool verified,
+      @HiveField(2) required int confirmation_time,
       @HiveField(3) required String txid,
       @HiveField(4) required int received,
       @HiveField(5) required int sent,
@@ -32,7 +32,7 @@ class _$TransactionTearOff {
     return _Transaction(
       timestamp: timestamp,
       height: height,
-      verified: verified,
+      confirmation_time: confirmation_time,
       txid: txid,
       received: received,
       sent: sent,
@@ -55,7 +55,7 @@ mixin _$Transaction {
   @HiveField(1)
   int get height => throw _privateConstructorUsedError;
   @HiveField(2)
-  bool get verified => throw _privateConstructorUsedError;
+  int get confirmation_time => throw _privateConstructorUsedError;
   @HiveField(3)
   String get txid => throw _privateConstructorUsedError;
   @HiveField(4)
@@ -79,7 +79,7 @@ abstract class $TransactionCopyWith<$Res> {
   $Res call(
       {@HiveField(0) int timestamp,
       @HiveField(1) int height,
-      @HiveField(2) bool verified,
+      @HiveField(2) int confirmation_time,
       @HiveField(3) String txid,
       @HiveField(4) int received,
       @HiveField(5) int sent,
@@ -98,7 +98,7 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
   $Res call({
     Object? timestamp = freezed,
     Object? height = freezed,
-    Object? verified = freezed,
+    Object? confirmation_time = freezed,
     Object? txid = freezed,
     Object? received = freezed,
     Object? sent = freezed,
@@ -113,10 +113,10 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as int,
-      verified: verified == freezed
-          ? _value.verified
-          : verified // ignore: cast_nullable_to_non_nullable
-              as bool,
+      confirmation_time: confirmation_time == freezed
+          ? _value.confirmation_time
+          : confirmation_time // ignore: cast_nullable_to_non_nullable
+              as int,
       txid: txid == freezed
           ? _value.txid
           : txid // ignore: cast_nullable_to_non_nullable
@@ -147,7 +147,7 @@ abstract class _$TransactionCopyWith<$Res>
   $Res call(
       {@HiveField(0) int timestamp,
       @HiveField(1) int height,
-      @HiveField(2) bool verified,
+      @HiveField(2) int confirmation_time,
       @HiveField(3) String txid,
       @HiveField(4) int received,
       @HiveField(5) int sent,
@@ -168,7 +168,7 @@ class __$TransactionCopyWithImpl<$Res> extends _$TransactionCopyWithImpl<$Res>
   $Res call({
     Object? timestamp = freezed,
     Object? height = freezed,
-    Object? verified = freezed,
+    Object? confirmation_time = freezed,
     Object? txid = freezed,
     Object? received = freezed,
     Object? sent = freezed,
@@ -183,10 +183,10 @@ class __$TransactionCopyWithImpl<$Res> extends _$TransactionCopyWithImpl<$Res>
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as int,
-      verified: verified == freezed
-          ? _value.verified
-          : verified // ignore: cast_nullable_to_non_nullable
-              as bool,
+      confirmation_time: confirmation_time == freezed
+          ? _value.confirmation_time
+          : confirmation_time // ignore: cast_nullable_to_non_nullable
+              as int,
       txid: txid == freezed
           ? _value.txid
           : txid // ignore: cast_nullable_to_non_nullable
@@ -214,7 +214,7 @@ class _$_Transaction extends _Transaction {
   const _$_Transaction(
       {@HiveField(0) required this.timestamp,
       @HiveField(1) required this.height,
-      @HiveField(2) required this.verified,
+      @HiveField(2) required this.confirmation_time,
       @HiveField(3) required this.txid,
       @HiveField(4) required this.received,
       @HiveField(5) required this.sent,
@@ -232,7 +232,7 @@ class _$_Transaction extends _Transaction {
   final int height;
   @override
   @HiveField(2)
-  final bool verified;
+  final int confirmation_time;
   @override
   @HiveField(3)
   final String txid;
@@ -248,7 +248,7 @@ class _$_Transaction extends _Transaction {
 
   @override
   String toString() {
-    return 'Transaction(timestamp: $timestamp, height: $height, verified: $verified, txid: $txid, received: $received, sent: $sent, fee: $fee)';
+    return 'Transaction(timestamp: $timestamp, height: $height, confirmation_time: $confirmation_time, txid: $txid, received: $received, sent: $sent, fee: $fee)';
   }
 
   @override
@@ -260,9 +260,9 @@ class _$_Transaction extends _Transaction {
                     .equals(other.timestamp, timestamp)) &&
             (identical(other.height, height) ||
                 const DeepCollectionEquality().equals(other.height, height)) &&
-            (identical(other.verified, verified) ||
+            (identical(other.confirmation_time, confirmation_time) ||
                 const DeepCollectionEquality()
-                    .equals(other.verified, verified)) &&
+                    .equals(other.confirmation_time, confirmation_time)) &&
             (identical(other.txid, txid) ||
                 const DeepCollectionEquality().equals(other.txid, txid)) &&
             (identical(other.received, received) ||
@@ -279,7 +279,7 @@ class _$_Transaction extends _Transaction {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(timestamp) ^
       const DeepCollectionEquality().hash(height) ^
-      const DeepCollectionEquality().hash(verified) ^
+      const DeepCollectionEquality().hash(confirmation_time) ^
       const DeepCollectionEquality().hash(txid) ^
       const DeepCollectionEquality().hash(received) ^
       const DeepCollectionEquality().hash(sent) ^
@@ -300,7 +300,7 @@ abstract class _Transaction extends Transaction {
   const factory _Transaction(
       {@HiveField(0) required int timestamp,
       @HiveField(1) required int height,
-      @HiveField(2) required bool verified,
+      @HiveField(2) required int confirmation_time,
       @HiveField(3) required String txid,
       @HiveField(4) required int received,
       @HiveField(5) required int sent,
@@ -318,7 +318,7 @@ abstract class _Transaction extends Transaction {
   int get height => throw _privateConstructorUsedError;
   @override
   @HiveField(2)
-  bool get verified => throw _privateConstructorUsedError;
+  int get confirmation_time => throw _privateConstructorUsedError;
   @override
   @HiveField(3)
   String get txid => throw _privateConstructorUsedError;

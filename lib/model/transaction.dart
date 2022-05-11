@@ -10,7 +10,7 @@ class Transaction with _$Transaction {
   const factory Transaction({
     @HiveField(0) required int timestamp,
     @HiveField(1) required int height,
-    @HiveField(2) required bool verified,
+    @HiveField(2) required int confirmation_time,
     @HiveField(3) required String txid,
     @HiveField(4) required int received,
     @HiveField(5) required int sent,
