@@ -24,12 +24,10 @@ class _MockLogApi extends Mock implements ILogAPI {}
 
 class _MockClipboard extends Mock implements IClipBoard {}
 
-class _MockLibStackmate extends Mock implements IStackMateCore {}
-
-class _SeedImportCubit extends Mock implements SeedImportCubit {}
-
 void main() {
   group('SeedImportWalletCubit: Saves a new wallet from seed.', () {
+    const labelChange = 'importLabel';
+
     final IStorage _storage = _MockStorage();
     final IStackMateCore _bitcoin = BitcoinFFI();
     final clipboard = _MockClipboard();
@@ -48,13 +46,10 @@ void main() {
       'tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G',
       'tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41',
     );
-
-    const labelChange = 'importLabel';
     const expPublicDesc =
         'wpkh([8099ce1e/84h/1h/0h]tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41/*)';
     const expPrivateDesc =
         'wpkh([8099ce1e/84h/1h/0h]tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G/*)';
-
     const Wallet testWallet = Wallet(
       label: labelChange,
       descriptor: expPrivateDesc,
@@ -82,7 +77,7 @@ void main() {
     tearDown(() {});
 
     blocTest<SeedImportWalletCubit, SeedImportWalletState>(
-      'Basic Import Flow',
+      'Basic Seed Import Flow',
       build: () {
         return seedImportWalletCubit;
       },
@@ -112,7 +107,7 @@ void main() {
       verify: (cubit) => [],
     );
     blocTest<SeedImportWalletCubit, SeedImportWalletState>(
-      'Close Seed Generate Wallet Cubit',
+      'Close Seed Import Wallet Cubit',
       build: () {
         return seedImportWalletCubit;
       },
@@ -120,7 +115,6 @@ void main() {
         cubit.close();
       },
       expect: () => <SeedImportWalletState>[],
-      verify: (cubit) => [],
     );
   });
 }

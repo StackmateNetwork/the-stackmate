@@ -57,7 +57,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     this._blockchainCubit,
     this._importCubit,
   ) : super(const XpubImportWalletState()) {
-    _importCubit.stream.listen((istate) {
+    _importSub = _importCubit.stream.listen((istate) {
       if (istate.detailsReady) {
         emit(state.copyWith(currentStep: XpubImportWalletStep.label));
       }

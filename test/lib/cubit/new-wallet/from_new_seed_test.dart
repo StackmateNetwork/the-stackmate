@@ -29,6 +29,7 @@ class _MockGenerateCubit extends Mock implements SeedGenerateCubit {}
 
 void main() {
   group('SeedGenerateWalletCubit: Saves a new wallet from seed.', () {
+    const labelChange = 'newLabel';
     final IStorage _storage = _MockStorage();
     final IStackMateCore _bitcoin = BitcoinFFI();
     final clipboard = _MockClipboard();
@@ -40,32 +41,6 @@ void main() {
 
     late SeedGenerateCubit _generateCubit;
     late SeedGenerateWalletCubit seedGenerateWalletCubit;
-
-    DerivedKeys testDerivedAccount = const DerivedKeys(
-      '8099ce1e',
-      'm/84h/1h/0h',
-      'tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G',
-      'tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41',
-    );
-
-    const labelChange = 'newLabel';
-    const expPublicDesc =
-        'wpkh([8099ce1e/84h/1h/0h]tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41/*)';
-    const expPrivateDesc =
-        'wpkh([8099ce1e/84h/1h/0h]tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G/*)';
-
-    const Wallet testWallet = Wallet(
-      label: labelChange,
-      descriptor: expPrivateDesc,
-      policy: 'pk(___primary___)',
-      blockchain: 'testnet',
-      policyElements: [
-        'primary:[8099ce1e/84h/1h/0h]tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41'
-      ],
-      requiredPolicyElements: 1,
-      walletType: 'SIGNER',
-      lastAddressIndex: 0,
-    );
 
     setUp(() async {
       _generateCubit = SeedGenerateCubit(_bitcoin, chainSelectCubit, logger);
