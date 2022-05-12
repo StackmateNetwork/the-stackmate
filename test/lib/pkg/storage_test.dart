@@ -1,25 +1,26 @@
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:sats/cubit/logger.dart';
-import 'package:sats/model/blockchain.dart';
-import 'package:sats/model/fees.dart';
-import 'package:sats/model/node.dart';
-import 'package:sats/model/result.dart';
-import 'package:sats/model/wallet.dart';
-import 'package:sats/pkg/_locator.dart';
-import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/pkg/storage.dart';
+@TestOn('vm')
+
+import 'dart:io';
+
+import 'package:hive/hive.dart';
+import 'package:hive/src/adapters/date_time_adapter.dart';
+import 'package:hive/src/hive_impl.dart';
 import 'package:test/test.dart';
+import 'hive_common.dart';
 
 void main() {
-  group('Hive Tests', () {
-    late IStorage store;
+  Future<HiveImpl> initHive() async {
+    var tempDir = await getTempDir();
+    var hive = HiveImpl();
+    hive.init(tempDir.path);
+    return hive;
+  }
 
-    setUp(() async {
-      // await initializeHive();
-      // store = HiveStore();
-    });
-    tearDown(() {});
-
-    test('Test hive basic CRUD ops', () async {});
+  test('returns false if no box was created', () async {
+    var hive = await initHive();
+    var box = await hive.openBox('testBox');
+    await box.put('key', 'value');
+    expect(box.get('key'), 'value');
+    await hive.close();
   });
 }
