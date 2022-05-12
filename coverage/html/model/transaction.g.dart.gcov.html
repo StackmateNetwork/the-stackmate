@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-05-08 07:36:32</td>
+            <td class="headerValue">2022-05-12 02:39:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -81,7 +81,7 @@
 <a name="19"><span class="lineNum">      19 </span><span class="lineNoCov">          0 :     return _$_Transaction(</span></a>
 <a name="20"><span class="lineNum">      20 </span><span class="lineNoCov">          0 :       timestamp: fields[0] as int,</span></a>
 <a name="21"><span class="lineNum">      21 </span><span class="lineNoCov">          0 :       height: fields[1] as int,</span></a>
-<a name="22"><span class="lineNum">      22 </span><span class="lineNoCov">          0 :       verified: fields[2] as bool,</span></a>
+<a name="22"><span class="lineNum">      22 </span><span class="lineNoCov">          0 :       confirmation_time: fields[2] as int,</span></a>
 <a name="23"><span class="lineNum">      23 </span><span class="lineNoCov">          0 :       txid: fields[3] as String,</span></a>
 <a name="24"><span class="lineNum">      24 </span><span class="lineNoCov">          0 :       received: fields[4] as int,</span></a>
 <a name="25"><span class="lineNum">      25 </span><span class="lineNoCov">          0 :       sent: fields[5] as int,</span></a>
@@ -98,7 +98,7 @@
 <a name="36"><span class="lineNum">      36 </span><span class="lineNoCov">          0 :       ..writeByte(1)</span></a>
 <a name="37"><span class="lineNum">      37 </span><span class="lineNoCov">          0 :       ..write(obj.height)</span></a>
 <a name="38"><span class="lineNum">      38 </span><span class="lineNoCov">          0 :       ..writeByte(2)</span></a>
-<a name="39"><span class="lineNum">      39 </span><span class="lineNoCov">          0 :       ..write(obj.verified)</span></a>
+<a name="39"><span class="lineNum">      39 </span><span class="lineNoCov">          0 :       ..write(obj.confirmation_time)</span></a>
 <a name="40"><span class="lineNum">      40 </span><span class="lineNoCov">          0 :       ..writeByte(3)</span></a>
 <a name="41"><span class="lineNum">      41 </span><span class="lineNoCov">          0 :       ..write(obj.txid)</span></a>
 <a name="42"><span class="lineNum">      42 </span><span class="lineNoCov">          0 :       ..writeByte(4)</span></a>
@@ -128,7 +128,7 @@
 <a name="66"><span class="lineNum">      66 </span><span class="lineCov">          1 :     _$_Transaction(</span></a>
 <a name="67"><span class="lineNum">      67 </span><span class="lineCov">          1 :       timestamp: json['timestamp'] as int,</span></a>
 <a name="68"><span class="lineNum">      68 </span><span class="lineCov">          1 :       height: json['height'] as int,</span></a>
-<a name="69"><span class="lineNum">      69 </span><span class="lineCov">          1 :       verified: json['verified'] as bool,</span></a>
+<a name="69"><span class="lineNum">      69 </span><span class="lineCov">          1 :       confirmation_time: json['confirmation_time'] as int,</span></a>
 <a name="70"><span class="lineNum">      70 </span><span class="lineCov">          1 :       txid: json['txid'] as String,</span></a>
 <a name="71"><span class="lineNum">      71 </span><span class="lineCov">          1 :       received: json['received'] as int,</span></a>
 <a name="72"><span class="lineNum">      72 </span><span class="lineCov">          1 :       sent: json['sent'] as int,</span></a>
@@ -139,7 +139,7 @@
 <a name="77"><span class="lineNum">      77 </span><span class="lineNoCov">          0 :     &lt;String, dynamic&gt;{</span></a>
 <a name="78"><span class="lineNum">      78 </span><span class="lineNoCov">          0 :       'timestamp': instance.timestamp,</span></a>
 <a name="79"><span class="lineNum">      79 </span><span class="lineNoCov">          0 :       'height': instance.height,</span></a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineNoCov">          0 :       'verified': instance.verified,</span></a>
+<a name="80"><span class="lineNum">      80 </span><span class="lineNoCov">          0 :       'confirmation_time': instance.confirmation_time,</span></a>
 <a name="81"><span class="lineNum">      81 </span><span class="lineNoCov">          0 :       'txid': instance.txid,</span></a>
 <a name="82"><span class="lineNum">      82 </span><span class="lineNoCov">          0 :       'received': instance.received,</span></a>
 <a name="83"><span class="lineNum">      83 </span><span class="lineNoCov">          0 :       'sent': instance.sent,</span></a>
