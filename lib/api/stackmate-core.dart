@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
-
 import 'package:bitcoin/bitcoin.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/model/transaction.dart';
@@ -84,7 +83,6 @@ class BitcoinFFI implements IStackMateCore {
     if (resp.contains('Error')) {
       return R(error: resp);
     }
-
     return R(result: resp);
   }
 
@@ -100,9 +98,7 @@ class BitcoinFFI implements IStackMateCore {
     if (resp.contains('Error')) {
       return R(error: resp);
     }
-
     final bal = jsonDecode(resp)['balance'];
-
     return R(result: bal as int);
   }
 
@@ -115,11 +111,9 @@ class BitcoinFFI implements IStackMateCore {
       descriptor: descriptor,
       index: index,
     );
-
     if (resp.contains('Error')) {
       return R(error: resp);
     }
-
     final address = jsonDecode(resp)['address'];
     return R(result: address as String);
   }
@@ -170,7 +164,6 @@ class BitcoinFFI implements IStackMateCore {
       var utxo = UTXO.fromJson(t as Map<String, dynamic>);
       utxos.add(utxo);
     }
-
     return R(result: utxos);
   }
 
@@ -205,11 +198,9 @@ class BitcoinFFI implements IStackMateCore {
       return R(error: resp);
     }
     final json = jsonDecode(resp)['outputs'];
-
     final List<DecodedTxOutput> decoded = [];
     for (final out in json)
       decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
-
     return R(result: decoded);
   }
 
@@ -261,7 +252,6 @@ class BitcoinFFI implements IStackMateCore {
       return R(error: resp);
     }
     final data = jsonDecode(resp);
-
     return R(result: data['rate'] as double);
   }
 
@@ -277,7 +267,6 @@ class BitcoinFFI implements IStackMateCore {
     if (resp.contains('Error')) {
       return R(error: resp);
     }
-
     final data = jsonDecode(resp);
     return R(result: data['weight'] as int);
   }
@@ -294,7 +283,6 @@ class BitcoinFFI implements IStackMateCore {
     if (resp.contains('Error')) {
       return R(error: resp);
     }
-
     return R(result: AbsoluteFees.fromJson(resp));
   }
 
@@ -310,7 +298,6 @@ class BitcoinFFI implements IStackMateCore {
     if (resp.contains('Error')) {
       return R(error: resp);
     }
-
     return R(result: AbsoluteFees.fromJson(resp));
   }
 }

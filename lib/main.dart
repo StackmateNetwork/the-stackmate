@@ -27,6 +27,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   // Bloc.observer = SimpleBlocObserver();
+
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
@@ -70,7 +71,6 @@ class Stackmate extends StatelessWidget {
     debugLogDiagnostics: true,
     routes: [
       GoRoute(path: '/', builder: (_, __) => const HomeScreen()),
-      //
       GoRoute(path: '/calc', builder: (_, __) => const CalculatorScreen()),
       GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
       GoRoute(path: '/network', builder: (_, __) => Container()),
