@@ -10,12 +10,10 @@ class Transaction with _$Transaction {
   const factory Transaction({
     @HiveField(0) required int timestamp,
     @HiveField(1) required int height,
-    // ignore: non_constant_identifier_names
-    @HiveField(2) required int confirmation_time,
-    @HiveField(3) required String txid,
-    @HiveField(4) required int received,
-    @HiveField(5) required int sent,
-    @HiveField(6) required int fee,
+    @HiveField(2) required String txid,
+    @HiveField(3) required int received,
+    @HiveField(4) required int sent,
+    @HiveField(5) required int fee,
   }) = _Transaction;
   const Transaction._();
 
