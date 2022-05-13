@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -15,7 +16,7 @@ class TransactionItem extends StatefulWidget {
 }
 
 class _TransactionItemState extends State<TransactionItem> {
-  bool _isExpanded = false;
+   bool _isExpanded = false;
 
   @override
   Widget build(BuildContext c) {
@@ -30,6 +31,7 @@ class _TransactionItemState extends State<TransactionItem> {
             setState(() {
               _isExpanded = !_isExpanded;
             });
+             c.push('/txinfo');
           },
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 4),
@@ -100,7 +102,8 @@ class _TransactionItemState extends State<TransactionItem> {
                     ),
                   ),
                 ),
-                if (_isExpanded) ...[
+                //
+                if (_isExpanded)  ...[
                   if (widget.transaction.timeStr() != '') ...[
                     const SizedBox(height: 16),
                     Text(
@@ -151,6 +154,7 @@ class _TransactionItemState extends State<TransactionItem> {
           setState(() {
             _isExpanded = !_isExpanded;
           });
+           c.push('/txinfo');
         },
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 4),
@@ -215,7 +219,7 @@ class _TransactionItemState extends State<TransactionItem> {
                 child: Container(
                   width: c.width / 2,
                   child: Text(
-                    !_isExpanded
+                   !_isExpanded
                         ? widget.transaction.txIdBlur()
                         : widget.transaction.txid,
                     style: c.fonts.caption!.copyWith(
@@ -224,7 +228,7 @@ class _TransactionItemState extends State<TransactionItem> {
                   ),
                 ),
               ),
-              if (_isExpanded) ...[
+            if (_isExpanded)   ...[
                 const SizedBox(height: 16),
                 //if (!widget.transaction.confirmed) ...[
                 // Text('CONFIRMATIONS'.notLocalised(),

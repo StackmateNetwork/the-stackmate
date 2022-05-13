@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 ThemeData mainTheme() => ThemeData(
-<<<<<<< HEAD
-       fontFamily: 'FontAwesome',
-      textTheme:  GoogleFonts.aldrichTextTheme(),
-=======
       textTheme: GoogleFonts.aldrichTextTheme(),
->>>>>>> c0a8f98ad9b7f54b9c9cd38df4817ec0439712ad
       colorScheme: ColorScheme(
         primary: Colors.orange[400]!,
         // primaryVariant: const Color(0xFF0745ff),

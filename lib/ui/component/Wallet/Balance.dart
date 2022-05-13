@@ -28,15 +28,11 @@ class Balance extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-<<<<<<< HEAD
-              NumberFormat('###,000').format(double.parse(balance.toString())) + ' sats',
-=======
               (balance > 0)
                   ? NumberFormat('###,000')
                           .format(double.parse(balance.toString())) +
                       ' sats'
                   : '0 sats',
->>>>>>> c0a8f98ad9b7f54b9c9cd38df4817ec0439712ad
               style: c.fonts.headline6!.copyWith(
                 color: Colors.white,
               ),
