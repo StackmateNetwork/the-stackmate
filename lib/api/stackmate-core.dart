@@ -142,13 +142,14 @@ class BitcoinFFI implements IStackMateCore {
       var tx = Transaction.fromJson(t as Map<String, dynamic>);
       if (!tx.isReceive())
         tx = tx.copyWith(sent: tx.sent - tx.received - tx.fee);
-
       transactions.add(tx);
     }
-
     transactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
-
-    return R(result: transactions);
+    final unconfirmed =
+        transactions.where((item) => item.timestamp == 0).toList();
+    final confirmed = transactions.where((item) => item.timestamp > 0).toList();
+    final sorted = unconfirmed + confirmed;
+    return R(result: sorted);
   }
 
   @override

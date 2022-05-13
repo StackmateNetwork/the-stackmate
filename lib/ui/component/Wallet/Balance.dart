@@ -33,7 +33,7 @@ class Balance extends StatelessWidget {
                           .format(double.parse(balance.toString())) +
                       ' sats'
                   : '0 sats',
-              style: c.fonts.headline6!.copyWith(
+              style: c.fonts.headline5!.copyWith(
                 color: Colors.white,
               ),
             ),

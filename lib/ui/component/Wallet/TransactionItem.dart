@@ -21,7 +21,7 @@ class _TransactionItemState extends State<TransactionItem> {
   Widget build(BuildContext c) {
     final isReceive = widget.transaction.isReceive();
 
-    if (isReceive)
+    if (isReceive) {
       return AnimatedSwitcher(
         key: _isExpanded ? const ValueKey(1) : const ValueKey(2),
         duration: const Duration(milliseconds: 2000),
@@ -54,6 +54,7 @@ class _TransactionItemState extends State<TransactionItem> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
+                          Padding(padding: const EdgeInsets.only(top: 8)),
                           Text(
                             NumberFormat('###,000').format(
                                   double.parse(
@@ -61,9 +62,13 @@ class _TransactionItemState extends State<TransactionItem> {
                                   ),
                                 ) +
                                 ' sats',
-                            style: c.fonts.headline6!.copyWith(
-                              color: c.colours.onBackground,
-                            ),
+                            style: (widget.transaction.height > 0)
+                                ? c.fonts.headline6!.copyWith(
+                                    color: c.colours.onBackground,
+                                  )
+                                : c.fonts.headline6!.copyWith(
+                                    color: Colors.blue,
+                                  ),
                             textAlign: TextAlign.end,
                           ),
                           Text(
@@ -71,7 +76,14 @@ class _TransactionItemState extends State<TransactionItem> {
                             style: c.fonts.overline!.copyWith(
                               color: c.colours.onBackground,
                             ),
-                          )
+                          ),
+                          if (widget.transaction.height == 0)
+                            Text(
+                              'UNCONFIRMED',
+                              style: c.fonts.overline!.copyWith(
+                                color: c.colours.onBackground,
+                              ),
+                            ),
                         ],
                       ),
                     )
@@ -142,6 +154,7 @@ class _TransactionItemState extends State<TransactionItem> {
           ),
         ),
       );
+    }
 
     return AnimatedSwitcher(
       key: _isExpanded ? const ValueKey(1) : const ValueKey(2),
@@ -175,6 +188,7 @@ class _TransactionItemState extends State<TransactionItem> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        Padding(padding: const EdgeInsets.only(top: 8)),
                         Text(
                           NumberFormat('###,000').format(
                                 double.parse(

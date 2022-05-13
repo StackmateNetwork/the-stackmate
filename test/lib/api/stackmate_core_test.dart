@@ -87,7 +87,7 @@ void main() {
     final int totalOut = history.result!.fold(
       0,
       (int sum, Transaction item) =>
-          (item.sent == 0) ? sum + item.sent : sum + item.sent + item.fee,
+          (item.sent != 0) ? sum + item.sent + item.fee : sum + 0,
     );
     final inferredBalance = totalIn - totalOut;
     final balance = libstackmate.syncBalance(

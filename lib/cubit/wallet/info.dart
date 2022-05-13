@@ -106,14 +106,17 @@ class InfoCubit extends Cubit<InfoState> {
 
       final int totalIn = transactions.fold(
         0,
-        (int sum, Transaction item) =>
-            (item.sent == 0) ? sum + item.received : sum + 0,
+        (int sum, Transaction item) => (item.sent == 0 && item.timestamp > 0)
+            ? sum + item.received
+            : sum + 0,
       );
       final int totalOut = transactions.fold(
         0,
-        (int sum, Transaction item) =>
-            (item.sent == 0) ? sum + item.sent : sum + item.sent + item.fee,
+        (int sum, Transaction item) => (item.sent != 0 && item.timestamp > 0)
+            ? sum + item.sent + item.fee
+            : sum + 0,
       );
+
       final inferredBalance = totalIn - totalOut;
 
       _vibrate.vibe();
