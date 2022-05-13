@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:ffi';
 import 'package:bitcoin/ffi-types.dart';
 import 'package:ffi/ffi.dart';
@@ -83,6 +82,18 @@ class FFFI {
     required String nodeAddress,
   }) {
     final func = binary.lookupFunction<SyncT, SyncT>('sync_history');
+    final resp = func(
+      descriptor.toNativeUtf8(),
+      nodeAddress.toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
+
+  String getUnspent({
+    required String descriptor,
+    required String nodeAddress,
+  }) {
+    final func = binary.lookupFunction<SyncT, SyncT>('list_unspent');
     final resp = func(
       descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),

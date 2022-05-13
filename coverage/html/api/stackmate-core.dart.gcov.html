@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">82</td>
-            <td class="headerCovTableEntry">97</td>
-            <td class="headerCovTableEntryMed">84.5 %</td>
+            <td class="headerCovTableEntry">91</td>
+            <td class="headerCovTableEntry">107</td>
+            <td class="headerCovTableEntryMed">85.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-05-07 05:39:58</td>
+            <td class="headerValue">2022-05-12 02:39:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -70,11 +70,11 @@
 <a name="8"><span class="lineNum">       8 </span>            : import 'package:sats/model/result.dart';</a>
 <a name="9"><span class="lineNum">       9 </span>            : </a>
 <a name="10"><span class="lineNum">      10 </span>            : class BitcoinFFI implements IStackMateCore {</a>
-<a name="11"><span class="lineNum">      11 </span><span class="lineCov">          4 :   BitcoinFFI() {</span></a>
-<a name="12"><span class="lineNum">      12 </span><span class="lineCov">          8 :     _bitcoin = FFFI(</span></a>
-<a name="13"><span class="lineNum">      13 </span><span class="lineCov">          4 :       binary: Platform.isAndroid</span></a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">          5 :   BitcoinFFI() {</span></a>
+<a name="12"><span class="lineNum">      12 </span><span class="lineCov">         10 :     _bitcoin = FFFI(</span></a>
+<a name="13"><span class="lineNum">      13 </span><span class="lineCov">          5 :       binary: Platform.isAndroid</span></a>
 <a name="14"><span class="lineNum">      14 </span><span class="lineNoCov">          0 :           ? DynamicLibrary.open('libstackmate.so')</span></a>
-<a name="15"><span class="lineNum">      15 </span><span class="lineCov">          4 :           : DynamicLibrary.open('libstackmate.dylib'),</span></a>
+<a name="15"><span class="lineNum">      15 </span><span class="lineCov">          5 :           : DynamicLibrary.open('libstackmate.dylib'),</span></a>
 <a name="16"><span class="lineNum">      16 </span>            :     );</a>
 <a name="17"><span class="lineNum">      17 </span>            :   }</a>
 <a name="18"><span class="lineNum">      18 </span>            : </a>
@@ -214,145 +214,167 @@
 <a name="152"><span class="lineNum">     152 </span>            :   }</a>
 <a name="153"><span class="lineNum">     153 </span>            : </a>
 <a name="154"><span class="lineNum">     154 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="155"><span class="lineNum">     155 </span>            :   R&lt;PSBT&gt; buildTransaction({</a>
+<a name="155"><span class="lineNum">     155 </span>            :   R&lt;List&lt;UTXO&gt;&gt; getUtxoSet({</a>
 <a name="156"><span class="lineNum">     156 </span>            :     required String descriptor,</a>
 <a name="157"><span class="lineNum">     157 </span>            :     required String nodeAddress,</a>
-<a name="158"><span class="lineNum">     158 </span>            :     required String txOutputs,</a>
-<a name="159"><span class="lineNum">     159 </span>            :     required String feeAbsolute,</a>
-<a name="160"><span class="lineNum">     160 </span>            :     required String policyPath,</a>
-<a name="161"><span class="lineNum">     161 </span>            :     required String sweep,</a>
-<a name="162"><span class="lineNum">     162 </span>            :   }) {</a>
-<a name="163"><span class="lineNum">     163 </span><span class="lineCov">          2 :     final resp = _bitcoin.buildTransaction(</span></a>
-<a name="164"><span class="lineNum">     164 </span>            :       descriptor: descriptor,</a>
-<a name="165"><span class="lineNum">     165 </span>            :       nodeAddress: nodeAddress,</a>
-<a name="166"><span class="lineNum">     166 </span>            :       txOutputs: txOutputs,</a>
-<a name="167"><span class="lineNum">     167 </span>            :       feeAbsolute: feeAbsolute,</a>
-<a name="168"><span class="lineNum">     168 </span>            :       policyPath: policyPath,</a>
-<a name="169"><span class="lineNum">     169 </span>            :       sweep: sweep,</a>
-<a name="170"><span class="lineNum">     170 </span>            :     );</a>
-<a name="171"><span class="lineNum">     171 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
-<a name="172"><span class="lineNum">     172 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
-<a name="173"><span class="lineNum">     173 </span>            :     }</a>
-<a name="174"><span class="lineNum">     174 </span><span class="lineCov">          2 :     return R(result: PSBT.fromJson(resp));</span></a>
-<a name="175"><span class="lineNum">     175 </span>            :   }</a>
-<a name="176"><span class="lineNum">     176 </span>            : </a>
-<a name="177"><span class="lineNum">     177 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="178"><span class="lineNum">     178 </span>            :   R&lt;List&lt;DecodedTxOutput&gt;&gt; decodePsbt(</a>
-<a name="179"><span class="lineNum">     179 </span>            :       {required String network, required String psbt}) {</a>
-<a name="180"><span class="lineNum">     180 </span><span class="lineCov">          2 :     final resp = _bitcoin.decodePsbt(network: network, psbt: psbt);</span></a>
-<a name="181"><span class="lineNum">     181 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
-<a name="182"><span class="lineNum">     182 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
-<a name="183"><span class="lineNum">     183 </span>            :     }</a>
-<a name="184"><span class="lineNum">     184 </span><span class="lineCov">          2 :     final json = jsonDecode(resp)['outputs'];</span></a>
-<a name="185"><span class="lineNum">     185 </span>            : </a>
-<a name="186"><span class="lineNum">     186 </span><span class="lineCov">          1 :     final List&lt;DecodedTxOutput&gt; decoded = [];</span></a>
-<a name="187"><span class="lineNum">     187 </span><span class="lineCov">          1 :     for (final out in json)</span></a>
-<a name="188"><span class="lineNum">     188 </span><span class="lineCov">          3 :       decoded.add(DecodedTxOutput.fromJson(out as Map&lt;String, dynamic&gt;));</span></a>
-<a name="189"><span class="lineNum">     189 </span>            : </a>
-<a name="190"><span class="lineNum">     190 </span><span class="lineCov">          1 :     return R(result: decoded);</span></a>
-<a name="191"><span class="lineNum">     191 </span>            :   }</a>
-<a name="192"><span class="lineNum">     192 </span>            : </a>
-<a name="193"><span class="lineNum">     193 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="194"><span class="lineNum">     194 </span>            :   R&lt;PSBT&gt; signTransaction({</a>
-<a name="195"><span class="lineNum">     195 </span>            :     required String descriptor,</a>
-<a name="196"><span class="lineNum">     196 </span>            :     required String unsignedPSBT,</a>
-<a name="197"><span class="lineNum">     197 </span>            :   }) {</a>
-<a name="198"><span class="lineNum">     198 </span><span class="lineCov">          2 :     final resp = _bitcoin.signTransaction(</span></a>
-<a name="199"><span class="lineNum">     199 </span>            :       descriptor: descriptor,</a>
-<a name="200"><span class="lineNum">     200 </span>            :       unsignedPSBT: unsignedPSBT,</a>
-<a name="201"><span class="lineNum">     201 </span>            :     );</a>
-<a name="202"><span class="lineNum">     202 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
-<a name="203"><span class="lineNum">     203 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
-<a name="204"><span class="lineNum">     204 </span>            :     }</a>
-<a name="205"><span class="lineNum">     205 </span><span class="lineCov">          2 :     return R(result: PSBT.fromJson(resp));</span></a>
-<a name="206"><span class="lineNum">     206 </span>            :   }</a>
+<a name="158"><span class="lineNum">     158 </span>            :   }) {</a>
+<a name="159"><span class="lineNum">     159 </span><span class="lineCov">          2 :     final resp = _bitcoin.getUnspent(</span></a>
+<a name="160"><span class="lineNum">     160 </span>            :       descriptor: descriptor,</a>
+<a name="161"><span class="lineNum">     161 </span>            :       nodeAddress: nodeAddress,</a>
+<a name="162"><span class="lineNum">     162 </span>            :     );</a>
+<a name="163"><span class="lineNum">     163 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
+<a name="164"><span class="lineNum">     164 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
+<a name="165"><span class="lineNum">     165 </span>            :     }</a>
+<a name="166"><span class="lineNum">     166 </span><span class="lineCov">          1 :     final json = jsonDecode(resp);</span></a>
+<a name="167"><span class="lineNum">     167 </span><span class="lineCov">          1 :     final List&lt;UTXO&gt; utxos = [];</span></a>
+<a name="168"><span class="lineNum">     168 </span><span class="lineCov">          3 :     for (final t in json['utxos'] as List) {</span></a>
+<a name="169"><span class="lineNum">     169 </span><span class="lineCov">          1 :       var utxo = UTXO.fromJson(t as Map&lt;String, dynamic&gt;);</span></a>
+<a name="170"><span class="lineNum">     170 </span><span class="lineCov">          1 :       utxos.add(utxo);</span></a>
+<a name="171"><span class="lineNum">     171 </span>            :     }</a>
+<a name="172"><span class="lineNum">     172 </span>            : </a>
+<a name="173"><span class="lineNum">     173 </span><span class="lineCov">          1 :     return R(result: utxos);</span></a>
+<a name="174"><span class="lineNum">     174 </span>            :   }</a>
+<a name="175"><span class="lineNum">     175 </span>            : </a>
+<a name="176"><span class="lineNum">     176 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="177"><span class="lineNum">     177 </span>            :   R&lt;PSBT&gt; buildTransaction({</a>
+<a name="178"><span class="lineNum">     178 </span>            :     required String descriptor,</a>
+<a name="179"><span class="lineNum">     179 </span>            :     required String nodeAddress,</a>
+<a name="180"><span class="lineNum">     180 </span>            :     required String txOutputs,</a>
+<a name="181"><span class="lineNum">     181 </span>            :     required String feeAbsolute,</a>
+<a name="182"><span class="lineNum">     182 </span>            :     required String policyPath,</a>
+<a name="183"><span class="lineNum">     183 </span>            :     required String sweep,</a>
+<a name="184"><span class="lineNum">     184 </span>            :   }) {</a>
+<a name="185"><span class="lineNum">     185 </span><span class="lineCov">          2 :     final resp = _bitcoin.buildTransaction(</span></a>
+<a name="186"><span class="lineNum">     186 </span>            :       descriptor: descriptor,</a>
+<a name="187"><span class="lineNum">     187 </span>            :       nodeAddress: nodeAddress,</a>
+<a name="188"><span class="lineNum">     188 </span>            :       txOutputs: txOutputs,</a>
+<a name="189"><span class="lineNum">     189 </span>            :       feeAbsolute: feeAbsolute,</a>
+<a name="190"><span class="lineNum">     190 </span>            :       policyPath: policyPath,</a>
+<a name="191"><span class="lineNum">     191 </span>            :       sweep: sweep,</a>
+<a name="192"><span class="lineNum">     192 </span>            :     );</a>
+<a name="193"><span class="lineNum">     193 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
+<a name="194"><span class="lineNum">     194 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
+<a name="195"><span class="lineNum">     195 </span>            :     }</a>
+<a name="196"><span class="lineNum">     196 </span><span class="lineCov">          2 :     return R(result: PSBT.fromJson(resp));</span></a>
+<a name="197"><span class="lineNum">     197 </span>            :   }</a>
+<a name="198"><span class="lineNum">     198 </span>            : </a>
+<a name="199"><span class="lineNum">     199 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="200"><span class="lineNum">     200 </span>            :   R&lt;List&lt;DecodedTxOutput&gt;&gt; decodePsbt(</a>
+<a name="201"><span class="lineNum">     201 </span>            :       {required String network, required String psbt}) {</a>
+<a name="202"><span class="lineNum">     202 </span><span class="lineCov">          2 :     final resp = _bitcoin.decodePsbt(network: network, psbt: psbt);</span></a>
+<a name="203"><span class="lineNum">     203 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
+<a name="204"><span class="lineNum">     204 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
+<a name="205"><span class="lineNum">     205 </span>            :     }</a>
+<a name="206"><span class="lineNum">     206 </span><span class="lineCov">          2 :     final json = jsonDecode(resp)['outputs'];</span></a>
 <a name="207"><span class="lineNum">     207 </span>            : </a>
-<a name="208"><span class="lineNum">     208 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="209"><span class="lineNum">     209 </span>            :   R&lt;String&gt; broadcastTransaction({</a>
-<a name="210"><span class="lineNum">     210 </span>            :     required String descriptor,</a>
-<a name="211"><span class="lineNum">     211 </span>            :     required String nodeAddress,</a>
-<a name="212"><span class="lineNum">     212 </span>            :     required String signedPSBT,</a>
-<a name="213"><span class="lineNum">     213 </span>            :   }) {</a>
-<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          2 :     final resp = _bitcoin.broadcastTransaction(</span></a>
-<a name="215"><span class="lineNum">     215 </span>            :       descriptor: descriptor,</a>
-<a name="216"><span class="lineNum">     216 </span>            :       nodeAddress: nodeAddress,</a>
-<a name="217"><span class="lineNum">     217 </span>            :       signedPSBT: signedPSBT,</a>
-<a name="218"><span class="lineNum">     218 </span>            :     );</a>
-<a name="219"><span class="lineNum">     219 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
-<a name="220"><span class="lineNum">     220 </span><span class="lineCov">          1 :       return R(error: resp);</span></a>
-<a name="221"><span class="lineNum">     221 </span>            :     }</a>
-<a name="222"><span class="lineNum">     222 </span><span class="lineCov">          1 :     final data = jsonDecode(resp);</span></a>
-<a name="223"><span class="lineNum">     223 </span><span class="lineCov">          2 :     return R(result: data['txid'] as String);</span></a>
-<a name="224"><span class="lineNum">     224 </span>            :   }</a>
-<a name="225"><span class="lineNum">     225 </span>            : </a>
-<a name="226"><span class="lineNum">     226 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="227"><span class="lineNum">     227 </span>            :   R&lt;double&gt; estimateNetworkFee({</a>
-<a name="228"><span class="lineNum">     228 </span>            :     required String network,</a>
-<a name="229"><span class="lineNum">     229 </span>            :     required String nodeAddress,</a>
-<a name="230"><span class="lineNum">     230 </span>            :     required String targetSize,</a>
-<a name="231"><span class="lineNum">     231 </span>            :   }) {</a>
-<a name="232"><span class="lineNum">     232 </span><span class="lineCov">          2 :     final resp = _bitcoin.estimateNetworkFee(</span></a>
-<a name="233"><span class="lineNum">     233 </span>            :       network: network,</a>
-<a name="234"><span class="lineNum">     234 </span>            :       nodeAddress: nodeAddress,</a>
-<a name="235"><span class="lineNum">     235 </span>            :       targetSize: targetSize,</a>
-<a name="236"><span class="lineNum">     236 </span>            :     );</a>
-<a name="237"><span class="lineNum">     237 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
-<a name="238"><span class="lineNum">     238 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
-<a name="239"><span class="lineNum">     239 </span>            :     }</a>
-<a name="240"><span class="lineNum">     240 </span><span class="lineCov">          1 :     final data = jsonDecode(resp);</span></a>
-<a name="241"><span class="lineNum">     241 </span>            : </a>
-<a name="242"><span class="lineNum">     242 </span><span class="lineCov">          2 :     return R(result: data['rate'] as double);</span></a>
-<a name="243"><span class="lineNum">     243 </span>            :   }</a>
-<a name="244"><span class="lineNum">     244 </span>            : </a>
-<a name="245"><span class="lineNum">     245 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="246"><span class="lineNum">     246 </span>            :   R&lt;int&gt; getWeight({</a>
-<a name="247"><span class="lineNum">     247 </span>            :     required String descriptor,</a>
-<a name="248"><span class="lineNum">     248 </span>            :     required String psbt,</a>
-<a name="249"><span class="lineNum">     249 </span>            :   }) {</a>
-<a name="250"><span class="lineNum">     250 </span><span class="lineCov">          2 :     final resp = _bitcoin.getWeight(</span></a>
-<a name="251"><span class="lineNum">     251 </span>            :       descriptor: descriptor,</a>
-<a name="252"><span class="lineNum">     252 </span>            :       psbt: psbt,</a>
-<a name="253"><span class="lineNum">     253 </span>            :     );</a>
-<a name="254"><span class="lineNum">     254 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
-<a name="255"><span class="lineNum">     255 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
-<a name="256"><span class="lineNum">     256 </span>            :     }</a>
-<a name="257"><span class="lineNum">     257 </span>            : </a>
-<a name="258"><span class="lineNum">     258 </span><span class="lineCov">          1 :     final data = jsonDecode(resp);</span></a>
-<a name="259"><span class="lineNum">     259 </span><span class="lineCov">          2 :     return R(result: data['weight'] as int);</span></a>
-<a name="260"><span class="lineNum">     260 </span>            :   }</a>
-<a name="261"><span class="lineNum">     261 </span>            : </a>
-<a name="262"><span class="lineNum">     262 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="263"><span class="lineNum">     263 </span>            :   R&lt;AbsoluteFees&gt; feeAbsoluteToRate({</a>
-<a name="264"><span class="lineNum">     264 </span>            :     required String feeAbsolute,</a>
-<a name="265"><span class="lineNum">     265 </span>            :     required String weight,</a>
-<a name="266"><span class="lineNum">     266 </span>            :   }) {</a>
-<a name="267"><span class="lineNum">     267 </span><span class="lineCov">          2 :     final resp = _bitcoin.feeAbsoluteToRate(</span></a>
-<a name="268"><span class="lineNum">     268 </span>            :       feeAbs: feeAbsolute,</a>
-<a name="269"><span class="lineNum">     269 </span>            :       weight: weight,</a>
-<a name="270"><span class="lineNum">     270 </span>            :     );</a>
-<a name="271"><span class="lineNum">     271 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
-<a name="272"><span class="lineNum">     272 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
-<a name="273"><span class="lineNum">     273 </span>            :     }</a>
-<a name="274"><span class="lineNum">     274 </span>            : </a>
-<a name="275"><span class="lineNum">     275 </span><span class="lineCov">          2 :     return R(result: AbsoluteFees.fromJson(resp));</span></a>
-<a name="276"><span class="lineNum">     276 </span>            :   }</a>
-<a name="277"><span class="lineNum">     277 </span>            : </a>
-<a name="278"><span class="lineNum">     278 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="279"><span class="lineNum">     279 </span>            :   R&lt;AbsoluteFees&gt; feeRateToAbsolute({</a>
-<a name="280"><span class="lineNum">     280 </span>            :     required String feeRate,</a>
-<a name="281"><span class="lineNum">     281 </span>            :     required String weight,</a>
-<a name="282"><span class="lineNum">     282 </span>            :   }) {</a>
-<a name="283"><span class="lineNum">     283 </span><span class="lineCov">          2 :     final resp = _bitcoin.feeRateToAbsolute(</span></a>
-<a name="284"><span class="lineNum">     284 </span>            :       feeRate: feeRate,</a>
-<a name="285"><span class="lineNum">     285 </span>            :       weight: weight,</a>
-<a name="286"><span class="lineNum">     286 </span>            :     );</a>
-<a name="287"><span class="lineNum">     287 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
-<a name="288"><span class="lineNum">     288 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
-<a name="289"><span class="lineNum">     289 </span>            :     }</a>
-<a name="290"><span class="lineNum">     290 </span>            : </a>
-<a name="291"><span class="lineNum">     291 </span><span class="lineCov">          2 :     return R(result: AbsoluteFees.fromJson(resp));</span></a>
-<a name="292"><span class="lineNum">     292 </span>            :   }</a>
-<a name="293"><span class="lineNum">     293 </span>            : }</a>
+<a name="208"><span class="lineNum">     208 </span><span class="lineCov">          1 :     final List&lt;DecodedTxOutput&gt; decoded = [];</span></a>
+<a name="209"><span class="lineNum">     209 </span><span class="lineCov">          1 :     for (final out in json)</span></a>
+<a name="210"><span class="lineNum">     210 </span><span class="lineCov">          3 :       decoded.add(DecodedTxOutput.fromJson(out as Map&lt;String, dynamic&gt;));</span></a>
+<a name="211"><span class="lineNum">     211 </span>            : </a>
+<a name="212"><span class="lineNum">     212 </span><span class="lineCov">          1 :     return R(result: decoded);</span></a>
+<a name="213"><span class="lineNum">     213 </span>            :   }</a>
+<a name="214"><span class="lineNum">     214 </span>            : </a>
+<a name="215"><span class="lineNum">     215 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="216"><span class="lineNum">     216 </span>            :   R&lt;PSBT&gt; signTransaction({</a>
+<a name="217"><span class="lineNum">     217 </span>            :     required String descriptor,</a>
+<a name="218"><span class="lineNum">     218 </span>            :     required String unsignedPSBT,</a>
+<a name="219"><span class="lineNum">     219 </span>            :   }) {</a>
+<a name="220"><span class="lineNum">     220 </span><span class="lineCov">          2 :     final resp = _bitcoin.signTransaction(</span></a>
+<a name="221"><span class="lineNum">     221 </span>            :       descriptor: descriptor,</a>
+<a name="222"><span class="lineNum">     222 </span>            :       unsignedPSBT: unsignedPSBT,</a>
+<a name="223"><span class="lineNum">     223 </span>            :     );</a>
+<a name="224"><span class="lineNum">     224 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
+<a name="226"><span class="lineNum">     226 </span>            :     }</a>
+<a name="227"><span class="lineNum">     227 </span><span class="lineCov">          2 :     return R(result: PSBT.fromJson(resp));</span></a>
+<a name="228"><span class="lineNum">     228 </span>            :   }</a>
+<a name="229"><span class="lineNum">     229 </span>            : </a>
+<a name="230"><span class="lineNum">     230 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="231"><span class="lineNum">     231 </span>            :   R&lt;String&gt; broadcastTransaction({</a>
+<a name="232"><span class="lineNum">     232 </span>            :     required String descriptor,</a>
+<a name="233"><span class="lineNum">     233 </span>            :     required String nodeAddress,</a>
+<a name="234"><span class="lineNum">     234 </span>            :     required String signedPSBT,</a>
+<a name="235"><span class="lineNum">     235 </span>            :   }) {</a>
+<a name="236"><span class="lineNum">     236 </span><span class="lineCov">          2 :     final resp = _bitcoin.broadcastTransaction(</span></a>
+<a name="237"><span class="lineNum">     237 </span>            :       descriptor: descriptor,</a>
+<a name="238"><span class="lineNum">     238 </span>            :       nodeAddress: nodeAddress,</a>
+<a name="239"><span class="lineNum">     239 </span>            :       signedPSBT: signedPSBT,</a>
+<a name="240"><span class="lineNum">     240 </span>            :     );</a>
+<a name="241"><span class="lineNum">     241 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
+<a name="242"><span class="lineNum">     242 </span><span class="lineCov">          1 :       return R(error: resp);</span></a>
+<a name="243"><span class="lineNum">     243 </span>            :     }</a>
+<a name="244"><span class="lineNum">     244 </span><span class="lineCov">          1 :     final data = jsonDecode(resp);</span></a>
+<a name="245"><span class="lineNum">     245 </span><span class="lineCov">          2 :     return R(result: data['txid'] as String);</span></a>
+<a name="246"><span class="lineNum">     246 </span>            :   }</a>
+<a name="247"><span class="lineNum">     247 </span>            : </a>
+<a name="248"><span class="lineNum">     248 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="249"><span class="lineNum">     249 </span>            :   R&lt;double&gt; estimateNetworkFee({</a>
+<a name="250"><span class="lineNum">     250 </span>            :     required String network,</a>
+<a name="251"><span class="lineNum">     251 </span>            :     required String nodeAddress,</a>
+<a name="252"><span class="lineNum">     252 </span>            :     required String targetSize,</a>
+<a name="253"><span class="lineNum">     253 </span>            :   }) {</a>
+<a name="254"><span class="lineNum">     254 </span><span class="lineCov">          2 :     final resp = _bitcoin.estimateNetworkFee(</span></a>
+<a name="255"><span class="lineNum">     255 </span>            :       network: network,</a>
+<a name="256"><span class="lineNum">     256 </span>            :       nodeAddress: nodeAddress,</a>
+<a name="257"><span class="lineNum">     257 </span>            :       targetSize: targetSize,</a>
+<a name="258"><span class="lineNum">     258 </span>            :     );</a>
+<a name="259"><span class="lineNum">     259 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
+<a name="260"><span class="lineNum">     260 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
+<a name="261"><span class="lineNum">     261 </span>            :     }</a>
+<a name="262"><span class="lineNum">     262 </span><span class="lineCov">          1 :     final data = jsonDecode(resp);</span></a>
+<a name="263"><span class="lineNum">     263 </span>            : </a>
+<a name="264"><span class="lineNum">     264 </span><span class="lineCov">          2 :     return R(result: data['rate'] as double);</span></a>
+<a name="265"><span class="lineNum">     265 </span>            :   }</a>
+<a name="266"><span class="lineNum">     266 </span>            : </a>
+<a name="267"><span class="lineNum">     267 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="268"><span class="lineNum">     268 </span>            :   R&lt;int&gt; getWeight({</a>
+<a name="269"><span class="lineNum">     269 </span>            :     required String descriptor,</a>
+<a name="270"><span class="lineNum">     270 </span>            :     required String psbt,</a>
+<a name="271"><span class="lineNum">     271 </span>            :   }) {</a>
+<a name="272"><span class="lineNum">     272 </span><span class="lineCov">          2 :     final resp = _bitcoin.getWeight(</span></a>
+<a name="273"><span class="lineNum">     273 </span>            :       descriptor: descriptor,</a>
+<a name="274"><span class="lineNum">     274 </span>            :       psbt: psbt,</a>
+<a name="275"><span class="lineNum">     275 </span>            :     );</a>
+<a name="276"><span class="lineNum">     276 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
+<a name="277"><span class="lineNum">     277 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
+<a name="278"><span class="lineNum">     278 </span>            :     }</a>
+<a name="279"><span class="lineNum">     279 </span>            : </a>
+<a name="280"><span class="lineNum">     280 </span><span class="lineCov">          1 :     final data = jsonDecode(resp);</span></a>
+<a name="281"><span class="lineNum">     281 </span><span class="lineCov">          2 :     return R(result: data['weight'] as int);</span></a>
+<a name="282"><span class="lineNum">     282 </span>            :   }</a>
+<a name="283"><span class="lineNum">     283 </span>            : </a>
+<a name="284"><span class="lineNum">     284 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="285"><span class="lineNum">     285 </span>            :   R&lt;AbsoluteFees&gt; feeAbsoluteToRate({</a>
+<a name="286"><span class="lineNum">     286 </span>            :     required String feeAbsolute,</a>
+<a name="287"><span class="lineNum">     287 </span>            :     required String weight,</a>
+<a name="288"><span class="lineNum">     288 </span>            :   }) {</a>
+<a name="289"><span class="lineNum">     289 </span><span class="lineCov">          2 :     final resp = _bitcoin.feeAbsoluteToRate(</span></a>
+<a name="290"><span class="lineNum">     290 </span>            :       feeAbs: feeAbsolute,</a>
+<a name="291"><span class="lineNum">     291 </span>            :       weight: weight,</a>
+<a name="292"><span class="lineNum">     292 </span>            :     );</a>
+<a name="293"><span class="lineNum">     293 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
+<a name="294"><span class="lineNum">     294 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
+<a name="295"><span class="lineNum">     295 </span>            :     }</a>
+<a name="296"><span class="lineNum">     296 </span>            : </a>
+<a name="297"><span class="lineNum">     297 </span><span class="lineCov">          2 :     return R(result: AbsoluteFees.fromJson(resp));</span></a>
+<a name="298"><span class="lineNum">     298 </span>            :   }</a>
+<a name="299"><span class="lineNum">     299 </span>            : </a>
+<a name="300"><span class="lineNum">     300 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="301"><span class="lineNum">     301 </span>            :   R&lt;AbsoluteFees&gt; feeRateToAbsolute({</a>
+<a name="302"><span class="lineNum">     302 </span>            :     required String feeRate,</a>
+<a name="303"><span class="lineNum">     303 </span>            :     required String weight,</a>
+<a name="304"><span class="lineNum">     304 </span>            :   }) {</a>
+<a name="305"><span class="lineNum">     305 </span><span class="lineCov">          2 :     final resp = _bitcoin.feeRateToAbsolute(</span></a>
+<a name="306"><span class="lineNum">     306 </span>            :       feeRate: feeRate,</a>
+<a name="307"><span class="lineNum">     307 </span>            :       weight: weight,</a>
+<a name="308"><span class="lineNum">     308 </span>            :     );</a>
+<a name="309"><span class="lineNum">     309 </span><span class="lineCov">          1 :     if (resp.contains('Error')) {</span></a>
+<a name="310"><span class="lineNum">     310 </span><span class="lineNoCov">          0 :       return R(error: resp);</span></a>
+<a name="311"><span class="lineNum">     311 </span>            :     }</a>
+<a name="312"><span class="lineNum">     312 </span>            : </a>
+<a name="313"><span class="lineNum">     313 </span><span class="lineCov">          2 :     return R(result: AbsoluteFees.fromJson(resp));</span></a>
+<a name="314"><span class="lineNum">     314 </span>            :   }</a>
+<a name="315"><span class="lineNum">     315 </span>            : }</a>
 </pre>
       </td>
     </tr>

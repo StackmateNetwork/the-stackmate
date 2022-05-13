@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-05-07 05:39:58</td>
+            <td class="headerValue">2022-05-12 02:39:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -72,7 +72,7 @@
 <a name="10"><span class="lineNum">      10 </span>            : import 'package:sats/pkg/_locator.dart';</a>
 <a name="11"><span class="lineNum">      11 </span>            : import 'package:sats/pkg/interface/storage.dart';</a>
 <a name="12"><span class="lineNum">      12 </span>            : </a>
-<a name="13"><span class="lineNum">      13 </span><span class="lineCov">          7 : enum StoreKeys {</span></a>
+<a name="13"><span class="lineNum">      13 </span><span class="lineCov">          9 : enum StoreKeys {</span></a>
 <a name="14"><span class="lineNum">      14 </span>            :   Wallet,</a>
 <a name="15"><span class="lineNum">      15 </span>            :   Blockchain,</a>
 <a name="16"><span class="lineNum">      16 </span>            :   Node,</a>
@@ -80,12 +80,12 @@
 <a name="18"><span class="lineNum">      18 </span>            : }</a>
 <a name="19"><span class="lineNum">      19 </span>            : </a>
 <a name="20"><span class="lineNum">      20 </span>            : extension StoreKeysFunctions on StoreKeys {</a>
-<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          4 :   String get name =&gt; const {</span></a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          5 :   String get name =&gt; const {</span></a>
 <a name="22"><span class="lineNum">      22 </span>            :         StoreKeys.Wallet: 'wallet',</a>
 <a name="23"><span class="lineNum">      23 </span>            :         StoreKeys.Blockchain: 'blockchain',</a>
 <a name="24"><span class="lineNum">      24 </span>            :         StoreKeys.Node: 'node',</a>
 <a name="25"><span class="lineNum">      25 </span>            :         StoreKeys.Fees: 'fees',</a>
-<a name="26"><span class="lineNum">      26 </span><span class="lineCov">          4 :       }[this]!;</span></a>
+<a name="26"><span class="lineNum">      26 </span><span class="lineCov">          5 :       }[this]!;</span></a>
 <a name="27"><span class="lineNum">      27 </span>            : }</a>
 <a name="28"><span class="lineNum">      28 </span>            : </a>
 <a name="29"><span class="lineNum">      29 </span><span class="lineNoCov">          0 : Future&lt;void&gt; initializeHive() async {</span></a>

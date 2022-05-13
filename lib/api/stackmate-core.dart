@@ -142,13 +142,36 @@ class BitcoinFFI implements IStackMateCore {
       var tx = Transaction.fromJson(t as Map<String, dynamic>);
       if (!tx.isReceive())
         tx = tx.copyWith(sent: tx.sent - tx.received - tx.fee);
-
       transactions.add(tx);
     }
-
     transactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+    final unconfirmed =
+        transactions.where((item) => item.timestamp == 0).toList();
+    final confirmed = transactions.where((item) => item.timestamp > 0).toList();
+    final sorted = unconfirmed + confirmed;
+    return R(result: sorted);
+  }
 
-    return R(result: transactions);
+  @override
+  R<List<UTXO>> getUtxoSet({
+    required String descriptor,
+    required String nodeAddress,
+  }) {
+    final resp = _bitcoin.getUnspent(
+      descriptor: descriptor,
+      nodeAddress: nodeAddress,
+    );
+    if (resp.contains('Error')) {
+      return R(error: resp);
+    }
+    final json = jsonDecode(resp);
+    final List<UTXO> utxos = [];
+    for (final t in json['utxos'] as List) {
+      var utxo = UTXO.fromJson(t as Map<String, dynamic>);
+      utxos.add(utxo);
+    }
+
+    return R(result: utxos);
   }
 
   @override

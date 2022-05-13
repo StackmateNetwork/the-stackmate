@@ -147,3 +147,33 @@ class DecodedTxOutput {
   final int value;
   final String to;
 }
+
+class UTXO {
+  const UTXO(
+    this.txid,
+    this.vout,
+    this.value,
+    this.scriptPubkey,
+    this.keychainKind,
+  );
+  factory UTXO.fromJson(Map<String, dynamic> json) {
+    return UTXO(
+        json['txid'] as String,
+        json['vout'] as int,
+        json['value'] as int,
+        json['script_pubkey'] as String,
+        json['keychain_kind'] as String);
+  }
+  final String txid;
+  final int vout;
+  final int value;
+  final String scriptPubkey;
+  final String keychainKind;
+}
+/*
+  pub txid: String,
+  pub vout: u32,
+  pub value: u64,
+  pub script_pubkey: String,
+  pub keychain_kind: String
+  */

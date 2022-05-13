@@ -45,9 +45,38 @@ class HiveStore implements IStorage {
   final _box = Hive.box<String>('storage');
 
   @override
-  Future<R<int>> saveItem<T>(String cls, T obj) async {
+  R<T> getFirstItem<T>(String dbName) {
     try {
-      final id = await Hive.box<T>(cls).add(obj);
+      final bx = Hive.box<T>(dbName);
+      final len = bx.length;
+      if (len == 0) throw 'empty';
+      final item = bx.getAt(0);
+      if (item == null) throw 'empty';
+      return R(result: item);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  R<T?> getFirstItemOrNull<T>(String dbName) {
+    try {
+      final bx = Hive.box<T>(dbName);
+      final len = bx.length;
+      if (len == 0) return throw '';
+      final item = bx.getAt(0);
+      return R(result: item);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  Future<R<int>> saveItem<T>(String dbName, T item) async {
+    try {
+      final id = await Hive.box<T>(dbName).add(item);
       return R(result: id);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -56,9 +85,9 @@ class HiveStore implements IStorage {
   }
 
   @override
-  Future<R<bool>> saveItemAt<T>(String cls, int idx, T obj) async {
+  Future<R<bool>> saveItemAt<T>(String dbName, int index, T item) async {
     try {
-      await Hive.box<T>(cls).put(idx, obj);
+      await Hive.box<T>(dbName).put(index, item);
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -67,9 +96,29 @@ class HiveStore implements IStorage {
   }
 
   @override
-  R<bool> deleteItem<T>(String cls, String key) {
+  R<T> getItem<T>(String dbName, String index) {
     try {
-      Hive.box<T>(cls).delete(key);
+      return R(result: Hive.box<T>(dbName).get(index));
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  R<List<T>> getAll<T>(String dbName) {
+    try {
+      return R(result: Hive.box<T>(dbName).values.toList());
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  R<bool> deleteItem<T>(String dbName, String index) {
+    try {
+      Hive.box<T>(dbName).delete(index);
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -78,9 +127,9 @@ class HiveStore implements IStorage {
   }
 
   @override
-  Future<R<bool>> clearAll<T>(String cls) async {
+  R<bool> deleteItemAt<T>(String dbName, int index) {
     try {
-      await Hive.box<T>(cls).clear();
+      Hive.box<T>(dbName).delete(index);
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -89,19 +138,10 @@ class HiveStore implements IStorage {
   }
 
   @override
-  R<T> getItem<T>(String cls, String key) {
+  Future<R<bool>> clearAll<T>(String dbName) async {
     try {
-      return R(result: Hive.box<T>(cls).get(key));
-    } catch (e, s) {
-      locator<Logger>().logException(e, '', s);
-      return R(error: e.toString());
-    }
-  }
-
-  @override
-  R<List<T>> getAll<T>(String cls) {
-    try {
-      return R(result: Hive.box<T>(cls).values.toList());
+      await Hive.box<T>(dbName).clear();
+      return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
       return R(error: e.toString());
@@ -138,46 +178,6 @@ class HiveStore implements IStorage {
     try {
       _box.delete(key);
 
-      return const R(result: true);
-    } catch (e, s) {
-      locator<Logger>().logException(e, '', s);
-      return R(error: e.toString());
-    }
-  }
-
-  @override
-  R<T> getFirstItem<T>(String cls) {
-    try {
-      final bx = Hive.box<T>(cls);
-      final len = bx.length;
-      if (len == 0) throw 'empty';
-      final obj = bx.getAt(0);
-      if (obj == null) throw 'empty';
-      return R(result: obj);
-    } catch (e, s) {
-      locator<Logger>().logException(e, '', s);
-      return R(error: e.toString());
-    }
-  }
-
-  @override
-  R<T?> getFirstItemOrNull<T>(String cls) {
-    try {
-      final bx = Hive.box<T>(cls);
-      final len = bx.length;
-      if (len == 0) return throw '';
-      final obj = bx.getAt(0);
-      return R(result: obj);
-    } catch (e, s) {
-      locator<Logger>().logException(e, '', s);
-      return R(error: e.toString());
-    }
-  }
-
-  @override
-  R<bool> deleteItemAt<T>(String cls, int idx) {
-    try {
-      Hive.box<T>(cls).delete(idx);
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);

@@ -6,6 +6,13 @@ import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'xpub-import.freezed.dart';
 
+const segwitNativePurpose = '84';
+const invalidPubkeyError = 'Invalid Public Key.';
+const invalidFingerprintError = 'Invalid Fingerprint.';
+const invalidPathError = 'Invalid Derivation Path.';
+const cameraError = 'Error while opening camera.';
+const emptyString = '';
+
 @freezed
 class XpubImportState with _$XpubImportState {
   const factory XpubImportState({
@@ -35,12 +42,6 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   final IClipBoard _clipboard;
   // final ISoloWalletAPI _soloWalletAPI;
   final Logger _logger;
-  static const segwitNativePurpose = '84';
-  static const invalidPubkeyError = 'Invalid Public Key.';
-  static const invalidFingerprintError = 'Invalid Fingerprint.';
-  static const invalidPathError = 'Invalid Derivation Path.';
-  static const cameraError = 'Error while opening camera.';
-  static const emptyString = '';
 
   void toggleCamera() async {
     try {
@@ -95,7 +96,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   }
 
   void checkDetails() {
-    if (state.xpub == emptyString || state.xpub.length < 10) {
+    if (state.xpub == emptyString || state.xpub.length < 64) {
       emit(
         state.copyWith(errXpub: invalidPubkeyError),
       );

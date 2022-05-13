@@ -22,7 +22,7 @@ class _TransactionItemState extends State<TransactionItem> {
   Widget build(BuildContext c) {
     final isReceive = widget.transaction.isReceive();
 
-    if (isReceive)
+    if (isReceive) {
       return AnimatedSwitcher(
         key: _isExpanded ? const ValueKey(1) : const ValueKey(2),
         duration: const Duration(milliseconds: 2000),
@@ -56,6 +56,7 @@ class _TransactionItemState extends State<TransactionItem> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
+                          Padding(padding: const EdgeInsets.only(top: 8)),
                           Text(
                             NumberFormat('###,000').format(
                                   double.parse(
@@ -63,9 +64,13 @@ class _TransactionItemState extends State<TransactionItem> {
                                   ),
                                 ) +
                                 ' sats',
-                            style: c.fonts.headline6!.copyWith(
-                              color: c.colours.onBackground,
-                            ),
+                            style: (widget.transaction.height > 0)
+                                ? c.fonts.headline6!.copyWith(
+                                    color: c.colours.onBackground,
+                                  )
+                                : c.fonts.headline6!.copyWith(
+                                    color: Colors.blue,
+                                  ),
                             textAlign: TextAlign.end,
                           ),
                           Text(
@@ -73,7 +78,14 @@ class _TransactionItemState extends State<TransactionItem> {
                             style: c.fonts.overline!.copyWith(
                               color: c.colours.onBackground,
                             ),
-                          )
+                          ),
+                          if (widget.transaction.height == 0)
+                            Text(
+                              'UNCONFIRMED',
+                              style: c.fonts.overline!.copyWith(
+                                color: c.colours.onBackground,
+                              ),
+                            ),
                         ],
                       ),
                     )
@@ -145,6 +157,7 @@ class _TransactionItemState extends State<TransactionItem> {
           ),
         ),
       );
+    }
 
     return AnimatedSwitcher(
       key: _isExpanded ? const ValueKey(1) : const ValueKey(2),
@@ -164,7 +177,6 @@ class _TransactionItemState extends State<TransactionItem> {
             color: c.colours.surface,
           ),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
@@ -180,6 +192,7 @@ class _TransactionItemState extends State<TransactionItem> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        Padding(padding: const EdgeInsets.only(top: 8)),
                         Text(
                           NumberFormat('###,000').format(
                                 double.parse(
@@ -189,9 +202,13 @@ class _TransactionItemState extends State<TransactionItem> {
                                 ),
                               ) +
                               ' sats',
-                          style: c.fonts.headline6!.copyWith(
-                            color: c.colours.onBackground,
-                          ),
+                          style: (widget.transaction.height > 0)
+                              ? c.fonts.headline6!.copyWith(
+                                  color: c.colours.onBackground,
+                                )
+                              : c.fonts.headline6!.copyWith(
+                                  color: Colors.blue,
+                                ),
                           textAlign: TextAlign.end,
                         ),
                         Text(
@@ -199,7 +216,14 @@ class _TransactionItemState extends State<TransactionItem> {
                           style: c.fonts.overline!.copyWith(
                             color: c.colours.onBackground,
                           ),
-                        )
+                        ),
+                        if (widget.transaction.height == 0)
+                          Text(
+                            'UNCONFIRMED',
+                            style: c.fonts.overline!.copyWith(
+                              color: c.colours.onBackground,
+                            ),
+                          ),
                       ],
                     ),
                   )
@@ -230,18 +254,6 @@ class _TransactionItemState extends State<TransactionItem> {
               ),
             if (_isExpanded)   ...[
                 const SizedBox(height: 16),
-                //if (!widget.transaction.confirmed) ...[
-                // Text('CONFIRMATIONS'.notLocalised(),
-                //     style: c.fonts.overline),
-                // Text(widget.transaction.confirmations.toString(),
-                //     style: c.fonts.caption),
-                //] else ...[
-                //  Text('CONFIRMED'.notLocalised(),
-                //      style: c.fonts.overline),
-                //  Align(
-                //      alignment: Alignment.centerLeft,
-                //      child: Icon(Icons.check_rounded)),
-                //],
                 if (widget.transaction.timeStr() != '') ...[
                   const SizedBox(height: 16),
                   Text(
@@ -258,8 +270,6 @@ class _TransactionItemState extends State<TransactionItem> {
                   ),
                 ],
                 const SizedBox(height: 16),
-                // Text('TO ADDRESS'.notLocalised(), style: c.fonts.overline),
-                // Text(widget.transaction.txid, style: c.fonts.caption),
                 const SizedBox(height: 16),
                 Text(
                   'AMOUNT'.notLocalised(),
@@ -294,19 +304,6 @@ class _TransactionItemState extends State<TransactionItem> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // if (widget.transaction.comment != null)
-                    //   Expanded(
-                    //     child: Column(
-                    //       crossAxisAlignment:
-                    //           CrossAxisAlignment.stretch,
-                    //       children: [
-                    //         Text('COMMENT'.notLocalised(),
-                    //             style: c.fonts.overline),
-                    //         Text(widget.transaction.comment!,
-                    //             style: c.fonts.caption)
-                    //       ],
-                    //     ),
-                    //   ),
                     TextButton(
                       onPressed: () {
                         c

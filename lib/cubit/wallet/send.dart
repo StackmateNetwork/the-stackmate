@@ -168,8 +168,14 @@ class SendCubit extends Cubit<SendState> {
         ScanMode.QR,
       );
       if (barcodeScanRes == '-1') barcodeScanRes = emptyString;
-
-      emit(state.copyWith(address: barcodeScanRes));
+      if (barcodeScanRes.contains('bitcoin:')) {
+        final address = barcodeScanRes.split(':')[1].split('?')[0];
+        emit(state.copyWith(address: address));
+        final amount =
+            barcodeScanRes.split(':')[1].split('?amount=')[1].split('?')[0];
+        amountChanged(amount);
+      } else
+        emit(state.copyWith(address: barcodeScanRes));
 
       await Future.delayed(const Duration(milliseconds: 1000));
 

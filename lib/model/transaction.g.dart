@@ -19,31 +19,28 @@ class TransactionClassAdapter extends TypeAdapter<_$_Transaction> {
     return _$_Transaction(
       timestamp: fields[0] as int,
       height: fields[1] as int,
-      verified: fields[2] as bool,
-      txid: fields[3] as String,
-      received: fields[4] as int,
-      sent: fields[5] as int,
-      fee: fields[6] as int,
+      txid: fields[2] as String,
+      received: fields[3] as int,
+      sent: fields[4] as int,
+      fee: fields[5] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_Transaction obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.timestamp)
       ..writeByte(1)
       ..write(obj.height)
       ..writeByte(2)
-      ..write(obj.verified)
-      ..writeByte(3)
       ..write(obj.txid)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.received)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.sent)
-      ..writeByte(6)
+      ..writeByte(5)
       ..write(obj.fee);
   }
 
@@ -66,7 +63,6 @@ _$_Transaction _$$_TransactionFromJson(Map<String, dynamic> json) =>
     _$_Transaction(
       timestamp: json['timestamp'] as int,
       height: json['height'] as int,
-      verified: json['verified'] as bool,
       txid: json['txid'] as String,
       received: json['received'] as int,
       sent: json['sent'] as int,
@@ -77,7 +73,6 @@ Map<String, dynamic> _$$_TransactionToJson(_$_Transaction instance) =>
     <String, dynamic>{
       'timestamp': instance.timestamp,
       'height': instance.height,
-      'verified': instance.verified,
       'txid': instance.txid,
       'received': instance.received,
       'sent': instance.sent,

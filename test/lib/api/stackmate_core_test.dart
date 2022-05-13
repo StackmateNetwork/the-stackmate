@@ -87,7 +87,7 @@ void main() {
     final int totalOut = history.result!.fold(
       0,
       (int sum, Transaction item) =>
-          (item.sent == 0) ? sum + item.sent : sum + item.sent + item.fee,
+          (item.sent != 0) ? sum + item.sent + item.fee : sum + 0,
     );
     final inferredBalance = totalIn - totalOut;
     final balance = libstackmate.syncBalance(
@@ -96,6 +96,13 @@ void main() {
     );
     assert(!balance.hasError);
     assert(balance.result! == inferredBalance);
+
+    final utxos = libstackmate.getUtxoSet(
+      descriptor: expPublicDesc,
+      nodeAddress: nodeAddress,
+    );
+
+    assert(!utxos.hasError);
   });
 
   test('Wallet Transaction Flow', () async {
@@ -210,5 +217,6 @@ void main() {
     assert(response.hasError);
     structuredError = SMError.fromJson(response.error!);
     print(structuredError.oneliner);
+    return;
   });
 }
