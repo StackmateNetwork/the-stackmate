@@ -7,28 +7,21 @@ class TransactionComplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txid = context.select((SendCubit sc) => sc.state.txId);
+    // final txid = context.select((SendCubit sc) => sc.state.txId);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 60),
         Text(
-          'Confirm\nTransaction',
+          'Transaction\nBroadcasted.',
           style: context.fonts.headline5!.copyWith(
-            color: context.colours.onBackground,
-          ),
-        ),
-        const SizedBox(height: 40),
-        Text(
-          'Transaction ID'.toUpperCase(),
-          style: context.fonts.overline!.copyWith(
             color: context.colours.onBackground,
           ),
         ),
         const SizedBox(height: 16),
         Text(
-          '' + txid,
+          'Check your wallet history for details.',
           style: context.fonts.caption!.copyWith(
             color: context.colours.onBackground,
           ),
@@ -38,7 +31,7 @@ class TransactionComplete extends StatelessWidget {
           onPressed: () {
             context.read<SendCubit>().shareTxId();
           },
-          child: const Text('SHARE TRANSACTION ID'),
+          child: const Text('Done.'),
         )
       ],
     );

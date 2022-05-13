@@ -198,9 +198,13 @@ class _TransactionItemState extends State<TransactionItem> {
                                 ),
                               ) +
                               ' sats',
-                          style: c.fonts.headline6!.copyWith(
-                            color: c.colours.onBackground,
-                          ),
+                          style: (widget.transaction.height > 0)
+                              ? c.fonts.headline6!.copyWith(
+                                  color: c.colours.onBackground,
+                                )
+                              : c.fonts.headline6!.copyWith(
+                                  color: Colors.blue,
+                                ),
                           textAlign: TextAlign.end,
                         ),
                         Text(
@@ -208,7 +212,14 @@ class _TransactionItemState extends State<TransactionItem> {
                           style: c.fonts.overline!.copyWith(
                             color: c.colours.onBackground,
                           ),
-                        )
+                        ),
+                        if (widget.transaction.height == 0)
+                          Text(
+                            'UNCONFIRMED',
+                            style: c.fonts.overline!.copyWith(
+                              color: c.colours.onBackground,
+                            ),
+                          ),
                       ],
                     ),
                   )
