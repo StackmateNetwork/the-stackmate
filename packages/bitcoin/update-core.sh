@@ -6,9 +6,9 @@ rm -rf releases
 mkdir -p releases
 cd releases
 echo "fetching stackmate-core release $RELEASE"
-wget https://github.com/StackmateNetwork/stackmate-core/releases/download/$RELEASE/$RELEASE.tar 
-tar -xf $RELEASE.tar 
-rm -rf $RELEASE.tar
+wget https://github.com/StackmateNetwork/stackmate-core/releases/download/$RELEASE/$RELEASE.tar.gz 
+tar -xzf $RELEASE.tar.gz 
+rm -rf $RELEASE.tar.gz
 cd ..
 
 echo 'updating to new jni binaries'
@@ -18,10 +18,10 @@ mkdir -p android/src/main/jniLibs/armeabi-v7a
 mkdir -p android/src/main/jniLibs/x86
 mkdir -p android/src/main/jniLibs/x86_64
 
-mv -f releases/$RELEASE/aarch64-linux-android/libstackmate.so android/src/main/jniLibs/arm64-v8a
-mv -f releases/$RELEASE/armv7-linux-androideabi/libstackmate.so android/src/main/jniLibs/armeabi-v7a
-mv -f releases/$RELEASE/i686-linux-android/libstackmate.so android/src/main/jniLibs/x86
-mv -f releases/$RELEASE/x86_64-linux-android/libstackmate.so android/src/main/jniLibs/x86_64
+mv -f releases/builds/aarch64-linux-android/libstackmate.so android/src/main/jniLibs/arm64-v8a
+mv -f releases/builds/armv7-linux-androideabi/libstackmate.so android/src/main/jniLibs/armeabi-v7a
+mv -f releases/builds/i686-linux-android/libstackmate.so android/src/main/jniLibs/x86
+mv -f releases/builds/x86_64-linux-android/libstackmate.so android/src/main/jniLibs/x86_64
 
 rm -rf releases
 

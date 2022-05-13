@@ -10,6 +10,7 @@ class Transaction with _$Transaction {
   const factory Transaction({
     @HiveField(0) required int timestamp,
     @HiveField(1) required int height,
+    // ignore: non_constant_identifier_names
     @HiveField(2) required int confirmation_time,
     @HiveField(3) required String txid,
     @HiveField(4) required int received,
