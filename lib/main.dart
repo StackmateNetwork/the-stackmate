@@ -96,7 +96,7 @@ class Stackmate extends StatelessWidget {
         path: '/send',
         builder: (_, __) => const WalletSendScreen(fromQr: false),
       ),
-     GoRoute(path: '/txinfo',builder: (_,__) => const TransactionDetailScreen()),
+     //GoRoute(path: '/txinfo',builder: (_,__) => const TransactionDetailScreen(txid: txid,)),
       GoRoute(
         path: '/send-from-qr',
         builder: (_, __) => const WalletSendScreen(fromQr: true),
