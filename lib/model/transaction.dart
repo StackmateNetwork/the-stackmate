@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
-
+import 'package:intl/intl.dart';
 part 'transaction.g.dart';
 part 'transaction.freezed.dart';
 
@@ -25,10 +25,9 @@ class Transaction with _$Transaction {
   String timeStr() {
     if (timestamp == 0) return '';
     final t = timestamp;
-    final dt = DateTime.fromMillisecondsSinceEpoch(
-      t * 1000,
-    ).toString();
-    return dt;
+    final date = DateTime.fromMillisecondsSinceEpoch(t * 1000);
+    final formattedDateTime = DateFormat.yMMMMEEEEd().add_jms().format(date);
+    return formattedDateTime;
   }
 
   String amountToBtc() =>

@@ -18,7 +18,7 @@ import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
 import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
-import 'package:sats/ui/screen/TxDetail.dart';
+// import 'package:sats/ui/screen/TxDetail.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
 
@@ -96,7 +96,7 @@ class Stackmate extends StatelessWidget {
         path: '/send',
         builder: (_, __) => const WalletSendScreen(fromQr: false),
       ),
-     //GoRoute(path: '/txinfo',builder: (_,__) => const TransactionDetailScreen(txid: txid,)),
+      //GoRoute(path: '/txinfo',builder: (_,__) => const TransactionDetailScreen(txid: txid,)),
       GoRoute(
         path: '/send-from-qr',
         builder: (_, __) => const WalletSendScreen(fromQr: true),
