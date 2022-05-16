@@ -62,6 +62,7 @@ void main() {
       walletType: 'SIGNER',
       lastAddressIndex: 0,
       balance: 0,
+      transactions: [],
     );
 
     setUp(() async {

@@ -22,18 +22,19 @@ class _$WalletTearOff {
   const _$WalletTearOff();
 
   _Wallet call(
-      {@HiveField(0) required String label,
-      @HiveField(1) required String descriptor,
-      @HiveField(2) required String policy,
-      @HiveField(3) required int requiredPolicyElements,
-      @HiveField(4) required List<String> policyElements,
-      @HiveField(5) required String blockchain,
-      @HiveField(6) List<Transaction>? transactions,
-      @HiveField(7) int? id,
+      {@HiveField(0) int? id,
+      @HiveField(1) required String label,
+      @HiveField(2) required String descriptor,
+      @HiveField(3) required String policy,
+      @HiveField(4) required int requiredPolicyElements,
+      @HiveField(5) required List<String> policyElements,
+      @HiveField(6) required String blockchain,
+      @HiveField(7) required List<Transaction> transactions,
       @HiveField(8) required int balance,
       @HiveField(9) required int lastAddressIndex,
       @HiveField(10) required String walletType}) {
     return _Wallet(
+      id: id,
       label: label,
       descriptor: descriptor,
       policy: policy,
@@ -41,7 +42,6 @@ class _$WalletTearOff {
       policyElements: policyElements,
       blockchain: blockchain,
       transactions: transactions,
-      id: id,
       balance: balance,
       lastAddressIndex: lastAddressIndex,
       walletType: walletType,
@@ -59,21 +59,21 @@ const $Wallet = _$WalletTearOff();
 /// @nodoc
 mixin _$Wallet {
   @HiveField(0)
-  String get label => throw _privateConstructorUsedError;
-  @HiveField(1)
-  String get descriptor => throw _privateConstructorUsedError;
-  @HiveField(2)
-  String get policy => throw _privateConstructorUsedError;
-  @HiveField(3)
-  int get requiredPolicyElements => throw _privateConstructorUsedError;
-  @HiveField(4)
-  List<String> get policyElements => throw _privateConstructorUsedError;
-  @HiveField(5)
-  String get blockchain => throw _privateConstructorUsedError;
-  @HiveField(6)
-  List<Transaction>? get transactions => throw _privateConstructorUsedError;
-  @HiveField(7)
   int? get id => throw _privateConstructorUsedError;
+  @HiveField(1)
+  String get label => throw _privateConstructorUsedError;
+  @HiveField(2)
+  String get descriptor => throw _privateConstructorUsedError;
+  @HiveField(3)
+  String get policy => throw _privateConstructorUsedError;
+  @HiveField(4)
+  int get requiredPolicyElements => throw _privateConstructorUsedError;
+  @HiveField(5)
+  List<String> get policyElements => throw _privateConstructorUsedError;
+  @HiveField(6)
+  String get blockchain => throw _privateConstructorUsedError;
+  @HiveField(7)
+  List<Transaction> get transactions => throw _privateConstructorUsedError;
   @HiveField(8)
   int get balance => throw _privateConstructorUsedError;
   @HiveField(9)
@@ -91,14 +91,14 @@ abstract class $WalletCopyWith<$Res> {
   factory $WalletCopyWith(Wallet value, $Res Function(Wallet) then) =
       _$WalletCopyWithImpl<$Res>;
   $Res call(
-      {@HiveField(0) String label,
-      @HiveField(1) String descriptor,
-      @HiveField(2) String policy,
-      @HiveField(3) int requiredPolicyElements,
-      @HiveField(4) List<String> policyElements,
-      @HiveField(5) String blockchain,
-      @HiveField(6) List<Transaction>? transactions,
-      @HiveField(7) int? id,
+      {@HiveField(0) int? id,
+      @HiveField(1) String label,
+      @HiveField(2) String descriptor,
+      @HiveField(3) String policy,
+      @HiveField(4) int requiredPolicyElements,
+      @HiveField(5) List<String> policyElements,
+      @HiveField(6) String blockchain,
+      @HiveField(7) List<Transaction> transactions,
       @HiveField(8) int balance,
       @HiveField(9) int lastAddressIndex,
       @HiveField(10) String walletType});
@@ -114,6 +114,7 @@ class _$WalletCopyWithImpl<$Res> implements $WalletCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? label = freezed,
     Object? descriptor = freezed,
     Object? policy = freezed,
@@ -121,12 +122,15 @@ class _$WalletCopyWithImpl<$Res> implements $WalletCopyWith<$Res> {
     Object? policyElements = freezed,
     Object? blockchain = freezed,
     Object? transactions = freezed,
-    Object? id = freezed,
     Object? balance = freezed,
     Object? lastAddressIndex = freezed,
     Object? walletType = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       label: label == freezed
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -154,11 +158,7 @@ class _$WalletCopyWithImpl<$Res> implements $WalletCopyWith<$Res> {
       transactions: transactions == freezed
           ? _value.transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<Transaction>?,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as List<Transaction>,
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
@@ -181,14 +181,14 @@ abstract class _$WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
       __$WalletCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@HiveField(0) String label,
-      @HiveField(1) String descriptor,
-      @HiveField(2) String policy,
-      @HiveField(3) int requiredPolicyElements,
-      @HiveField(4) List<String> policyElements,
-      @HiveField(5) String blockchain,
-      @HiveField(6) List<Transaction>? transactions,
-      @HiveField(7) int? id,
+      {@HiveField(0) int? id,
+      @HiveField(1) String label,
+      @HiveField(2) String descriptor,
+      @HiveField(3) String policy,
+      @HiveField(4) int requiredPolicyElements,
+      @HiveField(5) List<String> policyElements,
+      @HiveField(6) String blockchain,
+      @HiveField(7) List<Transaction> transactions,
       @HiveField(8) int balance,
       @HiveField(9) int lastAddressIndex,
       @HiveField(10) String walletType});
@@ -205,6 +205,7 @@ class __$WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? label = freezed,
     Object? descriptor = freezed,
     Object? policy = freezed,
@@ -212,12 +213,15 @@ class __$WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
     Object? policyElements = freezed,
     Object? blockchain = freezed,
     Object? transactions = freezed,
-    Object? id = freezed,
     Object? balance = freezed,
     Object? lastAddressIndex = freezed,
     Object? walletType = freezed,
   }) {
     return _then(_Wallet(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       label: label == freezed
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -245,11 +249,7 @@ class __$WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
       transactions: transactions == freezed
           ? _value.transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<Transaction>?,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as List<Transaction>,
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
@@ -271,14 +271,14 @@ class __$WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
 @HiveType(typeId: 1, adapterName: 'WalletClassAdapter')
 class _$_Wallet extends _Wallet {
   const _$_Wallet(
-      {@HiveField(0) required this.label,
-      @HiveField(1) required this.descriptor,
-      @HiveField(2) required this.policy,
-      @HiveField(3) required this.requiredPolicyElements,
-      @HiveField(4) required this.policyElements,
-      @HiveField(5) required this.blockchain,
-      @HiveField(6) this.transactions,
-      @HiveField(7) this.id,
+      {@HiveField(0) this.id,
+      @HiveField(1) required this.label,
+      @HiveField(2) required this.descriptor,
+      @HiveField(3) required this.policy,
+      @HiveField(4) required this.requiredPolicyElements,
+      @HiveField(5) required this.policyElements,
+      @HiveField(6) required this.blockchain,
+      @HiveField(7) required this.transactions,
       @HiveField(8) required this.balance,
       @HiveField(9) required this.lastAddressIndex,
       @HiveField(10) required this.walletType})
@@ -289,28 +289,28 @@ class _$_Wallet extends _Wallet {
 
   @override
   @HiveField(0)
-  final String label;
+  final int? id;
   @override
   @HiveField(1)
-  final String descriptor;
+  final String label;
   @override
   @HiveField(2)
-  final String policy;
+  final String descriptor;
   @override
   @HiveField(3)
-  final int requiredPolicyElements;
+  final String policy;
   @override
   @HiveField(4)
-  final List<String> policyElements;
+  final int requiredPolicyElements;
   @override
   @HiveField(5)
-  final String blockchain;
+  final List<String> policyElements;
   @override
   @HiveField(6)
-  final List<Transaction>? transactions;
+  final String blockchain;
   @override
   @HiveField(7)
-  final int? id;
+  final List<Transaction> transactions;
   @override
   @HiveField(8)
   final int balance;
@@ -323,13 +323,15 @@ class _$_Wallet extends _Wallet {
 
   @override
   String toString() {
-    return 'Wallet(label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, id: $id, balance: $balance, lastAddressIndex: $lastAddressIndex, walletType: $walletType)';
+    return 'Wallet(id: $id, label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, balance: $balance, lastAddressIndex: $lastAddressIndex, walletType: $walletType)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Wallet &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.descriptor, descriptor) ||
@@ -349,8 +351,6 @@ class _$_Wallet extends _Wallet {
             (identical(other.transactions, transactions) ||
                 const DeepCollectionEquality()
                     .equals(other.transactions, transactions)) &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.balance, balance) ||
                 const DeepCollectionEquality()
                     .equals(other.balance, balance)) &&
@@ -365,6 +365,7 @@ class _$_Wallet extends _Wallet {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(label) ^
       const DeepCollectionEquality().hash(descriptor) ^
       const DeepCollectionEquality().hash(policy) ^
@@ -372,7 +373,6 @@ class _$_Wallet extends _Wallet {
       const DeepCollectionEquality().hash(policyElements) ^
       const DeepCollectionEquality().hash(blockchain) ^
       const DeepCollectionEquality().hash(transactions) ^
-      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(balance) ^
       const DeepCollectionEquality().hash(lastAddressIndex) ^
       const DeepCollectionEquality().hash(walletType);
@@ -390,14 +390,14 @@ class _$_Wallet extends _Wallet {
 
 abstract class _Wallet extends Wallet {
   const factory _Wallet(
-      {@HiveField(0) required String label,
-      @HiveField(1) required String descriptor,
-      @HiveField(2) required String policy,
-      @HiveField(3) required int requiredPolicyElements,
-      @HiveField(4) required List<String> policyElements,
-      @HiveField(5) required String blockchain,
-      @HiveField(6) List<Transaction>? transactions,
-      @HiveField(7) int? id,
+      {@HiveField(0) int? id,
+      @HiveField(1) required String label,
+      @HiveField(2) required String descriptor,
+      @HiveField(3) required String policy,
+      @HiveField(4) required int requiredPolicyElements,
+      @HiveField(5) required List<String> policyElements,
+      @HiveField(6) required String blockchain,
+      @HiveField(7) required List<Transaction> transactions,
       @HiveField(8) required int balance,
       @HiveField(9) required int lastAddressIndex,
       @HiveField(10) required String walletType}) = _$_Wallet;
@@ -407,28 +407,28 @@ abstract class _Wallet extends Wallet {
 
   @override
   @HiveField(0)
-  String get label => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @override
   @HiveField(1)
-  String get descriptor => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
   @override
   @HiveField(2)
-  String get policy => throw _privateConstructorUsedError;
+  String get descriptor => throw _privateConstructorUsedError;
   @override
   @HiveField(3)
-  int get requiredPolicyElements => throw _privateConstructorUsedError;
+  String get policy => throw _privateConstructorUsedError;
   @override
   @HiveField(4)
-  List<String> get policyElements => throw _privateConstructorUsedError;
+  int get requiredPolicyElements => throw _privateConstructorUsedError;
   @override
   @HiveField(5)
-  String get blockchain => throw _privateConstructorUsedError;
+  List<String> get policyElements => throw _privateConstructorUsedError;
   @override
   @HiveField(6)
-  List<Transaction>? get transactions => throw _privateConstructorUsedError;
+  String get blockchain => throw _privateConstructorUsedError;
   @override
   @HiveField(7)
-  int? get id => throw _privateConstructorUsedError;
+  List<Transaction> get transactions => throw _privateConstructorUsedError;
   @override
   @HiveField(8)
   int get balance => throw _privateConstructorUsedError;

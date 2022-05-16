@@ -153,17 +153,19 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       }
 
       var newWallet = Wallet(
-          label: state.walletLabel,
-          walletType: signerWalletType,
-          descriptor: descriptor.result!,
-          policy: readable,
-          requiredPolicyElements: 1,
-          policyElements: [
-            'primary:$fullXPub',
-          ],
-          blockchain: _blockchainCubit.state.blockchain.name,
-          lastAddressIndex: 0,
-          balance: 0);
+        label: state.walletLabel,
+        walletType: signerWalletType,
+        descriptor: descriptor.result!,
+        policy: readable,
+        requiredPolicyElements: 1,
+        policyElements: [
+          'primary:$fullXPub',
+        ],
+        blockchain: _blockchainCubit.state.blockchain.name,
+        lastAddressIndex: 0,
+        balance: 0,
+        transactions: [],
+      );
 
       final savedid = await _storage.saveItem<Wallet>(
         StoreKeys.Wallet.name,
