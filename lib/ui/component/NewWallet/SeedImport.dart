@@ -41,6 +41,8 @@ class SeedImportPhrase extends StatelessWidget {
             Padding(
               padding: EdgeInsets.zero,
               child: TextField(
+                style: c.fonts.headline6!.copyWith(
+                color: Colors.white),
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 autocorrect: false,
@@ -99,6 +101,10 @@ class SeedImportPassphrase extends StatelessWidget {
             Padding(
               padding: EdgeInsets.zero,
               child: TextField(
+                style: c.fonts.headline6!.copyWith(
+                color: Colors.white,
+                // fontWeight: FontWeight.bold,
+              ),
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 autocorrect: false,

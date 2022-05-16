@@ -102,14 +102,14 @@ class SeedWordCell extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 8),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
-            color: c.colours.secondary,
+            color: c.colours.background,
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(
             text,
             textAlign: TextAlign.left,
             style: c.fonts.subtitle2!.copyWith(
-              color: onTap == null ? Colors.white : c.colours.primary,
+              color: onTap == null ?  c.colours.primary :Colors.white,
             ),
           ),
         ),
