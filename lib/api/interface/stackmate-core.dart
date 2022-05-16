@@ -1,6 +1,6 @@
 import 'package:bitcoin/bitcoin.dart';
-import 'package:sats/model/transaction.dart';
 import 'package:sats/model/result.dart';
+import 'package:sats/model/transaction.dart';
 
 abstract class IStackMateCore {
   R<Seed> generateMaster({

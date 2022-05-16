@@ -21,8 +21,8 @@ class Wallet with _$Wallet {
     @HiveField(5) required String blockchain,
     @HiveField(6) List<Transaction>? transactions,
     @HiveField(7) int? id,
-    @HiveField(8) int? balance,
-    @HiveField(9) int? lastAddressIndex,
+    @HiveField(8) required int balance,
+    @HiveField(9) required int lastAddressIndex,
     @HiveField(10) required String walletType,
   }) = _Wallet;
   const Wallet._();

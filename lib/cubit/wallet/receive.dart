@@ -74,14 +74,12 @@ class ReceiveCubit extends Cubit<ReceiveState> {
         throw SMError.fromJson(latestAddress.error!);
       }
 
-      _vibrate.vibe();
-
-      emit(
-        state.copyWith(
-          loadingAddress: true,
-          address: latestAddress.result!,
-        ),
-      );
+      // emit(
+      //   state.copyWith(
+      //     loadingAddress: true,
+      //     address: latestAddress.result!,
+      //   ),
+      // );
 
       final updated = wallet.copyWith(
         lastAddressIndex: nextIndex,
@@ -93,9 +91,11 @@ class ReceiveCubit extends Cubit<ReceiveState> {
         updated.id!,
         updated,
       );
+      _vibrate.vibe();
       emit(
         state.copyWith(
           loadingAddress: false,
+          address: latestAddress.result!,
         ),
       );
       return;

@@ -144,15 +144,15 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       }
       // check balance and see if last address index needs update
       var newWallet = Wallet(
-        label: state.label,
-        descriptor: descriptor.result!,
-        policy: readable,
-        requiredPolicyElements: 1,
-        policyElements: ['primary:$fullXPub'],
-        blockchain: _blockchainCubit.state.blockchain.name,
-        walletType: watcherWalletType,
-        lastAddressIndex: 0,
-      );
+          label: state.label,
+          descriptor: descriptor.result!,
+          policy: readable,
+          requiredPolicyElements: 1,
+          policyElements: ['primary:$fullXPub'],
+          blockchain: _blockchainCubit.state.blockchain.name,
+          walletType: watcherWalletType,
+          lastAddressIndex: 0,
+          balance: 0);
 
       final savedId = await _storage.saveItem<Wallet>(
         StoreKeys.Wallet.name,

@@ -25,8 +25,8 @@ class WalletClassAdapter extends TypeAdapter<_$_Wallet> {
       blockchain: fields[5] as String,
       transactions: (fields[6] as List?)?.cast<Transaction>(),
       id: fields[7] as int?,
-      balance: fields[8] as int?,
-      lastAddressIndex: fields[9] as int?,
+      balance: fields[8] as int,
+      lastAddressIndex: fields[9] as int,
       walletType: fields[10] as String,
     );
   }
@@ -87,8 +87,8 @@ _$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
           ?.map((e) => Transaction.fromJson(e as Map<String, dynamic>))
           .toList(),
       id: json['id'] as int?,
-      balance: json['balance'] as int?,
-      lastAddressIndex: json['lastAddressIndex'] as int?,
+      balance: json['balance'] as int,
+      lastAddressIndex: json['lastAddressIndex'] as int,
       walletType: json['walletType'] as String,
     );
 

@@ -30,8 +30,8 @@ class _$WalletTearOff {
       @HiveField(5) required String blockchain,
       @HiveField(6) List<Transaction>? transactions,
       @HiveField(7) int? id,
-      @HiveField(8) int? balance,
-      @HiveField(9) int? lastAddressIndex,
+      @HiveField(8) required int balance,
+      @HiveField(9) required int lastAddressIndex,
       @HiveField(10) required String walletType}) {
     return _Wallet(
       label: label,
@@ -75,9 +75,9 @@ mixin _$Wallet {
   @HiveField(7)
   int? get id => throw _privateConstructorUsedError;
   @HiveField(8)
-  int? get balance => throw _privateConstructorUsedError;
+  int get balance => throw _privateConstructorUsedError;
   @HiveField(9)
-  int? get lastAddressIndex => throw _privateConstructorUsedError;
+  int get lastAddressIndex => throw _privateConstructorUsedError;
   @HiveField(10)
   String get walletType => throw _privateConstructorUsedError;
 
@@ -99,8 +99,8 @@ abstract class $WalletCopyWith<$Res> {
       @HiveField(5) String blockchain,
       @HiveField(6) List<Transaction>? transactions,
       @HiveField(7) int? id,
-      @HiveField(8) int? balance,
-      @HiveField(9) int? lastAddressIndex,
+      @HiveField(8) int balance,
+      @HiveField(9) int lastAddressIndex,
       @HiveField(10) String walletType});
 }
 
@@ -162,11 +162,11 @@ class _$WalletCopyWithImpl<$Res> implements $WalletCopyWith<$Res> {
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       lastAddressIndex: lastAddressIndex == freezed
           ? _value.lastAddressIndex
           : lastAddressIndex // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       walletType: walletType == freezed
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
@@ -189,8 +189,8 @@ abstract class _$WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
       @HiveField(5) String blockchain,
       @HiveField(6) List<Transaction>? transactions,
       @HiveField(7) int? id,
-      @HiveField(8) int? balance,
-      @HiveField(9) int? lastAddressIndex,
+      @HiveField(8) int balance,
+      @HiveField(9) int lastAddressIndex,
       @HiveField(10) String walletType});
 }
 
@@ -253,11 +253,11 @@ class __$WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       lastAddressIndex: lastAddressIndex == freezed
           ? _value.lastAddressIndex
           : lastAddressIndex // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       walletType: walletType == freezed
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
@@ -279,8 +279,8 @@ class _$_Wallet extends _Wallet {
       @HiveField(5) required this.blockchain,
       @HiveField(6) this.transactions,
       @HiveField(7) this.id,
-      @HiveField(8) this.balance,
-      @HiveField(9) this.lastAddressIndex,
+      @HiveField(8) required this.balance,
+      @HiveField(9) required this.lastAddressIndex,
       @HiveField(10) required this.walletType})
       : super._();
 
@@ -313,10 +313,10 @@ class _$_Wallet extends _Wallet {
   final int? id;
   @override
   @HiveField(8)
-  final int? balance;
+  final int balance;
   @override
   @HiveField(9)
-  final int? lastAddressIndex;
+  final int lastAddressIndex;
   @override
   @HiveField(10)
   final String walletType;
@@ -398,8 +398,8 @@ abstract class _Wallet extends Wallet {
       @HiveField(5) required String blockchain,
       @HiveField(6) List<Transaction>? transactions,
       @HiveField(7) int? id,
-      @HiveField(8) int? balance,
-      @HiveField(9) int? lastAddressIndex,
+      @HiveField(8) required int balance,
+      @HiveField(9) required int lastAddressIndex,
       @HiveField(10) required String walletType}) = _$_Wallet;
   const _Wallet._() : super._();
 
@@ -431,10 +431,10 @@ abstract class _Wallet extends Wallet {
   int? get id => throw _privateConstructorUsedError;
   @override
   @HiveField(8)
-  int? get balance => throw _privateConstructorUsedError;
+  int get balance => throw _privateConstructorUsedError;
   @override
   @HiveField(9)
-  int? get lastAddressIndex => throw _privateConstructorUsedError;
+  int get lastAddressIndex => throw _privateConstructorUsedError;
   @override
   @HiveField(10)
   String get walletType => throw _privateConstructorUsedError;

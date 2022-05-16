@@ -195,15 +195,15 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     // Check history and whether this wallet needs to update its address index
 
     var newWallet = Wallet(
-      label: state.walletLabel,
-      walletType: signerWalletType,
-      descriptor: descriptor.result!,
-      policy: readable,
-      requiredPolicyElements: 1,
-      policyElements: ['primary:$fullXPub'],
-      blockchain: _blockchainCubit.state.blockchain.name,
-      lastAddressIndex: 0,
-    );
+        label: state.walletLabel,
+        walletType: signerWalletType,
+        descriptor: descriptor.result!,
+        policy: readable,
+        requiredPolicyElements: 1,
+        policyElements: ['primary:$fullXPub'],
+        blockchain: _blockchainCubit.state.blockchain.name,
+        lastAddressIndex: 0,
+        balance: 0);
 
     final savedId = await _storage.saveItem<Wallet>(
       StoreKeys.Wallet.name,

@@ -61,6 +61,7 @@ void main() {
       requiredPolicyElements: 1,
       walletType: 'SIGNER',
       lastAddressIndex: 0,
+      balance: 0,
     );
 
     setUp(() async {
