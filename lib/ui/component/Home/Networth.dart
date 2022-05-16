@@ -29,9 +29,8 @@ class Networth extends StatelessWidget {
                         .format(double.parse(networth.toString())) +
                     ' sats'
                 : '0 sats',
-            style: c.fonts.bodyMedium!.copyWith(
+            style: c.fonts.headline5!.copyWith(
               color: Colors.white,
-              fontSize: 21,
             ),
           ),
           const Spacer(),

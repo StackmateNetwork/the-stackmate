@@ -27,6 +27,8 @@ class _Wallet extends StatelessWidget {
   Widget build(BuildContext c) {
     final zeroBal = c.select((InfoCubit wc) => wc.state.zeroBalance());
     final showInfo = c.select((InfoCubit wc) => wc.state.showInfo);
+    final isLoading = c.select((InfoCubit wc) => wc.state.loadingTransactions);
+
     final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet);
 
     if (wallet == null) return Container();
@@ -87,18 +89,37 @@ class _Wallet extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Opacity(
-                                  opacity: 0.4,
+                                AnimatedOpacity(
+                                  duration: const Duration(milliseconds: 300),
+                                  opacity: (!isLoading) ? 0.8 : 0.4,
                                   child: IconButton(
                                     iconSize: 28,
                                     color: c.colours.error,
                                     onPressed: () {
-                                      _deleteWalletClicked(c, zeroBal, wallet);
+                                      if (!isLoading)
+                                        _deleteWalletClicked(
+                                          c,
+                                          zeroBal,
+                                          wallet,
+                                        );
                                     },
-                                    icon:
-                                        const Icon(Icons.delete_sweep_outlined),
+                                    icon: const Icon(
+                                      Icons.delete_sweep_outlined,
+                                    ),
                                   ),
                                 ),
+                                // Opacity(
+                                //   opacity: 0.4,
+                                //   child: IconButton(
+                                //     iconSize: 28,
+                                //     color: c.colours.error,
+                                //     onPressed: () {
+                                //       _deleteWalletClicked(c, zeroBal, wallet);
+                                //     },
+                                //     icon:
+                                //         const Icon(Icons.delete_sweep_outlined),
+                                //   ),
+                                // ),
                                 IconButton(
                                   color: c.colours.primary,
                                   onPressed: () {

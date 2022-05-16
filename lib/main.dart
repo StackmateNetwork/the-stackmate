@@ -71,12 +71,26 @@ class Stackmate extends StatelessWidget {
   late final _router = GoRouter(
     debugLogDiagnostics: true,
     routes: [
-      GoRoute(path: '/', builder: (_, __) => const HomeScreen()),
-      GoRoute(path: '/calc', builder: (_, __) => const CalculatorScreen()),
-      GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
-      GoRoute(path: '/network', builder: (_, __) => Container()),
-      //
-      GoRoute(path: '/add-wallet', builder: (_, __) => const AddWalletScreen()),
+      GoRoute(
+        path: '/',
+        builder: (_, __) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: '/calc',
+        builder: (_, __) => const CalculatorScreen(),
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (_, __) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/network',
+        builder: (_, __) => Container(),
+      ),
+      GoRoute(
+        path: '/add-wallet',
+        builder: (_, __) => const AddWalletScreen(),
+      ),
       GoRoute(
         path: '/generate-seed',
         builder: (_, __) => const SeedGenerateScreen(),
@@ -90,19 +104,32 @@ class Stackmate extends StatelessWidget {
         builder: (_, __) => const XPubImportScreen(),
       ),
 
-      GoRoute(path: '/wallet', builder: (_, __) => const WalletScreen()),
-      GoRoute(path: '/receive', builder: (_, __) => const ReceiveScreen()),
+      GoRoute(
+        path: '/wallet',
+        builder: (_, __) => const WalletScreen(),
+      ),
+      GoRoute(
+        path: '/receive',
+        builder: (_, __) => const ReceiveScreen(),
+      ),
       GoRoute(
         path: '/send',
-        builder: (_, __) => const WalletSendScreen(fromQr: false),
+        builder: (_, __) => const WalletSendScreen(
+          fromQr: false,
+        ),
       ),
       //GoRoute(path: '/txinfo',builder: (_,__) => const TransactionDetailScreen(txid: txid,)),
       GoRoute(
         path: '/send-from-qr',
-        builder: (_, __) => const WalletSendScreen(fromQr: true),
+        builder: (_, __) => const WalletSendScreen(
+          fromQr: true,
+        ),
       ),
       //
-      GoRoute(path: '/logs', builder: (_, __) => const LogsScreen()),
+      GoRoute(
+        path: '/logs',
+        builder: (_, __) => const LogsScreen(),
+      ),
     ],
     errorBuilder: (context, state) => Container(color: Colors.red),
   );
