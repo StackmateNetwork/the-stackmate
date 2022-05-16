@@ -72,21 +72,21 @@ class SendState with _$SendState {
 
 class SendCubit extends Cubit<SendState> {
   SendCubit(
-      bool withQR,
-      this._walletCubit,
-      // this._bitcoin,
-      this._blockchain,
-      this._logger,
-      this._clipBoard,
-      this._share,
-      this._nodeAddressCubit,
-      this._core,
-      this._fees)
-      : super(const SendState()) {
+    bool withQR,
+    this._walletsCubit,
+    // this._bitcoin,
+    this._blockchain,
+    this._logger,
+    this._clipBoard,
+    this._share,
+    this._nodeAddressCubit,
+    this._core,
+    this._fees,
+  ) : super(const SendState()) {
     _init(withQR);
   }
 
-  final WalletsCubit _walletCubit;
+  final WalletsCubit _walletsCubit;
   // final IBitcoin _bitcoin;
   final Logger _logger;
   final ChainSelectCubit _blockchain;
@@ -115,11 +115,14 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
+  // void completed() {
+  //   _walletsCubit.walletSelected(wallet)
+  // }
   void getBalance() async {
     try {
       emit(
         state.copyWith(
-          balance: _walletCubit.state.selectedWallet!.balance,
+          balance: _walletsCubit.state.selectedWallet!.balance,
           loadingStart: false,
           errLoading: emptyString,
         ),
@@ -128,7 +131,7 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final bal = await compute(computeBalance, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
       });
 
@@ -246,7 +249,7 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final psbt = await compute(buildTx, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'txOutputs': txOutputs,
         'feeAbsolute': dummyFeeValue,
@@ -255,7 +258,7 @@ class SendCubit extends Cubit<SendState> {
       });
 
       final weight = await compute(getWeight, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'psbt': psbt,
       });
 
@@ -353,7 +356,7 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final psbt = await compute(buildTx, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'txOutputs': state.txOutputs,
         'feeAbsolute': state.finalFee.toString(),
@@ -421,7 +424,7 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       // final unsigned = state.psbt;
-      final descriptor = _walletCubit.state.selectedWallet!.descriptor;
+      final descriptor = _walletsCubit.state.selectedWallet!.descriptor;
       final signed = await compute(signTx, {
         'descriptor': descriptor,
         'unsignedPSBT': state.psbt,
@@ -430,7 +433,7 @@ class SendCubit extends Cubit<SendState> {
         throw psbtNotFinalizedError;
       }
       final txid = await compute(broadcastTx, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'signedPSBT': signed.psbt,
       });

@@ -32,11 +32,11 @@ class _WalletSend extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        if (step != SendSteps.address && step != SendSteps.sent) {
-          context.read<SendCubit>().backClicked();
-          return false;
+        if (step == SendSteps.address || step == SendSteps.sent) {
+          return true;
         }
-        return true;
+        context.read<SendCubit>().backClicked();
+        return false;
       },
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

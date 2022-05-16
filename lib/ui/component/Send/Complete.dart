@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class TransactionComplete extends StatelessWidget {
@@ -24,8 +23,17 @@ class TransactionComplete extends StatelessWidget {
           'Check your wallet history for details.',
           style: context.fonts.caption!.copyWith(
             color: context.colours.onBackground,
+            fontSize: 16,
           ),
         ),
+        // const SizedBox(height: 60),
+        // TextButton(
+        //   onPressed: () {
+        //     // context.read<WalletsCubit>().state.selectedWallet;
+        //     // context.push('/wallet');
+        //   },
+        //   // child: const Text('RETURN'),
+        // )
       ],
     );
   }

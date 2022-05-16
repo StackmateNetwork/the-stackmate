@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/validation.dart';
+import 'package:intl/intl.dart';
 
 class ConfirmTransaction extends StatelessWidget {
   const ConfirmTransaction({Key? key}) : super(key: key);
@@ -44,9 +46,12 @@ class ConfirmTransaction extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          '' + state.finalAmount.toString() + ' sats',
+          NumberFormat('###,000')
+                  .format(double.parse(state.finalAmount.toString())) +
+              ' sats',
           style: context.fonts.caption!.copyWith(
             color: context.colours.onBackground,
+            fontSize: 21,
           ),
         ),
         const SizedBox(height: 8),
@@ -65,9 +70,12 @@ class ConfirmTransaction extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          '' + state.finalFee.toString() + ' sats',
+          NumberFormat('###,000')
+                  .format(double.parse(state.finalFee.toString())) +
+              ' sats',
           style: context.fonts.caption!.copyWith(
             color: context.colours.onBackground,
+            fontSize: 21,
           ),
         ),
         const SizedBox(height: 60),
@@ -79,9 +87,12 @@ class ConfirmTransaction extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          '' + state.total().toString() + ' sats',
+          NumberFormat('###,000')
+                  .format(double.parse(state.total().toString())) +
+              ' sats',
           style: context.fonts.caption!.copyWith(
             color: context.colours.onBackground,
+            fontSize: 21,
           ),
         ),
         const SizedBox(height: 8),

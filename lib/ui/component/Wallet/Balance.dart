@@ -13,8 +13,8 @@ class Balance extends StatelessWidget {
   Widget build(BuildContext c) {
     final balance = c.select((InfoCubit hc) => hc.state.balance);
     if (balance == null) return Container();
-    
-        return FadeIn(
+
+    return FadeIn(
       child: Padding(
         padding: const EdgeInsets.only(left: 16),
         child: Column(
