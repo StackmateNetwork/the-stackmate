@@ -152,7 +152,7 @@ class WalletCard extends StatelessWidget {
                             context.push('/receive');
                           }
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.call_received,
                           size: 24,
                           color: Colors.blue,

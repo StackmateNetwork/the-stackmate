@@ -14,14 +14,10 @@ class Networth extends StatelessWidget {
 
     int networth = 0;
     for (final wallet in wallets) {
-      final balance = wallet.balance!;
-
-      if (balance != null ) {
-        networth += balance;
-      }
+      networth += wallet.balance;
     }
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 24,
         right: 32,
       ),

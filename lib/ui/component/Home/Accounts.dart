@@ -29,7 +29,6 @@ class Accounts extends StatelessWidget {
         width: c.width,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          scrollDirection: Axis.vertical,
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [

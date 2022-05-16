@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/cubit/fees.dart';
 
 class Header extends StatelessWidget {
   @override
@@ -15,7 +13,7 @@ class Header extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 16,
               left: 24,
               right: 32,

@@ -164,7 +164,7 @@ class HiveStore implements IStorage {
     try {
       final str = _box.get(key);
       if (str == null) {
-        return R(error: 'empty');
+        return const R(error: 'empty');
       }
       return R(result: str);
     } catch (e, s) {

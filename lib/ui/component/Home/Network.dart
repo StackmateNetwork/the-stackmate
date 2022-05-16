@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/cubit/fees.dart';
 
 class Network extends StatelessWidget {
   @override
@@ -10,7 +7,7 @@ class Network extends StatelessWidget {
     // c.select((FeesCubit wc) => wc.update());
 
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 24,
         right: 32,
       ),
@@ -27,7 +24,7 @@ class Network extends StatelessWidget {
           // const SizedBox(width: 16),
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.language_sharp,
               size: 24,
               color: Colors.blue,

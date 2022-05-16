@@ -81,6 +81,17 @@ class WalletsCubit extends Cubit<WalletsState> {
     refresh();
   }
 
+  Future<void> updateAddressIndexToSelectedWallet(int lastIndex) async {
+    if (state.selectedWallet == null) return;
+
+    final wallet = state.selectedWallet!.copyWith(
+      lastAddressIndex: lastIndex,
+    );
+
+    _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
+    refresh();
+  }
+
   void clearSelectedWallet() async {
     await Future.delayed(const Duration(milliseconds: 500));
     emit(state.copyWith(selectedWallet: null));

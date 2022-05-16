@@ -31,7 +31,7 @@ class ReceiveState with _$ReceiveState {
 
 class ReceiveCubit extends Cubit<ReceiveState> {
   ReceiveCubit(
-    this._walletCubit,
+    this._walletsCubit,
     this._logger,
     this._clipBoard,
     this._share,
@@ -42,7 +42,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
     _init();
   }
 
-  final WalletsCubit _walletCubit;
+  final WalletsCubit _walletsCubit;
   final Logger _logger;
   final IShare _share;
   final IClipBoard _clipBoard;
@@ -64,8 +64,8 @@ class ReceiveCubit extends Cubit<ReceiveState> {
           errLoadingAddress: '',
         ),
       );
-      final wallet = _walletCubit.state.selectedWallet!;
-      final nextIndex = wallet.lastAddressIndex! + 1;
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final nextIndex = wallet.lastAddressIndex + 1;
       final latestAddress = _core.getAddress(
         descriptor: wallet.descriptor,
         index: nextIndex.toString(),
@@ -84,18 +84,14 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       final updated = wallet.copyWith(
         lastAddressIndex: nextIndex,
       );
-      _walletCubit.walletSelected(updated);
+      _walletsCubit.walletSelected(updated);
 
-      await _storage.saveItemAt<Wallet>(
-        StoreKeys.Wallet.name,
-        updated.id!,
-        updated,
-      );
-      _vibrate.vibe();
+      await _walletsCubit.updateAddressIndexToSelectedWallet(nextIndex);
+
       emit(
         state.copyWith(
           loadingAddress: false,
-          address: latestAddress.result!,
+          address: nextIndex.toString() + "   " + latestAddress.result!,
         ),
       );
       return;

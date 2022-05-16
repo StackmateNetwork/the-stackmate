@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'package:sats/model/transaction.dart';
@@ -29,8 +27,7 @@ class Wallet with _$Wallet {
 
   factory Wallet.fromJson(Map<String, dynamic> json) => _$WalletFromJson(json);
 
-  String balanceToBtc() =>
-      balance == null ? '0' : (balance! / satsInBTC).toStringAsFixed(8);
+  String balanceToBtc() => (balance / satsInBTC).toStringAsFixed(8);
 
   bool isNotWatchOnly() => label != 'WATCHER';
 
