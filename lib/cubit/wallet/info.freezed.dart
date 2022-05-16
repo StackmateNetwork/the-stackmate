@@ -22,8 +22,8 @@ class _$InfoStateTearOff {
       String errLoadingTransactions = '',
       bool loadingBalance = true,
       String errLoadingBalance = '',
-      int? balance,
-      List<Transaction>? transactions,
+      int balance = 0,
+      List<Transaction> transactions = const [],
       String errDeleting = '',
       bool deleted = false,
       bool showInfo = false}) {
@@ -50,8 +50,8 @@ mixin _$InfoState {
   String get errLoadingTransactions => throw _privateConstructorUsedError;
   bool get loadingBalance => throw _privateConstructorUsedError;
   String get errLoadingBalance => throw _privateConstructorUsedError;
-  int? get balance => throw _privateConstructorUsedError;
-  List<Transaction>? get transactions => throw _privateConstructorUsedError;
+  int get balance => throw _privateConstructorUsedError;
+  List<Transaction> get transactions => throw _privateConstructorUsedError;
   String get errDeleting => throw _privateConstructorUsedError;
   bool get deleted => throw _privateConstructorUsedError;
   bool get showInfo => throw _privateConstructorUsedError;
@@ -70,8 +70,8 @@ abstract class $InfoStateCopyWith<$Res> {
       String errLoadingTransactions,
       bool loadingBalance,
       String errLoadingBalance,
-      int? balance,
-      List<Transaction>? transactions,
+      int balance,
+      List<Transaction> transactions,
       String errDeleting,
       bool deleted,
       bool showInfo});
@@ -117,11 +117,11 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       transactions: transactions == freezed
           ? _value.transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<Transaction>?,
+              as List<Transaction>,
       errDeleting: errDeleting == freezed
           ? _value.errDeleting
           : errDeleting // ignore: cast_nullable_to_non_nullable
@@ -149,8 +149,8 @@ abstract class _$InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
       String errLoadingTransactions,
       bool loadingBalance,
       String errLoadingBalance,
-      int? balance,
-      List<Transaction>? transactions,
+      int balance,
+      List<Transaction> transactions,
       String errDeleting,
       bool deleted,
       bool showInfo});
@@ -197,11 +197,11 @@ class __$InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       transactions: transactions == freezed
           ? _value.transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<Transaction>?,
+              as List<Transaction>,
       errDeleting: errDeleting == freezed
           ? _value.errDeleting
           : errDeleting // ignore: cast_nullable_to_non_nullable
@@ -226,8 +226,8 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       this.errLoadingTransactions = '',
       this.loadingBalance = true,
       this.errLoadingBalance = '',
-      this.balance,
-      this.transactions,
+      this.balance = 0,
+      this.transactions = const [],
       this.errDeleting = '',
       this.deleted = false,
       this.showInfo = false})
@@ -245,10 +245,12 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   @JsonKey(defaultValue: '')
   @override
   final String errLoadingBalance;
+  @JsonKey(defaultValue: 0)
   @override
-  final int? balance;
+  final int balance;
+  @JsonKey(defaultValue: const [])
   @override
-  final List<Transaction>? transactions;
+  final List<Transaction> transactions;
   @JsonKey(defaultValue: '')
   @override
   final String errDeleting;
@@ -339,8 +341,8 @@ abstract class _InfoState extends InfoState {
       String errLoadingTransactions,
       bool loadingBalance,
       String errLoadingBalance,
-      int? balance,
-      List<Transaction>? transactions,
+      int balance,
+      List<Transaction> transactions,
       String errDeleting,
       bool deleted,
       bool showInfo}) = _$_InfoState;
@@ -355,9 +357,9 @@ abstract class _InfoState extends InfoState {
   @override
   String get errLoadingBalance => throw _privateConstructorUsedError;
   @override
-  int? get balance => throw _privateConstructorUsedError;
+  int get balance => throw _privateConstructorUsedError;
   @override
-  List<Transaction>? get transactions => throw _privateConstructorUsedError;
+  List<Transaction> get transactions => throw _privateConstructorUsedError;
   @override
   String get errDeleting => throw _privateConstructorUsedError;
   @override

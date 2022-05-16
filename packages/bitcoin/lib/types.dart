@@ -169,6 +169,9 @@ class UTXO {
   final int value;
   final String scriptPubkey;
   final String keychainKind;
+
+  // ignore: recursive_getters
+  // int get timestamp => timestamp;
 }
 /*
   pub txid: String,

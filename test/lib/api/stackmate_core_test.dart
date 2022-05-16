@@ -102,6 +102,24 @@ void main() {
       nodeAddress: nodeAddress,
     );
 
+    var lastReceiveTxId = '';
+    for (final item in history.result!) {
+      print('$item.timestamp: $item.txid');
+
+      if (lastReceiveTxId == '' && item.sent == 0) {
+        lastReceiveTxId = item.txid;
+      }
+    }
+
+    var lastUsedAddress = '';
+    for (final item in utxos.result!) {
+      if (lastUsedAddress == '' && item.txid == lastReceiveTxId) {
+        lastUsedAddress = item.scriptPubkey;
+      }
+    }
+
+    print(lastReceiveTxId);
+    print(lastUsedAddress);
     assert(!utxos.hasError);
   });
 

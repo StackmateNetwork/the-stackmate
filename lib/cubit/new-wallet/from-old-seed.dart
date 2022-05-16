@@ -12,6 +12,7 @@ import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
+import 'package:sats/model/transaction.dart';
 
 part 'from-old-seed.freezed.dart';
 
@@ -194,15 +195,35 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       throw SMError.fromJson(descriptor.error!);
     }
 
-    final utxos = _core.getUTXOSet(
+    final history = _core.getHistory(
       descriptor: descriptor.result!,
       nodeAddress: _nodeAddressCubit.toString(),
     );
-    if (utxos.hasError) {
-      throw SMError.fromJson(utxos.error!);
+    if (history.hasError) {
+      throw SMError.fromJson(history.error!);
+    }
+    var recievedCount = 0;
+
+    for (final item in history.result!) {
+      if (item.sent == 0) {
+        recievedCount++;
+      }
     }
 
-    int balance = utxos.result!.fold(0, (sum, item) => sum + item.value);
+    final int totalIn = history.result!.fold(
+      0,
+      (int sum, Transaction item) => (item.sent == 0 && item.timestamp > 0)
+          ? sum + item.received
+          : sum + 0,
+    );
+    final int totalOut = history.result!.fold(
+      0,
+      (int sum, Transaction item) => (item.sent != 0 && item.timestamp > 0)
+          ? sum + item.sent + item.fee
+          : sum + 0,
+    );
+
+    final inferredBalance = totalIn - totalOut;
 
     // public descriptor
     // Check history and whether this wallet needs to update its address index
@@ -215,8 +236,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       requiredPolicyElements: 1,
       policyElements: ['primary:$fullXPub'],
       blockchain: _blockchainCubit.state.blockchain.name,
-      lastAddressIndex: 0,
-      balance: balance,
+      lastAddressIndex: recievedCount,
+      balance: inferredBalance,
       transactions: [],
     );
 
@@ -241,8 +262,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       emit(state.copyWith(newWalletSaved: true));
       return;
     }
-
-    _wallets.refresh();
+    _wallets.walletSelected(newWallet);
+    _wallets.addTransactionsToSelectedWallet(history.result!);
 
     emit(
       state.copyWith(

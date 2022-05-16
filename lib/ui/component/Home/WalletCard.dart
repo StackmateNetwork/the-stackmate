@@ -79,26 +79,23 @@ class WalletCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      if (wallet.balance != null) ...[
-                        Text(
-                          (wallet.balance! > 0)
-                              ? NumberFormat('###,000').format(
-                                    double.parse(
-                                      wallet.balance.toString(),
-                                    ),
-                                  ) +
-                                  ' sats'
-                              : '0 sats',
+                      Text(
+                        (wallet.balance > 0)
+                            ? NumberFormat('###,000').format(
+                                  double.parse(
+                                    wallet.balance.toString(),
+                                  ),
+                                ) +
+                                ' sats'
+                            : '0 sats',
 
-                          // overflow: TextOverflow.ellipsis,
-                          maxLines: 10,
-                          style: context.fonts.caption!.copyWith(
-                            color:
-                                context.colours.onBackground.withOpacity(0.8),
-                            fontSize: 16,
-                          ),
+                        // overflow: TextOverflow.ellipsis,
+                        maxLines: 10,
+                        style: context.fonts.caption!.copyWith(
+                          color: context.colours.onBackground.withOpacity(0.8),
+                          fontSize: 16,
                         ),
-                      ],
+                      ),
                     ],
                   ),
                 ),

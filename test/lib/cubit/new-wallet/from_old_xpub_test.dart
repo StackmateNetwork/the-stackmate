@@ -7,6 +7,7 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
+import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
@@ -32,6 +33,8 @@ void main() {
     final logAPI = _MockLogApi();
     final logger = Logger(clipboard, logAPI);
     final chainSelectCubit = ChainSelectCubit(_storage, logger);
+    final nodeAddressCubit = NodeAddressCubit(_storage);
+
     final _wallets =
         WalletsCubit(_storage, logger, chainSelectCubit, clipboard);
 
@@ -46,6 +49,7 @@ void main() {
         _storage,
         _wallets,
         chainSelectCubit,
+        nodeAddressCubit,
         _importCubit,
       );
     });

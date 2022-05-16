@@ -5,6 +5,7 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
+import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -104,6 +105,8 @@ class XPubImportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final networkSelect = context.select((ChainSelectCubit c) => c);
+    final nodeSelect = context.select((NodeAddressCubit c) => c);
+
     final logger = context.select((Logger c) => c);
     final wallets = context.select((WalletsCubit c) => c);
 
@@ -117,6 +120,7 @@ class XPubImportScreen extends StatelessWidget {
       locator<IStorage>(),
       wallets,
       networkSelect,
+      nodeSelect,
       xpubCub,
     );
 

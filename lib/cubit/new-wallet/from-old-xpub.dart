@@ -7,8 +7,10 @@ import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
+import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -55,6 +57,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     this._storage,
     this._wallets,
     this._blockchainCubit,
+    this._nodeAddressCubit,
     this._importCubit,
   ) : super(const XpubImportWalletState()) {
     _importSub = _importCubit.stream.listen((istate) {
@@ -69,6 +72,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
   final IStackMateCore _core;
   final WalletsCubit _wallets;
   final ChainSelectCubit _blockchainCubit;
+  final NodeAddressCubit _nodeAddressCubit;
   final XpubImportCubit _importCubit;
   late StreamSubscription _importSub;
 
@@ -142,6 +146,35 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       if (descriptor.hasError) {
         throw SMError.fromJson(descriptor.error!);
       }
+      final history = _core.getHistory(
+        descriptor: descriptor.result!,
+        nodeAddress: _nodeAddressCubit.toString(),
+      );
+      if (history.hasError) {
+        throw SMError.fromJson(history.error!);
+      }
+      var recievedCount = 0;
+
+      for (final item in history.result!) {
+        if (item.sent == 0) {
+          recievedCount++;
+        }
+      }
+
+      final int totalIn = history.result!.fold(
+        0,
+        (int sum, Transaction item) => (item.sent == 0 && item.timestamp > 0)
+            ? sum + item.received
+            : sum + 0,
+      );
+      final int totalOut = history.result!.fold(
+        0,
+        (int sum, Transaction item) => (item.sent != 0 && item.timestamp > 0)
+            ? sum + item.sent + item.fee
+            : sum + 0,
+      );
+
+      final inferredBalance = totalIn - totalOut;
       // check balance and see if last address index needs update
       var newWallet = Wallet(
         label: state.label,
@@ -151,8 +184,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: watcherWalletType,
-        lastAddressIndex: 0,
-        balance: 0,
+        lastAddressIndex: recievedCount,
+        balance: inferredBalance,
         transactions: [],
       );
 
@@ -173,7 +206,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         newWallet,
       );
 
-      _wallets.refresh();
+      _wallets.walletSelected(newWallet);
+      _wallets.addTransactionsToSelectedWallet(history.result!);
 
       emit(
         state.copyWith(
