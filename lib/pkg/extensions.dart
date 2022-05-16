@@ -1,7 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 export 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 extension ContextUtils on BuildContext {
   ColorScheme get colours => Theme.of(this).colorScheme;
@@ -32,7 +33,6 @@ extension Strings on String {
     return this != other;
   }
 
-  
   String toBtc() {
     try {
       if (this == '') return '0.00000000';
@@ -59,7 +59,12 @@ extension Nums on num {
 
 extension Ints on int? {
   String toBtc() => this == null ? '0' : (this! / 100000000).toStringAsFixed(8);
-  //String toComma() => this == null ? '0':(this)
+}
+
+String readableDateFrom(int timeStamp) {
+  final date = DateTime.fromMillisecondsSinceEpoch(timeStamp);
+  final formattedDate = DateFormat.yMMMd().format(date);
+  return formattedDate;
 }
 
 class CCC {}
