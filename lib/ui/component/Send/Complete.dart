@@ -26,13 +26,6 @@ class TransactionComplete extends StatelessWidget {
             color: context.colours.onBackground,
           ),
         ),
-        const SizedBox(height: 60),
-        TextButton(
-          onPressed: () {
-            context.read<SendCubit>().shareTxId();
-          },
-          child: const Text('Done.'),
-        )
       ],
     );
   }

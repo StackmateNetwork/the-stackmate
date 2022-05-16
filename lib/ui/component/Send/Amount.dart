@@ -24,7 +24,7 @@ class _AmountRowState extends State<AmountRow> {
     final amount = c.select((SendCubit sc) => sc.state.amount);
     final errAmount = c.select((SendCubit sc) => sc.state.errAmount);
     final isSweep = c.select((SendCubit sc) => sc.state.sweepWallet);
-    final balance = c.select((SendCubit sc) => sc.state.balance!);
+    final balance = c.select((SendCubit sc) => sc.state.balance);
 
     if (amount != _controller.text) _controller.text = amount;
 

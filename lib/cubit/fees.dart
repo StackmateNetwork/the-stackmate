@@ -19,13 +19,11 @@ part 'fees.freezed.dart';
 
 @freezed
 class FeesState with _$FeesState {
-  const factory FeesState(
-      {@Default(Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0))
-          Fees fees,
-      @Default(false)
-          bool updating,
-      @Default('')
-          String errUpdating}) = _FeesState;
+  const factory FeesState({
+    @Default(Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0)) Fees fees,
+    @Default(false) bool updating,
+    @Default('') String errUpdating,
+  }) = _FeesState;
 }
 
 class FeesCubit extends Cubit<FeesState> {
