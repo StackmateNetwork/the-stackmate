@@ -25,7 +25,8 @@ class ReceiveState with _$ReceiveState {
   const factory ReceiveState({
     @Default(true) bool loadingAddress,
     @Default('') String errLoadingAddress,
-    String? address,
+    @Default('') String address,
+    @Default(0) int index,
   }) = _ReceiveState;
 }
 
@@ -91,7 +92,8 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       emit(
         state.copyWith(
           loadingAddress: false,
-          address: nextIndex.toString() + "   " + latestAddress.result!,
+          address: latestAddress.result!,
+          index: nextIndex,
         ),
       );
       return;

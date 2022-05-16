@@ -45,18 +45,16 @@ class _Receive extends StatelessWidget {
                   const SizedBox(height: 48),
                 ],
               ),
-              if (state.address != null) ...[
-                FadeIn(
-                  // delay: const Duration(milliseconds: 400),
-                  child: QRAddress(address: state.address!),
-                ),
-                const SizedBox(height: 24),
-                FadeIn(
-                  delay: const Duration(milliseconds: 300),
-                  child: TextAddress(address: state.address!),
-                ),
-                const SizedBox(height: 48),
-              ]
+              FadeIn(
+                // delay: const Duration(milliseconds: 400),
+                child: QRAddress(address: state.address),
+              ),
+              const SizedBox(height: 24),
+              FadeIn(
+                delay: const Duration(milliseconds: 300),
+                child: TextAddress(address: state.address, index: state.index),
+              ),
+              const SizedBox(height: 48),
             ],
           ),
         ),

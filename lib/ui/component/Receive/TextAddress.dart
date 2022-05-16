@@ -6,22 +6,25 @@ class TextAddress extends StatelessWidget {
   const TextAddress({
     Key? key,
     required this.address,
+    required this.index,
   }) : super(key: key);
 
   final String address;
+  final int index;
   @override
   Widget build(BuildContext c) {
     return Column(
-      // crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          width: c.width / 2,
+          width: c.width,
           child: Text(
             address,
             style: c.fonts.caption!.copyWith(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 12,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
         TextButton(
@@ -37,7 +40,7 @@ class TextAddress extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 48),
+        const SizedBox(height: 24),
         SizedBox(
           width: c.width / 4,
           child: TextButton(
@@ -47,6 +50,30 @@ class TextAddress extends StatelessWidget {
             },
             child: Text(
               'SHARE'.notLocalised(),
+            ),
+          ),
+        ),
+        const SizedBox(height: 24),
+        Container(
+          width: c.width / 4,
+          child: Text(
+            'INDEX: ' + index.toString(),
+            style: c.fonts.caption!.copyWith(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SizedBox(
+          width: c.width / 4,
+          child: TextButton(
+            onPressed: () {
+              c.read<ReceiveCubit>().getAddress();
+              //.shareAddress(address);
+            },
+            child: Text(
+              'ROTATE'.notLocalised(),
             ),
           ),
         )

@@ -20,11 +20,13 @@ class _$ReceiveStateTearOff {
   _ReceiveState call(
       {bool loadingAddress = true,
       String errLoadingAddress = '',
-      String? address}) {
+      String address = '',
+      int index = 0}) {
     return _ReceiveState(
       loadingAddress: loadingAddress,
       errLoadingAddress: errLoadingAddress,
       address: address,
+      index: index,
     );
   }
 }
@@ -36,7 +38,8 @@ const $ReceiveState = _$ReceiveStateTearOff();
 mixin _$ReceiveState {
   bool get loadingAddress => throw _privateConstructorUsedError;
   String get errLoadingAddress => throw _privateConstructorUsedError;
-  String? get address => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ReceiveStateCopyWith<ReceiveState> get copyWith =>
@@ -48,7 +51,11 @@ abstract class $ReceiveStateCopyWith<$Res> {
   factory $ReceiveStateCopyWith(
           ReceiveState value, $Res Function(ReceiveState) then) =
       _$ReceiveStateCopyWithImpl<$Res>;
-  $Res call({bool loadingAddress, String errLoadingAddress, String? address});
+  $Res call(
+      {bool loadingAddress,
+      String errLoadingAddress,
+      String address,
+      int index});
 }
 
 /// @nodoc
@@ -64,6 +71,7 @@ class _$ReceiveStateCopyWithImpl<$Res> implements $ReceiveStateCopyWith<$Res> {
     Object? loadingAddress = freezed,
     Object? errLoadingAddress = freezed,
     Object? address = freezed,
+    Object? index = freezed,
   }) {
     return _then(_value.copyWith(
       loadingAddress: loadingAddress == freezed
@@ -77,7 +85,11 @@ class _$ReceiveStateCopyWithImpl<$Res> implements $ReceiveStateCopyWith<$Res> {
       address: address == freezed
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -89,7 +101,11 @@ abstract class _$ReceiveStateCopyWith<$Res>
           _ReceiveState value, $Res Function(_ReceiveState) then) =
       __$ReceiveStateCopyWithImpl<$Res>;
   @override
-  $Res call({bool loadingAddress, String errLoadingAddress, String? address});
+  $Res call(
+      {bool loadingAddress,
+      String errLoadingAddress,
+      String address,
+      int index});
 }
 
 /// @nodoc
@@ -107,6 +123,7 @@ class __$ReceiveStateCopyWithImpl<$Res> extends _$ReceiveStateCopyWithImpl<$Res>
     Object? loadingAddress = freezed,
     Object? errLoadingAddress = freezed,
     Object? address = freezed,
+    Object? index = freezed,
   }) {
     return _then(_ReceiveState(
       loadingAddress: loadingAddress == freezed
@@ -120,7 +137,11 @@ class __$ReceiveStateCopyWithImpl<$Res> extends _$ReceiveStateCopyWithImpl<$Res>
       address: address == freezed
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -129,7 +150,10 @@ class __$ReceiveStateCopyWithImpl<$Res> extends _$ReceiveStateCopyWithImpl<$Res>
 
 class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
   const _$_ReceiveState(
-      {this.loadingAddress = true, this.errLoadingAddress = '', this.address});
+      {this.loadingAddress = true,
+      this.errLoadingAddress = '',
+      this.address = '',
+      this.index = 0});
 
   @JsonKey(defaultValue: true)
   @override
@@ -137,12 +161,16 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
   @JsonKey(defaultValue: '')
   @override
   final String errLoadingAddress;
+  @JsonKey(defaultValue: '')
   @override
-  final String? address;
+  final String address;
+  @JsonKey(defaultValue: 0)
+  @override
+  final int index;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ReceiveState(loadingAddress: $loadingAddress, errLoadingAddress: $errLoadingAddress, address: $address)';
+    return 'ReceiveState(loadingAddress: $loadingAddress, errLoadingAddress: $errLoadingAddress, address: $address, index: $index)';
   }
 
   @override
@@ -152,7 +180,8 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
       ..add(DiagnosticsProperty('type', 'ReceiveState'))
       ..add(DiagnosticsProperty('loadingAddress', loadingAddress))
       ..add(DiagnosticsProperty('errLoadingAddress', errLoadingAddress))
-      ..add(DiagnosticsProperty('address', address));
+      ..add(DiagnosticsProperty('address', address))
+      ..add(DiagnosticsProperty('index', index));
   }
 
   @override
@@ -166,7 +195,10 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
                 const DeepCollectionEquality()
                     .equals(other.errLoadingAddress, errLoadingAddress)) &&
             (identical(other.address, address) ||
-                const DeepCollectionEquality().equals(other.address, address)));
+                const DeepCollectionEquality()
+                    .equals(other.address, address)) &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)));
   }
 
   @override
@@ -174,7 +206,8 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(loadingAddress) ^
       const DeepCollectionEquality().hash(errLoadingAddress) ^
-      const DeepCollectionEquality().hash(address);
+      const DeepCollectionEquality().hash(address) ^
+      const DeepCollectionEquality().hash(index);
 
   @JsonKey(ignore: true)
   @override
@@ -186,14 +219,17 @@ abstract class _ReceiveState implements ReceiveState {
   const factory _ReceiveState(
       {bool loadingAddress,
       String errLoadingAddress,
-      String? address}) = _$_ReceiveState;
+      String address,
+      int index}) = _$_ReceiveState;
 
   @override
   bool get loadingAddress => throw _privateConstructorUsedError;
   @override
   String get errLoadingAddress => throw _privateConstructorUsedError;
   @override
-  String? get address => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  @override
+  int get index => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ReceiveStateCopyWith<_ReceiveState> get copyWith =>
