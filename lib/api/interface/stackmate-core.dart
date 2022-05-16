@@ -57,6 +57,11 @@ abstract class IStackMateCore {
     required String nodeAddress,
   });
 
+  R<List<UTXO>> getUTXOSet({
+    required String descriptor,
+    required String nodeAddress,
+  });
+
   R<String> getAddress({
     required String descriptor,
     required String index,

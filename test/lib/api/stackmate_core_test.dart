@@ -97,7 +97,7 @@ void main() {
     assert(!balance.hasError);
     assert(balance.result! == inferredBalance);
 
-    final utxos = libstackmate.getUtxoSet(
+    final utxos = libstackmate.getUTXOSet(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
     );

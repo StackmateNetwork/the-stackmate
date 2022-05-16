@@ -147,11 +147,11 @@ class BitcoinFFI implements IStackMateCore {
   }
 
   @override
-  R<List<UTXO>> getUtxoSet({
+  R<List<UTXO>> getUTXOSet({
     required String descriptor,
     required String nodeAddress,
   }) {
-    final resp = _bitcoin.getUnspent(
+    final resp = _bitcoin.listUnspent(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
     );

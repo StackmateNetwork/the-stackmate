@@ -89,7 +89,7 @@ class FFFI {
     return resp;
   }
 
-  String getUnspent({
+  String listUnspent({
     required String descriptor,
     required String nodeAddress,
   }) {

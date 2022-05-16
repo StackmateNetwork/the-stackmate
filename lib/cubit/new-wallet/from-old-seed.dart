@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
+import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/wallet.dart';
@@ -73,6 +74,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     this._storage,
     this._wallets,
     this._blockchainCubit,
+    this._nodeAddressCubit,
     this._importCubit, {
     String walletLabel = '',
   }) : super(
@@ -96,6 +98,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   final ChainSelectCubit _blockchainCubit;
   final SeedImportCubit _importCubit;
   late StreamSubscription _importSub;
+  final NodeAddressCubit _nodeAddressCubit;
 
   static const invalidLabelError = 'Invalid Label';
   static const signerWalletType = 'SIGNER';
@@ -191,6 +194,16 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       throw SMError.fromJson(descriptor.error!);
     }
 
+    final utxos = _core.getUTXOSet(
+      descriptor: descriptor.result!,
+      nodeAddress: _nodeAddressCubit.toString(),
+    );
+    if (utxos.hasError) {
+      throw SMError.fromJson(utxos.error!);
+    }
+
+    int balance = utxos.result!.fold(0, (sum, item) => sum + item.value);
+
     // public descriptor
     // Check history and whether this wallet needs to update its address index
 
@@ -203,7 +216,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       policyElements: ['primary:$fullXPub'],
       blockchain: _blockchainCubit.state.blockchain.name,
       lastAddressIndex: 0,
-      balance: 0,
+      balance: balance,
       transactions: [],
     );
 
