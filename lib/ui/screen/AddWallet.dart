@@ -54,7 +54,7 @@ class AddWalletScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 40),
+                const SizedBox(height: 24),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(

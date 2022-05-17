@@ -32,7 +32,7 @@ class WalletCard extends StatelessWidget {
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.only(left: 12, top: 12),
+                padding: const EdgeInsets.only(left: 12, top: 5),
                 child: Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(16),
@@ -46,7 +46,7 @@ class WalletCard extends StatelessWidget {
                     ),
                     child: Container(
                       height: 92,
-                      width: MediaQuery.of(context).size.width - 192,
+                      width: context.width - 192,
                       padding: const EdgeInsets.only(
                         top: 21,
                         left: 12,

@@ -10,34 +10,38 @@ import 'package:sats/ui/component/Home/Tools.dart';
 class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            stretch: true,
-            pinned: true,
-            expandedHeight: 365,
-            automaticallyImplyLeading: false,
-            backgroundColor: c.colours.background,
-            flexibleSpace: FlexibleSpaceBar(
-              stretchModes: const [
-                StretchMode.fadeTitle,
-              ],
-              background: Column(
-                children: [HomeHeader(), Networth(), WalletTools()],
+    return BlocBuilder<PreferencesCubit, PreferencesState>(
+      builder: (context, prefState) {
+        return Scaffold(
+          body: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                stretch: true,
+                pinned: true,
+                expandedHeight: 326,
+                automaticallyImplyLeading: false,
+                backgroundColor: c.colours.background,
+                flexibleSpace: FlexibleSpaceBar(
+                  stretchModes: const [
+                    StretchMode.fadeTitle,
+                  ],
+                  background: Column(
+                    children: [HomeHeader(), Networth(), WalletTools()],
+                  ),
+                ),
               ),
-            ),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Accounts(),
+                  ],
+                ),
+              ),
+            ],
           ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Accounts(),
-              ],
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: HomeActions(),
+          bottomNavigationBar: HomeActions(),
+        );
+      },
     );
   }
 }
