@@ -14,7 +14,6 @@ import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/ui/component/Common/BackButton2.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Label.dart';
-import 'package:sats/ui/component/NewWallet/SeedImport/Loader.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Stepper.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Warning.dart';
 import 'package:sats/ui/component/common/header.dart';
