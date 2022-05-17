@@ -16,7 +16,7 @@ class _Home extends StatelessWidget {
           SliverAppBar(
             stretch: true,
             pinned: true,
-            expandedHeight: 275,
+            expandedHeight: 292,
             automaticallyImplyLeading: false,
             backgroundColor: c.colours.background,
             flexibleSpace: FlexibleSpaceBar(

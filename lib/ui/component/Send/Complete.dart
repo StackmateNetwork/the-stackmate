@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class TransactionComplete extends StatelessWidget {
@@ -6,35 +7,68 @@ class TransactionComplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final txid = context.select((SendCubit sc) => sc.state.txId);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox(height: 60),
-        Text(
-          'Transaction\nBroadcasted.',
-          style: context.fonts.headline5!.copyWith(
-            color: context.colours.onBackground,
-          ),
+    final wallet = context.select((WalletsCubit w) => w.state.selectedWallet!);
+    if (wallet.isNotWatchOnly())
+      return Padding(
+        padding: const EdgeInsets.only(top: 35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Transaction\nBroadcasted.',
+              style: context.fonts.headline5!.copyWith(
+                color: context.colours.onBackground,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Check your wallet history for details.',
+              style: context.fonts.caption!.copyWith(
+                color: context.colours.onBackground,
+                fontSize: 16,
+              ),
+            ),
+            // const SizedBox(height: 60),
+            // TextButton(
+            //   onPressed: () {
+            //     // context.read<WalletsCubit>().state.selectedWallet;
+            //     // context.push('/wallet');
+            //   },
+            //   // child: const Text('RETURN'),
+            // )
+          ],
         ),
-        const SizedBox(height: 16),
-        Text(
-          'Check your wallet history for details.',
-          style: context.fonts.caption!.copyWith(
-            color: context.colours.onBackground,
-            fontSize: 16,
-          ),
+      );
+    else
+      return Padding(
+        padding: const EdgeInsets.only(top: 35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'PSBT\nCopied to Clipboard.',
+              style: context.fonts.headline5!.copyWith(
+                color: context.colours.onBackground,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Pass it to a signer.',
+              style: context.fonts.caption!.copyWith(
+                color: context.colours.onBackground,
+                fontSize: 16,
+              ),
+            ),
+            // const SizedBox(height: 60),
+            // TextButton(
+            //   onPressed: () {
+            //     // context.read<WalletsCubit>().state.selectedWallet;
+            //     // context.push('/wallet');
+            //   },
+            //   // child: const Text('RETURN'),
+            // )
+          ],
         ),
-        // const SizedBox(height: 60),
-        // TextButton(
-        //   onPressed: () {
-        //     // context.read<WalletsCubit>().state.selectedWallet;
-        //     // context.push('/wallet');
-        //   },
-        //   // child: const Text('RETURN'),
-        // )
-      ],
-    );
+      );
   }
 }

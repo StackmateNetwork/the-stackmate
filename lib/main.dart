@@ -18,7 +18,6 @@ import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
 import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
-// import 'package:sats/ui/screen/TxDetail.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
 

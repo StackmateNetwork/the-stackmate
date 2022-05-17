@@ -29,7 +29,7 @@ class Wallet with _$Wallet {
 
   String balanceToBtc() => (balance / satsInBTC).toStringAsFixed(8);
 
-  bool isNotWatchOnly() => label != 'WATCHER';
+  bool isNotWatchOnly() => walletType != 'WATCHER';
 
   int pendingPolicyElements() {
     return policyElements.length - requiredPolicyElements;

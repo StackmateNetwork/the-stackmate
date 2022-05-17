@@ -463,6 +463,17 @@ class SendCubit extends Cubit<SendState> {
       subjectForEmail: emailShareSubject,
     );
   }
+
+  void copyPSBT() {
+    _clipBoard.copyToClipBoard(state.psbt);
+    emit(
+      state.copyWith(
+        sendingTx: false,
+        errLoading: emptyString,
+        currentStep: SendSteps.sent,
+      ),
+    );
+  }
 }
 
 double estimateFeees(dynamic data) {
