@@ -20,13 +20,6 @@ class Header extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  child: const Image(
-                    image: AssetImage('assets/icon/stackmate.png'),
-                  ),
-                ),
                 const Spacer(),
                 // const SizedBox(width: 16),
                 IconButton(

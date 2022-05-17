@@ -22,12 +22,13 @@ class _Receive extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final state = c.select((ReceiveCubit h) => h.state);
+    final walletLabel =
+        c.select((WalletsCubit c) => c.state.selectedWallet!.label);
 
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Loader(),
               Header(
@@ -35,11 +36,21 @@ class _Receive extends StatelessWidget {
                 children: [
                   const SizedBox(height: 8),
                   const Back(),
-                  const SizedBox(height: 60),
-                  Text(
-                    ' RECEIVE',
-                    style: c.fonts.headline4!.copyWith(
-                      color: Colors.white,
+                  const SizedBox(height: 28),
+                  Align(
+                    child: Text(
+                      'RECEIVE BITCOIN',
+                      style: c.fonts.headline6!.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    child: Text(
+                      walletLabel.toUpperCase(),
+                      style: c.fonts.caption!.copyWith(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 48),

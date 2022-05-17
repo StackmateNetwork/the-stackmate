@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/ui/component/NewWallet/SeedImport/Loader.dart';
 
 class SeedImportSteps extends StatelessWidget {
   const SeedImportSteps({
@@ -41,8 +42,7 @@ class SeedImportPhrase extends StatelessWidget {
             Padding(
               padding: EdgeInsets.zero,
               child: TextField(
-                style: c.fonts.headline6!.copyWith(
-                color: Colors.white),
+                style: c.fonts.headline6!.copyWith(color: Colors.white),
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 autocorrect: false,
@@ -102,9 +102,9 @@ class SeedImportPassphrase extends StatelessWidget {
               padding: EdgeInsets.zero,
               child: TextField(
                 style: c.fonts.headline6!.copyWith(
-                color: Colors.white,
-                // fontWeight: FontWeight.bold,
-              ),
+                  color: Colors.white,
+                  // fontWeight: FontWeight.bold,
+                ),
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 autocorrect: false,

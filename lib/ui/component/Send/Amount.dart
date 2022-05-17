@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -38,12 +39,15 @@ class _AmountRowState extends State<AmountRow> {
             child: TextField(
               controller: _controller,
               keyboardType: TextInputType.number,
-              //inputFormatters: [ThousandsFormatter()],
-              style: TextStyle(color: c.colours.onBackground),
+              inputFormatters: [ThousandsFormatter()],
+              style: TextStyle(
+                color: c.colours.onBackground,
+                fontSize: 24,
+              ),
               decoration: InputDecoration(
                 hintText: isSweep
                     ? 'WALLET WILL BE EMPTIED'
-                    : 'Enter SATS Amount'.toUpperCase(),
+                    : 'Amount in SATS'.toUpperCase(),
                 hintStyle: isSweep
                     ? TextStyle(
                         color: c.colours.onBackground,
@@ -84,7 +88,9 @@ class _AmountRowState extends State<AmountRow> {
         const SizedBox(height: 100),
         TextButton(
           onPressed: () {
-            context.read<SendCubit>().amountConfirmedClicked();
+            if (amount != '') {
+              context.read<SendCubit>().amountConfirmedClicked();
+            }
           },
           child: const Text('CONFIRM'),
         ),

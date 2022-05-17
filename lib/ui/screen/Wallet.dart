@@ -60,7 +60,7 @@ class _Wallet extends StatelessWidget {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        const SizedBox(width: 8),
+                        const SizedBox(width: 16),
                         Back(
                           onPressed: () {
                             c.read<WalletsCubit>().clearSelectedWallet();
@@ -71,23 +71,27 @@ class _Wallet extends StatelessWidget {
                         const SizedBox(width: 8),
                       ],
                     ),
+                    const SizedBox(height: 6),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
                             children: const [
-                              WalletName(),
-                              SizedBox(height: 24),
                               Balance(),
                             ],
                           ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 36),
+                    Row(
+                      children: [
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(right: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
@@ -127,6 +131,16 @@ class _Wallet extends StatelessWidget {
                                   },
                                   icon: const Icon(Icons.info_outline),
                                 ),
+                                IconButton(
+                                  color: c.colours.primary,
+                                  onPressed: () {
+                                    c.push('/receive');
+                                  },
+                                  icon: const Icon(
+                                    Icons.call_received,
+                                    color: Colors.blue,
+                                  ),
+                                ),
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
                                   opacity: (zeroBal || !wallet.isNotWatchOnly())
@@ -143,23 +157,13 @@ class _Wallet extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                IconButton(
-                                  color: c.colours.primary,
-                                  onPressed: () {
-                                    c.push('/receive');
-                                  },
-                                  icon: const Icon(
-                                    Icons.call_received,
-                                    color: Colors.blue,
-                                  ),
-                                ),
                               ],
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 6),
                     if (!showInfo) TransactionsList() else const WalletInfo()
                   ],
                 ),

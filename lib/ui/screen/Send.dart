@@ -29,6 +29,8 @@ class _WalletSend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final step = context.select((SendCubit sc) => sc.state.currentStep);
+    final walletLabel =
+        context.select((WalletsCubit c) => c.state.selectedWallet!.label);
 
     return WillPopScope(
       onWillPop: () async {
@@ -69,13 +71,10 @@ class _WalletSend extends StatelessWidget {
                                 Navigator.pop(context);
                                 return;
                               }
-
                               if (step != SendSteps.fees) {
                                 context.read<SendCubit>().backClicked();
                                 return;
                               }
-                              if (step == SendSteps.confirm)
-                                context.read<InfoCubit>().getHistory();
                             },
                           ),
                           LogButton(
@@ -91,10 +90,26 @@ class _WalletSend extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 40),
                     const ZeroBalance(),
                     if (step == SendSteps.address) ...[
                       const SizedBox(height: 0),
+                      Align(
+                        child: Text(
+                          'SEND BITCOIN',
+                          style: context.fonts.headline6!.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        child: Text(
+                          walletLabel.toUpperCase(),
+                          style: context.fonts.caption!.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 48),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: SendAddress(),

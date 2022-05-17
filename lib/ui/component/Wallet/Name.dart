@@ -14,7 +14,7 @@ class WalletName extends StatelessWidget {
     if (wallet == null) return Container();
 
     return Align(
-      alignment: Alignment.topLeft,
+      alignment: Alignment.center,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(

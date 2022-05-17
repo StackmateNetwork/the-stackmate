@@ -18,22 +18,33 @@ class Networth extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.only(
+        top: 32,
         left: 24,
         right: 32,
       ),
-      child: Row(
+      child: Column(
         children: [
           Text(
-            (networth > 0)
-                ? NumberFormat('###,000')
-                        .format(double.parse(networth.toString())) +
-                    ' sats'
-                : '0 sats',
-            style: c.fonts.headline5!.copyWith(
+            NumberFormat('###,000').format(double.parse(networth.toString())),
+            style: c.fonts.headline4!.copyWith(
               color: Colors.white,
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: 6),
+          Text(
+            'sats',
+            style: c.fonts.headline6!.copyWith(
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            networth.toBtc() + ' BTC',
+            style: c.fonts.caption!.copyWith(
+              color: Colors.white,
+            ),
+          ),
+
           // const SizedBox(width: 16),
           IconButton(
             onPressed: () {},
