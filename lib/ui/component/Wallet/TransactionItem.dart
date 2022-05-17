@@ -384,7 +384,6 @@ class TransactionItem extends StatelessWidget {
     final preferences = c.select((PreferencesCubit pc) => pc.state);
 
     final isReceive = transaction.isReceive();
-
     if (isReceive) {
       return GestureDetector(
         onTap: () {

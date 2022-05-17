@@ -98,27 +98,25 @@ class InfoCubit extends Cubit<InfoState> {
           transactions: wallet.transactions,
         ),
       );
-
-      final transactions = await compute(computeHistory, {
+      final balance = await compute(computeBalance, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': node,
       });
 
-      final int totalIn = transactions.fold(
-        0,
-        (int sum, Transaction item) => (item.sent == 0 && item.timestamp > 0)
-            ? sum + item.received
-            : sum + 0,
-      );
-      final int totalOut = transactions.fold(
-        0,
-        (int sum, Transaction item) => (item.sent != 0 && item.timestamp > 0)
-            ? sum + item.sent + item.fee
-            : sum + 0,
-      );
+      _vibrate.vibe();
 
-      final inferredBalance = totalIn - totalOut;
-
+      emit(
+        state.copyWith(
+          loadingTransactions: true,
+          loadingBalance: false,
+          errLoadingTransactions: '',
+          balance: balance,
+        ),
+      );
+      final transactions = await compute(computeHistory, {
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'nodeAddress': node,
+      });
       _vibrate.vibe();
 
       emit(
@@ -127,11 +125,11 @@ class InfoCubit extends Cubit<InfoState> {
           loadingBalance: false,
           transactions: transactions,
           errLoadingTransactions: '',
-          balance: inferredBalance,
+          balance: balance,
         ),
       );
 
-      _walletsCubit.addBalanceToSelectedWallet(inferredBalance);
+      _walletsCubit.addBalanceToSelectedWallet(balance);
       _walletsCubit.addTransactionsToSelectedWallet(transactions);
       return;
     } catch (e, s) {
