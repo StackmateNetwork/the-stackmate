@@ -56,7 +56,7 @@ class _Wallet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const WalletLoader(),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 24),
                     Row(
                       children: [
                         const SizedBox(width: 16),

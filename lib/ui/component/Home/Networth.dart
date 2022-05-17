@@ -24,15 +24,16 @@ class Networth extends StatelessWidget {
         ),
         child: Column(
           children: [
-            if (prefState.incognito)
+            if (prefState.incognito) ...[
               Text(
                 '"A specter is haunting the modern world, the specter of crypto anarchy. - May, 1988"',
                 style: c.fonts.caption!.copyWith(
                   color: Colors.white,
                 ),
                 textAlign: TextAlign.center,
-              )
-            else ...[
+              ),
+              const SizedBox(height: 54),
+            ] else ...[
               Text(
                 (networth > 0)
                     ? NumberFormat('###,000')
