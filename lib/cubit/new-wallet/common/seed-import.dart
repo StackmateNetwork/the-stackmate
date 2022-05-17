@@ -120,6 +120,8 @@ class SeedImportCubit extends Cubit<SeedImportState> {
           seedReady: true,
           masterXpriv: root.result!.xprv,
           wallet: wallet.result,
+          passPhrase: '',
+          seed: '',
         ),
       );
     } catch (e, s) {

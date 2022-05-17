@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$BlockchainStateTearOff {
   const _$BlockchainStateTearOff();
 
-  _BlockchainState call({Blockchain blockchain = Blockchain.testNet}) {
+  _BlockchainState call({Blockchain blockchain = Blockchain.test}) {
     return _BlockchainState(
       blockchain: blockchain,
     );
@@ -103,9 +103,9 @@ class __$BlockchainStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_BlockchainState implements _BlockchainState {
-  const _$_BlockchainState({this.blockchain = Blockchain.testNet});
+  const _$_BlockchainState({this.blockchain = Blockchain.test});
 
-  @JsonKey(defaultValue: Blockchain.testNet)
+  @JsonKey(defaultValue: Blockchain.test)
   @override
   final Blockchain blockchain;
 

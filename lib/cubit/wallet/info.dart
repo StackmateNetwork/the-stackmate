@@ -113,6 +113,8 @@ class InfoCubit extends Cubit<InfoState> {
           balance: balance,
         ),
       );
+      _walletsCubit.addBalanceToSelectedWallet(balance);
+
       final transactions = await compute(computeHistory, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': node,
@@ -129,7 +131,6 @@ class InfoCubit extends Cubit<InfoState> {
         ),
       );
 
-      _walletsCubit.addBalanceToSelectedWallet(balance);
       _walletsCubit.addTransactionsToSelectedWallet(transactions);
       return;
     } catch (e, s) {
@@ -147,7 +148,7 @@ class InfoCubit extends Cubit<InfoState> {
   void openLink(Transaction transaction) {
     try {
       String url = '';
-      if (_blockchainCubit.state.blockchain == Blockchain.testNet)
+      if (_blockchainCubit.state.blockchain == Blockchain.test)
         url = blockstreamTestnetURL;
       else
         url = blockstreamMainnetURL;

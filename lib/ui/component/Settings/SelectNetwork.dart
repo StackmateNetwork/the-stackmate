@@ -11,10 +11,10 @@ class SelectNetwork extends StatelessWidget {
     final blockchain = c.select((ChainSelectCubit b) => b.state.blockchain);
     return ElevatedButton(
       onPressed: () {
-        if (blockchain == Blockchain.mainNet)
-          c.read<ChainSelectCubit>().changeBlockchain(Blockchain.testNet);
+        if (blockchain == Blockchain.main)
+          c.read<ChainSelectCubit>().changeBlockchain(Blockchain.test);
         else
-          c.read<ChainSelectCubit>().changeBlockchain(Blockchain.mainNet);
+          c.read<ChainSelectCubit>().changeBlockchain(Blockchain.main);
       },
       style: ElevatedButton.styleFrom(
         elevation: 0,

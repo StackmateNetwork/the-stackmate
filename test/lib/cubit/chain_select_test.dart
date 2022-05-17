@@ -43,7 +43,7 @@ void main() {
         cubit.init();
       },
       expect: () => <BlockchainState>[
-        const BlockchainState(blockchain: Blockchain.testNet),
+        const BlockchainState(blockchain: Blockchain.test),
       ],
       verify: (cubit) => [
         verify(() =>
@@ -58,39 +58,39 @@ void main() {
           () => _storage.saveItemAt<Blockchain>(
             StoreKeys.Blockchain.name,
             0,
-            Blockchain.mainNet,
+            Blockchain.main,
           ),
         ).thenAnswer((_) => Future.value(const R(result: true)));
         when(
           () => _storage.saveItemAt<Blockchain>(
             StoreKeys.Blockchain.name,
             0,
-            Blockchain.testNet,
+            Blockchain.test,
           ),
         ).thenAnswer((_) => Future.value(const R(result: true)));
         return chainSelectCubit;
       },
       act: (cubit) async {
-        cubit.changeBlockchain(Blockchain.mainNet);
-        cubit.changeBlockchain(Blockchain.testNet);
+        cubit.changeBlockchain(Blockchain.main);
+        cubit.changeBlockchain(Blockchain.test);
       },
       expect: () => <BlockchainState>[
-        const BlockchainState(blockchain: Blockchain.mainNet),
-        const BlockchainState(blockchain: Blockchain.testNet),
+        const BlockchainState(blockchain: Blockchain.main),
+        const BlockchainState(blockchain: Blockchain.test),
       ],
       verify: (cubit) => [
         verify(
           () => _storage.saveItemAt<Blockchain>(
             StoreKeys.Blockchain.name,
             0,
-            Blockchain.mainNet,
+            Blockchain.main,
           ),
         ).called(1),
         verify(
           () => _storage.saveItemAt<Blockchain>(
             StoreKeys.Blockchain.name,
             0,
-            Blockchain.testNet,
+            Blockchain.test,
           ),
         ).called(1),
       ],
