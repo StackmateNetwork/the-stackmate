@@ -16,6 +16,7 @@ class _Home extends StatelessWidget {
         return Scaffold(
           body: SafeArea(
             child: RefreshIndicator(
+              displacement: 10.0,
               onRefresh: () async {
                 c.read<WalletsCubit>().refresh();
                 return;
