@@ -46,7 +46,7 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
         0,
         blockchain,
       );
-      await Future.delayed(const Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 200));
     } catch (e, s) {
       _logger.logException(e, 'BlockchainCubit.changeBlockchain', s);
     }
