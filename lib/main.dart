@@ -9,6 +9,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
+import 'package:sats/ui/screen/PSBT.dart';
 import 'package:sats/ui/screen/Calculator.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Logs.dart';
@@ -89,6 +90,10 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/add-wallet',
         builder: (_, __) => const AddWalletScreen(),
+      ),
+      GoRoute(
+        path: '/psbt-tools',
+        builder: (_, __) => const PSBTScreen(),
       ),
       GoRoute(
         path: '/generate-seed',
