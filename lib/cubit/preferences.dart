@@ -108,22 +108,21 @@ class PreferencesCubit extends Cubit<PreferencesState> {
       preferredFiatUnit: state.preferredFiatUnit,
     );
 
-    final cleared =
-        await _storage.clearAll<Preferences>(StoreKeys.Preferences.name);
-    if (cleared.hasError) {
-      emit(state.copyWith(errorPreferencesState: cleared.error.toString()));
-      return;
-    }
-
-    final saved = await _storage.saveItem<Preferences>(
+    // final cleared =
+    //     await _storage.clearAll<Preferences>(StoreKeys.Preferences.name);
+    // if (cleared.hasError) {
+    //   emit(state.copyWith(errorPreferencesState: cleared.error.toString()));
+    //   return;
+    // }
+    final saved = await _storage.saveItemAt<Preferences>(
       StoreKeys.Preferences.name,
+      0,
       preferences,
     );
     if (saved.hasError) {
       emit(state.copyWith(errorPreferencesState: saved.error.toString()));
       return;
     }
-    toggleIsEditting();
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 50));
   }
 }

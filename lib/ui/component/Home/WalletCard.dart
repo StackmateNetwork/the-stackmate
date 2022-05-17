@@ -23,6 +23,7 @@ class WalletCard extends StatelessWidget {
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
         return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             GestureDetector(
               onTap: () {
@@ -32,7 +33,7 @@ class WalletCard extends StatelessWidget {
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.only(left: 12, top: 5),
+                padding: const EdgeInsets.only(left: 8, top: 12),
                 child: Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(16),
@@ -46,7 +47,7 @@ class WalletCard extends StatelessWidget {
                     ),
                     child: Container(
                       height: 92,
-                      width: context.width - 192,
+                      width: context.width / 1.8,
                       padding: const EdgeInsets.only(
                         top: 21,
                         left: 12,
@@ -119,7 +120,7 @@ class WalletCard extends StatelessWidget {
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.only(left: 6, top: 12),
+                padding: const EdgeInsets.only(left: 8, top: 12),
                 child: Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(16),
@@ -179,7 +180,7 @@ class WalletCard extends StatelessWidget {
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.only(left: 6, top: 12),
+                padding: const EdgeInsets.only(left: 8, top: 12),
                 child: Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(16),
