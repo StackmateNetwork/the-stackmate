@@ -9,7 +9,6 @@ class Networth extends StatelessWidget {
   Widget build(BuildContext c) {
     // c.select((FeesCubit wc) => wc.update());
     final wallets = c.select((WalletsCubit w) => w.state.wallets);
-    final preferences = c.select((PreferencesCubit p) => p);
 
     int networth = 0;
     for (final wallet in wallets) {
@@ -58,18 +57,6 @@ class Networth extends StatelessWidget {
                 ),
               ),
             ],
-
-            // const SizedBox(width: 16),
-            IconButton(
-              onPressed: () {
-                preferences.incognitoChanged();
-              },
-              icon: Icon(
-                Icons.hide_source,
-                size: 24,
-                color: c.colours.primary,
-              ),
-            ),
           ],
         ),
       );

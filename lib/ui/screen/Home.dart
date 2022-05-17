@@ -3,9 +3,9 @@ import 'package:sats/cubit/preferences.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
-import 'package:sats/ui/component/Home/AddWallet.dart';
 import 'package:sats/ui/component/Home/Header.dart';
 import 'package:sats/ui/component/Home/Networth.dart';
+import 'package:sats/ui/component/Home/Tools.dart';
 
 class _Home extends StatelessWidget {
   @override
@@ -16,7 +16,7 @@ class _Home extends StatelessWidget {
           SliverAppBar(
             stretch: true,
             pinned: true,
-            expandedHeight: 292,
+            expandedHeight: 365,
             automaticallyImplyLeading: false,
             backgroundColor: c.colours.background,
             flexibleSpace: FlexibleSpaceBar(
@@ -24,10 +24,7 @@ class _Home extends StatelessWidget {
                 StretchMode.fadeTitle,
               ],
               background: Column(
-                children: [
-                  HomeHeader(),
-                  Networth(),
-                ],
+                children: [HomeHeader(), Networth(), WalletTools()],
               ),
             ),
           ),
@@ -35,7 +32,6 @@ class _Home extends StatelessWidget {
             delegate: SliverChildListDelegate(
               [
                 Accounts(),
-                AddWallet(),
               ],
             ),
           ),
