@@ -9,7 +9,7 @@ class HomeHeader extends StatelessWidget {
     // c.select((FeesCubit wc) => wc.update());
 
     return Padding(
-      padding: const EdgeInsets.only(top: 42, bottom: 12),
+      padding: const EdgeInsets.only(top: 6, bottom: 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

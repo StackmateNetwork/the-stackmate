@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/preferences.dart';
+import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
@@ -13,31 +14,39 @@ class _Home extends StatelessWidget {
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
         return Scaffold(
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                stretch: true,
-                pinned: true,
-                expandedHeight: 326,
-                automaticallyImplyLeading: false,
-                backgroundColor: c.colours.background,
-                flexibleSpace: FlexibleSpaceBar(
-                  stretchModes: const [
-                    StretchMode.fadeTitle,
-                  ],
-                  background: Column(
-                    children: [HomeHeader(), Networth(), WalletTools()],
+          body: SafeArea(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                c.read<WalletsCubit>().refresh();
+                return;
+              },
+              child: CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    stretch: true,
+                    pinned: true,
+                    expandedHeight: 326,
+                    automaticallyImplyLeading: false,
+                    backgroundColor: c.colours.background,
+                    flexibleSpace: FlexibleSpaceBar(
+                      stretchModes: const [
+                        StretchMode.fadeTitle,
+                      ],
+                      background: Column(
+                        children: [HomeHeader(), Networth(), WalletTools()],
+                      ),
+                    ),
                   ),
-                ),
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        Accounts(),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Accounts(),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
           bottomNavigationBar: HomeActions(),
         );
