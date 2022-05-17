@@ -81,7 +81,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   }) : super(
           SeedImportWalletState(
             walletLabel: walletLabel,
-            labelFixed: walletLabel != '',
+            labelFixed: walletLabel != emptyString,
+            walletLabelError: emptyString,
+            savingWalletError: emptyString,
           ),
         ) {
     _importSub = _importCubit.stream.listen((istate) {
@@ -120,7 +122,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         break;
 
       case SeedImportWalletSteps.label:
-        _saveClicked();
+        if (!state.savingWallet) _saveClicked();
         break;
     }
   }
@@ -169,9 +171,11 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       emit(state.copyWith(walletLabelError: invalidLabelError));
       return;
     }
-
-    emit(state.copyWith(walletLabelError: emptyString));
-
+    emit(
+      state.copyWith(
+        savingWallet: true,
+      ),
+    );
     final istate = _importCubit.state;
     final wallet = istate.wallet;
     if (wallet == null) return;

@@ -110,7 +110,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
   void copyAddress() {
     try {
-      _clipBoard.copyToClipBoard(state.address!);
+      _clipBoard.copyToClipBoard(state.address);
       _vibrate.vibe();
     } catch (e, s) {
       _logger.logException(e, 'WalletCubit.copyAddress', s);
@@ -119,7 +119,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
   void shareAddress() {
     try {
-      final address = state.address!;
+      final address = state.address;
       final text = address;
       _share.share(text: text, subjectForEmail: emailShareSubject);
     } catch (e, s) {

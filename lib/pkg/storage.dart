@@ -5,6 +5,8 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/fees.dart';
 import 'package:sats/model/node.dart';
+import 'package:sats/model/preferences.dart';
+import 'package:sats/model/transaction.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -15,6 +17,7 @@ enum StoreKeys {
   Blockchain,
   Node,
   Fees,
+  Preferences,
 }
 
 extension StoreKeysFunctions on StoreKeys {
@@ -23,6 +26,7 @@ extension StoreKeysFunctions on StoreKeys {
         StoreKeys.Blockchain: 'blockchain',
         StoreKeys.Node: 'node',
         StoreKeys.Fees: 'fees',
+        StoreKeys.Preferences: 'preferences',
       }[this]!;
 }
 
@@ -32,11 +36,14 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(BlockchainClassAdapter());
   Hive.registerAdapter(NodeClassAdapter());
   Hive.registerAdapter(FeesClassAdapter());
+  Hive.registerAdapter(PreferencesClassAdapter());
+  Hive.registerAdapter(TransactionClassAdapter());
 
   await Hive.openBox<Wallet>(StoreKeys.Wallet.name);
   await Hive.openBox<Blockchain>(StoreKeys.Blockchain.name);
   await Hive.openBox<Node>(StoreKeys.Node.name);
   await Hive.openBox<Fees>(StoreKeys.Fees.name);
+  await Hive.openBox<Preferences>(StoreKeys.Preferences.name);
 
   await Hive.openBox<String>('storage');
 }
@@ -49,9 +56,9 @@ class HiveStore implements IStorage {
     try {
       final bx = Hive.box<T>(dbName);
       final len = bx.length;
-      if (len == 0) throw 'empty';
+      if (len == 0) return const R(error: 'empty');
       final item = bx.getAt(0);
-      if (item == null) throw 'empty';
+      if (item == null) return const R(error: 'empty');
       return R(result: item);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);

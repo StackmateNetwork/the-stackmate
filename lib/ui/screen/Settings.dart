@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
+import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Settings/SelectNetwork.dart';
 import 'package:sats/ui/component/Settings/SelectNode.dart';
 import 'package:sats/ui/component/common/header.dart';
@@ -16,29 +17,27 @@ class SettingsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+            children: const [
+              SizedBox(
+                height: 12,
+              ),
               Header(
-                cornerTitle: '',
+                cornerTitle: 'SETTINGS',
                 children: [
-                  // const SizedBox(height: 8),
-                  const Back(),
-                  const SizedBox(height: 40),
-                  Text(
-                    ' Settings',
-                    style: c.fonts.headline4!.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 48),
+                  SizedBox(height: 21),
                 ],
               ),
-              const SelectNode(),
-              const SizedBox(height: 16),
-              const SelectNetwork(),
+              SizedBox(
+                height: 28,
+              ),
+              SelectNode(),
+              SizedBox(height: 16),
+              SelectNetwork(),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: HomeActions(),
     );
   }
 }

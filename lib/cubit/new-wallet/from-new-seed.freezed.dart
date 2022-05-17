@@ -21,14 +21,14 @@ class _$SeedGenerateWalletStateTearOff {
       {SeedGenerateWalletSteps currentStep = SeedGenerateWalletSteps.warning,
       String walletLabel = '',
       String walletLabelError = '',
-      bool savinngWallet = false,
+      bool savingWallet = false,
       String savingWalletError = '',
       bool newWalletSaved = false}) {
     return _SeedGenerateWalletState(
       currentStep: currentStep,
       walletLabel: walletLabel,
       walletLabelError: walletLabelError,
-      savinngWallet: savinngWallet,
+      savingWallet: savingWallet,
       savingWalletError: savingWalletError,
       newWalletSaved: newWalletSaved,
     );
@@ -43,7 +43,7 @@ mixin _$SeedGenerateWalletState {
   SeedGenerateWalletSteps get currentStep => throw _privateConstructorUsedError;
   String get walletLabel => throw _privateConstructorUsedError;
   String get walletLabelError => throw _privateConstructorUsedError;
-  bool get savinngWallet => throw _privateConstructorUsedError;
+  bool get savingWallet => throw _privateConstructorUsedError;
   String get savingWalletError => throw _privateConstructorUsedError;
   bool get newWalletSaved => throw _privateConstructorUsedError;
 
@@ -61,7 +61,7 @@ abstract class $SeedGenerateWalletStateCopyWith<$Res> {
       {SeedGenerateWalletSteps currentStep,
       String walletLabel,
       String walletLabelError,
-      bool savinngWallet,
+      bool savingWallet,
       String savingWalletError,
       bool newWalletSaved});
 }
@@ -80,7 +80,7 @@ class _$SeedGenerateWalletStateCopyWithImpl<$Res>
     Object? currentStep = freezed,
     Object? walletLabel = freezed,
     Object? walletLabelError = freezed,
-    Object? savinngWallet = freezed,
+    Object? savingWallet = freezed,
     Object? savingWalletError = freezed,
     Object? newWalletSaved = freezed,
   }) {
@@ -97,9 +97,9 @@ class _$SeedGenerateWalletStateCopyWithImpl<$Res>
           ? _value.walletLabelError
           : walletLabelError // ignore: cast_nullable_to_non_nullable
               as String,
-      savinngWallet: savinngWallet == freezed
-          ? _value.savinngWallet
-          : savinngWallet // ignore: cast_nullable_to_non_nullable
+      savingWallet: savingWallet == freezed
+          ? _value.savingWallet
+          : savingWallet // ignore: cast_nullable_to_non_nullable
               as bool,
       savingWalletError: savingWalletError == freezed
           ? _value.savingWalletError
@@ -124,7 +124,7 @@ abstract class _$SeedGenerateWalletStateCopyWith<$Res>
       {SeedGenerateWalletSteps currentStep,
       String walletLabel,
       String walletLabelError,
-      bool savinngWallet,
+      bool savingWallet,
       String savingWalletError,
       bool newWalletSaved});
 }
@@ -146,7 +146,7 @@ class __$SeedGenerateWalletStateCopyWithImpl<$Res>
     Object? currentStep = freezed,
     Object? walletLabel = freezed,
     Object? walletLabelError = freezed,
-    Object? savinngWallet = freezed,
+    Object? savingWallet = freezed,
     Object? savingWalletError = freezed,
     Object? newWalletSaved = freezed,
   }) {
@@ -163,9 +163,9 @@ class __$SeedGenerateWalletStateCopyWithImpl<$Res>
           ? _value.walletLabelError
           : walletLabelError // ignore: cast_nullable_to_non_nullable
               as String,
-      savinngWallet: savinngWallet == freezed
-          ? _value.savinngWallet
-          : savinngWallet // ignore: cast_nullable_to_non_nullable
+      savingWallet: savingWallet == freezed
+          ? _value.savingWallet
+          : savingWallet // ignore: cast_nullable_to_non_nullable
               as bool,
       savingWalletError: savingWalletError == freezed
           ? _value.savingWalletError
@@ -186,7 +186,7 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState {
       {this.currentStep = SeedGenerateWalletSteps.warning,
       this.walletLabel = '',
       this.walletLabelError = '',
-      this.savinngWallet = false,
+      this.savingWallet = false,
       this.savingWalletError = '',
       this.newWalletSaved = false})
       : super._();
@@ -202,7 +202,7 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState {
   final String walletLabelError;
   @JsonKey(defaultValue: false)
   @override
-  final bool savinngWallet;
+  final bool savingWallet;
   @JsonKey(defaultValue: '')
   @override
   final String savingWalletError;
@@ -212,7 +212,7 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState {
 
   @override
   String toString() {
-    return 'SeedGenerateWalletState(currentStep: $currentStep, walletLabel: $walletLabel, walletLabelError: $walletLabelError, savinngWallet: $savinngWallet, savingWalletError: $savingWalletError, newWalletSaved: $newWalletSaved)';
+    return 'SeedGenerateWalletState(currentStep: $currentStep, walletLabel: $walletLabel, walletLabelError: $walletLabelError, savingWallet: $savingWallet, savingWalletError: $savingWalletError, newWalletSaved: $newWalletSaved)';
   }
 
   @override
@@ -228,9 +228,9 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState {
             (identical(other.walletLabelError, walletLabelError) ||
                 const DeepCollectionEquality()
                     .equals(other.walletLabelError, walletLabelError)) &&
-            (identical(other.savinngWallet, savinngWallet) ||
+            (identical(other.savingWallet, savingWallet) ||
                 const DeepCollectionEquality()
-                    .equals(other.savinngWallet, savinngWallet)) &&
+                    .equals(other.savingWallet, savingWallet)) &&
             (identical(other.savingWalletError, savingWalletError) ||
                 const DeepCollectionEquality()
                     .equals(other.savingWalletError, savingWalletError)) &&
@@ -245,7 +245,7 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState {
       const DeepCollectionEquality().hash(currentStep) ^
       const DeepCollectionEquality().hash(walletLabel) ^
       const DeepCollectionEquality().hash(walletLabelError) ^
-      const DeepCollectionEquality().hash(savinngWallet) ^
+      const DeepCollectionEquality().hash(savingWallet) ^
       const DeepCollectionEquality().hash(savingWalletError) ^
       const DeepCollectionEquality().hash(newWalletSaved);
 
@@ -261,7 +261,7 @@ abstract class _SeedGenerateWalletState extends SeedGenerateWalletState {
       {SeedGenerateWalletSteps currentStep,
       String walletLabel,
       String walletLabelError,
-      bool savinngWallet,
+      bool savingWallet,
       String savingWalletError,
       bool newWalletSaved}) = _$_SeedGenerateWalletState;
   const _SeedGenerateWalletState._() : super._();
@@ -273,7 +273,7 @@ abstract class _SeedGenerateWalletState extends SeedGenerateWalletState {
   @override
   String get walletLabelError => throw _privateConstructorUsedError;
   @override
-  bool get savinngWallet => throw _privateConstructorUsedError;
+  bool get savingWallet => throw _privateConstructorUsedError;
   @override
   String get savingWalletError => throw _privateConstructorUsedError;
   @override

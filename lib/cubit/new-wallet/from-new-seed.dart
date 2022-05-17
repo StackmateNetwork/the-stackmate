@@ -32,7 +32,7 @@ class SeedGenerateWalletState with _$SeedGenerateWalletState {
         SeedGenerateWalletSteps currentStep,
     @Default('') String walletLabel,
     @Default('') String walletLabelError,
-    @Default(false) bool savinngWallet,
+    @Default(false) bool savingWallet,
     @Default('') String savingWalletError,
     @Default(false) bool newWalletSaved,
   }) = _SeedGenerateWalletState;
@@ -112,7 +112,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         break;
 
       case SeedGenerateWalletSteps.label:
-        saveClicked();
+        if (!state.savingWallet) saveClicked();
         break;
     }
   }
@@ -130,6 +130,10 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
     }
 
     try {
+      emit(state.copyWith(
+        savingWallet: true,
+      ));
+
       final wallet = _generateCubit.state.wallet;
       if (wallet == null) return;
 
@@ -187,7 +191,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       emit(
         state.copyWith(
           savingWalletError: emptyString,
-          savinngWallet: false,
+          savingWallet: false,
           newWalletSaved: true,
         ),
       );

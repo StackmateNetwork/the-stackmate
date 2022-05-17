@@ -17,7 +17,6 @@ import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Wallet/Balance.dart';
 import 'package:sats/ui/component/Wallet/Info.dart';
 import 'package:sats/ui/component/Wallet/Loader.dart';
-import 'package:sats/ui/component/Wallet/Name.dart';
 import 'package:sats/ui/component/Wallet/TransactionList.dart';
 
 class _Wallet extends StatelessWidget {
@@ -95,7 +94,7 @@ class _Wallet extends StatelessWidget {
                               children: [
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
-                                  opacity: (!isLoading) ? 0.8 : 0.4,
+                                  opacity: (!isLoading) ? 0.8 : 0.2,
                                   child: IconButton(
                                     iconSize: 28,
                                     color: c.colours.error,

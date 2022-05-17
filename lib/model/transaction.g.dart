@@ -8,7 +8,7 @@ part of 'transaction.dart';
 
 class TransactionClassAdapter extends TypeAdapter<_$_Transaction> {
   @override
-  final int typeId = 3;
+  final int typeId = 6;
 
   @override
   _$_Transaction read(BinaryReader reader) {

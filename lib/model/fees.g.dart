@@ -8,7 +8,7 @@ part of 'fees.dart';
 
 class FeesClassAdapter extends TypeAdapter<_$_Fees> {
   @override
-  final int typeId = 3;
+  final int typeId = 5;
 
   @override
   _$_Fees read(BinaryReader reader) {

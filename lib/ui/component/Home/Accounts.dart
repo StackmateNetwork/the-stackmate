@@ -12,7 +12,6 @@ class Accounts extends StatelessWidget {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: Text(

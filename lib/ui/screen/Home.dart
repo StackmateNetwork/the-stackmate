@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/preferences.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
+import 'package:sats/ui/component/Home/AddWallet.dart';
 import 'package:sats/ui/component/Home/Header.dart';
 import 'package:sats/ui/component/Home/Networth.dart';
 
@@ -14,7 +16,7 @@ class _Home extends StatelessWidget {
           SliverAppBar(
             stretch: true,
             pinned: true,
-            expandedHeight: 272,
+            expandedHeight: 275,
             automaticallyImplyLeading: false,
             backgroundColor: c.colours.background,
             flexibleSpace: FlexibleSpaceBar(
@@ -23,7 +25,7 @@ class _Home extends StatelessWidget {
               ],
               background: Column(
                 children: [
-                  Header(),
+                  HomeHeader(),
                   Networth(),
                 ],
               ),
@@ -31,7 +33,10 @@ class _Home extends StatelessWidget {
           ),
           SliverList(
             delegate: SliverChildListDelegate(
-              [Accounts()],
+              [
+                Accounts(),
+                AddWallet(),
+              ],
             ),
           ),
         ],

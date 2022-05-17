@@ -193,7 +193,7 @@ class __$TransactionCopyWithImpl<$Res> extends _$TransactionCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-@HiveType(typeId: 3, adapterName: 'TransactionClassAdapter')
+@HiveType(typeId: 6, adapterName: 'TransactionClassAdapter')
 class _$_Transaction extends _Transaction {
   const _$_Transaction(
       {@HiveField(0) required this.timestamp,

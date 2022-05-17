@@ -5,6 +5,8 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
+import 'package:sats/cubit/preferences.dart';
+
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -23,29 +25,30 @@ class _CubitsState extends State<Cubits> {
   @override
   Widget build(BuildContext context) {
     final logger = locator<Logger>();
+    final storage = locator<IStorage>();
 
     final networkSelectCubit = ChainSelectCubit(
-      locator<IStorage>(),
+      storage,
       logger,
-      // walletsCubit,
     );
-
     networkSelectCubit.init();
 
+    final preferencesCubit = PreferencesCubit(storage);
+    preferencesCubit.init();
+
     final walletsCubit = WalletsCubit(
-      locator<IStorage>(),
+      storage,
       logger,
       networkSelectCubit,
       locator<IClipBoard>(),
     );
 
     final nodeAddressCubit = NodeAddressCubit(
-      locator<IStorage>(),
+      storage,
     );
     nodeAddressCubit.init();
 
-    final feesCubit =
-        FeesCubit(locator<IStorage>(), networkSelectCubit, nodeAddressCubit);
+    final feesCubit = FeesCubit(storage, networkSelectCubit, nodeAddressCubit);
 
     return MultiBlocProvider(
       providers: [
@@ -54,6 +57,7 @@ class _CubitsState extends State<Cubits> {
         BlocProvider.value(value: walletsCubit),
         BlocProvider.value(value: feesCubit),
         BlocProvider.value(value: nodeAddressCubit),
+        BlocProvider.value(value: preferencesCubit),
       ],
       child: BlocListener<ChainSelectCubit, BlockchainState>(
         listener: (context, state) {

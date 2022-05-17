@@ -156,7 +156,7 @@ class __$FeesCopyWithImpl<$Res> extends _$FeesCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-@HiveType(typeId: 3, adapterName: 'FeesClassAdapter')
+@HiveType(typeId: 5, adapterName: 'FeesClassAdapter')
 class _$_Fees extends _Fees {
   const _$_Fees(
       {@HiveField(0) required this.timestamp,

@@ -14,18 +14,14 @@ class HomeActions extends StatelessWidget {
             onPressed: () {
               context.push('/');
             },
-            icon: Icon(Icons.home, size: 32, color: context.colours.primary),
+            icon: Icon(
+              Icons.account_balance_wallet_outlined,
+              size: 32,
+              color: context.colours.primary,
+            ),
           ),
           IconButton(
-            onPressed: () {
-              context.push('/add-wallet');
-            },
-            icon: Icon(Icons.add, size: 32, color: context.colours.primary),
-          ),
-          IconButton(
-            onPressed: () {
-              context.push('/address-book');
-            },
+            onPressed: () {},
             icon: Icon(
               Icons.schema_outlined,
               size: 32,
@@ -38,6 +34,16 @@ class HomeActions extends StatelessWidget {
             },
             icon: Icon(
               Icons.calculate_sharp,
+              size: 32,
+              color: context.colours.primary,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              context.push('/settings');
+            },
+            icon: Icon(
+              Icons.settings,
               size: 32,
               color: context.colours.primary,
             ),

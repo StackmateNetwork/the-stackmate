@@ -96,7 +96,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
           emit(state.copyWith(errSavingWallet: invalidLabelError));
           return;
         }
-        _saveWallet();
+        if (!state.savingWallet) _saveWallet();
         break;
     }
   }

@@ -8,7 +8,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/ui/component/Calculator/Keyboard.dart';
 import 'package:sats/ui/component/Calculator/Rates.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
+import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/common/header.dart';
 import 'package:sats/ui/component/common/loading.dart';
 
@@ -30,15 +30,9 @@ class _Calc extends StatelessWidget {
               const Loading(
                 text: 'Fetching Rates',
               ),
-            if (!loading)
-              const Header(
-                cornerTitle: 'STACKMATE',
-                children: [
-                  SizedBox(height: 8),
-                  Back(),
-                ],
-              ),
-            const Spacer(),
+            const SizedBox(
+              height: 12,
+            ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Rates(),
@@ -53,6 +47,7 @@ class _Calc extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: HomeActions(),
     );
   }
 }

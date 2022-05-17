@@ -6,7 +6,7 @@ part 'fees.freezed.dart';
 
 @freezed
 class Fees with _$Fees {
-  @HiveType(typeId: 3, adapterName: 'FeesClassAdapter')
+  @HiveType(typeId: 5, adapterName: 'FeesClassAdapter')
   const factory Fees({
     @HiveField(0) required int timestamp,
     @HiveField(1) required double slow,
