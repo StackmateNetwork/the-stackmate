@@ -21,6 +21,8 @@ import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   await initializeHive();
@@ -38,34 +40,117 @@ void main() async {
   );
 }
 
-class Stackmate extends StatelessWidget {
+class Stackmate extends StatefulWidget {
+  const Stackmate({Key? key}) : super(key: key);
+
+  @override
+  State<Stackmate> createState() => _StackmateState();
+}
+
+class _StackmateState extends State<Stackmate> {
+  bool isAuth = false;
+
+  void _checkBiometric() async {
+    // check for biometric availability
+    final LocalAuthentication auth = LocalAuthentication();
+    bool canCheckBiometrics = false;
+    try {
+      canCheckBiometrics = await auth.canCheckBiometrics;
+    } catch (e) {
+      print("error biometrics $e");
+    }
+
+    print("biometric is available: $canCheckBiometrics");
+
+    // enumerate biometric technologies
+    List<BiometricType>? availableBiometrics;
+    try {
+      availableBiometrics = await auth.getAvailableBiometrics();
+    } catch (e) {
+      print("error enumerate biometrics $e");
+    }
+
+    print("following biometrics are available");
+
+    // authenticate with biometrics
+    bool authenticated = false;
+    try {
+      authenticated = await auth.authenticate(
+        localizedReason: 'Touch your finger on the sensor to login',
+        options: const AuthenticationOptions(
+          useErrorDialogs: true,
+          stickyAuth: true,
+        ),
+      );
+    } catch (e) {
+      print("error using biometric auth: $e");
+    }
+    setState(() {
+      isAuth = authenticated ? true : false;
+    });
+
+    print("authenticated: $authenticated");
+  }
+
   @override
   Widget build(BuildContext c) {
-    return Cubits(
-      child: OKToast(
-        duration: const Duration(milliseconds: 2000),
-        position: ToastPosition.bottom,
-        textStyle: c.fonts.caption!.copyWith(color: c.colours.onBackground),
-        child: MaterialApp.router(
-          routeInformationParser: _router.routeInformationParser,
-          routerDelegate: _router.routerDelegate,
-          // localizationsDelegates: const [
-          //   AppLocalizations.delegate,
-          //   GlobalMaterialLocalizations.delegate,
-          // ],
-          // supportedLocales: AppLocalizations.supportedLocales,
-          builder: (context, child) {
-            final mediaQueryData = MediaQuery.of(context);
-            return MediaQuery(
-              data: mediaQueryData.copyWith(textScaleFactor: 1.0),
-              child: child!,
-            );
-          },
-          debugShowCheckedModeBanner: false,
-          theme: derivedTheme(mainTheme()),
-        ),
-      ),
-    );
+    return isAuth
+        ? Cubits(
+            child: OKToast(
+              duration: const Duration(milliseconds: 2000),
+              position: ToastPosition.bottom,
+              textStyle:
+                  c.fonts.caption!.copyWith(color: c.colours.onBackground),
+              child: MaterialApp.router(
+                routeInformationParser: _router.routeInformationParser,
+                routerDelegate: _router.routerDelegate,
+                // localizationsDelegates: const [
+                //   AppLocalizations.delegate,
+                //   GlobalMaterialLocalizations.delegate,
+                // ],
+                // supportedLocales: AppLocalizations.supportedLocales,
+                builder: (context, child) {
+                  final mediaQueryData = MediaQuery.of(context);
+                  return MediaQuery(
+                    data: mediaQueryData.copyWith(textScaleFactor: 1.0),
+                    child: child!,
+                  );
+                },
+                debugShowCheckedModeBanner: false,
+                theme: derivedTheme(mainTheme()),
+              ),
+            ),
+          )
+        : MaterialApp(
+           home: Scaffold(
+              backgroundColor: Colors.black,
+              body: Center(
+                  child: InkWell(
+                onTap: () {
+                  _checkBiometric();
+                },
+                child: Container(
+                  height: 60,
+                  //width: MediaQuery.of(context).size.width * 0.9,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueAccent, width: 2.5)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.fingerprint,
+                        color: Colors.blueAccent,
+                      ),
+                      Text(
+                        "Login with Fingerprint",
+                        style: TextStyle(color: Colors.blueAccent),
+                      )
+                    ],
+                  ),
+                ),
+              )),
+            ),
+          );
   }
 
   late final _router = GoRouter(
