@@ -37,14 +37,21 @@ class PSBTCubit extends Cubit<PSBTState> {
   // void completed() {
   //   _walletsCubit.walletSelected(wallet)
   // }
+  void reset() {
+    emit(
+      state.copyWith(txId: ''),
+    );
+  }
 
   void psbtChanged(String text) {
-    emit(state.copyWith(psbt: text));
+    emit(
+      state.copyWith(psbt: text),
+    );
   }
 
   void pastePSBT() async {
     final text = await _clipBoard.pasteFromClipBoard();
-    if (text.hasError) return;
+    if (text.hasError) emit(state.copyWith(errBroadcasting: text.error!));
     emit(state.copyWith(psbt: text.result!));
   }
 
@@ -60,13 +67,28 @@ class PSBTCubit extends Cubit<PSBTState> {
       );
 
       if (psbt.hasError) {
-        emit(state.copyWith(errBroadcasting: psbt.error!));
+        emit(
+          state.copyWith(
+            broadcasting: false,
+            errBroadcasting: psbt.error!,
+            txId: '',
+            psbt: '',
+          ),
+        );
       } else
-        emit(state.copyWith(broadcasting: false));
+        emit(
+          state.copyWith(
+            broadcasting: false,
+            txId: 'BROADCAST SUCCESSFUL.',
+            psbt: '',
+            errBroadcasting: emptyString,
+          ),
+        );
     } catch (e, s) {
       emit(
         state.copyWith(
           errBroadcasting: e.toString(),
+          broadcasting: false,
         ),
       );
 
