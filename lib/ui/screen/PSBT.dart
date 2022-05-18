@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/psbt-tool.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -47,10 +48,13 @@ class PSBTScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final nodeAddressCubit = context.select((NodeAddressCubit c) => c);
+    final blockchainCubit = context.select((ChainSelectCubit c) => c);
+
     final psbt = PSBTCubit(
       locator<IStackMateCore>(),
       locator<IClipBoard>(),
       nodeAddressCubit,
+      blockchainCubit,
     );
 
     return BlocProvider.value(

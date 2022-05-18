@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/stackmate-core.dart';
+import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/node.dart';
-
+import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'psbt-tool.freezed.dart';
@@ -27,11 +29,16 @@ class PSBTCubit extends Cubit<PSBTState> {
     this._core,
     this._clipBoard,
     this._nodeAddressCubit,
+    this._blockchainCubit,
   ) : super(const PSBTState());
+
+  static const minerOutput = 'miner';
 
   final IClipBoard _clipBoard;
   final NodeAddressCubit _nodeAddressCubit;
   final IStackMateCore _core;
+  final ChainSelectCubit _blockchainCubit;
+
   static const dummyDescriptor = 'wpkh(tprv/*)';
   static const emptyString = '';
   // void completed() {
@@ -39,7 +46,7 @@ class PSBTCubit extends Cubit<PSBTState> {
   // }
   void reset() {
     emit(
-      state.copyWith(txId: ''),
+      state.copyWith(txId: emptyString),
     );
   }
 
@@ -52,7 +59,15 @@ class PSBTCubit extends Cubit<PSBTState> {
   void pastePSBT() async {
     final text = await _clipBoard.pasteFromClipBoard();
     if (text.hasError) emit(state.copyWith(errBroadcasting: text.error!));
-    emit(state.copyWith(psbt: text.result!));
+    final decoded = _core.decodePsbt(
+      network: _blockchainCubit.state.blockchain.name,
+      psbt: text.result!,
+    );
+    if (decoded.hasError) {
+      emit(state.copyWith(errBroadcasting: 'Invalid PSBT.'));
+    } else
+      emit(state.copyWith(psbt: text.result!));
+    return;
   }
 
   void broadcastConfirmed() async {
