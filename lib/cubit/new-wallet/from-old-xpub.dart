@@ -161,20 +161,13 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         }
       }
 
-      final int totalIn = history.result!.fold(
-        0,
-        (int sum, Transaction item) => (item.sent == 0 && item.timestamp > 0)
-            ? sum + item.received
-            : sum + 0,
+      final balance = _core.syncBalance(
+        descriptor: descriptor.result!,
+        nodeAddress: _nodeAddressCubit.toString(),
       );
-      final int totalOut = history.result!.fold(
-        0,
-        (int sum, Transaction item) => (item.sent != 0 && item.timestamp > 0)
-            ? sum + item.sent + item.fee
-            : sum + 0,
-      );
-
-      final inferredBalance = totalIn - totalOut;
+      if (balance.hasError) {
+        throw SMError.fromJson(history.error!);
+      }
       // check balance and see if last address index needs update
       var newWallet = Wallet(
         label: state.label,
@@ -185,7 +178,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: watcherWalletType,
         lastAddressIndex: recievedCount,
-        balance: inferredBalance,
+        balance: balance.result!,
         transactions: [],
       );
 
