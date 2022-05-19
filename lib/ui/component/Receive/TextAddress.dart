@@ -14,7 +14,6 @@ class TextAddress extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           width: c.width,
@@ -30,12 +29,11 @@ class TextAddress extends StatelessWidget {
         TextButton(
           onPressed: () {
             c.read<ReceiveCubit>().copyAddress();
-            //.copyAddress(address);
           },
           child: Text(
             'COPY',
             style: c.fonts.caption!.copyWith(
-              color: Colors.blue,
+              color: c.colours.primary,
               fontSize: 18,
             ),
           ),
@@ -46,7 +44,6 @@ class TextAddress extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               c.read<ReceiveCubit>().shareAddress();
-              //.shareAddress(address);
             },
             child: Text(
               'SHARE'.notLocalised(),
@@ -70,7 +67,6 @@ class TextAddress extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               c.read<ReceiveCubit>().getAddress();
-              //.shareAddress(address);
             },
             child: Text(
               'ROTATE'.notLocalised(),

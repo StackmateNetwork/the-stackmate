@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/model/preferences.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/validation.dart';
 
 class Balance extends StatelessWidget {
   const Balance({
@@ -32,8 +32,7 @@ class Balance extends StatelessWidget {
               ),
             ] else ...[
               Text(
-                NumberFormat('###,000')
-                    .format(double.parse(balance.toString())),
+                Validation.formatSatsString(balance.toString()),
                 style: c.fonts.headline4!.copyWith(
                   color: Colors.white,
                 ),

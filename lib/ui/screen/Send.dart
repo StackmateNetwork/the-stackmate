@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -30,6 +29,8 @@ class _WalletSend extends StatelessWidget {
     final step = context.select((SendCubit sc) => sc.state.currentStep);
     final walletLabel =
         context.select((WalletsCubit c) => c.state.selectedWallet!.label);
+    final walletType =
+        context.select((WalletsCubit c) => c.state.selectedWallet!.walletType);
 
     return WillPopScope(
       onWillPop: () async {
@@ -47,7 +48,6 @@ class _WalletSend extends StatelessWidget {
               child: BlocListener<SendCubit, SendState>(
                 listener: (context, state) async {
                   if (state.zeroBalanceAmt()) {
-                    await Future.delayed(const Duration(milliseconds: 2000));
                     Navigator.pop(context);
                   }
                 },
@@ -94,7 +94,9 @@ class _WalletSend extends StatelessWidget {
                       const SizedBox(height: 0),
                       Align(
                         child: Text(
-                          'SEND BITCOIN',
+                          (walletType == 'WATCHER')
+                              ? 'BUILD TRANSACTION'
+                              : 'SEND BITCOIN',
                           style: context.fonts.headline6!.copyWith(
                             color: Colors.white,
                           ),
@@ -108,7 +110,7 @@ class _WalletSend extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 48),
+                      const SizedBox(height: 16),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: SendAddress(),
@@ -120,7 +122,7 @@ class _WalletSend extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: WalletDetails(),
                       ),
-                      const SizedBox(height: 80),
+                      const SizedBox(height: 16),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: AmountRow(),
@@ -143,20 +145,18 @@ class _WalletSend extends StatelessWidget {
                         child: SelectFee(),
                       ),
                     ],
-                    if (step == SendSteps.confirm)
-                      FadeIn(
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: ConfirmTransaction(),
-                        ),
+                    if (step == SendSteps.confirm) ...[
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: ConfirmTransaction(),
                       ),
-                    if (step == SendSteps.sent)
-                      FadeIn(
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: TransactionComplete(),
-                        ),
+                    ],
+                    if (step == SendSteps.sent) ...[
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: TransactionComplete(),
                       ),
+                    ],
                     const SizedBox(height: 80),
                   ],
                 ),
@@ -183,15 +183,17 @@ class WalletSendScreen extends StatelessWidget {
     final fees = context.select((FeesCubit c) => c);
 
     final s = SendCubit(
-        fromQr,
-        wallets,
-        networkSelect,
-        logger,
-        locator<IClipBoard>(),
-        locator<IShare>(),
-        nodeAddress,
-        locator<IStackMateCore>(),
-        fees);
+      fromQr,
+      wallets,
+      networkSelect,
+      logger,
+      locator<IClipBoard>(),
+      locator<IShare>(),
+      nodeAddress,
+      locator<IStackMateCore>(),
+      fees,
+      // locator<FileManager>(),
+    );
 
     return BlocProvider.value(
       value: s,

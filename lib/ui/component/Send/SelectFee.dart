@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -22,6 +23,8 @@ class _SelectFeeState extends State<SelectFee> {
   Widget build(BuildContext context) {
     return BlocBuilder<SendCubit, SendState>(
       builder: (context, state) {
+        // context.read<FeesCubit>().update();
+
         if (state.feeSlow == null ||
             state.feeMedium == null ||
             state.feeFast == null) return Container();
@@ -115,17 +118,33 @@ class _SelectFeeState extends State<SelectFee> {
                   ],
                 ),
                 const SizedBox(height: 32),
-                TextField(
-                  controller: _controller,
-                  style: TextStyle(color: context.colours.onBackground),
-                  decoration: InputDecoration(
-                    hintText: 'Enter custom fee'.toUpperCase(),
-                    errorText: state.errFees.nullIfEmpty(),
+                Slider(
+                  divisions: 6,
+                  min: double.parse(
+                    context.read<SendCubit>().state.feeSlow!.toString(),
                   ),
-                  onChanged: (t) {
-                    context.read<SendCubit>().feeChanged(t);
+                  max: double.parse(
+                    context.read<SendCubit>().state.feeFast!.toString(),
+                  ),
+                  value: double.parse(
+                    context.read<SendCubit>().state.finalFee!.toString(),
+                  ),
+                  onChanged: (f) {
+                    context.read<SendCubit>().feeChanged(f.round().toString());
                   },
                 ),
+                // TextField(
+                //   controller: _controller,
+                //   keyboardType: TextInputType.number,
+                //   style: TextStyle(color: context.colours.onBackground),
+                //   decoration: InputDecoration(
+                //     hintText: 'Enter custom fee'.toUpperCase(),
+                //     errorText: state.errFees.nullIfEmpty(),
+                //   ),
+                //   onChanged: (t) {
+                //     context.read<SendCubit>().feeChanged(t);
+                //   },
+                // ),
                 const SizedBox(height: 60),
                 if (state.finalFee != null) ...[
                   Text(

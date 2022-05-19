@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
+
 import 'package:bitcoin/bitcoin.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
-import 'package:sats/model/transaction.dart';
 import 'package:sats/model/result.dart';
+import 'package:sats/model/transaction.dart';
 
 class BitcoinFFI implements IStackMateCore {
   BitcoinFFI() {
@@ -66,7 +67,7 @@ class BitcoinFFI implements IStackMateCore {
       purpose: purpose,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     return R(result: DerivedKeys.fromJson(resp));
   }
@@ -81,7 +82,7 @@ class BitcoinFFI implements IStackMateCore {
       scriptType: scriptType,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     return R(result: resp);
   }
@@ -96,7 +97,7 @@ class BitcoinFFI implements IStackMateCore {
       nodeAddress: nodeAddress,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     final bal = jsonDecode(resp)['balance'];
     return R(result: bal as int);
@@ -112,7 +113,7 @@ class BitcoinFFI implements IStackMateCore {
       index: index,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     final address = jsonDecode(resp)['address'];
     return R(result: address as String);
@@ -128,7 +129,7 @@ class BitcoinFFI implements IStackMateCore {
       nodeAddress: nodeAddress,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     final json = jsonDecode(resp);
     final List<Transaction> transactions = [];
@@ -156,12 +157,12 @@ class BitcoinFFI implements IStackMateCore {
       nodeAddress: nodeAddress,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     final json = jsonDecode(resp);
     final List<UTXO> utxos = [];
     for (final t in json['utxos'] as List) {
-      var utxo = UTXO.fromJson(t as Map<String, dynamic>);
+      final utxo = UTXO.fromJson(t as Map<String, dynamic>);
       utxos.add(utxo);
     }
     return R(result: utxos);
@@ -191,11 +192,13 @@ class BitcoinFFI implements IStackMateCore {
   }
 
   @override
-  R<List<DecodedTxOutput>> decodePsbt(
-      {required String network, required String psbt}) {
+  R<List<DecodedTxOutput>> decodePsbt({
+    required String network,
+    required String psbt,
+  }) {
     final resp = _bitcoin.decodePsbt(network: network, psbt: psbt);
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     final json = jsonDecode(resp)['outputs'];
     final List<DecodedTxOutput> decoded = [];
@@ -214,24 +217,24 @@ class BitcoinFFI implements IStackMateCore {
       unsignedPSBT: unsignedPSBT,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     return R(result: PSBT.fromJson(resp));
   }
 
   @override
-  R<String> broadcastTransaction({
+  Future<R<String>> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
     required String signedPSBT,
-  }) {
-    final resp = _bitcoin.broadcastTransaction(
+  }) async {
+    final resp = await _bitcoin.broadcastTransaction(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
       signedPSBT: signedPSBT,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     final data = jsonDecode(resp);
     return R(result: data['txid'] as String);
@@ -249,7 +252,7 @@ class BitcoinFFI implements IStackMateCore {
       targetSize: targetSize,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     final data = jsonDecode(resp);
     return R(result: data['rate'] as double);
@@ -265,7 +268,7 @@ class BitcoinFFI implements IStackMateCore {
       psbt: psbt,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     final data = jsonDecode(resp);
     return R(result: data['weight'] as int);
@@ -281,7 +284,7 @@ class BitcoinFFI implements IStackMateCore {
       weight: weight,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     return R(result: AbsoluteFees.fromJson(resp));
   }
@@ -296,7 +299,7 @@ class BitcoinFFI implements IStackMateCore {
       weight: weight,
     );
     if (resp.contains('Error')) {
-      return R(error: resp);
+      return R(error: SMError.fromJson(resp).message);
     }
     return R(result: AbsoluteFees.fromJson(resp));
   }

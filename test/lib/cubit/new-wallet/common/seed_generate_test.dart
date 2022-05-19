@@ -104,11 +104,11 @@ void main() {
     late String answer1;
     late int answer1Index;
 
-    late String answer2;
-    late int answer2Index;
+    // late String answer2;
+    // late int answer2Index;
 
-    late String answer3;
-    late int answer3Index;
+    // late String answer3;
+    // late int answer3Index;
 
     blocTest<SeedGenerateCubit, SeedGenerateState>(
       'Quiz new wallet flow.',

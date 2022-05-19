@@ -43,7 +43,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
           children: [
             const SizedBox(height: 24),
             Text(
-              'Enter your XPub',
+              'Public Key Details',
               style: c.fonts.headline4!.copyWith(
                 color: Colors.white,
                 // fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
               children: [
                 Expanded(
                   child: Text(
-                    'Public Key'.notLocalised(),
+                    'Extended Public Key'.notLocalised(),
                     style: c.fonts.overline!.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -101,7 +101,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 12),
             if (state.hasNoKeySource()) ...[
               Text(
                 'Fingerprint'.toUpperCase().notLocalised(),
@@ -139,7 +139,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 12),
               Text(
                 'Path'.toUpperCase().notLocalised(),
                 style: c.fonts.overline!.copyWith(
@@ -176,7 +176,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 12),
             ],
             if (state.errXpub != '')
               Text(

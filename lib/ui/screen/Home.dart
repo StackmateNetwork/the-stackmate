@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -19,6 +20,7 @@ class _Home extends StatelessWidget {
               displacement: 10.0,
               onRefresh: () async {
                 c.read<WalletsCubit>().refresh();
+                c.read<FeesCubit>().update();
                 return;
               },
               child: CustomScrollView(

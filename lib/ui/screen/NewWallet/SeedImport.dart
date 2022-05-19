@@ -11,11 +11,11 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/ui/component/Common/BackButton2.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Stepper.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Warning.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class _SeedImport extends StatelessWidget {
@@ -47,12 +47,12 @@ class _SeedImport extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const SizedBox(height: 24),
                     Header(
                       cornerTitle: 'RECOVER',
                       children: [
-                        BckButton(
-                          text: 'EXIT',
-                          onTapped: () {
+                        Back(
+                          onPressed: () {
                             if (!state.canGoBack()) {
                               c.read<SeedImportWalletCubit>().backClicked();
                               return;
@@ -64,6 +64,7 @@ class _SeedImport extends StatelessWidget {
                         const SizedBox(height: 24),
                       ],
                     ),
+                    const SizedBox(height: 24),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 24.0),
                       child: NewImportStepper(),

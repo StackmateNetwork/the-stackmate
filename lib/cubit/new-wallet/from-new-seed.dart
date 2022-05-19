@@ -45,7 +45,7 @@ class SeedGenerateWalletState with _$SeedGenerateWalletState {
 
   bool canGoBack() {
     if (currentStep == SeedGenerateWalletSteps.warning) return true;
-    return false;
+    return true;
   }
 
   double completePercent() =>
@@ -130,9 +130,11 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
     }
 
     try {
-      emit(state.copyWith(
-        savingWallet: true,
-      ));
+      emit(
+        state.copyWith(
+          savingWallet: true,
+        ),
+      );
 
       final wallet = _generateCubit.state.wallet;
       if (wallet == null) return;

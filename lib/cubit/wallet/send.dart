@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bitcoin/types.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -11,8 +9,6 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/fees.dart';
-
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
@@ -40,6 +36,7 @@ class SendState with _$SendState {
     @Default(false) bool sendingTx,
     @Default('') String errLoading,
     @Default('') String errAddress,
+    @Default('') String errSending,
     @Default('') String errAmount,
     @Default('') String errFees,
     @Default('') String policyPath,
@@ -82,6 +79,7 @@ class SendCubit extends Cubit<SendState> {
     this._nodeAddressCubit,
     this._core,
     this._fees,
+    // this._file,
   ) : super(const SendState()) {
     _init(withQR);
   }
@@ -95,8 +93,11 @@ class SendCubit extends Cubit<SendState> {
   final NodeAddressCubit _nodeAddressCubit;
   final IStackMateCore _core;
   final FeesCubit _fees;
+  // final FileManager _file;
 
-  static const emailShareSubject = 'Transaction ID';
+  static const emailShareTxidSubject = 'Transaction ID';
+  static const emailSharePSBTSubject = 'PSBT Requires Signature';
+
   static const invalidAddressError = 'Invalid Address';
   static const invalidAmountError = 'Invalid Amount';
   static const invalidFeeError = 'Invalid Fee';
@@ -214,6 +215,29 @@ class SendCubit extends Cubit<SendState> {
     emit(state.copyWith(sweepWallet: !state.sweepWallet, amount: emptyString));
   }
 
+  // void savePSBTToFile(BuildContext context) async {
+  //   // final bool isDesktop = !(Platform.isAndroid || Platform.isIOS);
+
+  //   final rootPath = await getTemporaryDirectory();
+  //   final String path = await FilesystemPicker.open(
+  //     title: 'Save to folder',
+  //     context: context,
+  //     rootDirectory: rootPath,
+  //     fsType: FilesystemType.folder,
+  //     pickText: 'Save file to this folder',
+  //     folderIconColor: Colors.teal,
+  //   );
+  //   await _file.saveTextToFile(state.psbt, path);
+  //   emit(
+  //     state.copyWith(
+  //       sendingTx: false,
+  //       errLoading: emptyString,
+  //       // currentStep: SendSteps.sent,
+  //     ),
+  //   );
+  //   return;
+  // }
+
   bool _checkAmount(String amount) {
     final checked = amount.replaceAll(',', emptyString);
     emit(state.copyWith(amount: checked));
@@ -232,7 +256,7 @@ class SendCubit extends Cubit<SendState> {
         return;
       }
       final txOutputs =
-          '${state.address}:${(state.sweepWallet ? 0 : state.amount)}';
+          '${state.address}:${state.sweepWallet ? 0 : state.amount}';
 
       emit(
         state.copyWith(
@@ -241,10 +265,6 @@ class SendCubit extends Cubit<SendState> {
           txOutputs: txOutputs,
         ),
       );
-
-      // await Future.delayed(const Duration(milliseconds: 100));
-
-      // emit(state.copyWith(buildingTx: true, errLoading: emptyString));
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
@@ -330,11 +350,11 @@ class SendCubit extends Cubit<SendState> {
   void feeChanged(String fee) {
     final checked = fee.replaceAll('.', emptyString);
     emit(state.copyWith(fees: checked, feesOption: 4));
-    final fees = _core.feeAbsoluteToRate(
-      feeAbsolute: checked,
-      weight: state.weight.toString(),
-    );
-    emit(state.copyWith(finalFee: fees.result!.absolute));
+    // final fees = _core.feeAbsoluteToRate(
+    //   feeAbsolute: checked,
+    //   weight: state.weight.toString(),
+    // );
+    emit(state.copyWith(finalFee: int.parse(checked)));
   }
 
   bool _checkFee() {
@@ -379,6 +399,7 @@ class SendCubit extends Cubit<SendState> {
           finalFee: feeoutput.value,
           finalAmount: amtoutput.value,
           currentStep: SendSteps.confirm,
+          errSending: emptyString,
         ),
       );
     } catch (e, s) {
@@ -425,27 +446,44 @@ class SendCubit extends Cubit<SendState> {
 
       // final unsigned = state.psbt;
       final descriptor = _walletsCubit.state.selectedWallet!.descriptor;
-      final signed = await compute(signTx, {
-        'descriptor': descriptor,
-        'unsignedPSBT': state.psbt,
-      });
-      if (!signed.isFinalized) {
-        throw psbtNotFinalizedError;
-      }
-      final txid = await compute(broadcastTx, {
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
-        'nodeAddress': nodeAddress,
-        'signedPSBT': signed.psbt,
-      });
-
-      emit(
-        state.copyWith(
-          sendingTx: false,
-          errLoading: emptyString,
-          txId: txid,
-          currentStep: SendSteps.sent,
-        ),
+      final signed = _core.signTransaction(
+        descriptor: descriptor,
+        unsignedPSBT: state.psbt,
       );
+      if (signed.hasError) {
+        emit(state.copyWith(errSending: signed.error!));
+        return;
+      }
+      if (!signed.result!.isFinalized) {
+        emit(state.copyWith(errSending: 'All signatures not present.'));
+        return;
+      }
+      final txid = await _core.broadcastTransaction(
+        descriptor: _walletsCubit.state.selectedWallet!.descriptor,
+        nodeAddress: nodeAddress,
+        signedPSBT: signed.result!.psbt,
+      );
+      if (txid.hasError)
+        emit(
+          state.copyWith(
+            sendingTx: false,
+            errLoading: emptyString,
+            errSending: txid.error!,
+            txId: '',
+            currentStep: SendSteps.confirm,
+          ),
+        );
+      else
+        emit(
+          state.copyWith(
+            sendingTx: false,
+            errLoading: emptyString,
+            errSending: emptyString,
+            txId: txid.result!,
+            currentStep: SendSteps.sent,
+          ),
+        );
+      return;
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -460,12 +498,26 @@ class SendCubit extends Cubit<SendState> {
   void shareTxId() {
     _share.share(
       text: state.txId,
-      subjectForEmail: emailShareSubject,
+      subjectForEmail: emailShareTxidSubject,
     );
   }
 
   void copyPSBT() {
     _clipBoard.copyToClipBoard(state.psbt);
+    emit(
+      state.copyWith(
+        sendingTx: false,
+        errLoading: emptyString,
+        currentStep: SendSteps.sent,
+      ),
+    );
+  }
+
+  void sharePSBT() {
+    _share.share(
+      text: state.psbt,
+      subjectForEmail: emailSharePSBTSubject,
+    );
     emit(
       state.copyWith(
         sendingTx: false,
@@ -556,10 +608,10 @@ PSBT signTx(dynamic data) {
   return resp.result!;
 }
 
-String broadcastTx(dynamic data) {
+Future<String> broadcastTx(dynamic data) async {
   final obj = data as Map<String, String?>;
 
-  final resp = BitcoinFFI().broadcastTransaction(
+  final resp = await BitcoinFFI().broadcastTransaction(
     nodeAddress: obj['nodeAddress']!,
     descriptor: obj['descriptor']!,
     signedPSBT: obj['signedPSBT']!,

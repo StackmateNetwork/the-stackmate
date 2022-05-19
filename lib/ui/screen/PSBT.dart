@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/psbt-tool.dart';
+import 'package:sats/pkg/_locator.dart';
+import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/PSBT/Broadcast.dart';
 
@@ -19,6 +26,7 @@ class _PSBTTools extends StatelessWidget {
                 Back(
                   onPressed: () {
                     Navigator.of(c).pop();
+                    c.read<PSBTCubit>().reset();
                   },
                 ),
                 const Spacer(),
@@ -26,7 +34,7 @@ class _PSBTTools extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 32),
-            BroadcastPSBT()
+            const BroadcastPSBT()
           ],
         ),
       ),
@@ -39,6 +47,19 @@ class PSBTScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _PSBTTools();
+    final nodeAddressCubit = context.select((NodeAddressCubit c) => c);
+    final blockchainCubit = context.select((ChainSelectCubit c) => c);
+
+    final psbt = PSBTCubit(
+      locator<IStackMateCore>(),
+      locator<IClipBoard>(),
+      nodeAddressCubit,
+      blockchainCubit,
+    );
+
+    return BlocProvider.value(
+      value: psbt,
+      child: const _PSBTTools(),
+    );
   }
 }

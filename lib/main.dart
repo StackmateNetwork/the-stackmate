@@ -9,13 +9,13 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
-import 'package:sats/ui/screen/PSBT.dart';
 import 'package:sats/ui/screen/Calculator.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Logs.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
 import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
+import 'package:sats/ui/screen/PSBT.dart';
 import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
@@ -29,7 +29,6 @@ void main() async {
   setupDependencies(useDummies: false);
 
   WidgetsFlutterBinding.ensureInitialized();
-  // Bloc.observer = SimpleBlocObserver();
 
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -192,7 +191,6 @@ class _StackmateState extends State<Stackmate> {
         path: '/watch-only',
         builder: (_, __) => const XPubImportScreen(),
       ),
-
       GoRoute(
         path: '/wallet',
         builder: (_, __) => const WalletScreen(),
@@ -207,14 +205,12 @@ class _StackmateState extends State<Stackmate> {
           fromQr: false,
         ),
       ),
-      //GoRoute(path: '/txinfo',builder: (_,__) => const TransactionDetailScreen(txid: txid,)),
       GoRoute(
         path: '/send-from-qr',
         builder: (_, __) => const WalletSendScreen(
           fromQr: true,
         ),
       ),
-      //
       GoRoute(
         path: '/logs',
         builder: (_, __) => const LogsScreen(),

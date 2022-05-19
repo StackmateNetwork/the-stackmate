@@ -7,6 +7,7 @@ import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/validation.dart';
 
 class WalletCard extends StatelessWidget {
   const WalletCard({
@@ -23,7 +24,6 @@ class WalletCard extends StatelessWidget {
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
         return Row(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             GestureDetector(
               onTap: () {
@@ -78,26 +78,21 @@ class WalletCard extends StatelessWidget {
                           Text(
                             wallet.walletType,
                             overflow: TextOverflow.ellipsis,
-                            // textAlign: TextAlign.end,
                             maxLines: 10,
                             style: context.fonts.caption!.copyWith(
-                              color: context.colours.onBackground,
+                              color: wallet.walletType == 'WATCHER'
+                                  ? context.colours.secondary
+                                  : context.colours.tertiary,
                               fontSize: 10,
                             ),
                           ),
                           const SizedBox(height: 8),
                           if (!prefState.incognito)
                             Text(
-                              (wallet.balance > 0)
-                                  ? NumberFormat('###,000').format(
-                                        double.parse(
-                                          wallet.balance.toString(),
-                                        ),
-                                      ) +
-                                      ' sats'
-                                  : '0 sats',
-
-                              // overflow: TextOverflow.ellipsis,
+                              Validation.formatSatsString(
+                                    wallet.balance.toString(),
+                                  ) +
+                                  ' sats',
                               maxLines: 10,
                               style: context.fonts.caption!.copyWith(
                                 color: context.colours.onBackground
@@ -128,8 +123,6 @@ class WalletCard extends StatelessWidget {
                   color: context.colours.background,
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
-                      // sigmaX: 0,
-                      // sigmaY: 0,
                       tileMode: TileMode.mirror,
                     ),
                     child: Container(
@@ -139,7 +132,6 @@ class WalletCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
-                          // end: Alignment.centerRight,
                           stops: const [0.3, 0.99],
                           colors: [
                             context.colours.surface,
@@ -159,10 +151,10 @@ class WalletCard extends StatelessWidget {
                                 context.push('/receive');
                               }
                             },
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.call_received,
                               size: 24,
-                              color: Colors.blue,
+                              color: context.colours.primary,
                             ),
                           ),
                         ],
@@ -188,8 +180,6 @@ class WalletCard extends StatelessWidget {
                   color: context.colours.background,
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
-                      // sigmaX: 0,
-                      // sigmaY: 0,
                       tileMode: TileMode.mirror,
                     ),
                     child: Container(
@@ -199,7 +189,6 @@ class WalletCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
-                          // end: Alignment.centerRight,
                           stops: const [0.3, 0.99],
                           colors: [
                             context.colours.surface,
@@ -208,7 +197,6 @@ class WalletCard extends StatelessWidget {
                         ),
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
@@ -221,7 +209,9 @@ class WalletCard extends StatelessWidget {
                               }
                             },
                             icon: Icon(
-                              Icons.send,
+                              wallet.walletType == 'WATCHER'
+                                  ? Icons.build
+                                  : Icons.send,
                               size: 21,
                               color: context.colours.primary,
                             ),

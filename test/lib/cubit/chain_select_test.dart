@@ -46,9 +46,9 @@ void main() {
         const BlockchainState(blockchain: Blockchain.test),
       ],
       verify: (cubit) => [
-        verify(() =>
-                _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name))
-            .called(1),
+        verify(
+          () => _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name),
+        ).called(1),
       ],
     );
     blocTest<ChainSelectCubit, BlockchainState>(

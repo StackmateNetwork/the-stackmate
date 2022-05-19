@@ -6,7 +6,10 @@ import 'package:share/share.dart';
 
 class Sharer implements IShare {
   @override
-  Future<R<bool>> share({required String text, required String subjectForEmail}) async {
+  Future<R<bool>> share({
+    required String text,
+    required String subjectForEmail,
+  }) async {
     try {
       await Share.share(text, subject: subjectForEmail);
       return const R(result: true);

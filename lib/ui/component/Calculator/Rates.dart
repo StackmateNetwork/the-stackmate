@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/calculator.dart';
 import 'package:sats/model/rate.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/style.dart';
 import 'package:sats/pkg/validation.dart';
+import 'package:sats/ui/style.dart';
 
 class Rates extends StatelessWidget {
   const Rates({
@@ -37,7 +37,7 @@ class Rates extends StatelessWidget {
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
-                              Validation.addCommas(calcState.satsAmt),
+                              Validation.formatSatsString(calcState.satsAmt),
                               style: c.fonts.headline4!.copyWith(
                                 color: c.colours.primary.withAlpha(
                                   !calcState.editingBtc ? 160 : 255,
@@ -107,7 +107,8 @@ class Rates extends StatelessWidget {
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
-                              Validation.addCommas(calcState.currencyAmt),
+                              Validation.formatSatsString(
+                                  calcState.currencyAmt),
                               style: c.fonts.headline4!.copyWith(
                                 color: c.colours.primary.withAlpha(
                                   calcState.editingBtc ? 160 : 255,

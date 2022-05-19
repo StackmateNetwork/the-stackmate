@@ -25,6 +25,7 @@ class _$SendStateTearOff {
       bool sendingTx = false,
       String errLoading = '',
       String errAddress = '',
+      String errSending = '',
       String errAmount = '',
       String errFees = '',
       String policyPath = '',
@@ -51,6 +52,7 @@ class _$SendStateTearOff {
       sendingTx: sendingTx,
       errLoading: errLoading,
       errAddress: errAddress,
+      errSending: errSending,
       errAmount: errAmount,
       errFees: errFees,
       policyPath: policyPath,
@@ -85,6 +87,7 @@ mixin _$SendState {
   bool get sendingTx => throw _privateConstructorUsedError;
   String get errLoading => throw _privateConstructorUsedError;
   String get errAddress => throw _privateConstructorUsedError;
+  String get errSending => throw _privateConstructorUsedError;
   String get errAmount => throw _privateConstructorUsedError;
   String get errFees => throw _privateConstructorUsedError;
   String get policyPath => throw _privateConstructorUsedError;
@@ -121,6 +124,7 @@ abstract class $SendStateCopyWith<$Res> {
       bool sendingTx,
       String errLoading,
       String errAddress,
+      String errSending,
       String errAmount,
       String errFees,
       String policyPath,
@@ -158,6 +162,7 @@ class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
     Object? sendingTx = freezed,
     Object? errLoading = freezed,
     Object? errAddress = freezed,
+    Object? errSending = freezed,
     Object? errAmount = freezed,
     Object? errFees = freezed,
     Object? policyPath = freezed,
@@ -205,6 +210,10 @@ class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
       errAddress: errAddress == freezed
           ? _value.errAddress
           : errAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      errSending: errSending == freezed
+          ? _value.errSending
+          : errSending // ignore: cast_nullable_to_non_nullable
               as String,
       errAmount: errAmount == freezed
           ? _value.errAmount
@@ -296,6 +305,7 @@ abstract class _$SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
       bool sendingTx,
       String errLoading,
       String errAddress,
+      String errSending,
       String errAmount,
       String errFees,
       String policyPath,
@@ -334,6 +344,7 @@ class __$SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
     Object? sendingTx = freezed,
     Object? errLoading = freezed,
     Object? errAddress = freezed,
+    Object? errSending = freezed,
     Object? errAmount = freezed,
     Object? errFees = freezed,
     Object? policyPath = freezed,
@@ -381,6 +392,10 @@ class __$SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
       errAddress: errAddress == freezed
           ? _value.errAddress
           : errAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      errSending: errSending == freezed
+          ? _value.errSending
+          : errSending // ignore: cast_nullable_to_non_nullable
               as String,
       errAmount: errAmount == freezed
           ? _value.errAmount
@@ -469,6 +484,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
       this.sendingTx = false,
       this.errLoading = '',
       this.errAddress = '',
+      this.errSending = '',
       this.errAmount = '',
       this.errFees = '',
       this.policyPath = '',
@@ -510,6 +526,9 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
   @JsonKey(defaultValue: '')
   @override
   final String errAddress;
+  @JsonKey(defaultValue: '')
+  @override
+  final String errSending;
   @JsonKey(defaultValue: '')
   @override
   final String errAmount;
@@ -561,7 +580,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SendState(currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, errLoading: $errLoading, errAddress: $errAddress, errAmount: $errAmount, errFees: $errFees, policyPath: $policyPath, txOutputs: $txOutputs, address: $address, amount: $amount, weight: $weight, fees: $fees, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
+    return 'SendState(currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, errLoading: $errLoading, errAddress: $errAddress, errSending: $errSending, errAmount: $errAmount, errFees: $errFees, policyPath: $policyPath, txOutputs: $txOutputs, address: $address, amount: $amount, weight: $weight, fees: $fees, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
   }
 
   @override
@@ -576,6 +595,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('sendingTx', sendingTx))
       ..add(DiagnosticsProperty('errLoading', errLoading))
       ..add(DiagnosticsProperty('errAddress', errAddress))
+      ..add(DiagnosticsProperty('errSending', errSending))
       ..add(DiagnosticsProperty('errAmount', errAmount))
       ..add(DiagnosticsProperty('errFees', errFees))
       ..add(DiagnosticsProperty('policyPath', policyPath))
@@ -621,6 +641,9 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
             (identical(other.errAddress, errAddress) ||
                 const DeepCollectionEquality()
                     .equals(other.errAddress, errAddress)) &&
+            (identical(other.errSending, errSending) ||
+                const DeepCollectionEquality()
+                    .equals(other.errSending, errSending)) &&
             (identical(other.errAmount, errAmount) ||
                 const DeepCollectionEquality()
                     .equals(other.errAmount, errAmount)) &&
@@ -664,9 +687,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
             (identical(other.finalFee, finalFee) ||
                 const DeepCollectionEquality()
                     .equals(other.finalFee, finalFee)) &&
-            (identical(other.finalAmount, finalAmount) ||
-                const DeepCollectionEquality()
-                    .equals(other.finalAmount, finalAmount)) &&
+            (identical(other.finalAmount, finalAmount) || const DeepCollectionEquality().equals(other.finalAmount, finalAmount)) &&
             (identical(other.sweepWallet, sweepWallet) || const DeepCollectionEquality().equals(other.sweepWallet, sweepWallet)));
   }
 
@@ -680,6 +701,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(sendingTx) ^
       const DeepCollectionEquality().hash(errLoading) ^
       const DeepCollectionEquality().hash(errAddress) ^
+      const DeepCollectionEquality().hash(errSending) ^
       const DeepCollectionEquality().hash(errAmount) ^
       const DeepCollectionEquality().hash(errFees) ^
       const DeepCollectionEquality().hash(policyPath) ^
@@ -714,6 +736,7 @@ abstract class _SendState extends SendState {
       bool sendingTx,
       String errLoading,
       String errAddress,
+      String errSending,
       String errAmount,
       String errFees,
       String policyPath,
@@ -748,6 +771,8 @@ abstract class _SendState extends SendState {
   String get errLoading => throw _privateConstructorUsedError;
   @override
   String get errAddress => throw _privateConstructorUsedError;
+  @override
+  String get errSending => throw _privateConstructorUsedError;
   @override
   String get errAmount => throw _privateConstructorUsedError;
   @override

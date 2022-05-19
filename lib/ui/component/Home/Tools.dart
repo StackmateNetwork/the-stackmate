@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/common/LogButton.dart';
 import 'package:sats/cubit/preferences.dart';
+import 'package:sats/pkg/extensions.dart';
 
 class WalletTools extends StatelessWidget {
   @override
@@ -28,10 +27,10 @@ class WalletTools extends StatelessWidget {
                   onPressed: () {
                     c.push('/psbt-tools');
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.language_sharp,
                     size: 32,
-                    color: Colors.blue,
+                    color: c.colours.primary,
                   ),
                 ),
                 IconButton(
@@ -41,7 +40,7 @@ class WalletTools extends StatelessWidget {
                   icon: Icon(
                     Icons.hide_source,
                     size: 24,
-                    color: c.colours.primary,
+                    color: c.colours.onPrimary,
                   ),
                 ),
                 IconButton(

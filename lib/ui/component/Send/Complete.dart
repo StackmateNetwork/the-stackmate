@@ -28,14 +28,6 @@ class TransactionComplete extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            // const SizedBox(height: 60),
-            // TextButton(
-            //   onPressed: () {
-            //     // context.read<WalletsCubit>().state.selectedWallet;
-            //     // context.push('/wallet');
-            //   },
-            //   // child: const Text('RETURN'),
-            // )
           ],
         ),
       );
@@ -59,14 +51,6 @@ class TransactionComplete extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            // const SizedBox(height: 60),
-            // TextButton(
-            //   onPressed: () {
-            //     // context.read<WalletsCubit>().state.selectedWallet;
-            //     // context.push('/wallet');
-            //   },
-            //   // child: const Text('RETURN'),
-            // )
           ],
         ),
       );

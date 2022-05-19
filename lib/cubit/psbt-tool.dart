@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/stackmate-core.dart';
+import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/node.dart';
-
 import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'psbt-tool.freezed.dart';
@@ -27,25 +27,45 @@ class PSBTCubit extends Cubit<PSBTState> {
     this._core,
     this._clipBoard,
     this._nodeAddressCubit,
+    this._blockchainCubit,
   ) : super(const PSBTState());
+
+  static const minerOutput = 'miner';
 
   final IClipBoard _clipBoard;
   final NodeAddressCubit _nodeAddressCubit;
   final IStackMateCore _core;
+  final ChainSelectCubit _blockchainCubit;
+
   static const dummyDescriptor = 'wpkh(tprv/*)';
   static const emptyString = '';
   // void completed() {
   //   _walletsCubit.walletSelected(wallet)
   // }
+  void reset() {
+    emit(
+      state.copyWith(txId: emptyString),
+    );
+  }
 
   void psbtChanged(String text) {
-    emit(state.copyWith(psbt: text));
+    emit(
+      state.copyWith(psbt: text),
+    );
   }
 
   void pastePSBT() async {
     final text = await _clipBoard.pasteFromClipBoard();
-    if (text.hasError) return;
-    emit(state.copyWith(psbt: text.result!));
+    if (text.hasError) emit(state.copyWith(errBroadcasting: text.error!));
+    final decoded = _core.decodePsbt(
+      network: _blockchainCubit.state.blockchain.name,
+      psbt: text.result!,
+    );
+    if (decoded.hasError) {
+      emit(state.copyWith(errBroadcasting: 'Invalid PSBT.'));
+    } else
+      emit(state.copyWith(psbt: text.result!));
+    return;
   }
 
   void broadcastConfirmed() async {
@@ -53,20 +73,35 @@ class PSBTCubit extends Cubit<PSBTState> {
       emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
-      final psbt = _core.broadcastTransaction(
+      final psbt = await _core.broadcastTransaction(
         descriptor: dummyDescriptor,
         nodeAddress: nodeAddress,
         signedPSBT: state.psbt,
       );
 
       if (psbt.hasError) {
-        emit(state.copyWith(errBroadcasting: psbt.error!));
+        emit(
+          state.copyWith(
+            broadcasting: false,
+            errBroadcasting: psbt.error!,
+            txId: '',
+            psbt: '',
+          ),
+        );
       } else
-        emit(state.copyWith(broadcasting: false));
-    } catch (e, s) {
+        emit(
+          state.copyWith(
+            broadcasting: false,
+            txId: 'BROADCAST SUCCESSFUL.',
+            psbt: '',
+            errBroadcasting: emptyString,
+          ),
+        );
+    } catch (e) {
       emit(
         state.copyWith(
           errBroadcasting: e.toString(),
+          broadcasting: false,
         ),
       );
 
@@ -105,10 +140,10 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
   return resp.result!;
 }
 
-String broadcastTx(dynamic data) {
+Future<String> broadcastTx(dynamic data) async {
   final obj = data as Map<String, String?>;
 
-  final resp = BitcoinFFI().broadcastTransaction(
+  final resp = await BitcoinFFI().broadcastTransaction(
     nodeAddress: obj['nodeAddress']!,
     descriptor: obj['descriptor']!,
     signedPSBT: obj['signedPSBT']!,

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/validation.dart';
 
 class WalletDetails extends StatelessWidget {
   const WalletDetails({
@@ -31,8 +32,9 @@ class WalletDetails extends StatelessWidget {
             ),
           ),
           Text(
-            NumberFormat.decimalPattern()
-                    .format(double.parse(balance.toString())) +
+            Validation.formatSatsString(
+                  balance.toString(),
+                ) +
                 ' sats',
             style: context.fonts.headline6!.copyWith(
               color: context.colours.onBackground,

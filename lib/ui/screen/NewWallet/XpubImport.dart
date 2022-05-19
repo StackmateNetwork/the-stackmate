@@ -11,10 +11,10 @@ import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/ui/component/Common/BackButton2.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Stepper.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class _XpubImport extends StatelessWidget {
@@ -47,12 +47,12 @@ class _XpubImport extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const SizedBox(height: 24),
                     Header(
                       cornerTitle: 'WATCHER',
                       children: [
-                        BckButton(
-                          text: 'EXIT',
-                          onTapped: () {
+                        Back(
+                          onPressed: () {
                             if (!state.canGoBack()) {
                               c.read<XpubImportWalletCubit>().backClicked();
                               return;
@@ -64,6 +64,7 @@ class _XpubImport extends StatelessWidget {
                         const SizedBox(height: 24),
                       ],
                     ),
+                    const SizedBox(height: 24),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 24.0),
                       child: XPubImportStepper(),

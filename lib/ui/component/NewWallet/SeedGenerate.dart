@@ -65,7 +65,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
               ),
             const SizedBox(height: 24),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextButton(
                 onPressed: () {
                   c.read<SeedGenerateCubit>().generateSeed();
@@ -109,7 +109,7 @@ class SeedWordCell extends StatelessWidget {
             text,
             textAlign: TextAlign.left,
             style: c.fonts.subtitle2!.copyWith(
-              color: onTap == null ?  c.colours.primary :Colors.white,
+              color: onTap == null ? c.colours.primary : Colors.white,
             ),
           ),
         ),
@@ -192,7 +192,7 @@ class SeedGenerate extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(4),
             child: TextButton(
               onPressed: () {
                 c.read<SeedGenerateCubit>().startQuiz();
@@ -200,7 +200,7 @@ class SeedGenerate extends StatelessWidget {
               child: Text('Next'.toUpperCase()),
             ),
           ),
-          const SizedBox(height: 24)
+          const SizedBox(height: 12)
         ],
       ),
     );

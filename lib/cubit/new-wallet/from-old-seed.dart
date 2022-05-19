@@ -12,7 +12,6 @@ import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sats/model/transaction.dart';
 
 part 'from-old-seed.freezed.dart';
 
@@ -213,22 +212,13 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         recievedCount++;
       }
     }
-
-    final int totalIn = history.result!.fold(
-      0,
-      (int sum, Transaction item) => (item.sent == 0 && item.timestamp > 0)
-          ? sum + item.received
-          : sum + 0,
+    final balance = _core.syncBalance(
+      descriptor: descriptor.result!,
+      nodeAddress: _nodeAddressCubit.toString(),
     );
-    final int totalOut = history.result!.fold(
-      0,
-      (int sum, Transaction item) => (item.sent != 0 && item.timestamp > 0)
-          ? sum + item.sent + item.fee
-          : sum + 0,
-    );
-
-    final inferredBalance = totalIn - totalOut;
-
+    if (balance.hasError) {
+      throw SMError.fromJson(history.error!);
+    }
     // public descriptor
     // Check history and whether this wallet needs to update its address index
 
@@ -241,7 +231,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       policyElements: ['primary:$fullXPub'],
       blockchain: _blockchainCubit.state.blockchain.name,
       lastAddressIndex: recievedCount,
-      balance: inferredBalance,
+      balance: balance.result!,
       transactions: [],
     );
 
