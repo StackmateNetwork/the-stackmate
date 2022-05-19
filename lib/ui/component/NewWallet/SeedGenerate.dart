@@ -30,7 +30,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
             Text(
               'optional\npassphrase'.toUpperCase(),
               style: c.fonts.headline5!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,
               ),
             ),
@@ -38,7 +38,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
             const SizedBox(height: 24),
             Text(
               'Add an (optional) security layer to your seed.\n\nThis passphrase should be added as the last word of your seed.\n\If set, you cannot recover funds without it.',
-              style: c.fonts.caption!.copyWith(color: Colors.white),
+              style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
             ),
             const SizedBox(height: 32),
 
@@ -109,7 +109,7 @@ class SeedWordCell extends StatelessWidget {
             text,
             textAlign: TextAlign.left,
             style: c.fonts.subtitle2!.copyWith(
-              color: onTap == null ? c.colours.primary : Colors.white,
+              color: onTap == null ? c.colours.primary : c.colours.onPrimary,
             ),
           ),
         ),
@@ -151,7 +151,7 @@ class SeedGenerate extends StatelessWidget {
           Text(
             'Write down your\nseed phrase'.toUpperCase(),
             style: c.fonts.headline5!.copyWith(
-              color: Colors.white,
+              color: c.colours.onPrimary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -159,7 +159,7 @@ class SeedGenerate extends StatelessWidget {
           Text(
             'Make sure that no one can view,\nwhat you are writing'
                 .notLocalised(),
-            style: c.fonts.caption!.copyWith(color: Colors.white),
+            style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
           ),
           const SizedBox(height: 16),
           Container(
@@ -228,7 +228,7 @@ class ConfirmStepCell extends StatelessWidget {
           height: 8,
           width: c.width * 0.2,
           decoration: BoxDecoration(
-            color: isOn ? c.colours.secondary : Colors.white,
+            color: isOn ? c.colours.secondary : c.colours.onPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -268,7 +268,7 @@ class SeedConfirm extends StatelessWidget {
           child: Text(
             'Confirm seed\nphrase',
             style: c.fonts.headline4!.copyWith(
-              color: Colors.white,
+              color: c.colours.onPrimary,
               // fontWeight: FontWeight.bold,
             ),
           ),
@@ -290,7 +290,7 @@ class SeedConfirm extends StatelessWidget {
                 answerIdx + '.',
                 style: c.fonts.headline5!.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                 ),
               ),
             ),
@@ -307,7 +307,7 @@ class SeedConfirm extends StatelessWidget {
         Center(
           child: Text(
             'Select the correct answer',
-            style: c.fonts.subtitle1!.copyWith(color: Colors.white),
+            style: c.fonts.subtitle1!.copyWith(color: c.colours.onPrimary),
           ),
         ),
         const SizedBox(height: 16),

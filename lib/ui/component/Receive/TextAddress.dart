@@ -20,7 +20,7 @@ class TextAddress extends StatelessWidget {
           child: Text(
             address,
             style: c.fonts.caption!.copyWith(
-              color: Colors.white,
+              color: c.colours.onPrimary,
               fontSize: 12,
             ),
             textAlign: TextAlign.center,
@@ -56,7 +56,7 @@ class TextAddress extends StatelessWidget {
           child: Text(
             'INDEX: ' + index.toString(),
             style: c.fonts.caption!.copyWith(
-              color: Colors.white,
+              color: c.colours.onPrimary,
               fontSize: 18,
             ),
             textAlign: TextAlign.center,

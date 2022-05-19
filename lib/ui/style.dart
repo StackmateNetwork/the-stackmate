@@ -10,7 +10,7 @@ const arcticLime = Color(0xFFCEFF1A);
 const goldenBridge = Color(0xFFBB4430);
 const maximumGreen = Color(0xFF548C2F);
 const frenchBistre = Color(0xFF726953);
-
+const cultured = Color(0xFFFCF5E8);
 ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.aldrichTextTheme(),
       colorScheme: ColorScheme(
@@ -20,15 +20,31 @@ ThemeData mainTheme() => ThemeData(
         surface: ghostWhite.withOpacity(0.009),
         background: richFogra,
         error: goldenBridge,
-        onPrimary: ghostWhite,
-        onSecondary: ghostWhite,
-        onSurface: ghostWhite,
-        onBackground: ghostWhite,
-        onError: ghostWhite,
+        onPrimary: cultured,
+        onSecondary: cultured,
+        onSurface: cultured,
+        onBackground: cultured,
+        onError: cultured,
         brightness: Brightness.dark,
       ),
     );
-
+// ThemeData(
+//   textTheme: GoogleFonts.aldrichTextTheme(),
+//   colorScheme: ColorScheme(
+//     primary: brightCrayola,
+//     secondary: blueJeans,
+//     tertiary: maximumGreen,
+//     surface: richFogra.withOpacity(0.09),
+//     background: cultured,
+//     error: goldenBridge,
+//     onPrimary: richFogra,
+//     onSecondary: richFogra,
+//     onSurface: richFogra,
+//     onBackground: richFogra,
+//     onError: richFogra,
+//     brightness: Brightness.dark,
+//   ),
+// );
 ThemeData derivedTheme(ThemeData theme) {
   return theme.copyWith(
     scaffoldBackgroundColor: theme.colorScheme.background,

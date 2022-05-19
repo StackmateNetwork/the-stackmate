@@ -30,7 +30,7 @@ class BlurryContainer extends StatelessWidget {
     this.borderRadius = kBorderRadius,
     //this.colorOpacity = kColorOpacity,
   });
-  
+
   final Widget child;
   final double blur;
   final double? height;

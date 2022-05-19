@@ -27,27 +27,27 @@ class Balance extends StatelessWidget {
               Text(
                 wallet.label,
                 style: c.fonts.headline4!.copyWith(
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                 ),
               ),
             ] else ...[
               Text(
                 Validation.formatSatsString(balance.toString()),
                 style: c.fonts.headline4!.copyWith(
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                 ),
               ),
               Text(
                 'sats',
                 style: c.fonts.headline6!.copyWith(
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 balance.toBtc() + ' BTC',
                 style: c.fonts.caption!.copyWith(
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                 ),
               ),
             ],
