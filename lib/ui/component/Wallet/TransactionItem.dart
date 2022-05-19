@@ -433,7 +433,7 @@ class TransactionItem extends StatelessWidget {
                                     color: c.colours.onBackground,
                                   )
                                 : c.fonts.headline6!.copyWith(
-                                    color: Colors.blue,
+                                    color: c.colours.error,
                                   ),
                             textAlign: TextAlign.end,
                           ),
