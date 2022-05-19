@@ -15,6 +15,7 @@ import 'package:sats/ui/component/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Label.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Stepper.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Warning.dart';
+import 'package:sats/ui/component/common/header.dart';
 
 class _SeedGenerate extends StatefulWidget {
   @override
@@ -65,19 +66,21 @@ class _SeedGenerateState extends State<_SeedGenerate> {
                 child: Column(
                   children: [
                     const SizedBox(height: 24),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Back(
-                        // text: 'EXIT',
-                        onPressed: () {
-                          if (!state.canGoBack()) {
-                            c.read<SeedGenerateWalletCubit>().backClicked();
-                            return;
-                          }
+                    Header(
+                      cornerTitle: 'KEYGEN',
+                      children: [
+                        Back(
+                          onPressed: () {
+                            if (!state.canGoBack()) {
+                              c.read<SeedGenerateWalletCubit>().backClicked();
+                              return;
+                            }
 
-                          Navigator.pop(c);
-                        },
-                      ),
+                            Navigator.pop(c);
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                      ],
                     ),
                     const SizedBox(height: 24),
                     Padding(

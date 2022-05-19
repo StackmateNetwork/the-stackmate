@@ -1,6 +1,8 @@
-Test stackmate with bdk-cli as an external signer
+# External Signers
 
-1. Create or restore a seed
+This example uses bdk-cli as a `signer` and stackmate as a `watcher`.
+
+## Create or restore a seed
 
 ```bash
 bdk-cli key restore --mnemonic 'transfer spare party divorce screen used pole march warfare another balance find'                                        01:10:37 AM
@@ -10,7 +12,7 @@ bdk-cli key restore --mnemonic 'transfer spare party divorce screen used pole ma
 }
 ```
 
-2. Derive account keys
+## Derive account keys
 
 ```bash
 bdk-cli key derive --xprv tprv8ZgxMBicQKsPctM9UgftwPdDCxMq2c57utsBu5htMG7ySHZzT33jWyiSBQJwvjDEoMHmZGFgezhVTyKmiKfdPtdFtoAAdSzFYdstokvpop1 --path "m/84h/1h/0h"
@@ -20,13 +22,13 @@ bdk-cli key derive --xprv tprv8ZgxMBicQKsPctM9UgftwPdDCxMq2c57utsBu5htMG7ySHZzT3
 }
 ```
 
-3. Create descriptor
+## Create descriptor
 
-bdk-cli no longer supports the policy command, so we will just build the descriptor by hand. 
+bdk-cli no longer supports the policy command, so we will just build the descriptor by hand.
 
 `wpkh([8099ce1e/84'/1'/0']tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G/*)`
 
-4. Sync bdk-cli wallet
+## Sync bdk-cli wallet
 
 ```bash
 bdk-cli wallet -d "wpkh([8099ce1e/84'/1'/0']tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G/0/*)" 
@@ -36,7 +38,8 @@ bdk-cli wallet -d "wpkh([8099ce1e/84'/1'/0']tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqe
 -c"wpkh([8099ce1e/84'/1'/0']tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G/1/*)" get_balance
 
 ```
-5. Import wallet into stackmate
+
+## Import wallet into stackmate
 
 Create a stackmate watcher wallet by importing the following pubkey:
 
@@ -44,9 +47,15 @@ Create a stackmate watcher wallet by importing the following pubkey:
 
 Confirm that the wallet created is correct based on balance.
 
-7. Build transaction on stackmate
+## Build and copy transaction on stackmate watcher
 
-8. Sign transaction on bdk-cli
+## Sign transaction on bdk-cli
 
-9. Broadcast transaction on stackmate
+Substitute $PSBT for the psbt copied from stackmate.
 
+```bash
+bdk-cli wallet -d "wpkh([8099ce1e/84'/1'/0']tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G/0/*)" 
+-c"wpkh([8099ce1e/84'/1'/0']tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G/1/*)" sign --psbt $PSBT
+```
+
+## Broadcast transaction on stackmate

@@ -75,11 +75,14 @@ class _SendAddressState extends State<SendAddress> {
               ],
             ),
             const SizedBox(height: 100),
-            TextButton(
-              onPressed: () {
-                context.read<SendCubit>().addressConfirmedClicked();
-              },
-              child: const Text('CONFIRM'),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: TextButton(
+                onPressed: () {
+                  context.read<SendCubit>().addressConfirmedClicked();
+                },
+                child: const Text('CONFIRM'),
+              ),
             ),
           ],
         ),

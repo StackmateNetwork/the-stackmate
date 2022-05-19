@@ -45,7 +45,7 @@ class SeedGenerateWalletState with _$SeedGenerateWalletState {
 
   bool canGoBack() {
     if (currentStep == SeedGenerateWalletSteps.warning) return true;
-    return false;
+    return true;
   }
 
   double completePercent() =>
