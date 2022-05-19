@@ -80,7 +80,9 @@ class WalletCard extends StatelessWidget {
                             // textAlign: TextAlign.end,
                             maxLines: 10,
                             style: context.fonts.caption!.copyWith(
-                              color: context.colours.onBackground,
+                              color: wallet.walletType == 'WATCHER'
+                                  ? context.colours.secondary
+                                  : context.colours.tertiary,
                               fontSize: 10,
                             ),
                           ),
@@ -161,7 +163,7 @@ class WalletCard extends StatelessWidget {
                             icon: Icon(
                               Icons.call_received,
                               size: 24,
-                              color: context.colours.tertiary,
+                              color: context.colours.primary,
                             ),
                           ),
                         ],
@@ -219,9 +221,11 @@ class WalletCard extends StatelessWidget {
                               }
                             },
                             icon: Icon(
-                              Icons.send,
+                              wallet.walletType == 'WATCHER'
+                                  ? Icons.build
+                                  : Icons.send,
                               size: 21,
-                              color: context.colours.secondary,
+                              color: context.colours.primary,
                             ),
                           ),
                         ],

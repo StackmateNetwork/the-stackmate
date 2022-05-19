@@ -131,26 +131,26 @@ class _Wallet extends StatelessWidget {
                                   icon: const Icon(Icons.info_outline),
                                 ),
                                 IconButton(
-                                  color: c.colours.tertiary,
+                                  color: c.colours.secondary,
                                   onPressed: () {
                                     c.push('/receive');
                                   },
-                                  icon: Icon(
-                                    Icons.call_received,
-                                    color: c.colours.tertiary,
-                                  ),
+                                  icon: Icon(Icons.call_received,
+                                      color: c.colours.secondary),
                                 ),
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
                                   opacity: zeroBal ? 0.4 : 1,
                                   child: IconButton(
-                                    color: c.colours.secondary,
+                                    color: c.colours.tertiary,
                                     onPressed: () {
                                       if (!zeroBal) c.push('/send');
                                     },
                                     icon: Icon(
-                                      Icons.send,
-                                      color: c.colours.secondary,
+                                      wallet.walletType == 'WATCHER'
+                                          ? Icons.build
+                                          : Icons.send,
+                                      color: c.colours.tertiary,
                                     ),
                                   ),
                                 ),

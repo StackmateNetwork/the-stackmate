@@ -5,8 +5,8 @@ ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.aldrichTextTheme(),
       colorScheme: ColorScheme(
         primary: Colors.orange[400]!,
-        secondary: const Color(0xFF0091F6),
-        tertiary: const Color(0xFF00BFB2),
+        secondary: const Color(0xFF00ABF5),
+        tertiary: const Color(0xFF548C2F),
         // tertiary: const Color(0xFF85CB33),
         surface: const Color(0xFFC9EDDC).withOpacity(0.009),
         background: const Color(0xFF13161f),

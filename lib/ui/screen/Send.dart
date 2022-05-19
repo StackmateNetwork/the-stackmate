@@ -46,7 +46,6 @@ class _WalletSend extends StatelessWidget {
               child: BlocListener<SendCubit, SendState>(
                 listener: (context, state) async {
                   if (state.zeroBalanceAmt()) {
-                    // await Future.delayed(const Duration(milliseconds: 500));
                     Navigator.pop(context);
                   }
                 },
@@ -93,7 +92,9 @@ class _WalletSend extends StatelessWidget {
                       const SizedBox(height: 0),
                       Align(
                         child: Text(
-                          'SEND BITCOIN',
+                          (walletLabel == 'WATCHER')
+                              ? 'SEND BITCOIN'
+                              : 'BUILD TRANSACTION',
                           style: context.fonts.headline6!.copyWith(
                             color: Colors.white,
                           ),

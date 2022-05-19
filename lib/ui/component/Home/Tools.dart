@@ -30,7 +30,7 @@ class WalletTools extends StatelessWidget {
                   icon: Icon(
                     Icons.language_sharp,
                     size: 32,
-                    color: c.colours.secondary,
+                    color: c.colours.primary,
                   ),
                 ),
                 IconButton(
