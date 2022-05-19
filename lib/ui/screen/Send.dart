@@ -47,7 +47,7 @@ class _WalletSend extends StatelessWidget {
               child: BlocListener<SendCubit, SendState>(
                 listener: (context, state) async {
                   if (state.zeroBalanceAmt()) {
-                    await Future.delayed(const Duration(milliseconds: 2000));
+                    // await Future.delayed(const Duration(milliseconds: 500));
                     Navigator.pop(context);
                   }
                 },
@@ -143,20 +143,18 @@ class _WalletSend extends StatelessWidget {
                         child: SelectFee(),
                       ),
                     ],
-                    if (step == SendSteps.confirm)
-                      FadeIn(
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: ConfirmTransaction(),
-                        ),
+                    if (step == SendSteps.confirm) ...[
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: ConfirmTransaction(),
                       ),
-                    if (step == SendSteps.sent)
-                      FadeIn(
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: TransactionComplete(),
-                        ),
+                    ],
+                    if (step == SendSteps.sent) ...[
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: TransactionComplete(),
                       ),
+                    ],
                     const SizedBox(height: 80),
                   ],
                 ),

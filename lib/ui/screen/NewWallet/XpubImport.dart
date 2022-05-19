@@ -11,7 +11,6 @@ import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/ui/component/Common/BackButton2.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Stepper.dart';

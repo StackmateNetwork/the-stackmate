@@ -158,11 +158,11 @@ class FFFI {
     return resp;
   }
 
-  String broadcastTransaction({
+  Future<String> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
     required String signedPSBT,
-  }) {
+  }) async {
     final func = binary.lookupFunction<BroadcastT, BroadcastT>(
       'broadcast_tx',
     );

@@ -11,7 +11,6 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/ui/component/Common/BackButton2.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Stepper.dart';

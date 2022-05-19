@@ -86,7 +86,7 @@ abstract class IStackMateCore {
     required String unsignedPSBT,
   });
 
-  R<String> broadcastTransaction({
+  Future<R<String>> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
     required String signedPSBT,

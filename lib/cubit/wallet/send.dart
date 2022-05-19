@@ -458,12 +458,11 @@ class SendCubit extends Cubit<SendState> {
         emit(state.copyWith(errSending: 'All signatures not present.'));
         return;
       }
-      final txid = _core.broadcastTransaction(
+      final txid = await _core.broadcastTransaction(
         descriptor: _walletsCubit.state.selectedWallet!.descriptor,
         nodeAddress: nodeAddress,
         signedPSBT: signed.result!.psbt,
       );
-
       if (txid.hasError)
         emit(
           state.copyWith(
@@ -609,10 +608,10 @@ PSBT signTx(dynamic data) {
   return resp.result!;
 }
 
-String broadcastTx(dynamic data) {
+Future<String> broadcastTx(dynamic data) async {
   final obj = data as Map<String, String?>;
 
-  final resp = BitcoinFFI().broadcastTransaction(
+  final resp = await BitcoinFFI().broadcastTransaction(
     nodeAddress: obj['nodeAddress']!,
     descriptor: obj['descriptor']!,
     signedPSBT: obj['signedPSBT']!,

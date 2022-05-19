@@ -73,7 +73,7 @@ class PSBTCubit extends Cubit<PSBTState> {
       emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
-      final psbt = _core.broadcastTransaction(
+      final psbt = await _core.broadcastTransaction(
         descriptor: dummyDescriptor,
         nodeAddress: nodeAddress,
         signedPSBT: state.psbt,
@@ -140,10 +140,10 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
   return resp.result!;
 }
 
-String broadcastTx(dynamic data) {
+Future<String> broadcastTx(dynamic data) async {
   final obj = data as Map<String, String?>;
 
-  final resp = BitcoinFFI().broadcastTransaction(
+  final resp = await BitcoinFFI().broadcastTransaction(
     nodeAddress: obj['nodeAddress']!,
     descriptor: obj['descriptor']!,
     signedPSBT: obj['signedPSBT']!,

@@ -117,6 +117,7 @@ class _SelectFeeState extends State<SelectFee> {
                 const SizedBox(height: 32),
                 TextField(
                   controller: _controller,
+                  keyboardType: TextInputType.number,
                   style: TextStyle(color: context.colours.onBackground),
                   decoration: InputDecoration(
                     hintText: 'Enter custom fee'.toUpperCase(),

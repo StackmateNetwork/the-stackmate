@@ -223,12 +223,12 @@ class BitcoinFFI implements IStackMateCore {
   }
 
   @override
-  R<String> broadcastTransaction({
+  Future<R<String>> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
     required String signedPSBT,
-  }) {
-    final resp = _bitcoin.broadcastTransaction(
+  }) async {
+    final resp = await _bitcoin.broadcastTransaction(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
       signedPSBT: signedPSBT,

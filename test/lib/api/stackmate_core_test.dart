@@ -184,7 +184,7 @@ void main() {
     assert(!signedPsbt.hasError);
     assert(signedPsbt.result!.isFinalized);
 
-    final txid = libstackmate.broadcastTransaction(
+    final txid = await libstackmate.broadcastTransaction(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
       signedPSBT: signedPsbt.result!.psbt,
@@ -193,7 +193,7 @@ void main() {
   });
 
   test('Error States', () async {
-    var response = libstackmate.broadcastTransaction(
+    var response = await libstackmate.broadcastTransaction(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
       signedPSBT: finalizedPsbt,
@@ -202,7 +202,7 @@ void main() {
     var structuredError = SMError.fromJson(response.error!);
     print(structuredError.oneliner);
 
-    response = libstackmate.broadcastTransaction(
+    response = await libstackmate.broadcastTransaction(
       descriptor: '$expPublicDesc lko',
       nodeAddress: nodeAddress,
       signedPSBT: finalizedPsbt,
@@ -211,7 +211,7 @@ void main() {
     structuredError = SMError.fromJson(response.error!);
     print(structuredError.oneliner);
 
-    response = libstackmate.broadcastTransaction(
+    await libstackmate.broadcastTransaction(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
       signedPSBT: 'finalizedPsbt',
