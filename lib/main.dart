@@ -55,7 +55,7 @@ class _StackmateState extends State<Stackmate> {
     bool canCheckBiometrics = false;
     try {
       canCheckBiometrics = await auth.canCheckBiometrics;
-    } catch (e) {
+    } on PlatformException catch (e) {
       print("error biometrics $e");
     }
 
@@ -65,7 +65,7 @@ class _StackmateState extends State<Stackmate> {
     List<BiometricType>? availableBiometrics;
     try {
       availableBiometrics = await auth.getAvailableBiometrics();
-    } catch (e) {
+    } on PlatformException catch (e) {
       print("error enumerate biometrics $e");
     }
 
@@ -81,7 +81,7 @@ class _StackmateState extends State<Stackmate> {
           stickyAuth: true,
         ),
       );
-    } catch (e) {
+    } on PlatformException catch (e) {
       print("error using biometric auth: $e");
     }
     setState(() {
@@ -121,34 +121,26 @@ class _StackmateState extends State<Stackmate> {
             ),
           )
         : MaterialApp(
-           home: Scaffold(
-              backgroundColor: Colors.black,
-              body: Center(
+            home: Scaffold(
+                backgroundColor: Colors.black,
+                body: Center(
                   child: InkWell(
-                onTap: () {
-                  _checkBiometric();
-                },
-                child: Container(
-                  height: 60,
-                  //width: MediaQuery.of(context).size.width * 0.9,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueAccent, width: 2.5)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.fingerprint,
-                        color: Colors.blueAccent,
-                      ),
-                      Text(
-                        "Login with Fingerprint",
-                        style: TextStyle(color: Colors.blueAccent),
-                      )
-                    ],
+                    onTap: () {
+                      _checkBiometric();
+                    },
+                    child: SimpleDialog(
+                      elevation: 1,
+                      backgroundColor:Colors.white70,
+                      title: const Text('       Unlock Stackmate'),
+                      children: <Widget>[
+                        Icon(
+                          Icons.fingerprint,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )),
-            ),
+                )),
           );
   }
 
