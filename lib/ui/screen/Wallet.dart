@@ -142,14 +142,11 @@ class _Wallet extends StatelessWidget {
                                 ),
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
-                                  opacity: (zeroBal || !wallet.isNotWatchOnly())
-                                      ? 0.4
-                                      : 1,
+                                  opacity: zeroBal ? 0.4 : 1,
                                   child: IconButton(
                                     color: c.colours.primary,
                                     onPressed: () {
-                                      if (!zeroBal && wallet.isNotWatchOnly())
-                                        c.push('/send');
+                                      if (!zeroBal) c.push('/send');
                                     },
                                     icon: const Icon(
                                       Icons.send,
