@@ -14,7 +14,6 @@ class _Home extends StatelessWidget {
   Widget build(BuildContext c) {
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
-        c.read<FeesCubit>().update();
         return Scaffold(
           body: SafeArea(
             child: RefreshIndicator(
