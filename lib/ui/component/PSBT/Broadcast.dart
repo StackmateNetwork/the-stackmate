@@ -23,8 +23,11 @@ class BroadcastPSBT extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               if (psbtState.psbt == '')
-                const Text(
+                Text(
                   'Paste a PSBT from your Clipboard OR Import from File.',
+                  style: context.fonts.bodyMedium!.copyWith(
+                    color: context.colours.onBackground,
+                  ),
                 )
               else
                 const Text('Got PSBT.'),
