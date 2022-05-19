@@ -48,11 +48,6 @@ class Stackmate extends StatelessWidget {
         child: MaterialApp.router(
           routeInformationParser: _router.routeInformationParser,
           routerDelegate: _router.routerDelegate,
-          // localizationsDelegates: const [
-          //   AppLocalizations.delegate,
-          //   GlobalMaterialLocalizations.delegate,
-          // ],
-          // supportedLocales: AppLocalizations.supportedLocales,
           builder: (context, child) {
             final mediaQueryData = MediaQuery.of(context);
             return MediaQuery(
@@ -106,7 +101,6 @@ class Stackmate extends StatelessWidget {
         path: '/watch-only',
         builder: (_, __) => const XPubImportScreen(),
       ),
-
       GoRoute(
         path: '/wallet',
         builder: (_, __) => const WalletScreen(),
@@ -121,14 +115,12 @@ class Stackmate extends StatelessWidget {
           fromQr: false,
         ),
       ),
-      //GoRoute(path: '/txinfo',builder: (_,__) => const TransactionDetailScreen(txid: txid,)),
       GoRoute(
         path: '/send-from-qr',
         builder: (_, __) => const WalletSendScreen(
           fromQr: true,
         ),
       ),
-      //
       GoRoute(
         path: '/logs',
         builder: (_, __) => const LogsScreen(),

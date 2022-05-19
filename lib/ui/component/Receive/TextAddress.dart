@@ -29,7 +29,6 @@ class TextAddress extends StatelessWidget {
         TextButton(
           onPressed: () {
             c.read<ReceiveCubit>().copyAddress();
-            //.copyAddress(address);
           },
           child: Text(
             'COPY',
@@ -45,7 +44,6 @@ class TextAddress extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               c.read<ReceiveCubit>().shareAddress();
-              //.shareAddress(address);
             },
             child: Text(
               'SHARE'.notLocalised(),
@@ -69,7 +67,6 @@ class TextAddress extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               c.read<ReceiveCubit>().getAddress();
-              //.shareAddress(address);
             },
             child: Text(
               'ROTATE'.notLocalised(),

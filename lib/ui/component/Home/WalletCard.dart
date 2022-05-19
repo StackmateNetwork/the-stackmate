@@ -77,7 +77,6 @@ class WalletCard extends StatelessWidget {
                           Text(
                             wallet.walletType,
                             overflow: TextOverflow.ellipsis,
-                            // textAlign: TextAlign.end,
                             maxLines: 10,
                             style: context.fonts.caption!.copyWith(
                               color: wallet.walletType == 'WATCHER'
@@ -97,8 +96,6 @@ class WalletCard extends StatelessWidget {
                                       ) +
                                       ' sats'
                                   : '0 sats',
-
-                              // overflow: TextOverflow.ellipsis,
                               maxLines: 10,
                               style: context.fonts.caption!.copyWith(
                                 color: context.colours.onBackground
@@ -129,8 +126,6 @@ class WalletCard extends StatelessWidget {
                   color: context.colours.background,
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
-                      // sigmaX: 0,
-                      // sigmaY: 0,
                       tileMode: TileMode.mirror,
                     ),
                     child: Container(
@@ -140,7 +135,6 @@ class WalletCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
-                          // end: Alignment.centerRight,
                           stops: const [0.3, 0.99],
                           colors: [
                             context.colours.surface,
@@ -189,8 +183,6 @@ class WalletCard extends StatelessWidget {
                   color: context.colours.background,
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
-                      // sigmaX: 0,
-                      // sigmaY: 0,
                       tileMode: TileMode.mirror,
                     ),
                     child: Container(
@@ -200,7 +192,6 @@ class WalletCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
-                          // end: Alignment.centerRight,
                           stops: const [0.3, 0.99],
                           colors: [
                             context.colours.surface,
