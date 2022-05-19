@@ -177,7 +177,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: watcherWalletType,
-        lastAddressIndex: recievedCount,
+        lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
         balance: balance.result!,
         transactions: [],
       );
