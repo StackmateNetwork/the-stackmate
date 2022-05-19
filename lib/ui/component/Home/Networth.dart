@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -10,6 +10,14 @@ class Networth extends StatelessWidget {
   Widget build(BuildContext c) {
     // c.select((FeesCubit wc) => wc.update());
     final wallets = c.select((WalletsCubit w) => w.state.wallets);
+    final fees = c.select((FeesCubit f) => f.state);
+    late String networkTraffic;
+    if (fees.fees.fast < 5)
+      networkTraffic = "LOW";
+    else if (fees.fees.fast > 5 && fees.fees.fast < 25)
+      networkTraffic = "MEDIUM";
+    else
+      networkTraffic = "HIGH";
 
     int networth = 0;
     for (final wallet in wallets) {
@@ -26,14 +34,23 @@ class Networth extends StatelessWidget {
           child: Column(
             children: [
               if (prefState.incognito) ...[
+                Icon(
+                  Icons.network_ping,
+                  size: 32,
+                  color: (networkTraffic == 'LOW')
+                      ? c.colours.tertiary
+                      : (networkTraffic == 'MEDIUM')
+                          ? c.colours.secondary
+                          : c.colours.error,
+                ),
                 Text(
-                  '"A specter is haunting the modern world, the specter of crypto anarchy. - May, 1988"',
+                  networkTraffic + ' NETWORK TRAFFIC',
                   style: c.fonts.caption!.copyWith(
                     color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 54),
+                const SizedBox(height: 32),
               ] else ...[
                 Text(
                   Validation.formatSatsString(networth.toString()),
