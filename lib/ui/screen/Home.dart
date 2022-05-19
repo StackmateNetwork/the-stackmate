@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -13,12 +14,14 @@ class _Home extends StatelessWidget {
   Widget build(BuildContext c) {
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
+        c.read<FeesCubit>().update();
         return Scaffold(
           body: SafeArea(
             child: RefreshIndicator(
               displacement: 10.0,
               onRefresh: () async {
                 c.read<WalletsCubit>().refresh();
+                c.read<FeesCubit>().update();
                 return;
               },
               child: CustomScrollView(

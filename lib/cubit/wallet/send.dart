@@ -350,11 +350,11 @@ class SendCubit extends Cubit<SendState> {
   void feeChanged(String fee) {
     final checked = fee.replaceAll('.', emptyString);
     emit(state.copyWith(fees: checked, feesOption: 4));
-    final fees = _core.feeAbsoluteToRate(
-      feeAbsolute: checked,
-      weight: state.weight.toString(),
-    );
-    emit(state.copyWith(finalFee: fees.result!.absolute));
+    // final fees = _core.feeAbsoluteToRate(
+    //   feeAbsolute: checked,
+    //   weight: state.weight.toString(),
+    // );
+    emit(state.copyWith(finalFee: int.parse(checked)));
   }
 
   bool _checkFee() {
