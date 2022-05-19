@@ -29,6 +29,8 @@ class _WalletSend extends StatelessWidget {
     final step = context.select((SendCubit sc) => sc.state.currentStep);
     final walletLabel =
         context.select((WalletsCubit c) => c.state.selectedWallet!.label);
+    final walletType =
+        context.select((WalletsCubit c) => c.state.selectedWallet!.walletType);
 
     return WillPopScope(
       onWillPop: () async {
@@ -92,9 +94,9 @@ class _WalletSend extends StatelessWidget {
                       const SizedBox(height: 0),
                       Align(
                         child: Text(
-                          (walletLabel == 'WATCHER')
-                              ? 'SEND BITCOIN'
-                              : 'BUILD TRANSACTION',
+                          (walletType == 'WATCHER')
+                              ? 'BUILD TRANSACTION'
+                              : 'SEND BITCOIN',
                           style: context.fonts.headline6!.copyWith(
                             color: Colors.white,
                           ),
