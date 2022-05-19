@@ -37,7 +37,7 @@ class Rates extends StatelessWidget {
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
-                              Validation.addCommas(calcState.satsAmt),
+                              Validation.formatSatsString(calcState.satsAmt),
                               style: c.fonts.headline4!.copyWith(
                                 color: c.colours.primary.withAlpha(
                                   !calcState.editingBtc ? 160 : 255,
@@ -107,7 +107,8 @@ class Rates extends StatelessWidget {
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
-                              Validation.addCommas(calcState.currencyAmt),
+                              Validation.formatSatsString(
+                                  calcState.currencyAmt),
                               style: c.fonts.headline4!.copyWith(
                                 color: c.colours.primary.withAlpha(
                                   calcState.editingBtc ? 160 : 255,

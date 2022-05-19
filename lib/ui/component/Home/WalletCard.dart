@@ -7,6 +7,7 @@ import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/validation.dart';
 
 class WalletCard extends StatelessWidget {
   const WalletCard({
@@ -88,14 +89,10 @@ class WalletCard extends StatelessWidget {
                           const SizedBox(height: 8),
                           if (!prefState.incognito)
                             Text(
-                              (wallet.balance > 0)
-                                  ? NumberFormat('###,000').format(
-                                        double.parse(
-                                          wallet.balance.toString(),
-                                        ),
-                                      ) +
-                                      ' sats'
-                                  : '0 sats',
+                              Validation.formatSatsString(
+                                    wallet.balance.toString(),
+                                  ) +
+                                  ' sats',
                               maxLines: 10,
                               style: context.fonts.caption!.copyWith(
                                 color: context.colours.onBackground

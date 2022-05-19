@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/validation.dart';
 
 class ConfirmTransaction extends StatelessWidget {
   const ConfirmTransaction({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class ConfirmTransaction extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            '' + state.address,
+            state.address,
             style: context.fonts.caption!.copyWith(
               color: context.colours.onBackground,
             ),
@@ -50,8 +51,8 @@ class ConfirmTransaction extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                NumberFormat('###,000').format(
-                      double.parse(state.finalAmount.toString()),
+                Validation.formatSatsString(
+                      state.finalAmount.toString(),
                     ) +
                     ' sats',
                 style: context.fonts.caption!.copyWith(
@@ -64,7 +65,7 @@ class ConfirmTransaction extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            '' + state.finalAmount.toBtc() + ' BTC',
+            state.finalAmount.toBtc() + ' BTC',
             style: context.fonts.caption!.copyWith(
               color: context.colours.onBackground.withOpacity(0.7),
             ),
@@ -81,8 +82,9 @@ class ConfirmTransaction extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                NumberFormat('###,000')
-                        .format(double.parse(state.finalFee.toString())) +
+                Validation.formatSatsString(
+                      state.finalFee.toString(),
+                    ) +
                     ' sats',
                 style: context.fonts.caption!.copyWith(
                   color: context.colours.onBackground,
@@ -96,7 +98,7 @@ class ConfirmTransaction extends StatelessWidget {
             height: 2,
           ),
           Text(
-            '' + state.finalFee.toBtc() + ' BTC',
+            state.finalFee.toBtc() + ' BTC',
             style: context.fonts.caption!.copyWith(
               color: context.colours.onBackground.withOpacity(0.7),
             ),
@@ -113,9 +115,7 @@ class ConfirmTransaction extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                NumberFormat('###,000')
-                        .format(double.parse(state.total().toString())) +
-                    ' sats',
+                Validation.formatSatsString(state.total().toString()) + ' sats',
                 style: context.fonts.caption!.copyWith(
                   color: context.colours.onBackground,
                   fontSize: 21,
@@ -126,7 +126,7 @@ class ConfirmTransaction extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            '' + state.total().toBtc() + ' BTC',
+            state.total().toBtc() + ' BTC',
             style: context.fonts.caption!.copyWith(
               color: context.colours.onBackground.withOpacity(0.7),
             ),

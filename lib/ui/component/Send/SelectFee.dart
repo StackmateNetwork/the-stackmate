@@ -115,18 +115,32 @@ class _SelectFeeState extends State<SelectFee> {
                   ],
                 ),
                 const SizedBox(height: 32),
-                TextField(
-                  controller: _controller,
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(color: context.colours.onBackground),
-                  decoration: InputDecoration(
-                    hintText: 'Enter custom fee'.toUpperCase(),
-                    errorText: state.errFees.nullIfEmpty(),
+                Slider(
+                  min: double.parse(
+                    context.read<SendCubit>().state.feeSlow!.toString(),
                   ),
-                  onChanged: (t) {
-                    context.read<SendCubit>().feeChanged(t);
+                  max: double.parse(
+                    context.read<SendCubit>().state.feeFast!.toString(),
+                  ),
+                  value: double.parse(
+                    context.read<SendCubit>().state.feeMedium!.toString(),
+                  ),
+                  onChanged: (f) {
+                    context.read<SendCubit>().feeChanged(f.toString());
                   },
                 ),
+                // TextField(
+                //   controller: _controller,
+                //   keyboardType: TextInputType.number,
+                //   style: TextStyle(color: context.colours.onBackground),
+                //   decoration: InputDecoration(
+                //     hintText: 'Enter custom fee'.toUpperCase(),
+                //     errorText: state.errFees.nullIfEmpty(),
+                //   ),
+                //   onChanged: (t) {
+                //     context.read<SendCubit>().feeChanged(t);
+                //   },
+                // ),
                 const SizedBox(height: 60),
                 if (state.finalFee != null) ...[
                   Text(

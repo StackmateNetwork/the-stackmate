@@ -193,8 +193,9 @@ class CalculatorCubit extends Cubit<CalculatorState> {
             final newExp = str + (key == 'x' ? '*' : key);
             emit(
               state.copyWith(
-                satsAmt:
-                    state.btcSelected ? newExp : Validation.addCommas(newExp),
+                satsAmt: state.btcSelected
+                    ? newExp
+                    : Validation.formatSatsString(newExp),
               ),
             );
           } else {
@@ -202,7 +203,8 @@ class CalculatorCubit extends Cubit<CalculatorState> {
               return;
             str = _isZero(state.currencyAmt) ? '' : state.currencyAmt;
             final newExp = str + (key == 'x' ? '*' : key);
-            emit(state.copyWith(currencyAmt: Validation.addCommas(newExp)));
+            emit(state.copyWith(
+                currencyAmt: Validation.formatSatsString(newExp)));
           }
 
           break;
@@ -274,7 +276,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
             state.selectedRate!.rate;
         emit(
           state.copyWith(
-            currencyAmt: Validation.addCommas(
+            currencyAmt: Validation.formatSatsString(
               finalVal.toStringAsFixed(2),
             ),
           ),
@@ -292,7 +294,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
           state.copyWith(
             satsAmt: state.btcSelected
                 ? finalVal.toStringAsFixed(8)
-                : Validation.addCommas(
+                : Validation.formatSatsString(
                     (finalVal * 100000000).toStringAsFixed(0),
                   ),
           ),

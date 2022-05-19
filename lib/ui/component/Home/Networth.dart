@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/validation.dart';
 
 class Networth extends StatelessWidget {
   @override
@@ -35,12 +36,10 @@ class Networth extends StatelessWidget {
                 const SizedBox(height: 54),
               ] else ...[
                 Text(
-                  (networth > 0)
-                      ? NumberFormat('###,000')
-                          .format(double.parse(networth.toString()))
-                      : '0 sats',
+                  Validation.formatSatsString(networth.toString()),
                   style: c.fonts.headline4!.copyWith(
                     color: Colors.white,
+                    letterSpacing: 1,
                   ),
                 ),
                 const SizedBox(height: 6),

@@ -5,6 +5,7 @@ import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/validation.dart';
 
 class TransactionItem extends StatelessWidget {
   const TransactionItem({Key? key, required this.transaction})
@@ -55,10 +56,8 @@ class TransactionItem extends StatelessWidget {
                         ] else ...[
                           const Padding(padding: EdgeInsets.only(top: 8)),
                           Text(
-                            NumberFormat('###,000').format(
-                                  double.parse(
-                                    transaction.received.toString(),
-                                  ),
+                            Validation.formatSatsString(
+                                  transaction.received.toString(),
                                 ) +
                                 ' sats',
                             style: (transaction.height > 0)
@@ -154,11 +153,8 @@ class TransactionItem extends StatelessWidget {
                       ] else ...[
                         const Padding(padding: EdgeInsets.only(top: 8)),
                         Text(
-                          NumberFormat('###,000').format(
-                                double.parse(
-                                  (transaction.sent + transaction.fee)
-                                      .toString(),
-                                ),
+                          Validation.formatSatsString(
+                                transaction.sent.toString(),
                               ) +
                               ' sats',
                           style: (transaction.height > 0)
