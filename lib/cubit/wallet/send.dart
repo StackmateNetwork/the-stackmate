@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bitcoin/types.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -11,7 +9,6 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
@@ -81,6 +78,7 @@ class SendCubit extends Cubit<SendState> {
     this._nodeAddressCubit,
     this._core,
     this._fees,
+    // this._file,
   ) : super(const SendState()) {
     _init(withQR);
   }
@@ -94,8 +92,11 @@ class SendCubit extends Cubit<SendState> {
   final NodeAddressCubit _nodeAddressCubit;
   final IStackMateCore _core;
   final FeesCubit _fees;
+  // final FileManager _file;
 
-  static const emailShareSubject = 'Transaction ID';
+  static const emailShareTxidSubject = 'Transaction ID';
+  static const emailSharePSBTSubject = 'PSBT Requires Signature';
+
   static const invalidAddressError = 'Invalid Address';
   static const invalidAmountError = 'Invalid Amount';
   static const invalidFeeError = 'Invalid Fee';
@@ -213,6 +214,29 @@ class SendCubit extends Cubit<SendState> {
     emit(state.copyWith(sweepWallet: !state.sweepWallet, amount: emptyString));
   }
 
+  // void savePSBTToFile(BuildContext context) async {
+  //   // final bool isDesktop = !(Platform.isAndroid || Platform.isIOS);
+
+  //   final rootPath = await getTemporaryDirectory();
+  //   final String path = await FilesystemPicker.open(
+  //     title: 'Save to folder',
+  //     context: context,
+  //     rootDirectory: rootPath,
+  //     fsType: FilesystemType.folder,
+  //     pickText: 'Save file to this folder',
+  //     folderIconColor: Colors.teal,
+  //   );
+  //   await _file.saveTextToFile(state.psbt, path);
+  //   emit(
+  //     state.copyWith(
+  //       sendingTx: false,
+  //       errLoading: emptyString,
+  //       // currentStep: SendSteps.sent,
+  //     ),
+  //   );
+  //   return;
+  // }
+
   bool _checkAmount(String amount) {
     final checked = amount.replaceAll(',', emptyString);
     emit(state.copyWith(amount: checked));
@@ -231,7 +255,7 @@ class SendCubit extends Cubit<SendState> {
         return;
       }
       final txOutputs =
-          '${state.address}:${(state.sweepWallet ? 0 : state.amount)}';
+          '${state.address}:${state.sweepWallet ? 0 : state.amount}';
 
       emit(
         state.copyWith(
@@ -459,12 +483,26 @@ class SendCubit extends Cubit<SendState> {
   void shareTxId() {
     _share.share(
       text: state.txId,
-      subjectForEmail: emailShareSubject,
+      subjectForEmail: emailShareTxidSubject,
     );
   }
 
   void copyPSBT() {
     _clipBoard.copyToClipBoard(state.psbt);
+    emit(
+      state.copyWith(
+        sendingTx: false,
+        errLoading: emptyString,
+        currentStep: SendSteps.sent,
+      ),
+    );
+  }
+
+  void sharePSBT() {
+    _share.share(
+      text: state.psbt,
+      subjectForEmail: emailSharePSBTSubject,
+    );
     emit(
       state.copyWith(
         sendingTx: false,

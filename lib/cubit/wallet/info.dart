@@ -33,8 +33,8 @@ class InfoState with _$InfoState {
   }) = _InfoState;
   const InfoState._();
 
-  bool zeroBalance() => balance == null || balance == 0;
-  bool zeroBalanceAmt() => balance != null && balance == 0;
+  bool zeroBalance() => balance == 0;
+  bool zeroBalanceAmt() => balance == 0;
 }
 
 class InfoCubit extends Cubit<InfoState> {

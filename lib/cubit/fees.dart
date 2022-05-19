@@ -1,16 +1,11 @@
-import 'dart:ffi';
 import 'package:bitcoin/types.dart';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 //import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sats/api/stackmate-core.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
-import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/chain-select.dart';
-
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:oktoast/oktoast.dart';
+import 'package:sats/cubit/node.dart';
 import 'package:sats/model/fees.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -48,7 +43,11 @@ class FeesCubit extends Cubit<FeesState> {
       if (fees.hasError) {
         if (fees.error! == 'empty') {
           final defaultFees = Fees(
-              timestamp: timestamp, slow: 0.000, medium: 0.000, fast: 0.000);
+            timestamp: timestamp,
+            slow: 0.000,
+            medium: 0.000,
+            fast: 0.000,
+          );
           emit(
             state.copyWith(fees: defaultFees),
           );

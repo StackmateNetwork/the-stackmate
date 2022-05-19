@@ -14,7 +14,6 @@ class TextAddress extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           width: c.width,

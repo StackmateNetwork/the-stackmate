@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/validation.dart';
-import 'package:intl/intl.dart';
 
 class ConfirmTransaction extends StatelessWidget {
   const ConfirmTransaction({Key? key}) : super(key: key);
@@ -208,13 +207,21 @@ class ConfirmTransaction extends StatelessWidget {
                 color: context.colours.onBackground.withOpacity(0.7),
               ),
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 52),
             TextButton(
               onPressed: () {
                 context.read<SendCubit>().copyPSBT();
                 // Future.delayed(Duration(seconds: 2));
               },
               child: const Text('COPY PSBT'),
+            ),
+            const SizedBox(height: 12),
+            TextButton(
+              onPressed: () {
+                // context.read<SendCubit>().savePSBTToFile(context);
+                // Future.delayed(Duration(seconds: 2));
+              },
+              child: const Text('SAVE PSBT'),
             )
           ],
         ),

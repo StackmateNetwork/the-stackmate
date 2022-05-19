@@ -9,7 +9,6 @@ import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/ui/component/Calculator/Keyboard.dart';
 import 'package:sats/ui/component/Calculator/Rates.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
-import 'package:sats/ui/component/common/header.dart';
 import 'package:sats/ui/component/common/loading.dart';
 
 class _Calc extends StatelessWidget {

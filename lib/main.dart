@@ -9,13 +9,13 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
-import 'package:sats/ui/screen/PSBT.dart';
 import 'package:sats/ui/screen/Calculator.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Logs.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
 import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
+import 'package:sats/ui/screen/PSBT.dart';
 import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
@@ -27,7 +27,6 @@ void main() async {
   setupDependencies(useDummies: false);
 
   WidgetsFlutterBinding.ensureInitialized();
-  // Bloc.observer = SimpleBlocObserver();
 
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);

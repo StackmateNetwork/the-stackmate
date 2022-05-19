@@ -20,9 +20,9 @@ class NodeAddressState with _$NodeAddressState {
   const NodeAddressState._();
 
   String getAddress() =>
-      address == (blockstreamNodeAddress) ? 'default' : '$address:$port';
+      address == blockstreamNodeAddress ? 'default' : '$address:$port';
 
-  String mainString() => address == (blockstreamNodeAddress)
+  String mainString() => address == blockstreamNodeAddress
       ? 'BLOCKSTREAM (default)'
       : '$address:$port';
 }

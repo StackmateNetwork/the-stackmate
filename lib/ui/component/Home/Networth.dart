@@ -15,52 +15,53 @@ class Networth extends StatelessWidget {
       networth += wallet.balance;
     }
     return BlocBuilder<PreferencesCubit, PreferencesState>(
-        builder: (context, prefState) {
-      return Padding(
-        padding: const EdgeInsets.only(
-          top: 36,
-          left: 24,
-          right: 32,
-        ),
-        child: Column(
-          children: [
-            if (prefState.incognito) ...[
-              Text(
-                '"A specter is haunting the modern world, the specter of crypto anarchy. - May, 1988"',
-                style: c.fonts.caption!.copyWith(
-                  color: Colors.white,
+      builder: (context, prefState) {
+        return Padding(
+          padding: const EdgeInsets.only(
+            top: 36,
+            left: 24,
+            right: 32,
+          ),
+          child: Column(
+            children: [
+              if (prefState.incognito) ...[
+                Text(
+                  '"A specter is haunting the modern world, the specter of crypto anarchy. - May, 1988"',
+                  style: c.fonts.caption!.copyWith(
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 54),
-            ] else ...[
-              Text(
-                (networth > 0)
-                    ? NumberFormat('###,000')
-                        .format(double.parse(networth.toString()))
-                    : '0 sats',
-                style: c.fonts.headline4!.copyWith(
-                  color: Colors.white,
+                const SizedBox(height: 54),
+              ] else ...[
+                Text(
+                  (networth > 0)
+                      ? NumberFormat('###,000')
+                          .format(double.parse(networth.toString()))
+                      : '0 sats',
+                  style: c.fonts.headline4!.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                'sats',
-                style: c.fonts.headline6!.copyWith(
-                  color: Colors.white,
+                const SizedBox(height: 6),
+                Text(
+                  'sats',
+                  style: c.fonts.headline6!.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                networth.toBtc() + ' BTC',
-                style: c.fonts.caption!.copyWith(
-                  color: Colors.white,
+                const SizedBox(height: 6),
+                Text(
+                  networth.toBtc() + ' BTC',
+                  style: c.fonts.caption!.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
-              ),
+              ],
             ],
-          ],
-        ),
-      );
-    });
+          ),
+        );
+      },
+    );
   }
 }

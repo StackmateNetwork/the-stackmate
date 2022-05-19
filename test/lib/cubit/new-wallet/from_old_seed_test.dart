@@ -1,4 +1,3 @@
-import 'package:bitcoin/bitcoin.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sats/api/interface/logger.dart';
@@ -11,13 +10,9 @@ import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/model/result.dart';
-import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/pkg/storage.dart';
 import 'package:test/test.dart';
-import 'package:sats/model/blockchain.dart';
 
 class _MockStorage extends Mock implements IStorage {}
 
@@ -43,30 +38,30 @@ void main() {
     late SeedImportCubit _importCubit;
     late SeedImportWalletCubit seedImportWalletCubit;
 
-    DerivedKeys testDerivedAccount = const DerivedKeys(
-      '8099ce1e',
-      'm/84h/1h/0h',
-      'tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G',
-      'tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41',
-    );
-    const expPublicDesc =
-        'wpkh([8099ce1e/84h/1h/0h]tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41/*)';
-    const expPrivateDesc =
-        'wpkh([8099ce1e/84h/1h/0h]tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G/*)';
-    const Wallet testWallet = Wallet(
-      label: labelChange,
-      descriptor: expPrivateDesc,
-      policy: 'pk(___primary___)',
-      blockchain: 'testnet',
-      policyElements: [
-        'primary:[8099ce1e/84h/1h/0h]tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41'
-      ],
-      requiredPolicyElements: 1,
-      walletType: 'SIGNER',
-      lastAddressIndex: 0,
-      balance: 0,
-      transactions: [],
-    );
+    // const DerivedKeys testDerivedAccount = const DerivedKeys(
+    //   '8099ce1e',
+    //   'm/84h/1h/0h',
+    //   'tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G',
+    //   'tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41',
+    // );
+    // const expPublicDesc =
+    //     'wpkh([8099ce1e/84h/1h/0h]tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41/*)';
+    // const expPrivateDesc =
+    // 'wpkh([8099ce1e/84h/1h/0h]tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G/*)';
+    // const Wallet testWallet = Wallet(
+    //   label: labelChange,
+    //   descriptor: expPrivateDesc,
+    //   policy: 'pk(___primary___)',
+    //   blockchain: 'testnet',
+    //   policyElements: [
+    //     'primary:[8099ce1e/84h/1h/0h]tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41'
+    //   ],
+    //   requiredPolicyElements: 1,
+    //   walletType: 'SIGNER',
+    //   lastAddressIndex: 0,
+    //   balance: 0,
+    //   transactions: [],
+    // );
 
     setUp(() async {
       _importCubit = SeedImportCubit(logger, chainSelectCubit, _bitcoin);

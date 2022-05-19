@@ -6,8 +6,6 @@ import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
-import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'psbt-tool.freezed.dart';
@@ -99,7 +97,7 @@ class PSBTCubit extends Cubit<PSBTState> {
             errBroadcasting: emptyString,
           ),
         );
-    } catch (e, s) {
+    } catch (e) {
       emit(
         state.copyWith(
           errBroadcasting: e.toString(),

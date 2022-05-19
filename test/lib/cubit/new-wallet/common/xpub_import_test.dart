@@ -1,18 +1,10 @@
-import 'package:bitcoin/types.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sats/api/interface/logger.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
-import 'package:sats/api/stackmate-core.dart';
-import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
-import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
-import 'package:sats/pkg/interface/storage.dart';
 import 'package:test/test.dart';
-
-class _MockStorage extends Mock implements IStorage {}
 
 class _MockLogApi extends Mock implements ILogAPI {}
 
@@ -20,7 +12,6 @@ class _MockClipboard extends Mock implements IClipBoard {}
 
 void main() {
   group('xpubImport: CORE OPS', () {
-    final IStorage _storage = _MockStorage();
     final clipboard = _MockClipboard();
     final logAPI = _MockLogApi();
     final logger = Logger(clipboard, logAPI);

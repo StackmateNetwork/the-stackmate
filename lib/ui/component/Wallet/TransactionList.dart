@@ -10,7 +10,7 @@ class TransactionsList extends StatelessWidget {
   Widget build(BuildContext c) {
     final transactions = c.select((InfoCubit w) => w.state.transactions);
 
-    if (transactions == null || transactions.isEmpty) return Container();
+    if (transactions.isEmpty) return Container();
 
     return FadeIn(
       delay: const Duration(milliseconds: 300),

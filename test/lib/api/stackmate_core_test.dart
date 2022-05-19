@@ -1,7 +1,7 @@
 // ignore: avoid_escaping_inner_quotes
 import 'package:bitcoin/types.dart';
-import 'package:sats/api/stackmate-core.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/model/transaction.dart';
 
 void main() {
@@ -18,7 +18,7 @@ void main() {
   const faucetReturnAddress = 'mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt';
   const returnAmount = 600;
   const minerTxOutput = 'miner';
-  var finalizedPsbt =
+  const finalizedPsbt =
       'cHNidP8BAHQBAAAAATP//sNP6QoTAtgzs2Eof4+e95GYAQeLE1wWqs4tFSoRAQAAAAD9////AvwCAAAAAAAAFgAUdzOj/AqxHes2No9ip9nkUBeHzM1YAgAAAAAAABl2qRQ0Sg9IyhUOwrkDgXZgubaLE6ZwJoisAAAAAAABAN8BAAAAAAEBSon1NvP7dcSgLFyS3noWwD5D54uhcVlVKX43LU+wAB0AAAAAAP3///8CECcAAAAAAAAWABTB5EuPpQOVbyqPM6pHkQJUsKTBLTwJAAAAAAAAFgAUeO/Z0zlT3dQTQP3Aqkp6Z1XyEWMCSDBFAiEAorKfWQvy3zysktKtk/FRatxbopZlnDHzIxUaR87O56QCIHIleIl98pbPbXgYhearHMysQ47HLqLEEkx09T+3wflDASEDh9xUMJ5DYt5r7TVE+3nwazApjYVEKHMcg5QXqVA2HJMAAAAAAQEfPAkAAAAAAAAWABR479nTOVPd1BNA/cCqSnpnVfIRYyIGAyA0nu2ZNJECxF4M8iU9XHhINvajPckJ618FAvXbKLxGGICZzh5UAACAAQAAgAAAAIABAAAABAAAAAAiAgLiTSQCgBofPHrv4cRlx8wOMx6vLHHv2B2m4zRLXZTpcxiAmc4eVAAAgAEAAIAAAACAAQAAAAUAAAAAAA==';
   late BitcoinFFI libstackmate;
 
@@ -44,7 +44,10 @@ void main() {
     assert(!root.hasError);
 
     final accountMasterKey = libstackmate.deriveHardened(
-        masterXPriv: root.result!.xprv, account: '0', purpose: '84');
+      masterXPriv: root.result!.xprv,
+      account: '0',
+      purpose: '84',
+    );
 
     assert(!accountMasterKey.hasError);
     // discard root
@@ -163,8 +166,6 @@ void main() {
     assert(decodedPsbt.result!.isNotEmpty);
 
     for (final output in decodedPsbt.result!) {
-      print(output.value.toString());
-      print(output.to.toString());
       if (output.to == faucetReturnAddress) {
         assert(output.value == returnAmount);
       } else if (output.to == minerTxOutput) {

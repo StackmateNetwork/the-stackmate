@@ -183,15 +183,17 @@ class WalletSendScreen extends StatelessWidget {
     final fees = context.select((FeesCubit c) => c);
 
     final s = SendCubit(
-        fromQr,
-        wallets,
-        networkSelect,
-        logger,
-        locator<IClipBoard>(),
-        locator<IShare>(),
-        nodeAddress,
-        locator<IStackMateCore>(),
-        fees);
+      fromQr,
+      wallets,
+      networkSelect,
+      logger,
+      locator<IClipBoard>(),
+      locator<IShare>(),
+      nodeAddress,
+      locator<IStackMateCore>(),
+      fees,
+      // locator<FileManager>(),
+    );
 
     return BlocProvider.value(
       value: s,

@@ -12,7 +12,6 @@ import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sats/model/transaction.dart';
 
 part 'from-old-seed.freezed.dart';
 

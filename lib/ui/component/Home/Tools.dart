@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/common/LogButton.dart';
 import 'package:sats/cubit/preferences.dart';
+import 'package:sats/pkg/extensions.dart';
 
 class WalletTools extends StatelessWidget {
   @override

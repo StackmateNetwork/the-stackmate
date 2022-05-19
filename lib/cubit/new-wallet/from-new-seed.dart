@@ -130,9 +130,11 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
     }
 
     try {
-      emit(state.copyWith(
-        savingWallet: true,
-      ));
+      emit(
+        state.copyWith(
+          savingWallet: true,
+        ),
+      );
 
       final wallet = _generateCubit.state.wallet;
       if (wallet == null) return;

@@ -8,10 +8,13 @@ import 'package:test/test.dart';
 
 Matcher isAHiveError([String? contains]) {
   return allOf(
-      isA<HiveError>(),
-      predicate((HiveError e) =>
+    isA<HiveError>(),
+    predicate(
+      (HiveError e) =>
           contains == null ||
-          e.toString().toLowerCase().contains(contains.toLowerCase())));
+          e.toString().toLowerCase().contains(contains.toLowerCase()),
+    ),
+  );
 }
 
 Matcher throwsHiveError([String? contains]) {
@@ -24,8 +27,8 @@ String tempPath =
 String assetsPath = path.join(Directory.current.path, 'test', 'assets');
 
 Future<File> getTempFile([List<int>? bytes]) async {
-  var name = random.nextInt(pow(2, 32) as int);
-  var file = File(path.join(tempPath, '$name.tmp'));
+  final name = random.nextInt(pow(2, 32) as int);
+  final file = File(path.join(tempPath, '$name.tmp'));
   await file.create(recursive: true);
 
   if (bytes != null) {
@@ -35,15 +38,17 @@ Future<File> getTempFile([List<int>? bytes]) async {
   return file;
 }
 
-Future<RandomAccessFile> getTempRaf(List<int> bytes,
-    {FileMode mode = FileMode.read}) async {
-  var file = await getTempFile(bytes);
-  return await file.open(mode: mode);
+Future<RandomAccessFile> getTempRaf(
+  List<int> bytes, {
+  FileMode mode = FileMode.read,
+}) async {
+  final file = await getTempFile(bytes);
+  return file.open(mode: mode);
 }
 
 Future<Directory> getTempDir() async {
-  var name = random.nextInt(pow(2, 32) as int);
-  var dir = Directory(path.join(tempPath, '${name}_tmp'));
+  final name = random.nextInt(pow(2, 32) as int);
+  final dir = Directory(path.join(tempPath, '${name}_tmp'));
   if (await dir.exists()) {
     await dir.delete(recursive: true);
   }
@@ -55,23 +60,31 @@ File getAssetFile(String part1, [String? part2, String? part3, String? part4]) {
   return File(path.join(assetsPath, part1, part2, part3, part4));
 }
 
-Future<File> getTempAssetFile(String part1,
-    [String? part2, String? part3, String? part4]) async {
-  var assetFile = getAssetFile(part1, part2, part3, part4);
-  var tempFile = await getTempFile();
+Future<File> getTempAssetFile(
+  String part1, [
+  String? part2,
+  String? part3,
+  String? part4,
+]) async {
+  final assetFile = getAssetFile(part1, part2, part3, part4);
+  final tempFile = await getTempFile();
 
-  return await assetFile.copy(tempFile.path);
+  return assetFile.copy(tempFile.path);
 }
 
-Future<Directory> getAssetDir(String part1,
-    [String? part2, String? part3, String? part4]) async {
-  var assetDir = Directory(path.join(assetsPath, part1, part2, part3, part4));
-  var tempDir = await getTempDir();
+Future<Directory> getAssetDir(
+  String part1, [
+  String? part2,
+  String? part3,
+  String? part4,
+]) async {
+  final assetDir = Directory(path.join(assetsPath, part1, part2, part3, part4));
+  final tempDir = await getTempDir();
 
-  await for (var file in assetDir.list(recursive: true)) {
+  await for (final file in assetDir.list(recursive: true)) {
     if (file is File) {
-      var relative = path.relative(file.path, from: assetDir.path);
-      var tempFile = File(path.join(tempDir.path, relative));
+      final relative = path.relative(file.path, from: assetDir.path);
+      final tempFile = File(path.join(tempDir.path, relative));
       await tempFile.create(recursive: true);
       await file.copy(tempFile.path);
     }
@@ -85,17 +98,20 @@ Future<void> expectDirsEqual(Directory dir1, Directory dir2) {
 }
 
 Future<void> _expectDirsEqual(
-    Directory dir1, Directory dir2, bool round2) async {
-  await for (var entity in dir1.list(recursive: true)) {
+  Directory dir1,
+  Directory dir2,
+  bool round2,
+) async {
+  await for (final entity in dir1.list(recursive: true)) {
     if (entity is File) {
-      var fileName = path.basename(entity.path);
-      var otherFile = File(path.join(dir2.path, fileName));
+      final fileName = path.basename(entity.path);
+      final otherFile = File(path.join(dir2.path, fileName));
 
-      var entityBytes = await entity.readAsBytes();
-      var otherBytes = await otherFile.readAsBytes();
+      final entityBytes = await entity.readAsBytes();
+      final otherBytes = await otherFile.readAsBytes();
       expect(entityBytes, otherBytes);
     } else if (entity is Directory) {
-      var dir2Entity =
+      final dir2Entity =
           Directory(path.join(dir2.path, path.basename(entity.path)));
       await expectDirsEqual(entity, dir2Entity);
     }
@@ -106,9 +122,14 @@ Future<void> _expectDirsEqual(
   }
 }
 
-Future<void> expectDirEqualsAssetDir(Directory dir1, String part1,
-    [String? part2, String? part3, String? part4]) {
-  var assetDir = Directory(path.join(assetsPath, part1, part2, part3, part4));
+Future<void> expectDirEqualsAssetDir(
+  Directory dir1,
+  String part1, [
+  String? part2,
+  String? part3,
+  String? part4,
+]) {
+  final assetDir = Directory(path.join(assetsPath, part1, part2, part3, part4));
   return expectDirsEqual(dir1, assetDir);
 }
 
@@ -117,8 +138,10 @@ void returnFutureVoid(When<Future<void>> v) =>
 
 final bool soundNullSafety = (() {
   try {
+    // ignore: cast_nullable_to_non_nullable
     null as Object;
     return false;
+    // ignore: avoid_catching_errors
   } on TypeError {
     return true;
   }

@@ -1,4 +1,3 @@
-import 'package:bitcoin/bitcoin.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sats/api/interface/logger.dart';
@@ -9,23 +8,15 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/model/result.dart';
-import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/pkg/storage.dart';
 import 'package:test/test.dart';
-import 'package:sats/model/blockchain.dart';
 
 class _MockStorage extends Mock implements IStorage {}
 
 class _MockLogApi extends Mock implements ILogAPI {}
 
 class _MockClipboard extends Mock implements IClipBoard {}
-
-class _MockLibStackmate extends Mock implements IStackMateCore {}
-
-class _MockGenerateCubit extends Mock implements SeedGenerateCubit {}
 
 void main() {
   group('SeedGenerateWalletCubit: Saves a new wallet from seed.', () {

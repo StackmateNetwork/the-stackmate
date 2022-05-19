@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/preferences.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class SavePreferences extends StatelessWidget {
@@ -10,7 +8,6 @@ class SavePreferences extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final preferences = c.select((PreferencesCubit p) => p);
-    final wallets = c.select((WalletsCubit w) => w);
 
     return Container(
       height: 120,

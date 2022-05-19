@@ -16,6 +16,7 @@ class SMError {
 }
 
 class PSBT {
+  // ignore: avoid_positional_boolean_parameters
   const PSBT(this.psbt, this.isFinalized);
   factory PSBT.fromJson(String data) {
     final json = jsonDecode(data);
@@ -158,25 +159,16 @@ class UTXO {
   );
   factory UTXO.fromJson(Map<String, dynamic> json) {
     return UTXO(
-        json['txid'] as String,
-        json['vout'] as int,
-        json['value'] as int,
-        json['script_pubkey'] as String,
-        json['keychain_kind'] as String);
+      json['txid'] as String,
+      json['vout'] as int,
+      json['value'] as int,
+      json['script_pubkey'] as String,
+      json['keychain_kind'] as String,
+    );
   }
   final String txid;
   final int vout;
   final int value;
   final String scriptPubkey;
   final String keychainKind;
-
-  // ignore: recursive_getters
-  // int get timestamp => timestamp;
 }
-/*
-  pub txid: String,
-  pub vout: u32,
-  pub value: u64,
-  pub script_pubkey: String,
-  pub keychain_kind: String
-  */

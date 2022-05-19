@@ -209,7 +209,7 @@ class TransactionItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Padding(padding: const EdgeInsets.only(top: 8)),
+                          const Padding(padding: EdgeInsets.only(top: 8)),
                           Text(
                             NumberFormat('###,000').format(
                                   double.parse(
@@ -420,7 +420,7 @@ class TransactionItem extends StatelessWidget {
                             ),
                           ),
                         ] else ...[
-                          Padding(padding: const EdgeInsets.only(top: 8)),
+                          const Padding(padding: EdgeInsets.only(top: 8)),
                           Text(
                             NumberFormat('###,000').format(
                                   double.parse(

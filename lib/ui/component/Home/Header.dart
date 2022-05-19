@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/LogButton.dart';
 

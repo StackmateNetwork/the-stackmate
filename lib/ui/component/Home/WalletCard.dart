@@ -23,7 +23,6 @@ class WalletCard extends StatelessWidget {
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
         return Row(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             GestureDetector(
               onTap: () {
@@ -208,7 +207,6 @@ class WalletCard extends StatelessWidget {
                         ),
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(

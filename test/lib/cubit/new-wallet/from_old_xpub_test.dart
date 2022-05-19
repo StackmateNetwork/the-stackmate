@@ -9,12 +9,8 @@ import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/model/blockchain.dart';
-import 'package:sats/model/result.dart';
-import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/pkg/storage.dart';
 import 'package:test/test.dart';
 
 class _MockStorage extends Mock implements IStorage {}
