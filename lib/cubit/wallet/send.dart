@@ -212,7 +212,12 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void toggleSweep() {
-    emit(state.copyWith(sweepWallet: !state.sweepWallet, amount: emptyString));
+    emit(
+      state.copyWith(
+        sweepWallet: !state.sweepWallet,
+        amount: 'WALLET WILL BE EMPTIED.',
+      ),
+    );
   }
 
   // void savePSBTToFile(BuildContext context) async {

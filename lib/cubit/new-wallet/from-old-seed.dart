@@ -9,6 +9,7 @@ import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -198,26 +199,27 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       throw SMError.fromJson(descriptor.error!);
     }
 
-    final history = _core.getHistory(
+    var history = _core.getHistory(
       descriptor: descriptor.result!,
       nodeAddress: _nodeAddressCubit.toString(),
     );
-    if (history.hasError) {
-      throw SMError.fromJson(history.error!);
-    }
     var recievedCount = 0;
 
-    for (final item in history.result!) {
-      if (item.sent == 0) {
-        recievedCount++;
+    if (history.hasError) {
+      history = const R(result: []);
+    } else
+      for (final item in history.result!) {
+        if (item.sent == 0) {
+          recievedCount++;
+        }
       }
-    }
-    final balance = _core.syncBalance(
+
+    var balance = _core.syncBalance(
       descriptor: descriptor.result!,
       nodeAddress: _nodeAddressCubit.toString(),
     );
     if (balance.hasError) {
-      throw SMError.fromJson(history.error!);
+      balance = const R(result: 0);
     }
     // public descriptor
     // Check history and whether this wallet needs to update its address index

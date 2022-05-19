@@ -203,8 +203,11 @@ class CalculatorCubit extends Cubit<CalculatorState> {
               return;
             str = _isZero(state.currencyAmt) ? '' : state.currencyAmt;
             final newExp = str + (key == 'x' ? '*' : key);
-            emit(state.copyWith(
-                currencyAmt: Validation.formatSatsString(newExp)));
+            emit(
+              state.copyWith(
+                currencyAmt: Validation.formatSatsString(newExp),
+              ),
+            );
           }
 
           break;
