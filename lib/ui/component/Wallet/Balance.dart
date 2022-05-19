@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
