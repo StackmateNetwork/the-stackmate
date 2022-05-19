@@ -4,12 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.aldrichTextTheme(),
       colorScheme: ColorScheme(
-        primary: Colors.orange[400]!,
+        primary: const Color(0xFFFFA827),
+        // primary: const Color(0xFFCEFF1A),
         secondary: const Color(0xFF00ABF5),
-        tertiary: const Color(0xFF548C2F),
-        // tertiary: const Color(0xFF85CB33),
+        // tertiary: const Color(0xFF548C2F),
+        tertiary: const Color(0xFFB0E000),
         surface: const Color(0xFFC9EDDC).withOpacity(0.009),
         background: const Color(0xFF13161f),
+        // background: const Color(0xFF414066).withOpacity(0.08),
         error: const Color(0xFFC33C54),
         onPrimary: Colors.white,
         onSecondary: Colors.white,
