@@ -34,7 +34,7 @@ class TextAddress extends StatelessWidget {
           child: Text(
             'COPY',
             style: c.fonts.caption!.copyWith(
-              color: Colors.blue,
+              color: c.colours.tertiary,
               fontSize: 18,
             ),
           ),

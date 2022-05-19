@@ -158,10 +158,10 @@ class WalletCard extends StatelessWidget {
                                 context.push('/receive');
                               }
                             },
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.call_received,
                               size: 24,
-                              color: Colors.blue,
+                              color: context.colours.tertiary,
                             ),
                           ),
                         ],
@@ -221,7 +221,7 @@ class WalletCard extends StatelessWidget {
                             icon: Icon(
                               Icons.send,
                               size: 21,
-                              color: context.colours.primary,
+                              color: context.colours.secondary,
                             ),
                           ),
                         ],

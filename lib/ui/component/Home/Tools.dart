@@ -27,10 +27,10 @@ class WalletTools extends StatelessWidget {
                   onPressed: () {
                     c.push('/psbt-tools');
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.language_sharp,
                     size: 32,
-                    color: Colors.blue,
+                    color: c.colours.secondary,
                   ),
                 ),
                 IconButton(
@@ -40,7 +40,7 @@ class WalletTools extends StatelessWidget {
                   icon: Icon(
                     Icons.hide_source,
                     size: 24,
-                    color: c.colours.primary,
+                    color: c.colours.onPrimary,
                   ),
                 ),
                 IconButton(

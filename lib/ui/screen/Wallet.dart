@@ -94,7 +94,7 @@ class _Wallet extends StatelessWidget {
                               children: [
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
-                                  opacity: (!isLoading) ? 0.8 : 0.2,
+                                  opacity: (!isLoading) ? 1 : 0.2,
                                   child: IconButton(
                                     iconSize: 28,
                                     color: c.colours.error,
@@ -131,25 +131,26 @@ class _Wallet extends StatelessWidget {
                                   icon: const Icon(Icons.info_outline),
                                 ),
                                 IconButton(
-                                  color: c.colours.primary,
+                                  color: c.colours.tertiary,
                                   onPressed: () {
                                     c.push('/receive');
                                   },
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.call_received,
-                                    color: Colors.blue,
+                                    color: c.colours.tertiary,
                                   ),
                                 ),
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
                                   opacity: zeroBal ? 0.4 : 1,
                                   child: IconButton(
-                                    color: c.colours.primary,
+                                    color: c.colours.secondary,
                                     onPressed: () {
                                       if (!zeroBal) c.push('/send');
                                     },
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.send,
+                                      color: c.colours.secondary,
                                     ),
                                   ),
                                 ),
