@@ -71,8 +71,9 @@ class WalletCard extends StatelessWidget {
                           Text(
                             wallet.label,
                             style: context.fonts.subtitle1!.copyWith(
-                              color: context.colours.primary,
+                              color: context.colours.onPrimary,
                               fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           Text(
