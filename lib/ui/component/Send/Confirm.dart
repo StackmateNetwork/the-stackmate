@@ -158,11 +158,11 @@ class ConfirmTransaction extends StatelessWidget {
       );
     else
       return Padding(
-        padding: const EdgeInsets.only(top: 25),
+        padding: const EdgeInsets.only(top: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             Text(
               'Transaction\nDetails',
               style: context.fonts.headline5!.copyWith(
@@ -184,21 +184,27 @@ class ConfirmTransaction extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 60),
-            Text(
-              'Amount'.toUpperCase(),
-              style: context.fonts.overline!.copyWith(
-                color: context.colours.onBackground,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              NumberFormat('###,000')
-                      .format(double.parse(state.finalAmount.toString())) +
-                  ' sats',
-              style: context.fonts.caption!.copyWith(
-                color: context.colours.onBackground,
-                fontSize: 21,
-              ),
+            Row(
+              children: [
+                Text(
+                  'Amount'.toUpperCase(),
+                  style: context.fonts.overline!.copyWith(
+                    color: context.colours.onBackground,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  NumberFormat('###,000').format(
+                        double.parse(state.finalAmount.toString()),
+                      ) +
+                      ' sats',
+                  style: context.fonts.caption!.copyWith(
+                    color: context.colours.onBackground,
+                    fontSize: 21,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ],
             ),
             const SizedBox(height: 2),
             Text(
@@ -206,40 +212,61 @@ class ConfirmTransaction extends StatelessWidget {
               style: context.fonts.caption!.copyWith(
                 color: context.colours.onBackground.withOpacity(0.7),
               ),
+              textAlign: TextAlign.right,
             ),
-            const SizedBox(height: 60),
-            Text(
-              'Network Fee'.toUpperCase(),
-              style: context.fonts.overline!.copyWith(
-                color: context.colours.onBackground,
-              ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Text(
+                  'Network Fee'.toUpperCase(),
+                  style: context.fonts.overline!.copyWith(
+                    color: context.colours.onBackground,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  NumberFormat('###,000')
+                          .format(double.parse(state.finalFee.toString())) +
+                      ' sats',
+                  style: context.fonts.caption!.copyWith(
+                    color: context.colours.onBackground,
+                    fontSize: 21,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(
+              height: 2,
+            ),
             Text(
-              NumberFormat('###,000')
-                      .format(double.parse(state.finalFee.toString())) +
-                  ' sats',
+              '' + state.finalFee.toBtc() + ' BTC',
               style: context.fonts.caption!.copyWith(
-                color: context.colours.onBackground,
-                fontSize: 21,
+                color: context.colours.onBackground.withOpacity(0.7),
               ),
+              textAlign: TextAlign.right,
             ),
-            const SizedBox(height: 60),
-            Text(
-              'Total'.toUpperCase(),
-              style: context.fonts.overline!.copyWith(
-                color: context.colours.onBackground,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              NumberFormat('###,000')
-                      .format(double.parse(state.total().toString())) +
-                  ' sats',
-              style: context.fonts.caption!.copyWith(
-                color: context.colours.onBackground,
-                fontSize: 21,
-              ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Text(
+                  'Total'.toUpperCase(),
+                  style: context.fonts.overline!.copyWith(
+                    color: context.colours.onBackground,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  NumberFormat('###,000')
+                          .format(double.parse(state.total().toString())) +
+                      ' sats',
+                  style: context.fonts.caption!.copyWith(
+                    color: context.colours.onBackground,
+                    fontSize: 21,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ],
             ),
             const SizedBox(height: 2),
             Text(
@@ -247,8 +274,9 @@ class ConfirmTransaction extends StatelessWidget {
               style: context.fonts.caption!.copyWith(
                 color: context.colours.onBackground.withOpacity(0.7),
               ),
+              textAlign: TextAlign.right,
             ),
-            const SizedBox(height: 52),
+            const SizedBox(height: 60),
             TextButton(
               onPressed: () {
                 context.read<SendCubit>().copyPSBT();

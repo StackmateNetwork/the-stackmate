@@ -399,6 +399,7 @@ class SendCubit extends Cubit<SendState> {
           finalFee: feeoutput.value,
           finalAmount: amtoutput.value,
           currentStep: SendSteps.confirm,
+          errSending: emptyString,
         ),
       );
     } catch (e, s) {
