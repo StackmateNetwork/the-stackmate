@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+const richFogra = Color(0xFF13161f);
+const brightCrayola = Color(0xFFFFA827);
+const ghostWhite = Color(0xFFF7F7FF);
+const blueJeans = Color(0xFF00ABF5);
+const bitterLemon = Color(0xFFB0E000);
+const arcticLime = Color(0xFFCEFF1A);
+const goldenBridge = Color(0xFFBB4430);
+const maximumGreen = Color(0xFF548C2F);
+const frenchBistre = Color(0xFF726953);
+
 ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.aldrichTextTheme(),
       colorScheme: ColorScheme(
-        primary: const Color(0xFFFFA827),
-        // primary: const Color(0xFFCEFF1A),
-        secondary: const Color(0xFF00ABF5),
-        // tertiary: const Color(0xFF548C2F),
-        tertiary: const Color(0xFFB0E000),
-        surface: const Color(0xFFC9EDDC).withOpacity(0.009),
-        background: const Color(0xFF13161f),
-        // background: const Color(0xFF414066).withOpacity(0.08),
-        error: const Color(0xFFC33C54),
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        onSurface: Colors.white, //.withOpacity(0.8),
-        onBackground: Colors.white, //.withOpacity(0.8),
-        onError: Colors.white,
+        primary: brightCrayola,
+        secondary: blueJeans,
+        tertiary: bitterLemon,
+        surface: ghostWhite.withOpacity(0.009),
+        background: richFogra,
+        error: goldenBridge,
+        onPrimary: ghostWhite,
+        onSecondary: ghostWhite,
+        onSurface: ghostWhite,
+        onBackground: ghostWhite,
+        onError: ghostWhite,
         brightness: Brightness.dark,
       ),
     );
