@@ -108,7 +108,7 @@ class _WalletSend extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 48),
+                      const SizedBox(height: 16),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: SendAddress(),
@@ -120,7 +120,7 @@ class _WalletSend extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: WalletDetails(),
                       ),
-                      const SizedBox(height: 80),
+                      const SizedBox(height: 16),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: AmountRow(),

@@ -36,6 +36,7 @@ class SendState with _$SendState {
     @Default(false) bool sendingTx,
     @Default('') String errLoading,
     @Default('') String errAddress,
+    @Default('') String errSending,
     @Default('') String errAmount,
     @Default('') String errFees,
     @Default('') String policyPath,
@@ -265,10 +266,6 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      // await Future.delayed(const Duration(milliseconds: 100));
-
-      // emit(state.copyWith(buildingTx: true, errLoading: emptyString));
-
       final nodeAddress = _nodeAddressCubit.state.getAddress();
 
       final psbt = await compute(buildTx, {
@@ -448,27 +445,45 @@ class SendCubit extends Cubit<SendState> {
 
       // final unsigned = state.psbt;
       final descriptor = _walletsCubit.state.selectedWallet!.descriptor;
-      final signed = await compute(signTx, {
-        'descriptor': descriptor,
-        'unsignedPSBT': state.psbt,
-      });
-      if (!signed.isFinalized) {
-        throw psbtNotFinalizedError;
-      }
-      final txid = await compute(broadcastTx, {
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
-        'nodeAddress': nodeAddress,
-        'signedPSBT': signed.psbt,
-      });
-
-      emit(
-        state.copyWith(
-          sendingTx: false,
-          errLoading: emptyString,
-          txId: txid,
-          currentStep: SendSteps.sent,
-        ),
+      final signed = _core.signTransaction(
+        descriptor: descriptor,
+        unsignedPSBT: state.psbt,
       );
+      if (signed.hasError) {
+        emit(state.copyWith(errSending: signed.error!));
+        return;
+      }
+      if (!signed.result!.isFinalized) {
+        emit(state.copyWith(errSending: 'All signatures not present.'));
+        return;
+      }
+      final txid = _core.broadcastTransaction(
+        descriptor: _walletsCubit.state.selectedWallet!.descriptor,
+        nodeAddress: nodeAddress,
+        signedPSBT: signed.result!.psbt,
+      );
+
+      if (txid.hasError)
+        emit(
+          state.copyWith(
+            sendingTx: false,
+            errLoading: emptyString,
+            errSending: txid.error!,
+            txId: '',
+            currentStep: SendSteps.confirm,
+          ),
+        );
+      else
+        emit(
+          state.copyWith(
+            sendingTx: false,
+            errLoading: emptyString,
+            errSending: emptyString,
+            txId: txid.result!,
+            currentStep: SendSteps.sent,
+          ),
+        );
+      return;
     } catch (e, s) {
       emit(
         state.copyWith(
