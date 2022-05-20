@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/pkg/extensions.dart';
 
-class SetIncognito extends StatelessWidget {
-  const SetIncognito({Key? key}) : super(key: key);
+class SetFiatUnit extends StatelessWidget {
+  const SetFiatUnit({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext c) {
@@ -11,8 +11,8 @@ class SetIncognito extends StatelessWidget {
       builder: (context, prefState) {
         return ElevatedButton(
           onPressed: () {
-            context.read<PreferencesCubit>().incognitoChanged();
-            context.read<PreferencesCubit>().saveClicked();
+            c.read<PreferencesCubit>().preferredFiatUnitChanged('INR');
+            c.read<PreferencesCubit>().saveClicked();
           },
           style: ElevatedButton.styleFrom(
             elevation: 0,
@@ -32,7 +32,7 @@ class SetIncognito extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Incognito Default',
+                      'Fiat Unit',
                       style: c.fonts.button!.copyWith(
                         color: c.colours.primary,
                         fontSize: 16,
@@ -40,7 +40,7 @@ class SetIncognito extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      prefState.incognito.toString().toUpperCase(),
+                      prefState.preferredFiatUnit,
                       maxLines: 3,
                       style: c.fonts.bodyMedium!.copyWith(
                         color: c.colours.onSurface.withOpacity(0.7),

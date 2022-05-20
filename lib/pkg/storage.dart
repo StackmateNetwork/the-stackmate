@@ -35,9 +35,14 @@ extension StoreKeysFunctions on StoreKeys {
 
 Future<void> initializeHive() async {
   await Hive.initFlutter();
+  Hive.registerAdapter(WalletClassAdapter());
+  Hive.registerAdapter(BlockchainClassAdapter());
+  Hive.registerAdapter(NodeClassAdapter());
+  Hive.registerAdapter(FeesClassAdapter());
+  Hive.registerAdapter(PreferencesClassAdapter());
+  Hive.registerAdapter(TransactionClassAdapter());
 
   const secureStorage = FlutterSecureStorage();
-  // if key not exists return null
   final encryprionKey = await secureStorage.read(key: 'key');
   if (encryprionKey == null) {
     final key = Hive.generateSecureKey();
@@ -48,14 +53,6 @@ Future<void> initializeHive() async {
   }
   final key = await secureStorage.read(key: 'key');
   final encryptionKey = base64Url.decode(key!);
-  print('Encryption key: $encryptionKey');
-
-  Hive.registerAdapter(WalletClassAdapter());
-  Hive.registerAdapter(BlockchainClassAdapter());
-  Hive.registerAdapter(NodeClassAdapter());
-  Hive.registerAdapter(FeesClassAdapter());
-  Hive.registerAdapter(PreferencesClassAdapter());
-  Hive.registerAdapter(TransactionClassAdapter());
 
   await Hive.openBox<Wallet>(
     StoreKeys.Wallet.name,

@@ -15,7 +15,6 @@ class PreferencesState with _$PreferencesState {
     @Default('CoinCap') String preferredExchange,
     @Default('USD') String preferredFiatUnit,
     @Default('') String errorPreferencesState,
-    @Default(false) bool isEditing,
   }) = _PreferencesState;
   const PreferencesState._();
 }
@@ -31,7 +30,6 @@ class PreferencesCubit extends Cubit<PreferencesState> {
             preferredExchange: 'CoinCap',
             preferredFiatUnit: 'USD',
             errorPreferencesState: '',
-            isEditing: false,
           ),
         );
 
@@ -74,28 +72,24 @@ class PreferencesCubit extends Cubit<PreferencesState> {
   }
 
   void bitcoinStandardChanged() {
-    toggleIsEditting();
     emit(state.copyWith(bitcoinStandard: !state.bitcoinStandard));
   }
 
-  void preferredBitcoinUnitChanged(String unit) {
-    toggleIsEditting();
-    emit(state.copyWith(preferredBitcoinUnit: unit));
+  void preferredBitcoinUnitChanged() {
+    emit(
+      state.copyWith(
+        preferredBitcoinUnit:
+            (state.preferredBitcoinUnit == 'sats') ? 'BTC' : 'sats',
+      ),
+    );
   }
 
   void preferredExchangeChanged(String exchange) {
-    toggleIsEditting();
     emit(state.copyWith(preferredExchange: exchange));
   }
 
   void preferredFiatUnitChanged(String unit) {
-    toggleIsEditting();
     emit(state.copyWith(preferredFiatUnit: unit));
-  }
-
-  void toggleIsEditting() async {
-    toggleIsEditting();
-    emit(state.copyWith(isEditing: !state.isEditing));
   }
 
   void saveClicked() async {
@@ -122,6 +116,6 @@ class PreferencesCubit extends Cubit<PreferencesState> {
       emit(state.copyWith(errorPreferencesState: saved.error.toString()));
       return;
     }
-    await Future.delayed(const Duration(milliseconds: 50));
+    // await Future.delayed(const Duration(milliseconds: 1500));
   }
 }

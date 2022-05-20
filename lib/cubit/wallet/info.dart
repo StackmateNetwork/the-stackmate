@@ -98,6 +98,9 @@ class InfoCubit extends Cubit<InfoState> {
           transactions: wallet.transactions,
         ),
       );
+
+      // THIS PART NEEDS TO BE REVIEWS
+      // compute is used and errors are not properly handled
       final balance = await compute(computeBalance, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': node,
