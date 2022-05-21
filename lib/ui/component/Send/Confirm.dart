@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/validation.dart';
+import 'package:sats/ui/component/common/BitcoinDisplayMedium.dart';
 
 class ConfirmTransaction extends StatelessWidget {
   const ConfirmTransaction({Key? key}) : super(key: key);
@@ -11,6 +13,7 @@ class ConfirmTransaction extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.select((SendCubit sc) => sc.state);
     final wallet = context.select((WalletsCubit w) => w.state.selectedWallet!);
+    final preferences = context.select((PreferencesCubit p) => p.state);
 
     if (state.finalAmount == null) return Container();
     return Padding(
@@ -49,26 +52,11 @@ class ConfirmTransaction extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(
-                Validation.formatSatsString(
-                      state.finalAmount.toString(),
-                    ) +
-                    ' sats',
-                style: context.fonts.caption!.copyWith(
-                  color: context.colours.onBackground,
-                  fontSize: 21,
-                ),
-                textAlign: TextAlign.right,
+              BitcoinDisplayMedium(
+                satsAmount: state.finalAmount.toString(),
+                bitcoinUnit: preferences.preferredBitcoinUnit,
               ),
             ],
-          ),
-          const SizedBox(height: 2),
-          Text(
-            state.finalAmount.toBtc() + ' BTC',
-            style: context.fonts.caption!.copyWith(
-              color: context.colours.onBackground.withOpacity(0.7),
-            ),
-            textAlign: TextAlign.right,
           ),
           const SizedBox(height: 20),
           Row(
@@ -80,28 +68,11 @@ class ConfirmTransaction extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(
-                Validation.formatSatsString(
-                      state.finalFee.toString(),
-                    ) +
-                    ' sats',
-                style: context.fonts.caption!.copyWith(
-                  color: context.colours.onBackground,
-                  fontSize: 21,
-                ),
-                textAlign: TextAlign.right,
+              BitcoinDisplayMedium(
+                satsAmount: state.finalFee.toString(),
+                bitcoinUnit: preferences.preferredBitcoinUnit,
               ),
             ],
-          ),
-          const SizedBox(
-            height: 2,
-          ),
-          Text(
-            state.finalFee.toBtc() + ' BTC',
-            style: context.fonts.caption!.copyWith(
-              color: context.colours.onBackground.withOpacity(0.7),
-            ),
-            textAlign: TextAlign.right,
           ),
           const SizedBox(height: 20),
           Row(
@@ -113,25 +84,13 @@ class ConfirmTransaction extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(
-                Validation.formatSatsString(state.total().toString()) + ' sats',
-                style: context.fonts.caption!.copyWith(
-                  color: context.colours.onBackground,
-                  fontSize: 21,
-                ),
-                textAlign: TextAlign.right,
+              BitcoinDisplayMedium(
+                satsAmount: state.total().toString(),
+                bitcoinUnit: preferences.preferredBitcoinUnit,
               ),
             ],
           ),
-          const SizedBox(height: 2),
-          Text(
-            state.total().toBtc() + ' BTC',
-            style: context.fonts.caption!.copyWith(
-              color: context.colours.onBackground.withOpacity(0.7),
-            ),
-            textAlign: TextAlign.right,
-          ),
-          const SizedBox(height: 60),
+          const SizedBox(height: 30),
           if (wallet.isNotWatchOnly())
             TextButton(
               onPressed: () {

@@ -24,8 +24,8 @@ class Validation {
   static bool isBtcAddress(String address) {
     if (address.startsWith('1') ||
             address.startsWith('3') ||
+            address.startsWith('bc1') ||
             address.startsWith('2') ||
-            address.startsWith('tb') ||
             address.startsWith('m') ||
             address.startsWith('n') ||
             address.startsWith('tb')
@@ -34,10 +34,6 @@ class Validation {
         // address.length <= 35
 
         ) return true;
-
-    if ((address.startsWith('bc1') || address.startsWith('tb')) &&
-        address.length > 25 &&
-        address.length < 62) return true;
 
     return false;
   }

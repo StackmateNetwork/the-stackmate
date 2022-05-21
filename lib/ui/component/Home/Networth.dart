@@ -3,7 +3,7 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/validation.dart';
+import 'package:sats/ui/component/common/BitcoinDisplayLarge.dart';
 
 class Networth extends StatelessWidget {
   @override
@@ -11,7 +11,7 @@ class Networth extends StatelessWidget {
     // c.select((FeesCubit wc) => wc.update());
     final wallets = c.select((WalletsCubit w) => w.state.wallets);
     final fees = c.select((FeesCubit f) => f.state);
-    final preferences = c.select((PreferencesCubit p) => p.state);
+    final preferences = c.select((PreferencesCubit p) => p);
 
     late String networkTraffic;
     if (fees.fees.fast < 5)
@@ -34,7 +34,7 @@ class Networth extends StatelessWidget {
       ),
       child: Column(
         children: [
-          if (preferences.incognito) ...[
+          if (preferences.state.incognito) ...[
             Icon(
               Icons.network_ping,
               size: 32,
@@ -53,25 +53,13 @@ class Networth extends StatelessWidget {
             ),
             const SizedBox(height: 32),
           ] else ...[
-            Text(
-              Validation.formatSatsString(networth.toString()),
-              style: c.fonts.headline4!.copyWith(
-                color: c.colours.onPrimary,
-                letterSpacing: 1,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              'sats',
-              style: c.fonts.headline6!.copyWith(
-                color: c.colours.onPrimary,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              networth.toBtc() + ' BTC',
-              style: c.fonts.caption!.copyWith(
-                color: c.colours.onPrimary,
+            GestureDetector(
+              onTap: () {
+                c.read<PreferencesCubit>().preferredBitcoinUnitChanged();
+              },
+              child: BitcoinDisplayLarge(
+                satsAmount: networth.toString(),
+                bitcoinUnit: preferences.state.preferredBitcoinUnit,
               ),
             ),
           ],

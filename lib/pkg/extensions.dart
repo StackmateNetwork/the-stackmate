@@ -35,7 +35,7 @@ extension Strings on String {
   String toBtc() {
     try {
       if (this == '') return '0.00000000';
-      final amt = int.parse(replaceAll(',', ''));
+      final amt = int.parse(replaceAll(' ', ''));
       return amt.toBtc();
     } catch (e) {
       //print(e.toString());
@@ -57,7 +57,8 @@ extension Nums on num {
 }
 
 extension Ints on int? {
-  String toBtc() => this == null ? '0' : (this! / 100000000).toStringAsFixed(8);
+  String toBtc() =>
+      this == null ? '0.00000000' : (this! / 100000000).toStringAsFixed(8);
 }
 
 String readableDateFrom(int timeStamp) {
