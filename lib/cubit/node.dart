@@ -6,25 +6,21 @@ import 'package:sats/pkg/storage.dart';
 
 part 'node.freezed.dart';
 
-const blockstreamNodeAddress = 'ssl://electrum.blockstream.info';
-const blockstreamTestnetPort = '60002';
+const defaultNodeAddress = 'default';
 
 @freezed
 class NodeAddressState with _$NodeAddressState {
   const factory NodeAddressState({
-    @Default(blockstreamNodeAddress) String address,
-    @Default(blockstreamTestnetPort) String port,
+    @Default(defaultNodeAddress) String address,
     @Default('') String errNodeState,
+    @Default('Blockstream') String name,
     @Default(false) bool isEditing,
   }) = _NodeAddressState;
   const NodeAddressState._();
 
-  String getAddress() =>
-      address == blockstreamNodeAddress ? 'default' : '$address:$port';
+  String getAddress() => address;
 
-  String mainString() => address == blockstreamNodeAddress
-      ? 'BLOCKSTREAM (default)'
-      : '$address:$port';
+  String mainString() => name.toUpperCase();
 }
 
 class NodeAddressCubit extends Cubit<NodeAddressState> {
@@ -40,37 +36,43 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
       if (node.error! == 'empty')
         emit(
           state.copyWith(
-            address: blockstreamNodeAddress,
-            port: blockstreamTestnetPort,
+            address: defaultNodeAddress,
           ),
         );
       else
         emit(state.copyWith(errNodeState: node.error.toString()));
-    } else
+    } else {
       emit(
         state.copyWith(
           address: node.result!.address,
-          port: node.result!.port,
+          name: node.result!.name,
         ),
       );
+    }
   }
 
-  void toggleIsEditting() async {
+  void toggleIsEditting() {
     emit(state.copyWith(isEditing: !state.isEditing));
+  }
+
+  void revertToDefault() {
+    emit(
+      state.copyWith(address: 'default', name: 'Blockstream'),
+    );
   }
 
   void addressChanged(String text) {
     emit(state.copyWith(address: text));
   }
 
-  void portChanged(String text) {
-    emit(state.copyWith(port: text));
+  void nameChanged(String text) {
+    emit(state.copyWith(name: text));
   }
 
   void saveClicked() async {
     final node = Node(
       address: state.address,
-      port: state.port,
+      name: state.name,
     );
 
     final cleared = await _storage.clearAll<Node>(StoreKeys.Node.name);

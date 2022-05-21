@@ -6,7 +6,6 @@ import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/validation.dart';
 import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
 
 class WalletCard extends StatelessWidget {

@@ -9,6 +9,7 @@ import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -31,13 +32,13 @@ void main() {
     final logger = Logger(clipboard, logAPI);
     final chainSelectCubit = ChainSelectCubit(_storage, logger);
     final nodeAddressCubit = NodeAddressCubit(_storage);
+    final torCubit = TorCubit(logger);
 
     final _wallets =
         WalletsCubit(_storage, logger, chainSelectCubit, clipboard);
 
-    late SeedImportCubit _importCubit;
+    late SeedImportCubit importCubit;
     late SeedImportWalletCubit seedImportWalletCubit;
-
     // const DerivedKeys testDerivedAccount = const DerivedKeys(
     //   '8099ce1e',
     //   'm/84h/1h/0h',
@@ -64,14 +65,15 @@ void main() {
     // );
 
     setUp(() async {
-      _importCubit = SeedImportCubit(logger, chainSelectCubit, _bitcoin);
+      importCubit = SeedImportCubit(logger, chainSelectCubit, _bitcoin);
       seedImportWalletCubit = SeedImportWalletCubit(
         _bitcoin,
         _storage,
         _wallets,
         chainSelectCubit,
         nodeAddressCubit,
-        _importCubit,
+        torCubit,
+        importCubit,
       );
     });
 

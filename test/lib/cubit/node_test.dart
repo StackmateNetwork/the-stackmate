@@ -14,8 +14,8 @@ void main() {
     late IStorage _storage;
     late NodeAddressCubit nodeAddressCubit;
     const myAltTestAddress = 'https://dummy.stackmate.net';
-    const myAltTestPort = '61002';
-    const node = Node(address: myAltTestAddress, port: myAltTestPort);
+    const myNodeName = 'dummy';
+    const node = Node(address: myAltTestAddress, name: myNodeName);
 
     setUp(() async {
       _storage = _MockStorage();
@@ -37,8 +37,8 @@ void main() {
       },
       expect: () => <NodeAddressState>[
         const NodeAddressState(
-          address: blockstreamNodeAddress,
-          port: blockstreamTestnetPort,
+          address: defaultNodeAddress,
+          name: defaultNodeAddress,
         ),
       ],
       verify: (cubit) => [
@@ -62,28 +62,28 @@ void main() {
       act: (cubit) async {
         cubit.toggleIsEditting();
         cubit.addressChanged(myAltTestAddress);
-        cubit.portChanged(myAltTestPort);
+        cubit.nameChanged(myNodeName);
         cubit.saveClicked();
       },
       expect: () => <NodeAddressState>[
         const NodeAddressState(
-          address: blockstreamNodeAddress,
-          port: blockstreamTestnetPort,
+          address: defaultNodeAddress,
+          name: defaultNodeAddress,
           isEditing: true,
         ),
         const NodeAddressState(
           address: myAltTestAddress,
-          port: blockstreamTestnetPort,
+          name: defaultNodeAddress,
           isEditing: true,
         ),
         const NodeAddressState(
           address: myAltTestAddress,
-          port: myAltTestPort,
+          name: myNodeName,
           isEditing: true,
         ),
         const NodeAddressState(
           address: myAltTestAddress,
-          port: myAltTestPort,
+          name: myNodeName,
           isEditing: false,
         ),
       ],

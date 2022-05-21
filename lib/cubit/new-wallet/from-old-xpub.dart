@@ -8,6 +8,7 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
@@ -58,6 +59,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     this._wallets,
     this._blockchainCubit,
     this._nodeAddressCubit,
+    this._torCubit,
     this._importCubit,
   ) : super(const XpubImportWalletState()) {
     _importSub = _importCubit.stream.listen((istate) {
@@ -73,7 +75,9 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
   final WalletsCubit _wallets;
   final ChainSelectCubit _blockchainCubit;
   final NodeAddressCubit _nodeAddressCubit;
+  final TorCubit _torCubit;
   final XpubImportCubit _importCubit;
+
   late StreamSubscription _importSub;
 
   static const invalidLabelError = 'Invalid Label';
@@ -132,6 +136,9 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       final xpub = xpubState.xpub;
       String fullXPub = xpub.replaceFirst('/*', emptyString);
 
+      final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+
       if (xpubState.hasNoKeySource())
         fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
 
@@ -148,7 +155,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       }
       var history = _core.getHistory(
         descriptor: descriptor.result!,
-        nodeAddress: _nodeAddressCubit.toString(),
+        nodeAddress: nodeAddress,
+        socks5: socks5,
       );
       var recievedCount = 0;
 
@@ -163,7 +171,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       var balance = _core.syncBalance(
         descriptor: descriptor.result!,
-        nodeAddress: _nodeAddressCubit.toString(),
+        nodeAddress: nodeAddress,
+        socks5: socks5,
       );
       if (balance.hasError) {
         balance = const R(result: 0);

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
@@ -282,6 +283,7 @@ class WalletScreen extends StatelessWidget {
     final wallets = context.select((WalletsCubit c) => c);
     final nodeAddress = context.select((NodeAddressCubit c) => c);
     final networkSelect = context.select((ChainSelectCubit c) => c);
+    final tor = context.select((TorCubit c) => c);
 
     final history = InfoCubit(
       wallets,
@@ -291,6 +293,7 @@ class WalletScreen extends StatelessWidget {
       locator<IShare>(),
       locator<IVibrate>(),
       nodeAddress,
+      tor,
       networkSelect,
     );
 

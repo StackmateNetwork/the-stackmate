@@ -3,6 +3,7 @@ import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/psbt-tool.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -49,11 +50,13 @@ class PSBTScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final nodeAddressCubit = context.select((NodeAddressCubit c) => c);
     final blockchainCubit = context.select((ChainSelectCubit c) => c);
+    final tor = context.select((TorCubit c) => c);
 
     final psbt = PSBTCubit(
       locator<IStackMateCore>(),
       locator<IClipBoard>(),
       nodeAddressCubit,
+      tor,
       blockchainCubit,
     );
 

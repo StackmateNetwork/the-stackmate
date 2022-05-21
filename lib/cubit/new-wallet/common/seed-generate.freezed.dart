@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'seed-generate.dart';
@@ -11,54 +12,7 @@ part of 'seed-generate.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SeedGenerateStateTearOff {
-  const _$SeedGenerateStateTearOff();
-
-  _SeedGenerateState call(
-      {dynamic currentStep = SeedGenerateSteps.passphrase,
-      List<String>? seed,
-      String? masterXpriv,
-      String? xpriv,
-      String? fingerPrint,
-      DerivedKeys? wallet,
-      bool generatingSeed = false,
-      int seedLength = 12,
-      String seedError = '',
-      int quizSeedCompleted = 0,
-      String quizSeedAnswer = '',
-      int quizSeedAnswerIdx = -1,
-      List<String> quizSeedList = const [],
-      List<String> quizSeedCompletedAnswers = const [],
-      String quizSeedError = '',
-      String passPhrase = '',
-      String errPassphrase = ''}) {
-    return _SeedGenerateState(
-      currentStep: currentStep,
-      seed: seed,
-      masterXpriv: masterXpriv,
-      xpriv: xpriv,
-      fingerPrint: fingerPrint,
-      wallet: wallet,
-      generatingSeed: generatingSeed,
-      seedLength: seedLength,
-      seedError: seedError,
-      quizSeedCompleted: quizSeedCompleted,
-      quizSeedAnswer: quizSeedAnswer,
-      quizSeedAnswerIdx: quizSeedAnswerIdx,
-      quizSeedList: quizSeedList,
-      quizSeedCompletedAnswers: quizSeedCompletedAnswers,
-      quizSeedError: quizSeedError,
-      passPhrase: passPhrase,
-      errPassphrase: errPassphrase,
-    );
-  }
-}
-
-/// @nodoc
-const $SeedGenerateState = _$SeedGenerateStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$SeedGenerateState {
@@ -214,11 +168,11 @@ class _$SeedGenerateStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$SeedGenerateStateCopyWith<$Res>
+abstract class _$$_SeedGenerateStateCopyWith<$Res>
     implements $SeedGenerateStateCopyWith<$Res> {
-  factory _$SeedGenerateStateCopyWith(
-          _SeedGenerateState value, $Res Function(_SeedGenerateState) then) =
-      __$SeedGenerateStateCopyWithImpl<$Res>;
+  factory _$$_SeedGenerateStateCopyWith(_$_SeedGenerateState value,
+          $Res Function(_$_SeedGenerateState) then) =
+      __$$_SeedGenerateStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {dynamic currentStep,
@@ -241,15 +195,15 @@ abstract class _$SeedGenerateStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SeedGenerateStateCopyWithImpl<$Res>
+class __$$_SeedGenerateStateCopyWithImpl<$Res>
     extends _$SeedGenerateStateCopyWithImpl<$Res>
-    implements _$SeedGenerateStateCopyWith<$Res> {
-  __$SeedGenerateStateCopyWithImpl(
-      _SeedGenerateState _value, $Res Function(_SeedGenerateState) _then)
-      : super(_value, (v) => _then(v as _SeedGenerateState));
+    implements _$$_SeedGenerateStateCopyWith<$Res> {
+  __$$_SeedGenerateStateCopyWithImpl(
+      _$_SeedGenerateState _value, $Res Function(_$_SeedGenerateState) _then)
+      : super(_value, (v) => _then(v as _$_SeedGenerateState));
 
   @override
-  _SeedGenerateState get _value => super._value as _SeedGenerateState;
+  _$_SeedGenerateState get _value => super._value as _$_SeedGenerateState;
 
   @override
   $Res call({
@@ -271,10 +225,10 @@ class __$SeedGenerateStateCopyWithImpl<$Res>
     Object? passPhrase = freezed,
     Object? errPassphrase = freezed,
   }) {
-    return _then(_SeedGenerateState(
+    return _then(_$_SeedGenerateState(
       currentStep: currentStep == freezed ? _value.currentStep : currentStep,
       seed: seed == freezed
-          ? _value.seed
+          ? _value._seed
           : seed // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       masterXpriv: masterXpriv == freezed
@@ -318,11 +272,11 @@ class __$SeedGenerateStateCopyWithImpl<$Res>
           : quizSeedAnswerIdx // ignore: cast_nullable_to_non_nullable
               as int,
       quizSeedList: quizSeedList == freezed
-          ? _value.quizSeedList
+          ? _value._quizSeedList
           : quizSeedList // ignore: cast_nullable_to_non_nullable
               as List<String>,
       quizSeedCompletedAnswers: quizSeedCompletedAnswers == freezed
-          ? _value.quizSeedCompletedAnswers
+          ? _value._quizSeedCompletedAnswers
           : quizSeedCompletedAnswers // ignore: cast_nullable_to_non_nullable
               as List<String>,
       quizSeedError: quizSeedError == freezed
@@ -346,7 +300,7 @@ class __$SeedGenerateStateCopyWithImpl<$Res>
 class _$_SeedGenerateState extends _SeedGenerateState {
   const _$_SeedGenerateState(
       {this.currentStep = SeedGenerateSteps.passphrase,
-      this.seed,
+      final List<String>? seed,
       this.masterXpriv,
       this.xpriv,
       this.fingerPrint,
@@ -357,18 +311,28 @@ class _$_SeedGenerateState extends _SeedGenerateState {
       this.quizSeedCompleted = 0,
       this.quizSeedAnswer = '',
       this.quizSeedAnswerIdx = -1,
-      this.quizSeedList = const [],
-      this.quizSeedCompletedAnswers = const [],
+      final List<String> quizSeedList = const [],
+      final List<String> quizSeedCompletedAnswers = const [],
       this.quizSeedError = '',
       this.passPhrase = '',
       this.errPassphrase = ''})
-      : super._();
+      : _seed = seed,
+        _quizSeedList = quizSeedList,
+        _quizSeedCompletedAnswers = quizSeedCompletedAnswers,
+        super._();
 
-  @JsonKey(defaultValue: SeedGenerateSteps.passphrase)
   @override
+  @JsonKey()
   final dynamic currentStep;
+  final List<String>? _seed;
   @override
-  final List<String>? seed;
+  List<String>? get seed {
+    final value = _seed;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? masterXpriv;
   @override
@@ -377,38 +341,48 @@ class _$_SeedGenerateState extends _SeedGenerateState {
   final String? fingerPrint;
   @override
   final DerivedKeys? wallet;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool generatingSeed;
-  @JsonKey(defaultValue: 12)
   @override
+  @JsonKey()
   final int seedLength;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String seedError;
-  @JsonKey(defaultValue: 0)
   @override
+  @JsonKey()
   final int quizSeedCompleted;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String quizSeedAnswer;
-  @JsonKey(defaultValue: -1)
   @override
+  @JsonKey()
   final int quizSeedAnswerIdx;
-  @JsonKey(defaultValue: const [])
+  final List<String> _quizSeedList;
   @override
-  final List<String> quizSeedList;
-  @JsonKey(defaultValue: const [])
+  @JsonKey()
+  List<String> get quizSeedList {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_quizSeedList);
+  }
+
+  final List<String> _quizSeedCompletedAnswers;
   @override
-  final List<String> quizSeedCompletedAnswers;
-  @JsonKey(defaultValue: '')
+  @JsonKey()
+  List<String> get quizSeedCompletedAnswers {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_quizSeedCompletedAnswers);
+  }
+
   @override
+  @JsonKey()
   final String quizSeedError;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String passPhrase;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String errPassphrase;
 
   @override
@@ -419,105 +393,87 @@ class _$_SeedGenerateState extends _SeedGenerateState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SeedGenerateState &&
-            (identical(other.currentStep, currentStep) ||
-                const DeepCollectionEquality()
-                    .equals(other.currentStep, currentStep)) &&
-            (identical(other.seed, seed) ||
-                const DeepCollectionEquality().equals(other.seed, seed)) &&
-            (identical(other.masterXpriv, masterXpriv) ||
-                const DeepCollectionEquality()
-                    .equals(other.masterXpriv, masterXpriv)) &&
-            (identical(other.xpriv, xpriv) ||
-                const DeepCollectionEquality().equals(other.xpriv, xpriv)) &&
-            (identical(other.fingerPrint, fingerPrint) ||
-                const DeepCollectionEquality()
-                    .equals(other.fingerPrint, fingerPrint)) &&
-            (identical(other.wallet, wallet) ||
-                const DeepCollectionEquality().equals(other.wallet, wallet)) &&
-            (identical(other.generatingSeed, generatingSeed) ||
-                const DeepCollectionEquality()
-                    .equals(other.generatingSeed, generatingSeed)) &&
-            (identical(other.seedLength, seedLength) ||
-                const DeepCollectionEquality()
-                    .equals(other.seedLength, seedLength)) &&
-            (identical(other.seedError, seedError) ||
-                const DeepCollectionEquality()
-                    .equals(other.seedError, seedError)) &&
-            (identical(other.quizSeedCompleted, quizSeedCompleted) ||
-                const DeepCollectionEquality()
-                    .equals(other.quizSeedCompleted, quizSeedCompleted)) &&
-            (identical(other.quizSeedAnswer, quizSeedAnswer) ||
-                const DeepCollectionEquality()
-                    .equals(other.quizSeedAnswer, quizSeedAnswer)) &&
-            (identical(other.quizSeedAnswerIdx, quizSeedAnswerIdx) ||
-                const DeepCollectionEquality()
-                    .equals(other.quizSeedAnswerIdx, quizSeedAnswerIdx)) &&
-            (identical(other.quizSeedList, quizSeedList) ||
-                const DeepCollectionEquality()
-                    .equals(other.quizSeedList, quizSeedList)) &&
-            (identical(
-                    other.quizSeedCompletedAnswers, quizSeedCompletedAnswers) ||
-                const DeepCollectionEquality().equals(
-                    other.quizSeedCompletedAnswers,
-                    quizSeedCompletedAnswers)) &&
-            (identical(other.quizSeedError, quizSeedError) ||
-                const DeepCollectionEquality()
-                    .equals(other.quizSeedError, quizSeedError)) &&
-            (identical(other.passPhrase, passPhrase) ||
-                const DeepCollectionEquality()
-                    .equals(other.passPhrase, passPhrase)) &&
-            (identical(other.errPassphrase, errPassphrase) ||
-                const DeepCollectionEquality()
-                    .equals(other.errPassphrase, errPassphrase)));
+        (other.runtimeType == runtimeType &&
+            other is _$_SeedGenerateState &&
+            const DeepCollectionEquality()
+                .equals(other.currentStep, currentStep) &&
+            const DeepCollectionEquality().equals(other._seed, _seed) &&
+            const DeepCollectionEquality()
+                .equals(other.masterXpriv, masterXpriv) &&
+            const DeepCollectionEquality().equals(other.xpriv, xpriv) &&
+            const DeepCollectionEquality()
+                .equals(other.fingerPrint, fingerPrint) &&
+            const DeepCollectionEquality().equals(other.wallet, wallet) &&
+            const DeepCollectionEquality()
+                .equals(other.generatingSeed, generatingSeed) &&
+            const DeepCollectionEquality()
+                .equals(other.seedLength, seedLength) &&
+            const DeepCollectionEquality().equals(other.seedError, seedError) &&
+            const DeepCollectionEquality()
+                .equals(other.quizSeedCompleted, quizSeedCompleted) &&
+            const DeepCollectionEquality()
+                .equals(other.quizSeedAnswer, quizSeedAnswer) &&
+            const DeepCollectionEquality()
+                .equals(other.quizSeedAnswerIdx, quizSeedAnswerIdx) &&
+            const DeepCollectionEquality()
+                .equals(other._quizSeedList, _quizSeedList) &&
+            const DeepCollectionEquality().equals(
+                other._quizSeedCompletedAnswers, _quizSeedCompletedAnswers) &&
+            const DeepCollectionEquality()
+                .equals(other.quizSeedError, quizSeedError) &&
+            const DeepCollectionEquality()
+                .equals(other.passPhrase, passPhrase) &&
+            const DeepCollectionEquality()
+                .equals(other.errPassphrase, errPassphrase));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(currentStep) ^
-      const DeepCollectionEquality().hash(seed) ^
-      const DeepCollectionEquality().hash(masterXpriv) ^
-      const DeepCollectionEquality().hash(xpriv) ^
-      const DeepCollectionEquality().hash(fingerPrint) ^
-      const DeepCollectionEquality().hash(wallet) ^
-      const DeepCollectionEquality().hash(generatingSeed) ^
-      const DeepCollectionEquality().hash(seedLength) ^
-      const DeepCollectionEquality().hash(seedError) ^
-      const DeepCollectionEquality().hash(quizSeedCompleted) ^
-      const DeepCollectionEquality().hash(quizSeedAnswer) ^
-      const DeepCollectionEquality().hash(quizSeedAnswerIdx) ^
-      const DeepCollectionEquality().hash(quizSeedList) ^
-      const DeepCollectionEquality().hash(quizSeedCompletedAnswers) ^
-      const DeepCollectionEquality().hash(quizSeedError) ^
-      const DeepCollectionEquality().hash(passPhrase) ^
-      const DeepCollectionEquality().hash(errPassphrase);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(currentStep),
+      const DeepCollectionEquality().hash(_seed),
+      const DeepCollectionEquality().hash(masterXpriv),
+      const DeepCollectionEquality().hash(xpriv),
+      const DeepCollectionEquality().hash(fingerPrint),
+      const DeepCollectionEquality().hash(wallet),
+      const DeepCollectionEquality().hash(generatingSeed),
+      const DeepCollectionEquality().hash(seedLength),
+      const DeepCollectionEquality().hash(seedError),
+      const DeepCollectionEquality().hash(quizSeedCompleted),
+      const DeepCollectionEquality().hash(quizSeedAnswer),
+      const DeepCollectionEquality().hash(quizSeedAnswerIdx),
+      const DeepCollectionEquality().hash(_quizSeedList),
+      const DeepCollectionEquality().hash(_quizSeedCompletedAnswers),
+      const DeepCollectionEquality().hash(quizSeedError),
+      const DeepCollectionEquality().hash(passPhrase),
+      const DeepCollectionEquality().hash(errPassphrase));
 
   @JsonKey(ignore: true)
   @override
-  _$SeedGenerateStateCopyWith<_SeedGenerateState> get copyWith =>
-      __$SeedGenerateStateCopyWithImpl<_SeedGenerateState>(this, _$identity);
+  _$$_SeedGenerateStateCopyWith<_$_SeedGenerateState> get copyWith =>
+      __$$_SeedGenerateStateCopyWithImpl<_$_SeedGenerateState>(
+          this, _$identity);
 }
 
 abstract class _SeedGenerateState extends SeedGenerateState {
   const factory _SeedGenerateState(
-      {dynamic currentStep,
-      List<String>? seed,
-      String? masterXpriv,
-      String? xpriv,
-      String? fingerPrint,
-      DerivedKeys? wallet,
-      bool generatingSeed,
-      int seedLength,
-      String seedError,
-      int quizSeedCompleted,
-      String quizSeedAnswer,
-      int quizSeedAnswerIdx,
-      List<String> quizSeedList,
-      List<String> quizSeedCompletedAnswers,
-      String quizSeedError,
-      String passPhrase,
-      String errPassphrase}) = _$_SeedGenerateState;
+      {final dynamic currentStep,
+      final List<String>? seed,
+      final String? masterXpriv,
+      final String? xpriv,
+      final String? fingerPrint,
+      final DerivedKeys? wallet,
+      final bool generatingSeed,
+      final int seedLength,
+      final String seedError,
+      final int quizSeedCompleted,
+      final String quizSeedAnswer,
+      final int quizSeedAnswerIdx,
+      final List<String> quizSeedList,
+      final List<String> quizSeedCompletedAnswers,
+      final String quizSeedError,
+      final String passPhrase,
+      final String errPassphrase}) = _$_SeedGenerateState;
   const _SeedGenerateState._() : super._();
 
   @override
@@ -557,6 +513,6 @@ abstract class _SeedGenerateState extends SeedGenerateState {
   String get errPassphrase => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SeedGenerateStateCopyWith<_SeedGenerateState> get copyWith =>
+  _$$_SeedGenerateStateCopyWith<_$_SeedGenerateState> get copyWith =>
       throw _privateConstructorUsedError;
 }

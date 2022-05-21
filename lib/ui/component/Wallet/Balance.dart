@@ -4,7 +4,6 @@ import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/validation.dart';
 import 'package:sats/ui/component/common/BitcoinDisplayLarge.dart';
 
 class Balance extends StatelessWidget {

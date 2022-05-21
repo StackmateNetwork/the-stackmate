@@ -45,18 +45,18 @@ class WalletClassAdapter extends TypeAdapter<_$_Wallet> {
       ..write(obj.policy)
       ..writeByte(4)
       ..write(obj.requiredPolicyElements)
-      ..writeByte(5)
-      ..write(obj.policyElements)
       ..writeByte(6)
       ..write(obj.blockchain)
-      ..writeByte(7)
-      ..write(obj.transactions)
       ..writeByte(8)
       ..write(obj.balance)
       ..writeByte(9)
       ..write(obj.lastAddressIndex)
       ..writeByte(10)
-      ..write(obj.walletType);
+      ..write(obj.walletType)
+      ..writeByte(5)
+      ..write(obj.policyElements)
+      ..writeByte(7)
+      ..write(obj.transactions);
   }
 
   @override

@@ -30,6 +30,7 @@ abstract class IStackMateCore {
     required String targetSize,
     required String network,
     required String nodeAddress,
+    required String socks5,
   });
 
   R<int> getWeight({
@@ -50,16 +51,19 @@ abstract class IStackMateCore {
   R<int> syncBalance({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   });
 
   R<List<Transaction>> getHistory({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   });
 
   R<List<UTXO>> getUTXOSet({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   });
 
   R<String> getAddress({
@@ -70,6 +74,7 @@ abstract class IStackMateCore {
   R<PSBT> buildTransaction({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
     required String txOutputs,
     required String feeAbsolute,
     required String policyPath,
@@ -89,6 +94,7 @@ abstract class IStackMateCore {
   Future<R<String>> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
     required String signedPSBT,
   });
 }

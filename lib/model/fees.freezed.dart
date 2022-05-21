@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'fees.dart';
@@ -11,36 +12,11 @@ part of 'fees.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Fees _$FeesFromJson(Map<String, dynamic> json) {
   return _Fees.fromJson(json);
 }
-
-/// @nodoc
-class _$FeesTearOff {
-  const _$FeesTearOff();
-
-  _Fees call(
-      {@HiveField(0) required int timestamp,
-      @HiveField(1) required double slow,
-      @HiveField(2) required double medium,
-      @HiveField(3) required double fast}) {
-    return _Fees(
-      timestamp: timestamp,
-      slow: slow,
-      medium: medium,
-      fast: fast,
-    );
-  }
-
-  Fees fromJson(Map<String, Object> json) {
-    return Fees.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Fees = _$FeesTearOff();
 
 /// @nodoc
 mixin _$Fees {
@@ -106,9 +82,9 @@ class _$FeesCopyWithImpl<$Res> implements $FeesCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$FeesCopyWith<$Res> implements $FeesCopyWith<$Res> {
-  factory _$FeesCopyWith(_Fees value, $Res Function(_Fees) then) =
-      __$FeesCopyWithImpl<$Res>;
+abstract class _$$_FeesCopyWith<$Res> implements $FeesCopyWith<$Res> {
+  factory _$$_FeesCopyWith(_$_Fees value, $Res Function(_$_Fees) then) =
+      __$$_FeesCopyWithImpl<$Res>;
   @override
   $Res call(
       {@HiveField(0) int timestamp,
@@ -118,13 +94,13 @@ abstract class _$FeesCopyWith<$Res> implements $FeesCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$FeesCopyWithImpl<$Res> extends _$FeesCopyWithImpl<$Res>
-    implements _$FeesCopyWith<$Res> {
-  __$FeesCopyWithImpl(_Fees _value, $Res Function(_Fees) _then)
-      : super(_value, (v) => _then(v as _Fees));
+class __$$_FeesCopyWithImpl<$Res> extends _$FeesCopyWithImpl<$Res>
+    implements _$$_FeesCopyWith<$Res> {
+  __$$_FeesCopyWithImpl(_$_Fees _value, $Res Function(_$_Fees) _then)
+      : super(_value, (v) => _then(v as _$_Fees));
 
   @override
-  _Fees get _value => super._value as _Fees;
+  _$_Fees get _value => super._value as _$_Fees;
 
   @override
   $Res call({
@@ -133,7 +109,7 @@ class __$FeesCopyWithImpl<$Res> extends _$FeesCopyWithImpl<$Res>
     Object? medium = freezed,
     Object? fast = freezed,
   }) {
-    return _then(_Fees(
+    return _then(_$_Fees(
       timestamp: timestamp == freezed
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -188,30 +164,27 @@ class _$_Fees extends _Fees {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Fees &&
-            (identical(other.timestamp, timestamp) ||
-                const DeepCollectionEquality()
-                    .equals(other.timestamp, timestamp)) &&
-            (identical(other.slow, slow) ||
-                const DeepCollectionEquality().equals(other.slow, slow)) &&
-            (identical(other.medium, medium) ||
-                const DeepCollectionEquality().equals(other.medium, medium)) &&
-            (identical(other.fast, fast) ||
-                const DeepCollectionEquality().equals(other.fast, fast)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Fees &&
+            const DeepCollectionEquality().equals(other.timestamp, timestamp) &&
+            const DeepCollectionEquality().equals(other.slow, slow) &&
+            const DeepCollectionEquality().equals(other.medium, medium) &&
+            const DeepCollectionEquality().equals(other.fast, fast));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(timestamp) ^
-      const DeepCollectionEquality().hash(slow) ^
-      const DeepCollectionEquality().hash(medium) ^
-      const DeepCollectionEquality().hash(fast);
 
   @JsonKey(ignore: true)
   @override
-  _$FeesCopyWith<_Fees> get copyWith =>
-      __$FeesCopyWithImpl<_Fees>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(timestamp),
+      const DeepCollectionEquality().hash(slow),
+      const DeepCollectionEquality().hash(medium),
+      const DeepCollectionEquality().hash(fast));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_FeesCopyWith<_$_Fees> get copyWith =>
+      __$$_FeesCopyWithImpl<_$_Fees>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -221,10 +194,10 @@ class _$_Fees extends _Fees {
 
 abstract class _Fees extends Fees {
   const factory _Fees(
-      {@HiveField(0) required int timestamp,
-      @HiveField(1) required double slow,
-      @HiveField(2) required double medium,
-      @HiveField(3) required double fast}) = _$_Fees;
+      {@HiveField(0) required final int timestamp,
+      @HiveField(1) required final double slow,
+      @HiveField(2) required final double medium,
+      @HiveField(3) required final double fast}) = _$_Fees;
   const _Fees._() : super._();
 
   factory _Fees.fromJson(Map<String, dynamic> json) = _$_Fees.fromJson;
@@ -243,5 +216,5 @@ abstract class _Fees extends Fees {
   double get fast => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$FeesCopyWith<_Fees> get copyWith => throw _privateConstructorUsedError;
+  _$$_FeesCopyWith<_$_Fees> get copyWith => throw _privateConstructorUsedError;
 }

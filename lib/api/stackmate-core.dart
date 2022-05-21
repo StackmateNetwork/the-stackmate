@@ -91,10 +91,12 @@ class BitcoinFFI implements IStackMateCore {
   R<int> syncBalance({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   }) {
     final resp = _bitcoin.syncBalance(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
+      socks5: socks5,
     );
     if (resp.contains('Error')) {
       return R(error: SMError.fromJson(resp).message);
@@ -123,10 +125,12 @@ class BitcoinFFI implements IStackMateCore {
   R<List<Transaction>> getHistory({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   }) {
     final resp = _bitcoin.getHistory(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
+      socks5: socks5,
     );
     if (resp.contains('Error')) {
       return R(error: SMError.fromJson(resp).message);
@@ -151,10 +155,12 @@ class BitcoinFFI implements IStackMateCore {
   R<List<UTXO>> getUTXOSet({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   }) {
     final resp = _bitcoin.listUnspent(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
+      socks5: socks5,
     );
     if (resp.contains('Error')) {
       return R(error: SMError.fromJson(resp).message);
@@ -172,6 +178,7 @@ class BitcoinFFI implements IStackMateCore {
   R<PSBT> buildTransaction({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
     required String txOutputs,
     required String feeAbsolute,
     required String policyPath,
@@ -180,6 +187,7 @@ class BitcoinFFI implements IStackMateCore {
     final resp = _bitcoin.buildTransaction(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
+      socks5: socks5,
       txOutputs: txOutputs,
       feeAbsolute: feeAbsolute,
       policyPath: policyPath,
@@ -226,12 +234,14 @@ class BitcoinFFI implements IStackMateCore {
   Future<R<String>> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
     required String signedPSBT,
   }) async {
     final resp = await _bitcoin.broadcastTransaction(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
       signedPSBT: signedPSBT,
+      socks5: socks5,
     );
     if (resp.contains('Error')) {
       return R(error: SMError.fromJson(resp).message);
@@ -244,12 +254,14 @@ class BitcoinFFI implements IStackMateCore {
   R<double> estimateNetworkFee({
     required String network,
     required String nodeAddress,
+    required String socks5,
     required String targetSize,
   }) {
     final resp = _bitcoin.estimateNetworkFee(
       network: network,
       nodeAddress: nodeAddress,
       targetSize: targetSize,
+      socks5: socks5,
     );
     if (resp.contains('Error')) {
       return R(error: SMError.fromJson(resp).message);

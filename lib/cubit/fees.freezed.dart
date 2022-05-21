@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'fees.dart';
@@ -11,26 +12,7 @@ part of 'fees.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$FeesStateTearOff {
-  const _$FeesStateTearOff();
-
-  _FeesState call(
-      {Fees fees = const Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0),
-      bool updating = false,
-      String errUpdating = ''}) {
-    return _FeesState(
-      fees: fees,
-      updating: updating,
-      errUpdating: errUpdating,
-    );
-  }
-}
-
-/// @nodoc
-const $FeesState = _$FeesStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$FeesState {
@@ -91,10 +73,10 @@ class _$FeesStateCopyWithImpl<$Res> implements $FeesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$FeesStateCopyWith<$Res> implements $FeesStateCopyWith<$Res> {
-  factory _$FeesStateCopyWith(
-          _FeesState value, $Res Function(_FeesState) then) =
-      __$FeesStateCopyWithImpl<$Res>;
+abstract class _$$_FeesStateCopyWith<$Res> implements $FeesStateCopyWith<$Res> {
+  factory _$$_FeesStateCopyWith(
+          _$_FeesState value, $Res Function(_$_FeesState) then) =
+      __$$_FeesStateCopyWithImpl<$Res>;
   @override
   $Res call({Fees fees, bool updating, String errUpdating});
 
@@ -103,13 +85,14 @@ abstract class _$FeesStateCopyWith<$Res> implements $FeesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$FeesStateCopyWithImpl<$Res> extends _$FeesStateCopyWithImpl<$Res>
-    implements _$FeesStateCopyWith<$Res> {
-  __$FeesStateCopyWithImpl(_FeesState _value, $Res Function(_FeesState) _then)
-      : super(_value, (v) => _then(v as _FeesState));
+class __$$_FeesStateCopyWithImpl<$Res> extends _$FeesStateCopyWithImpl<$Res>
+    implements _$$_FeesStateCopyWith<$Res> {
+  __$$_FeesStateCopyWithImpl(
+      _$_FeesState _value, $Res Function(_$_FeesState) _then)
+      : super(_value, (v) => _then(v as _$_FeesState));
 
   @override
-  _FeesState get _value => super._value as _FeesState;
+  _$_FeesState get _value => super._value as _$_FeesState;
 
   @override
   $Res call({
@@ -117,7 +100,7 @@ class __$FeesStateCopyWithImpl<$Res> extends _$FeesStateCopyWithImpl<$Res>
     Object? updating = freezed,
     Object? errUpdating = freezed,
   }) {
-    return _then(_FeesState(
+    return _then(_$_FeesState(
       fees: fees == freezed
           ? _value.fees
           : fees // ignore: cast_nullable_to_non_nullable
@@ -142,15 +125,14 @@ class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
       this.updating = false,
       this.errUpdating = ''});
 
-  @JsonKey(
-      defaultValue: const Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0))
   @override
+  @JsonKey()
   final Fees fees;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool updating;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String errUpdating;
 
   @override
@@ -171,33 +153,32 @@ class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _FeesState &&
-            (identical(other.fees, fees) ||
-                const DeepCollectionEquality().equals(other.fees, fees)) &&
-            (identical(other.updating, updating) ||
-                const DeepCollectionEquality()
-                    .equals(other.updating, updating)) &&
-            (identical(other.errUpdating, errUpdating) ||
-                const DeepCollectionEquality()
-                    .equals(other.errUpdating, errUpdating)));
+        (other.runtimeType == runtimeType &&
+            other is _$_FeesState &&
+            const DeepCollectionEquality().equals(other.fees, fees) &&
+            const DeepCollectionEquality().equals(other.updating, updating) &&
+            const DeepCollectionEquality()
+                .equals(other.errUpdating, errUpdating));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(fees) ^
-      const DeepCollectionEquality().hash(updating) ^
-      const DeepCollectionEquality().hash(errUpdating);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(fees),
+      const DeepCollectionEquality().hash(updating),
+      const DeepCollectionEquality().hash(errUpdating));
 
   @JsonKey(ignore: true)
   @override
-  _$FeesStateCopyWith<_FeesState> get copyWith =>
-      __$FeesStateCopyWithImpl<_FeesState>(this, _$identity);
+  _$$_FeesStateCopyWith<_$_FeesState> get copyWith =>
+      __$$_FeesStateCopyWithImpl<_$_FeesState>(this, _$identity);
 }
 
 abstract class _FeesState implements FeesState {
-  const factory _FeesState({Fees fees, bool updating, String errUpdating}) =
-      _$_FeesState;
+  const factory _FeesState(
+      {final Fees fees,
+      final bool updating,
+      final String errUpdating}) = _$_FeesState;
 
   @override
   Fees get fees => throw _privateConstructorUsedError;
@@ -207,6 +188,6 @@ abstract class _FeesState implements FeesState {
   String get errUpdating => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$FeesStateCopyWith<_FeesState> get copyWith =>
+  _$$_FeesStateCopyWith<_$_FeesState> get copyWith =>
       throw _privateConstructorUsedError;
 }

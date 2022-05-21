@@ -134,7 +134,7 @@ Future<void> expectDirEqualsAssetDir(
 }
 
 void returnFutureVoid(When<Future<void>> v) =>
-    v.thenAnswer((i) => Future.value(null));
+    v.thenAnswer((i) => Future.value());
 
 final bool soundNullSafety = (() {
   try {

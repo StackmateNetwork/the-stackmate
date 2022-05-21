@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'preferences.dart';
@@ -11,38 +12,11 @@ part of 'preferences.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Preferences _$PreferencesFromJson(Map<String, dynamic> json) {
   return _Preferences.fromJson(json);
 }
-
-/// @nodoc
-class _$PreferencesTearOff {
-  const _$PreferencesTearOff();
-
-  _Preferences call(
-      {@HiveField(0) required bool incognito,
-      @HiveField(1) required bool bitcoinStandard,
-      @HiveField(2) required String preferredBitcoinUnit,
-      @HiveField(3) required String preferredExchange,
-      @HiveField(4) required String preferredFiatUnit}) {
-    return _Preferences(
-      incognito: incognito,
-      bitcoinStandard: bitcoinStandard,
-      preferredBitcoinUnit: preferredBitcoinUnit,
-      preferredExchange: preferredExchange,
-      preferredFiatUnit: preferredFiatUnit,
-    );
-  }
-
-  Preferences fromJson(Map<String, Object> json) {
-    return Preferences.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Preferences = _$PreferencesTearOff();
 
 /// @nodoc
 mixin _$Preferences {
@@ -118,11 +92,11 @@ class _$PreferencesCopyWithImpl<$Res> implements $PreferencesCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$PreferencesCopyWith<$Res>
+abstract class _$$_PreferencesCopyWith<$Res>
     implements $PreferencesCopyWith<$Res> {
-  factory _$PreferencesCopyWith(
-          _Preferences value, $Res Function(_Preferences) then) =
-      __$PreferencesCopyWithImpl<$Res>;
+  factory _$$_PreferencesCopyWith(
+          _$_Preferences value, $Res Function(_$_Preferences) then) =
+      __$$_PreferencesCopyWithImpl<$Res>;
   @override
   $Res call(
       {@HiveField(0) bool incognito,
@@ -133,14 +107,14 @@ abstract class _$PreferencesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PreferencesCopyWithImpl<$Res> extends _$PreferencesCopyWithImpl<$Res>
-    implements _$PreferencesCopyWith<$Res> {
-  __$PreferencesCopyWithImpl(
-      _Preferences _value, $Res Function(_Preferences) _then)
-      : super(_value, (v) => _then(v as _Preferences));
+class __$$_PreferencesCopyWithImpl<$Res> extends _$PreferencesCopyWithImpl<$Res>
+    implements _$$_PreferencesCopyWith<$Res> {
+  __$$_PreferencesCopyWithImpl(
+      _$_Preferences _value, $Res Function(_$_Preferences) _then)
+      : super(_value, (v) => _then(v as _$_Preferences));
 
   @override
-  _Preferences get _value => super._value as _Preferences;
+  _$_Preferences get _value => super._value as _$_Preferences;
 
   @override
   $Res call({
@@ -150,7 +124,7 @@ class __$PreferencesCopyWithImpl<$Res> extends _$PreferencesCopyWithImpl<$Res>
     Object? preferredExchange = freezed,
     Object? preferredFiatUnit = freezed,
   }) {
-    return _then(_Preferences(
+    return _then(_$_Preferences(
       incognito: incognito == freezed
           ? _value.incognito
           : incognito // ignore: cast_nullable_to_non_nullable
@@ -214,37 +188,33 @@ class _$_Preferences extends _Preferences {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Preferences &&
-            (identical(other.incognito, incognito) ||
-                const DeepCollectionEquality()
-                    .equals(other.incognito, incognito)) &&
-            (identical(other.bitcoinStandard, bitcoinStandard) ||
-                const DeepCollectionEquality()
-                    .equals(other.bitcoinStandard, bitcoinStandard)) &&
-            (identical(other.preferredBitcoinUnit, preferredBitcoinUnit) ||
-                const DeepCollectionEquality().equals(
-                    other.preferredBitcoinUnit, preferredBitcoinUnit)) &&
-            (identical(other.preferredExchange, preferredExchange) ||
-                const DeepCollectionEquality()
-                    .equals(other.preferredExchange, preferredExchange)) &&
-            (identical(other.preferredFiatUnit, preferredFiatUnit) ||
-                const DeepCollectionEquality()
-                    .equals(other.preferredFiatUnit, preferredFiatUnit)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Preferences &&
+            const DeepCollectionEquality().equals(other.incognito, incognito) &&
+            const DeepCollectionEquality()
+                .equals(other.bitcoinStandard, bitcoinStandard) &&
+            const DeepCollectionEquality()
+                .equals(other.preferredBitcoinUnit, preferredBitcoinUnit) &&
+            const DeepCollectionEquality()
+                .equals(other.preferredExchange, preferredExchange) &&
+            const DeepCollectionEquality()
+                .equals(other.preferredFiatUnit, preferredFiatUnit));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(incognito) ^
-      const DeepCollectionEquality().hash(bitcoinStandard) ^
-      const DeepCollectionEquality().hash(preferredBitcoinUnit) ^
-      const DeepCollectionEquality().hash(preferredExchange) ^
-      const DeepCollectionEquality().hash(preferredFiatUnit);
 
   @JsonKey(ignore: true)
   @override
-  _$PreferencesCopyWith<_Preferences> get copyWith =>
-      __$PreferencesCopyWithImpl<_Preferences>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(incognito),
+      const DeepCollectionEquality().hash(bitcoinStandard),
+      const DeepCollectionEquality().hash(preferredBitcoinUnit),
+      const DeepCollectionEquality().hash(preferredExchange),
+      const DeepCollectionEquality().hash(preferredFiatUnit));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_PreferencesCopyWith<_$_Preferences> get copyWith =>
+      __$$_PreferencesCopyWithImpl<_$_Preferences>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -254,11 +224,11 @@ class _$_Preferences extends _Preferences {
 
 abstract class _Preferences extends Preferences {
   const factory _Preferences(
-      {@HiveField(0) required bool incognito,
-      @HiveField(1) required bool bitcoinStandard,
-      @HiveField(2) required String preferredBitcoinUnit,
-      @HiveField(3) required String preferredExchange,
-      @HiveField(4) required String preferredFiatUnit}) = _$_Preferences;
+      {@HiveField(0) required final bool incognito,
+      @HiveField(1) required final bool bitcoinStandard,
+      @HiveField(2) required final String preferredBitcoinUnit,
+      @HiveField(3) required final String preferredExchange,
+      @HiveField(4) required final String preferredFiatUnit}) = _$_Preferences;
   const _Preferences._() : super._();
 
   factory _Preferences.fromJson(Map<String, dynamic> json) =
@@ -281,6 +251,6 @@ abstract class _Preferences extends Preferences {
   String get preferredFiatUnit => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$PreferencesCopyWith<_Preferences> get copyWith =>
+  _$$_PreferencesCopyWith<_$_Preferences> get copyWith =>
       throw _privateConstructorUsedError;
 }
