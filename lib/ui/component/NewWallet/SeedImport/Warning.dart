@@ -13,7 +13,7 @@ class SeedImportWarning extends StatelessWidget {
           Text(
             'Security\nInformation'.toUpperCase(),
             style: c.fonts.headline5!.copyWith(
-              color: Colors.white,
+              color: c.colours.onPrimary,
             ),
           ),
           const SizedBox(height: 24),
@@ -24,7 +24,7 @@ You will now be prompted to enter your private key data.
 Use whatever you have and we will attempt to recover any associated spendable funds.
       ''',
             style: c.fonts.caption!.copyWith(
-              color: Colors.white,
+              color: c.colours.onPrimary,
             ),
           ),
           const SizedBox(height: 24),

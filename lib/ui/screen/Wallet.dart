@@ -135,8 +135,10 @@ class _Wallet extends StatelessWidget {
                                   onPressed: () {
                                     c.push('/receive');
                                   },
-                                  icon: Icon(Icons.call_received,
-                                      color: c.colours.secondary),
+                                  icon: Icon(
+                                    Icons.call_received,
+                                    color: c.colours.secondary,
+                                  ),
                                 ),
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),

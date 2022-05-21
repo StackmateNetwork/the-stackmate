@@ -98,7 +98,7 @@ class _WalletSend extends StatelessWidget {
                               ? 'BUILD TRANSACTION'
                               : 'SEND BITCOIN',
                           style: context.fonts.headline6!.copyWith(
-                            color: Colors.white,
+                            color: context.colours.onPrimary,
                           ),
                         ),
                       ),
@@ -106,7 +106,7 @@ class _WalletSend extends StatelessWidget {
                         child: Text(
                           walletLabel.toUpperCase(),
                           style: context.fonts.caption!.copyWith(
-                            color: Colors.white,
+                            color: context.colours.onPrimary,
                           ),
                         ),
                       ),

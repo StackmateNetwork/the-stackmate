@@ -33,7 +33,7 @@ class SeedImportPhrase extends StatelessWidget {
             Text(
               'Enter recovery info',
               style: c.fonts.headline5!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,
               ),
             ),
@@ -41,7 +41,7 @@ class SeedImportPhrase extends StatelessWidget {
             Padding(
               padding: EdgeInsets.zero,
               child: TextField(
-                style: c.fonts.headline6!.copyWith(color: Colors.white),
+                style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 autocorrect: false,
@@ -92,7 +92,7 @@ class SeedImportPassphrase extends StatelessWidget {
             Text(
               'Enter an\noptional\npassphrase'.toUpperCase(),
               style: c.fonts.headline5!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,
               ),
             ),
@@ -101,7 +101,7 @@ class SeedImportPassphrase extends StatelessWidget {
               padding: EdgeInsets.zero,
               child: TextField(
                 style: c.fonts.headline6!.copyWith(
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                   // fontWeight: FontWeight.bold,
                 ),
                 enableSuggestions: false,

@@ -22,7 +22,7 @@ class SelectNetwork extends StatelessWidget {
         primary: c.colours.surface,
       ),
       child: Container(
-        height: 120,
+        height: 80,
         padding: const EdgeInsets.only(
           top: 16,
           bottom: 16,
@@ -41,10 +41,9 @@ class SelectNetwork extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Only wallets from selected network will be displayed\n\nCurrent network:   ' +
-                      blockchain.displayName.toUpperCase(),
+                  blockchain.displayName.toUpperCase(),
                   maxLines: 3,
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodyMedium!.copyWith(
                     color: c.colours.onSurface.withOpacity(0.7),
                   ),
                 ),

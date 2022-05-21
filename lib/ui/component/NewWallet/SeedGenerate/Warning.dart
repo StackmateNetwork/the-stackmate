@@ -12,7 +12,7 @@ class SeedGenerateWarning extends StatelessWidget {
         Text(
           'Security\nInformation'.toUpperCase(),
           style: c.fonts.headline5!.copyWith(
-            color: Colors.white,
+            color: c.colours.onPrimary,
             // fontWeight: FontWeight.bold,
           ),
         ),
@@ -30,7 +30,7 @@ locked out of the app or get a new device.
 To protect the integrity of your seed, we recommend
 doing on airplane mode during this process.
       ''',
-          style: c.fonts.caption!.copyWith(color: Colors.white),
+          style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
         ),
         const SizedBox(height: 24),
         TextButton(

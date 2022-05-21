@@ -19,7 +19,7 @@ class XpubLabel extends StatelessWidget {
               Text(
                 'Label your wallet',
                 style: c.fonts.headline4!.copyWith(
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                   // fontWeight: FontWeight.bold,
                 ),
               ),

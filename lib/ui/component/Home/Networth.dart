@@ -47,7 +47,7 @@ class Networth extends StatelessWidget {
             Text(
               networkTraffic + ' NETWORK TRAFFIC',
               style: c.fonts.caption!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -56,7 +56,7 @@ class Networth extends StatelessWidget {
             Text(
               Validation.formatSatsString(networth.toString()),
               style: c.fonts.headline4!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
                 letterSpacing: 1,
               ),
             ),
@@ -64,14 +64,14 @@ class Networth extends StatelessWidget {
             Text(
               'sats',
               style: c.fonts.headline6!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
               ),
             ),
             const SizedBox(height: 6),
             Text(
               networth.toBtc() + ' BTC',
               style: c.fonts.caption!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
               ),
             ),
           ],

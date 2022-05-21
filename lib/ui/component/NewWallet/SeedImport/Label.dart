@@ -36,7 +36,7 @@ class _SeedImportLabelState extends State<SeedImportLabel> {
             Text(
               isFixed ? 'Label' : 'Label your wallet',
               style: c.fonts.headline4!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
               ),
             ),
             const SizedBox(height: 24),
@@ -45,7 +45,8 @@ class _SeedImportLabelState extends State<SeedImportLabel> {
               child: IgnorePointer(
                 ignoring: isFixed,
                 child: TextField(
-                  style: c.fonts.headline6!.copyWith(color: Colors.white),
+                  style:
+                      c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
                   controller: _controller,
                   onChanged: (text) {
                     if (!isFixed)

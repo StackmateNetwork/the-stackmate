@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -27,27 +26,27 @@ class Balance extends StatelessWidget {
               Text(
                 wallet.label,
                 style: c.fonts.headline4!.copyWith(
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                 ),
               ),
             ] else ...[
               Text(
                 Validation.formatSatsString(balance.toString()),
                 style: c.fonts.headline4!.copyWith(
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                 ),
               ),
               Text(
                 'sats',
                 style: c.fonts.headline6!.copyWith(
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 balance.toBtc() + ' BTC',
                 style: c.fonts.caption!.copyWith(
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                 ),
               ),
             ],

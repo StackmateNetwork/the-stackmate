@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
@@ -73,6 +72,7 @@ class WalletCard extends StatelessWidget {
                             style: context.fonts.subtitle1!.copyWith(
                               color: context.colours.primary,
                               fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           Text(

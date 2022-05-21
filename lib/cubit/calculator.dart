@@ -136,13 +136,17 @@ class CalculatorCubit extends Cubit<CalculatorState> {
       emit(
         state.copyWith(
           btcSelected: isBtc,
-          editingBtc: false,
+          editingBtc: isBtc,
+          satsAmt: isBtc ? '1' : '',
+          currencyAmt: isBtc ? '' : '1.0',
         ),
       );
+
       await Future.delayed(const Duration(microseconds: 100));
-      calcKeyPressed('1');
-      await Future.delayed(const Duration(microseconds: 100));
-      emit(state.copyWith(editingBtc: true));
+      // calcKeyPressed('1');
+      calcKeyPressed('=');
+
+      return;
     } catch (e, s) {
       _logger.logException(e, 'CalculatorBloc._mapBtcTypeChanged', s);
     }
@@ -203,8 +207,11 @@ class CalculatorCubit extends Cubit<CalculatorState> {
               return;
             str = _isZero(state.currencyAmt) ? '' : state.currencyAmt;
             final newExp = str + (key == 'x' ? '*' : key);
-            emit(state.copyWith(
-                currencyAmt: Validation.formatSatsString(newExp)));
+            emit(
+              state.copyWith(
+                currencyAmt: Validation.formatSatsString(newExp),
+              ),
+            );
           }
 
           break;
@@ -226,7 +233,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
           calc = parser.parse(calc).value.toString();
 
-          if (state.editingBtc)
+          if (!state.editingBtc)
             emit(state.copyWith(satsAmt: calc));
           else
             emit(state.copyWith(currencyAmt: calc));
@@ -248,9 +255,9 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
       String calc = '';
       if (state.editingBtc) {
-        calc = Validation.removeCommas(state.satsAmt);
+        calc = Validation.removeSatsFormat(state.satsAmt);
       } else {
-        calc = Validation.removeCommas(state.currencyAmt);
+        calc = Validation.removeSatsFormat(state.currencyAmt);
       }
 
       if (calc.startsWith('.')) calc = '0' + calc;
@@ -269,7 +276,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
       if (state.editingBtc) {
         late double amt;
         // if (calc.endsWith('.'))
-        amt = double.parse(Validation.removeCommas(calc));
+        amt = double.parse(calc);
         // else
         // amt = 0;
         final finalVal = (state.btcSelected ? amt : amt / 100000000) *
@@ -279,12 +286,17 @@ class CalculatorCubit extends Cubit<CalculatorState> {
             currencyAmt: Validation.formatSatsString(
               finalVal.toStringAsFixed(2),
             ),
+            satsAmt: Validation.formatSatsString(
+              (!state.btcSelected)
+                  ? amt.round().toString()
+                  : (amt / 100000000).round().toString(),
+            ),
           ),
         );
       } else {
         late double amt;
         // if (calc.endsWith('.'))
-        amt = double.parse(Validation.removeCommas(calc));
+        amt = double.parse(Validation.removeSatsFormat(calc));
         // else
         // amt = 0;
 
@@ -295,8 +307,11 @@ class CalculatorCubit extends Cubit<CalculatorState> {
             satsAmt: state.btcSelected
                 ? finalVal.toStringAsFixed(8)
                 : Validation.formatSatsString(
-                    (finalVal * 100000000).toStringAsFixed(0),
+                    (finalVal * 100000000).round().toString(),
                   ),
+            currencyAmt: Validation.formatSatsString(
+              amt.toStringAsFixed(2),
+            ),
           ),
         );
       }

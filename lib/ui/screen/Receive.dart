@@ -40,7 +40,7 @@ class _Receive extends StatelessWidget {
                     child: Text(
                       'RECEIVE BITCOIN',
                       style: c.fonts.headline6!.copyWith(
-                        color: Colors.white,
+                        color: c.colours.onPrimary,
                       ),
                     ),
                   ),
@@ -48,7 +48,7 @@ class _Receive extends StatelessWidget {
                     child: Text(
                       walletLabel.toUpperCase(),
                       style: c.fonts.caption!.copyWith(
-                        color: Colors.white,
+                        color: c.colours.onPrimary,
                       ),
                     ),
                   ),

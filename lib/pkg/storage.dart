@@ -1,5 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:convert';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
@@ -39,13 +42,43 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(PreferencesClassAdapter());
   Hive.registerAdapter(TransactionClassAdapter());
 
-  await Hive.openBox<Wallet>(StoreKeys.Wallet.name);
-  await Hive.openBox<Blockchain>(StoreKeys.Blockchain.name);
-  await Hive.openBox<Node>(StoreKeys.Node.name);
-  await Hive.openBox<Fees>(StoreKeys.Fees.name);
-  await Hive.openBox<Preferences>(StoreKeys.Preferences.name);
+  const secureStorage = FlutterSecureStorage();
+  final encryprionKey = await secureStorage.read(key: 'key');
+  if (encryprionKey == null) {
+    final key = Hive.generateSecureKey();
+    await secureStorage.write(
+      key: 'key',
+      value: base64UrlEncode(key),
+    );
+  }
+  final key = await secureStorage.read(key: 'key');
+  final encryptionKey = base64Url.decode(key!);
 
-  await Hive.openBox<String>('storage');
+  await Hive.openBox<Wallet>(
+    StoreKeys.Wallet.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<Blockchain>(
+    StoreKeys.Blockchain.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<Node>(
+    StoreKeys.Node.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<Fees>(
+    StoreKeys.Fees.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<Preferences>(
+    StoreKeys.Preferences.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+
+  await Hive.openBox<String>(
+    'storage',
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
 }
 
 class HiveStore implements IStorage {

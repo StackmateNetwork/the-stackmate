@@ -40,7 +40,7 @@ class WalletTools extends StatelessWidget {
                   icon: Icon(
                     Icons.hide_source,
                     size: 24,
-                    color: c.colours.onPrimary,
+                    color: c.colours.primary,
                   ),
                 ),
                 IconButton(

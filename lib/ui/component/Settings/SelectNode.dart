@@ -23,7 +23,7 @@ class SelectNode extends StatelessWidget {
         primary: c.colours.surface,
       ),
       child: Container(
-        height: 120,
+        height: 80,
         padding: const EdgeInsets.only(
           top: 16,
           bottom: 16,
@@ -43,11 +43,10 @@ class SelectNode extends StatelessWidget {
                 const SizedBox(height: 4),
                 Expanded(
                   child: Text(
-                    'Wallet public will sync via selected node\n\nCurrent node:   ' +
-                        nodeString,
+                    nodeString,
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
-                    style: c.fonts.caption!.copyWith(
+                    style: c.fonts.bodyMedium!.copyWith(
                       color: c.colours.onSurface.withOpacity(0.7),
                     ),
                   ),

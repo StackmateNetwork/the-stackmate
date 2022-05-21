@@ -1,25 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+const richFogra = Color(0xFF13161f);
+const brightCrayola = Color(0xFFFFA827);
+const ghostWhite = Color(0xFFF7F7FF);
+const blueJeans = Color(0xFF00ABF5);
+const bitterLemon = Color(0xFFB0E000);
+const arcticLime = Color(0xFFCEFF1A);
+const goldenBridge = Color(0xFFBB4430);
+const maximumGreen = Color(0xFF548C2F);
+const frenchBistre = Color(0xFF726953);
+const cultured = Color(0xFFFCF5E8);
 ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.aldrichTextTheme(),
       colorScheme: ColorScheme(
-        primary: Colors.orange[400]!,
-        secondary: const Color(0xFF00ABF5),
-        tertiary: const Color(0xFF548C2F),
-        // tertiary: const Color(0xFF85CB33),
-        surface: const Color(0xFFC9EDDC).withOpacity(0.009),
-        background: const Color(0xFF13161f),
-        error: const Color(0xFFC33C54),
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        onSurface: Colors.white, //.withOpacity(0.8),
-        onBackground: Colors.white, //.withOpacity(0.8),
-        onError: Colors.white,
+        primary: brightCrayola,
+        secondary: blueJeans,
+        tertiary: bitterLemon,
+        surface: ghostWhite.withOpacity(0.009),
+        background: richFogra,
+        error: goldenBridge,
+        onPrimary: cultured,
+        onSecondary: cultured,
+        onSurface: cultured,
+        onBackground: cultured,
+        onError: cultured,
         brightness: Brightness.dark,
       ),
     );
-
+// ThemeData(
+//   textTheme: GoogleFonts.aldrichTextTheme(),
+//   colorScheme: ColorScheme(
+//     primary: brightCrayola,
+//     secondary: blueJeans,
+//     tertiary: maximumGreen,
+//     surface: richFogra.withOpacity(0.09),
+//     background: cultured,
+//     error: goldenBridge,
+//     onPrimary: richFogra,
+//     onSecondary: richFogra,
+//     onSurface: richFogra,
+//     onBackground: richFogra,
+//     onError: richFogra,
+//     brightness: Brightness.dark,
+//   ),
+// );
 ThemeData derivedTheme(ThemeData theme) {
   return theme.copyWith(
     scaffoldBackgroundColor: theme.colorScheme.background,

@@ -71,7 +71,7 @@ class AddWalletScreen extends StatelessWidget {
                   child: Text(
                     'SOLO ACCOUNT',
                     style: c.fonts.overline!.copyWith(
-                      color: Colors.white,
+                      color: c.colours.onPrimary,
                     ),
                   ),
                 ),

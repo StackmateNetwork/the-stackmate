@@ -57,8 +57,8 @@ class Validation {
     );
   }
 
-  static String removeCommas(String amt) {
-    return amt.replaceAll(',', '');
+  static String removeSatsFormat(String amt) {
+    return amt.replaceAll(' ', '');
   }
 
   static bool toBoolean(String str, [bool strict = false]) {
