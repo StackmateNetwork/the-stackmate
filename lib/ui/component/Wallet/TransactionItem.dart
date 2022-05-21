@@ -35,11 +35,14 @@ class TransactionItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
-                    'RECEIVE'.notLocalised(),
-                    style: c.fonts.subtitle2!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: c.colours.onBackground,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 9.0),
+                    child: Text(
+                      'RECEIVE'.notLocalised(),
+                      style: c.fonts.subtitle2!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: c.colours.onBackground,
+                      ),
                     ),
                   ),
                   Expanded(
@@ -63,7 +66,7 @@ class TransactionItem extends StatelessWidget {
                             Text(
                               'UNCONFIRMED',
                               style: c.fonts.overline!.copyWith(
-                                color: c.colours.onBackground,
+                                color: c.colours.error,
                               ),
                             ),
                         ],
@@ -116,11 +119,14 @@ class TransactionItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  'SEND'.notLocalised(),
-                  style: c.fonts.subtitle2!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: c.colours.onBackground,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 9.0),
+                  child: Text(
+                    'SEND'.notLocalised(),
+                    style: c.fonts.subtitle2!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: c.colours.onBackground,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -144,7 +150,7 @@ class TransactionItem extends StatelessWidget {
                           Text(
                             'UNCONFIRMED',
                             style: c.fonts.overline!.copyWith(
-                              color: c.colours.onBackground,
+                              color: c.colours.error,
                             ),
                           ),
                       ],
