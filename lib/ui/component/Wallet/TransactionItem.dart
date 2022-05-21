@@ -5,7 +5,7 @@ import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/validation.dart';
+import 'package:sats/ui/component/common/BitcoinDisplayMedium.dart';
 
 class TransactionItem extends StatelessWidget {
   const TransactionItem({Key? key, required this.transaction})
@@ -35,11 +35,14 @@ class TransactionItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
-                    'RECEIVE'.notLocalised(),
-                    style: c.fonts.subtitle2!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: c.colours.onBackground,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 9.0),
+                    child: Text(
+                      'RECEIVE'.notLocalised(),
+                      style: c.fonts.subtitle2!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: c.colours.onBackground,
+                      ),
                     ),
                   ),
                   Expanded(
@@ -55,31 +58,15 @@ class TransactionItem extends StatelessWidget {
                           ),
                         ] else ...[
                           const Padding(padding: EdgeInsets.only(top: 8)),
-                          Text(
-                            Validation.formatSatsString(
-                                  transaction.received.toString(),
-                                ) +
-                                ' sats',
-                            style: (transaction.height > 0)
-                                ? c.fonts.headline6!.copyWith(
-                                    color: c.colours.onBackground,
-                                  )
-                                : c.fonts.headline6!.copyWith(
-                                    color: c.colours.error,
-                                  ),
-                            textAlign: TextAlign.end,
-                          ),
-                          Text(
-                            transaction.amountToBtc() + ' BTC',
-                            style: c.fonts.overline!.copyWith(
-                              color: c.colours.onBackground,
-                            ),
+                          BitcoinDisplayMedium(
+                            satsAmount: transaction.received.toString(),
+                            bitcoinUnit: preferences.preferredBitcoinUnit,
                           ),
                           if (transaction.height == 0)
                             Text(
                               'UNCONFIRMED',
                               style: c.fonts.overline!.copyWith(
-                                color: c.colours.onBackground,
+                                color: c.colours.error,
                               ),
                             ),
                         ],
@@ -132,11 +119,14 @@ class TransactionItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  'SEND'.notLocalised(),
-                  style: c.fonts.subtitle2!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: c.colours.onBackground,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 9.0),
+                  child: Text(
+                    'SEND'.notLocalised(),
+                    style: c.fonts.subtitle2!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: c.colours.onBackground,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -152,31 +142,15 @@ class TransactionItem extends StatelessWidget {
                         ),
                       ] else ...[
                         const Padding(padding: EdgeInsets.only(top: 8)),
-                        Text(
-                          Validation.formatSatsString(
-                                transaction.sent.toString(),
-                              ) +
-                              ' sats',
-                          style: (transaction.height > 0)
-                              ? c.fonts.headline6!.copyWith(
-                                  color: c.colours.onBackground,
-                                )
-                              : c.fonts.headline6!.copyWith(
-                                  color: c.colours.error,
-                                ),
-                          textAlign: TextAlign.end,
-                        ),
-                        Text(
-                          transaction.amountToBtc() + ' BTC',
-                          style: c.fonts.overline!.copyWith(
-                            color: c.colours.onBackground,
-                          ),
+                        BitcoinDisplayMedium(
+                          satsAmount: transaction.sent.toString(),
+                          bitcoinUnit: preferences.preferredBitcoinUnit,
                         ),
                         if (transaction.height == 0)
                           Text(
                             'UNCONFIRMED',
                             style: c.fonts.overline!.copyWith(
-                              color: c.colours.onBackground,
+                              color: c.colours.error,
                             ),
                           ),
                       ],

@@ -7,6 +7,7 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/validation.dart';
+import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
 
 class WalletCard extends StatelessWidget {
   const WalletCard({
@@ -88,18 +89,10 @@ class WalletCard extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           if (!prefState.incognito)
-                            Text(
-                              Validation.formatSatsString(
-                                    wallet.balance.toString(),
-                                  ) +
-                                  ' sats',
-                              maxLines: 10,
-                              style: context.fonts.caption!.copyWith(
-                                color: context.colours.onBackground
-                                    .withOpacity(0.8),
-                                fontSize: 16,
-                              ),
-                            ),
+                            BitcoinDisplaySmall(
+                              satsAmount: wallet.balance.toString(),
+                              bitcoinUnit: prefState.preferredBitcoinUnit,
+                            )
                         ],
                       ),
                     ),

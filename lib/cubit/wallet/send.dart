@@ -207,7 +207,7 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void amountChanged(String amount) {
-    final checked = amount.replaceAll('.', emptyString);
+    final checked = amount.replaceAll(' ', emptyString);
     emit(state.copyWith(amount: checked));
   }
 

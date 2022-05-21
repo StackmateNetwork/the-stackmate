@@ -120,7 +120,7 @@ class _SelectFeeState extends State<SelectFee> {
                 Slider(
                   divisions: 6,
                   min: double.parse(
-                    context.read<SendCubit>().state.feeSlow!.toString(),
+                    (context.read<SendCubit>().state.feeSlow! - 3).toString(),
                   ),
                   max: double.parse(
                     context.read<SendCubit>().state.feeFast!.toString(),

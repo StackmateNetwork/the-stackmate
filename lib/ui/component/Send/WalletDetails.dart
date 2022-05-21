@@ -3,6 +3,7 @@ import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/validation.dart';
+import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
 
 class WalletDetails extends StatelessWidget {
   const WalletDetails({
@@ -30,21 +31,10 @@ class WalletDetails extends StatelessWidget {
               color: context.colours.onBackground,
             ),
           ),
-          Text(
-            Validation.formatSatsString(
-                  balance.toString(),
-                ) +
-                ' sats',
-            style: context.fonts.headline6!.copyWith(
-              color: context.colours.onBackground,
-            ),
-          ),
-          Text(
-            balance.toBtc() + ' BTC',
-            style: context.fonts.caption!.copyWith(
-              color: context.colours.onBackground,
-            ),
-          ),
+          BitcoinDisplaySmall(
+            satsAmount: balance.toString(),
+            bitcoinUnit: preferences.preferredBitcoinUnit,
+          )
         ],
       ],
     );
