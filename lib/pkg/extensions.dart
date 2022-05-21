@@ -35,7 +35,8 @@ extension Strings on String {
   String toBtc() {
     try {
       if (this == '') return '0.00000000';
-      final amt = int.parse(replaceAll(' ', ''));
+      final amt = int.parse(replaceAll(' ', '').replaceAll(',', ''));
+
       return amt.toBtc();
     } catch (e) {
       //print(e.toString());
