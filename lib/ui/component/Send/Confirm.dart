@@ -45,10 +45,13 @@ class ConfirmTransaction extends StatelessWidget {
           const SizedBox(height: 60),
           Row(
             children: [
-              Text(
-                'Amount'.toUpperCase(),
-                style: context.fonts.overline!.copyWith(
-                  color: context.colours.onBackground,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 17.0),
+                child: Text(
+                  'Amount'.toUpperCase(),
+                  style: context.fonts.overline!.copyWith(
+                    color: context.colours.onBackground,
+                  ),
                 ),
               ),
               const Spacer(),
@@ -61,10 +64,13 @@ class ConfirmTransaction extends StatelessWidget {
           const SizedBox(height: 20),
           Row(
             children: [
-              Text(
-                'Network Fee'.toUpperCase(),
-                style: context.fonts.overline!.copyWith(
-                  color: context.colours.onBackground,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 17.0),
+                child: Text(
+                  'Network Fee'.toUpperCase(),
+                  style: context.fonts.overline!.copyWith(
+                    color: context.colours.onBackground,
+                  ),
                 ),
               ),
               const Spacer(),
@@ -77,10 +83,13 @@ class ConfirmTransaction extends StatelessWidget {
           const SizedBox(height: 20),
           Row(
             children: [
-              Text(
-                'Total'.toUpperCase(),
-                style: context.fonts.overline!.copyWith(
-                  color: context.colours.onBackground,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 17.0),
+                child: Text(
+                  'Total'.toUpperCase(),
+                  style: context.fonts.overline!.copyWith(
+                    color: context.colours.onBackground,
+                  ),
                 ),
               ),
               const Spacer(),
