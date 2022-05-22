@@ -19,7 +19,7 @@ class BitcoinDisplayMedium extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            Validation.formatSatsString(satsAmount) + 'sats',
+            Validation.formatSatsString(satsAmount) + ' sats',
             style: c.fonts.headline6!.copyWith(
               color: c.colours.onPrimary,
               letterSpacing: 1,
