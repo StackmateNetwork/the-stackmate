@@ -203,7 +203,7 @@ class SendCubit extends Cubit<SendState> {
   void addressConfirmedClicked() async {
     emit(state.copyWith(errAddress: emptyString));
 
-    if (!Validation.isBtcAddress(state.address)) {
+    if (!Validation.isBtcAddress(state.address.toLowerCase())) {
       emit(state.copyWith(errAddress: invalidAddressError));
       return;
     }
