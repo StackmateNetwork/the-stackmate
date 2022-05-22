@@ -62,13 +62,6 @@ class TransactionItem extends StatelessWidget {
                             satsAmount: transaction.received.toString(),
                             bitcoinUnit: preferences.preferredBitcoinUnit,
                           ),
-                          if (transaction.height == 0)
-                            Text(
-                              'UNCONFIRMED',
-                              style: c.fonts.overline!.copyWith(
-                                color: c.colours.error,
-                              ),
-                            ),
                         ],
                       ],
                     ),
@@ -97,6 +90,13 @@ class TransactionItem extends StatelessWidget {
                   ),
                 ),
               ),
+              if (transaction.height == 0)
+                Text(
+                  'UNCONFIRMED',
+                  style: c.fonts.overline!.copyWith(
+                    color: c.colours.error,
+                  ),
+                ),
             ],
           ),
         ),
@@ -146,13 +146,6 @@ class TransactionItem extends StatelessWidget {
                           satsAmount: transaction.sent.toString(),
                           bitcoinUnit: preferences.preferredBitcoinUnit,
                         ),
-                        if (transaction.height == 0)
-                          Text(
-                            'UNCONFIRMED',
-                            style: c.fonts.overline!.copyWith(
-                              color: c.colours.error,
-                            ),
-                          ),
                       ],
                     ],
                   ),
@@ -181,6 +174,13 @@ class TransactionItem extends StatelessWidget {
                 ),
               ),
             ),
+            if (transaction.height == 0)
+              Text(
+                'UNCONFIRMED',
+                style: c.fonts.overline!.copyWith(
+                  color: c.colours.error,
+                ),
+              ),
           ],
         ),
       ),

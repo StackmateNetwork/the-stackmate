@@ -9,43 +9,56 @@ class HomeHeader extends StatelessWidget {
     return BlocBuilder<TorCubit, TorState>(
       builder: (context, torState) {
         return Padding(
-          padding: const EdgeInsets.only(top: 6, bottom: 6),
+          padding: const EdgeInsets.only(
+            top: 16,
+            bottom: 16,
+            left: 24,
+            right: 32,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 16,
-                  left: 24,
-                  right: 32,
-                ),
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    LogButton(
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.lightbulb_outline_sharp,
-                          size: 32,
-                          color: c.colours.primary,
-                        ),
+              Row(
+                children: [
+                  const Spacer(),
+                  LogButton(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.lightbulb_outline_sharp,
+                        size: 32,
+                        color: c.colours.primary,
+                        semanticLabel: 'Logs',
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 2,
               ),
               if (torState.isRunning)
-                Icon(
-                  Icons.security_sharp,
-                  color: c.colours.tertiaryContainer,
+                Tooltip(
+                  triggerMode: TooltipTriggerMode.tap,
+                  message: 'Connected to Tor.',
+                  textStyle: context.fonts.caption!.copyWith(
+                    color: context.colours.primary,
+                  ),
+                  decoration: BoxDecoration(
+                    color: context.colours.surface,
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Icon(
+                    Icons.security_sharp,
+                    color: c.colours.tertiaryContainer,
+                  ),
                 )
               else ...[
                 Icon(
                   Icons.security_sharp,
                   color: c.colours.error,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
                 const Text(

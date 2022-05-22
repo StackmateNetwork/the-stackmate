@@ -49,7 +49,7 @@ class _SendAddressState extends State<SendAddress> {
                 errorText: errAddress.nullIfEmpty(),
               ),
               onChanged: (t) {
-                context.read<SendCubit>().adddressChanged(t);
+                context.read<SendCubit>().adddressChanged(t.toLowerCase());
               },
             ),
             const SizedBox(height: 16),

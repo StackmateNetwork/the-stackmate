@@ -26,6 +26,7 @@ class _Home extends StatelessWidget {
                 await c.read<FeesCubit>().update();
                 return;
               },
+              semanticsLabel: 'Updating Fee Estimator...',
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
