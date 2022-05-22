@@ -164,7 +164,7 @@ class SendCubit extends Cubit<SendState> {
   void pasteAddress() async {
     final text = await _clipBoard.pasteFromClipBoard();
     if (text.hasError) return;
-    emit(state.copyWith(address: text.result!));
+    emit(state.copyWith(address: text.result!.toLowerCase()));
   }
 
   void scanAddress(bool onStart) async {
@@ -178,12 +178,12 @@ class SendCubit extends Cubit<SendState> {
       if (barcodeScanRes == '-1') barcodeScanRes = emptyString;
       if (barcodeScanRes.contains('bitcoin:')) {
         final address = barcodeScanRes.split(':')[1].split('?')[0];
-        emit(state.copyWith(address: address));
+        emit(state.copyWith(address: address.toLowerCase()));
         final amount =
             barcodeScanRes.split(':')[1].split('?amount=')[1].split('?')[0];
         amountChanged(amount);
       } else
-        emit(state.copyWith(address: barcodeScanRes));
+        emit(state.copyWith(address: barcodeScanRes.toLowerCase()));
 
       await Future.delayed(const Duration(milliseconds: 1000));
 
