@@ -26,53 +26,72 @@ class _Home extends StatelessWidget {
                 await c.read<FeesCubit>().update();
                 return;
               },
-              child: CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    stretch: true,
-                    pinned: true,
-                    expandedHeight: c.height / 3,
-                    automaticallyImplyLeading: false,
-                    backgroundColor: c.colours.background,
-                    flexibleSpace: FlexibleSpaceBar(
-                      stretchModes: const [
-                        StretchMode.fadeTitle,
-                      ],
-                      background: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 12,
-                          bottom: 12,
-                          left: 12,
-                          right: 12,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [HomeHeader(), Networth(), WalletTools()],
+              child: BlocBuilder<TorCubit, TorState>(
+                builder: (context, torState) {
+                  return CustomScrollView(
+                    slivers: [
+                      SliverAppBar(
+                        stretch: true,
+                        pinned: true,
+                        expandedHeight: c.height / 3,
+                        automaticallyImplyLeading: false,
+                        backgroundColor: c.colours.background,
+                        flexibleSpace: FlexibleSpaceBar(
+                          stretchModes: const [
+                            StretchMode.fadeTitle,
+                          ],
+                          background: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 12,
+                              bottom: 12,
+                              left: 12,
+                              right: 12,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                if (torState.isRunning) ...[
+                                  HomeHeader(),
+                                  Networth(),
+                                  WalletTools()
+                                ] else ...[
+                                  HomeHeader(),
+                                ]
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildListDelegate(
-                      [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 12,
-                            bottom: 12,
-                            left: 12,
-                            right: 12,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [Accounts()],
-                          ),
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12,
+                                bottom: 12,
+                                left: 12,
+                                right: 12,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  if (torState.isRunning) ...[
+                                    Accounts()
+                                  ] else ...[
+                                    Container()
+                                  ]
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ],
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ),
