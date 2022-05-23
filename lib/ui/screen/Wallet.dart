@@ -248,7 +248,10 @@ class _Wallet extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('Yes, Delete'),
+              child: Text(
+                'DELETE IT!',
+                style: c.fonts.button!.copyWith(color: c.colours.error),
+              ),
             ),
           ),
           // const SizedBox(height: 24),

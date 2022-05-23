@@ -52,9 +52,9 @@ class _SeedImportLabelState extends State<SeedImportLabel> {
                     if (!isFixed)
                       c.read<SeedImportWalletCubit>().labelChanged(text);
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Wallet Name',
-                    labelStyle: TextStyle(color: Colors.transparent),
+                    labelStyle: TextStyle(color: c.colours.onPrimary),
                   ),
                 ),
               ),
@@ -67,12 +67,14 @@ class _SeedImportLabelState extends State<SeedImportLabel> {
               ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: TextButton(
-                onPressed: () {
-                  c.read<SeedImportWalletCubit>().nextClicked();
-                },
-                child: const Text('Confirm'),
-              ),
+              child: (state.savingWallet)
+                  ? const Text('Recoving wallet...')
+                  : TextButton(
+                      onPressed: () async {
+                        c.read<SeedImportWalletCubit>().nextClicked();
+                      },
+                      child: const Text('Confirm'),
+                    ),
             )
           ],
         );
