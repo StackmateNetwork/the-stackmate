@@ -26,30 +26,49 @@ class _Home extends StatelessWidget {
                 await c.read<FeesCubit>().update();
                 return;
               },
-              semanticsLabel: 'Updating Fee Estimator...',
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
                     stretch: true,
                     pinned: true,
-                    expandedHeight: c.height / 2.5,
+                    expandedHeight: c.height / 3,
                     automaticallyImplyLeading: false,
                     backgroundColor: c.colours.background,
                     flexibleSpace: FlexibleSpaceBar(
                       stretchModes: const [
                         StretchMode.fadeTitle,
                       ],
-                      background: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [HomeHeader(), Networth(), WalletTools()],
+                      background: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 12,
+                          bottom: 12,
+                          left: 12,
+                          right: 12,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [HomeHeader(), Networth(), WalletTools()],
+                        ),
                       ),
                     ),
                   ),
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        Accounts(),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 12,
+                            bottom: 12,
+                            left: 12,
+                            right: 12,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [Accounts()],
+                          ),
+                        ),
                       ],
                     ),
                   ),

@@ -9,51 +9,41 @@ class WalletTools extends StatelessWidget {
     // c.select((FeesCubit wc) => wc.update());
     final preferences = c.select((PreferencesCubit p) => p);
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 12, bottom: 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 16,
-              left: 24,
-              right: 24,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              onPressed: () {
+                c.push('/psbt-tools');
+              },
+              icon: Icon(
+                Icons.language_sharp,
+                size: 32,
+                color: c.colours.primary,
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    c.push('/psbt-tools');
-                  },
-                  icon: Icon(
-                    Icons.language_sharp,
-                    size: 32,
-                    color: c.colours.primary,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    preferences.incognitoChanged();
-                  },
-                  icon: Icon(
-                    Icons.hide_source,
-                    size: 24,
-                    color: c.colours.primary,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    c.push('/add-wallet');
-                  },
-                  icon: Icon(Icons.add, size: 32, color: c.colours.primary),
-                ),
-              ],
+            IconButton(
+              onPressed: () {
+                preferences.incognitoChanged();
+              },
+              icon: Icon(
+                Icons.hide_source,
+                size: 24,
+                color: c.colours.primary,
+              ),
             ),
-          ),
-        ],
-      ),
+            IconButton(
+              onPressed: () {
+                c.push('/add-wallet');
+              },
+              icon: Icon(Icons.add, size: 32, color: c.colours.primary),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -31,9 +31,11 @@ class Accounts extends StatelessWidget {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(height: 10),
-              for (var w in wallets) WalletCard(wallet: w),
-              const SizedBox(height: 10),
+              for (var w in wallets) ...[
+                const SizedBox(height: 5),
+                WalletCard(wallet: w),
+                const SizedBox(height: 5),
+              ],
             ],
           ),
         ),
