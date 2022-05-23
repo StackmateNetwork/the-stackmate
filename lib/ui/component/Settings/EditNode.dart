@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/model/node.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class EditNode extends StatefulWidget {

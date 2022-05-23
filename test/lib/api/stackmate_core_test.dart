@@ -88,7 +88,6 @@ void main() {
       socks5: 'none',
     );
     assert(!balance.hasError);
-    ;
 
     final utxos = libstackmate.getUTXOSet(
       descriptor: expPublicDesc,

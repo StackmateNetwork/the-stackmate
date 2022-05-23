@@ -194,9 +194,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     final policy = 'pk($fullXPrv/*)';
 
     const readable = 'pk(___primary___)';
-    const readableScript = 'thresh(2, ___buyer___,___seller___,___escrow___)';
-    const readableRaft =
-        'thresh(1, pk(___primary___),and(pk(___rescuer___),older(___sometime___)))';
 
     final descriptor = _core.compile(
       policy: policy,
