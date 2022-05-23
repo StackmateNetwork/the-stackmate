@@ -9,7 +9,7 @@ class Node with _$Node {
   @HiveType(typeId: 3, adapterName: 'NodeClassAdapter')
   const factory Node({
     @HiveField(1) required String address,
-    @HiveField(2) required String port,
+    @HiveField(2) required String name,
   }) = _Node;
   const Node._();
 

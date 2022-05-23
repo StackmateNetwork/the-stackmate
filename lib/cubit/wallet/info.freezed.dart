@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'info.dart';
@@ -11,38 +12,7 @@ part of 'info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$InfoStateTearOff {
-  const _$InfoStateTearOff();
-
-  _InfoState call(
-      {bool loadingTransactions = false,
-      String errLoadingTransactions = '',
-      bool loadingBalance = true,
-      String errLoadingBalance = '',
-      int balance = 0,
-      List<Transaction> transactions = const [],
-      String errDeleting = '',
-      bool deleted = false,
-      bool showInfo = false}) {
-    return _InfoState(
-      loadingTransactions: loadingTransactions,
-      errLoadingTransactions: errLoadingTransactions,
-      loadingBalance: loadingBalance,
-      errLoadingBalance: errLoadingBalance,
-      balance: balance,
-      transactions: transactions,
-      errDeleting: errDeleting,
-      deleted: deleted,
-      showInfo: showInfo,
-    );
-  }
-}
-
-/// @nodoc
-const $InfoState = _$InfoStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$InfoState {
@@ -139,10 +109,10 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
-  factory _$InfoStateCopyWith(
-          _InfoState value, $Res Function(_InfoState) then) =
-      __$InfoStateCopyWithImpl<$Res>;
+abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
+  factory _$$_InfoStateCopyWith(
+          _$_InfoState value, $Res Function(_$_InfoState) then) =
+      __$$_InfoStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {bool loadingTransactions,
@@ -157,13 +127,14 @@ abstract class _$InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
-    implements _$InfoStateCopyWith<$Res> {
-  __$InfoStateCopyWithImpl(_InfoState _value, $Res Function(_InfoState) _then)
-      : super(_value, (v) => _then(v as _InfoState));
+class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
+    implements _$$_InfoStateCopyWith<$Res> {
+  __$$_InfoStateCopyWithImpl(
+      _$_InfoState _value, $Res Function(_$_InfoState) _then)
+      : super(_value, (v) => _then(v as _$_InfoState));
 
   @override
-  _InfoState get _value => super._value as _InfoState;
+  _$_InfoState get _value => super._value as _$_InfoState;
 
   @override
   $Res call({
@@ -177,7 +148,7 @@ class __$InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
     Object? deleted = freezed,
     Object? showInfo = freezed,
   }) {
-    return _then(_InfoState(
+    return _then(_$_InfoState(
       loadingTransactions: loadingTransactions == freezed
           ? _value.loadingTransactions
           : loadingTransactions // ignore: cast_nullable_to_non_nullable
@@ -199,7 +170,7 @@ class __$InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
           : balance // ignore: cast_nullable_to_non_nullable
               as int,
       transactions: transactions == freezed
-          ? _value.transactions
+          ? _value._transactions
           : transactions // ignore: cast_nullable_to_non_nullable
               as List<Transaction>,
       errDeleting: errDeleting == freezed
@@ -227,38 +198,44 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       this.loadingBalance = true,
       this.errLoadingBalance = '',
       this.balance = 0,
-      this.transactions = const [],
+      final List<Transaction> transactions = const [],
       this.errDeleting = '',
       this.deleted = false,
       this.showInfo = false})
-      : super._();
+      : _transactions = transactions,
+        super._();
 
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool loadingTransactions;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String errLoadingTransactions;
-  @JsonKey(defaultValue: true)
   @override
+  @JsonKey()
   final bool loadingBalance;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String errLoadingBalance;
-  @JsonKey(defaultValue: 0)
   @override
+  @JsonKey()
   final int balance;
-  @JsonKey(defaultValue: const [])
+  final List<Transaction> _transactions;
   @override
-  final List<Transaction> transactions;
-  @JsonKey(defaultValue: '')
+  @JsonKey()
+  List<Transaction> get transactions {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_transactions);
+  }
+
   @override
+  @JsonKey()
   final String errDeleting;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool deleted;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool showInfo;
 
   @override
@@ -286,66 +263,55 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _InfoState &&
-            (identical(other.loadingTransactions, loadingTransactions) ||
-                const DeepCollectionEquality()
-                    .equals(other.loadingTransactions, loadingTransactions)) &&
-            (identical(other.errLoadingTransactions, errLoadingTransactions) ||
-                const DeepCollectionEquality().equals(
-                    other.errLoadingTransactions, errLoadingTransactions)) &&
-            (identical(other.loadingBalance, loadingBalance) ||
-                const DeepCollectionEquality()
-                    .equals(other.loadingBalance, loadingBalance)) &&
-            (identical(other.errLoadingBalance, errLoadingBalance) ||
-                const DeepCollectionEquality()
-                    .equals(other.errLoadingBalance, errLoadingBalance)) &&
-            (identical(other.balance, balance) ||
-                const DeepCollectionEquality()
-                    .equals(other.balance, balance)) &&
-            (identical(other.transactions, transactions) ||
-                const DeepCollectionEquality()
-                    .equals(other.transactions, transactions)) &&
-            (identical(other.errDeleting, errDeleting) ||
-                const DeepCollectionEquality()
-                    .equals(other.errDeleting, errDeleting)) &&
-            (identical(other.deleted, deleted) ||
-                const DeepCollectionEquality()
-                    .equals(other.deleted, deleted)) &&
-            (identical(other.showInfo, showInfo) ||
-                const DeepCollectionEquality()
-                    .equals(other.showInfo, showInfo)));
+        (other.runtimeType == runtimeType &&
+            other is _$_InfoState &&
+            const DeepCollectionEquality()
+                .equals(other.loadingTransactions, loadingTransactions) &&
+            const DeepCollectionEquality()
+                .equals(other.errLoadingTransactions, errLoadingTransactions) &&
+            const DeepCollectionEquality()
+                .equals(other.loadingBalance, loadingBalance) &&
+            const DeepCollectionEquality()
+                .equals(other.errLoadingBalance, errLoadingBalance) &&
+            const DeepCollectionEquality().equals(other.balance, balance) &&
+            const DeepCollectionEquality()
+                .equals(other._transactions, _transactions) &&
+            const DeepCollectionEquality()
+                .equals(other.errDeleting, errDeleting) &&
+            const DeepCollectionEquality().equals(other.deleted, deleted) &&
+            const DeepCollectionEquality().equals(other.showInfo, showInfo));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(loadingTransactions) ^
-      const DeepCollectionEquality().hash(errLoadingTransactions) ^
-      const DeepCollectionEquality().hash(loadingBalance) ^
-      const DeepCollectionEquality().hash(errLoadingBalance) ^
-      const DeepCollectionEquality().hash(balance) ^
-      const DeepCollectionEquality().hash(transactions) ^
-      const DeepCollectionEquality().hash(errDeleting) ^
-      const DeepCollectionEquality().hash(deleted) ^
-      const DeepCollectionEquality().hash(showInfo);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(loadingTransactions),
+      const DeepCollectionEquality().hash(errLoadingTransactions),
+      const DeepCollectionEquality().hash(loadingBalance),
+      const DeepCollectionEquality().hash(errLoadingBalance),
+      const DeepCollectionEquality().hash(balance),
+      const DeepCollectionEquality().hash(_transactions),
+      const DeepCollectionEquality().hash(errDeleting),
+      const DeepCollectionEquality().hash(deleted),
+      const DeepCollectionEquality().hash(showInfo));
 
   @JsonKey(ignore: true)
   @override
-  _$InfoStateCopyWith<_InfoState> get copyWith =>
-      __$InfoStateCopyWithImpl<_InfoState>(this, _$identity);
+  _$$_InfoStateCopyWith<_$_InfoState> get copyWith =>
+      __$$_InfoStateCopyWithImpl<_$_InfoState>(this, _$identity);
 }
 
 abstract class _InfoState extends InfoState {
   const factory _InfoState(
-      {bool loadingTransactions,
-      String errLoadingTransactions,
-      bool loadingBalance,
-      String errLoadingBalance,
-      int balance,
-      List<Transaction> transactions,
-      String errDeleting,
-      bool deleted,
-      bool showInfo}) = _$_InfoState;
+      {final bool loadingTransactions,
+      final String errLoadingTransactions,
+      final bool loadingBalance,
+      final String errLoadingBalance,
+      final int balance,
+      final List<Transaction> transactions,
+      final String errDeleting,
+      final bool deleted,
+      final bool showInfo}) = _$_InfoState;
   const _InfoState._() : super._();
 
   @override
@@ -368,6 +334,6 @@ abstract class _InfoState extends InfoState {
   bool get showInfo => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$InfoStateCopyWith<_InfoState> get copyWith =>
+  _$$_InfoStateCopyWith<_$_InfoState> get copyWith =>
       throw _privateConstructorUsedError;
 }

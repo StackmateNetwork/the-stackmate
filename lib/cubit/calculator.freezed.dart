@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'calculator.dart';
@@ -11,36 +12,7 @@ part of 'calculator.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$CalculatorStateTearOff {
-  const _$CalculatorStateTearOff();
-
-  _CalculatorState call(
-      {bool btcSelected = false,
-      Rate? selectedRate,
-      String currencyAmt = '0',
-      String satsAmt = '0',
-      bool editingBtc = true,
-      List<Rate>? rates,
-      bool loadingRates = false,
-      String loadingRatesError = ''}) {
-    return _CalculatorState(
-      btcSelected: btcSelected,
-      selectedRate: selectedRate,
-      currencyAmt: currencyAmt,
-      satsAmt: satsAmt,
-      editingBtc: editingBtc,
-      rates: rates,
-      loadingRates: loadingRates,
-      loadingRatesError: loadingRatesError,
-    );
-  }
-}
-
-/// @nodoc
-const $CalculatorState = _$CalculatorStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$CalculatorState {
@@ -145,11 +117,11 @@ class _$CalculatorStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$CalculatorStateCopyWith<$Res>
+abstract class _$$_CalculatorStateCopyWith<$Res>
     implements $CalculatorStateCopyWith<$Res> {
-  factory _$CalculatorStateCopyWith(
-          _CalculatorState value, $Res Function(_CalculatorState) then) =
-      __$CalculatorStateCopyWithImpl<$Res>;
+  factory _$$_CalculatorStateCopyWith(
+          _$_CalculatorState value, $Res Function(_$_CalculatorState) then) =
+      __$$_CalculatorStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {bool btcSelected,
@@ -166,15 +138,15 @@ abstract class _$CalculatorStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$CalculatorStateCopyWithImpl<$Res>
+class __$$_CalculatorStateCopyWithImpl<$Res>
     extends _$CalculatorStateCopyWithImpl<$Res>
-    implements _$CalculatorStateCopyWith<$Res> {
-  __$CalculatorStateCopyWithImpl(
-      _CalculatorState _value, $Res Function(_CalculatorState) _then)
-      : super(_value, (v) => _then(v as _CalculatorState));
+    implements _$$_CalculatorStateCopyWith<$Res> {
+  __$$_CalculatorStateCopyWithImpl(
+      _$_CalculatorState _value, $Res Function(_$_CalculatorState) _then)
+      : super(_value, (v) => _then(v as _$_CalculatorState));
 
   @override
-  _CalculatorState get _value => super._value as _CalculatorState;
+  _$_CalculatorState get _value => super._value as _$_CalculatorState;
 
   @override
   $Res call({
@@ -187,7 +159,7 @@ class __$CalculatorStateCopyWithImpl<$Res>
     Object? loadingRates = freezed,
     Object? loadingRatesError = freezed,
   }) {
-    return _then(_CalculatorState(
+    return _then(_$_CalculatorState(
       btcSelected: btcSelected == freezed
           ? _value.btcSelected
           : btcSelected // ignore: cast_nullable_to_non_nullable
@@ -209,7 +181,7 @@ class __$CalculatorStateCopyWithImpl<$Res>
           : editingBtc // ignore: cast_nullable_to_non_nullable
               as bool,
       rates: rates == freezed
-          ? _value.rates
+          ? _value._rates
           : rates // ignore: cast_nullable_to_non_nullable
               as List<Rate>?,
       loadingRates: loadingRates == freezed
@@ -233,31 +205,39 @@ class _$_CalculatorState implements _CalculatorState {
       this.currencyAmt = '0',
       this.satsAmt = '0',
       this.editingBtc = true,
-      this.rates,
+      final List<Rate>? rates,
       this.loadingRates = false,
-      this.loadingRatesError = ''});
+      this.loadingRatesError = ''})
+      : _rates = rates;
 
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool btcSelected;
   @override
   final Rate? selectedRate;
-  @JsonKey(defaultValue: '0')
   @override
+  @JsonKey()
   final String currencyAmt;
-  @JsonKey(defaultValue: '0')
   @override
+  @JsonKey()
   final String satsAmt;
-  @JsonKey(defaultValue: true)
   @override
+  @JsonKey()
   final bool editingBtc;
+  final List<Rate>? _rates;
   @override
-  final List<Rate>? rates;
-  @JsonKey(defaultValue: false)
+  List<Rate>? get rates {
+    final value = _rates;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
+  @JsonKey()
   final bool loadingRates;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String loadingRatesError;
 
   @override
@@ -268,60 +248,52 @@ class _$_CalculatorState implements _CalculatorState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _CalculatorState &&
-            (identical(other.btcSelected, btcSelected) ||
-                const DeepCollectionEquality()
-                    .equals(other.btcSelected, btcSelected)) &&
-            (identical(other.selectedRate, selectedRate) ||
-                const DeepCollectionEquality()
-                    .equals(other.selectedRate, selectedRate)) &&
-            (identical(other.currencyAmt, currencyAmt) ||
-                const DeepCollectionEquality()
-                    .equals(other.currencyAmt, currencyAmt)) &&
-            (identical(other.satsAmt, satsAmt) ||
-                const DeepCollectionEquality()
-                    .equals(other.satsAmt, satsAmt)) &&
-            (identical(other.editingBtc, editingBtc) ||
-                const DeepCollectionEquality()
-                    .equals(other.editingBtc, editingBtc)) &&
-            (identical(other.rates, rates) ||
-                const DeepCollectionEquality().equals(other.rates, rates)) &&
-            (identical(other.loadingRates, loadingRates) ||
-                const DeepCollectionEquality()
-                    .equals(other.loadingRates, loadingRates)) &&
-            (identical(other.loadingRatesError, loadingRatesError) ||
-                const DeepCollectionEquality()
-                    .equals(other.loadingRatesError, loadingRatesError)));
+        (other.runtimeType == runtimeType &&
+            other is _$_CalculatorState &&
+            const DeepCollectionEquality()
+                .equals(other.btcSelected, btcSelected) &&
+            const DeepCollectionEquality()
+                .equals(other.selectedRate, selectedRate) &&
+            const DeepCollectionEquality()
+                .equals(other.currencyAmt, currencyAmt) &&
+            const DeepCollectionEquality().equals(other.satsAmt, satsAmt) &&
+            const DeepCollectionEquality()
+                .equals(other.editingBtc, editingBtc) &&
+            const DeepCollectionEquality().equals(other._rates, _rates) &&
+            const DeepCollectionEquality()
+                .equals(other.loadingRates, loadingRates) &&
+            const DeepCollectionEquality()
+                .equals(other.loadingRatesError, loadingRatesError));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(btcSelected) ^
-      const DeepCollectionEquality().hash(selectedRate) ^
-      const DeepCollectionEquality().hash(currencyAmt) ^
-      const DeepCollectionEquality().hash(satsAmt) ^
-      const DeepCollectionEquality().hash(editingBtc) ^
-      const DeepCollectionEquality().hash(rates) ^
-      const DeepCollectionEquality().hash(loadingRates) ^
-      const DeepCollectionEquality().hash(loadingRatesError);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(btcSelected),
+      const DeepCollectionEquality().hash(selectedRate),
+      const DeepCollectionEquality().hash(currencyAmt),
+      const DeepCollectionEquality().hash(satsAmt),
+      const DeepCollectionEquality().hash(editingBtc),
+      const DeepCollectionEquality().hash(_rates),
+      const DeepCollectionEquality().hash(loadingRates),
+      const DeepCollectionEquality().hash(loadingRatesError));
 
   @JsonKey(ignore: true)
   @override
-  _$CalculatorStateCopyWith<_CalculatorState> get copyWith =>
-      __$CalculatorStateCopyWithImpl<_CalculatorState>(this, _$identity);
+  _$$_CalculatorStateCopyWith<_$_CalculatorState> get copyWith =>
+      __$$_CalculatorStateCopyWithImpl<_$_CalculatorState>(this, _$identity);
 }
 
 abstract class _CalculatorState implements CalculatorState {
   const factory _CalculatorState(
-      {bool btcSelected,
-      Rate? selectedRate,
-      String currencyAmt,
-      String satsAmt,
-      bool editingBtc,
-      List<Rate>? rates,
-      bool loadingRates,
-      String loadingRatesError}) = _$_CalculatorState;
+      {final bool btcSelected,
+      final Rate? selectedRate,
+      final String currencyAmt,
+      final String satsAmt,
+      final bool editingBtc,
+      final List<Rate>? rates,
+      final bool loadingRates,
+      final String loadingRatesError}) = _$_CalculatorState;
 
   @override
   bool get btcSelected => throw _privateConstructorUsedError;
@@ -341,6 +313,6 @@ abstract class _CalculatorState implements CalculatorState {
   String get loadingRatesError => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$CalculatorStateCopyWith<_CalculatorState> get copyWith =>
+  _$$_CalculatorStateCopyWith<_$_CalculatorState> get copyWith =>
       throw _privateConstructorUsedError;
 }

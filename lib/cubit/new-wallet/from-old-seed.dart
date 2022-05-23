@@ -7,6 +7,7 @@ import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
@@ -41,8 +42,9 @@ class SeedImportWalletState with _$SeedImportWalletState {
   }
 
   bool canGoBack() {
-    if (currentStep == SeedImportWalletSteps.warning) return true;
-    return false;
+    // if (currentStep == SeedImportWalletSteps.warning)
+    return true;
+    // return false;
   }
 
   double completePercent() =>
@@ -76,6 +78,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     this._wallets,
     this._blockchainCubit,
     this._nodeAddressCubit,
+    this._torCubit,
     this._importCubit, {
     String walletLabel = '',
   }) : super(
@@ -102,10 +105,11 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   final SeedImportCubit _importCubit;
   late StreamSubscription _importSub;
   final NodeAddressCubit _nodeAddressCubit;
-
+  final TorCubit _torCubit;
   static const invalidLabelError = 'Invalid Label';
   static const signerWalletType = 'SIGNER';
   static const wpkhScript = 'wpkh';
+  static const wshScript = 'wsh';
   static const emptyString = '';
 
   void nextClicked() async {
@@ -164,9 +168,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     emit(state.copyWith(walletLabel: text, walletLabelError: ''));
   }
 
-  void _saveClicked() async {
+  Future<void> _saveClicked() async {
     if (state.walletLabel.length < 3 ||
-        state.walletLabel.length > 10 ||
+        state.walletLabel.length > 12 ||
         state.walletLabel.contains(' ')) {
       emit(state.copyWith(walletLabelError: invalidLabelError));
       return;
@@ -199,9 +203,13 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       throw SMError.fromJson(descriptor.error!);
     }
 
+    final nodeAddress = _nodeAddressCubit.state.getAddress();
+    final socks5 = _torCubit.state.getSocks5();
+
     var history = _core.getHistory(
       descriptor: descriptor.result!,
-      nodeAddress: _nodeAddressCubit.toString(),
+      nodeAddress: nodeAddress,
+      socks5: socks5,
     );
     var recievedCount = 0;
 
@@ -216,7 +224,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
     var balance = _core.syncBalance(
       descriptor: descriptor.result!,
-      nodeAddress: _nodeAddressCubit.toString(),
+      nodeAddress: nodeAddress,
+      socks5: socks5,
     );
     if (balance.hasError) {
       balance = const R(result: 0);

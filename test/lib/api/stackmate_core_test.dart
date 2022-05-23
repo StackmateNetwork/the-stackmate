@@ -2,7 +2,6 @@
 import 'package:bitcoin/types.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sats/api/stackmate-core.dart';
-import 'package:sats/model/transaction.dart';
 
 void main() {
   const myAddress0 = 'tb1q6aw9ehm7zg7ppp5v0xdz3guwwu3fdehpypf6e2';
@@ -79,30 +78,21 @@ void main() {
     final history = libstackmate.getHistory(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
+      socks5: 'none',
     );
     assert(!history.hasError);
 
-    final int totalIn = history.result!.fold(
-      0,
-      (int sum, Transaction item) =>
-          (item.sent == 0) ? sum + item.received : sum + 0,
-    );
-    final int totalOut = history.result!.fold(
-      0,
-      (int sum, Transaction item) =>
-          (item.sent != 0) ? sum + item.sent + item.fee : sum + 0,
-    );
-    final inferredBalance = totalIn - totalOut;
     final balance = libstackmate.syncBalance(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
+      socks5: 'none',
     );
     assert(!balance.hasError);
-    assert(balance.result! == inferredBalance);
 
     final utxos = libstackmate.getUTXOSet(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
+      socks5: 'none',
     );
     assert(!utxos.hasError);
 
@@ -113,6 +103,7 @@ void main() {
     final fees = libstackmate.estimateNetworkFee(
       network: network,
       nodeAddress: nodeAddress,
+      socks5: 'none',
       targetSize: '6',
     );
     assert(!fees.hasError);
@@ -122,6 +113,7 @@ void main() {
     final dummyBuildPsbt = libstackmate.buildTransaction(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
+      socks5: 'none',
       txOutputs: txOutputs,
       feeAbsolute: '1000',
       policyPath: '',
@@ -150,6 +142,7 @@ void main() {
     final finalBuildPsbt = libstackmate.buildTransaction(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
+      socks5: 'none',
       txOutputs: txOutputs,
       feeAbsolute: absoluteFees.result!.absolute.toString(),
       policyPath: '',
@@ -187,6 +180,7 @@ void main() {
     final txid = await libstackmate.broadcastTransaction(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
+      socks5: 'none',
       signedPSBT: signedPsbt.result!.psbt,
     );
     assert(!txid.hasError);
@@ -196,6 +190,7 @@ void main() {
     var response = await libstackmate.broadcastTransaction(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
+      socks5: 'none',
       signedPSBT: finalizedPsbt,
     );
     assert(response.hasError);
@@ -205,6 +200,7 @@ void main() {
     response = await libstackmate.broadcastTransaction(
       descriptor: '$expPublicDesc lko',
       nodeAddress: nodeAddress,
+      socks5: 'none',
       signedPSBT: finalizedPsbt,
     );
     assert(response.hasError);
@@ -214,6 +210,7 @@ void main() {
     await libstackmate.broadcastTransaction(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
+      socks5: 'none',
       signedPSBT: 'finalizedPsbt',
     );
     assert(response.hasError);

@@ -29,6 +29,7 @@ typedef CompileT = Pointer<Utf8> Function(
 typedef SyncT = Pointer<Utf8> Function(
   Pointer<Utf8> descriptor,
   Pointer<Utf8> node_address,
+  Pointer<Utf8> socks5,
 );
 
 typedef AddressT = Pointer<Utf8> Function(
@@ -39,6 +40,7 @@ typedef AddressT = Pointer<Utf8> Function(
 typedef BuildT = Pointer<Utf8> Function(
   Pointer<Utf8> descriptor,
   Pointer<Utf8> node_address,
+  Pointer<Utf8> socks5,
   Pointer<Utf8> tx_outputs,
   Pointer<Utf8> fee_absolute,
   Pointer<Utf8> policyPath,
@@ -58,12 +60,14 @@ typedef SignT = Pointer<Utf8> Function(
 typedef BroadcastT = Pointer<Utf8> Function(
   Pointer<Utf8> descriptor,
   Pointer<Utf8> node_address,
+  Pointer<Utf8> socks5,
   Pointer<Utf8> signed_psbt,
 );
 
 typedef EstimateFeeT = Pointer<Utf8> Function(
   Pointer<Utf8> network,
   Pointer<Utf8> node_address,
+  Pointer<Utf8> socks5,
   Pointer<Utf8> conf_target,
 );
 
@@ -89,4 +93,5 @@ typedef DaysT = Pointer<Utf8> Function(
 typedef HeightT = Pointer<Utf8> Function(
   Pointer<Utf8> network,
   Pointer<Utf8> node_address,
+  Pointer<Utf8> socks5,
 );

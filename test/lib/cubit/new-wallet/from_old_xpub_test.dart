@@ -8,6 +8,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -30,6 +31,7 @@ void main() {
     final logger = Logger(clipboard, logAPI);
     final chainSelectCubit = ChainSelectCubit(_storage, logger);
     final nodeAddressCubit = NodeAddressCubit(_storage);
+    final torCubit = TorCubit(logger);
 
     final _wallets =
         WalletsCubit(_storage, logger, chainSelectCubit, clipboard);
@@ -46,6 +48,7 @@ void main() {
         _wallets,
         chainSelectCubit,
         nodeAddressCubit,
+        torCubit,
         _importCubit,
       );
     });

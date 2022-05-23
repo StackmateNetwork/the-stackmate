@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/preferences.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
@@ -20,34 +21,77 @@ class _Home extends StatelessWidget {
               displacement: 10.0,
               onRefresh: () async {
                 c.read<WalletsCubit>().refresh();
-                c.read<FeesCubit>().update();
+                c.read<TorCubit>().start();
+                c.read<TorCubit>().checkStatus();
+                await c.read<FeesCubit>().update();
                 return;
               },
-              child: CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    stretch: true,
-                    pinned: true,
-                    expandedHeight: 326,
-                    automaticallyImplyLeading: false,
-                    backgroundColor: c.colours.background,
-                    flexibleSpace: FlexibleSpaceBar(
-                      stretchModes: const [
-                        StretchMode.fadeTitle,
-                      ],
-                      background: Column(
-                        children: [HomeHeader(), Networth(), WalletTools()],
+              child: BlocBuilder<TorCubit, TorState>(
+                builder: (context, torState) {
+                  return CustomScrollView(
+                    slivers: [
+                      SliverAppBar(
+                        stretch: true,
+                        pinned: true,
+                        expandedHeight: c.height / 3,
+                        automaticallyImplyLeading: false,
+                        backgroundColor: c.colours.background,
+                        flexibleSpace: FlexibleSpaceBar(
+                          stretchModes: const [
+                            StretchMode.fadeTitle,
+                          ],
+                          background: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 12,
+                              bottom: 12,
+                              left: 12,
+                              right: 12,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                if (torState.isRunning) ...[
+                                  HomeHeader(),
+                                  Networth(),
+                                  WalletTools()
+                                ] else ...[
+                                  HomeHeader(),
+                                ]
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildListDelegate(
-                      [
-                        Accounts(),
-                      ],
-                    ),
-                  ),
-                ],
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12,
+                                bottom: 12,
+                                left: 12,
+                                right: 12,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  if (torState.isRunning) ...[
+                                    Accounts()
+                                  ] else ...[
+                                    Container()
+                                  ]
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ),

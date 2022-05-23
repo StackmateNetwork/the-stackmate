@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'rate.dart';
@@ -11,32 +12,11 @@ part of 'rate.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Rate _$RateFromJson(Map<String, dynamic> json) {
   return _Rate.fromJson(json);
 }
-
-/// @nodoc
-class _$RateTearOff {
-  const _$RateTearOff();
-
-  _Rate call(
-      {required String symbol, required String name, required double rate}) {
-    return _Rate(
-      symbol: symbol,
-      name: name,
-      rate: rate,
-    );
-  }
-
-  Rate fromJson(Map<String, Object> json) {
-    return Rate.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Rate = _$RateTearOff();
 
 /// @nodoc
 mixin _$Rate {
@@ -88,21 +68,21 @@ class _$RateCopyWithImpl<$Res> implements $RateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$RateCopyWith<$Res> implements $RateCopyWith<$Res> {
-  factory _$RateCopyWith(_Rate value, $Res Function(_Rate) then) =
-      __$RateCopyWithImpl<$Res>;
+abstract class _$$_RateCopyWith<$Res> implements $RateCopyWith<$Res> {
+  factory _$$_RateCopyWith(_$_Rate value, $Res Function(_$_Rate) then) =
+      __$$_RateCopyWithImpl<$Res>;
   @override
   $Res call({String symbol, String name, double rate});
 }
 
 /// @nodoc
-class __$RateCopyWithImpl<$Res> extends _$RateCopyWithImpl<$Res>
-    implements _$RateCopyWith<$Res> {
-  __$RateCopyWithImpl(_Rate _value, $Res Function(_Rate) _then)
-      : super(_value, (v) => _then(v as _Rate));
+class __$$_RateCopyWithImpl<$Res> extends _$RateCopyWithImpl<$Res>
+    implements _$$_RateCopyWith<$Res> {
+  __$$_RateCopyWithImpl(_$_Rate _value, $Res Function(_$_Rate) _then)
+      : super(_value, (v) => _then(v as _$_Rate));
 
   @override
-  _Rate get _value => super._value as _Rate;
+  _$_Rate get _value => super._value as _$_Rate;
 
   @override
   $Res call({
@@ -110,7 +90,7 @@ class __$RateCopyWithImpl<$Res> extends _$RateCopyWithImpl<$Res>
     Object? name = freezed,
     Object? rate = freezed,
   }) {
-    return _then(_Rate(
+    return _then(_$_Rate(
       symbol: symbol == freezed
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
@@ -149,26 +129,25 @@ class _$_Rate implements _Rate {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Rate &&
-            (identical(other.symbol, symbol) ||
-                const DeepCollectionEquality().equals(other.symbol, symbol)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.rate, rate) ||
-                const DeepCollectionEquality().equals(other.rate, rate)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Rate &&
+            const DeepCollectionEquality().equals(other.symbol, symbol) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.rate, rate));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(symbol) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(rate);
 
   @JsonKey(ignore: true)
   @override
-  _$RateCopyWith<_Rate> get copyWith =>
-      __$RateCopyWithImpl<_Rate>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(symbol),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(rate));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_RateCopyWith<_$_Rate> get copyWith =>
+      __$$_RateCopyWithImpl<_$_Rate>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -178,9 +157,9 @@ class _$_Rate implements _Rate {
 
 abstract class _Rate implements Rate {
   const factory _Rate(
-      {required String symbol,
-      required String name,
-      required double rate}) = _$_Rate;
+      {required final String symbol,
+      required final String name,
+      required final double rate}) = _$_Rate;
 
   factory _Rate.fromJson(Map<String, dynamic> json) = _$_Rate.fromJson;
 
@@ -192,5 +171,5 @@ abstract class _Rate implements Rate {
   double get rate => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$RateCopyWith<_Rate> get copyWith => throw _privateConstructorUsedError;
+  _$$_RateCopyWith<_$_Rate> get copyWith => throw _privateConstructorUsedError;
 }

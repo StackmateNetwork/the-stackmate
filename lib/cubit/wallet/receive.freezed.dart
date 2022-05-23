@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'receive.dart';
@@ -11,28 +12,7 @@ part of 'receive.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ReceiveStateTearOff {
-  const _$ReceiveStateTearOff();
-
-  _ReceiveState call(
-      {bool loadingAddress = true,
-      String errLoadingAddress = '',
-      String address = '',
-      int index = 0}) {
-    return _ReceiveState(
-      loadingAddress: loadingAddress,
-      errLoadingAddress: errLoadingAddress,
-      address: address,
-      index: index,
-    );
-  }
-}
-
-/// @nodoc
-const $ReceiveState = _$ReceiveStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ReceiveState {
@@ -95,11 +75,11 @@ class _$ReceiveStateCopyWithImpl<$Res> implements $ReceiveStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ReceiveStateCopyWith<$Res>
+abstract class _$$_ReceiveStateCopyWith<$Res>
     implements $ReceiveStateCopyWith<$Res> {
-  factory _$ReceiveStateCopyWith(
-          _ReceiveState value, $Res Function(_ReceiveState) then) =
-      __$ReceiveStateCopyWithImpl<$Res>;
+  factory _$$_ReceiveStateCopyWith(
+          _$_ReceiveState value, $Res Function(_$_ReceiveState) then) =
+      __$$_ReceiveStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {bool loadingAddress,
@@ -109,14 +89,15 @@ abstract class _$ReceiveStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReceiveStateCopyWithImpl<$Res> extends _$ReceiveStateCopyWithImpl<$Res>
-    implements _$ReceiveStateCopyWith<$Res> {
-  __$ReceiveStateCopyWithImpl(
-      _ReceiveState _value, $Res Function(_ReceiveState) _then)
-      : super(_value, (v) => _then(v as _ReceiveState));
+class __$$_ReceiveStateCopyWithImpl<$Res>
+    extends _$ReceiveStateCopyWithImpl<$Res>
+    implements _$$_ReceiveStateCopyWith<$Res> {
+  __$$_ReceiveStateCopyWithImpl(
+      _$_ReceiveState _value, $Res Function(_$_ReceiveState) _then)
+      : super(_value, (v) => _then(v as _$_ReceiveState));
 
   @override
-  _ReceiveState get _value => super._value as _ReceiveState;
+  _$_ReceiveState get _value => super._value as _$_ReceiveState;
 
   @override
   $Res call({
@@ -125,7 +106,7 @@ class __$ReceiveStateCopyWithImpl<$Res> extends _$ReceiveStateCopyWithImpl<$Res>
     Object? address = freezed,
     Object? index = freezed,
   }) {
-    return _then(_ReceiveState(
+    return _then(_$_ReceiveState(
       loadingAddress: loadingAddress == freezed
           ? _value.loadingAddress
           : loadingAddress // ignore: cast_nullable_to_non_nullable
@@ -155,17 +136,17 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
       this.address = '',
       this.index = 0});
 
-  @JsonKey(defaultValue: true)
   @override
+  @JsonKey()
   final bool loadingAddress;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String errLoadingAddress;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String address;
-  @JsonKey(defaultValue: 0)
   @override
+  @JsonKey()
   final int index;
 
   @override
@@ -187,40 +168,36 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ReceiveState &&
-            (identical(other.loadingAddress, loadingAddress) ||
-                const DeepCollectionEquality()
-                    .equals(other.loadingAddress, loadingAddress)) &&
-            (identical(other.errLoadingAddress, errLoadingAddress) ||
-                const DeepCollectionEquality()
-                    .equals(other.errLoadingAddress, errLoadingAddress)) &&
-            (identical(other.address, address) ||
-                const DeepCollectionEquality()
-                    .equals(other.address, address)) &&
-            (identical(other.index, index) ||
-                const DeepCollectionEquality().equals(other.index, index)));
+        (other.runtimeType == runtimeType &&
+            other is _$_ReceiveState &&
+            const DeepCollectionEquality()
+                .equals(other.loadingAddress, loadingAddress) &&
+            const DeepCollectionEquality()
+                .equals(other.errLoadingAddress, errLoadingAddress) &&
+            const DeepCollectionEquality().equals(other.address, address) &&
+            const DeepCollectionEquality().equals(other.index, index));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(loadingAddress) ^
-      const DeepCollectionEquality().hash(errLoadingAddress) ^
-      const DeepCollectionEquality().hash(address) ^
-      const DeepCollectionEquality().hash(index);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(loadingAddress),
+      const DeepCollectionEquality().hash(errLoadingAddress),
+      const DeepCollectionEquality().hash(address),
+      const DeepCollectionEquality().hash(index));
 
   @JsonKey(ignore: true)
   @override
-  _$ReceiveStateCopyWith<_ReceiveState> get copyWith =>
-      __$ReceiveStateCopyWithImpl<_ReceiveState>(this, _$identity);
+  _$$_ReceiveStateCopyWith<_$_ReceiveState> get copyWith =>
+      __$$_ReceiveStateCopyWithImpl<_$_ReceiveState>(this, _$identity);
 }
 
 abstract class _ReceiveState implements ReceiveState {
   const factory _ReceiveState(
-      {bool loadingAddress,
-      String errLoadingAddress,
-      String address,
-      int index}) = _$_ReceiveState;
+      {final bool loadingAddress,
+      final String errLoadingAddress,
+      final String address,
+      final int index}) = _$_ReceiveState;
 
   @override
   bool get loadingAddress => throw _privateConstructorUsedError;
@@ -232,6 +209,6 @@ abstract class _ReceiveState implements ReceiveState {
   int get index => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ReceiveStateCopyWith<_ReceiveState> get copyWith =>
+  _$$_ReceiveStateCopyWith<_$_ReceiveState> get copyWith =>
       throw _privateConstructorUsedError;
 }

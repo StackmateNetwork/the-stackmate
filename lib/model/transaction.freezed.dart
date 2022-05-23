@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'transaction.dart';
@@ -11,40 +12,11 @@ part of 'transaction.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Transaction _$TransactionFromJson(Map<String, dynamic> json) {
   return _Transaction.fromJson(json);
 }
-
-/// @nodoc
-class _$TransactionTearOff {
-  const _$TransactionTearOff();
-
-  _Transaction call(
-      {@HiveField(0) required int timestamp,
-      @HiveField(1) required int height,
-      @HiveField(2) required String txid,
-      @HiveField(3) required int received,
-      @HiveField(4) required int sent,
-      @HiveField(5) required int fee}) {
-    return _Transaction(
-      timestamp: timestamp,
-      height: height,
-      txid: txid,
-      received: received,
-      sent: sent,
-      fee: fee,
-    );
-  }
-
-  Transaction fromJson(Map<String, Object> json) {
-    return Transaction.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Transaction = _$TransactionTearOff();
 
 /// @nodoc
 mixin _$Transaction {
@@ -128,11 +100,11 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$TransactionCopyWith<$Res>
+abstract class _$$_TransactionCopyWith<$Res>
     implements $TransactionCopyWith<$Res> {
-  factory _$TransactionCopyWith(
-          _Transaction value, $Res Function(_Transaction) then) =
-      __$TransactionCopyWithImpl<$Res>;
+  factory _$$_TransactionCopyWith(
+          _$_Transaction value, $Res Function(_$_Transaction) then) =
+      __$$_TransactionCopyWithImpl<$Res>;
   @override
   $Res call(
       {@HiveField(0) int timestamp,
@@ -144,14 +116,14 @@ abstract class _$TransactionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$TransactionCopyWithImpl<$Res> extends _$TransactionCopyWithImpl<$Res>
-    implements _$TransactionCopyWith<$Res> {
-  __$TransactionCopyWithImpl(
-      _Transaction _value, $Res Function(_Transaction) _then)
-      : super(_value, (v) => _then(v as _Transaction));
+class __$$_TransactionCopyWithImpl<$Res> extends _$TransactionCopyWithImpl<$Res>
+    implements _$$_TransactionCopyWith<$Res> {
+  __$$_TransactionCopyWithImpl(
+      _$_Transaction _value, $Res Function(_$_Transaction) _then)
+      : super(_value, (v) => _then(v as _$_Transaction));
 
   @override
-  _Transaction get _value => super._value as _Transaction;
+  _$_Transaction get _value => super._value as _$_Transaction;
 
   @override
   $Res call({
@@ -162,7 +134,7 @@ class __$TransactionCopyWithImpl<$Res> extends _$TransactionCopyWithImpl<$Res>
     Object? sent = freezed,
     Object? fee = freezed,
   }) {
-    return _then(_Transaction(
+    return _then(_$_Transaction(
       timestamp: timestamp == freezed
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -234,37 +206,31 @@ class _$_Transaction extends _Transaction {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Transaction &&
-            (identical(other.timestamp, timestamp) ||
-                const DeepCollectionEquality()
-                    .equals(other.timestamp, timestamp)) &&
-            (identical(other.height, height) ||
-                const DeepCollectionEquality().equals(other.height, height)) &&
-            (identical(other.txid, txid) ||
-                const DeepCollectionEquality().equals(other.txid, txid)) &&
-            (identical(other.received, received) ||
-                const DeepCollectionEquality()
-                    .equals(other.received, received)) &&
-            (identical(other.sent, sent) ||
-                const DeepCollectionEquality().equals(other.sent, sent)) &&
-            (identical(other.fee, fee) ||
-                const DeepCollectionEquality().equals(other.fee, fee)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Transaction &&
+            const DeepCollectionEquality().equals(other.timestamp, timestamp) &&
+            const DeepCollectionEquality().equals(other.height, height) &&
+            const DeepCollectionEquality().equals(other.txid, txid) &&
+            const DeepCollectionEquality().equals(other.received, received) &&
+            const DeepCollectionEquality().equals(other.sent, sent) &&
+            const DeepCollectionEquality().equals(other.fee, fee));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(timestamp) ^
-      const DeepCollectionEquality().hash(height) ^
-      const DeepCollectionEquality().hash(txid) ^
-      const DeepCollectionEquality().hash(received) ^
-      const DeepCollectionEquality().hash(sent) ^
-      const DeepCollectionEquality().hash(fee);
 
   @JsonKey(ignore: true)
   @override
-  _$TransactionCopyWith<_Transaction> get copyWith =>
-      __$TransactionCopyWithImpl<_Transaction>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(timestamp),
+      const DeepCollectionEquality().hash(height),
+      const DeepCollectionEquality().hash(txid),
+      const DeepCollectionEquality().hash(received),
+      const DeepCollectionEquality().hash(sent),
+      const DeepCollectionEquality().hash(fee));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_TransactionCopyWith<_$_Transaction> get copyWith =>
+      __$$_TransactionCopyWithImpl<_$_Transaction>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -274,12 +240,12 @@ class _$_Transaction extends _Transaction {
 
 abstract class _Transaction extends Transaction {
   const factory _Transaction(
-      {@HiveField(0) required int timestamp,
-      @HiveField(1) required int height,
-      @HiveField(2) required String txid,
-      @HiveField(3) required int received,
-      @HiveField(4) required int sent,
-      @HiveField(5) required int fee}) = _$_Transaction;
+      {@HiveField(0) required final int timestamp,
+      @HiveField(1) required final int height,
+      @HiveField(2) required final String txid,
+      @HiveField(3) required final int received,
+      @HiveField(4) required final int sent,
+      @HiveField(5) required final int fee}) = _$_Transaction;
   const _Transaction._() : super._();
 
   factory _Transaction.fromJson(Map<String, dynamic> json) =
@@ -305,6 +271,6 @@ abstract class _Transaction extends Transaction {
   int get fee => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$TransactionCopyWith<_Transaction> get copyWith =>
+  _$$_TransactionCopyWith<_$_Transaction> get copyWith =>
       throw _privateConstructorUsedError;
 }

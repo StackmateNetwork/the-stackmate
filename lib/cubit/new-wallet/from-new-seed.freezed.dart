@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'from-new-seed.dart';
@@ -11,32 +12,7 @@ part of 'from-new-seed.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SeedGenerateWalletStateTearOff {
-  const _$SeedGenerateWalletStateTearOff();
-
-  _SeedGenerateWalletState call(
-      {SeedGenerateWalletSteps currentStep = SeedGenerateWalletSteps.warning,
-      String walletLabel = '',
-      String walletLabelError = '',
-      bool savingWallet = false,
-      String savingWalletError = '',
-      bool newWalletSaved = false}) {
-    return _SeedGenerateWalletState(
-      currentStep: currentStep,
-      walletLabel: walletLabel,
-      walletLabelError: walletLabelError,
-      savingWallet: savingWallet,
-      savingWalletError: savingWalletError,
-      newWalletSaved: newWalletSaved,
-    );
-  }
-}
-
-/// @nodoc
-const $SeedGenerateWalletState = _$SeedGenerateWalletStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$SeedGenerateWalletState {
@@ -114,11 +90,11 @@ class _$SeedGenerateWalletStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$SeedGenerateWalletStateCopyWith<$Res>
+abstract class _$$_SeedGenerateWalletStateCopyWith<$Res>
     implements $SeedGenerateWalletStateCopyWith<$Res> {
-  factory _$SeedGenerateWalletStateCopyWith(_SeedGenerateWalletState value,
-          $Res Function(_SeedGenerateWalletState) then) =
-      __$SeedGenerateWalletStateCopyWithImpl<$Res>;
+  factory _$$_SeedGenerateWalletStateCopyWith(_$_SeedGenerateWalletState value,
+          $Res Function(_$_SeedGenerateWalletState) then) =
+      __$$_SeedGenerateWalletStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {SeedGenerateWalletSteps currentStep,
@@ -130,16 +106,16 @@ abstract class _$SeedGenerateWalletStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SeedGenerateWalletStateCopyWithImpl<$Res>
+class __$$_SeedGenerateWalletStateCopyWithImpl<$Res>
     extends _$SeedGenerateWalletStateCopyWithImpl<$Res>
-    implements _$SeedGenerateWalletStateCopyWith<$Res> {
-  __$SeedGenerateWalletStateCopyWithImpl(_SeedGenerateWalletState _value,
-      $Res Function(_SeedGenerateWalletState) _then)
-      : super(_value, (v) => _then(v as _SeedGenerateWalletState));
+    implements _$$_SeedGenerateWalletStateCopyWith<$Res> {
+  __$$_SeedGenerateWalletStateCopyWithImpl(_$_SeedGenerateWalletState _value,
+      $Res Function(_$_SeedGenerateWalletState) _then)
+      : super(_value, (v) => _then(v as _$_SeedGenerateWalletState));
 
   @override
-  _SeedGenerateWalletState get _value =>
-      super._value as _SeedGenerateWalletState;
+  _$_SeedGenerateWalletState get _value =>
+      super._value as _$_SeedGenerateWalletState;
 
   @override
   $Res call({
@@ -150,7 +126,7 @@ class __$SeedGenerateWalletStateCopyWithImpl<$Res>
     Object? savingWalletError = freezed,
     Object? newWalletSaved = freezed,
   }) {
-    return _then(_SeedGenerateWalletState(
+    return _then(_$_SeedGenerateWalletState(
       currentStep: currentStep == freezed
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
@@ -191,23 +167,23 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState {
       this.newWalletSaved = false})
       : super._();
 
-  @JsonKey(defaultValue: SeedGenerateWalletSteps.warning)
   @override
+  @JsonKey()
   final SeedGenerateWalletSteps currentStep;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String walletLabel;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String walletLabelError;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool savingWallet;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String savingWalletError;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool newWalletSaved;
 
   @override
@@ -218,52 +194,48 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SeedGenerateWalletState &&
-            (identical(other.currentStep, currentStep) ||
-                const DeepCollectionEquality()
-                    .equals(other.currentStep, currentStep)) &&
-            (identical(other.walletLabel, walletLabel) ||
-                const DeepCollectionEquality()
-                    .equals(other.walletLabel, walletLabel)) &&
-            (identical(other.walletLabelError, walletLabelError) ||
-                const DeepCollectionEquality()
-                    .equals(other.walletLabelError, walletLabelError)) &&
-            (identical(other.savingWallet, savingWallet) ||
-                const DeepCollectionEquality()
-                    .equals(other.savingWallet, savingWallet)) &&
-            (identical(other.savingWalletError, savingWalletError) ||
-                const DeepCollectionEquality()
-                    .equals(other.savingWalletError, savingWalletError)) &&
-            (identical(other.newWalletSaved, newWalletSaved) ||
-                const DeepCollectionEquality()
-                    .equals(other.newWalletSaved, newWalletSaved)));
+        (other.runtimeType == runtimeType &&
+            other is _$_SeedGenerateWalletState &&
+            const DeepCollectionEquality()
+                .equals(other.currentStep, currentStep) &&
+            const DeepCollectionEquality()
+                .equals(other.walletLabel, walletLabel) &&
+            const DeepCollectionEquality()
+                .equals(other.walletLabelError, walletLabelError) &&
+            const DeepCollectionEquality()
+                .equals(other.savingWallet, savingWallet) &&
+            const DeepCollectionEquality()
+                .equals(other.savingWalletError, savingWalletError) &&
+            const DeepCollectionEquality()
+                .equals(other.newWalletSaved, newWalletSaved));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(currentStep) ^
-      const DeepCollectionEquality().hash(walletLabel) ^
-      const DeepCollectionEquality().hash(walletLabelError) ^
-      const DeepCollectionEquality().hash(savingWallet) ^
-      const DeepCollectionEquality().hash(savingWalletError) ^
-      const DeepCollectionEquality().hash(newWalletSaved);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(currentStep),
+      const DeepCollectionEquality().hash(walletLabel),
+      const DeepCollectionEquality().hash(walletLabelError),
+      const DeepCollectionEquality().hash(savingWallet),
+      const DeepCollectionEquality().hash(savingWalletError),
+      const DeepCollectionEquality().hash(newWalletSaved));
 
   @JsonKey(ignore: true)
   @override
-  _$SeedGenerateWalletStateCopyWith<_SeedGenerateWalletState> get copyWith =>
-      __$SeedGenerateWalletStateCopyWithImpl<_SeedGenerateWalletState>(
-          this, _$identity);
+  _$$_SeedGenerateWalletStateCopyWith<_$_SeedGenerateWalletState>
+      get copyWith =>
+          __$$_SeedGenerateWalletStateCopyWithImpl<_$_SeedGenerateWalletState>(
+              this, _$identity);
 }
 
 abstract class _SeedGenerateWalletState extends SeedGenerateWalletState {
   const factory _SeedGenerateWalletState(
-      {SeedGenerateWalletSteps currentStep,
-      String walletLabel,
-      String walletLabelError,
-      bool savingWallet,
-      String savingWalletError,
-      bool newWalletSaved}) = _$_SeedGenerateWalletState;
+      {final SeedGenerateWalletSteps currentStep,
+      final String walletLabel,
+      final String walletLabelError,
+      final bool savingWallet,
+      final String savingWalletError,
+      final bool newWalletSaved}) = _$_SeedGenerateWalletState;
   const _SeedGenerateWalletState._() : super._();
 
   @override
@@ -280,6 +252,6 @@ abstract class _SeedGenerateWalletState extends SeedGenerateWalletState {
   bool get newWalletSaved => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SeedGenerateWalletStateCopyWith<_SeedGenerateWalletState> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_SeedGenerateWalletStateCopyWith<_$_SeedGenerateWalletState>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'tor.dart';
@@ -11,27 +12,13 @@ part of 'tor.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$TorStateTearOff {
-  const _$TorStateTearOff();
-
-  _TorState call({int port = 9150, bool isRunning = false}) {
-    return _TorState(
-      port: port,
-      isRunning: isRunning,
-    );
-  }
-}
-
-/// @nodoc
-const $TorState = _$TorStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$TorState {
   int get port => throw _privateConstructorUsedError;
   bool get isRunning => throw _privateConstructorUsedError;
+  String get errConnection => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TorStateCopyWith<TorState> get copyWith =>
@@ -42,7 +29,7 @@ mixin _$TorState {
 abstract class $TorStateCopyWith<$Res> {
   factory $TorStateCopyWith(TorState value, $Res Function(TorState) then) =
       _$TorStateCopyWithImpl<$Res>;
-  $Res call({int port, bool isRunning});
+  $Res call({int port, bool isRunning, String errConnection});
 }
 
 /// @nodoc
@@ -57,6 +44,7 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
   $Res call({
     Object? port = freezed,
     Object? isRunning = freezed,
+    Object? errConnection = freezed,
   }) {
     return _then(_value.copyWith(
       port: port == freezed
@@ -67,33 +55,40 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
           ? _value.isRunning
           : isRunning // ignore: cast_nullable_to_non_nullable
               as bool,
+      errConnection: errConnection == freezed
+          ? _value.errConnection
+          : errConnection // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
-  factory _$TorStateCopyWith(_TorState value, $Res Function(_TorState) then) =
-      __$TorStateCopyWithImpl<$Res>;
+abstract class _$$_TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
+  factory _$$_TorStateCopyWith(
+          _$_TorState value, $Res Function(_$_TorState) then) =
+      __$$_TorStateCopyWithImpl<$Res>;
   @override
-  $Res call({int port, bool isRunning});
+  $Res call({int port, bool isRunning, String errConnection});
 }
 
 /// @nodoc
-class __$TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
-    implements _$TorStateCopyWith<$Res> {
-  __$TorStateCopyWithImpl(_TorState _value, $Res Function(_TorState) _then)
-      : super(_value, (v) => _then(v as _TorState));
+class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
+    implements _$$_TorStateCopyWith<$Res> {
+  __$$_TorStateCopyWithImpl(
+      _$_TorState _value, $Res Function(_$_TorState) _then)
+      : super(_value, (v) => _then(v as _$_TorState));
 
   @override
-  _TorState get _value => super._value as _TorState;
+  _$_TorState get _value => super._value as _$_TorState;
 
   @override
   $Res call({
     Object? port = freezed,
     Object? isRunning = freezed,
+    Object? errConnection = freezed,
   }) {
-    return _then(_TorState(
+    return _then(_$_TorState(
       port: port == freezed
           ? _value.port
           : port // ignore: cast_nullable_to_non_nullable
@@ -102,59 +97,75 @@ class __$TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
           ? _value.isRunning
           : isRunning // ignore: cast_nullable_to_non_nullable
               as bool,
+      errConnection: errConnection == freezed
+          ? _value.errConnection
+          : errConnection // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_TorState implements _TorState {
-  const _$_TorState({this.port = 9150, this.isRunning = false});
+class _$_TorState extends _TorState {
+  const _$_TorState(
+      {this.port = 0, this.isRunning = false, this.errConnection = ''})
+      : super._();
 
-  @JsonKey(defaultValue: 9150)
   @override
+  @JsonKey()
   final int port;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool isRunning;
+  @override
+  @JsonKey()
+  final String errConnection;
 
   @override
   String toString() {
-    return 'TorState(port: $port, isRunning: $isRunning)';
+    return 'TorState(port: $port, isRunning: $isRunning, errConnection: $errConnection)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _TorState &&
-            (identical(other.port, port) ||
-                const DeepCollectionEquality().equals(other.port, port)) &&
-            (identical(other.isRunning, isRunning) ||
-                const DeepCollectionEquality()
-                    .equals(other.isRunning, isRunning)));
+        (other.runtimeType == runtimeType &&
+            other is _$_TorState &&
+            const DeepCollectionEquality().equals(other.port, port) &&
+            const DeepCollectionEquality().equals(other.isRunning, isRunning) &&
+            const DeepCollectionEquality()
+                .equals(other.errConnection, errConnection));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(port) ^
-      const DeepCollectionEquality().hash(isRunning);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(port),
+      const DeepCollectionEquality().hash(isRunning),
+      const DeepCollectionEquality().hash(errConnection));
 
   @JsonKey(ignore: true)
   @override
-  _$TorStateCopyWith<_TorState> get copyWith =>
-      __$TorStateCopyWithImpl<_TorState>(this, _$identity);
+  _$$_TorStateCopyWith<_$_TorState> get copyWith =>
+      __$$_TorStateCopyWithImpl<_$_TorState>(this, _$identity);
 }
 
-abstract class _TorState implements TorState {
-  const factory _TorState({int port, bool isRunning}) = _$_TorState;
+abstract class _TorState extends TorState {
+  const factory _TorState(
+      {final int port,
+      final bool isRunning,
+      final String errConnection}) = _$_TorState;
+  const _TorState._() : super._();
 
   @override
   int get port => throw _privateConstructorUsedError;
   @override
   bool get isRunning => throw _privateConstructorUsedError;
   @override
+  String get errConnection => throw _privateConstructorUsedError;
+  @override
   @JsonKey(ignore: true)
-  _$TorStateCopyWith<_TorState> get copyWith =>
+  _$$_TorStateCopyWith<_$_TorState> get copyWith =>
       throw _privateConstructorUsedError;
 }

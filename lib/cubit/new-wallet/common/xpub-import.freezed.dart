@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'xpub-import.dart';
@@ -11,32 +12,7 @@ part of 'xpub-import.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$XpubImportStateTearOff {
-  const _$XpubImportStateTearOff();
-
-  _SeedImportXpubState call(
-      {String xpub = '',
-      String fingerPrint = '',
-      String path = '',
-      String errXpub = '',
-      bool cameraOpened = false,
-      bool detailsReady = false}) {
-    return _SeedImportXpubState(
-      xpub: xpub,
-      fingerPrint: fingerPrint,
-      path: path,
-      errXpub: errXpub,
-      cameraOpened: cameraOpened,
-      detailsReady: detailsReady,
-    );
-  }
-}
-
-/// @nodoc
-const $XpubImportState = _$XpubImportStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$XpubImportState {
@@ -114,11 +90,11 @@ class _$XpubImportStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$SeedImportXpubStateCopyWith<$Res>
+abstract class _$$_SeedImportXpubStateCopyWith<$Res>
     implements $XpubImportStateCopyWith<$Res> {
-  factory _$SeedImportXpubStateCopyWith(_SeedImportXpubState value,
-          $Res Function(_SeedImportXpubState) then) =
-      __$SeedImportXpubStateCopyWithImpl<$Res>;
+  factory _$$_SeedImportXpubStateCopyWith(_$_SeedImportXpubState value,
+          $Res Function(_$_SeedImportXpubState) then) =
+      __$$_SeedImportXpubStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {String xpub,
@@ -130,15 +106,15 @@ abstract class _$SeedImportXpubStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SeedImportXpubStateCopyWithImpl<$Res>
+class __$$_SeedImportXpubStateCopyWithImpl<$Res>
     extends _$XpubImportStateCopyWithImpl<$Res>
-    implements _$SeedImportXpubStateCopyWith<$Res> {
-  __$SeedImportXpubStateCopyWithImpl(
-      _SeedImportXpubState _value, $Res Function(_SeedImportXpubState) _then)
-      : super(_value, (v) => _then(v as _SeedImportXpubState));
+    implements _$$_SeedImportXpubStateCopyWith<$Res> {
+  __$$_SeedImportXpubStateCopyWithImpl(_$_SeedImportXpubState _value,
+      $Res Function(_$_SeedImportXpubState) _then)
+      : super(_value, (v) => _then(v as _$_SeedImportXpubState));
 
   @override
-  _SeedImportXpubState get _value => super._value as _SeedImportXpubState;
+  _$_SeedImportXpubState get _value => super._value as _$_SeedImportXpubState;
 
   @override
   $Res call({
@@ -149,7 +125,7 @@ class __$SeedImportXpubStateCopyWithImpl<$Res>
     Object? cameraOpened = freezed,
     Object? detailsReady = freezed,
   }) {
-    return _then(_SeedImportXpubState(
+    return _then(_$_SeedImportXpubState(
       xpub: xpub == freezed
           ? _value.xpub
           : xpub // ignore: cast_nullable_to_non_nullable
@@ -190,23 +166,23 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
       this.detailsReady = false})
       : super._();
 
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String xpub;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String fingerPrint;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String path;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String errXpub;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool cameraOpened;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool detailsReady;
 
   @override
@@ -217,50 +193,44 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SeedImportXpubState &&
-            (identical(other.xpub, xpub) ||
-                const DeepCollectionEquality().equals(other.xpub, xpub)) &&
-            (identical(other.fingerPrint, fingerPrint) ||
-                const DeepCollectionEquality()
-                    .equals(other.fingerPrint, fingerPrint)) &&
-            (identical(other.path, path) ||
-                const DeepCollectionEquality().equals(other.path, path)) &&
-            (identical(other.errXpub, errXpub) ||
-                const DeepCollectionEquality()
-                    .equals(other.errXpub, errXpub)) &&
-            (identical(other.cameraOpened, cameraOpened) ||
-                const DeepCollectionEquality()
-                    .equals(other.cameraOpened, cameraOpened)) &&
-            (identical(other.detailsReady, detailsReady) ||
-                const DeepCollectionEquality()
-                    .equals(other.detailsReady, detailsReady)));
+        (other.runtimeType == runtimeType &&
+            other is _$_SeedImportXpubState &&
+            const DeepCollectionEquality().equals(other.xpub, xpub) &&
+            const DeepCollectionEquality()
+                .equals(other.fingerPrint, fingerPrint) &&
+            const DeepCollectionEquality().equals(other.path, path) &&
+            const DeepCollectionEquality().equals(other.errXpub, errXpub) &&
+            const DeepCollectionEquality()
+                .equals(other.cameraOpened, cameraOpened) &&
+            const DeepCollectionEquality()
+                .equals(other.detailsReady, detailsReady));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(xpub) ^
-      const DeepCollectionEquality().hash(fingerPrint) ^
-      const DeepCollectionEquality().hash(path) ^
-      const DeepCollectionEquality().hash(errXpub) ^
-      const DeepCollectionEquality().hash(cameraOpened) ^
-      const DeepCollectionEquality().hash(detailsReady);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(xpub),
+      const DeepCollectionEquality().hash(fingerPrint),
+      const DeepCollectionEquality().hash(path),
+      const DeepCollectionEquality().hash(errXpub),
+      const DeepCollectionEquality().hash(cameraOpened),
+      const DeepCollectionEquality().hash(detailsReady));
 
   @JsonKey(ignore: true)
   @override
-  _$SeedImportXpubStateCopyWith<_SeedImportXpubState> get copyWith =>
-      __$SeedImportXpubStateCopyWithImpl<_SeedImportXpubState>(
+  _$$_SeedImportXpubStateCopyWith<_$_SeedImportXpubState> get copyWith =>
+      __$$_SeedImportXpubStateCopyWithImpl<_$_SeedImportXpubState>(
           this, _$identity);
 }
 
 abstract class _SeedImportXpubState extends XpubImportState {
   const factory _SeedImportXpubState(
-      {String xpub,
-      String fingerPrint,
-      String path,
-      String errXpub,
-      bool cameraOpened,
-      bool detailsReady}) = _$_SeedImportXpubState;
+      {final String xpub,
+      final String fingerPrint,
+      final String path,
+      final String errXpub,
+      final bool cameraOpened,
+      final bool detailsReady}) = _$_SeedImportXpubState;
   const _SeedImportXpubState._() : super._();
 
   @override
@@ -277,6 +247,6 @@ abstract class _SeedImportXpubState extends XpubImportState {
   bool get detailsReady => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SeedImportXpubStateCopyWith<_SeedImportXpubState> get copyWith =>
+  _$$_SeedImportXpubStateCopyWith<_$_SeedImportXpubState> get copyWith =>
       throw _privateConstructorUsedError;
 }

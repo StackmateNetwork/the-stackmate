@@ -5,7 +5,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 //import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/model/fees.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -26,6 +28,8 @@ class FeesCubit extends Cubit<FeesState> {
     this._storage,
     this._blockchain,
     this._nodeAddressCubit,
+    this._torCubit,
+    this._logger,
   ) : super(const FeesState()) {
     init();
   }
@@ -33,6 +37,8 @@ class FeesCubit extends Cubit<FeesState> {
   final IStorage _storage;
   final ChainSelectCubit _blockchain;
   final NodeAddressCubit _nodeAddressCubit;
+  final TorCubit _torCubit;
+  final Logger _logger;
 
   Future init() async {
     try {
@@ -63,25 +69,27 @@ class FeesCubit extends Cubit<FeesState> {
       }
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
-
+      final socks5 = _torCubit.state.getSocks5();
       final fastRate = BitcoinFFI().estimateNetworkFee(
         network: _blockchain.state.blockchain.name,
         nodeAddress: nodeAddress,
+        socks5: socks5,
         targetSize: '1',
       );
 
       if (fastRate.hasError) {
-        throw SMError.fromJson(fastRate.error!);
+        throw fastRate.error!;
       }
 
       final slowRate = BitcoinFFI().estimateNetworkFee(
         network: _blockchain.state.blockchain.name,
         nodeAddress: nodeAddress,
+        socks5: socks5,
         targetSize: '21',
       );
 
       if (slowRate.hasError) {
-        throw SMError.fromJson(slowRate.error!);
+        throw fastRate.error!;
       }
 
       final mediumRate = (fastRate.result! + slowRate.result!) / 2;
@@ -115,8 +123,8 @@ class FeesCubit extends Cubit<FeesState> {
         state.copyWith(updating: false, errUpdating: ''),
       );
       return;
-    } catch (e) {
-      print(e.toString());
+    } catch (e, s) {
+      _logger.logException(e.toString(), 'FeesCubit', s);
     }
   }
 
@@ -130,15 +138,19 @@ class FeesCubit extends Cubit<FeesState> {
       final timestamp = DateTime.now().millisecondsSinceEpoch;
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+
       final fastRate = BitcoinFFI().estimateNetworkFee(
         network: _blockchain.state.blockchain.name,
         nodeAddress: nodeAddress,
+        socks5: socks5,
         targetSize: '1',
       );
 
       final slowRate = BitcoinFFI().estimateNetworkFee(
         network: _blockchain.state.blockchain.name,
         nodeAddress: nodeAddress,
+        socks5: socks5,
         targetSize: '21',
       );
 
@@ -173,8 +185,8 @@ class FeesCubit extends Cubit<FeesState> {
         state.copyWith(updating: false, errUpdating: ''),
       );
       return;
-    } catch (e) {
-      print(e.toString());
+    } catch (e, s) {
+      _logger.logException(e.toString(), 'FeesCubit', s);
     }
   }
 }

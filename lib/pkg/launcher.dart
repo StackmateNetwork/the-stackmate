@@ -9,7 +9,7 @@ class Launcher implements ILauncher {
   @override
   Future<R<bool>> canLaunchApp(String link) async {
     try {
-      final c = await canLaunch(link);
+      final c = await canLaunchUrl(Uri.parse(link));
       return R(result: c);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -20,10 +20,10 @@ class Launcher implements ILauncher {
   @override
   Future<R<bool>> launchApp(String link) async {
     try {
-      final can = await canLaunch(link);
+      final can = await canLaunchUrl(Uri.parse(link));
       if (can)
-        await launch(
-          link,
+        await launchUrl(
+          Uri.parse(link),
           // forceWebView: true
           // universalLinksOnly: true,
         );

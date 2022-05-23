@@ -5,6 +5,7 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/preferences.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -31,6 +32,8 @@ class _CubitsState extends State<Cubits> {
       logger,
     );
     networkSelectCubit.init();
+    final torCubit = TorCubit(logger);
+    torCubit.start();
 
     final preferencesCubit = PreferencesCubit(storage);
     preferencesCubit.init();
@@ -47,7 +50,13 @@ class _CubitsState extends State<Cubits> {
     );
     nodeAddressCubit.init();
 
-    final feesCubit = FeesCubit(storage, networkSelectCubit, nodeAddressCubit);
+    final feesCubit = FeesCubit(
+      storage,
+      networkSelectCubit,
+      nodeAddressCubit,
+      torCubit,
+      logger,
+    );
 
     return MultiBlocProvider(
       providers: [
@@ -57,6 +66,7 @@ class _CubitsState extends State<Cubits> {
         BlocProvider.value(value: feesCubit),
         BlocProvider.value(value: nodeAddressCubit),
         BlocProvider.value(value: preferencesCubit),
+        BlocProvider.value(value: torCubit),
       ],
       child: BlocListener<ChainSelectCubit, BlockchainState>(
         listener: (context, state) {

@@ -6,6 +6,7 @@ import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'psbt-tool.freezed.dart';
@@ -27,6 +28,7 @@ class PSBTCubit extends Cubit<PSBTState> {
     this._core,
     this._clipBoard,
     this._nodeAddressCubit,
+    this._torCubit,
     this._blockchainCubit,
   ) : super(const PSBTState());
 
@@ -36,6 +38,7 @@ class PSBTCubit extends Cubit<PSBTState> {
   final NodeAddressCubit _nodeAddressCubit;
   final IStackMateCore _core;
   final ChainSelectCubit _blockchainCubit;
+  final TorCubit _torCubit;
 
   static const dummyDescriptor = 'wpkh(tprv/*)';
   static const emptyString = '';
@@ -72,10 +75,11 @@ class PSBTCubit extends Cubit<PSBTState> {
     try {
       emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
-
+      final socks5 = _torCubit.state.getSocks5();
       final psbt = await _core.broadcastTransaction(
         descriptor: dummyDescriptor,
         nodeAddress: nodeAddress,
+        socks5: socks5,
         signedPSBT: state.psbt,
       );
 
@@ -115,6 +119,7 @@ String buildTx(dynamic data) {
   final resp = BitcoinFFI().buildTransaction(
     descriptor: obj['descriptor']!,
     nodeAddress: obj['nodeAddress']!,
+    socks5: obj['socks5']!,
     txOutputs: obj['txOutputs']!,
     feeAbsolute: obj['feeAbsolute']!,
     policyPath: obj['policyPath']!,
@@ -144,8 +149,9 @@ Future<String> broadcastTx(dynamic data) async {
   final obj = data as Map<String, String?>;
 
   final resp = await BitcoinFFI().broadcastTransaction(
-    nodeAddress: obj['nodeAddress']!,
     descriptor: obj['descriptor']!,
+    nodeAddress: obj['nodeAddress']!,
+    socks5: obj['socks5']!,
     signedPSBT: obj['signedPSBT']!,
   );
   if (resp.hasError) {

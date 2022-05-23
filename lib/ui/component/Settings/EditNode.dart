@@ -11,18 +11,18 @@ class EditNode extends StatefulWidget {
 
 class _EditNodeState extends State<EditNode> {
   late TextEditingController _address;
-  late TextEditingController _port;
+  late TextEditingController _name;
 
   @override
   void initState() {
     _address = TextEditingController();
-    _port = TextEditingController();
+    _name = TextEditingController();
     super.initState();
   }
 
   void _checkFields(NodeAddressState state) {
     if (_address.text != state.address) _address.text = state.address;
-    if (_port.text != state.port) _port.text = state.port;
+    if (_name.text != state.name) _name.text = state.name;
   }
 
   @override
@@ -50,7 +50,7 @@ class _EditNodeState extends State<EditNode> {
           ),
           const SizedBox(height: 4),
           Text(
-            'Only enter domain/ip. Defaults to ssl.',
+            'Use full url and port number',
             maxLines: 3,
             style: c.fonts.caption!.copyWith(
               color: c.colours.onSurface.withOpacity(0.7),
@@ -71,14 +71,14 @@ class _EditNodeState extends State<EditNode> {
           ),
           const SizedBox(height: 16),
           TextField(
-            controller: _port,
+            controller: _name,
             autocorrect: false,
             style: TextStyle(color: context.colours.onBackground),
             decoration: InputDecoration(
-              hintText: 'Enter Port'.toUpperCase(),
+              hintText: 'Name Your Node'.toUpperCase(),
             ),
             onChanged: (t) {
-              context.read<NodeAddressCubit>().portChanged(t);
+              context.read<NodeAddressCubit>().nameChanged(t);
             },
           ),
           const SizedBox(height: 32),
@@ -91,10 +91,11 @@ class _EditNodeState extends State<EditNode> {
           const SizedBox(height: 24),
           TextButton(
             onPressed: () {
-              c.read<NodeAddressCubit>().toggleIsEditting();
+              c.read<NodeAddressCubit>().revertToDefault();
+              c.read<NodeAddressCubit>().saveClicked();
             },
             child: Text(
-              'CANCEL',
+              'RESET TO DEFAULT',
               style: c.fonts.button!.copyWith(color: c.colours.error),
             ),
           ),

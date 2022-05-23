@@ -9,6 +9,7 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
@@ -77,6 +78,7 @@ class SendCubit extends Cubit<SendState> {
     this._clipBoard,
     this._share,
     this._nodeAddressCubit,
+    this._torCubit,
     this._core,
     this._fees,
     // this._file,
@@ -91,6 +93,7 @@ class SendCubit extends Cubit<SendState> {
   final IShare _share;
   final IClipBoard _clipBoard;
   final NodeAddressCubit _nodeAddressCubit;
+  final TorCubit _torCubit;
   final IStackMateCore _core;
   final FeesCubit _fees;
   // final FileManager _file;
@@ -130,10 +133,11 @@ class SendCubit extends Cubit<SendState> {
       );
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
-
+      final socks5 = _torCubit.state.getSocks5();
       final bal = await compute(computeBalance, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
+        'socks5': socks5,
       });
 
       emit(
@@ -160,7 +164,7 @@ class SendCubit extends Cubit<SendState> {
   void pasteAddress() async {
     final text = await _clipBoard.pasteFromClipBoard();
     if (text.hasError) return;
-    emit(state.copyWith(address: text.result!));
+    emit(state.copyWith(address: text.result!.toLowerCase()));
   }
 
   void scanAddress(bool onStart) async {
@@ -174,12 +178,12 @@ class SendCubit extends Cubit<SendState> {
       if (barcodeScanRes == '-1') barcodeScanRes = emptyString;
       if (barcodeScanRes.contains('bitcoin:')) {
         final address = barcodeScanRes.split(':')[1].split('?')[0];
-        emit(state.copyWith(address: address));
+        emit(state.copyWith(address: address.toLowerCase()));
         final amount =
             barcodeScanRes.split(':')[1].split('?amount=')[1].split('?')[0];
         amountChanged(amount);
       } else
-        emit(state.copyWith(address: barcodeScanRes));
+        emit(state.copyWith(address: barcodeScanRes.toLowerCase()));
 
       await Future.delayed(const Duration(milliseconds: 1000));
 
@@ -199,7 +203,7 @@ class SendCubit extends Cubit<SendState> {
   void addressConfirmedClicked() async {
     emit(state.copyWith(errAddress: emptyString));
 
-    if (!Validation.isBtcAddress(state.address)) {
+    if (!Validation.isBtcAddress(state.address.toLowerCase())) {
       emit(state.copyWith(errAddress: invalidAddressError));
       return;
     }
@@ -272,10 +276,12 @@ class SendCubit extends Cubit<SendState> {
       );
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
 
       final psbt = await compute(buildTx, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
+        'socks5': socks5,
         'txOutputs': txOutputs,
         'feeAbsolute': dummyFeeValue,
         'policyPath': state.policyPath,
@@ -379,10 +385,12 @@ class SendCubit extends Cubit<SendState> {
       emit(state.copyWith(buildingTx: true, errLoading: emptyString));
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
 
       final psbt = await compute(buildTx, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
+        'socks5': socks5,
         'txOutputs': state.txOutputs,
         'feeAbsolute': state.finalFee.toString(),
         'policyPath': state.policyPath,
@@ -448,6 +456,7 @@ class SendCubit extends Cubit<SendState> {
       }
       emit(state.copyWith(sendingTx: true, errLoading: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
 
       // final unsigned = state.psbt;
       final descriptor = _walletsCubit.state.selectedWallet!.descriptor;
@@ -466,6 +475,7 @@ class SendCubit extends Cubit<SendState> {
       final txid = await _core.broadcastTransaction(
         descriptor: _walletsCubit.state.selectedWallet!.descriptor,
         nodeAddress: nodeAddress,
+        socks5: socks5,
         signedPSBT: signed.result!.psbt,
       );
       if (txid.hasError)
@@ -538,6 +548,7 @@ double estimateFeees(dynamic data) {
   final resp = BitcoinFFI().estimateNetworkFee(
     network: obj['network']!,
     nodeAddress: obj['nodeAddress']!,
+    socks5: obj['socks5']!,
     targetSize: obj['targetSize']!,
   );
   if (resp.hasError) {
@@ -575,6 +586,7 @@ String buildTx(dynamic data) {
   final resp = BitcoinFFI().buildTransaction(
     descriptor: obj['descriptor']!,
     nodeAddress: obj['nodeAddress']!,
+    socks5: obj['socks5']!,
     txOutputs: obj['txOutputs']!,
     feeAbsolute: obj['feeAbsolute']!,
     policyPath: obj['policyPath']!,
@@ -617,8 +629,9 @@ Future<String> broadcastTx(dynamic data) async {
   final obj = data as Map<String, String?>;
 
   final resp = await BitcoinFFI().broadcastTransaction(
-    nodeAddress: obj['nodeAddress']!,
     descriptor: obj['descriptor']!,
+    nodeAddress: obj['nodeAddress']!,
+    socks5: obj['socks5']!,
     signedPSBT: obj['signedPSBT']!,
   );
   if (resp.hasError) {

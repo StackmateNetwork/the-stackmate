@@ -68,11 +68,13 @@ class FFFI {
   String syncBalance({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   }) {
     final func = binary.lookupFunction<SyncT, SyncT>('sync_balance');
     final response = func(
       descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
+      socks5.toNativeUtf8(),
     );
     return response.toDartString();
   }
@@ -80,11 +82,13 @@ class FFFI {
   String getHistory({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   }) {
     final func = binary.lookupFunction<SyncT, SyncT>('sync_history');
     final resp = func(
       descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
+      socks5.toNativeUtf8(),
     ).toDartString();
     return resp;
   }
@@ -92,11 +96,13 @@ class FFFI {
   String listUnspent({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   }) {
     final func = binary.lookupFunction<SyncT, SyncT>('list_unspent');
     final resp = func(
       descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
+      socks5.toNativeUtf8(),
     ).toDartString();
     return resp;
   }
@@ -117,6 +123,7 @@ class FFFI {
   String buildTransaction({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
     required String txOutputs,
     required String feeAbsolute,
     required String sweep,
@@ -126,6 +133,7 @@ class FFFI {
     final resp = func(
       descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
+      socks5.toNativeUtf8(),
       txOutputs.toNativeUtf8(),
       feeAbsolute.toNativeUtf8(),
       policyPath.toNativeUtf8(),
@@ -161,6 +169,7 @@ class FFFI {
   Future<String> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
     required String signedPSBT,
   }) async {
     final func = binary.lookupFunction<BroadcastT, BroadcastT>(
@@ -169,6 +178,7 @@ class FFFI {
     final resp = func(
       descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
+      socks5.toNativeUtf8(),
       signedPSBT.toNativeUtf8(),
     ).toDartString();
     return resp;
@@ -177,6 +187,7 @@ class FFFI {
   String estimateNetworkFee({
     required String network,
     required String nodeAddress,
+    required String socks5,
     required String targetSize,
   }) {
     final func = binary
@@ -184,6 +195,7 @@ class FFFI {
     final resp = func(
       network.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
+      socks5.toNativeUtf8(),
       targetSize.toNativeUtf8(),
     ).toDartString();
     return resp;
@@ -230,12 +242,13 @@ class FFFI {
   String getHeight({
     required String network,
     required String nodeAddress,
+    required String socks5,
   }) {
-    final func =
-        binary.lookupFunction<FeeAbsoluteT, FeeAbsoluteT>('get_height');
+    final func = binary.lookupFunction<HeightT, HeightT>('get_height');
     final resp = func(
       network.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
+      socks5.toNativeUtf8(),
     ).toDartString();
     return resp;
   }

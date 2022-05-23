@@ -26,45 +26,38 @@ class Networth extends StatelessWidget {
       networth += wallet.balance;
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 36,
-        left: 24,
-        right: 32,
-      ),
-      child: Column(
-        children: [
-          if (preferences.state.incognito) ...[
-            Icon(
-              Icons.network_ping,
-              size: 32,
-              color: (networkTraffic == 'LOW')
-                  ? c.colours.tertiary
-                  : (networkTraffic == 'MEDIUM')
-                      ? c.colours.secondary
-                      : c.colours.error,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        if (preferences.state.incognito) ...[
+          Icon(
+            Icons.network_ping,
+            size: 32,
+            color: (networkTraffic == 'LOW')
+                ? c.colours.tertiary
+                : (networkTraffic == 'MEDIUM')
+                    ? c.colours.secondary
+                    : c.colours.error,
+          ),
+          Text(
+            networkTraffic + ' NETWORK TRAFFIC',
+            style: c.fonts.caption!.copyWith(
+              color: c.colours.onPrimary,
             ),
-            Text(
-              networkTraffic + ' NETWORK TRAFFIC',
-              style: c.fonts.caption!.copyWith(
-                color: c.colours.onPrimary,
-              ),
-              textAlign: TextAlign.center,
+            textAlign: TextAlign.center,
+          ),
+        ] else ...[
+          GestureDetector(
+            onTap: () {
+              c.read<PreferencesCubit>().preferredBitcoinUnitChanged();
+            },
+            child: BitcoinDisplayLarge(
+              satsAmount: networth.toString(),
+              bitcoinUnit: preferences.state.preferredBitcoinUnit,
             ),
-            const SizedBox(height: 32),
-          ] else ...[
-            GestureDetector(
-              onTap: () {
-                c.read<PreferencesCubit>().preferredBitcoinUnitChanged();
-              },
-              child: BitcoinDisplayLarge(
-                satsAmount: networth.toString(),
-                bitcoinUnit: preferences.state.preferredBitcoinUnit,
-              ),
-            ),
-          ],
+          ),
         ],
-      ),
+      ],
     );
   }
 }

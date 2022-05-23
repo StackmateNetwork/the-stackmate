@@ -6,6 +6,7 @@ import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/transaction.dart';
@@ -48,6 +49,7 @@ class InfoCubit extends Cubit<InfoState> {
     this._share,
     this._vibrate,
     this._nodeAddressCubit,
+    this._torCubit,
     this._blockchainCubit,
   ) : super(const InfoState()) {
     // scheduleMicrotask(() async {
@@ -68,9 +70,12 @@ class InfoCubit extends Cubit<InfoState> {
   final IVibrate _vibrate;
   final ChainSelectCubit _blockchainCubit;
   final NodeAddressCubit _nodeAddressCubit;
+  final TorCubit _torCubit;
 
-  static const blockstreamTestnetURL = 'https://blockstream.info/testnet/tx/';
-  static const blockstreamMainnetURL = 'https://blockstream.info/tx/';
+  static const defaultTestnetExplorer =
+      'https://mempool.bullbitcoin.com/testnet/tx/';
+  static const defaultMainnetExplorer = 'https://mempool.bullbitcoin.com/tx/';
+
   static const emailShareSubject = 'Transaction Details';
   static const walletHasFunds = 'Wallet has funds';
 
@@ -88,6 +93,7 @@ class InfoCubit extends Cubit<InfoState> {
       );
 
       final node = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
       final wallet = _walletsCubit.state.selectedWallet!;
 
       emit(
@@ -104,6 +110,7 @@ class InfoCubit extends Cubit<InfoState> {
       final balance = await compute(computeBalance, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': node,
+        'socks5': socks5,
       });
 
       _vibrate.vibe();
@@ -121,6 +128,7 @@ class InfoCubit extends Cubit<InfoState> {
       final transactions = await compute(computeHistory, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': node,
+        'socks5': socks5,
       });
       _vibrate.vibe();
 
@@ -152,9 +160,9 @@ class InfoCubit extends Cubit<InfoState> {
     try {
       String url = '';
       if (_blockchainCubit.state.blockchain == Blockchain.test)
-        url = blockstreamTestnetURL;
+        url = defaultTestnetExplorer;
       else
-        url = blockstreamMainnetURL;
+        url = defaultMainnetExplorer;
 
       url += transaction.txid;
 
@@ -198,6 +206,7 @@ List<Transaction> computeHistory(dynamic obj) {
   final resp = BitcoinFFI().getHistory(
     descriptor: data['descriptor']!,
     nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
   );
 
   if (resp.hasError) {
@@ -211,6 +220,7 @@ int computeBalance(dynamic obj) {
   final resp = BitcoinFFI().syncBalance(
     descriptor: data['descriptor']!,
     nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
   );
   if (resp.hasError) {
     throw SMError.fromJson(resp.error!);
