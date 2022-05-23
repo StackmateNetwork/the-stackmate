@@ -10,7 +10,7 @@ class WalletTools extends StatelessWidget {
     final preferences = c.select((PreferencesCubit p) => p);
 
     return Padding(
-      padding: const EdgeInsets.only(top: 10, bottom: 5),
+      padding: const EdgeInsets.only(top: 12, bottom: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -18,7 +18,7 @@ class WalletTools extends StatelessWidget {
             padding: const EdgeInsets.only(
               top: 16,
               left: 24,
-              right: 32,
+              right: 24,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

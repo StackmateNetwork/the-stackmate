@@ -32,7 +32,7 @@ class _Home extends StatelessWidget {
                   SliverAppBar(
                     stretch: true,
                     pinned: true,
-                    expandedHeight: 326,
+                    expandedHeight: c.height / 2.5,
                     automaticallyImplyLeading: false,
                     backgroundColor: c.colours.background,
                     flexibleSpace: FlexibleSpaceBar(
@@ -40,6 +40,8 @@ class _Home extends StatelessWidget {
                         StretchMode.fadeTitle,
                       ],
                       background: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [HomeHeader(), Networth(), WalletTools()],
                       ),
                     ),

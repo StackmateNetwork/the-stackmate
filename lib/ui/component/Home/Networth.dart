@@ -28,13 +28,15 @@ class Networth extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(
-        top: 36,
+        top: 16,
         left: 24,
-        right: 32,
+        right: 24,
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           if (preferences.state.incognito) ...[
+            // const SizedBox(height: 32),
             Icon(
               Icons.network_ping,
               size: 32,
@@ -51,7 +53,6 @@ class Networth extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 32),
           ] else ...[
             GestureDetector(
               onTap: () {

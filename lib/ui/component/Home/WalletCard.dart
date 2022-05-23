@@ -22,20 +22,26 @@ class WalletCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
-        return Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                context.read<WalletsCubit>().walletSelected(wallet);
-                if (!isSelection) {
-                  context.push('/wallet');
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, top: 12),
+        return Padding(
+          padding: const EdgeInsets.only(
+            top: 12,
+            left: 24,
+            right: 24,
+          ),
+          child: Row(
+            // crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  context.read<WalletsCubit>().walletSelected(wallet);
+                  if (!isSelection) {
+                    context.push('/wallet');
+                  }
+                },
                 child: Material(
                   elevation: 4,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   color: context.colours.background,
                   child: BackdropFilter(
@@ -45,10 +51,10 @@ class WalletCard extends StatelessWidget {
                       tileMode: TileMode.mirror,
                     ),
                     child: Container(
-                      height: 92,
-                      width: context.width / 1.8,
+                      height: 85,
+                      width: context.width / 2,
                       padding: const EdgeInsets.only(
-                        top: 21,
+                        top: 16,
                         left: 12,
                         right: 12,
                         bottom: 12,
@@ -98,19 +104,16 @@ class WalletCard extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                context.read<WalletsCubit>().walletSelected(wallet);
-                if (!isSelection) {
-                  context.push('/receive');
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, top: 12),
+              GestureDetector(
+                onTap: () {
+                  context.read<WalletsCubit>().walletSelected(wallet);
+                  if (!isSelection) {
+                    context.push('/receive');
+                  }
+                },
                 child: Material(
                   elevation: 4,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   color: context.colours.background,
                   child: BackdropFilter(
@@ -118,8 +121,8 @@ class WalletCard extends StatelessWidget {
                       tileMode: TileMode.mirror,
                     ),
                     child: Container(
-                      height: 90,
-                      width: 76,
+                      height: 85,
+                      width: context.width / 5.8,
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -155,19 +158,16 @@ class WalletCard extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                context.read<WalletsCubit>().walletSelected(wallet);
-                if (!isSelection) {
-                  context.push('/send');
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, top: 12),
+              GestureDetector(
+                onTap: () {
+                  context.read<WalletsCubit>().walletSelected(wallet);
+                  if (!isSelection) {
+                    context.push('/send');
+                  }
+                },
                 child: Material(
                   elevation: 4,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   color: context.colours.background,
                   child: BackdropFilter(
@@ -175,8 +175,8 @@ class WalletCard extends StatelessWidget {
                       tileMode: TileMode.mirror,
                     ),
                     child: Container(
-                      height: 90,
-                      width: 76,
+                      height: 85,
+                      width: context.width / 5.8,
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -214,8 +214,8 @@ class WalletCard extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

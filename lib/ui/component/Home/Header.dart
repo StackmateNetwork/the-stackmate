@@ -10,10 +10,8 @@ class HomeHeader extends StatelessWidget {
       builder: (context, torState) {
         return Padding(
           padding: const EdgeInsets.only(
-            top: 16,
-            bottom: 16,
             left: 24,
-            right: 32,
+            right: 24,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -39,8 +37,9 @@ class HomeHeader extends StatelessWidget {
               ),
               if (torState.isRunning)
                 Tooltip(
+                  preferBelow: false,
                   triggerMode: TooltipTriggerMode.tap,
-                  message: 'Connected to Tor.',
+                  message: 'Torified.',
                   textStyle: context.fonts.caption!.copyWith(
                     color: context.colours.primary,
                   ),
@@ -59,7 +58,7 @@ class HomeHeader extends StatelessWidget {
                   color: c.colours.error,
                 ),
                 const SizedBox(
-                  height: 2,
+                  height: 6,
                 ),
                 const Text(
                   'Insecure Connection: Tor not connected.\n Wait a few moments or Refresh Page.',
