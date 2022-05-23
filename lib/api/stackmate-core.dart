@@ -257,6 +257,8 @@ class BitcoinFFI implements IStackMateCore {
     required String socks5,
     required String targetSize,
   }) {
+    // temp fix for fees while tor is loading
+    if (socks5 == 'none') return const R(error: 'Tor Not Connected.');
     final resp = _bitcoin.estimateNetworkFee(
       network: network,
       nodeAddress: nodeAddress,

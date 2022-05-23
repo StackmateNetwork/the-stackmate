@@ -50,8 +50,13 @@ class _CubitsState extends State<Cubits> {
     );
     nodeAddressCubit.init();
 
-    final feesCubit =
-        FeesCubit(storage, networkSelectCubit, nodeAddressCubit, torCubit);
+    final feesCubit = FeesCubit(
+      storage,
+      networkSelectCubit,
+      nodeAddressCubit,
+      torCubit,
+      logger,
+    );
 
     return MultiBlocProvider(
       providers: [

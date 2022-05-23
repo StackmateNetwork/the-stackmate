@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 //import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/model/fees.dart';
@@ -28,6 +29,7 @@ class FeesCubit extends Cubit<FeesState> {
     this._blockchain,
     this._nodeAddressCubit,
     this._torCubit,
+    this._logger,
   ) : super(const FeesState()) {
     init();
   }
@@ -36,6 +38,8 @@ class FeesCubit extends Cubit<FeesState> {
   final ChainSelectCubit _blockchain;
   final NodeAddressCubit _nodeAddressCubit;
   final TorCubit _torCubit;
+  final Logger _logger;
+
   Future init() async {
     try {
       emit(state.copyWith(updating: true, errUpdating: ''));
@@ -74,7 +78,7 @@ class FeesCubit extends Cubit<FeesState> {
       );
 
       if (fastRate.hasError) {
-        throw SMError.fromJson(fastRate.error!);
+        throw fastRate.error!;
       }
 
       final slowRate = BitcoinFFI().estimateNetworkFee(
@@ -85,7 +89,7 @@ class FeesCubit extends Cubit<FeesState> {
       );
 
       if (slowRate.hasError) {
-        throw SMError.fromJson(slowRate.error!);
+        throw fastRate.error!;
       }
 
       final mediumRate = (fastRate.result! + slowRate.result!) / 2;
@@ -119,8 +123,8 @@ class FeesCubit extends Cubit<FeesState> {
         state.copyWith(updating: false, errUpdating: ''),
       );
       return;
-    } catch (e) {
-      print(e.toString());
+    } catch (e, _) {
+      _logger.logException(e.toString(), 'FeesCubit', StackTrace);
     }
   }
 
@@ -181,8 +185,8 @@ class FeesCubit extends Cubit<FeesState> {
         state.copyWith(updating: false, errUpdating: ''),
       );
       return;
-    } catch (e) {
-      print(e.toString());
+    } catch (e, _) {
+      _logger.logException(e.toString(), 'FeesCubit', StackTrace);
     }
   }
 }

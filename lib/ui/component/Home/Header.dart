@@ -54,7 +54,7 @@ class HomeHeader extends StatelessWidget {
             height: 6,
           ),
           Text(
-            'Insecure Connection: Tor connection in progress.\nThis could take upto a minute. ',
+            'Tor connection in progress.\nThis could take upto a minute. ',
             textAlign: TextAlign.center,
             style: context.fonts.caption!.copyWith(
               color: context.colours.error,
