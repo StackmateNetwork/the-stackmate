@@ -123,8 +123,8 @@ class FeesCubit extends Cubit<FeesState> {
         state.copyWith(updating: false, errUpdating: ''),
       );
       return;
-    } catch (e, _) {
-      _logger.logException(e.toString(), 'FeesCubit', StackTrace);
+    } catch (e, s) {
+      _logger.logException(e.toString(), 'FeesCubit', s);
     }
   }
 
@@ -185,8 +185,8 @@ class FeesCubit extends Cubit<FeesState> {
         state.copyWith(updating: false, errUpdating: ''),
       );
       return;
-    } catch (e, _) {
-      _logger.logException(e.toString(), 'FeesCubit', StackTrace);
+    } catch (e, s) {
+      _logger.logException(e.toString(), 'FeesCubit', s);
     }
   }
 }
