@@ -42,8 +42,9 @@ class SeedImportWalletState with _$SeedImportWalletState {
   }
 
   bool canGoBack() {
-    if (currentStep == SeedImportWalletSteps.warning) return true;
-    return false;
+    // if (currentStep == SeedImportWalletSteps.warning)
+    return true;
+    // return false;
   }
 
   double completePercent() =>
@@ -108,6 +109,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   static const invalidLabelError = 'Invalid Label';
   static const signerWalletType = 'SIGNER';
   static const wpkhScript = 'wpkh';
+  static const wshScript = 'wsh';
   static const emptyString = '';
 
   void nextClicked() async {
@@ -192,6 +194,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     final policy = 'pk($fullXPrv/*)';
 
     const readable = 'pk(___primary___)';
+    const readableScript = 'thresh(2, ___buyer___,___seller___,___escrow___)';
+    const readableRaft =
+        'thresh(1, pk(___primary___),and(pk(___rescuer___),older(___sometime___)))';
 
     final descriptor = _core.compile(
       policy: policy,

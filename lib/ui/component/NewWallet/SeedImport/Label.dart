@@ -64,18 +64,23 @@ class _SeedImportLabelState extends State<SeedImportLabel> {
               Text(
                 state.walletLabelError,
                 style: c.fonts.caption!.copyWith(color: c.colours.error),
+                textAlign: TextAlign.center,
               ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: (state.savingWallet)
-                  ? const Text('Recoving wallet...')
-                  : TextButton(
-                      onPressed: () async {
-                        c.read<SeedImportWalletCubit>().nextClicked();
-                      },
-                      child: const Text('Confirm'),
-                    ),
-            )
+            if (state.savingWallet)
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text('Recoving wallet...'),
+              )
+            else
+              Padding(
+                padding: EdgeInsets.zero,
+                child: TextButton(
+                  onPressed: () async {
+                    c.read<SeedImportWalletCubit>().nextClicked();
+                  },
+                  child: const Text('Confirm'),
+                ),
+              )
           ],
         );
       },
