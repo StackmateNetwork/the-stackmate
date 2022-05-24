@@ -33,18 +33,19 @@ void main() async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
   runZonedGuarded(
-    () => runApp(MaterialApp(home: LoginPage())),
+    () => runApp(
+      const MaterialApp(home: AuthPage()),
+    ),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class AuthPage extends StatelessWidget {
+  const AuthPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
+    return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
         child: Padding(
@@ -52,7 +53,7 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(
+              const Icon(
                 Icons.lock,
                 size: 30,
                 color: Colors.white,
@@ -108,7 +109,7 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
-    ));
+    );
   }
 }
 
