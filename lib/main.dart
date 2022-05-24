@@ -22,6 +22,7 @@ import 'package:sats/ui/screen/Settings.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
 import 'package:sats/api/local-auth.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   await initializeHive();
@@ -32,6 +33,7 @@ void main() async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runZonedGuarded(
     () => runApp(
       const MaterialApp(home: AuthPage()),
@@ -72,7 +74,7 @@ class AuthPage extends StatelessWidget {
                   onPressed: () async {
                     bool isAuthenticated = await AuthService.authenticateUser();
                     if (isAuthenticated) {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Stackmate()),
                       );
