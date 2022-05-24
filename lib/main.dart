@@ -21,8 +21,7 @@ import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:flutter/services.dart';
+import 'package:sats/api/local-auth.dart';
 
 void main() async {
   await initializeHive();
@@ -34,114 +33,108 @@ void main() async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
   runZonedGuarded(
-    () => runApp(Stackmate()),
+    () => runApp(MaterialApp(home: LoginPage())),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }
 
-class Stackmate extends StatefulWidget {
-  const Stackmate({Key? key}) : super(key: key);
+class LoginPage extends StatelessWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<Stackmate> createState() => _StackmateState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.lock,
+                size: 30,
+                color: Colors.white,
+              ),
+              const SizedBox(height: 20),
+              const Text('Tap on the button to authenticate ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 21,
+                    color: Colors.white,
+                  )),
+              const SizedBox(height: 30),
+              SizedBox(
+                //width: MediaQuery.of(context).size,
+                child: TextButton(
+                  onPressed: () async {
+                    bool isAuthenticated = await AuthService.authenticateUser();
+                    if (isAuthenticated) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Stackmate()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Authentication failed.'),
+                        ),
+                      );
+                    }
+                  },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.all(20),
+                    backgroundColor: Colors.white,
+                    //shadowColor: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'UNLOCK WITH BIOMETRICS',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          wordSpacing: 1.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    ));
+  }
 }
 
-class _StackmateState extends State<Stackmate> {
-  bool isAuth = false;
-
-  void _checkBiometric() async {
-    // check for biometric availability
-    final LocalAuthentication auth = LocalAuthentication();
-    bool canCheckBiometrics = false;
-    try {
-      canCheckBiometrics = await auth.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      print("error biometrics $e");
-    }
-
-    print("biometric is available: $canCheckBiometrics");
-
-    // enumerate biometric technologies
-    List<BiometricType>? availableBiometrics;
-    try {
-      availableBiometrics = await auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      print("error enumerate biometrics $e");
-    }
-
-    print("following biometrics are available");
-
-    // authenticate with biometrics
-    bool authenticated = false;
-    try {
-      authenticated = await auth.authenticate(
-        localizedReason: 'Touch your finger on the sensor to login',
-        options: const AuthenticationOptions(
-          useErrorDialogs: true,
-          stickyAuth: true,
-        ),
-      );
-    } on PlatformException catch (e) {
-      print("error using biometric auth: $e");
-    }
-    setState(() {
-      isAuth = authenticated ? true : false;
-    });
-
-    print("authenticated: $authenticated");
-  }
-
+class Stackmate extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    return isAuth
-        ? Cubits(
-            child: OKToast(
-              duration: const Duration(milliseconds: 2000),
-              position: ToastPosition.bottom,
-              textStyle:
-                  c.fonts.caption!.copyWith(color: c.colours.onBackground),
-              child: MaterialApp.router(
-                routeInformationParser: _router.routeInformationParser,
-                routerDelegate: _router.routerDelegate,
-                // localizationsDelegates: const [
-                //   AppLocalizations.delegate,
-                //   GlobalMaterialLocalizations.delegate,
-                // ],
-                // supportedLocales: AppLocalizations.supportedLocales,
-                builder: (context, child) {
-                  final mediaQueryData = MediaQuery.of(context);
-                  return MediaQuery(
-                    data: mediaQueryData.copyWith(textScaleFactor: 1.0),
-                    child: child!,
-                  );
-                },
-                debugShowCheckedModeBanner: false,
-                theme: derivedTheme(mainTheme()),
-              ),
-            ),
-          )
-        : MaterialApp(
-            home: Scaffold(
-                backgroundColor: Colors.black,
-                body: Center(
-                  child: InkWell(
-                    onTap: () {
-                      _checkBiometric();
-                    },
-                    child: SimpleDialog(
-                      elevation: 1,
-                      backgroundColor:Colors.white70,
-                      title: const Text('       Unlock Stackmate'),
-                      children: <Widget>[
-                        Icon(
-                          Icons.fingerprint,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ),
-                )),
-          );
+    return Cubits(
+      child: OKToast(
+        duration: const Duration(milliseconds: 2000),
+        position: ToastPosition.bottom,
+        textStyle: c.fonts.caption!.copyWith(color: c.colours.onBackground),
+        child: MaterialApp.router(
+          routeInformationParser: _router.routeInformationParser,
+          routerDelegate: _router.routerDelegate,
+          builder: (context, child) {
+            final mediaQueryData = MediaQuery.of(context);
+            return MediaQuery(
+              data: mediaQueryData.copyWith(textScaleFactor: 1.0),
+              child: child!,
+            );
+          },
+          debugShowCheckedModeBanner: false,
+          theme: derivedTheme(mainTheme()),
+        ),
+      ),
+    );
   }
 
   late final _router = GoRouter(
