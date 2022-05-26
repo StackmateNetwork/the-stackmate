@@ -105,7 +105,7 @@ class SendCubit extends Cubit<SendState> {
   static const invalidAmountError = 'Invalid Amount';
   static const invalidFeeError = 'Invalid Fee';
   static const psbtNotFinalizedError = 'Transaction signatures not satisfied.';
-  static const dummyFeeValue = '1000';
+  static const dummyFeeValue = '250';
   static const minerOutput = 'miner';
   static const emptyString = '';
 

@@ -243,7 +243,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       blockchain: _blockchainCubit.state.blockchain.name,
       lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
       balance: balance.result!,
-      transactions: [],
+      transactions: history.result!,
     );
 
     final savedId = await _storage.saveItem<Wallet>(

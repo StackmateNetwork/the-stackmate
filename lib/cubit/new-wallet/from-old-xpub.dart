@@ -188,7 +188,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         walletType: watcherWalletType,
         lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
         balance: balance.result!,
-        transactions: [],
+        transactions: history.result!,
       );
 
       final savedId = await _storage.saveItem<Wallet>(
