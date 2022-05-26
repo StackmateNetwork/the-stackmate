@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
@@ -40,6 +40,10 @@ void main() async {
 class Stackmate extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     return Cubits(
       child: OKToast(
         duration: const Duration(milliseconds: 2000),

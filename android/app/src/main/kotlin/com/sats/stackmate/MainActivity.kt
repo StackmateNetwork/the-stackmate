@@ -1,4 +1,4 @@
-package com.sats.stackmate
+package com.sats.stackmate.wallet
 
 import io.flutter.embedding.android.FlutterActivity
 
