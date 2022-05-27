@@ -1,6 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:sats/api/coincap.dart';
-import 'package:sats/api/interface/coincap.dart';
 import 'package:sats/api/interface/logger.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/logger.dart';
@@ -35,7 +33,6 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<IStorage>(() => HiveStore());
     locator.registerLazySingleton<IStackMateCore>(() => BitcoinFFI());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
-    locator.registerLazySingleton<IRatesAPI>(() => RatesAPI());
     locator.registerLazySingleton<ILogAPI>(() => SentryLogger());
   }
 
