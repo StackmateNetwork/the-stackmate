@@ -30,16 +30,6 @@ class HomeActions extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              context.push('/calc');
-            },
-            icon: Icon(
-              Icons.calculate_sharp,
-              size: 32,
-              color: context.colours.primary,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
               context.push('/settings');
             },
             icon: Icon(

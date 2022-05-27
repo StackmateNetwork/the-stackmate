@@ -24,11 +24,7 @@ This can be your own server.
 
 ### Exchange Rate
 
-`CoinCap`
-
-This is used in the calculator and in to display the fiat equivalent of your balances.
-
-This can be disabled in settings by going into `Bitcoin Standard` mode.
+Coming soon
 
 ### Blockexplorer
 

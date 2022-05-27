@@ -1,6 +1,7 @@
 name: sats
 description: Sovereign Bitcoin Scripting Wallet
-version: 0.0.8
+version: 0.0.9
+publish_to: none
 platforms:
   android:
 

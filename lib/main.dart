@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:flutter/services.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -9,7 +10,6 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
-import 'package:sats/ui/screen/Calculator.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Logs.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
@@ -72,10 +72,6 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/',
         builder: (_, __) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/calc',
-        builder: (_, __) => const CalculatorScreen(),
       ),
       GoRoute(
         path: '/settings',
