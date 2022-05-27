@@ -69,14 +69,18 @@ class _SeedImportLabelState extends State<SeedImportLabel> {
             if (state.savingWallet)
               const Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Text('Recoving wallet...'),
+                child: Text('Recovering wallet...'),
               )
             else
               Padding(
                 padding: EdgeInsets.zero,
-                child: TextButton(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: c.colours.primary,
+                    onPrimary: c.colours.background,
+                  ),
                   onPressed: () async {
-                    c.read<SeedImportWalletCubit>().nextClicked();
+                    context.read<SeedImportWalletCubit>().nextClicked();
                   },
                   child: const Text('Confirm'),
                 ),

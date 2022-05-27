@@ -336,7 +336,7 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      _logger.logException(e, 'SendCubit.confirmclicked', s);
+      _logger.logException(e.toString(), 'SendCubit.confirmclicked', s);
     }
   }
 
@@ -423,7 +423,7 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      _logger.logException(e, 'SendCubit.confirmclicked', s);
+      _logger.logException(e.toString(), 'SendCubit.confirmclicked', s);
     }
   }
 
@@ -452,9 +452,9 @@ class SendCubit extends Cubit<SendState> {
   void sendClicked() async {
     try {
       if (state.sendingTx == true) {
+        emit(state.copyWith(sendingTx: true, errLoading: emptyString));
         return;
       }
-      emit(state.copyWith(sendingTx: true, errLoading: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
@@ -506,7 +506,7 @@ class SendCubit extends Cubit<SendState> {
           errLoading: e.toString(),
         ),
       );
-      _logger.logException(e, 'SendCubit.sendclicked', s);
+      _logger.logException(e.toString(), 'SendCubit.sendclicked', s);
     }
   }
 

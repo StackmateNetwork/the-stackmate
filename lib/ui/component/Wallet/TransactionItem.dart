@@ -189,6 +189,7 @@ class TransactionItem extends StatelessWidget {
 }
 
 void _showTxinfo(BuildContext c, Transaction transaction) {
+  const sats = "sats";
   final isReceive = transaction.isReceive();
   if (isReceive) {
     showCupertinoModalPopup(
@@ -222,27 +223,9 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         const Padding(padding: EdgeInsets.only(top: 8)),
-                        Text(
-                          NumberFormat('###,000').format(
-                                double.parse(
-                                  transaction.received.toString(),
-                                ),
-                              ) +
-                              ' sats',
-                          style: (transaction.height > 0)
-                              ? c.fonts.headline6!.copyWith(
-                                  color: c.colours.onBackground,
-                                )
-                              : c.fonts.headline6!.copyWith(
-                                  color: c.colours.error,
-                                ),
-                          textAlign: TextAlign.end,
-                        ),
-                        Text(
-                          transaction.amountToBtc() + ' BTC',
-                          style: c.fonts.overline!.copyWith(
-                            color: c.colours.onBackground,
-                          ),
+                        BitcoinDisplayMedium(
+                          satsAmount: transaction.received.toString(),
+                          bitcoinUnit: sats,
                         ),
                         if (transaction.height == 0)
                           Text(
@@ -385,28 +368,9 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         const Padding(padding: EdgeInsets.only(top: 8)),
-                        Text(
-                          NumberFormat('###,000').format(
-                                double.parse(
-                                  (transaction.sent + transaction.fee)
-                                      .toString(),
-                                ),
-                              ) +
-                              ' sats',
-                          style: (transaction.height > 0)
-                              ? c.fonts.headline6!.copyWith(
-                                  color: c.colours.onBackground,
-                                )
-                              : c.fonts.headline6!.copyWith(
-                                  color: c.colours.error,
-                                ),
-                          textAlign: TextAlign.end,
-                        ),
-                        Text(
-                          transaction.amountToBtc() + ' BTC',
-                          style: c.fonts.overline!.copyWith(
-                            color: c.colours.onBackground,
-                          ),
+                        BitcoinDisplayMedium(
+                          satsAmount: transaction.sent.toString(),
+                          bitcoinUnit: sats,
                         ),
                         if (transaction.height == 0)
                           Text(
