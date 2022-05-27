@@ -5,15 +5,17 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
+import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/ui/component/Common/BackButton2.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Stepper.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class _XpubImport extends StatelessWidget {
@@ -46,12 +48,12 @@ class _XpubImport extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const SizedBox(height: 24),
                     Header(
                       cornerTitle: 'WATCHER',
                       children: [
-                        BckButton(
-                          text: 'EXIT',
-                          onTapped: () {
+                        Back(
+                          onPressed: () {
                             if (!state.canGoBack()) {
                               c.read<XpubImportWalletCubit>().backClicked();
                               return;
@@ -63,6 +65,7 @@ class _XpubImport extends StatelessWidget {
                         const SizedBox(height: 24),
                       ],
                     ),
+                    const SizedBox(height: 24),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 24.0),
                       child: XPubImportStepper(),
@@ -104,6 +107,9 @@ class XPubImportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final networkSelect = context.select((ChainSelectCubit c) => c);
+    final nodeSelect = context.select((NodeAddressCubit c) => c);
+    final tor = context.select((TorCubit c) => c);
+
     final logger = context.select((Logger c) => c);
     final wallets = context.select((WalletsCubit c) => c);
 
@@ -117,6 +123,8 @@ class XPubImportScreen extends StatelessWidget {
       locator<IStorage>(),
       wallets,
       networkSelect,
+      nodeSelect,
+      tor,
       xpubCub,
     );
 

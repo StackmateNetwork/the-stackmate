@@ -10,7 +10,7 @@ part 'chain-select.freezed.dart';
 @freezed
 class BlockchainState with _$BlockchainState {
   const factory BlockchainState({
-    @Default(Blockchain.testNet) Blockchain blockchain,
+    @Default(Blockchain.test) Blockchain blockchain,
   }) = _BlockchainState;
 }
 
@@ -18,19 +18,17 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
   ChainSelectCubit(
     this._storage,
     this._logger,
-  ) : super(const BlockchainState()) {
-    _init();
-  }
+  ) : super(const BlockchainState());
 
   final IStorage _storage;
   final Logger _logger;
 
-  void _init() async {
+  void init() async {
     final blockchain =
         _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name);
     if (blockchain.hasError) {
       if (blockchain.error! == 'empty') {
-        emit(const BlockchainState(blockchain: Blockchain.testNet));
+        emit(const BlockchainState(blockchain: Blockchain.test));
         await Future.delayed(const Duration(milliseconds: 50));
       } else
         return;
@@ -48,7 +46,7 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
         0,
         blockchain,
       );
-      await Future.delayed(const Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 200));
     } catch (e, s) {
       _logger.logException(e, 'BlockchainCubit.changeBlockchain', s);
     }

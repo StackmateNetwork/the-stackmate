@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bitcoin/types.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -8,9 +6,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/wallet/wallet.dart';
+import 'package:sats/cubit/tor.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -37,6 +37,7 @@ class SendState with _$SendState {
     @Default(false) bool sendingTx,
     @Default('') String errLoading,
     @Default('') String errAddress,
+    @Default('') String errSending,
     @Default('') String errAmount,
     @Default('') String errFees,
     @Default('') String policyPath,
@@ -70,26 +71,43 @@ class SendState with _$SendState {
 class SendCubit extends Cubit<SendState> {
   SendCubit(
     bool withQR,
-    this._walletCubit,
+    this._walletsCubit,
     // this._bitcoin,
     this._blockchain,
     this._logger,
     this._clipBoard,
     this._share,
     this._nodeAddressCubit,
+    this._torCubit,
     this._core,
+    this._fees,
+    // this._file,
   ) : super(const SendState()) {
     _init(withQR);
   }
 
-  final WalletsCubit _walletCubit;
+  final WalletsCubit _walletsCubit;
   // final IBitcoin _bitcoin;
   final Logger _logger;
   final ChainSelectCubit _blockchain;
   final IShare _share;
   final IClipBoard _clipBoard;
   final NodeAddressCubit _nodeAddressCubit;
+  final TorCubit _torCubit;
   final IStackMateCore _core;
+  final FeesCubit _fees;
+  // final FileManager _file;
+
+  static const emailShareTxidSubject = 'Transaction ID';
+  static const emailSharePSBTSubject = 'PSBT Requires Signature';
+
+  static const invalidAddressError = 'Invalid Address';
+  static const invalidAmountError = 'Invalid Amount';
+  static const invalidFeeError = 'Invalid Fee';
+  static const psbtNotFinalizedError = 'Transaction signatures not satisfied.';
+  static const dummyFeeValue = '250';
+  static const minerOutput = 'miner';
+  static const emptyString = '';
 
   void _init(bool withQR) async {
     if (withQR) {
@@ -101,27 +119,25 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
+  // void completed() {
+  //   _walletsCubit.walletSelected(wallet)
+  // }
   void getBalance() async {
-    // emit(
-    //   state.copyWith(
-    //     loadingStart: true,
-    //   ),
-    // );
-
     try {
       emit(
         state.copyWith(
-          balance: _walletCubit.state.selectedWallet!.balance,
+          balance: _walletsCubit.state.selectedWallet!.balance,
           loadingStart: false,
-          errLoading: '',
+          errLoading: emptyString,
         ),
       );
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
-
+      final socks5 = _torCubit.state.getSocks5();
       final bal = await compute(computeBalance, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
+        'socks5': socks5,
       });
 
       emit(
@@ -148,7 +164,7 @@ class SendCubit extends Cubit<SendState> {
   void pasteAddress() async {
     final text = await _clipBoard.pasteFromClipBoard();
     if (text.hasError) return;
-    emit(state.copyWith(address: text.result!));
+    emit(state.copyWith(address: text.result!.toLowerCase()));
   }
 
   void scanAddress(bool onStart) async {
@@ -159,9 +175,15 @@ class SendCubit extends Cubit<SendState> {
         false,
         ScanMode.QR,
       );
-      if (barcodeScanRes == '-1') barcodeScanRes = '';
-
-      emit(state.copyWith(address: barcodeScanRes));
+      if (barcodeScanRes == '-1') barcodeScanRes = emptyString;
+      if (barcodeScanRes.contains('bitcoin:')) {
+        final address = barcodeScanRes.split(':')[1].split('?')[0];
+        emit(state.copyWith(address: address.toLowerCase()));
+        final amount =
+            barcodeScanRes.split(':')[1].split('?amount=')[1].split('?')[0];
+        amountChanged(amount);
+      } else
+        emit(state.copyWith(address: barcodeScanRes.toLowerCase()));
 
       await Future.delayed(const Duration(milliseconds: 1000));
 
@@ -179,25 +201,55 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void addressConfirmedClicked() async {
-    emit(state.copyWith(errAddress: ''));
+    emit(state.copyWith(errAddress: emptyString));
 
-    if (!Validation.isBtcAddress(state.address)) {
-      emit(state.copyWith(errAddress: 'Invalid Wallet Address'));
+    if (!Validation.isBtcAddress(state.address.toLowerCase())) {
+      emit(state.copyWith(errAddress: invalidAddressError));
       return;
     }
     emit(state.copyWith(currentStep: SendSteps.amount));
   }
 
   void amountChanged(String amount) {
-    final checked = amount.replaceAll('.', '');
+    final checked = amount.replaceAll(' ', emptyString);
     emit(state.copyWith(amount: checked));
   }
 
   void toggleSweep() {
-    emit(state.copyWith(sweepWallet: !state.sweepWallet, amount: ''));
+    emit(
+      state.copyWith(
+        sweepWallet: !state.sweepWallet,
+        amount: 'WALLET WILL BE EMPTIED.',
+      ),
+    );
   }
 
-  bool _checkAmount() {
+  // void savePSBTToFile(BuildContext context) async {
+  //   // final bool isDesktop = !(Platform.isAndroid || Platform.isIOS);
+
+  //   final rootPath = await getTemporaryDirectory();
+  //   final String path = await FilesystemPicker.open(
+  //     title: 'Save to folder',
+  //     context: context,
+  //     rootDirectory: rootPath,
+  //     fsType: FilesystemType.folder,
+  //     pickText: 'Save file to this folder',
+  //     folderIconColor: Colors.teal,
+  //   );
+  //   await _file.saveTextToFile(state.psbt, path);
+  //   emit(
+  //     state.copyWith(
+  //       sendingTx: false,
+  //       errLoading: emptyString,
+  //       // currentStep: SendSteps.sent,
+  //     ),
+  //   );
+  //   return;
+  // }
+
+  bool _checkAmount(String amount) {
+    final checked = amount.replaceAll(',', emptyString);
+    emit(state.copyWith(amount: checked));
     return true;
   }
 
@@ -206,74 +258,71 @@ class SendCubit extends Cubit<SendState> {
     //get fees
 
     try {
-      emit(state.copyWith(errAmount: ''));
+      emit(state.copyWith(errAmount: emptyString));
 
-      if (!_checkAmount()) {
-        emit(state.copyWith(errAmount: 'Please enter a valid amount'));
+      if (!_checkAmount(state.amount)) {
+        emit(state.copyWith(errAmount: invalidAmountError));
         return;
       }
-      final txOutputs = '${state.address}:${state.amount}';
+      final txOutputs =
+          '${state.address}:${state.sweepWallet ? 0 : state.amount}';
 
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           calculatingFees: true,
           currentStep: SendSteps.fees,
-          txOutputs: txOutputs));
-
-      // await Future.delayed(const Duration(milliseconds: 100));
-
-      // emit(state.copyWith(buildingTx: true, errLoading: ''));
+          txOutputs: txOutputs,
+        ),
+      );
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
 
       final psbt = await compute(buildTx, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
+        'socks5': socks5,
         'txOutputs': txOutputs,
-        'feeAbsolute': '1000',
+        'feeAbsolute': dummyFeeValue,
         'policyPath': state.policyPath,
         'sweep': state.sweepWallet.toString(),
       });
 
       final weight = await compute(getWeight, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'psbt': psbt,
       });
 
-      final fastRate = await compute(estimateFeees, {
-        'network': _blockchain.state.blockchain.name,
-        'nodeAddress': nodeAddress,
-        'targetSize': '1',
-      });
-
-      final slowRate = await compute(estimateFeees, {
-        'network': _blockchain.state.blockchain.name,
-        'nodeAddress': nodeAddress,
-        'targetSize': '21',
-      });
-
-      final mediumRate = (fastRate + slowRate) / 2;
+      final now = DateTime.now().millisecondsSinceEpoch;
+      const tenMinutes = 600000;
+      var feesComplete = _fees.getFees();
+      if (feesComplete.fast == 0.0 ||
+          feesComplete.timestamp < now - tenMinutes) {
+        await _fees.update();
+      }
+      feesComplete = _fees.getFees();
 
       final fast = _core.feeRateToAbsolute(
-        feeRate: fastRate.toString(),
+        feeRate: feesComplete.fast.toString(),
         weight: weight.toString(),
       );
 
       final medium = _core.feeRateToAbsolute(
-        feeRate: mediumRate.toString(),
+        feeRate: feesComplete.medium.toString(),
         weight: weight.toString(),
       );
 
       final slow = _core.feeRateToAbsolute(
-        feeRate: slowRate.toString(),
+        feeRate: feesComplete.slow.toString(),
         weight: weight.toString(),
       );
 
       emit(
         state.copyWith(
-          feeFast: fast.absolute,
-          feeMedium: medium.absolute,
-          feeSlow: slow.absolute,
-          finalFee: medium.absolute,
+          feeFast: fast.result!.absolute,
+          feeMedium: medium.result!.absolute,
+          feeSlow: slow.result!.absolute,
+          finalFee: medium.result!.absolute,
           weight: weight,
           calculatingFees: false,
           currentStep: SendSteps.fees,
@@ -306,17 +355,17 @@ class SendCubit extends Cubit<SendState> {
         finalFee = state.feeFast!;
         break;
     }
-    emit(state.copyWith(finalFee: finalFee, fees: ''));
+    emit(state.copyWith(finalFee: finalFee, fees: emptyString));
   }
 
   void feeChanged(String fee) {
-    final checked = fee.replaceAll('.', '');
+    final checked = fee.replaceAll('.', emptyString);
     emit(state.copyWith(fees: checked, feesOption: 4));
-    final fees = _core.feeAbsoluteToRate(
-      feeAbsolute: checked,
-      weight: state.weight.toString(),
-    );
-    emit(state.copyWith(finalFee: fees.absolute));
+    // final fees = _core.feeAbsoluteToRate(
+    //   feeAbsolute: checked,
+    //   weight: state.weight.toString(),
+    // );
+    emit(state.copyWith(finalFee: int.parse(checked)));
   }
 
   bool _checkFee() {
@@ -325,21 +374,23 @@ class SendCubit extends Cubit<SendState> {
 
   void feeConfirmedClicked() async {
     try {
-      emit(state.copyWith(errFees: ''));
+      emit(state.copyWith(errFees: emptyString));
 
       if (!_checkFee()) {
-        emit(state.copyWith(errAmount: 'Please enter a valid fee amount'));
+        emit(state.copyWith(errAmount: invalidFeeError));
         return;
       }
       await Future.delayed(const Duration(milliseconds: 100));
 
-      emit(state.copyWith(buildingTx: true, errLoading: ''));
+      emit(state.copyWith(buildingTx: true, errLoading: emptyString));
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
 
       final psbt = await compute(buildTx, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
+        'socks5': socks5,
         'txOutputs': state.txOutputs,
         'feeAbsolute': state.finalFee.toString(),
         'policyPath': state.policyPath,
@@ -352,7 +403,7 @@ class SendCubit extends Cubit<SendState> {
       });
 
       final amtoutput = decode.firstWhere((o) => o.to == state.address);
-      final feeoutput = decode.firstWhere((o) => o.to == 'miner');
+      final feeoutput = decode.firstWhere((o) => o.to == minerOutput);
 
       emit(
         state.copyWith(
@@ -361,6 +412,7 @@ class SendCubit extends Cubit<SendState> {
           finalFee: feeoutput.value,
           finalAmount: amtoutput.value,
           currentStep: SendSteps.confirm,
+          errSending: emptyString,
         ),
       );
     } catch (e, s) {
@@ -376,7 +428,7 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void clearPsbt() {
-    emit(state.copyWith(psbt: '', finalAmount: null, finalFee: null));
+    emit(state.copyWith(psbt: emptyString, finalAmount: null, finalFee: null));
   }
 
   void backClicked() {
@@ -399,30 +451,54 @@ class SendCubit extends Cubit<SendState> {
 
   void sendClicked() async {
     try {
-      emit(state.copyWith(sendingTx: true, errLoading: ''));
+      if (state.sendingTx == true) {
+        return;
+      }
+      emit(state.copyWith(sendingTx: true, errLoading: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
 
       // final unsigned = state.psbt;
-      final descriptor = _walletCubit.state.selectedWallet!.descriptor;
-      final signed = await compute(signTx, {
-        'descriptor': descriptor,
-        'unsignedPSBT': state.psbt,
-      });
-
-      final txid = await compute(broadcastTx, {
-        'descriptor': _walletCubit.state.selectedWallet!.descriptor,
-        'nodeAddress': nodeAddress,
-        'signedPSBT': signed,
-      });
-
-      emit(
-        state.copyWith(
-          sendingTx: false,
-          errLoading: '',
-          txId: txid,
-          currentStep: SendSteps.sent,
-        ),
+      final descriptor = _walletsCubit.state.selectedWallet!.descriptor;
+      final signed = _core.signTransaction(
+        descriptor: descriptor,
+        unsignedPSBT: state.psbt,
       );
+      if (signed.hasError) {
+        emit(state.copyWith(errSending: signed.error!));
+        return;
+      }
+      if (!signed.result!.isFinalized) {
+        emit(state.copyWith(errSending: 'All signatures not present.'));
+        return;
+      }
+      final txid = await _core.broadcastTransaction(
+        descriptor: _walletsCubit.state.selectedWallet!.descriptor,
+        nodeAddress: nodeAddress,
+        socks5: socks5,
+        signedPSBT: signed.result!.psbt,
+      );
+      if (txid.hasError)
+        emit(
+          state.copyWith(
+            sendingTx: false,
+            errLoading: emptyString,
+            errSending: txid.error!,
+            txId: '',
+            currentStep: SendSteps.confirm,
+          ),
+        );
+      else
+        emit(
+          state.copyWith(
+            sendingTx: false,
+            errLoading: emptyString,
+            errSending: emptyString,
+            txId: txid.result!,
+            currentStep: SendSteps.sent,
+          ),
+        );
+      return;
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -436,8 +512,33 @@ class SendCubit extends Cubit<SendState> {
 
   void shareTxId() {
     _share.share(
-      text: 'This is the txid: ' + state.txId,
-      subjectForEmail: 'transaction',
+      text: state.txId,
+      subjectForEmail: emailShareTxidSubject,
+    );
+  }
+
+  void copyPSBT() {
+    _clipBoard.copyToClipBoard(state.psbt);
+    emit(
+      state.copyWith(
+        sendingTx: false,
+        errLoading: emptyString,
+        currentStep: SendSteps.sent,
+      ),
+    );
+  }
+
+  void sharePSBT() {
+    _share.share(
+      text: state.psbt,
+      subjectForEmail: emailSharePSBTSubject,
+    );
+    emit(
+      state.copyWith(
+        sendingTx: false,
+        errLoading: emptyString,
+        currentStep: SendSteps.sent,
+      ),
     );
   }
 }
@@ -447,9 +548,13 @@ double estimateFeees(dynamic data) {
   final resp = BitcoinFFI().estimateNetworkFee(
     network: obj['network']!,
     nodeAddress: obj['nodeAddress']!,
+    socks5: obj['socks5']!,
     targetSize: obj['targetSize']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 
 int getWeight(dynamic data) {
@@ -458,7 +563,10 @@ int getWeight(dynamic data) {
     descriptor: obj['descriptor']!,
     psbt: obj['psbt']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 
 AbsoluteFees getAbsoluteFees(dynamic data) {
@@ -467,7 +575,10 @@ AbsoluteFees getAbsoluteFees(dynamic data) {
     feeAbsolute: obj['feeRate']!,
     weight: obj['weight']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 
 String buildTx(dynamic data) {
@@ -475,12 +586,16 @@ String buildTx(dynamic data) {
   final resp = BitcoinFFI().buildTransaction(
     descriptor: obj['descriptor']!,
     nodeAddress: obj['nodeAddress']!,
+    socks5: obj['socks5']!,
     txOutputs: obj['txOutputs']!,
     feeAbsolute: obj['feeAbsolute']!,
     policyPath: obj['policyPath']!,
     sweep: obj['sweep']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!.psbt;
 }
 
 List<DecodedTxOutput> decodePSBT(dynamic data) {
@@ -489,33 +604,39 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
     network: obj['network']!,
     psbt: obj['psbt']!,
   );
-  final json = jsonDecode(resp)['outputs'];
 
-  final List<DecodedTxOutput> decoded = [];
-  for (final out in json)
-    decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
 
-  return decoded;
+  return resp.result!;
 }
 
-String signTx(dynamic data) {
+PSBT signTx(dynamic data) {
   final obj = data as Map<String, String?>;
 
   final resp = BitcoinFFI().signTransaction(
     descriptor: obj['descriptor']!,
     unsignedPSBT: obj['unsignedPSBT']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 
-String broadcastTx(dynamic data) {
+Future<String> broadcastTx(dynamic data) async {
   final obj = data as Map<String, String?>;
 
-  final resp = BitcoinFFI().broadcastTransaction(
-    nodeAddress: obj['nodeAddress']!,
+  final resp = await BitcoinFFI().broadcastTransaction(
     descriptor: obj['descriptor']!,
+    nodeAddress: obj['nodeAddress']!,
+    socks5: obj['socks5']!,
     signedPSBT: obj['signedPSBT']!,
   );
-  return resp;
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }
 // tb1qcd0dej2spq73nlkr4d5w3scksqagz0nzmdnzgg

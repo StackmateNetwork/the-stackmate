@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sats/pkg/extensions.dart';
 
 class StepLine extends StatelessWidget {
   const StepLine({
@@ -23,7 +24,9 @@ class StepLine extends StatelessWidget {
 
               // width: 50,
               decoration: BoxDecoration(
-                color: i <= idx ? Colors.blue.withOpacity(0.4) : Colors.white,
+                color: i <= idx
+                    ? context.colours.secondary.withOpacity(0.4)
+                    : context.colours.onPrimary,
                 borderRadius: BorderRadius.circular(8),
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -23,7 +24,7 @@ class _AmountRowState extends State<AmountRow> {
     final amount = c.select((SendCubit sc) => sc.state.amount);
     final errAmount = c.select((SendCubit sc) => sc.state.errAmount);
     final isSweep = c.select((SendCubit sc) => sc.state.sweepWallet);
-    final balance = c.select((SendCubit sc) => sc.state.balance!);
+    final balance = c.select((SendCubit sc) => sc.state.balance);
 
     if (amount != _controller.text) _controller.text = amount;
 
@@ -37,11 +38,15 @@ class _AmountRowState extends State<AmountRow> {
             child: TextField(
               controller: _controller,
               keyboardType: TextInputType.number,
-              style: TextStyle(color: c.colours.onBackground),
+              inputFormatters: [ThousandsFormatter()],
+              style: TextStyle(
+                color: c.colours.onBackground,
+                fontSize: 24,
+              ),
               decoration: InputDecoration(
                 hintText: isSweep
                     ? 'WALLET WILL BE EMPTIED'
-                    : 'Enter SATS Amount'.toUpperCase(),
+                    : 'Amount in SATS'.toUpperCase(),
                 hintStyle: isSweep
                     ? TextStyle(
                         color: c.colours.onBackground,
@@ -82,7 +87,9 @@ class _AmountRowState extends State<AmountRow> {
         const SizedBox(height: 100),
         TextButton(
           onPressed: () {
-            context.read<SendCubit>().amountConfirmedClicked();
+            if (amount != '') {
+              context.read<SendCubit>().amountConfirmedClicked();
+            }
           },
           child: const Text('CONFIRM'),
         ),

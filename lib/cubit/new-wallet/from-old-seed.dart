@@ -1,12 +1,16 @@
 import 'dart:async';
 
+import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
+import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -38,8 +42,9 @@ class SeedImportWalletState with _$SeedImportWalletState {
   }
 
   bool canGoBack() {
-    if (currentStep == SeedImportWalletSteps.warning) return true;
-    return false;
+    // if (currentStep == SeedImportWalletSteps.warning)
+    return true;
+    // return false;
   }
 
   double completePercent() =>
@@ -72,12 +77,16 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     this._storage,
     this._wallets,
     this._blockchainCubit,
+    this._nodeAddressCubit,
+    this._torCubit,
     this._importCubit, {
     String walletLabel = '',
   }) : super(
           SeedImportWalletState(
             walletLabel: walletLabel,
-            labelFixed: walletLabel != '',
+            labelFixed: walletLabel != emptyString,
+            walletLabelError: emptyString,
+            savingWalletError: emptyString,
           ),
         ) {
     _importSub = _importCubit.stream.listen((istate) {
@@ -95,6 +104,13 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   final ChainSelectCubit _blockchainCubit;
   final SeedImportCubit _importCubit;
   late StreamSubscription _importSub;
+  final NodeAddressCubit _nodeAddressCubit;
+  final TorCubit _torCubit;
+  static const invalidLabelError = 'Invalid Label';
+  static const signerWalletType = 'SIGNER';
+  static const wpkhScript = 'wpkh';
+  static const wshScript = 'wsh';
+  static const emptyString = '';
 
   void nextClicked() async {
     switch (state.currentStep) {
@@ -110,7 +126,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         break;
 
       case SeedImportWalletSteps.label:
-        _saveClicked();
+        if (!state.savingWallet) _saveClicked();
         break;
     }
   }
@@ -152,26 +168,28 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     emit(state.copyWith(walletLabel: text, walletLabelError: ''));
   }
 
-  void _saveClicked() async {
+  Future<void> _saveClicked() async {
     if (state.walletLabel.length < 3 ||
-        state.walletLabel.length > 10 ||
+        state.walletLabel.length > 12 ||
         state.walletLabel.contains(' ')) {
-      emit(state.copyWith(walletLabelError: 'Invalid Label'));
+      emit(state.copyWith(walletLabelError: invalidLabelError));
       return;
     }
-
-    emit(state.copyWith(walletLabelError: ''));
-
+    emit(
+      state.copyWith(
+        savingWallet: true,
+      ),
+    );
     final istate = _importCubit.state;
     final wallet = istate.wallet;
     if (wallet == null) return;
     final fullXPrv =
         '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
-            .replaceFirst('/m', '');
+            .replaceFirst('/m', emptyString);
 
     final fullXPub =
         '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
-            .replaceFirst('/m', '');
+            .replaceFirst('/m', emptyString);
 
     final policy = 'pk($fullXPrv/*)';
 
@@ -179,21 +197,53 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
     final descriptor = _core.compile(
       policy: policy,
-      scriptType: 'wpkh',
+      scriptType: wpkhScript,
     );
+    if (descriptor.hasError) {
+      throw SMError.fromJson(descriptor.error!);
+    }
 
+    final nodeAddress = _nodeAddressCubit.state.getAddress();
+    final socks5 = _torCubit.state.getSocks5();
+
+    var history = _core.getHistory(
+      descriptor: descriptor.result!,
+      nodeAddress: nodeAddress,
+      socks5: socks5,
+    );
+    var recievedCount = 0;
+
+    if (history.hasError) {
+      history = const R(result: []);
+    } else
+      for (final item in history.result!) {
+        if (item.sent == 0) {
+          recievedCount++;
+        }
+      }
+
+    var balance = _core.syncBalance(
+      descriptor: descriptor.result!,
+      nodeAddress: nodeAddress,
+      socks5: socks5,
+    );
+    if (balance.hasError) {
+      balance = const R(result: 0);
+    }
     // public descriptor
     // Check history and whether this wallet needs to update its address index
 
     var newWallet = Wallet(
       label: state.walletLabel,
-      walletType: 'SIGNER',
-      descriptor: descriptor,
+      walletType: signerWalletType,
+      descriptor: descriptor.result!,
       policy: readable,
       requiredPolicyElements: 1,
       policyElements: ['primary:$fullXPub'],
       blockchain: _blockchainCubit.state.blockchain.name,
-      lastAddressIndex: 0,
+      lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
+      balance: balance.result!,
+      transactions: history.result!,
     );
 
     final savedId = await _storage.saveItem<Wallet>(
@@ -217,8 +267,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       emit(state.copyWith(newWalletSaved: true));
       return;
     }
-
-    _wallets.refresh();
+    _wallets.walletSelected(newWallet);
+    _wallets.addTransactionsToSelectedWallet(history.result!);
 
     emit(
       state.copyWith(

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'send.dart';
@@ -11,70 +12,7 @@ part of 'send.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SendStateTearOff {
-  const _$SendStateTearOff();
-
-  _SendState call(
-      {SendSteps currentStep = SendSteps.address,
-      bool loadingStart = true,
-      bool calculatingFees = false,
-      bool buildingTx = false,
-      bool sendingTx = false,
-      String errLoading = '',
-      String errAddress = '',
-      String errAmount = '',
-      String errFees = '',
-      String policyPath = '',
-      String txOutputs = '',
-      String address = '',
-      String amount = '',
-      int weight = 0,
-      String fees = '',
-      int? feeSlow,
-      int? feeMedium,
-      int? feeFast,
-      int? balance,
-      int feesOption = 1,
-      String psbt = '',
-      String txId = '',
-      int? finalFee,
-      int? finalAmount,
-      bool sweepWallet = false}) {
-    return _SendState(
-      currentStep: currentStep,
-      loadingStart: loadingStart,
-      calculatingFees: calculatingFees,
-      buildingTx: buildingTx,
-      sendingTx: sendingTx,
-      errLoading: errLoading,
-      errAddress: errAddress,
-      errAmount: errAmount,
-      errFees: errFees,
-      policyPath: policyPath,
-      txOutputs: txOutputs,
-      address: address,
-      amount: amount,
-      weight: weight,
-      fees: fees,
-      feeSlow: feeSlow,
-      feeMedium: feeMedium,
-      feeFast: feeFast,
-      balance: balance,
-      feesOption: feesOption,
-      psbt: psbt,
-      txId: txId,
-      finalFee: finalFee,
-      finalAmount: finalAmount,
-      sweepWallet: sweepWallet,
-    );
-  }
-}
-
-/// @nodoc
-const $SendState = _$SendStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$SendState {
@@ -85,6 +23,7 @@ mixin _$SendState {
   bool get sendingTx => throw _privateConstructorUsedError;
   String get errLoading => throw _privateConstructorUsedError;
   String get errAddress => throw _privateConstructorUsedError;
+  String get errSending => throw _privateConstructorUsedError;
   String get errAmount => throw _privateConstructorUsedError;
   String get errFees => throw _privateConstructorUsedError;
   String get policyPath => throw _privateConstructorUsedError;
@@ -121,6 +60,7 @@ abstract class $SendStateCopyWith<$Res> {
       bool sendingTx,
       String errLoading,
       String errAddress,
+      String errSending,
       String errAmount,
       String errFees,
       String policyPath,
@@ -158,6 +98,7 @@ class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
     Object? sendingTx = freezed,
     Object? errLoading = freezed,
     Object? errAddress = freezed,
+    Object? errSending = freezed,
     Object? errAmount = freezed,
     Object? errFees = freezed,
     Object? policyPath = freezed,
@@ -205,6 +146,10 @@ class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
       errAddress: errAddress == freezed
           ? _value.errAddress
           : errAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      errSending: errSending == freezed
+          ? _value.errSending
+          : errSending // ignore: cast_nullable_to_non_nullable
               as String,
       errAmount: errAmount == freezed
           ? _value.errAmount
@@ -283,10 +228,10 @@ class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
-  factory _$SendStateCopyWith(
-          _SendState value, $Res Function(_SendState) then) =
-      __$SendStateCopyWithImpl<$Res>;
+abstract class _$$_SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
+  factory _$$_SendStateCopyWith(
+          _$_SendState value, $Res Function(_$_SendState) then) =
+      __$$_SendStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {SendSteps currentStep,
@@ -296,6 +241,7 @@ abstract class _$SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
       bool sendingTx,
       String errLoading,
       String errAddress,
+      String errSending,
       String errAmount,
       String errFees,
       String policyPath,
@@ -317,13 +263,14 @@ abstract class _$SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
-    implements _$SendStateCopyWith<$Res> {
-  __$SendStateCopyWithImpl(_SendState _value, $Res Function(_SendState) _then)
-      : super(_value, (v) => _then(v as _SendState));
+class __$$_SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
+    implements _$$_SendStateCopyWith<$Res> {
+  __$$_SendStateCopyWithImpl(
+      _$_SendState _value, $Res Function(_$_SendState) _then)
+      : super(_value, (v) => _then(v as _$_SendState));
 
   @override
-  _SendState get _value => super._value as _SendState;
+  _$_SendState get _value => super._value as _$_SendState;
 
   @override
   $Res call({
@@ -334,6 +281,7 @@ class __$SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
     Object? sendingTx = freezed,
     Object? errLoading = freezed,
     Object? errAddress = freezed,
+    Object? errSending = freezed,
     Object? errAmount = freezed,
     Object? errFees = freezed,
     Object? policyPath = freezed,
@@ -353,7 +301,7 @@ class __$SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
     Object? finalAmount = freezed,
     Object? sweepWallet = freezed,
   }) {
-    return _then(_SendState(
+    return _then(_$_SendState(
       currentStep: currentStep == freezed
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
@@ -381,6 +329,10 @@ class __$SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
       errAddress: errAddress == freezed
           ? _value.errAddress
           : errAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      errSending: errSending == freezed
+          ? _value.errSending
+          : errSending // ignore: cast_nullable_to_non_nullable
               as String,
       errAmount: errAmount == freezed
           ? _value.errAmount
@@ -469,6 +421,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
       this.sendingTx = false,
       this.errLoading = '',
       this.errAddress = '',
+      this.errSending = '',
       this.errAmount = '',
       this.errFees = '',
       this.policyPath = '',
@@ -489,50 +442,53 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
       this.sweepWallet = false})
       : super._();
 
-  @JsonKey(defaultValue: SendSteps.address)
   @override
+  @JsonKey()
   final SendSteps currentStep;
-  @JsonKey(defaultValue: true)
   @override
+  @JsonKey()
   final bool loadingStart;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool calculatingFees;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool buildingTx;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool sendingTx;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String errLoading;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String errAddress;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
+  final String errSending;
+  @override
+  @JsonKey()
   final String errAmount;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String errFees;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String policyPath;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String txOutputs;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String address;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String amount;
-  @JsonKey(defaultValue: 0)
   @override
+  @JsonKey()
   final int weight;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String fees;
   @override
   final int? feeSlow;
@@ -542,26 +498,26 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
   final int? feeFast;
   @override
   final int? balance;
-  @JsonKey(defaultValue: 1)
   @override
+  @JsonKey()
   final int feesOption;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String psbt;
-  @JsonKey(defaultValue: '')
   @override
+  @JsonKey()
   final String txId;
   @override
   final int? finalFee;
   @override
   final int? finalAmount;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool sweepWallet;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SendState(currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, errLoading: $errLoading, errAddress: $errAddress, errAmount: $errAmount, errFees: $errFees, policyPath: $policyPath, txOutputs: $txOutputs, address: $address, amount: $amount, weight: $weight, fees: $fees, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
+    return 'SendState(currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, errLoading: $errLoading, errAddress: $errAddress, errSending: $errSending, errAmount: $errAmount, errFees: $errFees, policyPath: $policyPath, txOutputs: $txOutputs, address: $address, amount: $amount, weight: $weight, fees: $fees, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
   }
 
   @override
@@ -576,6 +532,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('sendingTx', sendingTx))
       ..add(DiagnosticsProperty('errLoading', errLoading))
       ..add(DiagnosticsProperty('errAddress', errAddress))
+      ..add(DiagnosticsProperty('errSending', errSending))
       ..add(DiagnosticsProperty('errAmount', errAmount))
       ..add(DiagnosticsProperty('errFees', errFees))
       ..add(DiagnosticsProperty('policyPath', policyPath))
@@ -599,139 +556,112 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SendState &&
-            (identical(other.currentStep, currentStep) ||
-                const DeepCollectionEquality()
-                    .equals(other.currentStep, currentStep)) &&
-            (identical(other.loadingStart, loadingStart) ||
-                const DeepCollectionEquality()
-                    .equals(other.loadingStart, loadingStart)) &&
-            (identical(other.calculatingFees, calculatingFees) ||
-                const DeepCollectionEquality()
-                    .equals(other.calculatingFees, calculatingFees)) &&
-            (identical(other.buildingTx, buildingTx) ||
-                const DeepCollectionEquality()
-                    .equals(other.buildingTx, buildingTx)) &&
-            (identical(other.sendingTx, sendingTx) ||
-                const DeepCollectionEquality()
-                    .equals(other.sendingTx, sendingTx)) &&
-            (identical(other.errLoading, errLoading) ||
-                const DeepCollectionEquality()
-                    .equals(other.errLoading, errLoading)) &&
-            (identical(other.errAddress, errAddress) ||
-                const DeepCollectionEquality()
-                    .equals(other.errAddress, errAddress)) &&
-            (identical(other.errAmount, errAmount) ||
-                const DeepCollectionEquality()
-                    .equals(other.errAmount, errAmount)) &&
-            (identical(other.errFees, errFees) ||
-                const DeepCollectionEquality()
-                    .equals(other.errFees, errFees)) &&
-            (identical(other.policyPath, policyPath) ||
-                const DeepCollectionEquality()
-                    .equals(other.policyPath, policyPath)) &&
-            (identical(other.txOutputs, txOutputs) ||
-                const DeepCollectionEquality()
-                    .equals(other.txOutputs, txOutputs)) &&
-            (identical(other.address, address) ||
-                const DeepCollectionEquality()
-                    .equals(other.address, address)) &&
-            (identical(other.amount, amount) ||
-                const DeepCollectionEquality().equals(other.amount, amount)) &&
-            (identical(other.weight, weight) ||
-                const DeepCollectionEquality().equals(other.weight, weight)) &&
-            (identical(other.fees, fees) ||
-                const DeepCollectionEquality().equals(other.fees, fees)) &&
-            (identical(other.feeSlow, feeSlow) ||
-                const DeepCollectionEquality()
-                    .equals(other.feeSlow, feeSlow)) &&
-            (identical(other.feeMedium, feeMedium) ||
-                const DeepCollectionEquality()
-                    .equals(other.feeMedium, feeMedium)) &&
-            (identical(other.feeFast, feeFast) ||
-                const DeepCollectionEquality()
-                    .equals(other.feeFast, feeFast)) &&
-            (identical(other.balance, balance) ||
-                const DeepCollectionEquality()
-                    .equals(other.balance, balance)) &&
-            (identical(other.feesOption, feesOption) ||
-                const DeepCollectionEquality()
-                    .equals(other.feesOption, feesOption)) &&
-            (identical(other.psbt, psbt) ||
-                const DeepCollectionEquality().equals(other.psbt, psbt)) &&
-            (identical(other.txId, txId) ||
-                const DeepCollectionEquality().equals(other.txId, txId)) &&
-            (identical(other.finalFee, finalFee) ||
-                const DeepCollectionEquality()
-                    .equals(other.finalFee, finalFee)) &&
-            (identical(other.finalAmount, finalAmount) ||
-                const DeepCollectionEquality()
-                    .equals(other.finalAmount, finalAmount)) &&
-            (identical(other.sweepWallet, sweepWallet) || const DeepCollectionEquality().equals(other.sweepWallet, sweepWallet)));
+        (other.runtimeType == runtimeType &&
+            other is _$_SendState &&
+            const DeepCollectionEquality()
+                .equals(other.currentStep, currentStep) &&
+            const DeepCollectionEquality()
+                .equals(other.loadingStart, loadingStart) &&
+            const DeepCollectionEquality()
+                .equals(other.calculatingFees, calculatingFees) &&
+            const DeepCollectionEquality()
+                .equals(other.buildingTx, buildingTx) &&
+            const DeepCollectionEquality().equals(other.sendingTx, sendingTx) &&
+            const DeepCollectionEquality()
+                .equals(other.errLoading, errLoading) &&
+            const DeepCollectionEquality()
+                .equals(other.errAddress, errAddress) &&
+            const DeepCollectionEquality()
+                .equals(other.errSending, errSending) &&
+            const DeepCollectionEquality().equals(other.errAmount, errAmount) &&
+            const DeepCollectionEquality().equals(other.errFees, errFees) &&
+            const DeepCollectionEquality()
+                .equals(other.policyPath, policyPath) &&
+            const DeepCollectionEquality().equals(other.txOutputs, txOutputs) &&
+            const DeepCollectionEquality().equals(other.address, address) &&
+            const DeepCollectionEquality().equals(other.amount, amount) &&
+            const DeepCollectionEquality().equals(other.weight, weight) &&
+            const DeepCollectionEquality().equals(other.fees, fees) &&
+            const DeepCollectionEquality().equals(other.feeSlow, feeSlow) &&
+            const DeepCollectionEquality().equals(other.feeMedium, feeMedium) &&
+            const DeepCollectionEquality().equals(other.feeFast, feeFast) &&
+            const DeepCollectionEquality().equals(other.balance, balance) &&
+            const DeepCollectionEquality()
+                .equals(other.feesOption, feesOption) &&
+            const DeepCollectionEquality().equals(other.psbt, psbt) &&
+            const DeepCollectionEquality().equals(other.txId, txId) &&
+            const DeepCollectionEquality().equals(other.finalFee, finalFee) &&
+            const DeepCollectionEquality()
+                .equals(other.finalAmount, finalAmount) &&
+            const DeepCollectionEquality()
+                .equals(other.sweepWallet, sweepWallet));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(currentStep) ^
-      const DeepCollectionEquality().hash(loadingStart) ^
-      const DeepCollectionEquality().hash(calculatingFees) ^
-      const DeepCollectionEquality().hash(buildingTx) ^
-      const DeepCollectionEquality().hash(sendingTx) ^
-      const DeepCollectionEquality().hash(errLoading) ^
-      const DeepCollectionEquality().hash(errAddress) ^
-      const DeepCollectionEquality().hash(errAmount) ^
-      const DeepCollectionEquality().hash(errFees) ^
-      const DeepCollectionEquality().hash(policyPath) ^
-      const DeepCollectionEquality().hash(txOutputs) ^
-      const DeepCollectionEquality().hash(address) ^
-      const DeepCollectionEquality().hash(amount) ^
-      const DeepCollectionEquality().hash(weight) ^
-      const DeepCollectionEquality().hash(fees) ^
-      const DeepCollectionEquality().hash(feeSlow) ^
-      const DeepCollectionEquality().hash(feeMedium) ^
-      const DeepCollectionEquality().hash(feeFast) ^
-      const DeepCollectionEquality().hash(balance) ^
-      const DeepCollectionEquality().hash(feesOption) ^
-      const DeepCollectionEquality().hash(psbt) ^
-      const DeepCollectionEquality().hash(txId) ^
-      const DeepCollectionEquality().hash(finalFee) ^
-      const DeepCollectionEquality().hash(finalAmount) ^
-      const DeepCollectionEquality().hash(sweepWallet);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(currentStep),
+        const DeepCollectionEquality().hash(loadingStart),
+        const DeepCollectionEquality().hash(calculatingFees),
+        const DeepCollectionEquality().hash(buildingTx),
+        const DeepCollectionEquality().hash(sendingTx),
+        const DeepCollectionEquality().hash(errLoading),
+        const DeepCollectionEquality().hash(errAddress),
+        const DeepCollectionEquality().hash(errSending),
+        const DeepCollectionEquality().hash(errAmount),
+        const DeepCollectionEquality().hash(errFees),
+        const DeepCollectionEquality().hash(policyPath),
+        const DeepCollectionEquality().hash(txOutputs),
+        const DeepCollectionEquality().hash(address),
+        const DeepCollectionEquality().hash(amount),
+        const DeepCollectionEquality().hash(weight),
+        const DeepCollectionEquality().hash(fees),
+        const DeepCollectionEquality().hash(feeSlow),
+        const DeepCollectionEquality().hash(feeMedium),
+        const DeepCollectionEquality().hash(feeFast),
+        const DeepCollectionEquality().hash(balance),
+        const DeepCollectionEquality().hash(feesOption),
+        const DeepCollectionEquality().hash(psbt),
+        const DeepCollectionEquality().hash(txId),
+        const DeepCollectionEquality().hash(finalFee),
+        const DeepCollectionEquality().hash(finalAmount),
+        const DeepCollectionEquality().hash(sweepWallet)
+      ]);
 
   @JsonKey(ignore: true)
   @override
-  _$SendStateCopyWith<_SendState> get copyWith =>
-      __$SendStateCopyWithImpl<_SendState>(this, _$identity);
+  _$$_SendStateCopyWith<_$_SendState> get copyWith =>
+      __$$_SendStateCopyWithImpl<_$_SendState>(this, _$identity);
 }
 
 abstract class _SendState extends SendState {
   const factory _SendState(
-      {SendSteps currentStep,
-      bool loadingStart,
-      bool calculatingFees,
-      bool buildingTx,
-      bool sendingTx,
-      String errLoading,
-      String errAddress,
-      String errAmount,
-      String errFees,
-      String policyPath,
-      String txOutputs,
-      String address,
-      String amount,
-      int weight,
-      String fees,
-      int? feeSlow,
-      int? feeMedium,
-      int? feeFast,
-      int? balance,
-      int feesOption,
-      String psbt,
-      String txId,
-      int? finalFee,
-      int? finalAmount,
-      bool sweepWallet}) = _$_SendState;
+      {final SendSteps currentStep,
+      final bool loadingStart,
+      final bool calculatingFees,
+      final bool buildingTx,
+      final bool sendingTx,
+      final String errLoading,
+      final String errAddress,
+      final String errSending,
+      final String errAmount,
+      final String errFees,
+      final String policyPath,
+      final String txOutputs,
+      final String address,
+      final String amount,
+      final int weight,
+      final String fees,
+      final int? feeSlow,
+      final int? feeMedium,
+      final int? feeFast,
+      final int? balance,
+      final int feesOption,
+      final String psbt,
+      final String txId,
+      final int? finalFee,
+      final int? finalAmount,
+      final bool sweepWallet}) = _$_SendState;
   const _SendState._() : super._();
 
   @override
@@ -748,6 +678,8 @@ abstract class _SendState extends SendState {
   String get errLoading => throw _privateConstructorUsedError;
   @override
   String get errAddress => throw _privateConstructorUsedError;
+  @override
+  String get errSending => throw _privateConstructorUsedError;
   @override
   String get errAmount => throw _privateConstructorUsedError;
   @override
@@ -786,6 +718,6 @@ abstract class _SendState extends SendState {
   bool get sweepWallet => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SendStateCopyWith<_SendState> get copyWith =>
+  _$$_SendStateCopyWith<_$_SendState> get copyWith =>
       throw _privateConstructorUsedError;
 }

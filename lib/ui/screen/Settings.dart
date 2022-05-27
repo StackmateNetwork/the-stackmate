@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
+import 'package:sats/ui/component/Home/Actions.dart';
+import 'package:sats/ui/component/Settings/BitcoinUnit.dart';
+import 'package:sats/ui/component/Settings/Exchange.dart';
+import 'package:sats/ui/component/Settings/FiatUnit.dart';
+import 'package:sats/ui/component/Settings/Incognito.dart';
 import 'package:sats/ui/component/Settings/SelectNetwork.dart';
 import 'package:sats/ui/component/Settings/SelectNode.dart';
 import 'package:sats/ui/component/common/header.dart';
@@ -16,29 +19,35 @@ class SettingsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+            children: const [
+              SizedBox(
+                height: 12,
+              ),
               Header(
-                cornerTitle: '',
+                cornerTitle: 'SETTINGS',
                 children: [
-                  // const SizedBox(height: 8),
-                  const Back(),
-                  const SizedBox(height: 60),
-                  Text(
-                    ' Settings'.toUpperCase(),
-                    style: c.fonts.headline4!.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 48),
+                  SizedBox(height: 21),
                 ],
               ),
-              const SelectNode(),
-              const SizedBox(height: 16),
-              const SelectNetwork(),
+              SizedBox(
+                height: 28,
+              ),
+              SelectNode(),
+              SizedBox(height: 8),
+              SelectNetwork(),
+              SizedBox(height: 8),
+              SetBitcoinUnit(),
+              SizedBox(height: 8),
+              SetExchange(),
+              SizedBox(height: 8),
+              SetFiatUnit(),
+              SizedBox(height: 8),
+              SetIncognito(),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: HomeActions(),
     );
   }
 }

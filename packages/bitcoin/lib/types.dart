@@ -1,5 +1,34 @@
 import 'dart:convert';
 
+class SMError {
+  const SMError(this.kind, this.message);
+  factory SMError.fromJson(String data) {
+    final json = jsonDecode(data);
+    return SMError(
+      json['kind'] as String,
+      json['message'] as String,
+    );
+  }
+  final String kind;
+  final String message;
+
+  String get oneliner => '$kind:$message';
+}
+
+class PSBT {
+  // ignore: avoid_positional_boolean_parameters
+  const PSBT(this.psbt, this.isFinalized);
+  factory PSBT.fromJson(String data) {
+    final json = jsonDecode(data);
+    return PSBT(
+      json['psbt'] as String,
+      json['is_finalized'] as bool,
+    );
+  }
+  final String psbt;
+  final bool isFinalized;
+}
+
 class Seed {
   const Seed(this.mnemonic, this.fingerprint, this.xprv);
   factory Seed.fromJson(String data) {
@@ -43,6 +72,16 @@ class DerivedKeys {
   final String hardenedPath;
   final String xprv;
   final String xpub;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DerivedKeys &&
+          runtimeType == other.runtimeType &&
+          xprv == other.xprv;
+
+  @override
+  int get hashCode => xprv.hashCode;
 }
 
 class AbsoluteFees {
@@ -108,4 +147,28 @@ class DecodedTxOutput {
 
   final int value;
   final String to;
+}
+
+class UTXO {
+  const UTXO(
+    this.txid,
+    this.vout,
+    this.value,
+    this.scriptPubkey,
+    this.keychainKind,
+  );
+  factory UTXO.fromJson(Map<String, dynamic> json) {
+    return UTXO(
+      json['txid'] as String,
+      json['vout'] as int,
+      json['value'] as int,
+      json['script_pubkey'] as String,
+      json['keychain_kind'] as String,
+    );
+  }
+  final String txid;
+  final int vout;
+  final int value;
+  final String scriptPubkey;
+  final String keychainKind;
 }

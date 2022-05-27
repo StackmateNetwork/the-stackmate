@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bitcoin/types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -19,6 +20,10 @@ enum SeedGenerateWalletSteps {
   generate,
   label,
 }
+const invalidLabelError = 'Invalid Label';
+const signerWalletType = 'SIGNER';
+const wpkhScript = 'wpkh';
+const emptyString = '';
 
 @freezed
 class SeedGenerateWalletState with _$SeedGenerateWalletState {
@@ -27,7 +32,7 @@ class SeedGenerateWalletState with _$SeedGenerateWalletState {
         SeedGenerateWalletSteps currentStep,
     @Default('') String walletLabel,
     @Default('') String walletLabelError,
-    @Default(false) bool savinngWallet,
+    @Default(false) bool savingWallet,
     @Default('') String savingWalletError,
     @Default(false) bool newWalletSaved,
   }) = _SeedGenerateWalletState;
@@ -40,7 +45,7 @@ class SeedGenerateWalletState with _$SeedGenerateWalletState {
 
   bool canGoBack() {
     if (currentStep == SeedGenerateWalletSteps.warning) return true;
-    return false;
+    return true;
   }
 
   double completePercent() =>
@@ -107,24 +112,30 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         break;
 
       case SeedGenerateWalletSteps.label:
-        saveClicked();
+        if (!state.savingWallet) saveClicked();
         break;
     }
   }
 
   void labelChanged(String text) {
-    emit(state.copyWith(walletLabel: text, walletLabelError: ''));
+    emit(state.copyWith(walletLabel: text, walletLabelError: emptyString));
   }
 
   void saveClicked() async {
     if (state.walletLabel.length < 3 ||
         state.walletLabel.length > 10 ||
         state.walletLabel.contains(' ')) {
-      emit(state.copyWith(walletLabelError: 'Invalid Label'));
+      emit(state.copyWith(walletLabelError: invalidLabelError));
       return;
     }
 
     try {
+      emit(
+        state.copyWith(
+          savingWallet: true,
+        ),
+      );
+
       final wallet = _generateCubit.state.wallet;
       if (wallet == null) return;
 
@@ -133,28 +144,33 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
 
       final fullXPub =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
-              .replaceFirst('/m', '');
+              .replaceFirst('/m', emptyString);
 
-      final policy = 'pk($fullXPrv/*)'.replaceFirst('/m', '');
+      final policy = 'pk($fullXPrv/*)'.replaceFirst('/m', emptyString);
 
       const readable = 'pk(___primary___)';
 
       final descriptor = _core.compile(
         policy: policy,
-        scriptType: 'wpkh',
+        scriptType: wpkhScript,
       );
+      if (descriptor.hasError) {
+        throw SMError.fromJson(descriptor.error!);
+      }
 
       var newWallet = Wallet(
         label: state.walletLabel,
-        walletType: 'SIGNER',
-        descriptor: descriptor,
+        walletType: signerWalletType,
+        descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,
         policyElements: [
           'primary:$fullXPub',
         ],
         blockchain: _blockchainCubit.state.blockchain.name,
-        lastAddressIndex: 0,
+        lastAddressIndex: -1,
+        balance: 0,
+        transactions: [],
       );
 
       final savedid = await _storage.saveItem<Wallet>(
@@ -176,8 +192,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       _wallets.refresh();
       emit(
         state.copyWith(
-          savingWalletError: '',
-          savinngWallet: false,
+          savingWalletError: emptyString,
+          savingWallet: false,
           newWalletSaved: true,
         ),
       );

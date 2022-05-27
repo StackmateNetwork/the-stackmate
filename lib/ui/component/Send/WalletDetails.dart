@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
 
 class WalletDetails extends StatelessWidget {
   const WalletDetails({
@@ -9,39 +11,29 @@ class WalletDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final walletName = context.select(
-    //   (WalletsCubit wc) => wc.state.selectedWallet!.label,
-    // );
     final balance = context.select((SendCubit sc) => sc.state.balance);
+    final preferences = context.select((PreferencesCubit pc) => pc.state);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Text(
-        //   walletName,
-        //   style: context.fonts.headline5!.copyWith(
-        //     color: context.colours.onBackground,
-        //   ),
-        // ),
-        // const SizedBox(height: 40),
-        if (balance != null) ...[
+        if (preferences.incognito) ...[
+          Text(
+            'Do you have what it takes?'.toUpperCase(),
+            style: context.fonts.overline!.copyWith(
+              color: context.colours.onBackground,
+            ),
+          ),
+        ] else ...[
           Text(
             'Balance'.toUpperCase(),
             style: context.fonts.overline!.copyWith(
               color: context.colours.onBackground,
             ),
           ),
-          Text(
-            balance.toString() + ' sats',
-            style: context.fonts.headline6!.copyWith(
-              color: context.colours.onBackground,
-            ),
-          ),
-          Text(
-            balance.toBtc() + ' BTC',
-            style: context.fonts.caption!.copyWith(
-              color: context.colours.onBackground,
-            ),
-          ),
+          BitcoinDisplaySmall(
+            satsAmount: balance.toString(),
+            bitcoinUnit: preferences.preferredBitcoinUnit,
+          )
         ],
       ],
     );

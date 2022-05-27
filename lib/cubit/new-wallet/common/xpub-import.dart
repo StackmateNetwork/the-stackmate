@@ -6,6 +6,13 @@ import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'xpub-import.freezed.dart';
 
+const segwitNativePurpose = '84';
+const invalidPubkeyError = 'Invalid Public Key.';
+const invalidFingerprintError = 'Invalid Fingerprint.';
+const invalidPathError = 'Invalid Derivation Path.';
+const cameraError = 'Error while opening camera.';
+const emptyString = '';
+
 @freezed
 class XpubImportState with _$XpubImportState {
   const factory XpubImportState({
@@ -38,7 +45,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
 
   void toggleCamera() async {
     try {
-      emit(state.copyWith(cameraOpened: true, errXpub: ''));
+      emit(state.copyWith(cameraOpened: true, errXpub: emptyString));
 
       String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
@@ -47,11 +54,11 @@ class XpubImportCubit extends Cubit<XpubImportState> {
         ScanMode.QR,
       );
 
-      if (barcodeScanRes == '-1') barcodeScanRes = '';
+      if (barcodeScanRes == '-1') barcodeScanRes = emptyString;
 
       emit(state.copyWith(xpub: barcodeScanRes, cameraOpened: false));
     } catch (e, s) {
-      emit(state.copyWith(cameraOpened: false, errXpub: 'Error Occured.'));
+      emit(state.copyWith(cameraOpened: false, errXpub: cameraError));
 
       _logger.logException(e, 'BtcSendAddressBloc._mapToggleCameraEvent', s);
     }
@@ -60,55 +67,53 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   void xpubPasteClicked() async {
     final text = await _clipboard.pasteFromClipBoard();
     if (text.hasError) return;
-    emit(state.copyWith(xpub: text.result!, errXpub: ''));
+    emit(state.copyWith(xpub: text.result!, errXpub: emptyString));
   }
 
   void xpubChanged(String text) {
-    emit(state.copyWith(xpub: text, errXpub: ''));
+    emit(state.copyWith(xpub: text, errXpub: emptyString));
   }
 
   void fingerPrintChanged(String text) {
-    emit(state.copyWith(fingerPrint: text, errXpub: ''));
+    emit(state.copyWith(fingerPrint: text, errXpub: emptyString));
   }
 
   void fingerPrintPastedClicked() async {
     final text = await _clipboard.pasteFromClipBoard();
     if (text.hasError) return;
-    emit(state.copyWith(fingerPrint: text.result!, errXpub: ''));
+    emit(state.copyWith(fingerPrint: text.result!, errXpub: emptyString));
   }
 
   void pathChanged(String text) {
-    emit(state.copyWith(path: text, errXpub: ''));
+    emit(state.copyWith(path: text, errXpub: emptyString));
   }
 
   void pathPasteClicked() async {
     final text = await _clipboard.pasteFromClipBoard();
     if (text.hasError) return;
 
-    emit(state.copyWith(path: text.result!, errXpub: ''));
+    emit(state.copyWith(path: text.result!, errXpub: emptyString));
   }
 
   void checkDetails() {
-    if (state.xpub == '' || state.xpub.length < 10) {
+    if (state.xpub == emptyString || state.xpub.length < 64) {
       emit(
-        state.copyWith(
-          errXpub: 'Invalid xPub. Try again.',
-        ),
+        state.copyWith(errXpub: invalidPubkeyError),
       );
       return;
     }
     if (state.hasNoKeySource() && state.fingerPrint.length < 8) {
       emit(
         state.copyWith(
-          errXpub: 'Invalid Fingerprint. Try again.',
+          errXpub: invalidFingerprintError,
         ),
       );
       return;
     }
-    if (state.hasNoKeySource() && state.path == '') {
+    if (state.hasNoKeySource() && state.path == emptyString) {
       emit(
         state.copyWith(
-          errXpub: 'Invalid Path. Try again.',
+          errXpub: invalidPathError,
         ),
       );
       return;

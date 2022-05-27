@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/wallet/send.dart';
+import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class TransactionComplete extends StatelessWidget {
@@ -7,40 +7,52 @@ class TransactionComplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txid = context.select((SendCubit sc) => sc.state.txId);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox(height: 60),
-        Text(
-          'Confirm\nTransaction',
-          style: context.fonts.headline5!.copyWith(
-            color: context.colours.onBackground,
-          ),
+    final wallet = context.select((WalletsCubit w) => w.state.selectedWallet!);
+    if (wallet.isNotWatchOnly())
+      return Padding(
+        padding: const EdgeInsets.only(top: 35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Transaction\nBroadcasted.',
+              style: context.fonts.headline5!.copyWith(
+                color: context.colours.onBackground,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Check your wallet history for details.',
+              style: context.fonts.caption!.copyWith(
+                color: context.colours.onBackground,
+                fontSize: 16,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 40),
-        Text(
-          'Transaction ID'.toUpperCase(),
-          style: context.fonts.overline!.copyWith(
-            color: context.colours.onBackground,
-          ),
+      );
+    else
+      return Padding(
+        padding: const EdgeInsets.only(top: 35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'PSBT\nCopied to Clipboard.',
+              style: context.fonts.headline5!.copyWith(
+                color: context.colours.onBackground,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Pass it to a signer.',
+              style: context.fonts.caption!.copyWith(
+                color: context.colours.onBackground,
+                fontSize: 16,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 16),
-        Text(
-          '' + txid,
-          style: context.fonts.caption!.copyWith(
-            color: context.colours.onBackground,
-          ),
-        ),
-        const SizedBox(height: 60),
-        TextButton(
-          onPressed: () {
-            context.read<SendCubit>().shareTxId();
-          },
-          child: const Text('SHARE TRANSACTION ID'),
-        )
-      ],
-    );
+      );
   }
 }

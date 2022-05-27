@@ -20,7 +20,8 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
   Widget build(BuildContext c) {
     return BlocBuilder<SeedGenerateCubit, SeedGenerateState>(
       builder: (context, state) {
-        if (_textController.text != state.passPhrase) _textController.text = state.passPhrase;
+        if (_textController.text != state.passPhrase)
+          _textController.text = state.passPhrase;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -29,15 +30,15 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
             Text(
               'optional\npassphrase'.toUpperCase(),
               style: c.fonts.headline5!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,
               ),
             ),
             // const HeaderTextDark(text: 'Enter an\noptional\npassphrase'),
             const SizedBox(height: 24),
             Text(
-              'Add an extra security layer to your seed.\nDo not write down your passphrase.\nThis passphrase should be added as the last word of your seed.',
-              style: c.fonts.caption!.copyWith(color: Colors.white),
+              'Add an (optional) security layer to your seed.\n\nThis passphrase should be added as the last word of your seed.\n\If set, you cannot recover funds without it.',
+              style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
             ),
             const SizedBox(height: 32),
 
@@ -64,10 +65,10 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
               ),
             const SizedBox(height: 24),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextButton(
                 onPressed: () {
-                  c.read<SeedGenerateCubit>().confirmPassphrase();
+                  c.read<SeedGenerateCubit>().generateSeed();
                 },
                 child: Text('Confirm'.toUpperCase()),
               ),
@@ -101,14 +102,14 @@ class SeedWordCell extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 8),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
-            color: c.colours.secondary,
+            color: c.colours.background,
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(
             text,
             textAlign: TextAlign.left,
             style: c.fonts.subtitle2!.copyWith(
-              color: onTap == null ? Colors.white : c.colours.primary,
+              color: onTap == null ? c.colours.primary : c.colours.onPrimary,
             ),
           ),
         ),
@@ -147,19 +148,18 @@ class SeedGenerate extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 16),
-
-          // HeaderTextDark(text: 'Write down your\nseed phrase'.notLocalised()),
           Text(
             'Write down your\nseed phrase'.toUpperCase(),
             style: c.fonts.headline5!.copyWith(
-              color: Colors.white,
-              // fontWeight: FontWeight.bold,
+              color: c.colours.onPrimary,
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 16),
           Text(
-            'Make sure that no one can view,\nwhat you are writing'.notLocalised(),
-            style: c.fonts.caption!.copyWith(color: Colors.white),
+            'Make sure that no one can view,\nwhat you are writing'
+                .notLocalised(),
+            style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
           ),
           const SizedBox(height: 16),
           Container(
@@ -192,7 +192,7 @@ class SeedGenerate extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(4),
             child: TextButton(
               onPressed: () {
                 c.read<SeedGenerateCubit>().startQuiz();
@@ -200,7 +200,7 @@ class SeedGenerate extends StatelessWidget {
               child: Text('Next'.toUpperCase()),
             ),
           ),
-          const SizedBox(height: 24)
+          const SizedBox(height: 12)
         ],
       ),
     );
@@ -228,7 +228,7 @@ class ConfirmStepCell extends StatelessWidget {
           height: 8,
           width: c.width * 0.2,
           decoration: BoxDecoration(
-            color: isOn ? c.colours.secondary : Colors.white,
+            color: isOn ? c.colours.secondary : c.colours.onPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -253,7 +253,8 @@ class SeedConfirm extends StatelessWidget {
       (SeedGenerateCubit c) => c.state.quizSeedAnswerIdx.toString(),
     );
 
-    final completedIdx = c.select((SeedGenerateCubit c) => c.state.quizSeedCompleted);
+    final completedIdx =
+        c.select((SeedGenerateCubit c) => c.state.quizSeedCompleted);
 
     final words = c.select((SeedGenerateCubit c) => c.state.quizSeedList);
 
@@ -267,7 +268,7 @@ class SeedConfirm extends StatelessWidget {
           child: Text(
             'Confirm seed\nphrase',
             style: c.fonts.headline4!.copyWith(
-              color: Colors.white,
+              color: c.colours.onPrimary,
               // fontWeight: FontWeight.bold,
             ),
           ),
@@ -289,7 +290,7 @@ class SeedConfirm extends StatelessWidget {
                 answerIdx + '.',
                 style: c.fonts.headline5!.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: c.colours.onPrimary,
                 ),
               ),
             ),
@@ -306,7 +307,7 @@ class SeedConfirm extends StatelessWidget {
         Center(
           child: Text(
             'Select the correct answer',
-            style: c.fonts.subtitle1!.copyWith(color: Colors.white),
+            style: c.fonts.subtitle1!.copyWith(color: c.colours.onPrimary),
           ),
         ),
         const SizedBox(height: 16),

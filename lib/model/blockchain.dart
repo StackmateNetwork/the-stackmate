@@ -5,20 +5,20 @@ part 'blockchain.g.dart';
 @HiveType(typeId: 4, adapterName: 'BlockchainClassAdapter')
 enum Blockchain {
   @HiveField(0)
-  mainNet,
+  main,
 
   @HiveField(1)
-  testNet,
+  test,
 }
 
 extension Blo on Blockchain {
   String get name => const {
-        Blockchain.mainNet: 'main',
-        Blockchain.testNet: 'test',
+        Blockchain.main: 'main',
+        Blockchain.test: 'test',
       }[this]!;
 
   String get displayName => const {
-        Blockchain.mainNet: 'mainnet',
-        Blockchain.testNet: 'testnet',
+        Blockchain.main: 'mainnet',
+        Blockchain.test: 'testnet',
       }[this]!;
 }

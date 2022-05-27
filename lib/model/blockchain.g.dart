@@ -14,21 +14,21 @@ class BlockchainClassAdapter extends TypeAdapter<Blockchain> {
   Blockchain read(BinaryReader reader) {
     switch (reader.readByte()) {
       case 0:
-        return Blockchain.mainNet;
+        return Blockchain.main;
       case 1:
-        return Blockchain.testNet;
+        return Blockchain.test;
       default:
-        return Blockchain.mainNet;
+        return Blockchain.main;
     }
   }
 
   @override
   void write(BinaryWriter writer, Blockchain obj) {
     switch (obj) {
-      case Blockchain.mainNet:
+      case Blockchain.main:
         writer.writeByte(0);
         break;
-      case Blockchain.testNet:
+      case Blockchain.test:
         writer.writeByte(1);
         break;
     }

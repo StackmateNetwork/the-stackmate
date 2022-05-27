@@ -14,6 +14,6 @@ class Loader extends StatelessWidget {
 
     if (!loading) return Container();
 
-    return const Loading(text: 'Gettting Address');
+    return const Loading(text: 'Storing Address');
   }
 }

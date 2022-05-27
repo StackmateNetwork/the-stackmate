@@ -1,83 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sats/cubit/wallets.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/Home/RedditLoader.dart';
+import 'package:sats/ui/component/common/LogButton.dart';
 
-class Header extends StatelessWidget {
+class HomeHeader extends StatelessWidget {
   @override
-  Widget build(BuildContext c) {
-    final isRearranging = c.select((WalletsCubit wc) => wc.state.isRearranging);
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 32, bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const RedditLoader(),
-          Padding(
-            padding: EdgeInsets.only(
-              top: 8,
-              left: 24,
-              right: !isRearranging ? 16 : 0,
-            ),
-            child: Row(
-              children: [
-                Text(
-                  'STACKMATE',
-                  style: c.fonts.headline5!.copyWith(
-                    color: Colors.white,
-                  ),
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            const Spacer(),
+            LogButton(
+              child: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.lightbulb_outline_sharp,
+                  size: 32,
+                  color: context.colours.primary,
+                  semanticLabel: 'Logs',
                 ),
-                const Spacer(),
-                // const SizedBox(width: 16),
-                if (!isRearranging) ...[
-                  IconButton(
-                    onPressed: () {
-                      c.read<WalletsCubit>().toggleRearranging();
-                      // Navigator.pushNamed(c, Routes.setting);
-                    },
-                    icon: Icon(
-                      Icons.sort,
-                      size: 32,
-                      color: c.colours.primary,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  IconButton(
-                    onPressed: () {
-                      c.push('/settings');
-                    },
-                    icon: Icon(
-                      Icons.settings,
-                      size: 32,
-                      color: c.colours.primary,
-                    ),
-                  ),
-                ] else ...[
-                  TextButton(
-                    onPressed: () {
-                      c.read<WalletsCubit>().toggleRearranging();
-                    },
-                    child: const Text('DONE'),
-                  )
-                ]
-
-                // LogButton(
-                //   child: IconButton(
-                //     onPressed: () {},
-                //     icon: Icon(
-                //       Icons.lightbulb_outline_sharp,
-                //       size: 32,
-                //       color: c.colours.primary,
-                //     ),
-                //   ),
-                // ),
-              ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 2,
+        ),
+        if (context.read<TorCubit>().state.isRunning)
+          Tooltip(
+            preferBelow: false,
+            triggerMode: TooltipTriggerMode.tap,
+            message: 'Torified.',
+            textStyle: context.fonts.caption!.copyWith(
+              color: context.colours.primary,
+            ),
+            decoration: BoxDecoration(
+              color: context.colours.surface,
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Icon(
+              Icons.security_sharp,
+              color: context.colours.tertiaryContainer,
+            ),
+          )
+        else ...[
+          Icon(
+            Icons.security_sharp,
+            color: context.colours.error,
+          ),
+          const SizedBox(
+            height: 6,
+          ),
+          Text(
+            'Tor connection in progress.\nThis could take upto a minute. ',
+            textAlign: TextAlign.center,
+            style: context.fonts.caption!.copyWith(
+              color: context.colours.error,
             ),
           ),
-        ],
-      ),
+        ]
+      ],
     );
   }
 }

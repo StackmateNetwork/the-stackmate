@@ -1,20 +1,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
-
+import 'package:intl/intl.dart';
 part 'transaction.g.dart';
 part 'transaction.freezed.dart';
 
 @freezed
 class Transaction with _$Transaction {
-  @HiveType(typeId: 3, adapterName: 'TransactionClassAdapter')
+  @HiveType(typeId: 6, adapterName: 'TransactionClassAdapter')
   const factory Transaction({
     @HiveField(0) required int timestamp,
     @HiveField(1) required int height,
-    @HiveField(2) required bool verified,
-    @HiveField(3) required String txid,
-    @HiveField(4) required int received,
-    @HiveField(5) required int sent,
-    @HiveField(6) required int fee,
+    @HiveField(2) required String txid,
+    @HiveField(3) required int received,
+    @HiveField(4) required int sent,
+    @HiveField(5) required int fee,
   }) = _Transaction;
   const Transaction._();
 
@@ -25,29 +24,10 @@ class Transaction with _$Transaction {
 
   String timeStr() {
     if (timestamp == 0) return '';
-    // String date = '';
     final t = timestamp;
-    final dt = DateTime.fromMillisecondsSinceEpoch(
-      t * 1000,
-      // isUtc: true,
-    ).toString();
-    return dt;
-    //date += DateFormat.EEEE().format(dt) + ', ';
-
-    // date += dt.day.toString() +
-    //     '-' +
-    //     dt.month.toString() +
-    //     '-' +
-    //     dt.year.toString() +
-    //     ' ';
-
-    // date += dt.hour.toString() + ':' + dt.minute.toString() + ' ';
-
-    // date += dt.hour < 12 ? 'AM' : 'PM';
-
-    // date += ' GMT';
-
-    // return date;
+    final date = DateTime.fromMillisecondsSinceEpoch(t * 1000);
+    final formattedDateTime = DateFormat.yMMMMEEEEd().add_jms().format(date);
+    return formattedDateTime;
   }
 
   String amountToBtc() =>

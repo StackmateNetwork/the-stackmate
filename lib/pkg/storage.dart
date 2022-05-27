@@ -1,66 +1,122 @@
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // ignore_for_file: constant_identifier_names
 
+import 'dart:convert';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/model/address-book.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/fees.dart';
 import 'package:sats/model/node.dart';
-import 'package:sats/model/reddit-post.dart';
+import 'package:sats/model/preferences.dart';
 import 'package:sats/model/result.dart';
+import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/storage.dart';
 
 enum StoreKeys {
-  RedditPost,
   Wallet,
   Blockchain,
   Node,
-  AddressBookUser,
-  AddressBookKey,
+  Fees,
+  Preferences,
 }
 
 extension StoreKeysFunctions on StoreKeys {
   String get name => const {
-        StoreKeys.RedditPost: 'reddit-post',
         StoreKeys.Wallet: 'wallet',
         StoreKeys.Blockchain: 'blockchain',
         StoreKeys.Node: 'node',
-        StoreKeys.AddressBookUser: 'address-book-user',
-        StoreKeys.AddressBookKey: 'address-book-key'
+        StoreKeys.Fees: 'fees',
+        StoreKeys.Preferences: 'preferences',
       }[this]!;
 }
 
 Future<void> initializeHive() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(RedditPostClassAdapter());
   Hive.registerAdapter(WalletClassAdapter());
   Hive.registerAdapter(BlockchainClassAdapter());
-  Hive.registerAdapter(AddressBookUserClassAdapter());
-  Hive.registerAdapter(AddressBookValueClassAdapter());
   Hive.registerAdapter(NodeClassAdapter());
+  Hive.registerAdapter(FeesClassAdapter());
+  Hive.registerAdapter(PreferencesClassAdapter());
+  Hive.registerAdapter(TransactionClassAdapter());
 
-  await Hive.openBox<RedditPost>(
-    StoreKeys.RedditPost.name,
-    compactionStrategy: (entries, deletedEntries) => deletedEntries > 50,
+  const secureStorage = FlutterSecureStorage();
+  final encryprionKey = await secureStorage.read(key: 'key');
+  if (encryprionKey == null) {
+    final key = Hive.generateSecureKey();
+    await secureStorage.write(
+      key: 'key',
+      value: base64UrlEncode(key),
+    );
+  }
+  final key = await secureStorage.read(key: 'key');
+  final encryptionKey = base64Url.decode(key!);
+
+  await Hive.openBox<Wallet>(
+    StoreKeys.Wallet.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
   );
-  await Hive.openBox<Wallet>(StoreKeys.Wallet.name);
-  await Hive.openBox<Blockchain>(StoreKeys.Blockchain.name);
-  await Hive.openBox<AddressBookUser>(StoreKeys.AddressBookUser.name);
-  await Hive.openBox<AddressBookKey>(StoreKeys.AddressBookKey.name);
-  await Hive.openBox<Node>(StoreKeys.Node.name);
+  await Hive.openBox<Blockchain>(
+    StoreKeys.Blockchain.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<Node>(
+    StoreKeys.Node.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<Fees>(
+    StoreKeys.Fees.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<Preferences>(
+    StoreKeys.Preferences.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
 
-  await Hive.openBox<String>('storage');
+  await Hive.openBox<String>(
+    'storage',
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
 }
 
 class HiveStore implements IStorage {
   final _box = Hive.box<String>('storage');
 
   @override
-  Future<R<int>> saveItem<T>(String cls, T obj) async {
+  R<T> getFirstItem<T>(String dbName) {
     try {
-      final id = await Hive.box<T>(cls).add(obj);
+      final bx = Hive.box<T>(dbName);
+      final len = bx.length;
+      if (len == 0) return const R(error: 'empty');
+      final item = bx.getAt(0);
+      if (item == null) return const R(error: 'empty');
+      return R(result: item);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  R<T?> getFirstItemOrNull<T>(String dbName) {
+    try {
+      final bx = Hive.box<T>(dbName);
+      final len = bx.length;
+      if (len == 0) return throw '';
+      final item = bx.getAt(0);
+      return R(result: item);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  Future<R<int>> saveItem<T>(String dbName, T item) async {
+    try {
+      final id = await Hive.box<T>(dbName).add(item);
       return R(result: id);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -69,9 +125,9 @@ class HiveStore implements IStorage {
   }
 
   @override
-  Future<R<bool>> saveItemAt<T>(String cls, int idx, T obj) async {
+  Future<R<bool>> saveItemAt<T>(String dbName, int index, T item) async {
     try {
-      await Hive.box<T>(cls).put(idx, obj);
+      await Hive.box<T>(dbName).put(index, item);
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -80,9 +136,29 @@ class HiveStore implements IStorage {
   }
 
   @override
-  R<bool> deleteItem<T>(String cls, String key) {
+  R<T> getItem<T>(String dbName, String index) {
     try {
-      Hive.box<T>(cls).delete(key);
+      return R(result: Hive.box<T>(dbName).get(index));
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  R<List<T>> getAll<T>(String dbName) {
+    try {
+      return R(result: Hive.box<T>(dbName).values.toList());
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  R<bool> deleteItem<T>(String dbName, String index) {
+    try {
+      Hive.box<T>(dbName).delete(index);
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -91,9 +167,9 @@ class HiveStore implements IStorage {
   }
 
   @override
-  Future<R<bool>> clearAll<T>(String cls) async {
+  R<bool> deleteItemAt<T>(String dbName, int index) {
     try {
-      await Hive.box<T>(cls).clear();
+      Hive.box<T>(dbName).delete(index);
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
@@ -102,19 +178,10 @@ class HiveStore implements IStorage {
   }
 
   @override
-  R<T> getItem<T>(String cls, String key) {
+  Future<R<bool>> clearAll<T>(String dbName) async {
     try {
-      return R(result: Hive.box<T>(cls).get(key));
-    } catch (e, s) {
-      locator<Logger>().logException(e, '', s);
-      return R(error: e.toString());
-    }
-  }
-
-  @override
-  R<List<T>> getAll<T>(String cls) {
-    try {
-      return R(result: Hive.box<T>(cls).values.toList());
+      await Hive.box<T>(dbName).clear();
+      return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
       return R(error: e.toString());
@@ -130,10 +197,6 @@ class HiveStore implements IStorage {
       locator<Logger>().logException(e, '', s);
       return R(error: e.toString());
     }
-    // Hive.box<String>(key).add(value);
-
-    // var _box = await Hive.openBox(_store);
-    // await _box.put(key, value);
   }
 
   @override
@@ -141,81 +204,20 @@ class HiveStore implements IStorage {
     try {
       final str = _box.get(key);
       if (str == null) {
-        return R(error: 'empty');
+        return const R(error: 'empty');
       }
       return R(result: str);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);
       return R(error: e.toString());
     }
-    // var _box = await Hive.openBox<String>(_store);
-    // var result = _box.get(key);
-    // try {
-    //   final obj = Hive.box<String>(key).getAt(0);
-    //   if (obj == null) return R(error: 'empty');
-    //   return obj;
-    // } catch (e) {
-    //   return R(error: 'empty');
-    // }
-    // if ((key == StoreKeys.token.name || key == StoreKeys.phone.name) &&
-    //     (result == null || result == '')) {
-    //   throw 'No key';
-    // }
-
-    // if (result == null) throw 'no key';
-
-    // return result;
   }
 
   @override
   Future<R<bool>> deleteOne(String key) async {
     try {
       _box.delete(key);
-      // final b = Hive.box<String>(key);
-      // b.deleteAt(0); //.delete(key);
-      // var _box = await Hive.openBox(_store);
-      // await _box.delete(key);
-      return const R(result: true);
-    } catch (e, s) {
-      locator<Logger>().logException(e, '', s);
-      return R(error: e.toString());
-    }
-  }
 
-  @override
-  R<T> getFirstItem<T>(String cls) {
-    try {
-      final bx = Hive.box<T>(cls);
-      // if (bx.isEmpty) return R(error: 'empty');
-      final len = bx.length;
-      if (len == 0) return R(error: 'empty');
-      final obj = bx.getAt(0);
-      if (obj == null) return R(error: 'empty');
-      return R(result: obj);
-    } catch (e, s) {
-      locator<Logger>().logException(e, '', s);
-      return R(error: e.toString());
-    }
-  }
-
-  @override
-  R<T?> getFirstItemOrNull<T>(String cls) {
-    try {
-      final bx = Hive.box<T>(cls);
-      final len = bx.length;
-      if (len == 0) return throw '';
-      final obj = bx.getAt(0);
-      return R(result: obj);
-    } catch (e, s) {
-      locator<Logger>().logException(e, '', s);
-      return R(error: e.toString());
-    }
-  }
-
-  @override
-  R<bool> deleteItemAt<T>(String cls, int idx) {
-    try {
-      Hive.box<T>(cls).delete(idx);
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);

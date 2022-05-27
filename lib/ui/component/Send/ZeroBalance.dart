@@ -13,8 +13,8 @@ class ZeroBalance extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
-          'SORRY !\nYou have\nZero\nBalance.',
-          style: context.fonts.headline5!.copyWith(
+          'You have\nZero\nBalance.',
+          style: context.fonts.headline6!.copyWith(
             color: context.colours.onBackground,
           ),
         ),

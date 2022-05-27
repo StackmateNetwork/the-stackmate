@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-//import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:oktoast/oktoast.dart';
@@ -74,24 +73,7 @@ class Logger extends Cubit<LoggerState> {
         exceptionType: e.toString(),
         stackTrace: (s as StackTrace).toString(),
       );
-
-      // print(
-      //   '\n\nERROR @ ' +
-      //       log.exceptionSource! +
-      //       '\nMessage: ' +
-      //       log.exceptionType! +
-      //       '\nTrace: ' +
-      //       log.stackTrace! +
-      //       '\n\n',
-      // );
-
       _addToLog(log);
-
-      //await Sentry.captureException(
-      //  event.e,
-      //  stackTrace: event.s,
-      //  hint: event.source,
-      //);
     } catch (e) {
       print(e.toString());
     }

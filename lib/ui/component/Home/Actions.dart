@@ -12,20 +12,16 @@ class HomeActions extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              context.push('/qr');
+              context.push('/');
             },
-            icon: Icon(Icons.qr_code, size: 32, color: context.colours.primary),
+            icon: Icon(
+              Icons.account_balance_wallet_outlined,
+              size: 32,
+              color: context.colours.primary,
+            ),
           ),
           IconButton(
-            onPressed: () {
-              context.push('/add-wallet');
-            },
-            icon: Icon(Icons.add, size: 32, color: context.colours.primary),
-          ),
-          IconButton(
-            onPressed: () {
-              context.push('/address-book');
-            },
+            onPressed: () {},
             icon: Icon(
               Icons.schema_outlined,
               size: 32,
@@ -34,10 +30,10 @@ class HomeActions extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              context.push('/calc');
+              context.push('/settings');
             },
             icon: Icon(
-              Icons.calculate_sharp,
+              Icons.settings,
               size: 32,
               color: context.colours.primary,
             ),

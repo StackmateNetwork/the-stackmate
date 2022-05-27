@@ -1,9 +1,10 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -27,14 +28,18 @@ class _WalletSend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final step = context.select((SendCubit sc) => sc.state.currentStep);
+    final walletLabel =
+        context.select((WalletsCubit c) => c.state.selectedWallet!.label);
+    final walletType =
+        context.select((WalletsCubit c) => c.state.selectedWallet!.walletType);
 
     return WillPopScope(
       onWillPop: () async {
-        if (step != SendSteps.address && step != SendSteps.sent) {
-          context.read<SendCubit>().backClicked();
-          return false;
+        if (step == SendSteps.address || step == SendSteps.sent) {
+          return true;
         }
-        return true;
+        context.read<SendCubit>().backClicked();
+        return false;
       },
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -44,11 +49,11 @@ class _WalletSend extends StatelessWidget {
               child: BlocListener<SendCubit, SendState>(
                 listener: (context, state) async {
                   if (state.zeroBalanceAmt()) {
-                    await Future.delayed(const Duration(milliseconds: 2000));
                     Navigator.pop(context);
                   }
                 },
-                listenWhen: (p, c) => p.zeroBalanceAmt().not(c.zeroBalanceAmt()),
+                listenWhen: (p, c) =>
+                    p.zeroBalanceAmt().not(c.zeroBalanceAmt()),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -61,17 +66,15 @@ class _WalletSend extends StatelessWidget {
                         children: [
                           Back(
                             onPressed: () {
-                              if (step == SendSteps.address || step == SendSteps.sent) {
+                              if (step == SendSteps.address ||
+                                  step == SendSteps.sent) {
                                 Navigator.pop(context);
                                 return;
                               }
-
-                              // if (step != SendSteps.fees) {
-                              context.read<SendCubit>().backClicked();
-                              // return;
-                              // }
-                              // if (confirmedStep)
-                              //   context.read<HistoryCubit>().getHistory();
+                              if (step != SendSteps.fees) {
+                                context.read<SendCubit>().backClicked();
+                                return;
+                              }
                             },
                           ),
                           LogButton(
@@ -87,10 +90,28 @@ class _WalletSend extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 40),
                     const ZeroBalance(),
                     if (step == SendSteps.address) ...[
                       const SizedBox(height: 0),
+                      Align(
+                        child: Text(
+                          (walletType == 'WATCHER')
+                              ? 'BUILD TRANSACTION'
+                              : 'SEND BITCOIN',
+                          style: context.fonts.headline6!.copyWith(
+                            color: context.colours.onPrimary,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        child: Text(
+                          walletLabel.toUpperCase(),
+                          style: context.fonts.caption!.copyWith(
+                            color: context.colours.onPrimary,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: SendAddress(),
@@ -102,17 +123,7 @@ class _WalletSend extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: WalletDetails(),
                       ),
-                      const SizedBox(height: 80),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 16),
-                      //   child: Text(
-                      //     'Amount'.toUpperCase(),
-                      //     style: context.fonts.overline!.copyWith(
-                      //       color: context.colours.onBackground,
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: AmountRow(),
@@ -135,20 +146,18 @@ class _WalletSend extends StatelessWidget {
                         child: SelectFee(),
                       ),
                     ],
-                    if (step == SendSteps.confirm)
-                      FadeIn(
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: ConfirmTransaction(),
-                        ),
+                    if (step == SendSteps.confirm) ...[
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: ConfirmTransaction(),
                       ),
-                    if (step == SendSteps.sent)
-                      FadeIn(
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: TransactionComplete(),
-                        ),
+                    ],
+                    if (step == SendSteps.sent) ...[
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: TransactionComplete(),
                       ),
+                    ],
                     const SizedBox(height: 80),
                   ],
                 ),
@@ -172,6 +181,8 @@ class WalletSendScreen extends StatelessWidget {
     final logger = context.select((Logger c) => c);
     final wallets = context.select((WalletsCubit c) => c);
     final nodeAddress = context.select((NodeAddressCubit c) => c);
+    final fees = context.select((FeesCubit c) => c);
+    final tor = context.select((TorCubit c) => c);
 
     final s = SendCubit(
       fromQr,
@@ -181,7 +192,10 @@ class WalletSendScreen extends StatelessWidget {
       locator<IClipBoard>(),
       locator<IShare>(),
       nodeAddress,
+      tor,
       locator<IStackMateCore>(),
+      fees,
+      // locator<FileManager>(),
     );
 
     return BlocProvider.value(

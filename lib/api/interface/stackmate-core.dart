@@ -1,118 +1,100 @@
 import 'package:bitcoin/bitcoin.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
 
 abstract class IStackMateCore {
-  DerivedKeys derivePathStr({
-    required String masterXPriv,
-    required String derivationPath,
-  });
-
-  XOnlyPair xPrivToEc({required String masterXPriv});
-
-  String sharedSecret({
-    required String localPriv,
-    required String remotePub,
-  });
-
-  String signMessage({
-    required String message,
-    required String secKey,
-  });
-
-  bool verifySignature({
-    required String signature,
-    required String message,
-    required String pubkey,
-  });
-
-  Seed generateMaster({
+  R<Seed> generateMaster({
     required String length,
     required String passphrase,
     required String network,
   });
 
-  Seed importMaster({
+  R<Seed> importMaster({
     required String mnemonic,
     required String passphrase,
     required String network,
   });
 
-  DerivedKeys deriveHardened({
+  R<DerivedKeys> deriveHardened({
     required String masterXPriv,
     required String account,
     required String purpose,
   });
 
-  String compile({
+  R<String> compile({
     required String policy,
     required String scriptType,
   });
 
-  double estimateNetworkFee({
+  R<double> estimateNetworkFee({
     required String targetSize,
     required String network,
     required String nodeAddress,
+    required String socks5,
   });
 
-  int getWeight({
+  R<int> getWeight({
     required String descriptor,
     required String psbt,
   });
 
-  AbsoluteFees feeAbsoluteToRate({
+  R<AbsoluteFees> feeAbsoluteToRate({
     required String feeAbsolute,
     required String weight,
   });
 
-  AbsoluteFees feeRateToAbsolute({
+  R<AbsoluteFees> feeRateToAbsolute({
     required String feeRate,
     required String weight,
   });
 
-  int syncBalance({
+  R<int> syncBalance({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   });
 
-  List<Transaction> getHistory({
+  R<List<Transaction>> getHistory({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   });
 
-  String getAddress({
+  R<List<UTXO>> getUTXOSet({
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+  });
+
+  R<String> getAddress({
     required String descriptor,
     required String index,
   });
 
-  String buildTransaction({
+  R<PSBT> buildTransaction({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
     required String txOutputs,
     required String feeAbsolute,
-    required String sweep,
     required String policyPath,
+    required String sweep,
   });
 
-  String decodePsbt({
+  R<List<DecodedTxOutput>> decodePsbt({
     required String network,
     required String psbt,
   });
 
-  String signTransaction({
+  R<PSBT> signTransaction({
     required String descriptor,
     required String unsignedPSBT,
   });
 
-  String broadcastTransaction({
+  Future<R<String>> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
     required String signedPSBT,
   });
-
-  int getHeight({
-    required String network,
-    required String nodeAddress,
-  });
-
-  int daysToBlocks({required String days});
 }

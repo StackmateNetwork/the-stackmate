@@ -20,7 +20,6 @@ class AddWalletScreen extends StatelessWidget {
               SliverAppBar(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
-                // elevation: 2,
                 floating: true,
                 snap: true,
                 forceElevated: innerBoxIsScrolled,
@@ -29,14 +28,12 @@ class AddWalletScreen extends StatelessWidget {
                   systemNavigationBarColor: c.colours.onBackground,
                   statusBarIconBrightness: Brightness.dark,
                 ),
-                // leading: const Back(),
                 leadingWidth: 100,
                 toolbarHeight: 64,
                 leading: const Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: Back(),
                 ),
-
                 actions: [
                   LogButton(
                     child: IconButton(
@@ -44,7 +41,6 @@ class AddWalletScreen extends StatelessWidget {
                       icon: Icon(
                         Icons.lightbulb_outline_sharp,
                         size: 32,
-                        // color: Colors.blue[400],
                         color: c.colours.primary,
                       ),
                     ),
@@ -58,7 +54,7 @@ class AddWalletScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 40),
+                const SizedBox(height: 24),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
@@ -66,7 +62,6 @@ class AddWalletScreen extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: c.fonts.headline5!.copyWith(
                       color: c.colours.onBackground,
-                      // color: Colors.blue[400],
                     ),
                   ),
                 ),
@@ -76,7 +71,7 @@ class AddWalletScreen extends StatelessWidget {
                   child: Text(
                     'SOLO ACCOUNT',
                     style: c.fonts.overline!.copyWith(
-                      color: Colors.white,
+                      color: c.colours.onPrimary,
                     ),
                   ),
                 ),

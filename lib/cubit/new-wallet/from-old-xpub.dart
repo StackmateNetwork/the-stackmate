@@ -1,13 +1,17 @@
 import 'dart:async';
 
+import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
+import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -54,9 +58,11 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     this._storage,
     this._wallets,
     this._blockchainCubit,
+    this._nodeAddressCubit,
+    this._torCubit,
     this._importCubit,
   ) : super(const XpubImportWalletState()) {
-    _importCubit.stream.listen((istate) {
+    _importSub = _importCubit.stream.listen((istate) {
       if (istate.detailsReady) {
         emit(state.copyWith(currentStep: XpubImportWalletStep.label));
       }
@@ -68,11 +74,20 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
   final IStackMateCore _core;
   final WalletsCubit _wallets;
   final ChainSelectCubit _blockchainCubit;
+  final NodeAddressCubit _nodeAddressCubit;
+  final TorCubit _torCubit;
   final XpubImportCubit _importCubit;
+
   late StreamSubscription _importSub;
 
+  static const invalidLabelError = 'Invalid Label';
+  static const internalError = 'Internal Error';
+  static const watcherWalletType = 'WATCHER';
+  static const wpkhScript = 'wpkh';
+  static const emptyString = '';
+
   void labelChanged(String text) {
-    emit(state.copyWith(label: text, errSavingWallet: ''));
+    emit(state.copyWith(label: text, errSavingWallet: emptyString));
   }
 
   void nextClicked() async {
@@ -81,11 +96,11 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         break;
 
       case XpubImportWalletStep.label:
-        if (state.label == '' || state.label.length < 5) {
-          emit(state.copyWith(errSavingWallet: 'Invalid Label.'));
+        if (state.label == emptyString || state.label.length < 5) {
+          emit(state.copyWith(errSavingWallet: invalidLabelError));
           return;
         }
-        _saveWallet();
+        if (!state.savingWallet) _saveWallet();
         break;
     }
   }
@@ -99,7 +114,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         emit(
           state.copyWith(
             currentStep: XpubImportWalletStep.import,
-            label: '',
+            label: emptyString,
           ),
         );
         break;
@@ -110,7 +125,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     emit(
       state.copyWith(
         savingWallet: true,
-        errSavingWallet: '',
+        errSavingWallet: emptyString,
       ),
     );
 
@@ -119,10 +134,13 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       final fingerprint = xpubState.fingerPrint;
       final path = xpubState.path;
       final xpub = xpubState.xpub;
-      String fullXPub = xpub.replaceFirst('/*', '');
+      String fullXPub = xpub.replaceFirst('/*', emptyString);
+
+      final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
 
       if (xpubState.hasNoKeySource())
-        fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst('/m', '');
+        fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
 
       final policy = 'pk($fullXPub/*)';
 
@@ -130,22 +148,47 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       final descriptor = _core.compile(
         policy: policy,
-        scriptType: 'wpkh',
+        scriptType: wpkhScript,
       );
+      if (descriptor.hasError) {
+        throw SMError.fromJson(descriptor.error!);
+      }
+      var history = _core.getHistory(
+        descriptor: descriptor.result!,
+        nodeAddress: nodeAddress,
+        socks5: socks5,
+      );
+      var recievedCount = 0;
 
-      // final len = _storage.getAll<Wallet>(StoreKeys.Wallet.name).length;
+      if (history.hasError) {
+        history = const R(result: []);
+      } else
+        for (final item in history.result!) {
+          if (item.sent == 0) {
+            recievedCount++;
+          }
+        }
 
-      // public descriptor
+      var balance = _core.syncBalance(
+        descriptor: descriptor.result!,
+        nodeAddress: nodeAddress,
+        socks5: socks5,
+      );
+      if (balance.hasError) {
+        balance = const R(result: 0);
+      }
       // check balance and see if last address index needs update
       var newWallet = Wallet(
         label: state.label,
-        descriptor: descriptor,
+        descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
-        walletType: 'WATCHER',
-        lastAddressIndex: 0,
+        walletType: watcherWalletType,
+        lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
+        balance: balance.result!,
+        transactions: history.result!,
       );
 
       final savedId = await _storage.saveItem<Wallet>(
@@ -165,9 +208,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         newWallet,
       );
 
-      // _storage.saveItem(StoreKeys.Wallet.name, newWallet);
-
-      _wallets.refresh();
+      _wallets.walletSelected(newWallet);
+      _wallets.addTransactionsToSelectedWallet(history.result!);
 
       emit(
         state.copyWith(
@@ -180,7 +222,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       emit(
         state.copyWith(
-          errSavingWallet: 'Error Occured.',
+          errSavingWallet: internalError,
           newWalletSaved: true,
         ),
       );

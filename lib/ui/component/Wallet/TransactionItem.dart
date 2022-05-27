@@ -1,161 +1,27 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/wallet/wallet.dart';
+import 'package:intl/intl.dart';
+import 'package:sats/cubit/preferences.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/ui/component/common/BitcoinDisplayMedium.dart';
 
-class TransactionItem extends StatefulWidget {
+class TransactionItem extends StatelessWidget {
   const TransactionItem({Key? key, required this.transaction})
       : super(key: key);
 
   final Transaction transaction;
 
   @override
-  _TransactionItemState createState() => _TransactionItemState();
-}
-
-class _TransactionItemState extends State<TransactionItem> {
-  bool _isExpanded = false;
-
-  @override
   Widget build(BuildContext c) {
-    final isReceive = widget.transaction.isReceive();
+    final preferences = c.select((PreferencesCubit pc) => pc.state);
 
-    if (isReceive)
-      return AnimatedSwitcher(
-        key: _isExpanded ? const ValueKey(1) : const ValueKey(2),
-        duration: const Duration(milliseconds: 2000),
-        child: GestureDetector(
-          onTap: () {
-            setState(() {
-              _isExpanded = !_isExpanded;
-            });
-          },
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 4),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              color: c.colours.surface,
-            ),
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'RECEIVE'.notLocalised(),
-                      style: c.fonts.subtitle2!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: c.colours.onBackground,
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            widget.transaction.received.toString() + ' sats',
-                            style: c.fonts.headline6!.copyWith(
-                              color: c.colours.onBackground,
-                            ),
-                            textAlign: TextAlign.end,
-                          ),
-                          Text(
-                            widget.transaction.amountToBtc() + ' BTC',
-                            style: c.fonts.overline!.copyWith(
-                              color: c.colours.onBackground,
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'TRANSACTION ID'.notLocalised(),
-                  style: c.fonts.overline!.copyWith(
-                    color: c.colours.onBackground,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    c.read<WalletCubit>().openLink(widget.transaction);
-                  },
-                  child: Container(
-                    width: c.width / 2,
-                    child: Text(
-                      !_isExpanded
-                          ? widget.transaction.txIdBlur()
-                          : widget.transaction.txid,
-                      style: c.fonts.caption!.copyWith(
-                        color: c.colours.primary,
-                      ),
-                    ),
-                  ),
-                ),
-                //SizedBox(height: 16),
-                if (_isExpanded) ...[
-                  if (widget.transaction.timeStr() != '') ...[
-                    const SizedBox(height: 16),
-                    Text(
-                      'TIME'.notLocalised(),
-                      style: c.fonts.overline!.copyWith(
-                        color: c.colours.onBackground,
-                      ),
-                    ),
-                    Text(
-                      widget.transaction.timeStr(),
-                      style: c.fonts.caption!.copyWith(
-                        color: c.colours.onBackground,
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 16),
-                  //SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      // Expanded(
-                      //     child: Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.stretch,
-                      //         children: const [
-                      //       // Text('ADDRESS'.notLocalised(),
-                      //       //     style: c.fonts.overline),
-                      //       // Text(widget.transaction.txid,
-                      //       //     style: c.fonts.caption)
-                      //     ])),
-                      SizedBox(
-                        width: c.width / 4,
-                        child: TextButton(
-                          onPressed: () {
-                            c
-                                .read<WalletCubit>()
-                                .shareTransaction(widget.transaction);
-                          },
-                          child: Text(
-                            'SHARE'.notLocalised(),
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ]
-              ],
-            ),
-          ),
-        ),
-      );
-
-    return AnimatedSwitcher(
-      key: _isExpanded ? const ValueKey(1) : const ValueKey(2),
-      duration: const Duration(milliseconds: 2000),
-      child: GestureDetector(
+    final isReceive = transaction.isReceive();
+    if (isReceive) {
+      return GestureDetector(
         onTap: () {
-          setState(() {
-            _isExpanded = !_isExpanded;
-          });
+          _showTxinfo(c, transaction);
         },
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 4),
@@ -165,7 +31,344 @@ class _TransactionItemState extends State<TransactionItem> {
             color: c.colours.surface,
           ),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 9.0),
+                    child: Text(
+                      'RECEIVE'.notLocalised(),
+                      style: c.fonts.subtitle2!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: c.colours.onBackground,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        if (preferences.incognito) ...[
+                          Text(
+                            transaction.timeStr(),
+                            style: c.fonts.caption!.copyWith(
+                              color: c.colours.onBackground,
+                            ),
+                          ),
+                        ] else ...[
+                          const Padding(padding: EdgeInsets.only(top: 8)),
+                          BitcoinDisplayMedium(
+                            satsAmount: transaction.received.toString(),
+                            bitcoinUnit: preferences.preferredBitcoinUnit,
+                          ),
+                        ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'TRANSACTION ID'.notLocalised(),
+                style: c.fonts.overline!.copyWith(
+                  color: c.colours.onBackground,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  //c.read<InfoCubit>().openLink(transaction);
+                },
+                child: Container(
+                  width: c.width / 2,
+                  child: Text(
+                    transaction.txIdBlur(),
+                    // transaction.txid,
+                    style: c.fonts.caption!.copyWith(
+                      color: c.colours.primary,
+                    ),
+                  ),
+                ),
+              ),
+              if (transaction.height == 0)
+                Text(
+                  'UNCONFIRMED',
+                  style: c.fonts.overline!.copyWith(
+                    color: c.colours.error,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return GestureDetector(
+      onTap: () {
+        _showTxinfo(c, transaction);
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(2),
+          color: c.colours.surface,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 9.0),
+                  child: Text(
+                    'SEND'.notLocalised(),
+                    style: c.fonts.subtitle2!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: c.colours.onBackground,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      if (preferences.incognito) ...[
+                        Text(
+                          transaction.timeStr(),
+                          style: c.fonts.caption!.copyWith(
+                            color: c.colours.onBackground,
+                          ),
+                        ),
+                      ] else ...[
+                        const Padding(padding: EdgeInsets.only(top: 8)),
+                        BitcoinDisplayMedium(
+                          satsAmount: transaction.sent.toString(),
+                          bitcoinUnit: preferences.preferredBitcoinUnit,
+                        ),
+                      ],
+                    ],
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'TRANSACTION ID'.notLocalised(),
+              style: c.fonts.overline!.copyWith(
+                color: c.colours.onBackground,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                // c.read<InfoCubit>().openLink(transaction);
+              },
+              child: Container(
+                width: c.width / 2,
+                child: Text(
+                  transaction.txIdBlur(),
+                  // transaction.txid,
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.primary,
+                  ),
+                ),
+              ),
+            ),
+            if (transaction.height == 0)
+              Text(
+                'UNCONFIRMED',
+                style: c.fonts.overline!.copyWith(
+                  color: c.colours.error,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+void _showTxinfo(BuildContext c, Transaction transaction) {
+  final isReceive = transaction.isReceive();
+  if (isReceive) {
+    showCupertinoModalPopup(
+      context: c,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: Text(
+          'Transaction Details'.toUpperCase(),
+          style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+        ),
+        message: Container(
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(2),
+            color: c.colours.surface,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'RECEIVE'.notLocalised(),
+                    style: c.fonts.subtitle2!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: c.colours.onBackground,
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const Padding(padding: EdgeInsets.only(top: 8)),
+                        Text(
+                          NumberFormat('###,000').format(
+                                double.parse(
+                                  transaction.received.toString(),
+                                ),
+                              ) +
+                              ' sats',
+                          style: (transaction.height > 0)
+                              ? c.fonts.headline6!.copyWith(
+                                  color: c.colours.onBackground,
+                                )
+                              : c.fonts.headline6!.copyWith(
+                                  color: c.colours.error,
+                                ),
+                          textAlign: TextAlign.end,
+                        ),
+                        Text(
+                          transaction.amountToBtc() + ' BTC',
+                          style: c.fonts.overline!.copyWith(
+                            color: c.colours.onBackground,
+                          ),
+                        ),
+                        if (transaction.height == 0)
+                          Text(
+                            'UNCONFIRMED',
+                            style: c.fonts.overline!.copyWith(
+                              color: c.colours.onBackground,
+                            ),
+                          ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'TRANSACTION ID'.notLocalised(),
+                style: c.fonts.overline!.copyWith(
+                  color: c.colours.onBackground,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  c.read<InfoCubit>().openLink(transaction);
+                },
+                child: Container(
+                  width: c.width / 2,
+                  child: Text(
+                    // transaction.txIdBlur(),
+                    transaction.txid,
+                    style: c.fonts.caption!.copyWith(
+                      color: c.colours.primary,
+                    ),
+                  ),
+                ),
+              ),
+              if (transaction.timeStr() != '') ...[
+                const SizedBox(height: 16),
+                Text(
+                  'TIME'.notLocalised(),
+                  style: c.fonts.overline!.copyWith(
+                    color: c.colours.onBackground,
+                  ),
+                ),
+                Text(
+                  transaction.timeStr(),
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.onBackground,
+                  ),
+                ),
+              ],
+              const SizedBox(height: 16),
+              //SizedBox(height: 8),
+              Column(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      c.read<InfoCubit>().shareTransaction(transaction);
+                    },
+                    child: Text(
+                      'SHARE'.notLocalised(),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+        actions: [
+          if (transaction.height == 0)
+            Container(
+              color: c.colours.background,
+              child: CupertinoActionSheetAction(
+                child: Text(
+                  'Bump fee',
+                  style: c.fonts.button!.copyWith(color: c.colours.primary),
+                ),
+                onPressed: () async {
+                  // c.read<InfoCubit>().openLink(transaction);
+                },
+              ),
+            )
+          else
+            Container(
+              color: c.colours.background,
+              child: CupertinoActionSheetAction(
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+                child: Text(
+                  'Success',
+                  style:
+                      c.fonts.button!.copyWith(color: c.colours.onBackground),
+                ),
+              ),
+            ),
+          Container(
+            color: c.colours.background,
+            child: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text(
+                'BACK',
+                style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  } else {
+    showCupertinoModalPopup(
+      context: c,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: Text(
+          'Transaction Details'.toUpperCase(),
+          style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+        ),
+        message: Container(
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(2),
+            color: c.colours.surface,
+          ),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
@@ -181,19 +384,37 @@ class _TransactionItemState extends State<TransactionItem> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        const Padding(padding: EdgeInsets.only(top: 8)),
                         Text(
-                          widget.transaction.sent.toString() + ' sats',
-                          style: c.fonts.headline6!.copyWith(
-                            color: c.colours.onBackground,
-                          ),
+                          NumberFormat('###,000').format(
+                                double.parse(
+                                  (transaction.sent + transaction.fee)
+                                      .toString(),
+                                ),
+                              ) +
+                              ' sats',
+                          style: (transaction.height > 0)
+                              ? c.fonts.headline6!.copyWith(
+                                  color: c.colours.onBackground,
+                                )
+                              : c.fonts.headline6!.copyWith(
+                                  color: c.colours.error,
+                                ),
                           textAlign: TextAlign.end,
                         ),
                         Text(
-                          widget.transaction.amountToBtc() + ' BTC',
+                          transaction.amountToBtc() + ' BTC',
                           style: c.fonts.overline!.copyWith(
                             color: c.colours.onBackground,
                           ),
-                        )
+                        ),
+                        if (transaction.height == 0)
+                          Text(
+                            'UNCONFIRMED',
+                            style: c.fonts.overline!.copyWith(
+                              color: c.colours.onBackground,
+                            ),
+                          ),
                       ],
                     ),
                   )
@@ -208,35 +429,22 @@ class _TransactionItemState extends State<TransactionItem> {
               ),
               GestureDetector(
                 onTap: () {
-                  c.read<WalletCubit>().openLink(widget.transaction);
+                  c.read<InfoCubit>().openLink(transaction);
                 },
                 child: Container(
                   width: c.width / 2,
                   child: Text(
-                    !_isExpanded
-                        ? widget.transaction.txIdBlur()
-                        : widget.transaction.txid,
+                    // transaction.txIdBlur()
+                    transaction.txid,
                     style: c.fonts.caption!.copyWith(
                       color: c.colours.primary,
                     ),
                   ),
                 ),
               ),
-              if (_isExpanded) ...[
+              ...[
                 const SizedBox(height: 16),
-                //if (!widget.transaction.confirmed) ...[
-                // Text('CONFIRMATIONS'.notLocalised(),
-                //     style: c.fonts.overline),
-                // Text(widget.transaction.confirmations.toString(),
-                //     style: c.fonts.caption),
-                //] else ...[
-                //  Text('CONFIRMED'.notLocalised(),
-                //      style: c.fonts.overline),
-                //  Align(
-                //      alignment: Alignment.centerLeft,
-                //      child: Icon(Icons.check_rounded)),
-                //],
-                if (widget.transaction.timeStr() != '') ...[
+                if (transaction.timeStr() != '') ...[
                   const SizedBox(height: 16),
                   Text(
                     'TIME'.notLocalised(),
@@ -245,15 +453,13 @@ class _TransactionItemState extends State<TransactionItem> {
                     ),
                   ),
                   Text(
-                    widget.transaction.timeStr(),
+                    transaction.timeStr(),
                     style: c.fonts.caption!.copyWith(
                       color: c.colours.onBackground,
                     ),
                   ),
                 ],
                 const SizedBox(height: 16),
-                // Text('TO ADDRESS'.notLocalised(), style: c.fonts.overline),
-                // Text(widget.transaction.txid, style: c.fonts.caption),
                 const SizedBox(height: 16),
                 Text(
                   'AMOUNT'.notLocalised(),
@@ -262,8 +468,8 @@ class _TransactionItemState extends State<TransactionItem> {
                   ),
                 ),
                 Text(
-                  (widget.transaction.sent - widget.transaction.fee)
-                          .toString() +
+                  NumberFormat('###,000')
+                          .format(double.parse(transaction.sent.toString())) +
                       ' sats',
                   style: c.fonts.caption!.copyWith(
                     color: c.colours.onBackground,
@@ -277,33 +483,20 @@ class _TransactionItemState extends State<TransactionItem> {
                   ),
                 ),
                 Text(
-                  widget.transaction.fee.toString() + ' sats',
+                  NumberFormat('###,000')
+                          .format(double.parse(transaction.fee.toString())) +
+                      ' sats',
                   style: c.fonts.caption!.copyWith(
                     color: c.colours.onBackground,
                   ),
                 ),
                 const SizedBox(height: 16),
-                Row(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // if (widget.transaction.comment != null)
-                    //   Expanded(
-                    //     child: Column(
-                    //       crossAxisAlignment:
-                    //           CrossAxisAlignment.stretch,
-                    //       children: [
-                    //         Text('COMMENT'.notLocalised(),
-                    //             style: c.fonts.overline),
-                    //         Text(widget.transaction.comment!,
-                    //             style: c.fonts.caption)
-                    //       ],
-                    //     ),
-                    //   ),
                     TextButton(
                       onPressed: () {
-                        c
-                            .read<WalletCubit>()
-                            .shareTransaction(widget.transaction);
+                        c.read<InfoCubit>().shareTransaction(transaction);
                       },
                       child: Text('SHARE'.notLocalised()),
                     ),
@@ -314,6 +507,47 @@ class _TransactionItemState extends State<TransactionItem> {
             ],
           ),
         ),
+        actions: [
+          if (transaction.height == 0)
+            Container(
+              color: c.colours.background,
+              child: CupertinoActionSheetAction(
+                child: Text(
+                  'Bump fee',
+                  style: c.fonts.button!.copyWith(color: c.colours.primary),
+                ),
+                onPressed: () async {
+                  // c.read<InfoCubit>().openLink(transaction);
+                },
+              ),
+            )
+          else
+            Container(
+              color: c.colours.background,
+              child: CupertinoActionSheetAction(
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+                child: Text(
+                  'Success',
+                  style:
+                      c.fonts.button!.copyWith(color: c.colours.onBackground),
+                ),
+              ),
+            ),
+          Container(
+            color: c.colours.background,
+            child: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text(
+                'BACK',
+                style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

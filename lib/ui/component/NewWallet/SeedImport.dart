@@ -33,7 +33,7 @@ class SeedImportPhrase extends StatelessWidget {
             Text(
               'Enter recovery info',
               style: c.fonts.headline5!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,
               ),
             ),
@@ -41,6 +41,7 @@ class SeedImportPhrase extends StatelessWidget {
             Padding(
               padding: EdgeInsets.zero,
               child: TextField(
+                style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 autocorrect: false,
@@ -91,7 +92,7 @@ class SeedImportPassphrase extends StatelessWidget {
             Text(
               'Enter an\noptional\npassphrase'.toUpperCase(),
               style: c.fonts.headline5!.copyWith(
-                color: Colors.white,
+                color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,
               ),
             ),
@@ -99,6 +100,10 @@ class SeedImportPassphrase extends StatelessWidget {
             Padding(
               padding: EdgeInsets.zero,
               child: TextField(
+                style: c.fonts.headline6!.copyWith(
+                  color: c.colours.onPrimary,
+                  // fontWeight: FontWeight.bold,
+                ),
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 autocorrect: false,
@@ -106,27 +111,6 @@ class SeedImportPassphrase extends StatelessWidget {
                   c.read<SeedImportCubit>().passPhraseChanged(text);
                 },
                 decoration: const InputDecoration(labelText: 'Passphrase'),
-              ),
-            ),
-            const SizedBox(height: 80),
-            Text(
-              'Select an\naccount\nnumber'.toUpperCase(),
-              style: c.fonts.headline5!.copyWith(
-                color: Colors.white,
-                // fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Padding(
-              padding: EdgeInsets.zero,
-              child: TextField(
-                enableSuggestions: false,
-                autocorrect: false,
-                onChanged: (text) {
-                  c.read<SeedImportCubit>().accountNumberChanged(text);
-                },
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Account Number'),
               ),
             ),
             const SizedBox(height: 40),

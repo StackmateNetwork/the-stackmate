@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:bitcoin/bitcoin.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
 
 class BitcoinFFI implements IStackMateCore {
@@ -11,14 +12,14 @@ class BitcoinFFI implements IStackMateCore {
     _bitcoin = FFFI(
       binary: Platform.isAndroid
           ? DynamicLibrary.open('libstackmate.so')
-          : DynamicLibrary.executable(),
+          : DynamicLibrary.open('libstackmate.dylib'),
     );
   }
 
   late FFFI _bitcoin;
 
   @override
-  Seed generateMaster({
+  R<Seed> generateMaster({
     required String length,
     required String passphrase,
     required String network,
@@ -29,12 +30,15 @@ class BitcoinFFI implements IStackMateCore {
       network: network,
     );
 
-    if (resp.startsWith('Error')) throw resp;
-    return Seed.fromJson(resp);
+    if (resp.contains('Error')) {
+      return R(error: resp);
+    }
+
+    return R(result: Seed.fromJson(resp));
   }
 
   @override
-  Seed importMaster({
+  R<Seed> importMaster({
     required String mnemonic,
     required String passphrase,
     required String network,
@@ -44,12 +48,15 @@ class BitcoinFFI implements IStackMateCore {
       passphrase: passphrase,
       network: network,
     );
-    if (resp.startsWith('Error')) throw resp;
-    return Seed.fromJson(resp);
+    if (resp.contains('Error')) {
+      return R(error: resp);
+    }
+
+    return R(result: Seed.fromJson(resp));
   }
 
   @override
-  DerivedKeys deriveHardened({
+  R<DerivedKeys> deriveHardened({
     required String masterXPriv,
     required String account,
     required String purpose,
@@ -59,12 +66,14 @@ class BitcoinFFI implements IStackMateCore {
       account: account,
       purpose: purpose,
     );
-    if (resp.startsWith('Error')) throw resp;
-    return DerivedKeys.fromJson(resp);
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    return R(result: DerivedKeys.fromJson(resp));
   }
 
   @override
-  String compile({
+  R<String> compile({
     required String policy,
     required String scriptType,
   }) {
@@ -72,27 +81,32 @@ class BitcoinFFI implements IStackMateCore {
       policy: policy,
       scriptType: scriptType,
     );
-    if (resp.startsWith('Error')) throw resp;
-    return resp;
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    return R(result: resp);
   }
 
   @override
-  int syncBalance({
+  R<int> syncBalance({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   }) {
     final resp = _bitcoin.syncBalance(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
+      socks5: socks5,
     );
-    if (resp.contains('Error')) throw resp;
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
     final bal = jsonDecode(resp)['balance'];
-
-    return bal as int;
+    return R(result: bal as int);
   }
 
   @override
-  String getAddress({
+  R<String> getAddress({
     required String descriptor,
     required String index,
   }) {
@@ -100,63 +114,109 @@ class BitcoinFFI implements IStackMateCore {
       descriptor: descriptor,
       index: index,
     );
-    return resp;
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    final address = jsonDecode(resp)['address'];
+    return R(result: address as String);
   }
 
   @override
-  List<Transaction> getHistory({
+  R<List<Transaction>> getHistory({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
   }) {
     final resp = _bitcoin.getHistory(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
+      socks5: socks5,
     );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
     final json = jsonDecode(resp);
     final List<Transaction> transactions = [];
     for (final t in json['history'] as List) {
       var tx = Transaction.fromJson(t as Map<String, dynamic>);
       if (!tx.isReceive())
         tx = tx.copyWith(sent: tx.sent - tx.received - tx.fee);
-
       transactions.add(tx);
     }
-
     transactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
-
-    return transactions;
+    final unconfirmed =
+        transactions.where((item) => item.timestamp == 0).toList();
+    final confirmed = transactions.where((item) => item.timestamp > 0).toList();
+    final sorted = unconfirmed + confirmed;
+    return R(result: sorted);
   }
 
   @override
-  String buildTransaction({
+  R<List<UTXO>> getUTXOSet({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
+  }) {
+    final resp = _bitcoin.listUnspent(
+      descriptor: descriptor,
+      nodeAddress: nodeAddress,
+      socks5: socks5,
+    );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    final json = jsonDecode(resp);
+    final List<UTXO> utxos = [];
+    for (final t in json['utxos'] as List) {
+      final utxo = UTXO.fromJson(t as Map<String, dynamic>);
+      utxos.add(utxo);
+    }
+    return R(result: utxos);
+  }
+
+  @override
+  R<PSBT> buildTransaction({
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
     required String txOutputs,
     required String feeAbsolute,
-    required String sweep,
     required String policyPath,
+    required String sweep,
   }) {
     final resp = _bitcoin.buildTransaction(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
+      socks5: socks5,
       txOutputs: txOutputs,
       feeAbsolute: feeAbsolute,
-      sweep: sweep,
       policyPath: policyPath,
+      sweep: sweep,
     );
-    final data = jsonDecode(resp);
-    if (data['error'] != null) return data['error'] as String;
-    return data['psbt'] as String;
+    if (resp.contains('Error')) {
+      return R(error: resp);
+    }
+    return R(result: PSBT.fromJson(resp));
   }
 
   @override
-  String decodePsbt({required String network, required String psbt}) {
+  R<List<DecodedTxOutput>> decodePsbt({
+    required String network,
+    required String psbt,
+  }) {
     final resp = _bitcoin.decodePsbt(network: network, psbt: psbt);
-    return resp;
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    final json = jsonDecode(resp)['outputs'];
+    final List<DecodedTxOutput> decoded = [];
+    for (final out in json)
+      decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
+    return R(result: decoded);
   }
 
   @override
-  String signTransaction({
+  R<PSBT> signTransaction({
     required String descriptor,
     required String unsignedPSBT,
   }) {
@@ -164,48 +224,56 @@ class BitcoinFFI implements IStackMateCore {
       descriptor: descriptor,
       unsignedPSBT: unsignedPSBT,
     );
-    final data = jsonDecode(resp);
-    if (data['error'] != null) return data['error'] as String;
-    return data['psbt'] as String;
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    return R(result: PSBT.fromJson(resp));
   }
 
   @override
-  String broadcastTransaction({
+  Future<R<String>> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
+    required String socks5,
     required String signedPSBT,
-  }) {
-    final resp = _bitcoin.broadcastTransaction(
+  }) async {
+    final resp = await _bitcoin.broadcastTransaction(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
       signedPSBT: signedPSBT,
+      socks5: socks5,
     );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
     final data = jsonDecode(resp);
-    return data['txid'] as String;
+    return R(result: data['txid'] as String);
   }
 
   @override
-  double estimateNetworkFee({
+  R<double> estimateNetworkFee({
     required String network,
     required String nodeAddress,
+    required String socks5,
     required String targetSize,
   }) {
+    // temp fix for fees while tor is loading
+    if (socks5 == 'none') return const R(error: 'Tor Not Connected.');
     final resp = _bitcoin.estimateNetworkFee(
       network: network,
       nodeAddress: nodeAddress,
       targetSize: targetSize,
+      socks5: socks5,
     );
-    final data = jsonDecode(resp);
-    if (data['error'] != null) {
-      print(data);
-      return 3.0;
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
     }
-
-    return data['rate'] as double;
+    final data = jsonDecode(resp);
+    return R(result: data['rate'] as double);
   }
 
   @override
-  int getWeight({
+  R<int> getWeight({
     required String descriptor,
     required String psbt,
   }) {
@@ -213,13 +281,15 @@ class BitcoinFFI implements IStackMateCore {
       descriptor: descriptor,
       psbt: psbt,
     );
-    if (resp.startsWith('Error')) throw resp;
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
     final data = jsonDecode(resp);
-    return data['weight'] as int;
+    return R(result: data['weight'] as int);
   }
 
   @override
-  AbsoluteFees feeAbsoluteToRate({
+  R<AbsoluteFees> feeAbsoluteToRate({
     required String feeAbsolute,
     required String weight,
   }) {
@@ -227,12 +297,14 @@ class BitcoinFFI implements IStackMateCore {
       feeAbs: feeAbsolute,
       weight: weight,
     );
-    if (resp.startsWith('Error')) throw resp;
-    return AbsoluteFees.fromJson(resp);
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    return R(result: AbsoluteFees.fromJson(resp));
   }
 
   @override
-  AbsoluteFees feeRateToAbsolute({
+  R<AbsoluteFees> feeRateToAbsolute({
     required String feeRate,
     required String weight,
   }) {
@@ -240,66 +312,9 @@ class BitcoinFFI implements IStackMateCore {
       feeRate: feeRate,
       weight: weight,
     );
-    if (resp.startsWith('Error')) throw resp;
-    return AbsoluteFees.fromJson(resp);
-  }
-
-  @override
-  int daysToBlocks({required String days}) {
-    final resp = _bitcoin.daysToBlocks(
-      days: days,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    final data = jsonDecode(resp);
-    return data['height'] as int;
-  }
-
-  @override
-  int getHeight({
-    required String network,
-    required String nodeAddress,
-  }) {
-    final resp = _bitcoin.getHeight(
-      network: network,
-      nodeAddress: nodeAddress,
-    );
-    if (resp.startsWith('Error')) throw resp;
-    final data = jsonDecode(resp);
-    return data['height'] as int;
-  }
-
-  @override
-  DerivedKeys derivePathStr(
-      {required String masterXPriv, required String derivationPath}) {
-    // TODO: implement derivePathStr
-    throw UnimplementedError();
-  }
-
-  @override
-  String sharedSecret({required String localPriv, required String remotePub}) {
-    // TODO: implement sharedSecret
-    throw UnimplementedError();
-  }
-
-  @override
-  String signMessage({required String message, required String secKey}) {
-    // TODO: implement signMessage
-    throw UnimplementedError();
-  }
-
-  @override
-  bool verifySignature({
-    required String signature,
-    required String message,
-    required String pubkey,
-  }) {
-    // TODO: implement verifySignature
-    throw UnimplementedError();
-  }
-
-  @override
-  XOnlyPair xPrivToEc({required String masterXPriv}) {
-    // TODO: implement xPrivToEc
-    throw UnimplementedError();
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    return R(result: AbsoluteFees.fromJson(resp));
   }
 }

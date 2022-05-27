@@ -11,10 +11,10 @@ class SelectNetwork extends StatelessWidget {
     final blockchain = c.select((ChainSelectCubit b) => b.state.blockchain);
     return ElevatedButton(
       onPressed: () {
-        if (blockchain == Blockchain.mainNet)
-          c.read<ChainSelectCubit>().changeBlockchain(Blockchain.testNet);
+        if (blockchain == Blockchain.main)
+          c.read<ChainSelectCubit>().changeBlockchain(Blockchain.test);
         else
-          c.read<ChainSelectCubit>().changeBlockchain(Blockchain.mainNet);
+          c.read<ChainSelectCubit>().changeBlockchain(Blockchain.main);
       },
       style: ElevatedButton.styleFrom(
         elevation: 0,
@@ -22,7 +22,7 @@ class SelectNetwork extends StatelessWidget {
         primary: c.colours.surface,
       ),
       child: Container(
-        height: 100,
+        height: 80,
         padding: const EdgeInsets.only(
           top: 16,
           bottom: 16,
@@ -33,7 +33,7 @@ class SelectNetwork extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Change Network'.toUpperCase(),
+                  'Change Network',
                   style: c.fonts.button!.copyWith(
                     color: c.colours.primary,
                     fontSize: 16,
@@ -41,10 +41,9 @@ class SelectNetwork extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Only wallets from selected network will be displayed\n\nCurrent network:   ' +
-                      blockchain.displayName.toUpperCase(),
+                  blockchain.displayName.toUpperCase(),
                   maxLines: 3,
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodyMedium!.copyWith(
                     color: c.colours.onSurface.withOpacity(0.7),
                   ),
                 ),

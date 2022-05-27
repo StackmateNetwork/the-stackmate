@@ -18,11 +18,9 @@ class SeedGenerateLabel extends StatelessWidget {
             Text(
               'Name your wallet',
               style: c.fonts.headline4!.copyWith(
-                color: Colors.white,
-                // fontWeight: FontWeight.bold,
+                color: c.colours.onPrimary,
               ),
             ),
-            // const HeaderTextDark(text: 'Name your wallet'),
             const SizedBox(height: 24),
             Padding(
               padding: EdgeInsets.zero,
@@ -30,7 +28,7 @@ class SeedGenerateLabel extends StatelessWidget {
                 onChanged: (text) {
                   c.read<SeedGenerateWalletCubit>().labelChanged(text);
                 },
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: c.colours.onPrimary),
                 decoration: const InputDecoration(
                   labelText: 'Wallet Name',
                   labelStyle: TextStyle(color: Colors.transparent),

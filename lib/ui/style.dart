@@ -1,26 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+const richFogra = Color(0xFF13161f);
+const brightCrayola = Color(0xFFFFA827);
+const ghostWhite = Color(0xFFF7F7FF);
+const blueJeans = Color(0xFF00ABF5);
+const bitterLemon = Color(0xFFB0E000);
+const arcticLime = Color(0xFFCEFF1A);
+const goldenBridge = Color(0xFFBB4430);
+const maximumGreen = Color(0xFF548C2F);
+const frenchBistre = Color(0xFF726953);
+const cultured = Color(0xFFFCF5E8);
+const torPurple = Color(0xFF7D4698);
 ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.aldrichTextTheme(),
       colorScheme: ColorScheme(
-        primary: Colors.orange[400]!,
-        // primaryVariant: const Color(0xFF0745ff),
-        secondary: const Color(0xFF87888a),
-        //  const Color(0xFF13161f),
-        // secondaryVariant: const Color(0xFF87888a),
-        surface: Colors.blue.withOpacity(0.1),
-        background: const Color(0xFF13161f),
-        error: const Color(0xFFff0000),
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        onSurface: Colors.white, //.withOpacity(0.8),
-        onBackground: Colors.white, //.withOpacity(0.8),
-        onError: Colors.white,
+        primary: brightCrayola,
+        secondary: blueJeans,
+        tertiary: bitterLemon,
+        tertiaryContainer: torPurple,
+        surface: ghostWhite.withOpacity(0.009),
+        background: richFogra,
+        error: goldenBridge,
+        onPrimary: cultured,
+        onSecondary: cultured,
+        onSurface: cultured,
+        onBackground: cultured,
+        onError: cultured,
         brightness: Brightness.dark,
       ),
     );
-
+// ThemeData(
+//   textTheme: GoogleFonts.aldrichTextTheme(),
+//   colorScheme: ColorScheme(
+//     primary: brightCrayola,
+//     secondary: blueJeans,
+//     tertiary: maximumGreen,
+//     surface: richFogra.withOpacity(0.09),
+//     background: cultured,
+//     error: goldenBridge,
+//     onPrimary: richFogra,
+//     onSecondary: richFogra,
+//     onSurface: richFogra,
+//     onBackground: richFogra,
+//     onError: richFogra,
+//     brightness: Brightness.dark,
+//   ),
+// );
 ThemeData derivedTheme(ThemeData theme) {
   return theme.copyWith(
     scaffoldBackgroundColor: theme.colorScheme.background,
@@ -59,15 +85,6 @@ ThemeData derivedTheme(ThemeData theme) {
     ),
   );
 }
-
-// BoxLooseDecoration pinInputDecoration = BoxLooseDecoration(
-//   obscureStyle: ObscureStyle(obscureText: '*', isTextObscure: true),
-//   bgColorBuilder:
-//       PinListenColorBuilder(Colors.pink, Colors.purple), //_white, _white),
-//   strokeColorBuilder:
-//       PinListenColorBuilder(_secondary.withAlpha(0), _textfieldBorder),
-//   radius: Radius.circular(2),
-// );
 
 Widget buttonToLoaderTransition({
   required Widget child,

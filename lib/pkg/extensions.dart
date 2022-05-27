@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 export 'package:flutter_bloc/flutter_bloc.dart';
 
 extension ContextUtils on BuildContext {
@@ -35,10 +35,11 @@ extension Strings on String {
   String toBtc() {
     try {
       if (this == '') return '0.00000000';
-      final amt = int.parse(this);
+      final amt = int.parse(replaceAll(' ', '').replaceAll(',', ''));
+
       return amt.toBtc();
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
       return '0.00000000';
     }
   }
@@ -57,7 +58,14 @@ extension Nums on num {
 }
 
 extension Ints on int? {
-  String toBtc() => this == null ? '0' : (this! / 100000000).toStringAsFixed(8);
+  String toBtc() =>
+      this == null ? '0.00000000' : (this! / 100000000).toStringAsFixed(8);
+}
+
+String readableDateFrom(int timeStamp) {
+  final date = DateTime.fromMillisecondsSinceEpoch(timeStamp);
+  final formattedDate = DateFormat.yMMMd().format(date);
+  return formattedDate;
 }
 
 class CCC {}

@@ -12,7 +12,7 @@ class CornerTitle extends StatelessWidget {
       text,
       textAlign: TextAlign.end,
       style: c.fonts.headline6!.copyWith(
-        color: Colors.white,
+        color: c.colours.onPrimary,
         // fontWeight: FontWeight.bold,
       ),
     );

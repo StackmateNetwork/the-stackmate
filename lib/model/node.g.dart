@@ -8,7 +8,7 @@ part of 'node.dart';
 
 class NodeClassAdapter extends TypeAdapter<_$_Node> {
   @override
-  final int typeId = 5;
+  final int typeId = 3;
 
   @override
   _$_Node read(BinaryReader reader) {
@@ -18,7 +18,7 @@ class NodeClassAdapter extends TypeAdapter<_$_Node> {
     };
     return _$_Node(
       address: fields[1] as String,
-      port: fields[2] as String,
+      name: fields[2] as String,
     );
   }
 
@@ -29,7 +29,7 @@ class NodeClassAdapter extends TypeAdapter<_$_Node> {
       ..writeByte(1)
       ..write(obj.address)
       ..writeByte(2)
-      ..write(obj.port);
+      ..write(obj.name);
   }
 
   @override
@@ -49,10 +49,10 @@ class NodeClassAdapter extends TypeAdapter<_$_Node> {
 
 _$_Node _$$_NodeFromJson(Map<String, dynamic> json) => _$_Node(
       address: json['address'] as String,
-      port: json['port'] as String,
+      name: json['name'] as String,
     );
 
 Map<String, dynamic> _$$_NodeToJson(_$_Node instance) => <String, dynamic>{
       'address': instance.address,
-      'port': instance.port,
+      'name': instance.name,
     };
