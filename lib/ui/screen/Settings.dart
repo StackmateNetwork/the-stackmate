@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Settings/BitcoinUnit.dart';
-import 'package:sats/ui/component/Settings/Exchange.dart';
-import 'package:sats/ui/component/Settings/FiatUnit.dart';
 import 'package:sats/ui/component/Settings/Incognito.dart';
 import 'package:sats/ui/component/Settings/SelectNetwork.dart';
 import 'package:sats/ui/component/Settings/SelectNode.dart';
@@ -37,10 +35,6 @@ class SettingsScreen extends StatelessWidget {
               SelectNetwork(),
               SizedBox(height: 8),
               SetBitcoinUnit(),
-              SizedBox(height: 8),
-              SetExchange(),
-              SizedBox(height: 8),
-              SetFiatUnit(),
               SizedBox(height: 8),
               SetIncognito(),
             ],
