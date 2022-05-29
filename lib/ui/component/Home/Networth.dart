@@ -22,8 +22,14 @@ class Networth extends StatelessWidget {
       networkTraffic = 'HIGH';
 
     int networth = 0;
+    // THIS WILL ONLY WORK FOR SINGLE SIGS
+    // SCRIPTS NEED TO CHECK PUBLIC DESCRIPTOR
+    final existingPubkeys = [];
     for (final wallet in wallets) {
-      networth += wallet.balance;
+      if (!existingPubkeys.contains(wallet.policyElements[0])) {
+        existingPubkeys.add(wallet.policyElements[0]);
+        networth += wallet.balance;
+      }
     }
 
     return Column(

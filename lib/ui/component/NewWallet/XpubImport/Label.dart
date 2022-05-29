@@ -30,10 +30,11 @@ class XpubLabel extends StatelessWidget {
                   onChanged: (text) {
                     c.read<XpubImportWalletCubit>().labelChanged(text);
                   },
-                  decoration: const InputDecoration(
+                  style: TextStyle(color: c.colours.onPrimary),
+                  decoration: InputDecoration(
                     labelText: 'Wallet Name',
                     labelStyle: TextStyle(
-                      color: Colors.transparent,
+                      color: context.colours.onPrimary,
                     ),
                   ),
                 ),

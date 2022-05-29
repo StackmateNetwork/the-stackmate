@@ -67,10 +67,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
-  fonts:
-    - family: FontAwesome
-      fonts:
-        - asset: assets/fontawesome-webfont.ttf
   assets:
     - assets/icon/sm92.png
 
