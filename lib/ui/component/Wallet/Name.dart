@@ -19,7 +19,7 @@ class WalletName extends StatelessWidget {
         child: Text(
           '' + wallet.label.toUpperCase(),
           style: context.fonts.headline6!.copyWith(
-            color: context.colours.onBackground,
+            color: context.colours.primary,
           ),
         ),
       ),

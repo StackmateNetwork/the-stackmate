@@ -44,8 +44,12 @@ class _AmountRowState extends State<AmountRow> {
                 fontSize: 24,
               ),
               decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: _controller.clear,
+                  icon: Icon(Icons.clear),
+                ),
                 hintText: isSweep
-                    ? 'WALLET WILL BE EMPTIED'
+                    ? 'WALLET WILL BE SWEEPED'
                     : 'Amount in SATS'.toUpperCase(),
                 hintStyle: isSweep
                     ? TextStyle(
