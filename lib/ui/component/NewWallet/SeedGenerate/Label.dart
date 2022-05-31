@@ -29,9 +29,11 @@ class SeedGenerateLabel extends StatelessWidget {
                   c.read<SeedGenerateWalletCubit>().labelChanged(text);
                 },
                 style: TextStyle(color: c.colours.onPrimary),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Wallet Name',
-                  labelStyle: TextStyle(color: Colors.transparent),
+                  labelStyle: TextStyle(
+                    color: context.colours.onPrimary,
+                  ),
                 ),
               ),
             ),

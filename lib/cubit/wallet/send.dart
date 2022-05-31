@@ -158,13 +158,16 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void adddressChanged(String text) {
-    emit(state.copyWith(address: text));
+    if (text.startsWith('bc1') || text.startsWith('tb1'))
+      emit(state.copyWith(address: text.toLowerCase()));
+    else
+      emit(state.copyWith(address: text));
   }
 
   void pasteAddress() async {
     final text = await _clipBoard.pasteFromClipBoard();
     if (text.hasError) return;
-    emit(state.copyWith(address: text.result!.toLowerCase()));
+    emit(state.copyWith(address: text.result!));
   }
 
   void scanAddress(bool onStart) async {
@@ -178,12 +181,15 @@ class SendCubit extends Cubit<SendState> {
       if (barcodeScanRes == '-1') barcodeScanRes = emptyString;
       if (barcodeScanRes.contains('bitcoin:')) {
         final address = barcodeScanRes.split(':')[1].split('?')[0];
-        emit(state.copyWith(address: address.toLowerCase()));
-        final amount =
+        emit(state.copyWith(address: address));
+        var amount =
             barcodeScanRes.split(':')[1].split('?amount=')[1].split('?')[0];
+        if (amount.contains('.')) {
+          amount = (double.parse(amount) * 100000000).toStringAsFixed(0);
+        }
         amountChanged(amount);
       } else
-        emit(state.copyWith(address: barcodeScanRes.toLowerCase()));
+        emit(state.copyWith(address: barcodeScanRes));
 
       await Future.delayed(const Duration(milliseconds: 1000));
 

@@ -80,23 +80,12 @@ class FeesCubit extends Cubit<FeesState> {
         throw fastRate.error!;
       }
 
-      final mediumRate = BitcoinFFI().estimateNetworkFee(
-        network: _blockchain.state.blockchain.name,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-        targetSize: '21',
-      );
-
-      if (mediumRate.hasError) {
-        throw fastRate.error!;
-      }
-
       const slowRate = 1.0;
 
       final feesUpdated = Fees(
         timestamp: timestamp,
         slow: slowRate,
-        medium: mediumRate.result!,
+        medium: fastRate.result! / 2,
         fast: fastRate.result!,
       );
 
@@ -146,19 +135,16 @@ class FeesCubit extends Cubit<FeesState> {
         targetSize: '1',
       );
 
-      final mediumRate = BitcoinFFI().estimateNetworkFee(
-        network: _blockchain.state.blockchain.name,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-        targetSize: '21',
-      );
+      if (fastRate.hasError) {
+        throw fastRate.error!;
+      }
 
       const slowRate = 1.0;
 
       final feesUpdated = Fees(
         timestamp: timestamp,
         slow: slowRate,
-        medium: mediumRate.result!,
+        medium: fastRate.result! / 2,
         fast: fastRate.result!,
       );
 

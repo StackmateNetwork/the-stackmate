@@ -30,7 +30,7 @@ class SetIncognito extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Incognito Default',
+                  'Incognito Mode',
                   style: c.fonts.button!.copyWith(
                     color: c.colours.primary,
                     fontSize: 16,
@@ -38,7 +38,7 @@ class SetIncognito extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  incognito.toString().toUpperCase(),
+                  (incognito) ? 'ON' : 'OFF',
                   maxLines: 3,
                   style: c.fonts.bodyMedium!.copyWith(
                     color: c.colours.onSurface.withOpacity(0.7),
