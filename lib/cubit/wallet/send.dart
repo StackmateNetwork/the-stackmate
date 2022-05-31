@@ -451,7 +451,7 @@ class SendCubit extends Cubit<SendState> {
 
   void sendClicked() async {
     try {
-      if (state.sendingTx == true) {
+      if (state.sendingTx != true) {
         emit(state.copyWith(sendingTx: true, errLoading: emptyString));
         return;
       }
