@@ -171,6 +171,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         lastAddressIndex: -1,
         balance: 0,
         transactions: [],
+        isNewWallet: true,
       );
 
       final savedid = await _storage.saveItem<Wallet>(

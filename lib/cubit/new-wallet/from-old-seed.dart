@@ -203,33 +203,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       throw SMError.fromJson(descriptor.error!);
     }
 
-    final nodeAddress = _nodeAddressCubit.state.getAddress();
-    final socks5 = _torCubit.state.getSocks5();
-
-    var history = _core.getHistory(
-      descriptor: descriptor.result!,
-      nodeAddress: nodeAddress,
-      socks5: socks5,
-    );
-    var recievedCount = 0;
-
-    if (history.hasError) {
-      history = const R(result: []);
-    } else
-      for (final item in history.result!) {
-        if (item.sent == 0) {
-          recievedCount++;
-        }
-      }
-
-    var balance = _core.syncBalance(
-      descriptor: descriptor.result!,
-      nodeAddress: nodeAddress,
-      socks5: socks5,
-    );
-    if (balance.hasError) {
-      balance = const R(result: 0);
-    }
+    // Future.delayed(Duration(seconds: 3));
     // public descriptor
     // Check history and whether this wallet needs to update its address index
 
@@ -241,9 +215,10 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       requiredPolicyElements: 1,
       policyElements: ['primary:$fullXPub'],
       blockchain: _blockchainCubit.state.blockchain.name,
-      lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
-      balance: balance.result!,
-      transactions: history.result!,
+      lastAddressIndex: -1,
+      balance: 0,
+      transactions: [],
+      isNewWallet: true,
     );
 
     final savedId = await _storage.saveItem<Wallet>(
@@ -268,8 +243,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       return;
     }
     _wallets.walletSelected(newWallet);
-    _wallets.addTransactionsToSelectedWallet(history.result!);
-
+    _wallets.refresh();
     emit(
       state.copyWith(
         savingWallet: false,

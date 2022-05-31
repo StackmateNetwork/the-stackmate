@@ -28,13 +28,14 @@ class WalletClassAdapter extends TypeAdapter<_$_Wallet> {
       balance: fields[8] as int,
       lastAddressIndex: fields[9] as int,
       walletType: fields[10] as String,
+      isNewWallet: fields[11] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_Wallet obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -53,6 +54,8 @@ class WalletClassAdapter extends TypeAdapter<_$_Wallet> {
       ..write(obj.lastAddressIndex)
       ..writeByte(10)
       ..write(obj.walletType)
+      ..writeByte(11)
+      ..write(obj.isNewWallet)
       ..writeByte(5)
       ..write(obj.policyElements)
       ..writeByte(7)
@@ -90,6 +93,7 @@ _$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
       balance: json['balance'] as int,
       lastAddressIndex: json['lastAddressIndex'] as int,
       walletType: json['walletType'] as String,
+      isNewWallet: json['isNewWallet'] as bool,
     );
 
 Map<String, dynamic> _$$_WalletToJson(_$_Wallet instance) => <String, dynamic>{
@@ -104,4 +108,5 @@ Map<String, dynamic> _$$_WalletToJson(_$_Wallet instance) => <String, dynamic>{
       'balance': instance.balance,
       'lastAddressIndex': instance.lastAddressIndex,
       'walletType': instance.walletType,
+      'isNewWallet': instance.isNewWallet,
     };

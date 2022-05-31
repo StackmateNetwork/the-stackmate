@@ -153,30 +153,6 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       if (descriptor.hasError) {
         throw SMError.fromJson(descriptor.error!);
       }
-      var history = _core.getHistory(
-        descriptor: descriptor.result!,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-      );
-      var recievedCount = 0;
-
-      if (history.hasError) {
-        history = const R(result: []);
-      } else
-        for (final item in history.result!) {
-          if (item.sent == 0) {
-            recievedCount++;
-          }
-        }
-
-      var balance = _core.syncBalance(
-        descriptor: descriptor.result!,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-      );
-      if (balance.hasError) {
-        balance = const R(result: 0);
-      }
       // check balance and see if last address index needs update
       var newWallet = Wallet(
         label: state.label,
@@ -186,9 +162,10 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: watcherWalletType,
-        lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
-        balance: balance.result!,
-        transactions: history.result!,
+        lastAddressIndex:-1,
+        balance: 0,
+        transactions: [],
+        isNewWallet: true,
       );
 
       final savedId = await _storage.saveItem<Wallet>(
@@ -209,7 +186,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       );
 
       _wallets.walletSelected(newWallet);
-      _wallets.addTransactionsToSelectedWallet(history.result!);
+      _wallets.refresh();
 
       emit(
         state.copyWith(

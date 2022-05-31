@@ -87,11 +87,19 @@ class WalletCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        if (!prefState.incognito)
+                        if (!prefState.incognito && !wallet.isNewWallet)
                           BitcoinDisplaySmall(
                             satsAmount: wallet.balance.toString(),
                             bitcoinUnit: prefState.preferredBitcoinUnit,
-                          )
+                          ),
+                        if (wallet.isNewWallet)
+                           Text(
+                          'Click to Load.',
+                          style: context.fonts.caption!.copyWith(
+                            color: 
+                                context.colours.onPrimary,
+                          ),
+                        ),
                       ],
                     ),
                   ),
