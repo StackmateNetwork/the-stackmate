@@ -31,12 +31,18 @@ class TorCubit extends Cubit<TorState> {
 
   Future<void> start() async {
     try {
+      emit(
+        state.copyWith(
+          errConnection: '',
+        ),
+      );
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         final port = await UtopicTorOnionProxy.startTor();
         emit(
           state.copyWith(
             port: port!,
+            errConnection: '',
             isRunning: true,
           ),
         );
@@ -49,8 +55,11 @@ class TorCubit extends Cubit<TorState> {
         );
       }
     } catch (e) {
-      state.copyWith(
-        errConnection: e.toString(),
+      emit(
+        state.copyWith(
+          isRunning: false,
+          errConnection: 'Could not connect to the Internet.',
+        ),
       );
       _logger.logException(e, 'Tor.start', '');
       return;

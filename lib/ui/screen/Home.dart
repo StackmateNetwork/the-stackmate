@@ -25,7 +25,7 @@ class _Home extends StatelessWidget {
                 c.read<TorCubit>().start();
                 c.read<TorCubit>().checkStatus();
                 // if (c.select((TorCubit t) => t.state).isRunning)
-                c.read<FeesCubit>().update();
+                await c.read<FeesCubit>().update();
                 return;
               },
               child: BlocBuilder<TorCubit, TorState>(

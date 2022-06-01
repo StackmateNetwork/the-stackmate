@@ -12,9 +12,11 @@ class LandingLoader extends StatelessWidget {
     final tor = context.select((TorCubit hc) => hc.state);
     // final fees = context.select((FeesCubit hc) => hc.state);
     const String loading = 'Initializing Tor...';
-    if (tor.isRunning) Container();
-    return const Loading(
-      text: loading,
-    );
+    if (!tor.isRunning && tor.errConnection == '')
+      return const Loading(
+        text: loading,
+      );
+    else
+      return Container();
   }
 }
