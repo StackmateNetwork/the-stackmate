@@ -205,7 +205,7 @@ class _Wallet extends StatelessWidget {
                 onPressed: () async {
                   Navigator.pop(context, true);
                   await Future.delayed(const Duration(milliseconds: 200));
-                  c.push("/send");
+                  c.push('/send');
                 },
               ),
             ),

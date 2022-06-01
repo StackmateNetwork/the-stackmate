@@ -27,7 +27,6 @@ class XpubLabel extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.zero,
                 child: TextField(
-                  
                   onChanged: (text) {
                     c.read<XpubImportWalletCubit>().labelChanged(text);
                   },
@@ -46,21 +45,15 @@ class XpubLabel extends StatelessWidget {
                   state.errSavingWallet,
                   style: c.fonts.caption!.copyWith(color: c.colours.error),
                 ),
-              if (!state.savingWallet)
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextButton(
-                    onPressed: () {
-                      c.read<XpubImportWalletCubit>().nextClicked();
-                    },
-                    child: const Text('Confirm'),
-                  ),
-                )
-              else
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Loading(text: 'Saving Wallet'),
-                )
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextButton(
+                  onPressed: () {
+                    c.read<XpubImportWalletCubit>().nextClicked();
+                  },
+                  child: const Text('Confirm'),
+                ),
+              )
             ],
           ),
         );

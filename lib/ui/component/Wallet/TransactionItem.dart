@@ -189,7 +189,7 @@ class TransactionItem extends StatelessWidget {
 }
 
 void _showTxinfo(BuildContext c, Transaction transaction) {
-  const sats = "sats";
+  const sats = 'sats';
   final isReceive = transaction.isReceive();
   if (isReceive) {
     showCupertinoModalPopup(

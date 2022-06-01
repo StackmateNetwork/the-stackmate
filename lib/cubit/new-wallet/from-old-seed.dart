@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 
 import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/stackmate-core.dart';
@@ -13,10 +13,10 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
+import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sats/model/transaction.dart';
 
 part 'from-old-seed.freezed.dart';
 
@@ -210,9 +210,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     final socks5 = _torCubit.state.getSocks5();
 
     var history = await compute(computeHistory, {
-        'descriptor': descriptor.result!,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
+      'descriptor': descriptor.result!,
+      'nodeAddress': nodeAddress,
+      'socks5': socks5,
     });
 
     var recievedCount = 0;
@@ -226,11 +226,11 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         }
       }
 
-     var balance = await compute(computeBalance, {
-        'descriptor': descriptor.result!,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
-      });
+    var balance = await compute(computeBalance, {
+      'descriptor': descriptor.result!,
+      'nodeAddress': nodeAddress,
+      'socks5': socks5,
+    });
 
     if (balance.hasError) {
       balance = const R(result: 0);
@@ -248,9 +248,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       requiredPolicyElements: 1,
       policyElements: ['primary:$fullXPub'],
       blockchain: _blockchainCubit.state.blockchain.name,
-            lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
-        balance: balance.result!,
-        transactions: history.result!,
+      lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
+      balance: balance.result!,
+      transactions: history.result!,
     );
 
     final savedId = await _storage.saveItem<Wallet>(
@@ -276,7 +276,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     }
     _wallets.walletSelected(newWallet);
     _wallets.addTransactionsToSelectedWallet(history.result!);
-    
+
     emit(
       state.copyWith(
         savingWallet: false,
@@ -292,7 +292,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   }
 }
 
-
 R<List<Transaction>> computeHistory(dynamic obj) {
   final data = obj as Map<String, String?>;
   final resp = BitcoinFFI().getHistory(
@@ -304,7 +303,7 @@ R<List<Transaction>> computeHistory(dynamic obj) {
   return resp;
 }
 
-R<int> computeBalance(dynamic obj)  {
+R<int> computeBalance(dynamic obj) {
   final data = obj as Map<String, String?>;
   final resp = BitcoinFFI().syncBalance(
     descriptor: data['descriptor']!,

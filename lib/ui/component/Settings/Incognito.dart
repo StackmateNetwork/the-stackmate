@@ -38,7 +38,7 @@ class SetIncognito extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  (incognito) ? 'ON' : 'OFF',
+                  incognito ? 'ON' : 'OFF',
                   maxLines: 3,
                   style: c.fonts.bodyMedium!.copyWith(
                     color: c.colours.onSurface.withOpacity(0.7),

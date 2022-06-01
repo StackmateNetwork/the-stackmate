@@ -46,7 +46,7 @@ class _AmountRowState extends State<AmountRow> {
               decoration: InputDecoration(
                 suffixIcon: IconButton(
                   onPressed: _controller.clear,
-                  icon: Icon(Icons.clear),
+                  icon: const Icon(Icons.clear),
                 ),
                 hintText: isSweep
                     ? 'WALLET WILL BE SWEEPED'

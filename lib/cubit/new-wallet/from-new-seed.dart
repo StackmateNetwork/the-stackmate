@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 
 import 'package:bitcoin/types.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -21,6 +21,7 @@ enum SeedGenerateWalletSteps {
   generate,
   label,
 }
+
 const invalidLabelError = 'Invalid Label';
 const signerWalletType = 'SIGNER';
 const wpkhScript = 'wpkh';
