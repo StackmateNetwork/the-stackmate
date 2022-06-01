@@ -27,10 +27,7 @@ class XpubLabel extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.zero,
                 child: TextField(
-                  style: TextStyle(
-                    color: c.colours.onBackground,
-                    fontSize: 18,
-                  ),
+                  
                   onChanged: (text) {
                     c.read<XpubImportWalletCubit>().labelChanged(text);
                   },
