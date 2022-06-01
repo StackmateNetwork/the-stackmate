@@ -157,7 +157,8 @@ class __$$_SeedGenerateWalletStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SeedGenerateWalletState extends _SeedGenerateWalletState {
+class _$_SeedGenerateWalletState extends _SeedGenerateWalletState
+    with DiagnosticableTreeMixin {
   const _$_SeedGenerateWalletState(
       {this.currentStep = SeedGenerateWalletSteps.warning,
       this.walletLabel = '',
@@ -187,8 +188,21 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState {
   final bool newWalletSaved;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SeedGenerateWalletState(currentStep: $currentStep, walletLabel: $walletLabel, walletLabelError: $walletLabelError, savingWallet: $savingWallet, savingWalletError: $savingWalletError, newWalletSaved: $newWalletSaved)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SeedGenerateWalletState'))
+      ..add(DiagnosticsProperty('currentStep', currentStep))
+      ..add(DiagnosticsProperty('walletLabel', walletLabel))
+      ..add(DiagnosticsProperty('walletLabelError', walletLabelError))
+      ..add(DiagnosticsProperty('savingWallet', savingWallet))
+      ..add(DiagnosticsProperty('savingWalletError', savingWalletError))
+      ..add(DiagnosticsProperty('newWalletSaved', newWalletSaved));
   }
 
   @override

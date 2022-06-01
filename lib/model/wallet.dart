@@ -22,7 +22,6 @@ class Wallet with _$Wallet {
     @HiveField(8) required int balance,
     @HiveField(9) required int lastAddressIndex,
     @HiveField(10) required String walletType,
-    @HiveField(11) required bool isNewWallet,
   }) = _Wallet;
   const Wallet._();
 

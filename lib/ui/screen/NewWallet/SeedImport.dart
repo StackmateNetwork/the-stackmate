@@ -14,6 +14,8 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Label.dart';
+import 'package:sats/ui/component/AddWallet/Loader.dart';
+
 import 'package:sats/ui/component/NewWallet/SeedImport/Stepper.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Warning.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
@@ -48,7 +50,9 @@ class _SeedImport extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const Loader(),
                     const SizedBox(height: 24),
+                  
                     Header(
                       cornerTitle: 'RECOVER',
                       children: [

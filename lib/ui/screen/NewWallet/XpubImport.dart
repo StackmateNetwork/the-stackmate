@@ -15,6 +15,7 @@ import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Stepper.dart';
+import 'package:sats/ui/component/AddWallet/Loader.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
@@ -48,6 +49,7 @@ class _XpubImport extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const  Loader(),
                     const SizedBox(height: 24),
                     Header(
                       cornerTitle: 'WATCHER',

@@ -42,8 +42,6 @@ mixin _$Wallet {
   int get lastAddressIndex => throw _privateConstructorUsedError;
   @HiveField(10)
   String get walletType => throw _privateConstructorUsedError;
-  @HiveField(11)
-  bool get isNewWallet => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -65,8 +63,7 @@ abstract class $WalletCopyWith<$Res> {
       @HiveField(7) List<Transaction> transactions,
       @HiveField(8) int balance,
       @HiveField(9) int lastAddressIndex,
-      @HiveField(10) String walletType,
-      @HiveField(11) bool isNewWallet});
+      @HiveField(10) String walletType});
 }
 
 /// @nodoc
@@ -90,7 +87,6 @@ class _$WalletCopyWithImpl<$Res> implements $WalletCopyWith<$Res> {
     Object? balance = freezed,
     Object? lastAddressIndex = freezed,
     Object? walletType = freezed,
-    Object? isNewWallet = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -137,10 +133,6 @@ class _$WalletCopyWithImpl<$Res> implements $WalletCopyWith<$Res> {
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
               as String,
-      isNewWallet: isNewWallet == freezed
-          ? _value.isNewWallet
-          : isNewWallet // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -161,8 +153,7 @@ abstract class _$$_WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
       @HiveField(7) List<Transaction> transactions,
       @HiveField(8) int balance,
       @HiveField(9) int lastAddressIndex,
-      @HiveField(10) String walletType,
-      @HiveField(11) bool isNewWallet});
+      @HiveField(10) String walletType});
 }
 
 /// @nodoc
@@ -187,7 +178,6 @@ class __$$_WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
     Object? balance = freezed,
     Object? lastAddressIndex = freezed,
     Object? walletType = freezed,
-    Object? isNewWallet = freezed,
   }) {
     return _then(_$_Wallet(
       id: id == freezed
@@ -234,10 +224,6 @@ class __$$_WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
               as String,
-      isNewWallet: isNewWallet == freezed
-          ? _value.isNewWallet
-          : isNewWallet // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -257,8 +243,7 @@ class _$_Wallet extends _Wallet {
       @HiveField(7) required final List<Transaction> transactions,
       @HiveField(8) required this.balance,
       @HiveField(9) required this.lastAddressIndex,
-      @HiveField(10) required this.walletType,
-      @HiveField(11) required this.isNewWallet})
+      @HiveField(10) required this.walletType})
       : _policyElements = policyElements,
         _transactions = transactions,
         super._();
@@ -309,13 +294,10 @@ class _$_Wallet extends _Wallet {
   @override
   @HiveField(10)
   final String walletType;
-  @override
-  @HiveField(11)
-  final bool isNewWallet;
 
   @override
   String toString() {
-    return 'Wallet(id: $id, label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, balance: $balance, lastAddressIndex: $lastAddressIndex, walletType: $walletType, isNewWallet: $isNewWallet)';
+    return 'Wallet(id: $id, label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, balance: $balance, lastAddressIndex: $lastAddressIndex, walletType: $walletType)';
   }
 
   @override
@@ -340,9 +322,7 @@ class _$_Wallet extends _Wallet {
             const DeepCollectionEquality()
                 .equals(other.lastAddressIndex, lastAddressIndex) &&
             const DeepCollectionEquality()
-                .equals(other.walletType, walletType) &&
-            const DeepCollectionEquality()
-                .equals(other.isNewWallet, isNewWallet));
+                .equals(other.walletType, walletType));
   }
 
   @JsonKey(ignore: true)
@@ -359,8 +339,7 @@ class _$_Wallet extends _Wallet {
       const DeepCollectionEquality().hash(_transactions),
       const DeepCollectionEquality().hash(balance),
       const DeepCollectionEquality().hash(lastAddressIndex),
-      const DeepCollectionEquality().hash(walletType),
-      const DeepCollectionEquality().hash(isNewWallet));
+      const DeepCollectionEquality().hash(walletType));
 
   @JsonKey(ignore: true)
   @override
@@ -385,8 +364,7 @@ abstract class _Wallet extends Wallet {
       @HiveField(7) required final List<Transaction> transactions,
       @HiveField(8) required final int balance,
       @HiveField(9) required final int lastAddressIndex,
-      @HiveField(10) required final String walletType,
-      @HiveField(11) required final bool isNewWallet}) = _$_Wallet;
+      @HiveField(10) required final String walletType}) = _$_Wallet;
   const _Wallet._() : super._();
 
   factory _Wallet.fromJson(Map<String, dynamic> json) = _$_Wallet.fromJson;
@@ -424,9 +402,6 @@ abstract class _Wallet extends Wallet {
   @override
   @HiveField(10)
   String get walletType => throw _privateConstructorUsedError;
-  @override
-  @HiveField(11)
-  bool get isNewWallet => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_WalletCopyWith<_$_Wallet> get copyWith =>

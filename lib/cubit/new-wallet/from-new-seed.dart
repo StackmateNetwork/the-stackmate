@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 
 import 'package:bitcoin/types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -171,7 +172,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         lastAddressIndex: -1,
         balance: 0,
         transactions: [],
-        isNewWallet: true,
       );
 
       final savedid = await _storage.saveItem<Wallet>(
