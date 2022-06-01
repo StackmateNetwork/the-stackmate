@@ -13,6 +13,7 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/validation.dart';
@@ -105,7 +106,7 @@ class SendCubit extends Cubit<SendState> {
   static const invalidAmountError = 'Invalid Amount';
   static const invalidFeeError = 'Invalid Fee';
   static const psbtNotFinalizedError = 'Transaction signatures not satisfied.';
-  static const dummyFeeValue = '250';
+  static const dummyFeeValue = '500';
   static const minerOutput = 'miner';
   static const emptyString = '';
 
@@ -342,7 +343,7 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      _logger.logException(e, 'SendCubit.confirmclicked', s);
+      _logger.logException(e.toString(), 'SendCubit.confirmclicked', s);
     }
   }
 
@@ -429,7 +430,7 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      _logger.logException(e, 'SendCubit.confirmclicked', s);
+      _logger.logException(e.toString(), 'SendCubit.confirmclicked', s);
     }
   }
 
@@ -457,33 +458,45 @@ class SendCubit extends Cubit<SendState> {
 
   void sendClicked() async {
     try {
-      if (state.sendingTx == true) {
-        return;
-      }
-      emit(state.copyWith(sendingTx: true, errLoading: emptyString));
+      if (state.sendingTx) return;
+      emit(
+        state.copyWith(
+          sendingTx: true,
+          errLoading: emptyString,
+          currentStep: SendSteps.confirm,
+        ),
+      );
+
+      final descriptor = _walletsCubit.state.selectedWallet!.descriptor;
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
-      // final unsigned = state.psbt;
-      final descriptor = _walletsCubit.state.selectedWallet!.descriptor;
-      final signed = _core.signTransaction(
-        descriptor: descriptor,
-        unsignedPSBT: state.psbt,
-      );
+      final signed = await compute(signTx, {
+        'descriptor': descriptor,
+        'unsignedPSBT': state.psbt,
+      });
+
       if (signed.hasError) {
-        emit(state.copyWith(errSending: signed.error!));
+        emit(state.copyWith(sendingTx: false, errSending: signed.error!));
         return;
       }
       if (!signed.result!.isFinalized) {
-        emit(state.copyWith(errSending: 'All signatures not present.'));
+        emit(
+          state.copyWith(
+            sendingTx: false,
+            errSending: 'All signatures not present.',
+          ),
+        );
         return;
       }
-      final txid = await _core.broadcastTransaction(
-        descriptor: _walletsCubit.state.selectedWallet!.descriptor,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-        signedPSBT: signed.result!.psbt,
-      );
+
+      final txid = await compute(broadcastTx, {
+        'descriptor': descriptor,
+        'nodeAddress': nodeAddress,
+        'socks5': socks5,
+        'signedPSBT': signed.result!.psbt,
+      });
+
       if (txid.hasError)
         emit(
           state.copyWith(
@@ -504,7 +517,6 @@ class SendCubit extends Cubit<SendState> {
             currentStep: SendSteps.sent,
           ),
         );
-      return;
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -512,7 +524,7 @@ class SendCubit extends Cubit<SendState> {
           errLoading: e.toString(),
         ),
       );
-      _logger.logException(e, 'SendCubit.sendclicked', s);
+      _logger.logException(e.toString(), 'SendCubit.sendclicked', s);
     }
   }
 
@@ -618,20 +630,18 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
   return resp.result!;
 }
 
-PSBT signTx(dynamic data) {
+R<PSBT> signTx(dynamic data) {
   final obj = data as Map<String, String?>;
 
   final resp = BitcoinFFI().signTransaction(
     descriptor: obj['descriptor']!,
     unsignedPSBT: obj['unsignedPSBT']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
+
+  return resp;
 }
 
-Future<String> broadcastTx(dynamic data) async {
+Future<R<String>> broadcastTx(dynamic data) async {
   final obj = data as Map<String, String?>;
 
   final resp = await BitcoinFFI().broadcastTransaction(
@@ -640,9 +650,7 @@ Future<String> broadcastTx(dynamic data) async {
     socks5: obj['socks5']!,
     signedPSBT: obj['signedPSBT']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
+
+  return resp;
 }
 // tb1qcd0dej2spq73nlkr4d5w3scksqagz0nzmdnzgg

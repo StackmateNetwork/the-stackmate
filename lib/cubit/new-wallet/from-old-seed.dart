@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/node.dart';
@@ -11,6 +13,7 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
+import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -169,9 +172,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   }
 
   Future<void> _saveClicked() async {
-    if (state.walletLabel.length < 3 ||
-        state.walletLabel.length > 12 ||
-        state.walletLabel.contains(' ')) {
+    if (state.walletLabel.length <= 3 ||
+        state.walletLabel.length > 20 ||
+        state.walletLabel == emptyString) {
       emit(state.copyWith(walletLabelError: invalidLabelError));
       return;
     }
@@ -206,11 +209,12 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     final nodeAddress = _nodeAddressCubit.state.getAddress();
     final socks5 = _torCubit.state.getSocks5();
 
-    var history = _core.getHistory(
-      descriptor: descriptor.result!,
-      nodeAddress: nodeAddress,
-      socks5: socks5,
-    );
+    var history = await compute(computeHistory, {
+      'descriptor': descriptor.result!,
+      'nodeAddress': nodeAddress,
+      'socks5': socks5,
+    });
+
     var recievedCount = 0;
 
     if (history.hasError) {
@@ -222,14 +226,17 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         }
       }
 
-    var balance = _core.syncBalance(
-      descriptor: descriptor.result!,
-      nodeAddress: nodeAddress,
-      socks5: socks5,
-    );
+    var balance = await compute(computeBalance, {
+      'descriptor': descriptor.result!,
+      'nodeAddress': nodeAddress,
+      'socks5': socks5,
+    });
+
     if (balance.hasError) {
       balance = const R(result: 0);
     }
+
+    // Future.delayed(Duration(seconds: 3));
     // public descriptor
     // Check history and whether this wallet needs to update its address index
 
@@ -283,4 +290,26 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     _importSub.cancel();
     return super.close();
   }
+}
+
+R<List<Transaction>> computeHistory(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = BitcoinFFI().getHistory(
+    descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+
+  return resp;
+}
+
+R<int> computeBalance(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = BitcoinFFI().syncBalance(
+    descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+
+  return resp;
 }

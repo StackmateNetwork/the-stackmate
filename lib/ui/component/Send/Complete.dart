@@ -15,7 +15,7 @@ class TransactionComplete extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Transaction\nBroadcasted.',
+              'Transaction\nSuccessful.',
               style: context.fonts.headline5!.copyWith(
                 color: context.colours.onBackground,
               ),
@@ -28,6 +28,8 @@ class TransactionComplete extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
+            const SizedBox(height: 32),
+            const Icon(Icons.check_circle, size: 80),
           ],
         ),
       );

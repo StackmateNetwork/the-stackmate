@@ -170,7 +170,8 @@ class __$$_SeedImportWalletStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SeedImportWalletState extends _SeedImportWalletState {
+class _$_SeedImportWalletState extends _SeedImportWalletState
+    with DiagnosticableTreeMixin {
   const _$_SeedImportWalletState(
       {this.currentStep = SeedImportWalletSteps.warning,
       this.walletLabel = '',
@@ -204,8 +205,22 @@ class _$_SeedImportWalletState extends _SeedImportWalletState {
   final bool labelFixed;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SeedImportWalletState(currentStep: $currentStep, walletLabel: $walletLabel, walletLabelError: $walletLabelError, savingWallet: $savingWallet, savingWalletError: $savingWalletError, newWalletSaved: $newWalletSaved, labelFixed: $labelFixed)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SeedImportWalletState'))
+      ..add(DiagnosticsProperty('currentStep', currentStep))
+      ..add(DiagnosticsProperty('walletLabel', walletLabel))
+      ..add(DiagnosticsProperty('walletLabelError', walletLabelError))
+      ..add(DiagnosticsProperty('savingWallet', savingWallet))
+      ..add(DiagnosticsProperty('savingWalletError', savingWalletError))
+      ..add(DiagnosticsProperty('newWalletSaved', newWalletSaved))
+      ..add(DiagnosticsProperty('labelFixed', labelFixed));
   }
 
   @override

@@ -118,13 +118,13 @@ class _SelectFeeState extends State<SelectFee> {
             Slider(
               divisions: 6,
               min: double.parse(
-                (context.read<SendCubit>().state.feeSlow! - 3).toString(),
+                1.toString(),
               ),
               max: double.parse(
-                context.read<SendCubit>().state.feeFast!.toString(),
+                (context.read<SendCubit>().state.feeFast! + 250).toString(),
               ),
               value: double.parse(
-                context.read<SendCubit>().state.finalFee!.toString(),
+                (context.read<SendCubit>().state.finalFee!).toString(),
               ),
               onChanged: (f) {
                 context.read<SendCubit>().feeChanged(f.round().toString());
@@ -166,7 +166,11 @@ class _SelectFeeState extends State<SelectFee> {
               ),
             ],
             const SizedBox(height: 80),
-            TextButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: context.colours.primary,
+                onPrimary: context.colours.background,
+              ),
               onPressed: () {
                 context.read<SendCubit>().feeConfirmedClicked();
               },

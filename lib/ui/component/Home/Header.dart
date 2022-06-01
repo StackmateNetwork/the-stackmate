@@ -9,22 +9,25 @@ class HomeHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            const Spacer(),
-            LogButton(
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.lightbulb_outline_sharp,
-                  size: 32,
-                  color: context.colours.primary,
-                  semanticLabel: 'Logs',
-                ),
-              ),
-            ),
-          ],
-        ),
+        // Row(
+        //   children: [
+        //     const Spacer(),
+        //     LogButton(
+        //       child: Padding(
+        //         padding: const EdgeInsets.only(right: 19),
+        //         child: IconButton(
+        //           onPressed: () {},
+        //           icon: Icon(
+        //             Icons.lightbulb_outline_sharp,
+        //             size: 32,
+        //             color: context.colours.primary,
+        //             semanticLabel: 'Logs',
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
         const SizedBox(
           height: 2,
         ),

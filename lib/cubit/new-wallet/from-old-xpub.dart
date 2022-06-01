@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
@@ -12,6 +14,7 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
+import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -96,7 +99,9 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         break;
 
       case XpubImportWalletStep.label:
-        if (state.label == emptyString || state.label.length < 5) {
+        if (state.label == emptyString ||
+            state.label.length <= 3 ||
+            state.label.length > 20) {
           emit(state.copyWith(errSavingWallet: invalidLabelError));
           return;
         }
@@ -136,9 +141,6 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       final xpub = xpubState.xpub;
       String fullXPub = xpub.replaceFirst('/*', emptyString);
 
-      final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
-
       if (xpubState.hasNoKeySource())
         fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
 
@@ -153,11 +155,15 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       if (descriptor.hasError) {
         throw SMError.fromJson(descriptor.error!);
       }
-      var history = _core.getHistory(
-        descriptor: descriptor.result!,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-      );
+
+      final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+
+      var history = await compute(computeHistory, {
+        'descriptor': descriptor.result!,
+        'nodeAddress': nodeAddress,
+        'socks5': socks5,
+      });
       var recievedCount = 0;
 
       if (history.hasError) {
@@ -169,11 +175,12 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
           }
         }
 
-      var balance = _core.syncBalance(
-        descriptor: descriptor.result!,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-      );
+      var balance = await compute(computeBalance, {
+        'descriptor': descriptor.result!,
+        'nodeAddress': nodeAddress,
+        'socks5': socks5,
+      });
+
       if (balance.hasError) {
         balance = const R(result: 0);
       }
@@ -234,4 +241,26 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     _importSub.cancel();
     return super.close();
   }
+}
+
+Future<R<List<Transaction>>> computeHistory(dynamic obj) async {
+  final data = obj as Map<String, String?>;
+  final resp = BitcoinFFI().getHistory(
+    descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+
+  return resp;
+}
+
+Future<R<int>> computeBalance(dynamic obj) async {
+  final data = obj as Map<String, String?>;
+  final resp = BitcoinFFI().syncBalance(
+    descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+
+  return resp;
 }

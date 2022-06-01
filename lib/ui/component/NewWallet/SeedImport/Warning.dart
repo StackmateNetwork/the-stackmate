@@ -26,19 +26,16 @@ Use whatever you have and we will attempt to recover any associated spendable fu
             color: c.colours.onPrimary,
           ),
         ),
-        const SizedBox(height: 24),
-        GestureDetector(
-          onTap: () => c.read<SeedImportWalletCubit>().nextClicked(),
-          child: SizedBox(
-            height: 20,
-            width: 20,
-            child: Text(
-              'I Understand'.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: c.fonts.bodyMedium!.copyWith(
-                color: c.colours.primary,
-              ),
-            ),
+        const SizedBox(height: 32),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: c.colours.primary,
+            onPrimary: c.colours.background,
+          ),
+          onPressed: () => c.read<SeedImportWalletCubit>().nextClicked(),
+          child: Text(
+            'I Understand'.toUpperCase(),
+            textAlign: TextAlign.center,
           ),
         ),
       ],

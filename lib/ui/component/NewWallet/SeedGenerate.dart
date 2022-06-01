@@ -9,10 +9,12 @@ class SeedGeneratePassphrase extends StatefulWidget {
 
 class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
   late TextEditingController _textController;
-
+  late TextEditingController _textControllerP;
+  final GlobalKey<FormState> _form = GlobalKey<FormState>();
   @override
   void initState() {
     _textController = TextEditingController();
+    _textControllerP = TextEditingController();
     super.initState();
   }
 
@@ -22,58 +24,88 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
       builder: (context, state) {
         if (_textController.text != state.passPhrase)
           _textController.text = state.passPhrase;
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 24),
-            Text(
-              'optional\npassphrase'.toUpperCase(),
-              style: c.fonts.headline5!.copyWith(
-                color: c.colours.onPrimary,
-                // fontWeight: FontWeight.bold,
-              ),
-            ),
-            // const HeaderTextDark(text: 'Enter an\noptional\npassphrase'),
-            const SizedBox(height: 24),
-            Text(
-              'Add an (optional) security layer to your seed.\n\nThis passphrase should be added as the last word of your seed.\n\If set, you cannot recover funds without it.',
-              style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
-            ),
-            const SizedBox(height: 32),
-
-            Padding(
-              padding: EdgeInsets.zero,
-              child: TextField(
-                controller: _textController,
-                onChanged: (text) {
-                  c.read<SeedGenerateCubit>().passPhrasedChanged(text);
-                },
-                style: TextStyle(color: c.colours.onBackground),
-                decoration: const InputDecoration(
-                  labelText: 'Passphrase',
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            if (state.errPassphrase != '')
+        return Form(
+          key: _form,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 24),
               Text(
-                state.errPassphrase,
-                style: c.fonts.caption!.copyWith(
-                  color: c.colours.error,
+                'optional\npassphrase (!)'.toUpperCase(),
+                style: c.fonts.headline5!.copyWith(
+                  color: c.colours.onPrimary,
+                  // fontWeight: FontWeight.bold,
                 ),
               ),
-            const SizedBox(height: 24),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextButton(
-                onPressed: () {
-                  c.read<SeedGenerateCubit>().generateSeed();
-                },
-                child: Text('Confirm'.toUpperCase()),
+              // const HeaderTextDark(text: 'Enter an\noptional\npassphrase'),
+              const SizedBox(height: 24),
+              Text(
+                'Add an (optional) security layer to your seed.\n\nThis passphrase should be added as the last word of your seed.\n\If set, you cannot recover funds without it.',
+                style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
               ),
-            )
-          ],
+              const SizedBox(height: 32),
+
+              Padding(
+                padding: EdgeInsets.zero,
+                child: TextFormField(
+                  autocorrect: false,
+                  obscureText: true,
+                  obscuringCharacter: '*',
+                  controller: _textController,
+                  validator: (val) {},
+                  onChanged: (text) {
+                    c.read<SeedGenerateCubit>().passPhrasedChanged(text);
+                  },
+                  style: TextStyle(color: c.colours.onBackground),
+                  decoration: const InputDecoration(
+                    labelText: 'Passphrase',
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Padding(
+                padding: EdgeInsets.zero,
+                child: TextFormField(
+                  autocorrect: false,
+                  obscureText: true,
+                  obscuringCharacter: '*',
+                  controller: _textControllerP,
+                  validator: (val) {
+                    if (val != _textController.text) return 'Not Matched';
+                    return null;
+                  },
+                  style: TextStyle(color: c.colours.onBackground),
+                  decoration: const InputDecoration(
+                    labelText: 'Verify Passphrase',
+                  ),
+                ),
+              ),
+              const SizedBox(height: 18),
+              if (state.errPassphrase != '')
+                Text(
+                  state.errPassphrase,
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.error,
+                  ),
+                ),
+              const SizedBox(height: 14),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: c.colours.primary,
+                    onPrimary: c.colours.background,
+                  ),
+                  onPressed: () {
+                    if (_form.currentState!.validate()) {
+                      c.read<SeedGenerateCubit>().generateSeed();
+                    }
+                  },
+                  child: Text('Confirm'.toUpperCase()),
+                ),
+              )
+            ],
+          ),
         );
       },
     );
@@ -193,7 +225,11 @@ class SeedGenerate extends StatelessWidget {
           const SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.all(4),
-            child: TextButton(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: c.colours.primary,
+                onPrimary: c.colours.background,
+              ),
               onPressed: () {
                 c.read<SeedGenerateCubit>().startQuiz();
               },

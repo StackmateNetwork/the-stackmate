@@ -91,7 +91,7 @@ class WalletCard extends StatelessWidget {
                           BitcoinDisplaySmall(
                             satsAmount: wallet.balance.toString(),
                             bitcoinUnit: prefState.preferredBitcoinUnit,
-                          )
+                          ),
                       ],
                     ),
                   ),

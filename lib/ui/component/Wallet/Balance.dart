@@ -30,9 +30,14 @@ class Balance extends StatelessWidget {
                 ),
               ),
             ] else ...[
-              BitcoinDisplayLarge(
-                satsAmount: balance.toString(),
-                bitcoinUnit: preferences.preferredBitcoinUnit,
+              GestureDetector(
+                onTap: () {
+                  c.read<PreferencesCubit>().preferredBitcoinUnitChanged();
+                },
+                child: BitcoinDisplayLarge(
+                  satsAmount: balance.toString(),
+                  bitcoinUnit: preferences.preferredBitcoinUnit,
+                ),
               ),
             ],
           ],

@@ -29,6 +29,7 @@ class _AmountRowState extends State<AmountRow> {
     if (amount != _controller.text) _controller.text = amount;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         IgnorePointer(
           ignoring: isSweep,
@@ -44,8 +45,12 @@ class _AmountRowState extends State<AmountRow> {
                 fontSize: 24,
               ),
               decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: _controller.clear,
+                  icon: const Icon(Icons.clear),
+                ),
                 hintText: isSweep
-                    ? 'WALLET WILL BE EMPTIED'
+                    ? 'WALLET WILL BE SWEEP'
                     : 'Amount in SATS'.toUpperCase(),
                 hintStyle: isSweep
                     ? TextStyle(
@@ -79,13 +84,17 @@ class _AmountRowState extends State<AmountRow> {
               child: Text(
                 isSweep
                     ? 'Change amount'.toUpperCase()
-                    : 'Empty Wallet'.toUpperCase(),
+                    : 'Sweep Wallet'.toUpperCase(),
               ),
             ),
           ],
         ),
         const SizedBox(height: 100),
-        TextButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: c.colours.primary,
+            onPrimary: c.colours.background,
+          ),
           onPressed: () {
             if (amount != '') {
               context.read<SendCubit>().amountConfirmedClicked();

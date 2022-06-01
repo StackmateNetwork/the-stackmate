@@ -18,6 +18,7 @@ import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Wallet/Balance.dart';
 import 'package:sats/ui/component/Wallet/Info.dart';
 import 'package:sats/ui/component/Wallet/Loader.dart';
+import 'package:sats/ui/component/Wallet/Name.dart';
 import 'package:sats/ui/component/Wallet/TransactionList.dart';
 
 class _Wallet extends StatelessWidget {
@@ -78,6 +79,7 @@ class _Wallet extends StatelessWidget {
                         Expanded(
                           child: Column(
                             children: const [
+                              //WalletName(),
                               Balance(),
                             ],
                           ),
@@ -197,13 +199,13 @@ class _Wallet extends StatelessWidget {
               color: c.colours.background,
               child: CupertinoActionSheetAction(
                 child: Text(
-                  'DELETE ANYWAY.',
+                  'Please sweep your funds'.toUpperCase(),
                   style: c.fonts.button!.copyWith(color: c.colours.error),
                 ),
                 onPressed: () async {
                   Navigator.pop(context, true);
                   await Future.delayed(const Duration(milliseconds: 200));
-                  c.read<InfoCubit>().deleteClicked();
+                  c.push('/send');
                 },
               ),
             ),

@@ -7,6 +7,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/Header.dart';
+import 'package:sats/ui/component/Home/Loader.dart';
 import 'package:sats/ui/component/Home/Networth.dart';
 import 'package:sats/ui/component/Home/Tools.dart';
 
@@ -23,7 +24,8 @@ class _Home extends StatelessWidget {
                 c.read<WalletsCubit>().refresh();
                 c.read<TorCubit>().start();
                 c.read<TorCubit>().checkStatus();
-                await c.read<FeesCubit>().update();
+                // if (c.select((TorCubit t) => t.state).isRunning)
+                c.read<FeesCubit>().update();
                 return;
               },
               child: BlocBuilder<TorCubit, TorState>(
@@ -40,26 +42,18 @@ class _Home extends StatelessWidget {
                           stretchModes: const [
                             StretchMode.fadeTitle,
                           ],
-                          background: Padding(
-                            padding: const EdgeInsets.only(
-                              top: 12,
-                              bottom: 12,
-                              left: 12,
-                              right: 12,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                if (torState.isRunning) ...[
-                                  HomeHeader(),
-                                  Networth(),
-                                  WalletTools()
-                                ] else ...[
-                                  HomeHeader(),
-                                ]
-                              ],
-                            ),
+                          background: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const HomeLoader(),
+                              if (torState.isRunning) ...[
+                                HomeHeader(),
+                                Networth(),
+                                WalletTools()
+                              ] else
+                                Container()
+                            ],
                           ),
                         ),
                       ),

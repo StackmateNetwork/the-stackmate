@@ -33,7 +33,11 @@ doing on airplane mode during this process.
           style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
         ),
         const SizedBox(height: 24),
-        TextButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: c.colours.primary,
+            onPrimary: c.colours.background,
+          ),
           onPressed: () {
             c.read<SeedGenerateWalletCubit>().nextClicked();
           },
