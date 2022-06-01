@@ -1,20 +1,20 @@
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:sats/cubit/wallets.dart';
-// import 'package:sats/pkg/extensions.dart';
-// import 'package:sats/ui/component/common/loading.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:sats/cubit/tor.dart';
+import 'package:sats/pkg/extensions.dart';
+import 'package:sats/ui/component/common/loading.dart';
 
-// class HomeLoader extends StatelessWidget {
-//   const HomeLoader({Key? key}) : super(key: key);
+class HomeLoader extends StatelessWidget {
+  const HomeLoader({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final wallets = context.select((WalletsCubit hc) => hc.state);
-//     const String updating = 'Updating Rates...';
-//     if (!wallets.loadingRates && !wallets.loadingRates) return Container();
-
-//     return Loading(
-//       text: updating,
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    final tor = context.select((TorCubit hc) => hc.state);
+    // final fees = context.select((FeesCubit hc) => hc.state);
+    const String loading = 'Initializing Tor...';
+    if (tor.isRunning) return Container();
+    return const Loading(
+      text: loading,
+    );
+  }
+}

@@ -5,6 +5,7 @@ import 'package:sats/ui/component/Settings/Incognito.dart';
 import 'package:sats/ui/component/Settings/SelectNetwork.dart';
 import 'package:sats/ui/component/Settings/SelectNode.dart';
 import 'package:sats/ui/component/common/header.dart';
+import 'package:sats/ui/component/Common/BackButton.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -17,31 +18,42 @@ class SettingsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: const [
-              SizedBox(
+            children: [
+              const SizedBox(
                 height: 12,
               ),
-              Header(
+              Row(
+                children: [
+                  const SizedBox(width: 16),
+                  Back(
+                    onPressed: () {
+                      Navigator.of(c).pop();
+                    },
+                  ),
+                  const Spacer(),
+                  const SizedBox(width: 8),
+                ],
+              ),
+              const Header(
                 cornerTitle: 'SETTINGS',
                 children: [
                   SizedBox(height: 21),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 28,
               ),
-              SelectNode(),
-              SizedBox(height: 8),
-              SelectNetwork(),
-              SizedBox(height: 8),
-              SetBitcoinUnit(),
-              SizedBox(height: 8),
-              SetIncognito(),
+              const SelectNode(),
+              const SizedBox(height: 8),
+              const SelectNetwork(),
+              const SizedBox(height: 8),
+              const SetBitcoinUnit(),
+              const SizedBox(height: 8),
+              const SetIncognito(),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: HomeActions(),
     );
   }
 }
