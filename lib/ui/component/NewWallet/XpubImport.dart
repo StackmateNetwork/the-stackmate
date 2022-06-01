@@ -185,7 +185,11 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
               ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: TextButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: c.colours.primary,
+                  onPrimary: c.colours.background,
+                ),
                 onPressed: () {
                   c.read<XpubImportCubit>().checkDetails();
                 },

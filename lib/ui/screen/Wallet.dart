@@ -79,7 +79,7 @@ class _Wallet extends StatelessWidget {
                         Expanded(
                           child: Column(
                             children: const [
-                              WalletName(),
+                              //WalletName(),
                               Balance(),
                             ],
                           ),

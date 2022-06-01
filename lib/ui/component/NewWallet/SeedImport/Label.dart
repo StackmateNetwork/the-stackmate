@@ -39,9 +39,9 @@ class SeedImportLabel extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-                if (state.savingWalletError != '')
+                if (state.walletLabelError != '')
                   Text(
-                    state.savingWalletError,
+                    state.walletLabelError,
                     style: c.fonts.caption!.copyWith(color: c.colours.error),
                     textAlign: TextAlign.center,
                   ),
