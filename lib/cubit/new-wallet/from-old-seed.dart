@@ -169,9 +169,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   }
 
   Future<void> _saveClicked() async {
-    if (state.walletLabel.length < 3 ||
-        state.walletLabel.length > 12 ||
-        state.walletLabel.contains(' ')) {
+    if (state.walletLabel.length <= 3 ||
+        state.walletLabel.length > 20 ||
+        state.walletLabel == emptyString) {
       emit(state.copyWith(walletLabelError: invalidLabelError));
       return;
     }

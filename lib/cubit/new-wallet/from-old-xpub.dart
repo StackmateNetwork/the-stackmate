@@ -96,7 +96,9 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         break;
 
       case XpubImportWalletStep.label:
-        if (state.label == emptyString || state.label.length < 5) {
+        if (state.label == emptyString ||
+            state.label.length <= 3 ||
+            state.label.length > 20) {
           emit(state.copyWith(errSavingWallet: invalidLabelError));
           return;
         }
@@ -162,7 +164,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: watcherWalletType,
-        lastAddressIndex:-1,
+        lastAddressIndex: -1,
         balance: 0,
         transactions: [],
         isNewWallet: true,
