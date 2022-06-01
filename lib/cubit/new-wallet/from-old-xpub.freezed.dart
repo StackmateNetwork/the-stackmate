@@ -143,7 +143,8 @@ class __$$_SeedImportXpubStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SeedImportXpubState extends _SeedImportXpubState {
+class _$_SeedImportXpubState extends _SeedImportXpubState
+    with DiagnosticableTreeMixin {
   const _$_SeedImportXpubState(
       {this.currentStep = XpubImportWalletStep.import,
       this.label = '',
@@ -169,8 +170,20 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
   final bool newWalletSaved;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'XpubImportWalletState(currentStep: $currentStep, label: $label, savingWallet: $savingWallet, errSavingWallet: $errSavingWallet, newWalletSaved: $newWalletSaved)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'XpubImportWalletState'))
+      ..add(DiagnosticsProperty('currentStep', currentStep))
+      ..add(DiagnosticsProperty('label', label))
+      ..add(DiagnosticsProperty('savingWallet', savingWallet))
+      ..add(DiagnosticsProperty('errSavingWallet', errSavingWallet))
+      ..add(DiagnosticsProperty('newWalletSaved', newWalletSaved));
   }
 
   @override

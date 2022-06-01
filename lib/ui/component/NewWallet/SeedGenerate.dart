@@ -47,7 +47,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
               child: TextField(
                 autocorrect: false,
                 obscureText: true,
-                obscuringCharacter: "*",
+                obscuringCharacter: '*',
                 controller: _textController,
                 onChanged: (text) {
                   c.read<SeedGenerateCubit>().passPhrasedChanged(text);

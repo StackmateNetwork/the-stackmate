@@ -13,10 +13,10 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/validation.dart';
-import 'package:sats/model/result.dart';
 
 part 'send.freezed.dart';
 
@@ -459,12 +459,18 @@ class SendCubit extends Cubit<SendState> {
   void sendClicked() async {
     try {
       if (state.sendingTx) return;
-      emit(state.copyWith(sendingTx: true, errLoading: emptyString, currentStep: SendSteps.confirm,));
-      
+      emit(
+        state.copyWith(
+          sendingTx: true,
+          errLoading: emptyString,
+          currentStep: SendSteps.confirm,
+        ),
+      );
+
       final descriptor = _walletsCubit.state.selectedWallet!.descriptor;
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      
+
       final signed = await compute(signTx, {
         'descriptor': descriptor,
         'unsignedPSBT': state.psbt,
@@ -475,7 +481,12 @@ class SendCubit extends Cubit<SendState> {
         return;
       }
       if (!signed.result!.isFinalized) {
-        emit(state.copyWith(sendingTx: false, errSending: 'All signatures not present.'));
+        emit(
+          state.copyWith(
+            sendingTx: false,
+            errSending: 'All signatures not present.',
+          ),
+        );
         return;
       }
 
