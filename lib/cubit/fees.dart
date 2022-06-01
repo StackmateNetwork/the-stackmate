@@ -8,6 +8,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/model/fees.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 
@@ -69,12 +70,13 @@ class FeesCubit extends Cubit<FeesState> {
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final fastRate = BitcoinFFI().estimateNetworkFee(
-        network: _blockchain.state.blockchain.name,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-        targetSize: '1',
-      );
+
+      final fastRate = await compute(estimateFees, {
+        'network': _blockchain.state.blockchain.name,
+        'nodeAddress': nodeAddress,
+        'socks5': socks5,
+        'targetSize': '1',
+      });
 
       if (fastRate.hasError) {
         throw fastRate.error!;
@@ -128,12 +130,12 @@ class FeesCubit extends Cubit<FeesState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
-      final fastRate = BitcoinFFI().estimateNetworkFee(
-        network: _blockchain.state.blockchain.name,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-        targetSize: '1',
-      );
+      final fastRate = await compute(estimateFees, {
+        'network': _blockchain.state.blockchain.name,
+        'nodeAddress': nodeAddress,
+        'socks5': socks5,
+        'targetSize': '1',
+      });
 
       if (fastRate.hasError) {
         throw fastRate.error!;
@@ -174,4 +176,14 @@ class FeesCubit extends Cubit<FeesState> {
       _logger.logException(e.toString(), 'FeesCubit', s);
     }
   }
+}
+
+R<double> estimateFees(dynamic data) {
+  final obj = data as Map<String, String?>;
+  return BitcoinFFI().estimateNetworkFee(
+    network: obj['network']!,
+    nodeAddress: obj['nodeAddress']!,
+    socks5: obj['socks5']!,
+    targetSize: obj['targetSize']!,
+  );
 }
