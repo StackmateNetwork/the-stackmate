@@ -11,6 +11,7 @@ import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
 import 'package:sats/ui/screen/Home.dart';
+import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
@@ -71,6 +72,10 @@ class Stackmate extends StatelessWidget {
     routes: [
       GoRoute(
         path: '/',
+        builder: (_, __) => const LandingScreen(),
+      ),
+      GoRoute(
+        path: '/home',
         builder: (_, __) => const HomeScreen(),
       ),
       GoRoute(

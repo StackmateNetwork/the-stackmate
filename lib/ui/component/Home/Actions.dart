@@ -12,7 +12,7 @@ class HomeActions extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              context.push('/');
+              context.push('/home');
             },
             icon: Icon(
               Icons.account_balance_wallet_outlined,

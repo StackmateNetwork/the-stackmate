@@ -28,7 +28,7 @@ class _XpubImport extends StatelessWidget {
           previous.newWalletSaved != current.newWalletSaved,
       listener: (context, state) {
         if (state.newWalletSaved) {
-          context.go('/');
+          context.go('/home');
         }
       },
       buildWhen: (previous, current) =>

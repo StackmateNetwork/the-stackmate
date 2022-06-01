@@ -45,7 +45,7 @@ class _SeedGenerateState extends State<_SeedGenerate> {
         );
 
         if (state.newWalletSaved) {
-          context.go('/');
+          context.go('/home');
         }
       },
       buildWhen: (previous, current) =>
