@@ -44,8 +44,8 @@ class SeedGenerateLabel extends StatelessWidget {
                 style: c.fonts.caption!.copyWith(color: c.colours.error),
               ),
             const SizedBox(height: 24),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            SizedBox(
+              height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: c.colours.primary,
@@ -56,7 +56,7 @@ class SeedGenerateLabel extends StatelessWidget {
                 },
                 child: Text('Confirm'.toUpperCase()),
               ),
-            )
+            ),
           ],
         );
       },

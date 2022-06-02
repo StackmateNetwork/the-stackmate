@@ -90,7 +90,7 @@ class __$$_BlockchainStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_BlockchainState implements _BlockchainState {
-  const _$_BlockchainState({this.blockchain = Blockchain.test});
+  const _$_BlockchainState({this.blockchain = Blockchain.main});
 
   @override
   @JsonKey()

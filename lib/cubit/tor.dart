@@ -68,6 +68,11 @@ class TorCubit extends Cubit<TorState> {
 
   Future<void> checkStatus() async {
     try {
+      emit(
+        state.copyWith(
+          errConnection: '',
+        ),
+      );
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         final isRunning = await UtopicTorOnionProxy.isTorRunning();

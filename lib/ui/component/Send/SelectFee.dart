@@ -166,15 +166,18 @@ class _SelectFeeState extends State<SelectFee> {
               ),
             ],
             const SizedBox(height: 80),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: context.colours.primary,
-                onPrimary: context.colours.background,
+            SizedBox(
+              height: 52,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: context.colours.primary,
+                  onPrimary: context.colours.background,
+                ),
+                onPressed: () {
+                  context.read<SendCubit>().feeConfirmedClicked();
+                },
+                child: const Text('CONFIRM'),
               ),
-              onPressed: () {
-                context.read<SendCubit>().feeConfirmedClicked();
-              },
-              child: const Text('CONFIRM'),
             ),
           ],
         ),

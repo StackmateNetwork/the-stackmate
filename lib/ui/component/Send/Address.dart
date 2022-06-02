@@ -75,15 +75,18 @@ class _SendAddressState extends State<SendAddress> {
               ],
             ),
             const SizedBox(height: 30),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: context.colours.primary,
-                onPrimary: context.colours.background,
+            SizedBox(
+              height: 52,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: context.colours.primary,
+                  onPrimary: context.colours.background,
+                ),
+                onPressed: () {
+                  context.read<SendCubit>().addressConfirmedClicked();
+                },
+                child: const Text('CONFIRM'),
               ),
-              onPressed: () {
-                context.read<SendCubit>().addressConfirmedClicked();
-              },
-              child: const Text('CONFIRM'),
             ),
           ],
         ),

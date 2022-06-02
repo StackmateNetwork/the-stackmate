@@ -54,6 +54,7 @@ class SelectNetwork extends StatelessWidget {
               'assets/icon/bitcoin_icons/png/outline/node.png',
               width: 52,
               height: 52,
+              color: c.colours.onPrimary,
             ),
           ],
         ),

@@ -24,6 +24,16 @@ class NetworkStatus extends StatelessWidget {
           )
         else ...[
           Text(
+            'COMING SOON.',
+            style: c.fonts.caption!.copyWith(
+              color: c.colours.primary,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
             'cypherpost is a free and open-source\nend-to-end encrypted social networking protocol.',
             style: c.fonts.caption!.copyWith(
               color: c.colours.onPrimary,
@@ -39,7 +49,7 @@ class NetworkStatus extends StatelessWidget {
               onPrimary: c.colours.background,
             ),
             onPressed: () async {
-              c.push('/register');
+              // c.push('/register');
             },
             child: const Text('REGISTER'),
           ),

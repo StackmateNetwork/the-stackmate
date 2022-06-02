@@ -24,6 +24,8 @@ class _CypherPostHome extends StatelessWidget {
                 c.read<TorCubit>().start();
                 c.read<TorCubit>().checkStatus();
                 // if (c.select((TorCubit t) => t.state).isRunning)
+                if (!c.select((TorCubit t) => t.state).isRunning)
+                  Navigator.of(c).pop();
                 await c.read<FeesCubit>().update();
                 return;
               },

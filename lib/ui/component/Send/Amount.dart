@@ -90,17 +90,20 @@ class _AmountRowState extends State<AmountRow> {
           ],
         ),
         const SizedBox(height: 100),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: c.colours.primary,
-            onPrimary: c.colours.background,
+        SizedBox(
+          height: 52,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: c.colours.primary,
+              onPrimary: c.colours.background,
+            ),
+            onPressed: () {
+              if (amount != '') {
+                context.read<SendCubit>().amountConfirmedClicked();
+              }
+            },
+            child: const Text('CONFIRM'),
           ),
-          onPressed: () {
-            if (amount != '') {
-              context.read<SendCubit>().amountConfirmedClicked();
-            }
-          },
-          child: const Text('CONFIRM'),
         ),
       ],
     );

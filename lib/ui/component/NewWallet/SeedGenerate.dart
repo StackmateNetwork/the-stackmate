@@ -89,8 +89,8 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
                   ),
                 ),
               const SizedBox(height: 14),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              SizedBox(
+                height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: c.colours.primary,
@@ -103,7 +103,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
                   },
                   child: Text('Confirm'.toUpperCase()),
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -223,8 +223,8 @@ class SeedGenerate extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          Padding(
-            padding: const EdgeInsets.all(4),
+          SizedBox(
+            height: 52,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: c.colours.primary,

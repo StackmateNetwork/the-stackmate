@@ -34,16 +34,19 @@ We recommend proceeding on airplane mode.
           style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
         ),
         const SizedBox(height: 24),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: c.colours.primary,
-            onPrimary: c.colours.background,
-          ),
-          onPressed: () {
-            c.read<SeedGenerateWalletCubit>().nextClicked();
-          },
-          child: Text(
-            'I Understand'.toUpperCase().notLocalised(),
+        SizedBox(
+          height: 52,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: c.colours.primary,
+              onPrimary: c.colours.background,
+            ),
+            onPressed: () {
+              c.read<SeedGenerateWalletCubit>().nextClicked();
+            },
+            child: Text(
+              'I Understand'.toUpperCase().notLocalised(),
+            ),
           ),
         ),
       ],

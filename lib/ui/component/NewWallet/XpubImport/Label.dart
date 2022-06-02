@@ -47,8 +47,8 @@ class XpubLabel extends StatelessWidget {
                     state.errSavingWallet,
                     style: c.fonts.caption!.copyWith(color: c.colours.error),
                   ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+                SizedBox(
+                  height: 52,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: c.colours.primary,
@@ -59,7 +59,7 @@ class XpubLabel extends StatelessWidget {
                     },
                     child: const Text('Confirm'),
                   ),
-                )
+                ),
               ],
             ),
           ),

@@ -58,6 +58,7 @@ class SelectNode extends StatelessWidget {
               'assets/icon/bitcoin_icons/png/outline/home.png',
               width: 52,
               height: 52,
+              color: c.colours.onPrimary,
             ),
           ],
         ),

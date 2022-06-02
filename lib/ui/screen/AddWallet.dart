@@ -42,7 +42,7 @@ class AddWalletScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'Your master key can create child accounts and manage your social media identity (optional).',
+                  'Your master key can create child accounts and manages your social media identity (optional).',
                   style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.onPrimary,
                   ),
@@ -54,7 +54,8 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'New',
-                description: 'Generate a new mnemonic seed phrase.',
+                description:
+                    'Generate a new mnemonic seed phrase.\nCreates a segwit-native ("bc1q") wallet.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/generate-seed');
@@ -63,7 +64,8 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'Import',
-                description: 'Import master key from an existing seed phrase.',
+                description:
+                    'Import master key from an existing seed phrase.\nCreates a segwit-native ("bc1q") wallet.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/import-seed');
@@ -73,22 +75,42 @@ class AddWalletScreen extends StatelessWidget {
             if (masterKey != null) ...[
               const SizedBox(height: 16),
               SelectButton(
-                text: 'Child',
-                description:
-                    'Derive a child account from your master key.\nUse if you require Taproot or Legacy support.',
-                colour: c.colours.surface,
-                onPressed: () {
-                  // c.push('/watch-only');
-                },
-              ),
-              const SizedBox(height: 16),
-              SelectButton(
                 text: 'Watcher',
                 description:
                     'Import a public key or descriptor.\nMonitor your hardware signer.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/watch-only');
+                },
+              ),
+              const SizedBox(height: 16),
+              // SelectButton(
+              //   text: 'Legacy (coming soon...)',
+              //   description:
+              //       'Derive a legacy ("1") account from your master key.',
+              //   colour: c.colours.surface,
+              //   onPressed: () {
+              //     // c.push('/watch-only');
+              //   },
+              // ),
+              // const SizedBox(height: 16),
+              // SelectButton(
+              //   text: 'Compatible (coming soon...)',
+              //   description:
+              //       'Derive a compatible ("3") account from your master key.',
+              //   colour: c.colours.surface,
+              //   onPressed: () {
+              //     // c.push('/watch-only');
+              //   },
+              // ),
+              const SizedBox(height: 16),
+              SelectButton(
+                text: 'Taproot',
+                description:
+                    'Derive a taproot ("bc1p") account from your master key.\nCOMING SOON.',
+                colour: c.colours.surface,
+                onPressed: () {
+                  // c.push('/watch-only');
                 },
               ),
               const SizedBox(height: 16),

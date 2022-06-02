@@ -30,15 +30,18 @@ We recommend sweeping any recovered funds into a Watcher or Primary wallet.
           ),
         ),
         const SizedBox(height: 32),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: c.colours.primary,
-            onPrimary: c.colours.background,
-          ),
-          onPressed: () => c.read<SeedImportWalletCubit>().nextClicked(),
-          child: Text(
-            'I Understand'.toUpperCase(),
-            textAlign: TextAlign.center,
+        SizedBox(
+          height: 52,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: c.colours.primary,
+              onPrimary: c.colours.background,
+            ),
+            onPressed: () => c.read<SeedImportWalletCubit>().nextClicked(),
+            child: Text(
+              'I Understand'.toUpperCase(),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ],

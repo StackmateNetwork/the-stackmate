@@ -60,16 +60,19 @@ class SeedImportPhrase extends StatelessWidget {
             AnimatedOpacity(
               opacity: state.showSeedCompleteButton() ? 1 : 0.3,
               duration: const Duration(milliseconds: 300),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: c.colours.primary,
-                  onPrimary: c.colours.background,
+              child: SizedBox(
+                height: 52,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: c.colours.primary,
+                    onPrimary: c.colours.background,
+                  ),
+                  onPressed: () {
+                    if (state.showSeedCompleteButton())
+                      c.read<SeedImportCubit>().checkPassPhrase();
+                  },
+                  child: const Text('Next'),
                 ),
-                onPressed: () {
-                  if (state.showSeedCompleteButton())
-                    c.read<SeedImportCubit>().checkPassPhrase();
-                },
-                child: const Text('Next'),
               ),
             ),
             const SizedBox(height: 24),
@@ -94,7 +97,7 @@ class SeedImportPassphrase extends StatelessWidget {
           children: [
             const SizedBox(height: 24),
             Text(
-              'Enter an\noptional\npassphrase'.toUpperCase(),
+              'Optional\npassphrase'.toUpperCase(),
               style: c.fonts.headline5!.copyWith(
                 color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,
@@ -123,8 +126,8 @@ class SeedImportPassphrase extends StatelessWidget {
                 state.errPassPhrase,
                 style: c.fonts.caption!.copyWith(color: c.colours.error),
               ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            SizedBox(
+              height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: c.colours.primary,
@@ -135,7 +138,7 @@ class SeedImportPassphrase extends StatelessWidget {
                 },
                 child: const Text('Confirm'),
               ),
-            )
+            ),
           ],
         );
       },

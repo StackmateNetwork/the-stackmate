@@ -17,10 +17,10 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext c) {
     return Scaffold(
       body: SafeArea(
-        bottom: false,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               const SizedBox(
                 height: 12,
@@ -55,7 +55,7 @@ class SettingsScreen extends StatelessWidget {
               const SetIncognito(),
               const SizedBox(height: 8),
               SizedBox(
-                height: 56,
+                height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: c.colours.primary,

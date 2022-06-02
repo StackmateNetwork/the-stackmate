@@ -56,7 +56,7 @@ class SelectButton extends StatelessWidget {
                   // height: 45,
                   child: Text(
                     description,
-                    maxLines: 3,
+                    maxLines: 4,
                     // softWrap: true,
                     // overflow: TextOverflow.fade,
                     style: context.fonts.caption!.copyWith(

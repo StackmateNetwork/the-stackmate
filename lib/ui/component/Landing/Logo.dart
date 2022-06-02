@@ -7,13 +7,24 @@ class LandingLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Opacity(
-      opacity: 0.2,
-      child: Image.asset(
-        'assets/icon/sm92.png',
-        width: context.width,
-        height: context.height / 2,
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text(
+          'Stackmate'.toUpperCase(),
+          style: context.fonts.headline3!.copyWith(
+            color: context.colours.primary,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          'Self-sovereign tools for bitcoin finance.'.toUpperCase(),
+          style: context.fonts.caption!.copyWith(
+            color: context.colours.onPrimary,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }

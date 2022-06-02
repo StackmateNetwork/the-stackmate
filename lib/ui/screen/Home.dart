@@ -15,6 +15,8 @@ import 'package:sats/ui/component/Home/Tools.dart';
 class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
+    final torIsRunning = c.select((TorCubit t) => t.state.isRunning);
+
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
         return Scaffold(
@@ -23,9 +25,8 @@ class _Home extends StatelessWidget {
               displacement: 10.0,
               onRefresh: () async {
                 c.read<WalletsCubit>().refresh();
-                c.read<TorCubit>().start();
                 c.read<TorCubit>().checkStatus();
-                // if (c.select((TorCubit t) => t.state).isRunning)
+                c.read<TorCubit>().start();
                 await c.read<FeesCubit>().update();
                 return;
               },

@@ -105,15 +105,18 @@ class ConfirmTransaction extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               if (wallet.isNotWatchOnly())
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: context.colours.primary,
-                    onPrimary: context.colours.background,
+                SizedBox(
+                  height: 52,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: context.colours.primary,
+                      onPrimary: context.colours.background,
+                    ),
+                    onPressed: () {
+                      context.read<SendCubit>().sendClicked();
+                    },
+                    child: const Text('SEND'),
                   ),
-                  onPressed: () {
-                    context.read<SendCubit>().sendClicked();
-                  },
-                  child: const Text('SEND'),
                 )
               else ...[
                 TextButton(

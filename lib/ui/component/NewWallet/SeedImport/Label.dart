@@ -45,8 +45,8 @@ class SeedImportLabel extends StatelessWidget {
                     style: c.fonts.caption!.copyWith(color: c.colours.error),
                     textAlign: TextAlign.center,
                   ),
-                Padding(
-                  padding: EdgeInsets.zero,
+                SizedBox(
+                  height: 52,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: c.colours.primary,
@@ -57,7 +57,7 @@ class SeedImportLabel extends StatelessWidget {
                     },
                     child: const Text('Confirm'),
                   ),
-                )
+                ),
               ],
             ),
           ),
