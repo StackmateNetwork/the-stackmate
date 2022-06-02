@@ -10,7 +10,7 @@ part 'chain-select.freezed.dart';
 @freezed
 class BlockchainState with _$BlockchainState {
   const factory BlockchainState({
-    @Default(Blockchain.test) Blockchain blockchain,
+    @Default(Blockchain.main) Blockchain blockchain,
   }) = _BlockchainState;
 }
 
@@ -28,7 +28,7 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
         _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name);
     if (blockchain.hasError) {
       if (blockchain.error! == 'empty') {
-        emit(const BlockchainState(blockchain: Blockchain.test));
+        emit(const BlockchainState(blockchain: Blockchain.main));
         await Future.delayed(const Duration(milliseconds: 50));
       } else
         return;

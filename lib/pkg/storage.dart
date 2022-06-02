@@ -137,7 +137,7 @@ class HiveStore implements IStorage {
   }
 
   @override
-  R<T> getItem<T>(String dbName, String index) {
+  R<T> getItem<T>(String dbName, int index) {
     try {
       return R(result: Hive.box<T>(dbName).get(index));
     } catch (e, s) {

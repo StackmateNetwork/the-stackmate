@@ -168,9 +168,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       await _masterKeyCubit.save(
         root,
         wallet.fingerPrint,
-        _blockchainCubit.state.blockchain.name,
       );
-
+      _masterKeyCubit.init();
       var newWallet = Wallet(
         label: state.walletLabel,
         walletType: signerWalletType,

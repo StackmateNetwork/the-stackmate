@@ -56,7 +56,7 @@ class HomeHeader extends StatelessWidget {
             height: 6,
           ),
           Text(
-            'Tor connection in progress.\nThis could take upto a minute. ',
+            'Lost connection to Tor.\nRestart the app to reconnect.',
             textAlign: TextAlign.center,
             style: context.fonts.caption!.copyWith(
               color: context.colours.error,

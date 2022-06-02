@@ -7,6 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
@@ -82,7 +83,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     this._blockchainCubit,
     this._nodeAddressCubit,
     this._torCubit,
-    this._importCubit, {
+    this._importCubit,
+    this._masterKeyCubit, {
     String walletLabel = '',
   }) : super(
           SeedImportWalletState(
@@ -109,8 +111,11 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   late StreamSubscription _importSub;
   final NodeAddressCubit _nodeAddressCubit;
   final TorCubit _torCubit;
+  final MasterKeyCubit _masterKeyCubit;
+
   static const invalidLabelError = 'Invalid Label';
-  static const recoveredWalletType = 'RESCUED';
+  static const signerWalletType = 'SIGNER';
+  static const primaryWalletType = 'PRIMARY';
   static const wpkhScript = 'wpkh';
   static const wshScript = 'wsh';
   static const emptyString = '';
@@ -183,9 +188,13 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         savingWallet: true,
       ),
     );
+
     final istate = _importCubit.state;
     final wallet = istate.wallet;
     if (wallet == null) return;
+
+    final root = _importCubit.state.masterXpriv!;
+
     final fullXPrv =
         '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
             .replaceFirst('/m', emptyString);
@@ -236,13 +245,22 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       balance = const R(result: 0);
     }
 
+    final needsMasterKey = _masterKeyCubit.state.key == null;
+
+    if (needsMasterKey) {
+      await _masterKeyCubit.save(
+        root,
+        wallet.fingerPrint,
+      );
+      _masterKeyCubit.init();
+    }
     // Future.delayed(Duration(seconds: 3));
     // public descriptor
     // Check history and whether this wallet needs to update its address index
 
     var newWallet = Wallet(
       label: state.walletLabel,
-      walletType: recoveredWalletType,
+      walletType: needsMasterKey ? primaryWalletType : signerWalletType,
       descriptor: descriptor.result!,
       policy: readable,
       requiredPolicyElements: 1,

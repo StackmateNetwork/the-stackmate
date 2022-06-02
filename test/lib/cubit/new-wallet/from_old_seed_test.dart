@@ -5,6 +5,7 @@ import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
@@ -36,7 +37,7 @@ void main() {
 
     final _wallets =
         WalletsCubit(_storage, logger, chainSelectCubit, clipboard);
-
+    final _masterKeyCubit = MasterKeyCubit(_storage, chainSelectCubit);
     late SeedImportCubit importCubit;
     late SeedImportWalletCubit seedImportWalletCubit;
     // const DerivedKeys testDerivedAccount = const DerivedKeys(
@@ -74,6 +75,7 @@ void main() {
         nodeAddressCubit,
         torCubit,
         importCubit,
+        _masterKeyCubit,
       );
     });
 

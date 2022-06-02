@@ -14,7 +14,7 @@ class _Landing extends StatelessWidget {
       listener: (context, state) {
         if (state.isRunning && masterKey != null) c.push('/home');
         if (state.isRunning && masterKey == null) {
-          c.push('/generate-seed');
+          c.push('/add-wallet');
         }
       },
       builder: (context, torState) {
@@ -56,7 +56,7 @@ class _Landing extends StatelessWidget {
                           ),
                           if (masterKey == null)
                             Text(
-                              'No master key found.\nYou will be promted to setup a master key.\nGet a pen and paper ready.',
+                              'No master key found.',
                               style: c.fonts.caption!.copyWith(
                                 color: c.colours.primary,
                                 // fontWeight: FontWeight.bold,

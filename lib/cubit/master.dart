@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/model/master.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -21,12 +22,17 @@ class MasterKeyState with _$MasterKeyState {
 class MasterKeyCubit extends Cubit<MasterKeyState> {
   MasterKeyCubit(
     this._storage,
+    this._chainSelect,
   ) : super(const MasterKeyState());
 
   final IStorage _storage;
+  final ChainSelectCubit _chainSelect;
 
   void init() async {
-    final key = _storage.getFirstItem<MasterKey>(StoreKeys.MasterKey.name);
+    final key = _storage.getItem<MasterKey>(
+      StoreKeys.MasterKey.name,
+      _chainSelect.state.blockchain.index,
+    );
     if (key.hasError) {
       if (key.error! == 'empty')
         emit(
@@ -47,12 +53,18 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
     }
   }
 
-  Future<void> save(String root, String fingerPrint, String network) async {
-    final masterKey =
-        MasterKey(root: root, fingerprint: fingerPrint, network: network);
+  Future<void> save(String root, String fingerPrint) async {
+    final masterKey = MasterKey(
+      root: root,
+      fingerprint: fingerPrint,
+      network: _chainSelect.state.blockchain.name,
+    );
 
-    final saved =
-        await _storage.saveItem<MasterKey>(StoreKeys.MasterKey.name, masterKey);
+    final saved = await _storage.saveItemAt<MasterKey>(
+      StoreKeys.MasterKey.name,
+      _chainSelect.state.blockchain.index,
+      masterKey,
+    );
     if (saved.hasError) {
       emit(state.copyWith(error: saved.error.toString()));
       return;

@@ -31,7 +31,7 @@ void main() {
     final chainSelectCubit = ChainSelectCubit(_storage, logger);
     final _wallets =
         WalletsCubit(_storage, logger, chainSelectCubit, clipboard);
-    final _masterKeyCubit = MasterKeyCubit(_storage);
+    final _masterKeyCubit = MasterKeyCubit(_storage, chainSelectCubit);
     late SeedGenerateCubit _generateCubit;
     late SeedGenerateWalletCubit seedGenerateWalletCubit;
 

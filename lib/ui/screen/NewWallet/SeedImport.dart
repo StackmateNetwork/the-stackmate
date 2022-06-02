@@ -4,11 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
+import 'package:sats/model/master.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -120,6 +122,7 @@ class SeedImportScreen extends StatelessWidget {
     final networkSelect = context.select((ChainSelectCubit c) => c);
     final nodeSelect = context.select((NodeAddressCubit c) => c);
     final tor = context.select((TorCubit c) => c);
+    final masterKey = context.select((MasterKeyCubit c) => c);
 
     final importCubit = SeedImportCubit(
       logger,
@@ -135,6 +138,7 @@ class SeedImportScreen extends StatelessWidget {
       nodeSelect,
       tor,
       importCubit,
+      masterKey,
     );
 
     return MultiBlocProvider(

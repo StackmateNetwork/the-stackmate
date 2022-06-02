@@ -21,4 +21,9 @@ extension Blo on Blockchain {
         Blockchain.main: 'mainnet',
         Blockchain.test: 'testnet',
       }[this]!;
+
+  int get index => const {
+        Blockchain.main: 0,
+        Blockchain.test: 1,
+      }[this]!;
 }

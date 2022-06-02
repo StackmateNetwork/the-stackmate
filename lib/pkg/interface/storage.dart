@@ -4,7 +4,7 @@ abstract class IStorage {
   Future<R<int>> saveItem<T>(String cls, T obj);
   R<bool> deleteItem<T>(String cls, String key);
   Future<R<bool>> clearAll<T>(String cls);
-  R<T> getItem<T>(String cls, String key);
+  R<T> getItem<T>(String cls, int idx);
   R<List<T>> getAll<T>(String cls);
   Future<R<bool>> saveOrUpdateOne(String key, String value);
   Future<R<String>> getOne(String key);
