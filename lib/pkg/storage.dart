@@ -7,6 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/fees.dart';
+import 'package:sats/model/master.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/model/preferences.dart';
 import 'package:sats/model/result.dart';
@@ -15,13 +16,7 @@ import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/storage.dart';
 
-enum StoreKeys {
-  Wallet,
-  Blockchain,
-  Node,
-  Fees,
-  Preferences,
-}
+enum StoreKeys { Wallet, Blockchain, Node, Fees, Preferences, MasterKey }
 
 extension StoreKeysFunctions on StoreKeys {
   String get name => const {
@@ -30,17 +25,19 @@ extension StoreKeysFunctions on StoreKeys {
         StoreKeys.Node: 'node',
         StoreKeys.Fees: 'fees',
         StoreKeys.Preferences: 'preferences',
+        StoreKeys.MasterKey: 'master',
       }[this]!;
 }
 
 Future<void> initializeHive() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(WalletClassAdapter());
-  Hive.registerAdapter(BlockchainClassAdapter());
-  Hive.registerAdapter(NodeClassAdapter());
-  Hive.registerAdapter(FeesClassAdapter());
-  Hive.registerAdapter(PreferencesClassAdapter());
-  Hive.registerAdapter(TransactionClassAdapter());
+  Hive.registerAdapter(WalletClassAdapter()); // typeId: 1
+  Hive.registerAdapter(BlockchainClassAdapter()); // typeId: 2
+  Hive.registerAdapter(NodeClassAdapter()); // typeId: 3
+  Hive.registerAdapter(FeesClassAdapter()); // typeId: 4
+  Hive.registerAdapter(PreferencesClassAdapter()); // typeId: 5
+  Hive.registerAdapter(TransactionClassAdapter()); // typeId: 6
+  Hive.registerAdapter(MasterKeyClassAdapter()); // typeId: 7
 
   const secureStorage = FlutterSecureStorage();
   final encryprionKey = await secureStorage.read(key: 'key');
@@ -72,6 +69,10 @@ Future<void> initializeHive() async {
   );
   await Hive.openBox<Preferences>(
     StoreKeys.Preferences.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<MasterKey>(
+    StoreKeys.MasterKey.name,
     encryptionCipher: HiveAesCipher(encryptionKey),
   );
 

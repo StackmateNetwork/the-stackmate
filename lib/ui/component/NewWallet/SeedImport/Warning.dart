@@ -18,9 +18,12 @@ class SeedImportWarning extends StatelessWidget {
         const SizedBox(height: 24),
         Text(
           '''
-You will now be prompted to enter your private key data.
+Typing your private key data or copying it via a clipboard makes it vulnerable
+to a larger attack surface.
 
-Use whatever you have and we will attempt to recover any associated spendable funds.
+Recovered wallets are therefore best used as a transitionary wallet.
+
+We recommend sweeping any recovered funds into a Watcher or Primary wallet.
       ''',
           style: c.fonts.caption!.copyWith(
             color: c.colours.onPrimary,

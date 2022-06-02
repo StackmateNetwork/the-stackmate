@@ -10,6 +10,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
+import 'package:sats/ui/screen/CypherPost.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
@@ -84,7 +85,7 @@ class Stackmate extends StatelessWidget {
       ),
       GoRoute(
         path: '/network',
-        builder: (_, __) => Container(),
+        builder: (_, __) => const CypherPostHomeScreen(),
       ),
       GoRoute(
         path: '/add-wallet',

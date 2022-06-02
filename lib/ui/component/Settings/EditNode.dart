@@ -50,7 +50,7 @@ class _EditNodeState extends State<EditNode> {
           ),
           const SizedBox(height: 4),
           Text(
-            'Use full url and port number',
+            'Provide Full Address (URL:PORT) and give it a name.',
             maxLines: 3,
             style: c.fonts.caption!.copyWith(
               color: c.colours.onSurface.withOpacity(0.7),

@@ -5,9 +5,11 @@ import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/wallets.dart';
+import 'package:sats/model/master.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:test/test.dart';
@@ -29,7 +31,7 @@ void main() {
     final chainSelectCubit = ChainSelectCubit(_storage, logger);
     final _wallets =
         WalletsCubit(_storage, logger, chainSelectCubit, clipboard);
-
+    final _masterKeyCubit = MasterKeyCubit(_storage);
     late SeedGenerateCubit _generateCubit;
     late SeedGenerateWalletCubit seedGenerateWalletCubit;
 
@@ -42,6 +44,7 @@ void main() {
         _wallets,
         chainSelectCubit,
         _generateCubit,
+        _masterKeyCubit,
       );
     });
 

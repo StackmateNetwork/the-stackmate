@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/common/loading.dart';
 
 class XpubLabel extends StatelessWidget {
   const XpubLabel({Key? key}) : super(key: key);

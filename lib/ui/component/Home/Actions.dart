@@ -21,7 +21,9 @@ class HomeActions extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.push('/network');
+            },
             icon: Icon(
               Icons.schema_outlined,
               size: 32,

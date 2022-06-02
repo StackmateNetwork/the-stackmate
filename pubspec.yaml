@@ -1,6 +1,6 @@
 name: sats
 description: Sovereign Bitcoin Scripting Wallet
-version: 0.0.10
+version: 0.0.11
 publish_to: none
 platforms:
   android:
@@ -69,6 +69,10 @@ flutter:
   generate: true
   assets:
     - assets/icon/sm92.png
+    - assets/icon/bitcoin_icons/png/outline/node.png
+    - assets/icon/bitcoin_icons/png/outline/home.png
+    - assets/icon/bitcoin_icons/png/outline/ellipsis.png
+    - assets/icon/bitcoin_icons/png/outline/satoshi-v2.png
 
 flutter_icons:
   android: true

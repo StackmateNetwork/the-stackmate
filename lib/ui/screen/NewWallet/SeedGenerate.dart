@@ -4,9 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/wallets.dart';
+import 'package:sats/model/master.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -129,6 +131,7 @@ class SeedGenerateScreen extends StatelessWidget {
     final networkSelect = context.select((ChainSelectCubit c) => c);
     final logger = context.select((Logger c) => c);
     final wallets = context.select((WalletsCubit c) => c);
+    final masterKey = context.select((MasterKeyCubit c) => c);
 
     final seedGenerateCubit = SeedGenerateCubit(
       locator<IStackMateCore>(),
@@ -143,6 +146,7 @@ class SeedGenerateScreen extends StatelessWidget {
       wallets,
       networkSelect,
       seedGenerateCubit,
+      masterKey,
     );
 
     return MultiBlocProvider(

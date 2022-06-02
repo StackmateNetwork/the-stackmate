@@ -110,7 +110,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   final NodeAddressCubit _nodeAddressCubit;
   final TorCubit _torCubit;
   static const invalidLabelError = 'Invalid Label';
-  static const signerWalletType = 'SIGNER';
+  static const recoveredWalletType = 'RESCUED';
   static const wpkhScript = 'wpkh';
   static const wshScript = 'wsh';
   static const emptyString = '';
@@ -242,7 +242,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
     var newWallet = Wallet(
       label: state.walletLabel,
-      walletType: signerWalletType,
+      walletType: recoveredWalletType,
       descriptor: descriptor.result!,
       policy: readable,
       requiredPolicyElements: 1,

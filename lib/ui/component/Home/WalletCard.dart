@@ -75,6 +75,7 @@ class WalletCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
+                        const SizedBox(height: 2),
                         Text(
                           wallet.walletType,
                           overflow: TextOverflow.ellipsis,
@@ -82,7 +83,9 @@ class WalletCard extends StatelessWidget {
                           style: context.fonts.caption!.copyWith(
                             color: wallet.walletType == 'WATCHER'
                                 ? context.colours.secondary
-                                : context.colours.tertiary,
+                                : wallet.walletType == 'PRIMARY'
+                                    ? context.colours.tertiary
+                                    : context.colours.error,
                             fontSize: 10,
                           ),
                         ),

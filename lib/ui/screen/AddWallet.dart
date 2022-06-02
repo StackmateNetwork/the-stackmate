@@ -58,7 +58,7 @@ class AddWalletScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    'Create\nWallet'.toUpperCase(),
+                    'Add\nAccount'.toUpperCase(),
                     textAlign: TextAlign.left,
                     style: c.fonts.headline5!.copyWith(
                       color: c.colours.onBackground,
@@ -69,37 +69,39 @@ class AddWalletScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    'SOLO ACCOUNT',
+                    'SINGLE SIGNATURE',
                     style: c.fonts.overline!.copyWith(
                       color: c.colours.onPrimary,
                     ),
                   ),
                 ),
+                // const SizedBox(height: 16),
+                // SelectButton(
+                //   text: 'New',
+                //   description: 'Generate a new mnemonic seed.',
+                //   colour: c.colours.surface,
+                //   onPressed: () {
+                //     c.push('/generate-seed');
+                //   },
+                // ),
                 const SizedBox(height: 16),
                 SelectButton(
-                  text: 'New',
-                  description: 'Generate a new mnemonic seed.',
+                  text: 'Watcher',
+                  description:
+                      'Import a public key.\nMonitor your hardware signer.',
                   colour: c.colours.surface,
                   onPressed: () {
-                    c.push('/generate-seed');
+                    c.push('/watch-only');
                   },
                 ),
                 const SizedBox(height: 16),
                 SelectButton(
                   text: 'Recover',
-                  description: 'Import an existing wallet.',
+                  description:
+                      'Recover a wallet from a seed.\nOnly for emergency use.',
                   colour: c.colours.surface,
                   onPressed: () {
                     c.push('/import-seed');
-                  },
-                ),
-                const SizedBox(height: 16),
-                SelectButton(
-                  text: 'Watcher',
-                  description: 'Import a public key.',
-                  colour: c.colours.surface,
-                  onPressed: () {
-                    c.push('/watch-only');
                   },
                 ),
                 const SizedBox(height: 48),

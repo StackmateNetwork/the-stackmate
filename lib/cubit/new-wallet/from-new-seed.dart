@@ -6,10 +6,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/interface/stackmate-core.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/wallet.dart';
+import 'package:sats/model/master.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -23,7 +25,7 @@ enum SeedGenerateWalletSteps {
 }
 
 const invalidLabelError = 'Invalid Label';
-const signerWalletType = 'SIGNER';
+const signerWalletType = 'PRIMARY';
 const wpkhScript = 'wpkh';
 const emptyString = '';
 
@@ -66,6 +68,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
     this._wallets,
     this._blockchainCubit,
     this._generateCubit,
+    this._masterKeyCubit,
   ) : super(const SeedGenerateWalletState()) {
     _generateSub = _generateCubit.stream.listen((gstate) {
       if (gstate.wallet != null) {
@@ -83,6 +86,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   final ChainSelectCubit _blockchainCubit;
   final SeedGenerateCubit _generateCubit;
   late StreamSubscription _generateSub;
+  final MasterKeyCubit _masterKeyCubit;
 
   void backClicked() {
     switch (state.currentStep) {
@@ -140,6 +144,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
 
       final wallet = _generateCubit.state.wallet;
       if (wallet == null) return;
+      final root = _generateCubit.state.masterXpriv!;
 
       final fullXPrv =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
@@ -159,6 +164,12 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       if (descriptor.hasError) {
         throw SMError.fromJson(descriptor.error!);
       }
+
+      await _masterKeyCubit.save(
+        root,
+        wallet.fingerPrint,
+        _blockchainCubit.state.blockchain.name,
+      );
 
       var newWallet = Wallet(
         label: state.walletLabel,

@@ -48,6 +48,11 @@ class SetBitcoinUnit extends StatelessWidget {
               ],
             ),
             const Spacer(),
+            Image.asset(
+              'assets/icon/bitcoin_icons/png/outline/satoshi-v2.png',
+              width: 52,
+              height: 52,
+            ),
           ],
         ),
       ),

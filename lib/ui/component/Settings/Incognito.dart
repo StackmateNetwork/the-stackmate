@@ -47,6 +47,11 @@ class SetIncognito extends StatelessWidget {
               ],
             ),
             const Spacer(),
+            Image.asset(
+              'assets/icon/bitcoin_icons/png/outline/ellipsis.png',
+              width: 52,
+              height: 52,
+            ),
           ],
         ),
       ),

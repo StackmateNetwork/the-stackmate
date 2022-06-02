@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/common/LogButton.dart';
 
 class HomeHeader extends StatelessWidget {
   @override

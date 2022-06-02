@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sats/ui/component/Home/Actions.dart';
+import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Settings/BitcoinUnit.dart';
 import 'package:sats/ui/component/Settings/Incognito.dart';
 import 'package:sats/ui/component/Settings/SelectNetwork.dart';
 import 'package:sats/ui/component/Settings/SelectNode.dart';
 import 'package:sats/ui/component/common/header.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);

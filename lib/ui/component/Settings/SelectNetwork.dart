@@ -50,6 +50,11 @@ class SelectNetwork extends StatelessWidget {
               ],
             ),
             const Spacer(),
+            Image.asset(
+              'assets/icon/bitcoin_icons/png/outline/node.png',
+              width: 52,
+              height: 52,
+            ),
           ],
         ),
       ),

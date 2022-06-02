@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Landing/Loader.dart';
@@ -7,9 +8,14 @@ import 'package:sats/ui/component/Landing/Loader.dart';
 class _Landing extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
+    final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
+
     return BlocConsumer<TorCubit, TorState>(
       listener: (context, state) {
-        if (state.isRunning) c.push('/home');
+        if (state.isRunning && masterKey != null) c.push('/home');
+        if (state.isRunning && masterKey == null) {
+          c.push('/generate-seed');
+        }
       },
       builder: (context, torState) {
         return Scaffold(
@@ -37,7 +43,6 @@ class _Landing extends StatelessWidget {
                       ],
                       background: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const LandingLoader(),
                           const SizedBox(height: 12),
@@ -49,6 +54,24 @@ class _Landing extends StatelessWidget {
                             ),
                             textAlign: TextAlign.center,
                           ),
+                          if (masterKey == null)
+                            Text(
+                              'No master key found.\nYou will be promted to setup a master key.\nGet a pen and paper ready.',
+                              style: c.fonts.caption!.copyWith(
+                                color: c.colours.primary,
+                                // fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            )
+                          else
+                            Text(
+                              'Master key found.\nHang in there while Tor loads.',
+                              style: c.fonts.caption!.copyWith(
+                                color: c.colours.primary,
+                                // fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                         ],
                       ),
                     ),

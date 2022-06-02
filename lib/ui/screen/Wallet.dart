@@ -18,7 +18,6 @@ import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Wallet/Balance.dart';
 import 'package:sats/ui/component/Wallet/Info.dart';
 import 'package:sats/ui/component/Wallet/Loader.dart';
-import 'package:sats/ui/component/Wallet/Name.dart';
 import 'package:sats/ui/component/Wallet/TransactionList.dart';
 
 class _Wallet extends StatelessWidget {

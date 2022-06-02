@@ -4,6 +4,7 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -34,6 +35,9 @@ class _CubitsState extends State<Cubits> {
     networkSelectCubit.init();
     final torCubit = TorCubit(logger);
     torCubit.start();
+
+    final masterKeyCubit = MasterKeyCubit(storage);
+    masterKeyCubit.init();
 
     final preferencesCubit = PreferencesCubit(storage);
     preferencesCubit.init();
@@ -67,6 +71,7 @@ class _CubitsState extends State<Cubits> {
         BlocProvider.value(value: nodeAddressCubit),
         BlocProvider.value(value: preferencesCubit),
         BlocProvider.value(value: torCubit),
+        BlocProvider.value(value: masterKeyCubit),
       ],
       child: BlocListener<ChainSelectCubit, BlockchainState>(
         listener: (context, state) {
