@@ -50,7 +50,7 @@ class SeedImportPhrase extends StatelessWidget {
                 },
                 maxLines: 8,
                 decoration: InputDecoration(
-                  hintText: 'Seed Phrase/Private Key/Descriptor',
+                  hintText: '12/24 word seed phrase',
                   fillColor: c.colours.surface,
                   errorText: state.seedError.nullIfEmpty(),
                 ),

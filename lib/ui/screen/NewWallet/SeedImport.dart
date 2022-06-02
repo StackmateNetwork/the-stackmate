@@ -55,7 +55,7 @@ class _SeedImport extends StatelessWidget {
                     const Loader(),
                     const SizedBox(height: 24),
                     Header(
-                      cornerTitle: 'RECOVER',
+                      cornerTitle: 'IMPORT',
                       children: [
                         Back(
                           onPressed: () {

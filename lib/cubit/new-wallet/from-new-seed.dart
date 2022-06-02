@@ -11,7 +11,6 @@ import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/wallet.dart';
-import 'package:sats/model/master.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -25,7 +24,8 @@ enum SeedGenerateWalletSteps {
 }
 
 const invalidLabelError = 'Invalid Label';
-const signerWalletType = 'PRIMARY';
+const primaryWalletType = 'PRIMARY';
+const signerWalletType = 'SIGNER';
 const wpkhScript = 'wpkh';
 const emptyString = '';
 
@@ -172,7 +172,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       _masterKeyCubit.init();
       var newWallet = Wallet(
         label: state.walletLabel,
-        walletType: signerWalletType,
+        walletType: primaryWalletType,
         descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,

@@ -42,7 +42,7 @@ class AddWalletScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'Your master key will be used to manage your social accounts and hot wallets.',
+                  'Your master key can create child accounts and manage your social media identity (optional).',
                   style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.onPrimary,
                   ),
@@ -50,16 +50,6 @@ class AddWalletScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
             ],
-            if (masterKey != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'SINGLE SIGNATURE',
-                  style: c.fonts.overline!.copyWith(
-                    color: c.colours.onPrimary,
-                  ),
-                ),
-              ),
             if (masterKey == null) ...[
               const SizedBox(height: 16),
               SelectButton(
@@ -70,28 +60,38 @@ class AddWalletScreen extends StatelessWidget {
                   c.push('/generate-seed');
                 },
               ),
+              const SizedBox(height: 16),
+              SelectButton(
+                text: 'Import',
+                description: 'Import an master key from a seed.',
+                colour: c.colours.surface,
+                onPressed: () {
+                  c.push('/import-seed');
+                },
+              ),
             ],
-            const SizedBox(height: 16),
-            SelectButton(
-              text: 'Recover',
-              description:
-                  'Recover an account from a seed.\nOnly use for emergency.',
-              colour: c.colours.surface,
-              onPressed: () {
-                c.push('/import-seed');
-              },
-            ),
             if (masterKey != null) ...[
+              const SizedBox(height: 16),
+              SelectButton(
+                text: 'Child',
+                description:
+                    'Derive a child account from your master key.\nUse if you require Taproot or Legacy support.',
+                colour: c.colours.surface,
+                onPressed: () {
+                  // c.push('/watch-only');
+                },
+              ),
               const SizedBox(height: 16),
               SelectButton(
                 text: 'Watcher',
                 description:
-                    'Import a public key.\nMonitor your hardware signer.',
+                    'Import a public key or descriptor.\nMonitor your hardware signer.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/watch-only');
                 },
               ),
+              const SizedBox(height: 16),
             ],
             const SizedBox(height: 48),
           ],
