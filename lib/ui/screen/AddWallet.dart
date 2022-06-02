@@ -63,7 +63,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'Import',
-                description: 'Import an master key from a seed.',
+                description: 'Import master key from an existing seed phrase.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/import-seed');
