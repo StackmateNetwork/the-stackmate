@@ -18,7 +18,9 @@ class _Announcements extends StatelessWidget {
         // return false;
       },
       child: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
         child: Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
