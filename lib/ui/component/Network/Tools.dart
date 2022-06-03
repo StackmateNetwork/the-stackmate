@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:go_router/go_router.dart';
 
 class SocialTools extends StatelessWidget {
   @override
@@ -14,17 +15,17 @@ class SocialTools extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  // c.push('/discover');
+                  c.push('/trades');
                 },
                 icon: Icon(
-                  Icons.language_sharp,
+                  Icons.currency_exchange,
                   size: 32,
                   color: c.colours.primary,
                 ),
               ),
               IconButton(
                 onPressed: () {
-                  // c.push('/messaging');
+                  c.push('/messages');
                 },
                 icon: Icon(
                   Icons.message,
@@ -34,7 +35,7 @@ class SocialTools extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  // c.push('/peers');
+                  c.push('/peers');
                 },
                 icon: Icon(
                   Icons.people,

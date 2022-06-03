@@ -13,15 +13,18 @@ import 'package:sats/ui/screen/AddWallet.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
+import 'package:sats/ui/screen/Messages.dart';
 import 'package:sats/ui/screen/MyIdentity.dart';
 import 'package:sats/ui/screen/Network.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
 import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
 import 'package:sats/ui/screen/PSBT.dart';
+import 'package:sats/ui/screen/Peers.dart';
 import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
+import 'package:sats/ui/screen/Trade.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
 
@@ -91,6 +94,18 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/my-identity',
         builder: (_, __) => const MyIdentityScreen(),
+      ),
+      GoRoute(
+        path: '/peers',
+        builder: (_, __) => const PeersScreen(),
+      ),
+      GoRoute(
+        path: '/trades',
+        builder: (_, __) => const AnnouncementsScreen(),
+      ),
+      GoRoute(
+        path: '/messages',
+        builder: (_, __) => const MessagesScreen(),
       ),
       GoRoute(
         path: '/add-wallet',
