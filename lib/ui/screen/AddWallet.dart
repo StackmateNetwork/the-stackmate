@@ -42,7 +42,7 @@ class AddWalletScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'Your master key can create child accounts and manages your social media identity (optional).',
+                  'A 12 word mnemonic seed phrase and optional passphrase represents your master key. It can recover all accounts created on this wallet.',
                   style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.onPrimary,
                   ),
@@ -54,8 +54,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'New',
-                description:
-                    'Generate a new mnemonic seed phrase.\nCreates a segwit-native ("bc1q") wallet.',
+                description: 'Master key from a new mnemonic seed phrase.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/generate-seed');
@@ -64,8 +63,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'Import',
-                description:
-                    'Import master key from an existing seed phrase.\nCreates a segwit-native ("bc1q") wallet.',
+                description: 'Import master key from an existing seed phrase.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/import-seed');

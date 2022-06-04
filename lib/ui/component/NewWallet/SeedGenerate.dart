@@ -40,7 +40,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
               // const HeaderTextDark(text: 'Enter an\noptional\npassphrase'),
               const SizedBox(height: 24),
               Text(
-                'Add an (optional) security layer to your seed.\n\nThis passphrase should be added as the last word of your seed.\n\If set, you cannot recover funds without it.',
+                'Add an (optional) security layer to your seed.\n\nIf you feel paranoid about 12 words not being enough, add some more entropy here.\n\nIf set, you cannot recover funds without it.',
                 style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
               ),
               const SizedBox(height: 32),
@@ -189,8 +189,7 @@ class SeedGenerate extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Make sure that no one can view,\nwhat you are writing'
-                .notLocalised(),
+            'Store it somewhere reliable and safe.'.notLocalised(),
             style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
           ),
           const SizedBox(height: 16),

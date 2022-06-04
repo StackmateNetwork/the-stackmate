@@ -95,3 +95,15 @@ typedef HeightT = Pointer<Utf8> Function(
   Pointer<Utf8> node_address,
   Pointer<Utf8> socks5,
 );
+
+typedef TorStartT = Pointer<Utf8> Function(
+  Pointer<Utf8> path,
+  Pointer<Utf8> socks5_port,
+  Pointer<Utf8> http_port,
+);
+typedef TorStatusT = Pointer<Utf8> Function(
+  Pointer<Utf8> control_key,
+);
+typedef TorStopT = Pointer<Utf8> Function(
+  Pointer<Utf8> control_key,
+);

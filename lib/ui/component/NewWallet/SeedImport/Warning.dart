@@ -21,10 +21,9 @@ class SeedImportWarning extends StatelessWidget {
 Typing your private key data or copying it via a clipboard makes it vulnerable
 to a larger attack surface.
 
-Recovered wallets are therefore best used as a transitionary wallet.
-
-We recommend sweeping any recovered funds into a Watcher or Primary wallet.
-      ''',
+Android uses GBoard by deafult with analytics, consider disabling it or entirely
+opting out and using OpenBoards.
+''',
           style: c.fonts.caption!.copyWith(
             color: c.colours.onPrimary,
           ),
