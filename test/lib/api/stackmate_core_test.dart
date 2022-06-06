@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sats/api/stackmate-core.dart';
 
 void main() {
+  // THE FOLLOWING WALLET NEEDS SYNC TO SUPPORT HIGHER MAX ADDRESS VALUE
   const myAddress0 = 'tb1q6aw9ehm7zg7ppp5v0xdz3guwwu3fdehpypf6e2';
   const myImportedWords =
       'transfer spare party divorce screen used pole march warfare another balance find';
@@ -15,7 +16,7 @@ void main() {
   const network = 'test';
   // const _readableSoloPolicy = 'wpkh(___primary___)';
   const faucetReturnAddress = 'mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt';
-  const returnAmount = 600;
+  const returnAmount = 250;
   const minerTxOutput = 'miner';
   const finalizedPsbt =
       'cHNidP8BAHQBAAAAATP//sNP6QoTAtgzs2Eof4+e95GYAQeLE1wWqs4tFSoRAQAAAAD9////AvwCAAAAAAAAFgAUdzOj/AqxHes2No9ip9nkUBeHzM1YAgAAAAAAABl2qRQ0Sg9IyhUOwrkDgXZgubaLE6ZwJoisAAAAAAABAN8BAAAAAAEBSon1NvP7dcSgLFyS3noWwD5D54uhcVlVKX43LU+wAB0AAAAAAP3///8CECcAAAAAAAAWABTB5EuPpQOVbyqPM6pHkQJUsKTBLTwJAAAAAAAAFgAUeO/Z0zlT3dQTQP3Aqkp6Z1XyEWMCSDBFAiEAorKfWQvy3zysktKtk/FRatxbopZlnDHzIxUaR87O56QCIHIleIl98pbPbXgYhearHMysQ47HLqLEEkx09T+3wflDASEDh9xUMJ5DYt5r7TVE+3nwazApjYVEKHMcg5QXqVA2HJMAAAAAAQEfPAkAAAAAAAAWABR479nTOVPd1BNA/cCqSnpnVfIRYyIGAyA0nu2ZNJECxF4M8iU9XHhINvajPckJ618FAvXbKLxGGICZzh5UAACAAQAAgAAAAIABAAAABAAAAAAiAgLiTSQCgBofPHrv4cRlx8wOMx6vLHHv2B2m4zRLXZTpcxiAmc4eVAAAgAEAAIAAAACAAQAAAAUAAAAAAA==';
@@ -115,7 +116,7 @@ void main() {
       nodeAddress: nodeAddress,
       socks5: 'none',
       txOutputs: txOutputs,
-      feeAbsolute: '1000',
+      feeAbsolute: '250',
       policyPath: '',
       sweep: 'false',
     );
@@ -177,13 +178,13 @@ void main() {
     assert(!signedPsbt.hasError);
     assert(signedPsbt.result!.isFinalized);
 
-    final txid = await libstackmate.broadcastTransaction(
-      descriptor: expPublicDesc,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-      signedPSBT: signedPsbt.result!.psbt,
-    );
-    assert(!txid.hasError);
+    // final txid = await libstackmate.broadcastTransaction(
+    //   descriptor: expPublicDesc,
+    //   nodeAddress: nodeAddress,
+    //   socks5: 'none',
+    //   signedPSBT: signedPsbt.result!.psbt,
+    // );
+    // assert(!txid.hasError);
   });
 
   test('Error States', () async {
@@ -194,28 +195,30 @@ void main() {
       signedPSBT: finalizedPsbt,
     );
     assert(response.hasError);
-    var structuredError = SMError.fromJson(response.error!);
-    print(structuredError.oneliner);
+    // print(response);
+
+    var errorMessage = response.error!;
+    print(errorMessage);
 
     response = await libstackmate.broadcastTransaction(
-      descriptor: '$expPublicDesc lko',
+      descriptor: '$expPublicDesc',
       nodeAddress: nodeAddress,
-      socks5: 'none',
+      socks5: 'blazed',
       signedPSBT: finalizedPsbt,
     );
     assert(response.hasError);
-    structuredError = SMError.fromJson(response.error!);
-    print(structuredError.oneliner);
+    errorMessage = response.error!;
+    print(errorMessage);
 
-    await libstackmate.broadcastTransaction(
+    response = await libstackmate.broadcastTransaction(
       descriptor: expPublicDesc,
       nodeAddress: nodeAddress,
       socks5: 'none',
       signedPSBT: 'finalizedPsbt',
     );
     assert(response.hasError);
-    structuredError = SMError.fromJson(response.error!);
-    print(structuredError.oneliner);
+    errorMessage = response.error!;
+    print(errorMessage);
     return;
   });
 }
