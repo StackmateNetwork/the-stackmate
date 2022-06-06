@@ -48,7 +48,7 @@ class _CypherPostHome extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const HomeLoader(),
-                              if (torState.isRunning) ...[
+                              if (torState.isConnected) ...[
                                 HomeHeader(),
                                 NetworkStatus(),
                                 SocialTools(),
@@ -73,7 +73,7 @@ class _CypherPostHome extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  if (torState.isRunning)
+                                  if (torState.isConnected)
                                     ...[]
                                   else ...[Container()]
                                 ],

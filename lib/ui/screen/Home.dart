@@ -46,7 +46,7 @@ class _Home extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const HomeLoader(),
-                              if (torState.isRunning) ...[
+                              if (torState.isConnected) ...[
                                 HomeHeader(),
                                 Networth(),
                                 WalletTools()
@@ -71,7 +71,7 @@ class _Home extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  if (torState.isRunning) ...[
+                                  if (torState.isConnected) ...[
                                     Accounts()
                                   ] else ...[
                                     Container()
