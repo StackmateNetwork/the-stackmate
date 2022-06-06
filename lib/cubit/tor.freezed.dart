@@ -16,8 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TorState {
-  int get port => throw _privateConstructorUsedError;
+  int get socks5Port => throw _privateConstructorUsedError;
+  int get httpProxy => throw _privateConstructorUsedError;
+  String get bootstapProgress => throw _privateConstructorUsedError;
   bool get isRunning => throw _privateConstructorUsedError;
+  bool get isConnected => throw _privateConstructorUsedError;
+  String get controlKey => throw _privateConstructorUsedError;
   String get errConnection => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -29,7 +33,14 @@ mixin _$TorState {
 abstract class $TorStateCopyWith<$Res> {
   factory $TorStateCopyWith(TorState value, $Res Function(TorState) then) =
       _$TorStateCopyWithImpl<$Res>;
-  $Res call({int port, bool isRunning, String errConnection});
+  $Res call(
+      {int socks5Port,
+      int httpProxy,
+      String bootstapProgress,
+      bool isRunning,
+      bool isConnected,
+      String controlKey,
+      String errConnection});
 }
 
 /// @nodoc
@@ -42,19 +53,39 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? port = freezed,
+    Object? socks5Port = freezed,
+    Object? httpProxy = freezed,
+    Object? bootstapProgress = freezed,
     Object? isRunning = freezed,
+    Object? isConnected = freezed,
+    Object? controlKey = freezed,
     Object? errConnection = freezed,
   }) {
     return _then(_value.copyWith(
-      port: port == freezed
-          ? _value.port
-          : port // ignore: cast_nullable_to_non_nullable
+      socks5Port: socks5Port == freezed
+          ? _value.socks5Port
+          : socks5Port // ignore: cast_nullable_to_non_nullable
               as int,
+      httpProxy: httpProxy == freezed
+          ? _value.httpProxy
+          : httpProxy // ignore: cast_nullable_to_non_nullable
+              as int,
+      bootstapProgress: bootstapProgress == freezed
+          ? _value.bootstapProgress
+          : bootstapProgress // ignore: cast_nullable_to_non_nullable
+              as String,
       isRunning: isRunning == freezed
           ? _value.isRunning
           : isRunning // ignore: cast_nullable_to_non_nullable
               as bool,
+      isConnected: isConnected == freezed
+          ? _value.isConnected
+          : isConnected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      controlKey: controlKey == freezed
+          ? _value.controlKey
+          : controlKey // ignore: cast_nullable_to_non_nullable
+              as String,
       errConnection: errConnection == freezed
           ? _value.errConnection
           : errConnection // ignore: cast_nullable_to_non_nullable
@@ -69,7 +100,14 @@ abstract class _$$_TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
           _$_TorState value, $Res Function(_$_TorState) then) =
       __$$_TorStateCopyWithImpl<$Res>;
   @override
-  $Res call({int port, bool isRunning, String errConnection});
+  $Res call(
+      {int socks5Port,
+      int httpProxy,
+      String bootstapProgress,
+      bool isRunning,
+      bool isConnected,
+      String controlKey,
+      String errConnection});
 }
 
 /// @nodoc
@@ -84,19 +122,39 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? port = freezed,
+    Object? socks5Port = freezed,
+    Object? httpProxy = freezed,
+    Object? bootstapProgress = freezed,
     Object? isRunning = freezed,
+    Object? isConnected = freezed,
+    Object? controlKey = freezed,
     Object? errConnection = freezed,
   }) {
     return _then(_$_TorState(
-      port: port == freezed
-          ? _value.port
-          : port // ignore: cast_nullable_to_non_nullable
+      socks5Port: socks5Port == freezed
+          ? _value.socks5Port
+          : socks5Port // ignore: cast_nullable_to_non_nullable
               as int,
+      httpProxy: httpProxy == freezed
+          ? _value.httpProxy
+          : httpProxy // ignore: cast_nullable_to_non_nullable
+              as int,
+      bootstapProgress: bootstapProgress == freezed
+          ? _value.bootstapProgress
+          : bootstapProgress // ignore: cast_nullable_to_non_nullable
+              as String,
       isRunning: isRunning == freezed
           ? _value.isRunning
           : isRunning // ignore: cast_nullable_to_non_nullable
               as bool,
+      isConnected: isConnected == freezed
+          ? _value.isConnected
+          : isConnected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      controlKey: controlKey == freezed
+          ? _value.controlKey
+          : controlKey // ignore: cast_nullable_to_non_nullable
+              as String,
       errConnection: errConnection == freezed
           ? _value.errConnection
           : errConnection // ignore: cast_nullable_to_non_nullable
@@ -107,24 +165,56 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TorState extends _TorState {
+class _$_TorState extends _TorState with DiagnosticableTreeMixin {
   const _$_TorState(
-      {this.port = 0, this.isRunning = false, this.errConnection = ''})
+      {this.socks5Port = 49050,
+      this.httpProxy = 48950,
+      this.bootstapProgress = 'Offline.',
+      this.isRunning = false,
+      this.isConnected = false,
+      this.controlKey = 'control_key',
+      this.errConnection = ''})
       : super._();
 
   @override
   @JsonKey()
-  final int port;
+  final int socks5Port;
+  @override
+  @JsonKey()
+  final int httpProxy;
+  @override
+  @JsonKey()
+  final String bootstapProgress;
   @override
   @JsonKey()
   final bool isRunning;
   @override
   @JsonKey()
+  final bool isConnected;
+  @override
+  @JsonKey()
+  final String controlKey;
+  @override
+  @JsonKey()
   final String errConnection;
 
   @override
-  String toString() {
-    return 'TorState(port: $port, isRunning: $isRunning, errConnection: $errConnection)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'TorState(socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'TorState'))
+      ..add(DiagnosticsProperty('socks5Port', socks5Port))
+      ..add(DiagnosticsProperty('httpProxy', httpProxy))
+      ..add(DiagnosticsProperty('bootstapProgress', bootstapProgress))
+      ..add(DiagnosticsProperty('isRunning', isRunning))
+      ..add(DiagnosticsProperty('isConnected', isConnected))
+      ..add(DiagnosticsProperty('controlKey', controlKey))
+      ..add(DiagnosticsProperty('errConnection', errConnection));
   }
 
   @override
@@ -132,8 +222,16 @@ class _$_TorState extends _TorState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TorState &&
-            const DeepCollectionEquality().equals(other.port, port) &&
+            const DeepCollectionEquality()
+                .equals(other.socks5Port, socks5Port) &&
+            const DeepCollectionEquality().equals(other.httpProxy, httpProxy) &&
+            const DeepCollectionEquality()
+                .equals(other.bootstapProgress, bootstapProgress) &&
             const DeepCollectionEquality().equals(other.isRunning, isRunning) &&
+            const DeepCollectionEquality()
+                .equals(other.isConnected, isConnected) &&
+            const DeepCollectionEquality()
+                .equals(other.controlKey, controlKey) &&
             const DeepCollectionEquality()
                 .equals(other.errConnection, errConnection));
   }
@@ -141,8 +239,12 @@ class _$_TorState extends _TorState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(port),
+      const DeepCollectionEquality().hash(socks5Port),
+      const DeepCollectionEquality().hash(httpProxy),
+      const DeepCollectionEquality().hash(bootstapProgress),
       const DeepCollectionEquality().hash(isRunning),
+      const DeepCollectionEquality().hash(isConnected),
+      const DeepCollectionEquality().hash(controlKey),
       const DeepCollectionEquality().hash(errConnection));
 
   @JsonKey(ignore: true)
@@ -153,15 +255,27 @@ class _$_TorState extends _TorState {
 
 abstract class _TorState extends TorState {
   const factory _TorState(
-      {final int port,
+      {final int socks5Port,
+      final int httpProxy,
+      final String bootstapProgress,
       final bool isRunning,
+      final bool isConnected,
+      final String controlKey,
       final String errConnection}) = _$_TorState;
   const _TorState._() : super._();
 
   @override
-  int get port => throw _privateConstructorUsedError;
+  int get socks5Port => throw _privateConstructorUsedError;
+  @override
+  int get httpProxy => throw _privateConstructorUsedError;
+  @override
+  String get bootstapProgress => throw _privateConstructorUsedError;
   @override
   bool get isRunning => throw _privateConstructorUsedError;
+  @override
+  bool get isConnected => throw _privateConstructorUsedError;
+  @override
+  String get controlKey => throw _privateConstructorUsedError;
   @override
   String get errConnection => throw _privateConstructorUsedError;
   @override
