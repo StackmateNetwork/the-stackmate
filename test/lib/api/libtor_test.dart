@@ -11,12 +11,61 @@ void main() {
   setUp(() async {
     libtor = LibTor();
   });
-  test('Start Tor', () async {
+  test('TEST TOR', () async {
     controlKey = libtor.torStart(
       path: path,
       socks5Port: '29050',
       httpProxy: '',
     );
     assert(!controlKey.hasError);
+    await Future.delayed(
+      const Duration(
+        seconds: 2,
+      ),
+    );
+
+    var status = libtor.torStatus(
+      controlPort: '28950',
+      controlKey: controlKey.result!,
+    );
+    assert(!status.hasError);
+
+    print(status.result!);
+
+    await Future.delayed(
+      const Duration(
+        seconds: 2,
+      ),
+    );
+
+    status = libtor.torStatus(
+      controlPort: '28950',
+      controlKey: controlKey.result!,
+    );
+    assert(!status.hasError);
+
+    print(status.result!);
+    await Future.delayed(
+      const Duration(
+        seconds: 2,
+      ),
+    );
+
+    status = libtor.torStatus(
+      controlPort: '28950',
+      controlKey: controlKey.result!,
+    );
+    assert(!status.hasError);
+
+    print(status.result!);
+
+    final stop = libtor.torStop(
+      controlPort: '28950',
+      controlKey: controlKey.result!,
+    );
+    print(stop.result);
+
+    assert(!stop.hasError);
+    assert(stop.result == 'true');
   });
 }

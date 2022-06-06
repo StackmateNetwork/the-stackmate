@@ -283,7 +283,7 @@ class LibStackmateFFI {
     required String controlPort,
     required String controlKey,
   }) {
-    final func = binary.lookupFunction<TorStatusT, TorStatusT>('tor_status');
+    final func = binary.lookupFunction<TorStatusT, TorStatusT>('tor_progress');
     final resp = func(
       controlPort.toNativeUtf8(),
       controlKey.toNativeUtf8(),
@@ -295,7 +295,7 @@ class LibStackmateFFI {
     required String controlPort,
     required String controlKey,
   }) {
-    final func = binary.lookupFunction<TorStopT, TorStopT>('tor_status');
+    final func = binary.lookupFunction<TorStopT, TorStopT>('tor_stop');
     final resp = func(
       controlPort.toNativeUtf8(),
       controlKey.toNativeUtf8(),
