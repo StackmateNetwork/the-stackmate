@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
-import 'package:sats/api/stackmate-core.dart';
+import 'package:libstackmate/types.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
+import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
@@ -101,7 +101,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     });
   }
 
-  final IStackMateCore _core;
+  final IStackMateBitcoin _core;
 
   final IStorage _storage;
 
@@ -312,7 +312,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
 R<List<Transaction>> computeHistory(dynamic obj) {
   final data = obj as Map<String, String?>;
-  final resp = BitcoinFFI().getHistory(
+  final resp = LibBitcoin().getHistory(
     descriptor: data['descriptor']!,
     nodeAddress: data['nodeAddress']!,
     socks5: obj['socks5']!,
@@ -323,7 +323,7 @@ R<List<Transaction>> computeHistory(dynamic obj) {
 
 R<int> computeBalance(dynamic obj) {
   final data = obj as Map<String, String?>;
-  final resp = BitcoinFFI().syncBalance(
+  final resp = LibBitcoin().syncBalance(
     descriptor: data['descriptor']!,
     nodeAddress: data['nodeAddress']!,
     socks5: obj['socks5']!,

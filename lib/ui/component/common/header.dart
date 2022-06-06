@@ -1,8 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/Common/CornerTitle.dart';
-import 'package:sats/ui/component/Common/LogButton.dart';
+import 'package:sats/ui/component/common/CornerTitle.dart';
+import 'package:sats/ui/component/common/LogButton.dart';
 
 class Header extends StatelessWidget {
   const Header({Key? key, required this.cornerTitle, required this.children})

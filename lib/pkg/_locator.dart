@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/interface/logger.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/api/logger.dart';
-import 'package:sats/api/stackmate-core.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -24,14 +24,14 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<IShare>(() => Sharer());
     locator.registerSingleton<ILauncher>(Launcher());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
-    locator.registerLazySingleton<IStackMateCore>(() => BitcoinFFI());
+    locator.registerLazySingleton<IStackMateBitcoin>(() => LibBitcoin());
     locator.registerLazySingleton<ILogAPI>(() => DummyLogAPI());
   } else {
     locator.registerLazySingleton<IShare>(() => Sharer());
     locator.registerLazySingleton<ILauncher>(() => Launcher());
     locator.registerLazySingleton<IClipBoard>(() => ClipBoard());
     locator.registerLazySingleton<IStorage>(() => HiveStore());
-    locator.registerLazySingleton<IStackMateCore>(() => BitcoinFFI());
+    locator.registerLazySingleton<IStackMateBitcoin>(() => LibBitcoin());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
     locator.registerLazySingleton<ILogAPI>(() => SentryLogger());
   }

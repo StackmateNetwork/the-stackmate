@@ -1,9 +1,9 @@
-import 'package:bitcoin/types.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:libstackmate/types.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/interface/logger.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
-import 'package:sats/api/stackmate-core.dart';
+import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
@@ -24,7 +24,7 @@ void main() {
     final logAPI = _MockLogApi();
     final logger = Logger(clipboard, logAPI);
     final chainSelectCubit = ChainSelectCubit(_storage, logger);
-    final IStackMateCore _bitcoin = BitcoinFFI();
+    final IStackMateBitcoin _bitcoin = LibBitcoin();
 
     late SeedImportCubit seedImportCubit;
 

@@ -1,10 +1,10 @@
-import 'package:bitcoin/types.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
-import 'package:sats/api/stackmate-core.dart';
+import 'package:libstackmate/types.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
+import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
@@ -95,7 +95,7 @@ class SendCubit extends Cubit<SendState> {
   final IClipBoard _clipBoard;
   final NodeAddressCubit _nodeAddressCubit;
   final TorCubit _torCubit;
-  final IStackMateCore _core;
+  final IStackMateBitcoin _core;
   final FeesCubit _fees;
   // final FileManager _file;
 
@@ -562,7 +562,7 @@ class SendCubit extends Cubit<SendState> {
 
 double estimateFeees(dynamic data) {
   final obj = data as Map<String, String?>;
-  final resp = BitcoinFFI().estimateNetworkFee(
+  final resp = LibBitcoin().estimateNetworkFee(
     network: obj['network']!,
     nodeAddress: obj['nodeAddress']!,
     socks5: obj['socks5']!,
@@ -576,7 +576,7 @@ double estimateFeees(dynamic data) {
 
 int getWeight(dynamic data) {
   final obj = data as Map<String, String?>;
-  final resp = BitcoinFFI().getWeight(
+  final resp = LibBitcoin().getWeight(
     descriptor: obj['descriptor']!,
     psbt: obj['psbt']!,
   );
@@ -588,7 +588,7 @@ int getWeight(dynamic data) {
 
 AbsoluteFees getAbsoluteFees(dynamic data) {
   final obj = data as Map<String, String?>;
-  final resp = BitcoinFFI().feeAbsoluteToRate(
+  final resp = LibBitcoin().feeAbsoluteToRate(
     feeAbsolute: obj['feeRate']!,
     weight: obj['weight']!,
   );
@@ -600,7 +600,7 @@ AbsoluteFees getAbsoluteFees(dynamic data) {
 
 String buildTx(dynamic data) {
   final obj = data as Map<String, String?>;
-  final resp = BitcoinFFI().buildTransaction(
+  final resp = LibBitcoin().buildTransaction(
     descriptor: obj['descriptor']!,
     nodeAddress: obj['nodeAddress']!,
     socks5: obj['socks5']!,
@@ -617,7 +617,7 @@ String buildTx(dynamic data) {
 
 List<DecodedTxOutput> decodePSBT(dynamic data) {
   final obj = data as Map<String, String?>;
-  final resp = BitcoinFFI().decodePsbt(
+  final resp = LibBitcoin().decodePsbt(
     network: obj['network']!,
     psbt: obj['psbt']!,
   );
@@ -632,7 +632,7 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
 R<PSBT> signTx(dynamic data) {
   final obj = data as Map<String, String?>;
 
-  final resp = BitcoinFFI().signTransaction(
+  final resp = LibBitcoin().signTransaction(
     descriptor: obj['descriptor']!,
     unsignedPSBT: obj['unsignedPSBT']!,
   );
@@ -643,7 +643,7 @@ R<PSBT> signTx(dynamic data) {
 Future<R<String>> broadcastTx(dynamic data) async {
   final obj = data as Map<String, String?>;
 
-  final resp = await BitcoinFFI().broadcastTransaction(
+  final resp = await LibBitcoin().broadcastTransaction(
     descriptor: obj['descriptor']!,
     nodeAddress: obj['nodeAddress']!,
     socks5: obj['socks5']!,

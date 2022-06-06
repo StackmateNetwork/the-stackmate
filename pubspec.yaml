@@ -1,5 +1,5 @@
 name: sats
-description: Sovereign Bitcoin Scripting Wallet
+description: Self-Sovereign Bitcoin Wallet
 version: 0.0.13
 publish_to: none
 platforms:
@@ -11,8 +11,8 @@ environment:
 dependencies:
   animate_do: ^2.0.0
   animations: ^2.0.0
-  bitcoin:
-    path: packages/bitcoin
+  libstackmate:
+    path: packages/libstackmate
   bloc_concurrency: ^0.2.0
   # connectivity: ^3.0.3
   dio: ^4.0.5

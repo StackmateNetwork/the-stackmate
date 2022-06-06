@@ -1,9 +1,9 @@
-import 'package:bitcoin/types.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
-import 'package:sats/api/stackmate-core.dart';
+import 'package:libstackmate/types.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
+import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
@@ -36,7 +36,7 @@ class PSBTCubit extends Cubit<PSBTState> {
 
   final IClipBoard _clipBoard;
   final NodeAddressCubit _nodeAddressCubit;
-  final IStackMateCore _core;
+  final IStackMateBitcoin _core;
   final ChainSelectCubit _blockchainCubit;
   final TorCubit _torCubit;
 
@@ -116,7 +116,7 @@ class PSBTCubit extends Cubit<PSBTState> {
 
 String buildTx(dynamic data) {
   final obj = data as Map<String, String?>;
-  final resp = BitcoinFFI().buildTransaction(
+  final resp = LibBitcoin().buildTransaction(
     descriptor: obj['descriptor']!,
     nodeAddress: obj['nodeAddress']!,
     socks5: obj['socks5']!,
@@ -133,7 +133,7 @@ String buildTx(dynamic data) {
 
 List<DecodedTxOutput> decodePSBT(dynamic data) {
   final obj = data as Map<String, String?>;
-  final resp = BitcoinFFI().decodePsbt(
+  final resp = LibBitcoin().decodePsbt(
     network: obj['network']!,
     psbt: obj['psbt']!,
   );
@@ -148,7 +148,7 @@ List<DecodedTxOutput> decodePSBT(dynamic data) {
 Future<String> broadcastTx(dynamic data) async {
   final obj = data as Map<String, String?>;
 
-  final resp = await BitcoinFFI().broadcastTransaction(
+  final resp = await LibBitcoin().broadcastTransaction(
     descriptor: obj['descriptor']!,
     nodeAddress: obj['nodeAddress']!,
     socks5: obj['socks5']!,

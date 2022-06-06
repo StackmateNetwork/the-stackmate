@@ -52,7 +52,9 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
                   obscureText: true,
                   obscuringCharacter: '*',
                   controller: _textController,
-                  validator: (val) {},
+                  validator: (val) {
+                    return null;
+                  },
                   onChanged: (text) {
                     c.read<SeedGenerateCubit>().passPhrasedChanged(text);
                   },

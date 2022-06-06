@@ -14,11 +14,11 @@ import 'package:sats/pkg/interface/launcher.dart';
 import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Wallet/Balance.dart';
 import 'package:sats/ui/component/Wallet/Info.dart';
 import 'package:sats/ui/component/Wallet/Loader.dart';
 import 'package:sats/ui/component/Wallet/TransactionList.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
 
 class _Wallet extends StatelessWidget {
   const _Wallet({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
@@ -120,7 +120,7 @@ class XPubImportScreen extends StatelessWidget {
       locator<IClipBoard>(),
     );
     final xpubCubit = XpubImportWalletCubit(
-      locator<IStackMateCore>(),
+      locator<IStackMateBitcoin>(),
       logger,
       locator<IStorage>(),
       wallets,

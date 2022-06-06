@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/psbt-tool.dart';
@@ -7,8 +7,8 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/PSBT/Broadcast.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
 
 class _PSBTTools extends StatelessWidget {
   const _PSBTTools({Key? key}) : super(key: key);
@@ -53,7 +53,7 @@ class PSBTScreen extends StatelessWidget {
     final tor = context.select((TorCubit c) => c);
 
     final psbt = PSBTCubit(
-      locator<IStackMateCore>(),
+      locator<IStackMateBitcoin>(),
       locator<IClipBoard>(),
       nodeAddressCubit,
       tor,

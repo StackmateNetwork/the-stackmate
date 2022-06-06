@@ -7,11 +7,11 @@
             "command": "flutter pub run build_runner watch --delete-conflicting-outputs"
         },
         {
-            "label": "Update bitcoin-core from source",
+            "label": "Update stackmate-core from source",
             "type": "shell",
             "command": "sh update-core.sh",
             "options": {
-                "cwd": "${workspaceRoot}/packages/bitcoin"
+                "cwd": "${workspaceRoot}/packages/libstackmate"
                 
             },
         },

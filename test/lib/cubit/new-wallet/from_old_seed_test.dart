@@ -1,8 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/interface/logger.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
-import 'package:sats/api/stackmate-core.dart';
+import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
@@ -27,7 +27,7 @@ void main() {
     const labelChange = 'importLabel';
 
     final IStorage _storage = _MockStorage();
-    final IStackMateCore _bitcoin = BitcoinFFI();
+    final IStackMateBitcoin _bitcoin = LibBitcoin();
     final clipboard = _MockClipboard();
     final logAPI = _MockLogApi();
     final logger = Logger(clipboard, logAPI);
