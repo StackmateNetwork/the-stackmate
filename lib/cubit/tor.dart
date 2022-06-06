@@ -13,6 +13,7 @@ part 'tor.freezed.dart';
 @freezed
 class TorState with _$TorState {
   const factory TorState({
+    @Default('/tmp') String workingDir,
     @Default(49050) int socks5Port,
     @Default(48950) int httpProxy,
     @Default('Offline.') String bootstapProgress,
@@ -43,9 +44,10 @@ class TorCubit extends Cubit<TorState> {
           errConnection: '',
         ),
       );
+      final platformTmp = Directory.systemTemp.toString();
       final controlKey = await compute(
         daemonStart,
-        {'path': '/tmp', 'socks5Port': '49050', 'httpProxy': ''},
+        {'path': platformTmp, 'socks5Port': '49050', 'httpProxy': ''},
       );
       if (controlKey.hasError)
         emit(

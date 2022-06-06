@@ -1,4 +1,6 @@
 // ignore: avoid_escaping_inner_quotes
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sats/api/libtor.dart';
 import 'package:sats/model/result.dart';
@@ -6,7 +8,7 @@ import 'package:sats/model/result.dart';
 void main() {
   late LibTor libtor;
   var controlKey = const R(result: 'control_key');
-  const path = '/tmp';
+  final path = Directory.systemTemp.toString();
 
   setUp(() async {
     libtor = LibTor();

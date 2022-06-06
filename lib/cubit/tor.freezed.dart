@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TorState {
+  String get workingDir => throw _privateConstructorUsedError;
   int get socks5Port => throw _privateConstructorUsedError;
   int get httpProxy => throw _privateConstructorUsedError;
   String get bootstapProgress => throw _privateConstructorUsedError;
@@ -34,7 +35,8 @@ abstract class $TorStateCopyWith<$Res> {
   factory $TorStateCopyWith(TorState value, $Res Function(TorState) then) =
       _$TorStateCopyWithImpl<$Res>;
   $Res call(
-      {int socks5Port,
+      {String workingDir,
+      int socks5Port,
       int httpProxy,
       String bootstapProgress,
       bool isRunning,
@@ -53,6 +55,7 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? workingDir = freezed,
     Object? socks5Port = freezed,
     Object? httpProxy = freezed,
     Object? bootstapProgress = freezed,
@@ -62,6 +65,10 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
     Object? errConnection = freezed,
   }) {
     return _then(_value.copyWith(
+      workingDir: workingDir == freezed
+          ? _value.workingDir
+          : workingDir // ignore: cast_nullable_to_non_nullable
+              as String,
       socks5Port: socks5Port == freezed
           ? _value.socks5Port
           : socks5Port // ignore: cast_nullable_to_non_nullable
@@ -101,7 +108,8 @@ abstract class _$$_TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
       __$$_TorStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int socks5Port,
+      {String workingDir,
+      int socks5Port,
       int httpProxy,
       String bootstapProgress,
       bool isRunning,
@@ -122,6 +130,7 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? workingDir = freezed,
     Object? socks5Port = freezed,
     Object? httpProxy = freezed,
     Object? bootstapProgress = freezed,
@@ -131,6 +140,10 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
     Object? errConnection = freezed,
   }) {
     return _then(_$_TorState(
+      workingDir: workingDir == freezed
+          ? _value.workingDir
+          : workingDir // ignore: cast_nullable_to_non_nullable
+              as String,
       socks5Port: socks5Port == freezed
           ? _value.socks5Port
           : socks5Port // ignore: cast_nullable_to_non_nullable
@@ -167,7 +180,8 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
 
 class _$_TorState extends _TorState with DiagnosticableTreeMixin {
   const _$_TorState(
-      {this.socks5Port = 49050,
+      {this.workingDir = '/tmp',
+      this.socks5Port = 49050,
       this.httpProxy = 48950,
       this.bootstapProgress = 'Offline.',
       this.isRunning = false,
@@ -176,6 +190,9 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
       this.errConnection = ''})
       : super._();
 
+  @override
+  @JsonKey()
+  final String workingDir;
   @override
   @JsonKey()
   final int socks5Port;
@@ -200,7 +217,7 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TorState(socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection)';
+    return 'TorState(workingDir: $workingDir, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection)';
   }
 
   @override
@@ -208,6 +225,7 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'TorState'))
+      ..add(DiagnosticsProperty('workingDir', workingDir))
       ..add(DiagnosticsProperty('socks5Port', socks5Port))
       ..add(DiagnosticsProperty('httpProxy', httpProxy))
       ..add(DiagnosticsProperty('bootstapProgress', bootstapProgress))
@@ -222,6 +240,8 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TorState &&
+            const DeepCollectionEquality()
+                .equals(other.workingDir, workingDir) &&
             const DeepCollectionEquality()
                 .equals(other.socks5Port, socks5Port) &&
             const DeepCollectionEquality().equals(other.httpProxy, httpProxy) &&
@@ -239,6 +259,7 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(workingDir),
       const DeepCollectionEquality().hash(socks5Port),
       const DeepCollectionEquality().hash(httpProxy),
       const DeepCollectionEquality().hash(bootstapProgress),
@@ -255,7 +276,8 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
 
 abstract class _TorState extends TorState {
   const factory _TorState(
-      {final int socks5Port,
+      {final String workingDir,
+      final int socks5Port,
       final int httpProxy,
       final String bootstapProgress,
       final bool isRunning,
@@ -264,6 +286,8 @@ abstract class _TorState extends TorState {
       final String errConnection}) = _$_TorState;
   const _TorState._() : super._();
 
+  @override
+  String get workingDir => throw _privateConstructorUsedError;
   @override
   int get socks5Port => throw _privateConstructorUsedError;
   @override
