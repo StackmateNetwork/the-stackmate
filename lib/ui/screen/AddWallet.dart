@@ -69,6 +69,16 @@ class AddWalletScreen extends StatelessWidget {
             ],
             if (masterKey != null) ...[
               const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'From External Wallet'.toUpperCase(),
+                  textAlign: TextAlign.left,
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.onBackground,
+                  ),
+                ),
+              ),
               SelectButton(
                 text: 'Watcher',
                 description:
@@ -99,6 +109,16 @@ class AddWalletScreen extends StatelessWidget {
               //   },
               // ),
               const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'From Master Key'.toUpperCase(),
+                  textAlign: TextAlign.left,
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.onBackground,
+                  ),
+                ),
+              ),
               SelectButton(
                 text: 'Taproot',
                 description:
