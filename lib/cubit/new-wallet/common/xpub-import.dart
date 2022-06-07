@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/model/coldcard.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'xpub-import.freezed.dart';
@@ -20,6 +24,7 @@ class XpubImportState with _$XpubImportState {
     @Default('') String fingerPrint,
     @Default('') String path,
     @Default('') String errXpub,
+    @Default('') String errFileImport,
     @Default(false) bool cameraOpened,
     @Default(false) bool detailsReady,
   }) = _SeedImportXpubState;
@@ -123,4 +128,24 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   }
 
   void clear() => emit(const XpubImportState());
+
+  Future<void> importColdCardSegwit(File genericJson) async {
+    try {
+      final json = jsonDecode(await genericJson.readAsString());
+      final ColdCardGeneric ccWatcher =
+          ColdCardGeneric.fromJson(json as Map<String, dynamic>);
+      emit(
+        state.copyWith(
+          xpub: ccWatcher.bip84!.xpub!,
+          fingerPrint: ccWatcher.xfp!,
+          path: ccWatcher.bip84!.deriv!,
+          detailsReady: true,
+        ),
+      );
+    } catch (e, s) {
+      emit(state.copyWith(errFileImport: e.toString()));
+
+      _logger.logException(e, 'ColdCardJSON.ImportSegwit', s);
+    }
+  }
 }

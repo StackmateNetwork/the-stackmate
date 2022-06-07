@@ -1,11 +1,9 @@
+import 'dart:convert';
 // ignore: avoid_escaping_inner_quotes
 import 'dart:io';
 
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sats/model/coldcard.dart';
-import 'package:flutter/services.dart';
-import 'dart:convert';
 
 void main() {
   setUp(() async {
@@ -29,5 +27,6 @@ void main() {
     const expectedSegwitPolicy =
         'pk([efab2046/84h/1h/0h}]tpubDCBtCtWDzqBZRjMzFbtSDFvTQkKhN2gdKyAG6cDVGqGo9zeUDwCuL73XEszmJc1Do7aE8rxtzoDdkEm8GvX4FPQrqpZHgwhpTNAUALq9kd7/*)';
     assert(ccWatcher.bip84Policy == expectedSegwitPolicy);
+    print(ccWatcher.bip84!.deriv);
   });
 }

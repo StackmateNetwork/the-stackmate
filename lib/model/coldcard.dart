@@ -49,11 +49,11 @@ class ColdCardGeneric {
     return data;
   }
 
-  get bip84Policy =>
+  String get bip84Policy =>
       'pk([${xfp!.toLowerCase()}/84h/${(chain == 'XTN') ? "1h" : "0h"}/${account}h}]${bip84!.xpub}/*)';
-  get bip49Policy =>
+  String get bip49Policy =>
       'pk([${xfp!.toLowerCase()}/49h/${(chain == 'XTN') ? "1h" : "0h"}/${account}h}]${bip49!.xpub}/*)';
-  get bip44Policy =>
+  String get bip44Policy =>
       'pk([${xfp!.toLowerCase()}/44h/${(chain == 'XTN') ? "1h" : "0h"}/${account}h}]${bip44!.xpub}/*)';
 }
 

@@ -20,6 +20,7 @@ mixin _$XpubImportState {
   String get fingerPrint => throw _privateConstructorUsedError;
   String get path => throw _privateConstructorUsedError;
   String get errXpub => throw _privateConstructorUsedError;
+  String get errFileImport => throw _privateConstructorUsedError;
   bool get cameraOpened => throw _privateConstructorUsedError;
   bool get detailsReady => throw _privateConstructorUsedError;
 
@@ -38,6 +39,7 @@ abstract class $XpubImportStateCopyWith<$Res> {
       String fingerPrint,
       String path,
       String errXpub,
+      String errFileImport,
       bool cameraOpened,
       bool detailsReady});
 }
@@ -57,6 +59,7 @@ class _$XpubImportStateCopyWithImpl<$Res>
     Object? fingerPrint = freezed,
     Object? path = freezed,
     Object? errXpub = freezed,
+    Object? errFileImport = freezed,
     Object? cameraOpened = freezed,
     Object? detailsReady = freezed,
   }) {
@@ -76,6 +79,10 @@ class _$XpubImportStateCopyWithImpl<$Res>
       errXpub: errXpub == freezed
           ? _value.errXpub
           : errXpub // ignore: cast_nullable_to_non_nullable
+              as String,
+      errFileImport: errFileImport == freezed
+          ? _value.errFileImport
+          : errFileImport // ignore: cast_nullable_to_non_nullable
               as String,
       cameraOpened: cameraOpened == freezed
           ? _value.cameraOpened
@@ -101,6 +108,7 @@ abstract class _$$_SeedImportXpubStateCopyWith<$Res>
       String fingerPrint,
       String path,
       String errXpub,
+      String errFileImport,
       bool cameraOpened,
       bool detailsReady});
 }
@@ -122,6 +130,7 @@ class __$$_SeedImportXpubStateCopyWithImpl<$Res>
     Object? fingerPrint = freezed,
     Object? path = freezed,
     Object? errXpub = freezed,
+    Object? errFileImport = freezed,
     Object? cameraOpened = freezed,
     Object? detailsReady = freezed,
   }) {
@@ -141,6 +150,10 @@ class __$$_SeedImportXpubStateCopyWithImpl<$Res>
       errXpub: errXpub == freezed
           ? _value.errXpub
           : errXpub // ignore: cast_nullable_to_non_nullable
+              as String,
+      errFileImport: errFileImport == freezed
+          ? _value.errFileImport
+          : errFileImport // ignore: cast_nullable_to_non_nullable
               as String,
       cameraOpened: cameraOpened == freezed
           ? _value.cameraOpened
@@ -162,6 +175,7 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
       this.fingerPrint = '',
       this.path = '',
       this.errXpub = '',
+      this.errFileImport = '',
       this.cameraOpened = false,
       this.detailsReady = false})
       : super._();
@@ -180,6 +194,9 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
   final String errXpub;
   @override
   @JsonKey()
+  final String errFileImport;
+  @override
+  @JsonKey()
   final bool cameraOpened;
   @override
   @JsonKey()
@@ -187,7 +204,7 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
 
   @override
   String toString() {
-    return 'XpubImportState(xpub: $xpub, fingerPrint: $fingerPrint, path: $path, errXpub: $errXpub, cameraOpened: $cameraOpened, detailsReady: $detailsReady)';
+    return 'XpubImportState(xpub: $xpub, fingerPrint: $fingerPrint, path: $path, errXpub: $errXpub, errFileImport: $errFileImport, cameraOpened: $cameraOpened, detailsReady: $detailsReady)';
   }
 
   @override
@@ -201,6 +218,8 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
             const DeepCollectionEquality().equals(other.path, path) &&
             const DeepCollectionEquality().equals(other.errXpub, errXpub) &&
             const DeepCollectionEquality()
+                .equals(other.errFileImport, errFileImport) &&
+            const DeepCollectionEquality()
                 .equals(other.cameraOpened, cameraOpened) &&
             const DeepCollectionEquality()
                 .equals(other.detailsReady, detailsReady));
@@ -213,6 +232,7 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
       const DeepCollectionEquality().hash(fingerPrint),
       const DeepCollectionEquality().hash(path),
       const DeepCollectionEquality().hash(errXpub),
+      const DeepCollectionEquality().hash(errFileImport),
       const DeepCollectionEquality().hash(cameraOpened),
       const DeepCollectionEquality().hash(detailsReady));
 
@@ -229,6 +249,7 @@ abstract class _SeedImportXpubState extends XpubImportState {
       final String fingerPrint,
       final String path,
       final String errXpub,
+      final String errFileImport,
       final bool cameraOpened,
       final bool detailsReady}) = _$_SeedImportXpubState;
   const _SeedImportXpubState._() : super._();
@@ -241,6 +262,8 @@ abstract class _SeedImportXpubState extends XpubImportState {
   String get path => throw _privateConstructorUsedError;
   @override
   String get errXpub => throw _privateConstructorUsedError;
+  @override
+  String get errFileImport => throw _privateConstructorUsedError;
   @override
   bool get cameraOpened => throw _privateConstructorUsedError;
   @override
