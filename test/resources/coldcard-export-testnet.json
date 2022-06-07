@@ -1,1 +1,29 @@
-{"chain": "XTN", "xpub": "tpubD6NzVbkrYhZ4Xq4XyiwvmzGPCXzFJ9AsnX73R6gWv2XfGrvGwSCnpJegSjpSXnFj3tRdUC9YpKQvgxSqJ4TcdrCjQR7fSw3VRqGnQL5NtQA", "xfp": "EFAB2046", "account": 0, "bip49": {"xpub": "tpubDCw55JYr2oyHnevDv4CTVHXPWoxC3LjsyjzCCMCFNZgRh5jFCdMgNB3WFecRd777m8GCnFBk5z2fiUT8g8KZShZdF9iqWhKVdUfFDqKF6HG", "first": "2MwFTXMzizYWieC2JU1aKmmGqwe5FCsF4KA", "deriv": "m/49'/1'/0'", "xfp": "31B4BA66", "name": "p2wpkh-p2sh", "_pub": "upub5E4ee4iQsVPPxyA1xnrVf6uWfnRCE6GKgmqEVcTStdntnVcrNS1uMYQFwzet6tC7kJNsvEtCAu8yNS7q8BEHAZ4XaXtG5SCoELsuJ9CS2Cz"}, "bip44": {"xpub": "tpubDC4aoM5HbUhASitj53NF232tkuGdPwKfUbSNa64puihCRgZ8L81N8p1VfqdC7y5QtANSJqsLup4smgkfNLTKHpnw9dd5xNXg6jCGTrncm6h", "first": "mjyKkvsMhTjEpNqbt4vD5kD9GDoHzStFES", "deriv": "m/44'/1'/0'", "xfp": "7DEF5A46", "name": "p2pkh"}, "bip84": {"xpub": "tpubDCBtCtWDzqBZRjMzFbtSDFvTQkKhN2gdKyAG6cDVGqGo9zeUDwCuL73XEszmJc1Do7aE8rxtzoDdkEm8GvX4FPQrqpZHgwhpTNAUALq9kd7", "first": "tb1qcpmjxkw90dvsy7emhdpvxehe3z0vpw8eerz4ct", "deriv": "m/84'/1'/0'", "xfp": "38012D14", "name": "p2wpkh", "_pub": "vpub5Y9j5KLhzC99TLnu8hL6bAQ5jgw9VQCZx7XXBGNaAum9JWMJeQ2gwY4QxRzonHk9Bvoi2LFuYNgVHV3PSfqnmUbN3YR8qbQcKxSmd7xW4bn"}}
+{
+  "chain": "XTN",
+  "xpub": "tpubD6NzVbkrYhZ4Xq4XyiwvmzGPCXzFJ9AsnX73R6gWv2XfGrvGwSCnpJegSjpSXnFj3tRdUC9YpKQvgxSqJ4TcdrCjQR7fSw3VRqGnQL5NtQA",
+  "xfp": "EFAB2046",
+  "account": 0,
+  "bip49": {
+    "xpub": "tpubDCw55JYr2oyHnevDv4CTVHXPWoxC3LjsyjzCCMCFNZgRh5jFCdMgNB3WFecRd777m8GCnFBk5z2fiUT8g8KZShZdF9iqWhKVdUfFDqKF6HG",
+    "first": "2MwFTXMzizYWieC2JU1aKmmGqwe5FCsF4KA",
+    "deriv": "m/49'/1'/0'",
+    "xfp": "31B4BA66",
+    "name": "p2wpkh-p2sh",
+    "_pub": "upub5E4ee4iQsVPPxyA1xnrVf6uWfnRCE6GKgmqEVcTStdntnVcrNS1uMYQFwzet6tC7kJNsvEtCAu8yNS7q8BEHAZ4XaXtG5SCoELsuJ9CS2Cz"
+  },
+  "bip44": {
+    "xpub": "tpubDC4aoM5HbUhASitj53NF232tkuGdPwKfUbSNa64puihCRgZ8L81N8p1VfqdC7y5QtANSJqsLup4smgkfNLTKHpnw9dd5xNXg6jCGTrncm6h",
+    "first": "mjyKkvsMhTjEpNqbt4vD5kD9GDoHzStFES",
+    "deriv": "m/44'/1'/0'",
+    "xfp": "7DEF5A46",
+    "name": "p2pkh"
+  },
+  "bip84": {
+    "xpub": "tpubDCBtCtWDzqBZRjMzFbtSDFvTQkKhN2gdKyAG6cDVGqGo9zeUDwCuL73XEszmJc1Do7aE8rxtzoDdkEm8GvX4FPQrqpZHgwhpTNAUALq9kd7",
+    "first": "tb1qcpmjxkw90dvsy7emhdpvxehe3z0vpw8eerz4ct",
+    "deriv": "m/84'/1'/0'",
+    "xfp": "38012D14",
+    "name": "p2wpkh",
+    "_pub": "vpub5Y9j5KLhzC99TLnu8hL6bAQ5jgw9VQCZx7XXBGNaAum9JWMJeQ2gwY4QxRzonHk9Bvoi2LFuYNgVHV3PSfqnmUbN3YR8qbQcKxSmd7xW4bn"
+  }
+}
