@@ -27,15 +27,16 @@ class _Landing extends StatelessWidget {
               edgeOffset: 10.0,
               displacement: 10.0,
               onRefresh: () async {
-                if (!torState.isRunning) c.read<TorCubit>().start();
+                c.read<TorCubit>().start();
                 c.read<TorCubit>().checkStatus();
+                c.read<TorCubit>().getProgress();
               },
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
                     stretch: true,
                     pinned: true,
-                    expandedHeight: c.height / 6,
+                    expandedHeight: c.height / 4,
                     automaticallyImplyLeading: false,
                     backgroundColor: c.colours.background,
                     flexibleSpace: FlexibleSpaceBar(
@@ -44,12 +45,9 @@ class _Landing extends StatelessWidget {
                       ],
                       background: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const LandingLoader(),
                           const SizedBox(height: 12),
-                          const LandingLogo(),
-                          if (torState.isConnected) Container(),
                           if (torState.errConnection != '')
                             Text(
                               torState.errConnection,
@@ -58,7 +56,10 @@ class _Landing extends StatelessWidget {
                                 // fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
-                            )
+                            ),
+                          const SizedBox(height: 48),
+                          const LandingLogo(),
+                          if (torState.isConnected) Container(),
 
                           // const Start(),
                         ],

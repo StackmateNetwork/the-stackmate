@@ -97,9 +97,9 @@ typedef HeightT = Pointer<Utf8> Function(
 );
 
 typedef TorStartT = Pointer<Utf8> Function(
-  Pointer<Utf8> path,
+  Pointer<Utf8> data_dir,
   Pointer<Utf8> socks5_port,
-  Pointer<Utf8> http_port,
+  Pointer<Utf8> http_proxy,
 );
 typedef TorStatusT = Pointer<Utf8> Function(
   Pointer<Utf8> control_port,

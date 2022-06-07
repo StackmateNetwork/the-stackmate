@@ -1,12 +1,13 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/libtor.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/result.dart';
 import 'package:utopic_tor_onion_proxy/utopic_tor_onion_proxy.dart';
-import 'package:sats/api/libtor.dart';
 
 part 'tor.freezed.dart';
 
@@ -14,22 +15,19 @@ part 'tor.freezed.dart';
 class TorState with _$TorState {
   const factory TorState({
     @Default('/tmp') String workingDir,
-    @Default(49050) int socks5Port,
-    @Default(48950) int httpProxy,
-    @Default('Offline.') String bootstapProgress,
+    @Default(9150) int socks5Port,
+    @Default('') String httpProxy,
+    @Default('101') String bootstapProgress,
     @Default(false) bool isRunning,
     @Default(false) bool isConnected,
-    @Default('control_key') String controlKey,
+    @Default('') String controlKey,
     @Default('') String errConnection,
   }) = _TorState;
 
   const TorState._();
 
   String getSocks5() {
-    if (socks5Port == 0)
-      return 'none';
-    else
-      return '127.0.0.1:' + socks5Port.toString();
+    return '127.0.0.1:' + socks5Port.toString();
   }
 }
 
@@ -44,28 +42,25 @@ class TorCubit extends Cubit<TorState> {
           errConnection: '',
         ),
       );
-      final platformTmp = Directory.systemTemp.toString();
-      final controlKey = await compute(
-        daemonStart,
-        {'path': platformTmp, 'socks5Port': '49050', 'httpProxy': ''},
-      );
-      if (controlKey.hasError)
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        final port = await UtopicTorOnionProxy.startTor();
         emit(
           state.copyWith(
-            errConnection: controlKey.result!,
-            isRunning: false,
-            bootstapProgress: '0',
-          ),
-        );
-      else
-        emit(
-          state.copyWith(
+            socks5Port: port!,
             errConnection: '',
-            controlKey: controlKey.result!,
             isRunning: true,
-            bootstapProgress: '0',
+            isConnected: true,
           ),
         );
+      } else {
+        emit(
+          state.copyWith(
+            isRunning: false,
+            errConnection: 'Not Connected To The Internet.',
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(
@@ -85,18 +80,50 @@ class TorCubit extends Cubit<TorState> {
           errConnection: '',
         ),
       );
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        final isConnected = await UtopicTorOnionProxy.isTorRunning();
+        emit(
+          state.copyWith(isConnected: isConnected!),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            isConnected: false,
+            isRunning: false,
+            errConnection: 'Not Connected To The Internet.',
+          ),
+        );
+      }
+    } catch (e) {
+      state.copyWith(
+        isConnected: false,
+        isRunning: false,
+        errConnection: e.toString(),
+      );
+      _logger.logException(e, 'Tor.status', '');
+    }
+  }
+
+  Future<void> getProgress() async {
+    try {
+      emit(
+        state.copyWith(
+          errConnection: '',
+        ),
+      );
       final progress = await compute(
         controlProgress,
         {
-          'controlPort': '48950',
+          'controlPort': (state.socks5Port + 1).toString(),
           'controlKey': state.controlKey,
         },
       );
       if (progress.hasError)
         emit(
           state.copyWith(
-            errConnection: progress.result!,
-            isRunning: false,
+            errConnection: progress.error!,
+            // isRunning: false,
           ),
         );
       else
@@ -124,17 +151,17 @@ class TorCubit extends Cubit<TorState> {
           errConnection: '',
         ),
       );
-      final progress = await compute(
+      final status = await compute(
         controlShutdown,
         {
-          'controlPort': '48950',
+          'controlPort': (state.socks5Port + 1).toString(),
           'controlKey': state.controlKey,
         },
       );
-      if (progress.hasError)
+      if (status.hasError)
         emit(
           state.copyWith(
-            errConnection: progress.result!,
+            errConnection: status.error!,
           ),
         );
       else
@@ -143,7 +170,6 @@ class TorCubit extends Cubit<TorState> {
             errConnection: '',
             isRunning: false,
             isConnected: false,
-            bootstapProgress: progress.result!,
           ),
         );
     } catch (e) {
@@ -155,16 +181,14 @@ class TorCubit extends Cubit<TorState> {
   }
 }
 
-Future<R<String>> daemonStart(dynamic data) async {
+void daemonStart(dynamic data) {
   final obj = data as Map<String, String?>;
 
-  final resp = LibTor().torStart(
+  LibTor().torStart(
     path: obj['path']!,
     socks5Port: obj['socks5Port']!,
     httpProxy: obj['httpProxy']!,
   );
-
-  return resp;
 }
 
 Future<R<String>> controlProgress(dynamic data) async {
@@ -174,10 +198,12 @@ Future<R<String>> controlProgress(dynamic data) async {
     controlPort: obj['controlPort']!,
     controlKey: obj['controlKey']!,
   );
-
-  if (resp.result!.startsWith('101'))
+  if (resp.hasError)
+    return resp;
+  else if (resp.result!.startsWith('101'))
     return const R(error: 'Error, requires restart.');
-  return resp;
+  else
+    return resp;
 }
 
 Future<R<String>> controlShutdown(dynamic data) async {
