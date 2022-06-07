@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
+import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Settings/BitcoinUnit.dart';
 import 'package:sats/ui/component/Settings/Incognito.dart';
 import 'package:sats/ui/component/Settings/SelectNetwork.dart';
 import 'package:sats/ui/component/Settings/SelectNode.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
-import 'package:sats/pkg/extensions.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);

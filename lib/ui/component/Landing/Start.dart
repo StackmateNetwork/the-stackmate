@@ -9,14 +9,14 @@ class Start extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final torRunning = context.select((TorCubit sc) => sc.state.isRunning);
+    final torConnected = context.select((TorCubit sc) => sc.state.isConnected);
     final masterKey = context.select((MasterKeyCubit mc) => mc.state.key);
 
     return IgnorePointer(
-      ignoring: !torRunning,
+      ignoring: !torConnected,
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 300),
-        opacity: !torRunning ? 0.3 : 1.0,
+        opacity: !torConnected ? 0.3 : 1.0,
         child: SizedBox(
           height: 72,
           child: ElevatedButton(

@@ -1,7 +1,7 @@
-import 'package:bitcoin/bitcoin.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:libstackmate/libstackmate.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 
@@ -37,7 +37,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     this._core,
   ) : super(const SeedImportState());
 
-  final IStackMateCore _core;
+  final IStackMateBitcoin _core;
   final Logger logger;
   final ChainSelectCubit _blockchainCubit;
 

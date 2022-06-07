@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -11,7 +10,7 @@ class LandingLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     final tor = context.select((TorCubit hc) => hc.state);
     // final fees = context.select((FeesCubit hc) => hc.state);
-    const String loading = 'Initializing Tor...';
+    const String loading = 'Initializing Tor.\nThis can take a while...';
     if (!tor.isRunning && tor.errConnection == '')
       return const Loading(
         text: loading,

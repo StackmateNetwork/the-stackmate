@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Landing/Loader.dart';
@@ -31,13 +29,14 @@ class _Landing extends StatelessWidget {
               onRefresh: () async {
                 c.read<TorCubit>().start();
                 c.read<TorCubit>().checkStatus();
+                c.read<TorCubit>().getProgress();
               },
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
                     stretch: true,
                     pinned: true,
-                    expandedHeight: c.height / 6,
+                    expandedHeight: c.height / 4,
                     automaticallyImplyLeading: false,
                     backgroundColor: c.colours.background,
                     flexibleSpace: FlexibleSpaceBar(
@@ -46,12 +45,9 @@ class _Landing extends StatelessWidget {
                       ],
                       background: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const LandingLoader(),
                           const SizedBox(height: 12),
-                          const LandingLogo(),
-                          if (torState.isRunning) Container(),
                           if (torState.errConnection != '')
                             Text(
                               torState.errConnection,
@@ -60,7 +56,10 @@ class _Landing extends StatelessWidget {
                                 // fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
-                            )
+                            ),
+                          const SizedBox(height: 48),
+                          const LandingLogo(),
+                          if (torState.isConnected) Container(),
 
                           // const Start(),
                         ],

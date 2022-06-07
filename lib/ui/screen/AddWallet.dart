@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/AddWallet/SelectButton.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
-import 'package:sats/ui/component/Common/LogButton.dart';
 
 class AddWalletScreen extends StatelessWidget {
   const AddWalletScreen({Key? key}) : super(key: key);
@@ -42,7 +39,7 @@ class AddWalletScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'Your master key can create child accounts and manages your social media identity (optional).',
+                  'A 12 word mnemonic seed phrase and optional passphrase represents your master key. It can recover all accounts created on this wallet.',
                   style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.onPrimary,
                   ),
@@ -54,8 +51,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'New',
-                description:
-                    'Generate a new mnemonic seed phrase.\nCreates a segwit-native ("bc1q") wallet.',
+                description: 'Master key from a new mnemonic seed phrase.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/generate-seed');
@@ -64,8 +60,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'Import',
-                description:
-                    'Import master key from an existing seed phrase.\nCreates a segwit-native ("bc1q") wallet.',
+                description: 'Import master key from an existing seed phrase.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/import-seed');
@@ -74,6 +69,16 @@ class AddWalletScreen extends StatelessWidget {
             ],
             if (masterKey != null) ...[
               const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'From External Wallet'.toUpperCase(),
+                  textAlign: TextAlign.left,
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.onBackground,
+                  ),
+                ),
+              ),
               SelectButton(
                 text: 'Watcher',
                 description:
@@ -104,6 +109,16 @@ class AddWalletScreen extends StatelessWidget {
               //   },
               // ),
               const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'From Master Key'.toUpperCase(),
+                  textAlign: TextAlign.left,
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.onBackground,
+                  ),
+                ),
+              ),
               SelectButton(
                 text: 'Taproot',
                 description:

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
@@ -11,8 +11,6 @@ import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
-import 'package:sats/ui/component/Common/LogButton.dart';
 import 'package:sats/ui/component/Send/Address.dart';
 import 'package:sats/ui/component/Send/Amount.dart';
 import 'package:sats/ui/component/Send/Complete.dart';
@@ -21,6 +19,8 @@ import 'package:sats/ui/component/Send/Loader.dart';
 import 'package:sats/ui/component/Send/SelectFee.dart';
 import 'package:sats/ui/component/Send/WalletDetails.dart';
 import 'package:sats/ui/component/Send/ZeroBalance.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
+import 'package:sats/ui/component/common/LogButton.dart';
 
 class _WalletSend extends StatelessWidget {
   const _WalletSend({Key? key}) : super(key: key);
@@ -193,7 +193,7 @@ class WalletSendScreen extends StatelessWidget {
       locator<IShare>(),
       nodeAddress,
       tor,
-      locator<IStackMateCore>(),
+      locator<IStackMateBitcoin>(),
       fees,
       // locator<FileManager>(),
     );

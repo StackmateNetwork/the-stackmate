@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/fees.dart';
-import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -15,8 +14,6 @@ import 'package:sats/ui/component/Home/Tools.dart';
 class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final torIsRunning = c.select((TorCubit t) => t.state.isRunning);
-
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
         return Scaffold(
@@ -49,7 +46,7 @@ class _Home extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const HomeLoader(),
-                              if (torState.isRunning) ...[
+                              if (torState.isConnected) ...[
                                 HomeHeader(),
                                 Networth(),
                                 WalletTools()
@@ -74,7 +71,7 @@ class _Home extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  if (torState.isRunning) ...[
+                                  if (torState.isConnected) ...[
                                     Accounts()
                                   ] else ...[
                                     Container()

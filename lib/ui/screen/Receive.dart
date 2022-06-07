@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/wallet/receive.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -9,10 +9,10 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/Receive/Loader.dart';
 import 'package:sats/ui/component/Receive/QrAddress.dart';
 import 'package:sats/ui/component/Receive/TextAddress.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class _Receive extends StatelessWidget {
@@ -89,7 +89,7 @@ class ReceiveScreen extends StatelessWidget {
       locator<IClipBoard>(),
       locator<IShare>(),
       locator<IVibrate>(),
-      locator<IStackMateCore>(),
+      locator<IStackMateBitcoin>(),
     );
 
     return BlocProvider.value(

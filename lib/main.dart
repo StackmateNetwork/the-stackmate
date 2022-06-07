@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
@@ -27,12 +30,14 @@ import 'package:sats/ui/screen/Settings.dart';
 import 'package:sats/ui/screen/Trade.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
+// ignore: import_of_legacy_library_into_null_safe
 
 void main() async {
   await initializeHive();
   setupDependencies(useDummies: false);
 
   WidgetsFlutterBinding.ensureInitialized();
+  // final p = ReceivePort();
 
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -46,6 +51,15 @@ void main() async {
 class Stackmate extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
+    compute(
+      daemonStart,
+      {
+        'path': Directory.systemTemp.toString(),
+        'socks5Port': '39050',
+        'httpProxy': '',
+      },
+    );
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);

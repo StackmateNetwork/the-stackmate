@@ -50,13 +50,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
-  bitcoin:
-    dependency: "direct main"
-    description:
-      path: "packages/bitcoin"
-      relative: true
-    source: path
-    version: "0.0.1"
   bloc:
     dependency: transitive
     description:
@@ -492,6 +485,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.2.0"
+  libstackmate:
+    dependency: "direct main"
+    description:
+      path: "packages/libstackmate"
+      relative: true
+    source: path
+    version: "0.0.1"
   lint:
     dependency: "direct dev"
     description:

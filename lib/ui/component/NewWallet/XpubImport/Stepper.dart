@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/Common/StepLine.dart';
+import 'package:sats/ui/component/common/StepLine.dart';
 
 class XPubImportStepper extends StatelessWidget {
   const XPubImportStepper({Key? key}) : super(key: key);

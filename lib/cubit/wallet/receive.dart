@@ -1,10 +1,10 @@
-import 'package:bitcoin/types.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
-import 'package:sats/api/stackmate-core.dart';
+import 'package:libstackmate/types.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
+import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -40,7 +40,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   final IShare _share;
   final IClipBoard _clipBoard;
   final IVibrate _vibrate;
-  final IStackMateCore _core;
+  final IStackMateBitcoin _core;
 
   static const emailShareSubject = 'Bitcoin Address';
 
@@ -121,7 +121,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
 String getAdrr(dynamic msg) {
   final data = msg as Map<String, String?>;
-  final resp = BitcoinFFI().getAddress(
+  final resp = LibBitcoin().getAddress(
     descriptor: data['descriptor']!,
     index: data['index']!,
   );

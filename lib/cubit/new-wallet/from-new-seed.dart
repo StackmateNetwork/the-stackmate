@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:bitcoin/types.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:libstackmate/types.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
@@ -77,7 +77,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
     });
   }
 
-  final IStackMateCore _core;
+  final IStackMateBitcoin _core;
 
   final IStorage _storage;
   final Logger _logger;

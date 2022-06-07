@@ -1,22 +1,21 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/api/interface/stackmate-core.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/wallets.dart';
-import 'package:sats/model/master.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Label.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Stepper.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Warning.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class _SeedGenerate extends StatefulWidget {
@@ -134,13 +133,13 @@ class SeedGenerateScreen extends StatelessWidget {
     final masterKey = context.select((MasterKeyCubit c) => c);
 
     final seedGenerateCubit = SeedGenerateCubit(
-      locator<IStackMateCore>(),
+      locator<IStackMateBitcoin>(),
       networkSelect,
       logger,
     );
 
     final seedGenerateWalletCubit = SeedGenerateWalletCubit(
-      locator<IStackMateCore>(),
+      locator<IStackMateBitcoin>(),
       locator<IStorage>(),
       logger,
       wallets,

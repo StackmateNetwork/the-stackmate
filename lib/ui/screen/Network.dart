@@ -45,7 +45,7 @@ class _NetworkHome extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const HomeLoader(),
-                              if (torState.isRunning) ...[
+                              if (torState.isConnected) ...[
                                 HomeHeader(),
                                 EnterMyIdentity(),
                                 SocialTools(),
@@ -70,7 +70,7 @@ class _NetworkHome extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  if (torState.isRunning)
+                                  if (torState.isConnected)
                                     ...[]
                                   else ...[Container()]
                                 ],

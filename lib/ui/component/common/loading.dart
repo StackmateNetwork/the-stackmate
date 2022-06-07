@@ -20,6 +20,7 @@ class Loading extends StatelessWidget {
           style: c.fonts.caption!.copyWith(
             color: c.colours.onBackground,
           ),
+          textAlign: TextAlign.center,
         )
       ],
     );

@@ -19,17 +19,14 @@ class SeedGenerateWarning extends StatelessWidget {
         const SizedBox(height: 32),
         Text(
           '''
-The following seed phrase represents your master key.
+DO NOT TYPE THE FOLLOWING ON A KEYBOARD OR CREATE DIGITAL COPIES OF IT.
 
-DO NOT TYPE IT ON A KEYBOARD OR CREATE DIGITAL COPIES OF IT.
-
-Note down your seed phrase on a piece of paper/card/steel
+Note down your seed phrase (and optional passphrase) on a piece of paper/card/steel
 and store in a safe place.
 
-Only in case of an emergency, you will need to type it to recover your wallet, after 
-which it is recommended to sweep into a new seed.
+In case your device resets or fails, you will need it to recover your wallet on a 
+new device.
 
-We recommend proceeding on airplane mode.
       ''',
           style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
         ),
