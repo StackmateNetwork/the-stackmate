@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/logger.dart';
@@ -27,6 +28,8 @@ class XpubImportState with _$XpubImportState {
     @Default('') String errFileImport,
     @Default(false) bool cameraOpened,
     @Default(false) bool detailsReady,
+    @Default(false) bool clearJson,
+    String? importedJSONPath,
   }) = _SeedImportXpubState;
   const XpubImportState._();
 
@@ -47,6 +50,40 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   final IClipBoard _clipboard;
   // final ISoloWalletAPI _soloWalletAPI;
   final Logger _logger;
+
+  Future<void> updateFile() async {
+    final FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowMultiple: false,
+      allowedExtensions: ['json'],
+    );
+
+    if (result != null) {
+      final PlatformFile _coldcardJson = result.files.single;
+
+      emit(
+        state.copyWith(
+          importedJSONPath: _coldcardJson.path,
+        ),
+      );
+    } else {
+      emit(state.copyWith(errFileImport: 'Could not find file.'));
+    }
+  }
+
+  Future<void> clearCachedFiles() async {
+    final bool? result = await FilePicker.platform.clearTemporaryFiles();
+    if (result != null) {
+      emit(
+        state.copyWith(
+          clearJson: true,
+          detailsReady: false,
+        ),
+      );
+    } else {
+      emit(state.copyWith(errFileImport: 'Could not find file.'));
+    }
+  }
 
   void toggleCamera() async {
     try {
@@ -129,22 +166,22 @@ class XpubImportCubit extends Cubit<XpubImportState> {
 
   void clear() => emit(const XpubImportState());
 
-  Future<void> importColdCardSegwit(File genericJson) async {
+  Future<void> importColdCardSegwit() async {
     try {
-      final json = jsonDecode(await genericJson.readAsString());
+      final jsonFile = File(state.importedJSONPath!);
+      final json = jsonDecode(await jsonFile.readAsString());
       final ColdCardGeneric ccWatcher =
           ColdCardGeneric.fromJson(json as Map<String, dynamic>);
       emit(
         state.copyWith(
           xpub: ccWatcher.bip84!.xpub!,
-          fingerPrint: ccWatcher.xfp!,
+          fingerPrint: ccWatcher.xfp!.toLowerCase(),
           path: ccWatcher.bip84!.deriv!,
           detailsReady: true,
         ),
       );
     } catch (e, s) {
       emit(state.copyWith(errFileImport: e.toString()));
-
       _logger.logException(e, 'ColdCardJSON.ImportSegwit', s);
     }
   }

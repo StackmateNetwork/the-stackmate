@@ -1,7 +1,5 @@
-import 'dart:developer';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
@@ -14,37 +12,92 @@ import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
+import 'package:sats/ui/component/NewWallet/XpubColdcardImport.dart';
+import 'package:sats/ui/component/NewWallet/XpubImport/Label.dart';
+import 'package:sats/ui/component/NewWallet/XpubImport/Loader.dart';
+import 'package:sats/ui/component/NewWallet/XpubImport/Stepper.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
+import 'package:sats/ui/component/common/header.dart';
 
 class _XpubColdcard extends StatelessWidget {
-  void _pickFile() async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['json'],
-    );
-
-    if (result != null) {
-      final PlatformFile file = result.files.first;
-
-      print(file.name);
-      print(file.path);
-    } else {
-      log('No file selected');
-    }
-  }
-
-  @override
   Widget build(BuildContext c) {
-    return Center(
-      child: MaterialButton(
-        onPressed: () {
-          _pickFile();
-        },
-        color: c.colours.primary,
-        child: Text(
-          'Import json file',
-          style: TextStyle(color: c.colours.background),
-        ),
-      ),
+    return BlocConsumer<XpubImportWalletCubit, XpubImportWalletState>(
+      listenWhen: (previous, current) =>
+          previous.currentStep != current.currentStep ||
+          previous.newWalletSaved != current.newWalletSaved,
+      listener: (context, state) {
+        if (state.newWalletSaved) {
+          context.go('/home');
+        }
+      },
+      buildWhen: (previous, current) =>
+          previous.currentStep != current.currentStep,
+      builder: (context, state) {
+        return WillPopScope(
+          onWillPop: () async {
+            if (!state.canGoBack()) {
+              c.read<XpubImportWalletCubit>().backClicked();
+              return false;
+            }
+
+            return true;
+          },
+          child: Scaffold(
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Loader(),
+                    const SizedBox(height: 24),
+                    Header(
+                      cornerTitle: 'WATCHER',
+                      children: [
+                        Back(
+                          onPressed: () {
+                            if (!state.canGoBack()) {
+                              c.read<XpubImportWalletCubit>().backClicked();
+                              return;
+                            }
+
+                            Navigator.pop(c);
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24.0),
+                      child: XPubImportStepper(),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 24,
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: c.colours.surface,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: () {
+                        switch (state.currentStep) {
+                          case XpubImportWalletStep.import:
+                            return const XpubColdcardImport();
+
+                          case XpubImportWalletStep.label:
+                            return const XpubLabel();
+                        }
+                      }(),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
