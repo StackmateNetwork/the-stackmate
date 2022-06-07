@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
-import 'package:sats/ui/component/Common/LogButton.dart';
+import 'package:sats/ui/component/Network/MyIdentity/Key.dart';
 import 'package:sats/ui/component/Network/MyIdentity/Recover.dart';
 import 'package:sats/ui/component/Network/MyIdentity/Register.dart';
-import 'package:sats/ui/component/Network/MyIdentity/Key.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
+import 'package:sats/ui/component/common/LogButton.dart';
 
 class _MyIdentity extends StatelessWidget {
   const _MyIdentity({Key? key}) : super(key: key);

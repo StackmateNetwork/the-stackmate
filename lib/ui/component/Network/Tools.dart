@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sats/pkg/extensions.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sats/pkg/extensions.dart';
 
 class SocialTools extends StatelessWidget {
   @override
@@ -58,7 +58,7 @@ Future<void> _showTradeWarning(BuildContext context) async {
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: context.colours.onPrimary,
-        title: Text('P2P Trade Terms.', style: context.fonts.headline3!),
+        title: Text('P2P Trade Terms.', style: context.fonts.headline3),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[

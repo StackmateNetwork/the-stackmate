@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
-import 'package:sats/ui/component/Common/LogButton.dart';
 import 'package:sats/ui/component/Peers/Search.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
+import 'package:sats/ui/component/common/LogButton.dart';
 
 class _Peers extends StatelessWidget {
   const _Peers({Key? key}) : super(key: key);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';

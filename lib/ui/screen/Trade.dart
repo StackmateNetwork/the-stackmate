@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/Common/BackButton.dart';
-import 'package:sats/ui/component/Common/LogButton.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
+import 'package:sats/ui/component/common/LogButton.dart';
 
 class _Announcements extends StatelessWidget {
   const _Announcements({Key? key}) : super(key: key);
