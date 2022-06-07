@@ -16,7 +16,7 @@ class TextAddress extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: c.width,
+          width: c.width / 1.2,
           child: Text(
             address,
             style: c.fonts.caption!.copyWith(

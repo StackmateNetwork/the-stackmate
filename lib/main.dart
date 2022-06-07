@@ -19,10 +19,11 @@ import 'package:sats/ui/screen/Logs.dart';
 import 'package:sats/ui/screen/Messages.dart';
 import 'package:sats/ui/screen/MyIdentity.dart';
 import 'package:sats/ui/screen/Network.dart';
+import 'package:sats/ui/screen/NewWallet/MasterKeyDerive.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
-import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
 import 'package:sats/ui/screen/NewWallet/XpubColdcard.dart';
+import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
 import 'package:sats/ui/screen/PSBT.dart';
 import 'package:sats/ui/screen/Peers.dart';
 import 'package:sats/ui/screen/Receive.dart';
@@ -137,6 +138,10 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/import-seed',
         builder: (_, __) => const SeedImportScreen(),
+      ),
+      GoRoute(
+        path: '/derive-account',
+        builder: (_, __) => const MasterDeriveScreen(),
       ),
       GoRoute(
         path: '/watch-only',

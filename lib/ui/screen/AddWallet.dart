@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
+import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/AddWallet/SelectButton.dart';
 
@@ -10,13 +11,16 @@ class AddWalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
+    final wallets = c.select((WalletsCubit wc) => wc.state);
+    final hasTaprootWallet =
+        wallets.wallets.map((e) => e.descriptor.startsWith('tr'));
 
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 64),
+            const SizedBox(height: 48),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: (masterKey == null)
@@ -72,29 +76,30 @@ class AddWalletScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'From External Wallet'.toUpperCase(),
+                  'WATCHER'.toUpperCase(),
                   textAlign: TextAlign.left,
                   style: c.fonts.caption!.copyWith(
-                    color: c.colours.onBackground,
+                    color: c.colours.secondary,
                   ),
                 ),
               ),
-              SelectButton(
-                text: 'Watcher',
-                description:
-                    'Import a public key or descriptor.\nMonitor your hardware signer.',
-                colour: c.colours.surface,
-                onPressed: () {
-                  c.push('/watch-only');
-                },
-              ),
+              const SizedBox(height: 8),
               SelectButton(
                 text: 'Coldcard',
-                description:
-                    'Import a public key or descriptor.\nMonitor your hardware signer.',
+                description: 'Import a generic.json from your ColdCard.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/coldcard');
+                },
+              ),
+              const SizedBox(height: 8),
+              SelectButton(
+                text: 'Manual',
+                description:
+                    'Import a raw public key.\nMonitor any hardware if your know what youre doing.',
+                colour: c.colours.surface,
+                onPressed: () {
+                  c.push('/watch-only');
                 },
               ),
               const SizedBox(height: 16),
@@ -118,26 +123,29 @@ class AddWalletScreen extends StatelessWidget {
               //   },
               // ),
               const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'From Master Key'.toUpperCase(),
-                  textAlign: TextAlign.left,
-                  style: c.fonts.caption!.copyWith(
-                    color: c.colours.onBackground,
+              if (!hasTaprootWallet.contains(true)) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    'SIGNER'.toUpperCase(),
+                    textAlign: TextAlign.left,
+                    style: c.fonts.caption!.copyWith(
+                      color: c.colours.tertiary,
+                    ),
                   ),
                 ),
-              ),
-              SelectButton(
-                text: 'Taproot',
-                description:
-                    'Derive a taproot ("bc1p") account from your master key.\nCOMING SOON.',
-                colour: c.colours.surface,
-                onPressed: () {
-                  // c.push('/watch-only');
-                },
-              ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 8),
+                SelectButton(
+                  text: 'DERIVE',
+                  description:
+                      'Derive a taproot ("bc1p") or legacy ("3") account from your master key.',
+                  colour: c.colours.surface,
+                  onPressed: () {
+                    c.push('/derive-account');
+                  },
+                ),
+                const SizedBox(height: 16),
+              ],
             ],
             const SizedBox(height: 48),
           ],

@@ -172,7 +172,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       _masterKeyCubit.init();
       var newWallet = Wallet(
         label: state.walletLabel,
-        walletType: primaryWalletType,
+        walletType: signerWalletType,
         descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,

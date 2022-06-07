@@ -13,7 +13,6 @@ class Loader extends StatelessWidget {
     final loading = c.select((SeedImportWalletCubit h) => h.state.savingWallet);
 
     if (!loading) return Container();
-
-    return const Loading(text: 'Recovering wallet...');
+    return const Loading(text: 'Importing new wallet...');
   }
 }

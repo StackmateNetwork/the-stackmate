@@ -1,0 +1,251 @@
+import 'dart:async';
+
+import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:libstackmate/types.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
+import 'package:sats/api/libbitcoin.dart';
+import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
+import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
+import 'package:sats/cubit/wallets.dart';
+import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/result.dart';
+import 'package:sats/model/transaction.dart';
+import 'package:sats/model/wallet.dart';
+import 'package:sats/pkg/interface/storage.dart';
+import 'package:sats/pkg/storage.dart';
+
+part 'from-master-key.freezed.dart';
+
+enum MasterDeriveWalletStep { purpose, label }
+
+enum DerivationPurpose { taproot, legacy }
+
+@freezed
+class MasterDeriveWalletState with _$MasterDeriveWalletState {
+  const factory MasterDeriveWalletState({
+    @Default(MasterDeriveWalletStep.purpose) MasterDeriveWalletStep currentStep,
+    @Default(DerivationPurpose.taproot) DerivationPurpose purpose,
+    @Default('') String label,
+    @Default('') String walletLabelError,
+    @Default(false) bool savingWallet,
+    @Default('') String errSavingWallet,
+    @Default(false) bool newWalletSaved,
+  }) = _MasterDeriveWalletState;
+
+  // bool canGoBack() => true;
+}
+
+class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
+  MasterDeriveWalletCubit(
+    this._core,
+    this._logger,
+    this._storage,
+    this._wallets,
+    this._blockchainCubit,
+    this._nodeAddressCubit,
+    this._torCubit,
+    this._masterKeyCubit,
+  ) : super(const MasterDeriveWalletState());
+
+  final Logger _logger;
+  final IStorage _storage;
+  final IStackMateBitcoin _core;
+  final WalletsCubit _wallets;
+  final ChainSelectCubit _blockchainCubit;
+  final NodeAddressCubit _nodeAddressCubit;
+  final TorCubit _torCubit;
+  final MasterKeyCubit _masterKeyCubit;
+
+  static const invalidLabelError = 'Invalid Label';
+  static const internalError = 'Internal Error';
+  static const signerWalletType = 'SIGNER';
+  static const trScript = 'tr';
+  static const taprootPurpose = '86';
+  static const emptyString = '';
+
+  void labelChanged(String text) {
+    emit(state.copyWith(label: text, errSavingWallet: emptyString));
+  }
+
+  void nextClicked() async {
+    switch (state.currentStep) {
+      case MasterDeriveWalletStep.purpose:
+        emit(state.copyWith(currentStep: MasterDeriveWalletStep.label));
+
+        break;
+
+      case MasterDeriveWalletStep.label:
+        if (state.label == emptyString ||
+            state.label.length <= 3 ||
+            state.label.length > 20) {
+          emit(state.copyWith(errSavingWallet: invalidLabelError));
+          return;
+        }
+        if (!state.savingWallet) deriveTaproot();
+        break;
+    }
+  }
+
+  void purposeChanged(DerivationPurpose purpose) {
+    emit(state.copyWith(purpose: purpose));
+  }
+
+  void backClicked() {
+    switch (state.currentStep) {
+      case MasterDeriveWalletStep.purpose:
+        break;
+      case MasterDeriveWalletStep.label:
+        emit(
+          state.copyWith(
+            currentStep: MasterDeriveWalletStep.purpose,
+            label: emptyString,
+          ),
+        );
+        break;
+    }
+  }
+
+  void deriveTaproot() async {
+    try {
+      emit(
+        state.copyWith(
+          savingWallet: true,
+          errSavingWallet: emptyString,
+        ),
+      );
+
+      final child = _core.deriveHardened(
+        masterXPriv: _masterKeyCubit.state.key?.root as String,
+        account: '0',
+        purpose: taprootPurpose,
+      );
+
+      if (child.hasError) {
+        throw SMError.fromJson(child.error!);
+      }
+      final fingerprint = child.result!.fingerPrint;
+      final path = child.result!.hardenedPath;
+      final xprv = child.result!.xprv;
+      final fullXPrv =
+          '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
+
+      final policy = 'pk($fullXPrv/*)';
+
+      const readable = 'pk(__primary__)';
+
+      final descriptor = _core.compile(
+        policy: policy,
+        scriptType: trScript,
+      );
+
+      if (descriptor.hasError) {
+        throw SMError.fromJson(descriptor.error!);
+      }
+
+      final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+
+      var history = await compute(computeHistory, {
+        'descriptor': descriptor.result!,
+        'nodeAddress': nodeAddress,
+        'socks5': socks5,
+      });
+      var recievedCount = 0;
+
+      if (history.hasError) {
+        history = const R(result: []);
+      } else
+        for (final item in history.result!) {
+          if (item.sent == 0) {
+            recievedCount++;
+          }
+        }
+
+      var balance = await compute(computeBalance, {
+        'descriptor': descriptor.result!,
+        'nodeAddress': nodeAddress,
+        'socks5': socks5,
+      });
+
+      if (balance.hasError) {
+        balance = const R(result: 0);
+      }
+      // check balance and see if last address index needs update
+      var newWallet = Wallet(
+        label: state.label,
+        descriptor: descriptor.result!,
+        policy: readable,
+        requiredPolicyElements: 1,
+        policyElements: ['primary:$fullXPrv'],
+        blockchain: _blockchainCubit.state.blockchain.name,
+        walletType: signerWalletType,
+        lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
+        balance: balance.result!,
+        transactions: history.result!,
+      );
+
+      final savedId = await _storage.saveItem<Wallet>(
+        StoreKeys.Wallet.name,
+        newWallet,
+      );
+
+      if (savedId.hasError) return;
+
+      final id = savedId.result!;
+
+      newWallet = newWallet.copyWith(id: id);
+
+      await _storage.saveItemAt<Wallet>(
+        StoreKeys.Wallet.name,
+        id,
+        newWallet,
+      );
+
+      _wallets.walletSelected(newWallet);
+      _wallets.addTransactionsToSelectedWallet(history.result!);
+
+      emit(
+        state.copyWith(
+          savingWallet: false,
+          newWalletSaved: true,
+        ),
+      );
+    } catch (e, s) {
+      _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
+
+      emit(
+        state.copyWith(
+          errSavingWallet: internalError,
+          newWalletSaved: true,
+        ),
+      );
+    }
+  }
+}
+
+Future<R<List<Transaction>>> computeHistory(dynamic obj) async {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().getHistory(
+    descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+
+  return resp;
+}
+
+Future<R<int>> computeBalance(dynamic obj) async {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().syncBalance(
+    descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+
+  return resp;
+}

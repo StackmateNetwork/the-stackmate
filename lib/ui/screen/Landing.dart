@@ -29,7 +29,7 @@ class _Landing extends StatelessWidget {
               onRefresh: () async {
                 c.read<TorCubit>().start();
                 c.read<TorCubit>().checkStatus();
-                c.read<TorCubit>().getProgress();
+                // c.read<TorCubit>().getProgress();
               },
               child: CustomScrollView(
                 slivers: [

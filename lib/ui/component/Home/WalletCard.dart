@@ -45,7 +45,7 @@ class WalletCard extends StatelessWidget {
                     tileMode: TileMode.mirror,
                   ),
                   child: Container(
-                    height: 85,
+                    height: 92,
                     width: context.width / 2,
                     padding: const EdgeInsets.only(
                       top: 16,
@@ -70,7 +70,7 @@ class WalletCard extends StatelessWidget {
                         Text(
                           wallet.label,
                           style: context.fonts.subtitle1!.copyWith(
-                            color: context.colours.primary,
+                            color: context.colours.onPrimary,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -84,6 +84,19 @@ class WalletCard extends StatelessWidget {
                             color: wallet.walletType == 'WATCHER'
                                 ? context.colours.secondary
                                 : context.colours.tertiary,
+                            fontSize: 10,
+                          ),
+                        ),
+                        Text(
+                          (wallet.descriptor.startsWith('w'))
+                              ? 'SEGWIT'
+                              : wallet.descriptor.startsWith('tr')
+                                  ? 'TAPROOT'
+                                  : 'LEGACY',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 10,
+                          style: context.fonts.caption!.copyWith(
+                            color: context.colours.primary,
                             fontSize: 10,
                           ),
                         ),
@@ -116,7 +129,7 @@ class WalletCard extends StatelessWidget {
                     tileMode: TileMode.mirror,
                   ),
                   child: Container(
-                    height: 85,
+                    height: 92,
                     width: context.width / 5,
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
@@ -168,7 +181,7 @@ class WalletCard extends StatelessWidget {
                     tileMode: TileMode.mirror,
                   ),
                   child: Container(
-                    height: 85,
+                    height: 92,
                     width: context.width / 5,
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
