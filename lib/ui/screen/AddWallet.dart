@@ -88,6 +88,15 @@ class AddWalletScreen extends StatelessWidget {
                   c.push('/watch-only');
                 },
               ),
+              SelectButton(
+                text: 'Coldcard',
+                description:
+                    'Import a public key or descriptor.\nMonitor your hardware signer.',
+                colour: c.colours.surface,
+                onPressed: () {
+                  c.push('/coldcard');
+                },
+              ),
               const SizedBox(height: 16),
               // SelectButton(
               //   text: 'Legacy (coming soon...)',

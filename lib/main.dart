@@ -22,6 +22,7 @@ import 'package:sats/ui/screen/Network.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
 import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
+import 'package:sats/ui/screen/NewWallet/XpubColdcard.dart';
 import 'package:sats/ui/screen/PSBT.dart';
 import 'package:sats/ui/screen/Peers.dart';
 import 'package:sats/ui/screen/Receive.dart';
@@ -140,6 +141,10 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/watch-only',
         builder: (_, __) => const XPubImportScreen(),
+      ),
+      GoRoute(
+        path: '/coldcard',
+        builder: (_, __) => const XPubColdcardScreen(),
       ),
       GoRoute(
         path: '/wallet',

@@ -16,6 +16,7 @@ dependencies:
   dio: ^4.0.5
   drag_and_drop_lists: ^0.3.2
   equatable: ^2.0.3
+  file_picker: ^4.6.1
   flutter:
     sdk: flutter
   flutter_barcode_scanner: ^2.0.0
