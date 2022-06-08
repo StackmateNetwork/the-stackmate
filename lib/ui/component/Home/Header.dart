@@ -5,7 +5,7 @@ import 'package:sats/pkg/extensions.dart';
 class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final torIsRunning = context.select((TorCubit t) => t.state.isRunning);
+    final torIsConnected = context.select((TorCubit t) => t.state.isConnected);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,7 +32,7 @@ class HomeHeader extends StatelessWidget {
         const SizedBox(
           height: 2,
         ),
-        if (torIsRunning)
+        if (torIsConnected)
           Tooltip(
             preferBelow: false,
             triggerMode: TooltipTriggerMode.tap,
@@ -58,7 +58,7 @@ class HomeHeader extends StatelessWidget {
             height: 6,
           ),
           Text(
-            'Lost connection to Tor.\nSwipe down to refresh and attempt to reconnect.',
+            'Lost connection to Tor.\nGo back and attempt to reconnect.',
             textAlign: TextAlign.center,
             style: context.fonts.caption!.copyWith(
               color: context.colours.error,

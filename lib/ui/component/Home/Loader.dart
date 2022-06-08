@@ -12,7 +12,7 @@ class HomeLoader extends StatelessWidget {
     final tor = context.select((TorCubit hc) => hc.state);
     // final fees = context.select((FeesCubit hc) => hc.state);
     const String loading = 'Initializing Tor...';
-    if (tor.isRunning) return Container();
+    if (tor.isConnected) return Container();
     return const Loading(
       text: loading,
     );
