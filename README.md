@@ -1,17 +1,9 @@
 <h1 align="center">STACKMATE</h1> <div align="center">A multi-purpose Bitcoin Wallet</div> <br /> <p align="center"> <img style="height:500px" src="demo.png"/> <p/> <br />
 
-## About
-
-At Stackmate, we build software to enable self-sovereignty. We are and will always only ever be managed by Bitcoin remnants.
-
-Our software is free from VC, Fiat or Shitcoin influences and we actively work to warding off such influences.
-
-This software is FOSS. Feel free to do as you please with it.
-
-Before forking, we urge you to start a conversation with us and contribute.
-
 ## Table of Contents
 
+- [About](#about)
+- [Goals](#goals)
 - [Core](#core)
 - [Features](#features)
 - [Getting Started](#getting-started)
@@ -20,7 +12,28 @@ Before forking, we urge you to start a conversation with us and contribute.
   - [Exchange Rates API](#exchange-rates-api)
   - [Updating stackmate-core](#updating-stackmate-core)
 - [Maintainers](#maintainers)
+- [Contribution](#contribution)
 - [License](#license)
+
+## About
+
+At Stackmate, we build software to enable self-sovereignty. We are and will always only ever be managed by Bitcoin remnants.
+
+Our software is free from VC, fiat or shitcoin influences and we actively work to ward off such attempts.
+
+All our software is FOSS. Feel free to do as you please with it.
+
+Before forking, we urge you to start a conversation with us and contribute, no matter how blunt your message, express it freely.
+
+## Goals
+
+We aim to achieve:
+
+1. Simplicity
+2. Security
+3. Speed
+
+Prioritized in that order.
 
 ## Core
 
@@ -98,6 +111,12 @@ sh update-core.sh
 [Morteza](https://github.com/mocodesmo)
 
 [Vishal](https://github.com/i5hi)
+
+## Contribution
+
+We are very active on git and we do our best to respond to contributers quickly.
+
+Lets build together.
 
 ## License
 
