@@ -4,6 +4,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Landing/Loader.dart';
 import 'package:sats/ui/component/Landing/Logo.dart';
 import 'package:sats/ui/component/Landing/Start.dart';
+import 'package:sats/ui/component/Tor/Manual.dart';
 
 class _Landing extends StatelessWidget {
   @override
@@ -27,8 +28,10 @@ class _Landing extends StatelessWidget {
               edgeOffset: 10.0,
               displacement: 10.0,
               onRefresh: () async {
-                c.read<TorCubit>().start();
+                // c.read<TorCubit>().start();
                 c.read<TorCubit>().checkStatus();
+                c.read<TorCubit>().testConnection();
+
                 // c.read<TorCubit>().getProgress();
               },
               child: CustomScrollView(
@@ -36,7 +39,7 @@ class _Landing extends StatelessWidget {
                   SliverAppBar(
                     stretch: true,
                     pinned: true,
-                    expandedHeight: c.height / 4,
+                    expandedHeight: c.height / 1.2,
                     automaticallyImplyLeading: false,
                     backgroundColor: c.colours.background,
                     flexibleSpace: FlexibleSpaceBar(
@@ -47,20 +50,11 @@ class _Landing extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           const LandingLoader(),
-                          const SizedBox(height: 12),
-                          if (torState.errConnection != '')
-                            Text(
-                              torState.errConnection,
-                              style: c.fonts.caption!.copyWith(
-                                color: c.colours.error,
-                                // fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
                           const SizedBox(height: 48),
                           const LandingLogo(),
                           if (torState.isConnected) Container(),
-
+                          const SizedBox(height: 12),
+                          ManualTor()
                           // const Start(),
                         ],
                       ),

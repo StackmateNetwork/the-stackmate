@@ -22,8 +22,7 @@ class _Home extends StatelessWidget {
               displacement: 10.0,
               onRefresh: () async {
                 c.read<WalletsCubit>().refresh();
-                c.read<TorCubit>().checkStatus();
-                c.read<TorCubit>().start();
+                c.read<TorCubit>().testConnection();
                 await c.read<FeesCubit>().update();
                 return;
               },

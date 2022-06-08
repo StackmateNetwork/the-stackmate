@@ -183,7 +183,7 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
       {this.workingDir = '/tmp',
       this.socks5Port = 9150,
       this.httpProxy = '',
-      this.bootstapProgress = '101',
+      this.bootstapProgress = 'Starting Tor.\nThis may take a while ...',
       this.isRunning = false,
       this.isConnected = false,
       this.controlKey = '',

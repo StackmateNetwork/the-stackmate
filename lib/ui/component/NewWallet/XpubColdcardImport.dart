@@ -23,7 +23,7 @@ class XpubColdcardImport extends StatelessWidget {
                   height: 52,
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(width: 1.0, color: c.colours.onPrimary),
+                      side: BorderSide(color: c.colours.onPrimary),
                       primary: c.colours.primary,
                       onSurface: c.colours.background,
                     ),

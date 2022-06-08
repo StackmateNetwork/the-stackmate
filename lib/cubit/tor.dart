@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -6,6 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/libtor.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/result.dart';
+import 'package:flutter_socks_proxy/socks_proxy.dart';
 import 'package:utopic_tor_onion_proxy/utopic_tor_onion_proxy.dart';
 
 part 'tor.freezed.dart';
@@ -16,7 +18,8 @@ class TorState with _$TorState {
     @Default('/tmp') String workingDir,
     @Default(9150) int socks5Port,
     @Default('') String httpProxy,
-    @Default('101') String bootstapProgress,
+    @Default('Starting Tor.\nThis may take a while ...')
+        String bootstapProgress,
     @Default(false) bool isRunning,
     @Default(false) bool isConnected,
     @Default('') String controlKey,
@@ -36,8 +39,15 @@ class TorCubit extends Cubit<TorState> {
 
   Future<void> start() async {
     try {
+      if (state.isRunning) {
+        await stop();
+        return;
+      }
+
       emit(
         state.copyWith(
+          bootstapProgress: 'Starting Tor.\nThis may take a while ...',
+          isRunning: true,
           errConnection: '',
         ),
       );
@@ -74,11 +84,6 @@ class TorCubit extends Cubit<TorState> {
 
   Future<void> checkStatus() async {
     try {
-      emit(
-        state.copyWith(
-          errConnection: '',
-        ),
-      );
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         final isConnected = await UtopicTorOnionProxy.isTorRunning();
@@ -104,79 +109,72 @@ class TorCubit extends Cubit<TorState> {
     }
   }
 
-  Future<void> getProgress() async {
-    try {
-      emit(
-        state.copyWith(
-          errConnection: '',
-        ),
-      );
-      final progress = await compute(
-        controlProgress,
-        {
-          'controlPort': (state.socks5Port + 1).toString(),
-          'controlKey': state.controlKey,
-        },
-      );
-      if (progress.hasError)
-        emit(
-          state.copyWith(
-            errConnection: progress.error!,
-            // isRunning: false,
-          ),
-        );
-      else
-        emit(
-          state.copyWith(
-            errConnection: '',
-            isRunning: true,
-            isConnected: progress.result == '100',
-            bootstapProgress: progress.result!,
-          ),
-        );
-    } catch (e) {
-      state.copyWith(
-        isRunning: false,
-        errConnection: e.toString(),
-      );
-      _logger.logException(e, 'Tor.status', '');
-    }
-  }
-
   Future<void> stop() async {
     try {
       emit(
         state.copyWith(
+          bootstapProgress: 'Stopping Tor.\nThis might take a while...',
           errConnection: '',
         ),
       );
-      final status = await compute(
-        controlShutdown,
-        {
-          'controlPort': (state.socks5Port + 1).toString(),
-          'controlKey': state.controlKey,
-        },
+      final isStopped = await UtopicTorOnionProxy.stopTor();
+      emit(
+        state.copyWith(
+          isRunning: !isStopped!,
+          isConnected: false,
+          bootstapProgress: 'Tor stopped.',
+          errConnection: 'Tor disconnected.',
+        ),
       );
-      if (status.hasError)
-        emit(
-          state.copyWith(
-            errConnection: status.error!,
-          ),
-        );
-      else
-        emit(
-          state.copyWith(
-            errConnection: '',
-            isRunning: false,
-            isConnected: false,
-          ),
-        );
     } catch (e) {
       state.copyWith(
         errConnection: e.toString(),
       );
       _logger.logException(e, 'Tor.stop', '');
     }
+  }
+
+  void useExternalSocks5(String port) {
+    emit(
+      state.copyWith(socks5Port: int.parse(port)),
+    );
+  }
+
+  Future<void> testExternalSocks5() async {
+    stop();
+    await testConnection();
+  }
+
+  Future<void> testConnection() async {
+    SocksProxy.initProxy(
+      proxy: 'SOCKS5 localhost:${state.socks5Port.toString()}',
+    );
+    await HttpClient()
+        .getUrl(
+      Uri.parse(
+        'http://github.com/StackmateNetwork/the-stackmate/blob/master/docs/PRIVACY.md',
+      ),
+    )
+        .then((value) {
+      return value.close();
+    }).then((value) {
+      return value.transform(utf8.decoder);
+    }).then((value) {
+      return value.fold('', (dynamic previous, element) => previous + element);
+    }).then(
+      (value) {
+        emit(
+          state.copyWith(isConnected: true),
+        );
+        print(value);
+      },
+    ).catchError((e) {
+      state.copyWith(
+        isConnected: false,
+        errConnection: "Could not connect to the internet via Tor",
+      );
+      _logger.logException(e, 'Tor.ConnectionStatus', '');
+    });
   }
 }
 

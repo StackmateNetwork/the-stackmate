@@ -48,6 +48,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
               Padding(
                 padding: EdgeInsets.zero,
                 child: TextFormField(
+                  enableIMEPersonalizedLearning: false,
                   autocorrect: false,
                   obscureText: true,
                   obscuringCharacter: '*',
@@ -68,6 +69,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
               Padding(
                 padding: EdgeInsets.zero,
                 child: TextFormField(
+                  enableIMEPersonalizedLearning: false,
                   autocorrect: false,
                   obscureText: true,
                   obscuringCharacter: '*',
