@@ -30,6 +30,7 @@ class XpubImportState with _$XpubImportState {
     @Default(false) bool detailsReady,
     @Default(false) bool clearJson,
     String? importedJSONPath,
+    String? importedJSONfileName,
   }) = _SeedImportXpubState;
   const XpubImportState._();
 
@@ -64,6 +65,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
       emit(
         state.copyWith(
           importedJSONPath: _coldcardJson.path,
+          importedJSONfileName: _coldcardJson.name,
         ),
       );
     } else {
@@ -78,6 +80,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
         state.copyWith(
           clearJson: true,
           detailsReady: false,
+          importedJSONfileName: '',
         ),
       );
     } else {

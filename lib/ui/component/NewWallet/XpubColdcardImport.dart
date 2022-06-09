@@ -9,6 +9,8 @@ class XpubColdcardImport extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final result = c.select((XpubImportCubit sc) => sc.state.clearJson);
+    final name =
+        c.select((XpubImportCubit sn) => sn.state.importedJSONfileName);
     return BlocBuilder<XpubImportCubit, XpubImportState>(
       builder: (context, state) {
         return Column(
@@ -35,7 +37,18 @@ class XpubColdcardImport extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            if (state.importedJSONfileName != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'File:' + name.toString(),
+                    style: c.fonts.button!.copyWith(color: c.colours.primary),
+                  ),
+                ),
+              ),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Align(
@@ -49,7 +62,7 @@ class XpubColdcardImport extends StatelessWidget {
                             result ? c.colours.primary : c.colours.error,
                         content: Text(
                           result
-                              ? 'Json file removed with success.'
+                              ? 'Json file removed'
                               : 'Failed to clear json file',
                         ),
                       ),
