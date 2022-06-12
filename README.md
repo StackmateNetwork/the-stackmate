@@ -30,7 +30,7 @@ Before forking, we urge you to start a conversation with us and contribute, no m
 We aim to achieve:
 
 1. Simplicity
-2. Security
+2. Safety
 3. Speed
 
 Prioritized in that order.

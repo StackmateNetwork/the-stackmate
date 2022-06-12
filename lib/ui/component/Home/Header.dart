@@ -5,7 +5,7 @@ import 'package:sats/pkg/extensions.dart';
 class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final torIsConnected = context.select((TorCubit t) => t.state.isConnected);
+    final tor = context.select((TorCubit t) => t.state);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,21 +32,26 @@ class HomeHeader extends StatelessWidget {
         const SizedBox(
           height: 2,
         ),
-        if (torIsConnected)
-          Tooltip(
-            preferBelow: false,
-            triggerMode: TooltipTriggerMode.tap,
-            message: 'Torified.',
-            textStyle: context.fonts.caption!.copyWith(
-              color: context.colours.primary,
-            ),
-            decoration: BoxDecoration(
-              color: context.colours.surface,
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Icon(
-              Icons.security_sharp,
-              color: context.colours.tertiaryContainer,
+        if (tor.isConnected)
+          Padding(
+            padding: EdgeInsets.only(top: 16),
+            child: Tooltip(
+              preferBelow: false,
+              triggerMode: TooltipTriggerMode.tap,
+              message: (tor.isRunning)
+                  ? 'Torified Natively.'
+                  : 'Torified via External.',
+              textStyle: context.fonts.caption!.copyWith(
+                color: context.colours.primary,
+              ),
+              decoration: BoxDecoration(
+                color: context.colours.surface,
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: Icon(
+                Icons.security_sharp,
+                color: context.colours.tertiaryContainer,
+              ),
             ),
           )
         else ...[
@@ -58,7 +63,7 @@ class HomeHeader extends StatelessWidget {
             height: 6,
           ),
           Text(
-            'Lost connection to Tor.\nGo back and attempt to reconnect.',
+            'Lost connection to Tor.\nGoto settings to reconnect.',
             textAlign: TextAlign.center,
             style: context.fonts.caption!.copyWith(
               color: context.colours.error,

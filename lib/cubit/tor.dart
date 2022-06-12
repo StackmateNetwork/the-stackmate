@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/libtor.dart';
 import 'package:sats/cubit/logger.dart';
@@ -16,7 +17,7 @@ part 'tor.freezed.dart';
 class TorState with _$TorState {
   const factory TorState({
     @Default('/tmp') String workingDir,
-    @Default(9150) int socks5Port,
+    @Default(9050) int socks5Port,
     @Default('') String httpProxy,
     @Default('Starting Tor.\nThis may take a while ...')
         String bootstapProgress,
@@ -70,6 +71,16 @@ class TorCubit extends Cubit<TorState> {
           ),
         );
       }
+    } on PlatformException catch (e) {
+      emit(
+        state.copyWith(
+          isRunning: false,
+          errConnection:
+              'Could not bind to port. You might have an other tor instance running.',
+        ),
+      );
+      _logger.logException(e, 'Tor.start', '');
+      return;
     } catch (e) {
       emit(
         state.copyWith(
@@ -135,46 +146,64 @@ class TorCubit extends Cubit<TorState> {
   }
 
   void useExternalSocks5(String port) {
-    emit(
-      state.copyWith(socks5Port: int.parse(port)),
-    );
+    try {
+      port.replaceAll(' ', '');
+      if (port == '') return;
+      final socsk5 = int.parse(port);
+      emit(
+        state.copyWith(socks5Port: socsk5),
+      );
+    } catch (e) {
+      return;
+    }
   }
 
   Future<void> testExternalSocks5() async {
-    stop();
+    await stop();
     await testConnection();
   }
 
   Future<void> testConnection() async {
-    SocksProxy.initProxy(
-      proxy: 'SOCKS5 localhost:${state.socks5Port.toString()}',
-    );
-    await HttpClient()
-        .getUrl(
-      Uri.parse(
-        'http://github.com/StackmateNetwork/the-stackmate/blob/master/docs/PRIVACY.md',
-      ),
-    )
-        .then((value) {
-      return value.close();
-    }).then((value) {
-      return value.transform(utf8.decoder);
-    }).then((value) {
-      return value.fold('', (dynamic previous, element) => previous + element);
-    }).then(
-      (value) {
-        emit(
-          state.copyWith(isConnected: true),
+    try {
+      SocksProxy.initProxy(
+        proxy: 'SOCKS5 localhost:${state.socks5Port.toString()}',
+      );
+      await HttpClient()
+          .getUrl(
+        Uri.parse(
+          'http://github.com/StackmateNetwork/the-stackmate/blob/master/docs/PRIVACY.md',
+        ),
+      )
+          .then((value) {
+        return value.close();
+      }).then((value) {
+        return value.transform(utf8.decoder);
+      }).then((value) {
+        return value.fold(
+            '', (dynamic previous, element) => previous + element);
+      }).then(
+        (value) {
+          emit(
+            state.copyWith(isConnected: true),
+          );
+          print(value);
+        },
+      ).catchError((e) {
+        state.copyWith(
+          isConnected: false,
+          errConnection:
+              'Could not connect to the internet via Tor. Restart Tor or try another external port.',
         );
-        print(value);
-      },
-    ).catchError((e) {
+        _logger.logException(e, 'Tor.ConnectionStatus', '');
+      });
+    } catch (e) {
       state.copyWith(
         isConnected: false,
-        errConnection: "Could not connect to the internet via Tor",
+        errConnection:
+            'Could not connect to the internet via Tor. Restart Tor or try another external port.',
       );
       _logger.logException(e, 'Tor.ConnectionStatus', '');
-    });
+    }
   }
 }
 
