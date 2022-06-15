@@ -25,7 +25,7 @@ class BroadcastState with _$BroadcastState {
     @Default('') String hex,
     @Default('') String txId,
     @Default('') String errFileImport,
-    @Default(false) bool clearPsbt,
+    @Default(false) bool clearData,
     String? importedPsbtPath,
     String? importedPsbtfileName,
     String? importedHexPath,
@@ -64,7 +64,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     );
   }
 
-  Future<void> updateFile() async {
+  Future<void> updatePSBTFile() async {
     try {
       final FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowedExtensions: [],
@@ -84,7 +84,9 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     } catch (e, s) {
       _logger.logException(e, 'BroadcastCubit.importPsbt', s);
       emit(
-        state.copyWith(),
+        state.copyWith(
+          errFileImport: e.toString(),
+        ),
       );
     }
   }
@@ -109,7 +111,9 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     } catch (e, s) {
       _logger.logException(e, 'BroadcastCubit.importHex', s);
       emit(
-        state.copyWith(),
+        state.copyWith(
+          errFileImport: e.toString(),
+        ),
       );
     }
   }
@@ -119,7 +123,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     if (result != null) {
       emit(
         state.copyWith(
-          clearPsbt: true,
+          clearData: true,
         ),
       );
     } else {
@@ -173,7 +177,13 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       if (decoded.hasError) {
         emit(state.copyWith(errBroadcasting: 'Invalid PSBT.'));
       } else
-        emit(state.copyWith(psbt: content));
+        emit(
+          state.copyWith(
+            psbt: content.replaceAll(' ', '')
+            .replaceAll('\r', '')
+            .replaceAll('\n', ''),
+          ),
+        );
       return;
     } catch (e, s) {
       _logger.logException(e, 'BroadcastCubit.verifyImportPSBT', s);
@@ -188,8 +198,17 @@ class BroadcastCubit extends Cubit<BroadcastState> {
   void verifyImportHex() async {
     try {
       final hexFile = File(state.importedHexPath!);
-      final content = await hexFile.readAsString();
-      emit(state.copyWith(hex: content, errFileImport: emptyString));
+      final content = await hexFile.readAsString(); //this is fine
+      // the cubit state is not holding the entire content
+      emit(
+        state.copyWith(
+          hex: content
+              .replaceAll(' ', '')
+              .replaceAll('\r', '')
+              .replaceAll('\n', ''),
+          errFileImport: emptyString,
+        ),
+      );
     } catch (e, s) {
       _logger.logException(e, 'BroadcastCubit.verifyImportHex', s);
       emit(
@@ -205,6 +224,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
+      print('START---${state.hex}---END');
       final hex = await _core.broadcastTransactionHex(
         descriptor: dummyDescriptor,
         nodeAddress: nodeAddress,

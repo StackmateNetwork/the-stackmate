@@ -54,7 +54,7 @@ class BroadcastPSBT extends StatelessWidget {
                   onSurface: c.colours.background,
                 ),
                 onPressed: () {
-                  c.read<BroadcastCubit>().updateFile();
+                  c.read<BroadcastCubit>().updatePSBTFile();
                 },
                 child: Text('Import psbt'.toUpperCase() + ''),
               ),

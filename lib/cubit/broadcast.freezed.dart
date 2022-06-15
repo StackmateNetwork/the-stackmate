@@ -22,7 +22,7 @@ mixin _$BroadcastState {
   String get hex => throw _privateConstructorUsedError;
   String get txId => throw _privateConstructorUsedError;
   String get errFileImport => throw _privateConstructorUsedError;
-  bool get clearPsbt => throw _privateConstructorUsedError;
+  bool get clearData => throw _privateConstructorUsedError;
   String? get importedPsbtPath => throw _privateConstructorUsedError;
   String? get importedPsbtfileName => throw _privateConstructorUsedError;
   String? get importedHexPath => throw _privateConstructorUsedError;
@@ -45,7 +45,7 @@ abstract class $BroadcastStateCopyWith<$Res> {
       String hex,
       String txId,
       String errFileImport,
-      bool clearPsbt,
+      bool clearData,
       String? importedPsbtPath,
       String? importedPsbtfileName,
       String? importedHexPath,
@@ -69,7 +69,7 @@ class _$BroadcastStateCopyWithImpl<$Res>
     Object? hex = freezed,
     Object? txId = freezed,
     Object? errFileImport = freezed,
-    Object? clearPsbt = freezed,
+    Object? clearData = freezed,
     Object? importedPsbtPath = freezed,
     Object? importedPsbtfileName = freezed,
     Object? importedHexPath = freezed,
@@ -100,9 +100,9 @@ class _$BroadcastStateCopyWithImpl<$Res>
           ? _value.errFileImport
           : errFileImport // ignore: cast_nullable_to_non_nullable
               as String,
-      clearPsbt: clearPsbt == freezed
-          ? _value.clearPsbt
-          : clearPsbt // ignore: cast_nullable_to_non_nullable
+      clearData: clearData == freezed
+          ? _value.clearData
+          : clearData // ignore: cast_nullable_to_non_nullable
               as bool,
       importedPsbtPath: importedPsbtPath == freezed
           ? _value.importedPsbtPath
@@ -138,7 +138,7 @@ abstract class _$$_BroadcastStateCopyWith<$Res>
       String hex,
       String txId,
       String errFileImport,
-      bool clearPsbt,
+      bool clearData,
       String? importedPsbtPath,
       String? importedPsbtfileName,
       String? importedHexPath,
@@ -164,7 +164,7 @@ class __$$_BroadcastStateCopyWithImpl<$Res>
     Object? hex = freezed,
     Object? txId = freezed,
     Object? errFileImport = freezed,
-    Object? clearPsbt = freezed,
+    Object? clearData = freezed,
     Object? importedPsbtPath = freezed,
     Object? importedPsbtfileName = freezed,
     Object? importedHexPath = freezed,
@@ -195,9 +195,9 @@ class __$$_BroadcastStateCopyWithImpl<$Res>
           ? _value.errFileImport
           : errFileImport // ignore: cast_nullable_to_non_nullable
               as String,
-      clearPsbt: clearPsbt == freezed
-          ? _value.clearPsbt
-          : clearPsbt // ignore: cast_nullable_to_non_nullable
+      clearData: clearData == freezed
+          ? _value.clearData
+          : clearData // ignore: cast_nullable_to_non_nullable
               as bool,
       importedPsbtPath: importedPsbtPath == freezed
           ? _value.importedPsbtPath
@@ -229,7 +229,7 @@ class _$_BroadcastState extends _BroadcastState with DiagnosticableTreeMixin {
       this.hex = '',
       this.txId = '',
       this.errFileImport = '',
-      this.clearPsbt = false,
+      this.clearData = false,
       this.importedPsbtPath,
       this.importedPsbtfileName,
       this.importedHexPath,
@@ -256,7 +256,7 @@ class _$_BroadcastState extends _BroadcastState with DiagnosticableTreeMixin {
   final String errFileImport;
   @override
   @JsonKey()
-  final bool clearPsbt;
+  final bool clearData;
   @override
   final String? importedPsbtPath;
   @override
@@ -268,7 +268,7 @@ class _$_BroadcastState extends _BroadcastState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BroadcastState(broadcasting: $broadcasting, errBroadcasting: $errBroadcasting, psbt: $psbt, hex: $hex, txId: $txId, errFileImport: $errFileImport, clearPsbt: $clearPsbt, importedPsbtPath: $importedPsbtPath, importedPsbtfileName: $importedPsbtfileName, importedHexPath: $importedHexPath, importedHexfileName: $importedHexfileName)';
+    return 'BroadcastState(broadcasting: $broadcasting, errBroadcasting: $errBroadcasting, psbt: $psbt, hex: $hex, txId: $txId, errFileImport: $errFileImport, clearData: $clearData, importedPsbtPath: $importedPsbtPath, importedPsbtfileName: $importedPsbtfileName, importedHexPath: $importedHexPath, importedHexfileName: $importedHexfileName)';
   }
 
   @override
@@ -282,7 +282,7 @@ class _$_BroadcastState extends _BroadcastState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('hex', hex))
       ..add(DiagnosticsProperty('txId', txId))
       ..add(DiagnosticsProperty('errFileImport', errFileImport))
-      ..add(DiagnosticsProperty('clearPsbt', clearPsbt))
+      ..add(DiagnosticsProperty('clearData', clearData))
       ..add(DiagnosticsProperty('importedPsbtPath', importedPsbtPath))
       ..add(DiagnosticsProperty('importedPsbtfileName', importedPsbtfileName))
       ..add(DiagnosticsProperty('importedHexPath', importedHexPath))
@@ -303,7 +303,7 @@ class _$_BroadcastState extends _BroadcastState with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.txId, txId) &&
             const DeepCollectionEquality()
                 .equals(other.errFileImport, errFileImport) &&
-            const DeepCollectionEquality().equals(other.clearPsbt, clearPsbt) &&
+            const DeepCollectionEquality().equals(other.clearData, clearData) &&
             const DeepCollectionEquality()
                 .equals(other.importedPsbtPath, importedPsbtPath) &&
             const DeepCollectionEquality()
@@ -323,7 +323,7 @@ class _$_BroadcastState extends _BroadcastState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(hex),
       const DeepCollectionEquality().hash(txId),
       const DeepCollectionEquality().hash(errFileImport),
-      const DeepCollectionEquality().hash(clearPsbt),
+      const DeepCollectionEquality().hash(clearData),
       const DeepCollectionEquality().hash(importedPsbtPath),
       const DeepCollectionEquality().hash(importedPsbtfileName),
       const DeepCollectionEquality().hash(importedHexPath),
@@ -343,7 +343,7 @@ abstract class _BroadcastState extends BroadcastState {
       final String hex,
       final String txId,
       final String errFileImport,
-      final bool clearPsbt,
+      final bool clearData,
       final String? importedPsbtPath,
       final String? importedPsbtfileName,
       final String? importedHexPath,
@@ -363,7 +363,7 @@ abstract class _BroadcastState extends BroadcastState {
   @override
   String get errFileImport => throw _privateConstructorUsedError;
   @override
-  bool get clearPsbt => throw _privateConstructorUsedError;
+  bool get clearData => throw _privateConstructorUsedError;
   @override
   String? get importedPsbtPath => throw _privateConstructorUsedError;
   @override
