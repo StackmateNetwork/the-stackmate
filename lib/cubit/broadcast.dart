@@ -224,7 +224,6 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      print('START---${state.hex}---END');
       final hex = await _core.broadcastTransactionHex(
         descriptor: dummyDescriptor,
         nodeAddress: nodeAddress,
@@ -236,7 +235,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
         emit(
           state.copyWith(
             broadcasting: false,
-            errBroadcasting: hex.error!,
+            errBroadcasting: (hex.error!.contains('spent'))?'Transaction already spent.':hex.error!,
             txId: '',
             hex: '',
           ),
