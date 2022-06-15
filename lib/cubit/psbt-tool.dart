@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -5,6 +9,7 @@ import 'package:libstackmate/types.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -18,6 +23,10 @@ class PSBTState with _$PSBTState {
     @Default('') String errBroadcasting,
     @Default('') String psbt,
     @Default('') String txId,
+    @Default('') String errFileImport,
+    @Default(false) bool clearPsbt,
+    String? importedPsbtPath,
+    String? importedPsbtfileName,
   }) = _PSBTState;
 
   const PSBTState._();
@@ -25,6 +34,7 @@ class PSBTState with _$PSBTState {
 
 class PSBTCubit extends Cubit<PSBTState> {
   PSBTCubit(
+    this._logger,
     this._core,
     this._clipBoard,
     this._nodeAddressCubit,
@@ -33,7 +43,7 @@ class PSBTCubit extends Cubit<PSBTState> {
   ) : super(const PSBTState());
 
   static const minerOutput = 'miner';
-
+  final Logger _logger;
   final IClipBoard _clipBoard;
   final NodeAddressCubit _nodeAddressCubit;
   final IStackMateBitcoin _core;
@@ -49,6 +59,45 @@ class PSBTCubit extends Cubit<PSBTState> {
     emit(
       state.copyWith(txId: emptyString),
     );
+  }
+
+  Future<void> updateFile() async {
+    try {
+      final FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: false,
+        allowedExtensions: [],
+      );
+
+      if (result != null) {
+        final PlatformFile _psbtFile = result.files.single;
+
+        emit(
+          state.copyWith(
+            importedPsbtPath: _psbtFile.path,
+          ),
+        );
+      } else {
+        emit(state.copyWith(errFileImport: 'Could not find file.'));
+      }
+    } catch (e, s) {
+      _logger.logException(e, 'PSBTCubit.importPsbt', s);
+      emit(
+        state.copyWith(),
+      );
+    }
+  }
+
+  Future<void> clearCachedFiles() async {
+    final bool? result = await FilePicker.platform.clearTemporaryFiles();
+    if (result != null) {
+      emit(
+        state.copyWith(
+          clearPsbt: true,
+        ),
+      );
+    } else {
+      emit(state.copyWith(errFileImport: 'Could not find file.'));
+    }
   }
 
   void psbtChanged(String text) {
@@ -69,6 +118,27 @@ class PSBTCubit extends Cubit<PSBTState> {
     } else
       emit(state.copyWith(psbt: text.result!));
     return;
+  }
+
+  void verifyImportPSBT() async {
+    try {
+      final psbtFile = File(state.importedPsbtPath!);
+      final content = await psbtFile.readAsString();
+      final decoded = _core.decodePsbt(
+        network: _blockchainCubit.state.blockchain.name,
+        psbt: content,
+      );
+      if (decoded.hasError) {
+        emit(state.copyWith(errBroadcasting: 'Invalid PSBT.'));
+      } else
+        emit(state.copyWith(psbt: content));
+      return;
+    } catch (e, s) {
+      _logger.logException(e, 'PSBTCubit.verifyImportPSBT', s);
+      emit(
+        state.copyWith(),
+      );
+    }
   }
 
   void broadcastConfirmed() async {
@@ -101,15 +171,14 @@ class PSBTCubit extends Cubit<PSBTState> {
             errBroadcasting: emptyString,
           ),
         );
-    } catch (e) {
+    } catch (e, s) {
+      _logger.logException(e, 'PSBTCubit.confirmclicked', s);
       emit(
         state.copyWith(
           errBroadcasting: e.toString(),
           broadcasting: false,
         ),
       );
-
-      // _logger.logException(e, 'PSBTCubit.confirmclicked', s);
     }
   }
 }

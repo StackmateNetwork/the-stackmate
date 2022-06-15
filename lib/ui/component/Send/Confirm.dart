@@ -129,7 +129,7 @@ class ConfirmTransaction extends StatelessWidget {
                 const SizedBox(height: 12),
                 TextButton(
                   onPressed: () {
-                    // context.read<SendCubit>().savePSBTToFile(context);
+                    context.read<SendCubit>().savePSBTToFile();
                     // Future.delayed(Duration(seconds: 2));
                   },
                   child: const Text('SAVE PSBT'),

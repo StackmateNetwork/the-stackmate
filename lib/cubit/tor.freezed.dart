@@ -181,7 +181,7 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
 class _$_TorState extends _TorState with DiagnosticableTreeMixin {
   const _$_TorState(
       {this.workingDir = '/tmp',
-      this.socks5Port = 9150,
+      this.socks5Port = 9050,
       this.httpProxy = '',
       this.bootstapProgress = 'Starting Tor.\nThis may take a while ...',
       this.isRunning = false,

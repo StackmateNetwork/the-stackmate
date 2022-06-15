@@ -20,6 +20,10 @@ mixin _$PSBTState {
   String get errBroadcasting => throw _privateConstructorUsedError;
   String get psbt => throw _privateConstructorUsedError;
   String get txId => throw _privateConstructorUsedError;
+  String get errFileImport => throw _privateConstructorUsedError;
+  bool get clearPsbt => throw _privateConstructorUsedError;
+  String? get importedPsbtPath => throw _privateConstructorUsedError;
+  String? get importedPsbtfileName => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PSBTStateCopyWith<PSBTState> get copyWith =>
@@ -31,7 +35,14 @@ abstract class $PSBTStateCopyWith<$Res> {
   factory $PSBTStateCopyWith(PSBTState value, $Res Function(PSBTState) then) =
       _$PSBTStateCopyWithImpl<$Res>;
   $Res call(
-      {bool broadcasting, String errBroadcasting, String psbt, String txId});
+      {bool broadcasting,
+      String errBroadcasting,
+      String psbt,
+      String txId,
+      String errFileImport,
+      bool clearPsbt,
+      String? importedPsbtPath,
+      String? importedPsbtfileName});
 }
 
 /// @nodoc
@@ -48,6 +59,10 @@ class _$PSBTStateCopyWithImpl<$Res> implements $PSBTStateCopyWith<$Res> {
     Object? errBroadcasting = freezed,
     Object? psbt = freezed,
     Object? txId = freezed,
+    Object? errFileImport = freezed,
+    Object? clearPsbt = freezed,
+    Object? importedPsbtPath = freezed,
+    Object? importedPsbtfileName = freezed,
   }) {
     return _then(_value.copyWith(
       broadcasting: broadcasting == freezed
@@ -66,6 +81,22 @@ class _$PSBTStateCopyWithImpl<$Res> implements $PSBTStateCopyWith<$Res> {
           ? _value.txId
           : txId // ignore: cast_nullable_to_non_nullable
               as String,
+      errFileImport: errFileImport == freezed
+          ? _value.errFileImport
+          : errFileImport // ignore: cast_nullable_to_non_nullable
+              as String,
+      clearPsbt: clearPsbt == freezed
+          ? _value.clearPsbt
+          : clearPsbt // ignore: cast_nullable_to_non_nullable
+              as bool,
+      importedPsbtPath: importedPsbtPath == freezed
+          ? _value.importedPsbtPath
+          : importedPsbtPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      importedPsbtfileName: importedPsbtfileName == freezed
+          ? _value.importedPsbtfileName
+          : importedPsbtfileName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -77,7 +108,14 @@ abstract class _$$_PSBTStateCopyWith<$Res> implements $PSBTStateCopyWith<$Res> {
       __$$_PSBTStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {bool broadcasting, String errBroadcasting, String psbt, String txId});
+      {bool broadcasting,
+      String errBroadcasting,
+      String psbt,
+      String txId,
+      String errFileImport,
+      bool clearPsbt,
+      String? importedPsbtPath,
+      String? importedPsbtfileName});
 }
 
 /// @nodoc
@@ -96,6 +134,10 @@ class __$$_PSBTStateCopyWithImpl<$Res> extends _$PSBTStateCopyWithImpl<$Res>
     Object? errBroadcasting = freezed,
     Object? psbt = freezed,
     Object? txId = freezed,
+    Object? errFileImport = freezed,
+    Object? clearPsbt = freezed,
+    Object? importedPsbtPath = freezed,
+    Object? importedPsbtfileName = freezed,
   }) {
     return _then(_$_PSBTState(
       broadcasting: broadcasting == freezed
@@ -114,6 +156,22 @@ class __$$_PSBTStateCopyWithImpl<$Res> extends _$PSBTStateCopyWithImpl<$Res>
           ? _value.txId
           : txId // ignore: cast_nullable_to_non_nullable
               as String,
+      errFileImport: errFileImport == freezed
+          ? _value.errFileImport
+          : errFileImport // ignore: cast_nullable_to_non_nullable
+              as String,
+      clearPsbt: clearPsbt == freezed
+          ? _value.clearPsbt
+          : clearPsbt // ignore: cast_nullable_to_non_nullable
+              as bool,
+      importedPsbtPath: importedPsbtPath == freezed
+          ? _value.importedPsbtPath
+          : importedPsbtPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      importedPsbtfileName: importedPsbtfileName == freezed
+          ? _value.importedPsbtfileName
+          : importedPsbtfileName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -125,7 +183,11 @@ class _$_PSBTState extends _PSBTState with DiagnosticableTreeMixin {
       {this.broadcasting = false,
       this.errBroadcasting = '',
       this.psbt = '',
-      this.txId = ''})
+      this.txId = '',
+      this.errFileImport = '',
+      this.clearPsbt = false,
+      this.importedPsbtPath,
+      this.importedPsbtfileName})
       : super._();
 
   @override
@@ -140,10 +202,20 @@ class _$_PSBTState extends _PSBTState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final String txId;
+  @override
+  @JsonKey()
+  final String errFileImport;
+  @override
+  @JsonKey()
+  final bool clearPsbt;
+  @override
+  final String? importedPsbtPath;
+  @override
+  final String? importedPsbtfileName;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PSBTState(broadcasting: $broadcasting, errBroadcasting: $errBroadcasting, psbt: $psbt, txId: $txId)';
+    return 'PSBTState(broadcasting: $broadcasting, errBroadcasting: $errBroadcasting, psbt: $psbt, txId: $txId, errFileImport: $errFileImport, clearPsbt: $clearPsbt, importedPsbtPath: $importedPsbtPath, importedPsbtfileName: $importedPsbtfileName)';
   }
 
   @override
@@ -154,7 +226,11 @@ class _$_PSBTState extends _PSBTState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('broadcasting', broadcasting))
       ..add(DiagnosticsProperty('errBroadcasting', errBroadcasting))
       ..add(DiagnosticsProperty('psbt', psbt))
-      ..add(DiagnosticsProperty('txId', txId));
+      ..add(DiagnosticsProperty('txId', txId))
+      ..add(DiagnosticsProperty('errFileImport', errFileImport))
+      ..add(DiagnosticsProperty('clearPsbt', clearPsbt))
+      ..add(DiagnosticsProperty('importedPsbtPath', importedPsbtPath))
+      ..add(DiagnosticsProperty('importedPsbtfileName', importedPsbtfileName));
   }
 
   @override
@@ -167,7 +243,14 @@ class _$_PSBTState extends _PSBTState with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.errBroadcasting, errBroadcasting) &&
             const DeepCollectionEquality().equals(other.psbt, psbt) &&
-            const DeepCollectionEquality().equals(other.txId, txId));
+            const DeepCollectionEquality().equals(other.txId, txId) &&
+            const DeepCollectionEquality()
+                .equals(other.errFileImport, errFileImport) &&
+            const DeepCollectionEquality().equals(other.clearPsbt, clearPsbt) &&
+            const DeepCollectionEquality()
+                .equals(other.importedPsbtPath, importedPsbtPath) &&
+            const DeepCollectionEquality()
+                .equals(other.importedPsbtfileName, importedPsbtfileName));
   }
 
   @override
@@ -176,7 +259,11 @@ class _$_PSBTState extends _PSBTState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(broadcasting),
       const DeepCollectionEquality().hash(errBroadcasting),
       const DeepCollectionEquality().hash(psbt),
-      const DeepCollectionEquality().hash(txId));
+      const DeepCollectionEquality().hash(txId),
+      const DeepCollectionEquality().hash(errFileImport),
+      const DeepCollectionEquality().hash(clearPsbt),
+      const DeepCollectionEquality().hash(importedPsbtPath),
+      const DeepCollectionEquality().hash(importedPsbtfileName));
 
   @JsonKey(ignore: true)
   @override
@@ -189,7 +276,11 @@ abstract class _PSBTState extends PSBTState {
       {final bool broadcasting,
       final String errBroadcasting,
       final String psbt,
-      final String txId}) = _$_PSBTState;
+      final String txId,
+      final String errFileImport,
+      final bool clearPsbt,
+      final String? importedPsbtPath,
+      final String? importedPsbtfileName}) = _$_PSBTState;
   const _PSBTState._() : super._();
 
   @override
@@ -200,6 +291,14 @@ abstract class _PSBTState extends PSBTState {
   String get psbt => throw _privateConstructorUsedError;
   @override
   String get txId => throw _privateConstructorUsedError;
+  @override
+  String get errFileImport => throw _privateConstructorUsedError;
+  @override
+  bool get clearPsbt => throw _privateConstructorUsedError;
+  @override
+  String? get importedPsbtPath => throw _privateConstructorUsedError;
+  @override
+  String? get importedPsbtfileName => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_PSBTStateCopyWith<_$_PSBTState> get copyWith =>

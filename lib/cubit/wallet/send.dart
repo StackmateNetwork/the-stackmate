@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -230,28 +234,22 @@ class SendCubit extends Cubit<SendState> {
     );
   }
 
-  // void savePSBTToFile(BuildContext context) async {
-  //   // final bool isDesktop = !(Platform.isAndroid || Platform.isIOS);
+  Future<void> savePSBTToFile() async {
+    final bool isDesktop = !(Platform.isAndroid || Platform.isIOS);
 
-  //   final rootPath = await getTemporaryDirectory();
-  //   final String path = await FilesystemPicker.open(
-  //     title: 'Save to folder',
-  //     context: context,
-  //     rootDirectory: rootPath,
-  //     fsType: FilesystemType.folder,
-  //     pickText: 'Save file to this folder',
-  //     folderIconColor: Colors.teal,
-  //   );
-  //   await _file.saveTextToFile(state.psbt, path);
-  //   emit(
-  //     state.copyWith(
-  //       sendingTx: false,
-  //       errLoading: emptyString,
-  //       // currentStep: SendSteps.sent,
-  //     ),
-  //   );
-  //   return;
-  // }
+    String? path = await FilePicker.platform.getDirectoryPath();
+
+    final file = File('$path/build.psbt');
+
+    file.writeAsString(state.psbt);
+    emit(
+      state.copyWith(
+        sendingTx: false,
+        errLoading: emptyString,
+        currentStep: SendSteps.sent,
+      ),
+    );
+  }
 
   bool _checkAmount(String amount) {
     final checked = amount.replaceAll(',', emptyString);

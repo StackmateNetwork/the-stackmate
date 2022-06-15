@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/psbt-tool.dart';
 import 'package:sats/cubit/tor.dart';
@@ -51,8 +52,9 @@ class PSBTScreen extends StatelessWidget {
     final nodeAddressCubit = context.select((NodeAddressCubit c) => c);
     final blockchainCubit = context.select((ChainSelectCubit c) => c);
     final tor = context.select((TorCubit c) => c);
-
+    final logger = context.select((Logger c) => c);
     final psbt = PSBTCubit(
+      logger,
       locator<IStackMateBitcoin>(),
       locator<IClipBoard>(),
       nodeAddressCubit,

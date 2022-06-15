@@ -9,69 +9,107 @@ class BroadcastPSBT extends StatelessWidget {
   Widget build(BuildContext c) {
     return BlocBuilder<PSBTCubit, PSBTState>(
       builder: (context, psbtState) {
-        return Padding(
-          padding:
-              const EdgeInsets.only(left: 24, right: 24, top: 32, bottom: 32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'PSBT To Broadcast'.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: context.fonts.overline!.copyWith(
+                color: context.colours.onBackground,
+              ),
+            ),
+            const SizedBox(height: 26),
+            if (psbtState.psbt == '')
               Text(
-                'PSBT To Broadcast'.toUpperCase(),
-                style: context.fonts.overline!.copyWith(
+                'Paste a PSBT from your Clipboard or Import from File.',
+                style: context.fonts.bodyMedium!.copyWith(
                   color: context.colours.onBackground,
                 ),
+              )
+            else
+              const Text('Got PSBT.'),
+            const SizedBox(height: 16),
+            SizedBox(
+              height: 52,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: c.colours.onPrimary),
+                  primary: c.colours.primary,
+                  onSurface: c.colours.background,
+                ),
+                onPressed: () {
+                  context.read<PSBTCubit>().pastePSBT();
+                },
+                child: const Text('PASTE from Clipboard'),
               ),
-              const SizedBox(height: 16),
-              if (psbtState.psbt == '')
-                Text(
-                  'Paste a PSBT from your Clipboard OR Import from File.',
-                  style: context.fonts.bodyMedium!.copyWith(
-                    color: context.colours.onBackground,
-                  ),
-                )
-              else
-                const Text('Got PSBT.'),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      context.read<PSBTCubit>().pastePSBT();
-                    },
-                    child: const Text('PASTE'),
-                  ),
-                ],
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              height: 52,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: c.colours.onPrimary),
+                  primary: c.colours.primary,
+                  onSurface: c.colours.background,
+                ),
+                onPressed: () {
+                  c.read<PSBTCubit>().updateFile();
+                },
+                child: Text('Import psbt'.toUpperCase() + ''),
               ),
-              const SizedBox(height: 30),
-              TextButton(
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              height: 52,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: c.colours.onPrimary),
+                  primary: c.colours.primary,
+                  onSurface: c.colours.background,
+                ),
+                onPressed: () {
+                  c.read<PSBTCubit>().verifyImportPSBT();
+                },
+                child: Text('verify psbt'.toUpperCase() + ''),
+              ),
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              height: 52,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: c.colours.primary,
+                  onPrimary: c.colours.background,
+                ),
                 onPressed: () {
                   context.read<PSBTCubit>().broadcastConfirmed();
                 },
                 child: const Text('CONFIRM'),
               ),
-              if (psbtState.txId != '')
-                Text(
-                  psbtState.txId,
-                  textAlign: TextAlign.center,
-                  style: context.fonts.headline6!.copyWith(
-                    color: context.colours.onBackground,
-                  ),
-                )
-              else
-                Container(),
-              if (psbtState.errBroadcasting != '')
-                Text(
-                  psbtState.errBroadcasting,
-                  textAlign: TextAlign.center,
-                  style: context.fonts.caption!.copyWith(
-                    color: context.colours.error,
-                  ),
-                )
-              else
-                Container(),
-            ],
-          ),
+            ),
+            const SizedBox(height: 16),
+            if (psbtState.txId != '')
+              Text(
+                psbtState.txId,
+                textAlign: TextAlign.center,
+                style: context.fonts.headline6!.copyWith(
+                  color: context.colours.onBackground,
+                ),
+              )
+            else
+              Container(),
+            if (psbtState.errBroadcasting != '')
+              Text(
+                psbtState.errBroadcasting,
+                textAlign: TextAlign.center,
+                style: context.fonts.caption!.copyWith(
+                  color: context.colours.error,
+                ),
+              )
+            else
+              Container(),
+          ],
         );
       },
     );
