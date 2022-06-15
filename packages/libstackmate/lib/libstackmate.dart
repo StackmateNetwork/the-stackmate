@@ -186,6 +186,24 @@ class LibStackmateFFI {
     return resp;
   }
 
+  Future<String> broadcastTransactionHex({
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+    required String signedHex,
+  }) async {
+    final func = binary.lookupFunction<BroadcastTHex, BroadcastTHex>(
+      'broadcast_hex',
+    );
+    final resp = func(
+      descriptor.toNativeUtf8(),
+      nodeAddress.toNativeUtf8(),
+      socks5.toNativeUtf8(),
+      signedHex.toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
+
   String estimateNetworkFee({
     required String network,
     required String nodeAddress,

@@ -257,6 +257,26 @@ class LibBitcoin implements IStackMateBitcoin {
   }
 
   @override
+  Future<R<String>> broadcastTransactionHex({
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+    required String signedHex,
+  }) async {
+    final resp = await _libstackmate.broadcastTransactionHex(
+      descriptor: descriptor,
+      nodeAddress: nodeAddress,
+      signedHex: signedHex,
+      socks5: socks5,
+    );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    final data = jsonDecode(resp);
+    return R(result: data['txid'] as String);
+  }
+
+  @override
   R<double> estimateNetworkFee({
     required String network,
     required String nodeAddress,

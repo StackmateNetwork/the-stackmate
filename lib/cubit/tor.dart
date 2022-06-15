@@ -180,7 +180,9 @@ class TorCubit extends Cubit<TorState> {
         return value.transform(utf8.decoder);
       }).then((value) {
         return value.fold(
-            '', (dynamic previous, element) => previous + element);
+          '',
+          (dynamic previous, element) => previous + element,
+        );
       }).then(
         (value) {
           emit(

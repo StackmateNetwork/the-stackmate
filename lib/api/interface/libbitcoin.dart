@@ -98,4 +98,10 @@ abstract class IStackMateBitcoin {
     required String socks5,
     required String signedPSBT,
   });
+  Future<R<String>> broadcastTransactionHex({
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+    required String signedHex,
+  });
 }

@@ -63,6 +63,12 @@ typedef BroadcastT = Pointer<Utf8> Function(
   Pointer<Utf8> socks5,
   Pointer<Utf8> signed_psbt,
 );
+typedef BroadcastTHex = Pointer<Utf8> Function(
+  Pointer<Utf8> descriptor,
+  Pointer<Utf8> node_address,
+  Pointer<Utf8> socks5,
+  Pointer<Utf8> signed_tx_hex,
+);
 
 typedef EstimateFeeT = Pointer<Utf8> Function(
   Pointer<Utf8> network,

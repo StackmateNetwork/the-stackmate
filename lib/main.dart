@@ -13,6 +13,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
+import 'package:sats/ui/screen/Broadcast.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
@@ -24,7 +25,6 @@ import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
 import 'package:sats/ui/screen/NewWallet/XpubColdcard.dart';
 import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
-import 'package:sats/ui/screen/PSBT.dart';
 import 'package:sats/ui/screen/Peers.dart';
 import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
@@ -128,8 +128,8 @@ class Stackmate extends StatelessWidget {
         builder: (_, __) => const AddWalletScreen(),
       ),
       GoRoute(
-        path: '/psbt-tools',
-        builder: (_, __) => const PSBTScreen(),
+        path: '/broadcast',
+        builder: (_, __) => const BroadcastScreen(),
       ),
       GoRoute(
         path: '/generate-seed',

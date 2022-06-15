@@ -16,6 +16,23 @@ class XpubColdcardImport extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const SizedBox(height: 20),
+            Text(
+              'Generic.json'.toUpperCase(),
+              style: context.fonts.headline6!.copyWith(
+                color: context.colours.secondary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              "Once you have your account loaded in your ColdCard (APPLY passphrase if required), navigate to:\n\n-> Advanced\n-> Micro SD Card\n-> Export Wallet\n-> Generic JSON\n-> Account 0\n\nThis will dump your ColdCard account's public keys into a .json file.\nImport the JSON file here.\n\nWE RECOMMEND USING AN SD ADAPTOR, AND AVOID STORING YOUR PUBLIC KEYS ON YOUR PHONE'S SHARED MEMORY.\n\nWe only derive the Segwit account from your ColdCard. Ask us if you need support for Legacy.",
+              style: context.fonts.bodySmall!.copyWith(
+                color: context.colours.onPrimary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
             IgnorePointer(
               ignoring: state.detailsReady,
               child: AnimatedOpacity(
@@ -37,14 +54,18 @@ class XpubColdcardImport extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
             if (state.importedJSONfileName != null)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'File:' + name.toString(),
-                    style: c.fonts.button!.copyWith(color: c.colours.primary),
+                    'File: ' +
+                        ((name.toString() == '')
+                            ? 'None Selected'
+                            : name.toString()),
+                    style: c.fonts.button!.copyWith(color: c.colours.secondary),
                   ),
                 ),
               ),
