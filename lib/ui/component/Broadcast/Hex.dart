@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/pkg/extensions.dart';
 
-class BroadcastHex extends StatelessWidget {
+class BroadcastHex extends StatefulWidget {
   const BroadcastHex({Key? key}) : super(key: key);
 
   @override
+  State<BroadcastHex> createState() => _BroadcastHexState();
+}
+
+class _BroadcastHexState extends State<BroadcastHex> {
+  @override
   Widget build(BuildContext c) {
+    final hex = context.select((BroadcastCubit sc) => sc.state.hex);
+    TextEditingController textController = TextEditingController(text: hex);
     return BlocBuilder<BroadcastCubit, BroadcastState>(
       builder: (context, broadcastState) {
         return Column(
@@ -24,9 +31,9 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: c.colours.onPrimary),
-                  primary: c.colours.primary,
-                  onSurface: c.colours.background,
+                  side: BorderSide(color: context.colours.onPrimary),
+                  primary: context.colours.primary,
+                  onSurface: context.colours.background,
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().pasteHex();
@@ -39,14 +46,14 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: c.colours.onPrimary),
-                  primary: c.colours.primary,
-                  onSurface: c.colours.background,
+                  side: BorderSide(color: context.colours.onPrimary),
+                  primary: context.colours.primary,
+                  onSurface: context.colours.background,
                 ),
                 onPressed: () {
-                  c.read<BroadcastCubit>().updateHexFile();
+                  context.read<BroadcastCubit>().updateHexFile();
                 },
-                child: Text('Import hex'.toUpperCase() + ''),
+                child: Text('Import hex'.toUpperCase()),
               ),
             ),
             const SizedBox(height: 30),
@@ -54,14 +61,35 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: c.colours.onPrimary),
-                  primary: c.colours.primary,
-                  onSurface: c.colours.background,
+                  side: BorderSide(color: context.colours.onPrimary),
+                  primary: context.colours.primary,
+                  onSurface: context.colours.background,
                 ),
                 onPressed: () {
-                  c.read<BroadcastCubit>().verifyImportHex();
+                  context.read<BroadcastCubit>().verifyImportHex();
                 },
-                child: Text('verify hex'.toUpperCase() + ''),
+                child: Text('verify hex'.toUpperCase()),
+              ),
+            ),
+            const SizedBox(height: 5),
+            Padding(
+              padding: EdgeInsets.zero,
+              child: TextField(
+                controller: textController,
+                enableIMEPersonalizedLearning: false,
+                style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+                enableSuggestions: false,
+                keyboardType: TextInputType.text,
+                autocorrect: false,
+                onChanged: (text) {
+                  c.read<BroadcastCubit>().hexText(text);
+                },
+                maxLines: 10,
+                decoration: InputDecoration(
+                  hintText: 'hex',
+                  fillColor: c.colours.surface,
+                  //errorText: state.seedError.nullIfEmpty(),
+                ),
               ),
             ),
             const SizedBox(height: 30),
@@ -69,8 +97,8 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: c.colours.primary,
-                  onPrimary: c.colours.background,
+                  primary: context.colours.primary,
+                  onPrimary: context.colours.background,
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().broadcastHexConfirmed();

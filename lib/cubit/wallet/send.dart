@@ -241,7 +241,7 @@ class SendCubit extends Cubit<SendState> {
 
     final file = File('$path/build.psbt');
 
-    file.writeAsString(state.psbt);
+    await file.writeAsString(state.psbt);
     emit(
       state.copyWith(
         sendingTx: false,

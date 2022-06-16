@@ -98,11 +98,11 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       );
 
       if (result != null) {
-        final PlatformFile _hexFile = result.files.single;
+        final _hexFile = result.files.first.path;
 
         emit(
           state.copyWith(
-            importedHexPath: _hexFile.path,
+            importedHexPath: _hexFile,
           ),
         );
       } else {
@@ -163,7 +163,6 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       emit(state.copyWith(errFileImport: text.error!));
     else
       emit(state.copyWith(hex: text.result!));
-    return;
   }
 
   void verifyImportPSBT() async {
@@ -179,9 +178,10 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       } else
         emit(
           state.copyWith(
-            psbt: content.replaceAll(' ', '')
-            .replaceAll('\r', '')
-            .replaceAll('\n', ''),
+            psbt: content
+                .replaceAll(' ', '')
+                .replaceAll('\r', '')
+                .replaceAll('\n', ''),
           ),
         );
       return;
@@ -198,8 +198,9 @@ class BroadcastCubit extends Cubit<BroadcastState> {
   void verifyImportHex() async {
     try {
       final hexFile = File(state.importedHexPath!);
-      final content = await hexFile.readAsString(); //this is fine
-      // the cubit state is not holding the entire content
+
+      final content = await hexFile.readAsString();
+
       emit(
         state.copyWith(
           hex: content
@@ -219,6 +220,14 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     }
   }
 
+  void hexText(String hex) {
+    emit(
+      state.copyWith(
+        hex: hex,
+      ),
+    );
+  }
+
   void broadcastHexConfirmed() async {
     try {
       emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
@@ -230,12 +239,12 @@ class BroadcastCubit extends Cubit<BroadcastState> {
         socks5: socks5,
         signedHex: state.hex,
       );
-
+      print('START---${state.hex}---END');
       if (hex.hasError) {
         emit(
           state.copyWith(
             broadcasting: false,
-            errBroadcasting: (hex.error!.contains('spent'))?'Transaction already spent.':hex.error!,
+            errBroadcasting: hex.error!,
             txId: '',
             hex: '',
           ),
