@@ -53,7 +53,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
   final ChainSelectCubit _blockchainCubit;
   final TorCubit _torCubit;
 
-  static const dummyDescriptor = 'wpkh(tprv/*)';
+  static const dummyDescriptor = 'wpkh(xprv/*)';
   static const emptyString = '';
   // void completed() {
   //   _walletsCubit.walletSelected(wallet)
