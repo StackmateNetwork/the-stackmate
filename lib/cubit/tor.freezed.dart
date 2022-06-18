@@ -28,6 +28,7 @@ mixin _$TorState {
   String get controlKey => throw _privateConstructorUsedError;
   String get errConnection => throw _privateConstructorUsedError;
   String get errStorage => throw _privateConstructorUsedError;
+  String get errMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TorStateCopyWith<TorState> get copyWith =>
@@ -50,7 +51,8 @@ abstract class $TorStateCopyWith<$Res> {
       bool isConnected,
       String controlKey,
       String errConnection,
-      String errStorage});
+      String errStorage,
+      String errMessage});
 }
 
 /// @nodoc
@@ -75,6 +77,7 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
     Object? controlKey = freezed,
     Object? errConnection = freezed,
     Object? errStorage = freezed,
+    Object? errMessage = freezed,
   }) {
     return _then(_value.copyWith(
       workingDir: workingDir == freezed
@@ -125,6 +128,10 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
           ? _value.errStorage
           : errStorage // ignore: cast_nullable_to_non_nullable
               as String,
+      errMessage: errMessage == freezed
+          ? _value.errMessage
+          : errMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -147,7 +154,8 @@ abstract class _$$_TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
       bool isConnected,
       String controlKey,
       String errConnection,
-      String errStorage});
+      String errStorage,
+      String errMessage});
 }
 
 /// @nodoc
@@ -174,6 +182,7 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
     Object? controlKey = freezed,
     Object? errConnection = freezed,
     Object? errStorage = freezed,
+    Object? errMessage = freezed,
   }) {
     return _then(_$_TorState(
       workingDir: workingDir == freezed
@@ -224,6 +233,10 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
           ? _value.errStorage
           : errStorage // ignore: cast_nullable_to_non_nullable
               as String,
+      errMessage: errMessage == freezed
+          ? _value.errMessage
+          : errMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -243,7 +256,8 @@ class _$_TorState extends _TorState {
       this.isConnected = false,
       this.controlKey = '',
       this.errConnection = '',
-      this.errStorage = ''})
+      this.errStorage = '',
+      this.errMessage = ''})
       : super._();
 
   @override
@@ -282,10 +296,13 @@ class _$_TorState extends _TorState {
   @override
   @JsonKey()
   final String errStorage;
+  @override
+  @JsonKey()
+  final String errMessage;
 
   @override
   String toString() {
-    return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isEdittingExternal: $isEdittingExternal, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage)';
+    return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isEdittingExternal: $isEdittingExternal, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage, errMessage: $errMessage)';
   }
 
   @override
@@ -312,7 +329,9 @@ class _$_TorState extends _TorState {
             const DeepCollectionEquality()
                 .equals(other.errConnection, errConnection) &&
             const DeepCollectionEquality()
-                .equals(other.errStorage, errStorage));
+                .equals(other.errStorage, errStorage) &&
+            const DeepCollectionEquality()
+                .equals(other.errMessage, errMessage));
   }
 
   @override
@@ -329,7 +348,8 @@ class _$_TorState extends _TorState {
       const DeepCollectionEquality().hash(isConnected),
       const DeepCollectionEquality().hash(controlKey),
       const DeepCollectionEquality().hash(errConnection),
-      const DeepCollectionEquality().hash(errStorage));
+      const DeepCollectionEquality().hash(errStorage),
+      const DeepCollectionEquality().hash(errMessage));
 
   @JsonKey(ignore: true)
   @override
@@ -350,7 +370,8 @@ abstract class _TorState extends TorState {
       final bool isConnected,
       final String controlKey,
       final String errConnection,
-      final String errStorage}) = _$_TorState;
+      final String errStorage,
+      final String errMessage}) = _$_TorState;
   const _TorState._() : super._();
 
   @override
@@ -377,6 +398,8 @@ abstract class _TorState extends TorState {
   String get errConnection => throw _privateConstructorUsedError;
   @override
   String get errStorage => throw _privateConstructorUsedError;
+  @override
+  String get errMessage => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_TorStateCopyWith<_$_TorState> get copyWith =>

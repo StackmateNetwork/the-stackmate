@@ -28,7 +28,7 @@ import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
 import 'package:sats/ui/screen/TorConfig.dart';
-import 'package:sats/ui/screen/Trade.dart';
+import 'package:sats/ui/screen/Contracts.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
 
@@ -105,8 +105,8 @@ class Stackmate extends StatelessWidget {
         builder: (_, __) => const PeersScreen(),
       ),
       GoRoute(
-        path: '/trades',
-        builder: (_, __) => const AnnouncementsScreen(),
+        path: '/contracts',
+        builder: (_, __) => const ContractsScreen(),
       ),
       GoRoute(
         path: '/messages',

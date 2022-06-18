@@ -9,15 +9,14 @@ class HomeLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final tor = context.select((TorCubit hc) => hc.state);
+    final tor = context.select((TorCubit hc) => hc.state);
     // final fees = context.select((FeesCubit hc) => hc.state);
-    // const String loading = 'Checking Tor Connection Status...';
-    // if (tor.isConnected) return Container();
-    // if (tor.errConnection != '')
-    //   return Text('Cound not connect. Goto settings and reset.');
-    // return const Loading(
-    //   text: loading,
-    // );
+    const String loading = 'Connecting to Tor...';
+    if (tor.isConnected) return Container();
+    if (tor.errConnection != '') return Text(tor.errConnection);
+    return const Loading(
+      text: loading,
+    );
 
     return Container();
   }

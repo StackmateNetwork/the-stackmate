@@ -29,6 +29,7 @@ class TorState with _$TorState {
     @Default('') String controlKey,
     @Default('') String errConnection,
     @Default('') String errStorage,
+    @Default('') String errMessage,
   }) = _TorState;
 
   const TorState._();
@@ -153,7 +154,9 @@ class TorCubit extends Cubit<TorState> {
         // connect to external tor
         await testExternalSocks5();
       } else {
-        return;
+        emit(
+          state.copyWith(errMessage: 'You have chosen to opt out of Tor.'),
+        );
       }
     } on PlatformException catch (e) {
       emit(

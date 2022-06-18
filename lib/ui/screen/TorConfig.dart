@@ -84,7 +84,9 @@ class TorConfigScreen extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    'Lost connection to Tor.\nGoto settings to reconnect.',
+                    (tor.errMessage != '')
+                        ? tor.errMessage
+                        : 'Not routed via Tor.',
                     textAlign: TextAlign.center,
                     style: c.fonts.caption!.copyWith(
                       color: c.colours.error,

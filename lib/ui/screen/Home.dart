@@ -73,14 +73,7 @@ class _Home extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: [
-                                  if (torState.isConnected) ...[
-                                    BackupWarning(),
-                                    Accounts()
-                                  ] else ...[
-                                    Container()
-                                  ]
-                                ],
+                                children: [BackupWarning(), Accounts()],
                               ),
                             ),
                           ],

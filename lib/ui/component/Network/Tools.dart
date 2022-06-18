@@ -15,10 +15,10 @@ class SocialTools extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  _showTradeWarning(c);
+                  _showContractWarning(c);
                 },
                 icon: Icon(
-                  Icons.currency_exchange,
+                  Icons.group_work,
                   size: 32,
                   color: c.colours.primary,
                 ),
@@ -38,7 +38,7 @@ class SocialTools extends StatelessWidget {
                   c.push('/peers');
                 },
                 icon: Icon(
-                  Icons.people,
+                  Icons.groups,
                   size: 32,
                   color: c.colours.primary,
                 ),
@@ -51,19 +51,19 @@ class SocialTools extends StatelessWidget {
   }
 }
 
-Future<void> _showTradeWarning(BuildContext context) async {
+Future<void> _showContractWarning(BuildContext context) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: context.colours.onPrimary,
-        title: Text('P2P Trade Terms.', style: context.fonts.headline3),
+        title: Text('P2P Contract Terms.', style: context.fonts.headline3),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               Text(
-                'You are responsible to protect yourself from fraud by being selective about who you trade with.\n',
+                'You are responsible to protect yourself from fraud by being selective about who you start contracts with.\n',
                 style: context.fonts.bodyMedium!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
@@ -73,7 +73,7 @@ Future<void> _showTradeWarning(BuildContext context) async {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                'Only trade via Verified Escrows whom you Trust to be fair and fast in handling disputes.\n',
+                'Only do business via Verified Escrows whom you Trust to be fair and fast in handling disputes.\n',
                 style: context.fonts.bodyMedium!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
@@ -85,7 +85,7 @@ Future<void> _showTradeWarning(BuildContext context) async {
             child: const Text('I Agree.'),
             onPressed: () {
               Navigator.of(context).pop();
-              context.push('/trades');
+              context.push('/contracts');
             },
           ),
         ],
