@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/broadcast.dart';
-import 'package:sats/cubit/chain-select.dart';
-import 'package:sats/cubit/logger.dart';
-import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
-import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/ui/component/Broadcast/Hex.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
 
@@ -49,22 +42,19 @@ class BroadcastScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final nodeAddressCubit = context.select((NodeAddressCubit c) => c);
-    final blockchainCubit = context.select((ChainSelectCubit c) => c);
-    final tor = context.select((TorCubit c) => c);
-    final logger = context.select((Logger c) => c);
-    final psbt = BroadcastCubit(
-      logger,
-      locator<IStackMateBitcoin>(),
-      locator<IClipBoard>(),
-      nodeAddressCubit,
-      tor,
-      blockchainCubit,
-    );
+    // final nodeAddressCubit = context.select((NodeAddressCubit c) => c);
+    // final blockchainCubit = context.select((ChainSelectCubit c) => c);
+    // final tor = context.select((TorCubit c) => c);
+    // final logger = context.select((Logger c) => c);
+    // final psbt = BroadcastCubit(
+    //   logger,
+    //   locator<IStackMateBitcoin>(),
+    //   locator<IClipBoard>(),
+    //   nodeAddressCubit,
+    //   tor,
+    //   blockchainCubit,
+    // );
 
-    return BlocProvider.value(
-      value: psbt,
-      child: const _Broadcast(),
-    );
+    return const _Broadcast();
   }
 }

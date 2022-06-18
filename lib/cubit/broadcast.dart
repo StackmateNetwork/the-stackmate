@@ -76,6 +76,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
         emit(
           state.copyWith(
             importedPsbtPath: _psbtFile.path,
+            importedPsbtfileName: _psbtFile.name,
           ),
         );
       } else {
@@ -96,13 +97,13 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       final FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowedExtensions: [],
       );
-
       if (result != null) {
-        final _hexFile = result.files.first.path;
+        final _hexFile = result.files.first;
 
         emit(
           state.copyWith(
-            importedHexPath: _hexFile,
+            importedHexPath: _hexFile.path,
+            importedHexfileName: _hexFile.name,
           ),
         );
       } else {
@@ -124,6 +125,8 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       emit(
         state.copyWith(
           clearData: true,
+          importedHexfileName: '',
+          importedPsbtfileName: '',
         ),
       );
     } else {
@@ -200,7 +203,6 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       final hexFile = File(state.importedHexPath!);
 
       final content = await hexFile.readAsString();
-
       emit(
         state.copyWith(
           hex: content
@@ -220,7 +222,8 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     }
   }
 
-  void hexText(String hex) {
+  void hexText(String hex) async {
+    await Future.delayed(const Duration(milliseconds: 3000));
     emit(
       state.copyWith(
         hex: hex,
@@ -228,7 +231,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     );
   }
 
-  void broadcastHexConfirmed() async {
+  Future<void> broadcastHexConfirmed() async {
     try {
       emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
@@ -239,7 +242,6 @@ class BroadcastCubit extends Cubit<BroadcastState> {
         socks5: socks5,
         signedHex: state.hex,
       );
-      print('START---${state.hex}---END');
       if (hex.hasError) {
         emit(
           state.copyWith(

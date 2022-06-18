@@ -10,17 +10,6 @@ class Validation {
     // return double.parse(s) != null;
   }
 
-  static bool isEmail(String email) {
-    final emailCheck = RegExp(
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
-    );
-
-    if (email != '') {
-      if (emailCheck.hasMatch(email)) return true;
-    }
-    return false;
-  }
-
   static bool isBtcAddress(String address) {
     if (address.startsWith('1') ||
             address.startsWith('3') ||
