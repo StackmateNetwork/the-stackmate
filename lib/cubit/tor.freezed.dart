@@ -23,6 +23,7 @@ mixin _$TorState {
   String get httpProxy => throw _privateConstructorUsedError;
   String get bootstapProgress => throw _privateConstructorUsedError;
   bool get isRunning => throw _privateConstructorUsedError;
+  bool get isEdittingExternal => throw _privateConstructorUsedError;
   bool get isConnected => throw _privateConstructorUsedError;
   String get controlKey => throw _privateConstructorUsedError;
   String get errConnection => throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $TorStateCopyWith<$Res> {
       String httpProxy,
       String bootstapProgress,
       bool isRunning,
+      bool isEdittingExternal,
       bool isConnected,
       String controlKey,
       String errConnection,
@@ -68,6 +70,7 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
     Object? httpProxy = freezed,
     Object? bootstapProgress = freezed,
     Object? isRunning = freezed,
+    Object? isEdittingExternal = freezed,
     Object? isConnected = freezed,
     Object? controlKey = freezed,
     Object? errConnection = freezed,
@@ -101,6 +104,10 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
       isRunning: isRunning == freezed
           ? _value.isRunning
           : isRunning // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isEdittingExternal: isEdittingExternal == freezed
+          ? _value.isEdittingExternal
+          : isEdittingExternal // ignore: cast_nullable_to_non_nullable
               as bool,
       isConnected: isConnected == freezed
           ? _value.isConnected
@@ -136,6 +143,7 @@ abstract class _$$_TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
       String httpProxy,
       String bootstapProgress,
       bool isRunning,
+      bool isEdittingExternal,
       bool isConnected,
       String controlKey,
       String errConnection,
@@ -161,6 +169,7 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
     Object? httpProxy = freezed,
     Object? bootstapProgress = freezed,
     Object? isRunning = freezed,
+    Object? isEdittingExternal = freezed,
     Object? isConnected = freezed,
     Object? controlKey = freezed,
     Object? errConnection = freezed,
@@ -195,6 +204,10 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
           ? _value.isRunning
           : isRunning // ignore: cast_nullable_to_non_nullable
               as bool,
+      isEdittingExternal: isEdittingExternal == freezed
+          ? _value.isEdittingExternal
+          : isEdittingExternal // ignore: cast_nullable_to_non_nullable
+              as bool,
       isConnected: isConnected == freezed
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
@@ -226,6 +239,7 @@ class _$_TorState extends _TorState {
       this.httpProxy = '',
       this.bootstapProgress = 'Starting Tor.\nThis may take a while ...',
       this.isRunning = false,
+      this.isEdittingExternal = false,
       this.isConnected = false,
       this.controlKey = '',
       this.errConnection = '',
@@ -255,6 +269,9 @@ class _$_TorState extends _TorState {
   final bool isRunning;
   @override
   @JsonKey()
+  final bool isEdittingExternal;
+  @override
+  @JsonKey()
   final bool isConnected;
   @override
   @JsonKey()
@@ -268,7 +285,7 @@ class _$_TorState extends _TorState {
 
   @override
   String toString() {
-    return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage)';
+    return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isEdittingExternal: $isEdittingExternal, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage)';
   }
 
   @override
@@ -286,6 +303,8 @@ class _$_TorState extends _TorState {
             const DeepCollectionEquality()
                 .equals(other.bootstapProgress, bootstapProgress) &&
             const DeepCollectionEquality().equals(other.isRunning, isRunning) &&
+            const DeepCollectionEquality()
+                .equals(other.isEdittingExternal, isEdittingExternal) &&
             const DeepCollectionEquality()
                 .equals(other.isConnected, isConnected) &&
             const DeepCollectionEquality()
@@ -306,6 +325,7 @@ class _$_TorState extends _TorState {
       const DeepCollectionEquality().hash(httpProxy),
       const DeepCollectionEquality().hash(bootstapProgress),
       const DeepCollectionEquality().hash(isRunning),
+      const DeepCollectionEquality().hash(isEdittingExternal),
       const DeepCollectionEquality().hash(isConnected),
       const DeepCollectionEquality().hash(controlKey),
       const DeepCollectionEquality().hash(errConnection),
@@ -326,6 +346,7 @@ abstract class _TorState extends TorState {
       final String httpProxy,
       final String bootstapProgress,
       final bool isRunning,
+      final bool isEdittingExternal,
       final bool isConnected,
       final String controlKey,
       final String errConnection,
@@ -346,6 +367,8 @@ abstract class _TorState extends TorState {
   String get bootstapProgress => throw _privateConstructorUsedError;
   @override
   bool get isRunning => throw _privateConstructorUsedError;
+  @override
+  bool get isEdittingExternal => throw _privateConstructorUsedError;
   @override
   bool get isConnected => throw _privateConstructorUsedError;
   @override

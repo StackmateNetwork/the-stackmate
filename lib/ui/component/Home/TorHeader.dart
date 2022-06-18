@@ -38,7 +38,7 @@ class TorHeader extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    'Lost connection to Tor.\nGoto settings to reconnect.',
+                    'Not routed via Tor.\n',
                     textAlign: TextAlign.center,
                     style: context.fonts.caption!.copyWith(
                       color: context.colours.error,

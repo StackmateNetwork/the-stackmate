@@ -24,6 +24,7 @@ class TorState with _$TorState {
     @Default('Starting Tor.\nThis may take a while ...')
         String bootstapProgress,
     @Default(false) bool isRunning,
+    @Default(false) bool isEdittingExternal,
     @Default(false) bool isConnected,
     @Default('') String controlKey,
     @Default('') String errConnection,
@@ -80,16 +81,24 @@ class TorCubit extends Cubit<TorState> {
       );
   }
 
-  void toggleEnforce() {
+  Future<void> toggleEnforce() async {
     emit(
       state.copyWith(enforced: !state.enforced),
     );
+    await updateConfig();
   }
 
-  void toggleInternal() {
+  void toggleEditExternal() {
+    emit(
+      state.copyWith(isEdittingExternal: !state.isEdittingExternal),
+    );
+  }
+
+  Future<void> toggleInternal() async {
     emit(
       state.copyWith(internal: !state.internal),
     );
+    await updateConfig();
   }
 
   void setExternalSocks5(String port) {
