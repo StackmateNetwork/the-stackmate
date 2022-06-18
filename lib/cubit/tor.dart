@@ -177,7 +177,7 @@ class TorCubit extends Cubit<TorState> {
     }
   }
 
-  Future<void> checkStatus() async {
+  Future<void> checkInternalStatus() async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {

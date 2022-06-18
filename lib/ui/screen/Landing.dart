@@ -29,7 +29,6 @@ class _Landing extends StatelessWidget {
               displacement: 10.0,
               onRefresh: () async {
                 if (torState.enforced) {
-                  c.read<TorCubit>().checkStatus();
                   c.read<TorCubit>().testConnection();
                 }
               },

@@ -174,7 +174,7 @@ class _ExternalTorState extends State<ExternalTor> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Set External SockS5 Proxy'.toUpperCase(),
+            'External SockS5 Proxy'.toUpperCase(),
             style: c.fonts.button!.copyWith(
               color: c.colours.onBackground,
               fontSize: 16,
@@ -182,7 +182,7 @@ class _ExternalTorState extends State<ExternalTor> {
           ),
           const SizedBox(height: 4),
           Text(
-            'Default: 9050',
+            'Check your external Tor app.',
             maxLines: 3,
             style: c.fonts.caption!.copyWith(
               color: c.colours.onSurface.withOpacity(0.7),
