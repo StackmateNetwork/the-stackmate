@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/tor.dart';
-import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/BackupWarning.dart';
-import 'package:sats/ui/component/Home/TorHeader.dart';
 import 'package:sats/ui/component/Home/Loader.dart';
 import 'package:sats/ui/component/Home/Networth.dart';
 import 'package:sats/ui/component/Home/Tools.dart';
+import 'package:sats/ui/component/Home/TorHeader.dart';
 
 class _Home extends StatelessWidget {
   @override

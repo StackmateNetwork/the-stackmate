@@ -2,25 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/pkg/extensions.dart';
 
-class BroadcastHex extends StatefulWidget {
+class BroadcastHex extends StatelessWidget {
   const BroadcastHex({Key? key}) : super(key: key);
 
   @override
-  State<BroadcastHex> createState() => _BroadcastHexState();
-}
-
-class _BroadcastHexState extends State<BroadcastHex> {
-  @override
   Widget build(BuildContext c) {
-    final hex = context.select((BroadcastCubit sc) => sc.state.hex);
-    TextEditingController textController = TextEditingController(text: hex);
+    final hex = c.select((BroadcastCubit sc) => sc.state.hex);
+    final result = c.select((BroadcastCubit sc) => sc.state.clearData);
+    final name = c.select((BroadcastCubit sn) => sn.state.importedHexfileName);
+    final TextEditingController textController =
+        TextEditingController(text: hex);
     return BlocBuilder<BroadcastCubit, BroadcastState>(
       builder: (context, broadcastState) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Broadcast Hex'.toUpperCase(),
+              'Broadcast Transaction'.toUpperCase(),
               textAlign: TextAlign.center,
               style: context.fonts.overline!.copyWith(
                 color: context.colours.onBackground,
@@ -53,7 +51,47 @@ class _BroadcastHexState extends State<BroadcastHex> {
                 onPressed: () {
                   context.read<BroadcastCubit>().updateHexFile();
                 },
-                child: Text('Import hex'.toUpperCase()),
+                child: Text('Import Signed file'.toUpperCase()),
+              ),
+            ),
+            const SizedBox(height: 10),
+            if (broadcastState.importedHexfileName != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'File: ' +
+                        ((name.toString() == '')
+                            ? 'None Selected'
+                            : name.toString()),
+                    style: c.fonts.button!.copyWith(color: c.colours.secondary),
+                  ),
+                ),
+              ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () async {
+                    c.read<BroadcastCubit>().clearCachedFiles();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor:
+                            result ? c.colours.primary : c.colours.error,
+                        content: Text(
+                          result ? ' File removed' : 'Failed to clear file',
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Clear file',
+                    style: c.fonts.button!.copyWith(color: c.colours.primary),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 30),
@@ -68,7 +106,7 @@ class _BroadcastHexState extends State<BroadcastHex> {
                 onPressed: () {
                   context.read<BroadcastCubit>().verifyImportHex();
                 },
-                child: Text('verify hex'.toUpperCase()),
+                child: Text('verify file'.toUpperCase()),
               ),
             ),
             const SizedBox(height: 5),
@@ -77,14 +115,14 @@ class _BroadcastHexState extends State<BroadcastHex> {
               child: TextField(
                 controller: textController,
                 enableIMEPersonalizedLearning: false,
-                style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+                style: c.fonts.bodySmall!.copyWith(color: c.colours.onPrimary),
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 autocorrect: false,
                 onChanged: (text) {
                   c.read<BroadcastCubit>().hexText(text);
                 },
-                maxLines: 10,
+                maxLines: 8,
                 decoration: InputDecoration(
                   hintText: 'hex',
                   fillColor: c.colours.surface,
@@ -103,7 +141,7 @@ class _BroadcastHexState extends State<BroadcastHex> {
                 onPressed: () {
                   context.read<BroadcastCubit>().broadcastHexConfirmed();
                 },
-                child: const Text('CONFIRM'),
+                child: const Text('Broadcast'),
               ),
             ),
             const SizedBox(height: 16),

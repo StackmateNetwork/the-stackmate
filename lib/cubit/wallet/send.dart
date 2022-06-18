@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/types.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -40,6 +40,7 @@ class SendState with _$SendState {
     @Default(false) bool calculatingFees,
     @Default(false) bool buildingTx,
     @Default(false) bool sendingTx,
+    bool? permissionGranted,
     @Default('') String errLoading,
     @Default('') String errAddress,
     @Default('') String errSending,
@@ -234,21 +235,52 @@ class SendCubit extends Cubit<SendState> {
     );
   }
 
+  Future<void> _getStoragePermission() async {
+    if (await Permission.storage.request().isGranted) {
+      var permissionGranted = true;
+    } else if (await Permission.storage.request().isPermanentlyDenied) {
+      await openAppSettings();
+    } else if (await Permission.storage.request().isDenied) {
+      var permissionGranted = false;
+    }
+  }
+
   Future<void> savePSBTToFile() async {
-    final bool isDesktop = !(Platform.isAndroid || Platform.isIOS);
+    try {
+      await _getStoragePermission();
+      final path = await FilePicker.platform.getDirectoryPath();
+      if (path == null) {
+        emit(
+          state.copyWith(
+            sendingTx: false,
+            errLoading: 'Folder not selected',
+            currentStep: SendSteps.confirm,
+          ),
+        );
+      }
+      //final File file = File('$path/build.psbt');
+      String _timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
-    String? path = await FilePicker.platform.getDirectoryPath();
+      await File('$path/build$_timestamp.psbt').writeAsString(state.psbt);
 
-    final file = File('$path/build.psbt');
+      emit(
+        state.copyWith(
+          sendingTx: false,
+          errLoading: emptyString,
+          currentStep: SendSteps.sent,
+        ),
+      );
+    } catch (e, s) {
+      emit(
+        state.copyWith(
+          sendingTx: false,
+          errLoading: emptyString,
+          currentStep: SendSteps.confirm,
+        ),
+      );
 
-    await file.writeAsString(state.psbt);
-    emit(
-      state.copyWith(
-        sendingTx: false,
-        errLoading: emptyString,
-        currentStep: SendSteps.sent,
-      ),
-    );
+      _logger.logException(e.toString(), 'SendCubit.confirmclicked', s);
+    }
   }
 
   bool _checkAmount(String amount) {
