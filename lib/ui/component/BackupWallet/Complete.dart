@@ -1,115 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
+import 'package:sats/cubit/seed-backup.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/ui/component/BackupWallet/Warning.dart';
 
-class SeedGeneratePassphrase extends StatefulWidget {
-  @override
-  State<SeedGeneratePassphrase> createState() => _SeedGeneratePassphraseState();
-}
-
-class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
-  late TextEditingController _textController;
-  late TextEditingController _textControllerP;
-  final GlobalKey<FormState> _form = GlobalKey<FormState>();
-  @override
-  void initState() {
-    _textController = TextEditingController();
-    _textControllerP = TextEditingController();
-    super.initState();
-  }
-
+class SeedBackupPassphrase extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    return BlocBuilder<SeedGenerateCubit, SeedGenerateState>(
+    return BlocBuilder<SeedBackupCubit, SeedBackupState>(
       builder: (context, state) {
-        if (_textController.text != state.passPhrase)
-          _textController.text = state.passPhrase;
-        return Form(
-          key: _form,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 24),
-              Text(
-                'optional\npassphrase'.toUpperCase(),
-                style: c.fonts.headline5!.copyWith(
-                  color: c.colours.onPrimary,
-                  // fontWeight: FontWeight.bold,
-                ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 24),
+            Text(
+              'Passphrase'.toUpperCase(),
+              style: c.fonts.headline5!.copyWith(
+                color: c.colours.onPrimary,
+                // fontWeight: FontWeight.bold,
               ),
-              // const HeaderTextDark(text: 'Enter an\noptional\npassphrase'),
-              const SizedBox(height: 24),
-              Text(
-                'Add an (optional) security layer to your seed.\n\nIf you feel paranoid about 12 words not being enough, add some more entropy here.\n\nIf set, you cannot recover funds without it.',
-                style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
-              ),
-              const SizedBox(height: 32),
-
-              Padding(
-                padding: EdgeInsets.zero,
-                child: TextFormField(
-                  enableIMEPersonalizedLearning: false,
-                  autocorrect: false,
-                  obscureText: true,
-                  obscuringCharacter: '*',
-                  controller: _textController,
-                  validator: (val) {
-                    return null;
-                  },
-                  onChanged: (text) {
-                    c.read<SeedGenerateCubit>().passPhrasedChanged(text);
-                  },
-                  style: TextStyle(color: c.colours.onBackground),
-                  decoration: const InputDecoration(
-                    labelText: 'Passphrase',
-                  ),
+            ),
+            // const HeaderTextDark(text: 'Enter an\noptional\npassphrase'),
+            const SizedBox(height: 24),
+            Text(
+              (state.passPhrase != '')
+                  ? 'You have a passphrase set.\n\nMake sure you write this down with your seed.\n\nYOU WILL NOT BE ABLE TO RECOVER YOUR COINS WITHOUT IT.'
+                  : 'You have not set a passphrase.',
+              style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              (state.passPhrase != '') ? state.passPhrase : '',
+              style: c.fonts.headline6!.copyWith(color: c.colours.secondary),
+            ),
+            const SizedBox(height: 32),
+            SizedBox(
+              height: 52,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: c.colours.primary,
+                  onPrimary: c.colours.background,
                 ),
+                onPressed: () {
+                  c.read<SeedBackupCubit>().nextClicked();
+                },
+                child: Text('Done'.toUpperCase()),
               ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: EdgeInsets.zero,
-                child: TextFormField(
-                  enableIMEPersonalizedLearning: false,
-                  autocorrect: false,
-                  obscureText: true,
-                  obscuringCharacter: '*',
-                  controller: _textControllerP,
-                  validator: (val) {
-                    if (val != _textController.text) return 'Not Matched';
-                    return null;
-                  },
-                  style: TextStyle(color: c.colours.onBackground),
-                  decoration: const InputDecoration(
-                    labelText: 'Verify Passphrase',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 18),
-              if (state.errPassphrase != '')
-                Text(
-                  state.errPassphrase,
-                  style: c.fonts.caption!.copyWith(
-                    color: c.colours.error,
-                  ),
-                ),
-              const SizedBox(height: 14),
-              SizedBox(
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: c.colours.primary,
-                    onPrimary: c.colours.background,
-                  ),
-                  onPressed: () {
-                    if (_form.currentState!.validate()) {
-                      c.read<SeedGenerateCubit>().finalizePassphrase();
-                    }
-                  },
-                  child: Text('Confirm'.toUpperCase()),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );
@@ -154,30 +91,32 @@ class SeedWordCell extends StatelessWidget {
   }
 }
 
-class SeedGenerateStepSelect extends StatelessWidget {
-  const SeedGenerateStepSelect({Key? key}) : super(key: key);
+class SeedBackupStepSelect extends StatelessWidget {
+  const SeedBackupStepSelect({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext c) {
-    final step = c.select((SeedGenerateCubit c) => c.state.currentStep);
+    final step = c.select((SeedBackupCubit c) => c.state.currentStep);
 
     switch (step) {
-      case SeedGenerateSteps.generate:
-        return SeedGenerate();
-      case SeedGenerateSteps.quiz:
+      case SeedBackupSteps.warning:
+        return SeedBackupWarning();
+      case SeedBackupSteps.display:
+        return SeedBackup();
+      case SeedBackupSteps.quiz:
         return SeedConfirm();
-      case SeedGenerateSteps.passphrase:
-        return SeedGeneratePassphrase();
+      case SeedBackupSteps.passphrase:
+        return SeedBackupPassphrase();
     }
 
     return Container();
   }
 }
 
-class SeedGenerate extends StatelessWidget {
+class SeedBackup extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final words = c.select((SeedGenerateCubit c) => c.state.seed);
+    final words = c.select((SeedBackupCubit c) => c.state.seed);
 
     return SingleChildScrollView(
       child: Column(
@@ -234,24 +173,9 @@ class SeedGenerate extends StatelessWidget {
                 onPrimary: c.colours.background,
               ),
               onPressed: () {
-                c.read<SeedGenerateCubit>().startQuiz();
+                c.read<SeedBackupCubit>().startQuiz();
               },
               child: Text('Next'.toUpperCase()),
-            ),
-          ),
-          const SizedBox(height: 2),
-          SizedBox(
-            height: 52,
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: c.colours.onPrimary),
-                primary: c.colours.primary,
-                onSurface: c.colours.background,
-              ),
-              onPressed: () {
-                c.read<SeedGenerateCubit>().backupLater();
-              },
-              child: Text('BackUp Later'.toUpperCase()),
             ),
           ),
           const SizedBox(height: 12)
@@ -304,15 +228,15 @@ class SeedConfirm extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final answerIdx = c.select(
-      (SeedGenerateCubit c) => c.state.quizSeedAnswerIdx.toString(),
+      (SeedBackupCubit c) => c.state.quizSeedAnswerIdx.toString(),
     );
 
     final completedIdx =
-        c.select((SeedGenerateCubit c) => c.state.quizSeedCompleted);
+        c.select((SeedBackupCubit c) => c.state.quizSeedCompleted);
 
-    final words = c.select((SeedGenerateCubit c) => c.state.quizSeedList);
+    final words = c.select((SeedBackupCubit c) => c.state.quizSeedList);
 
-    final error = c.select((SeedGenerateCubit c) => c.state.quizSeedError);
+    final error = c.select((SeedBackupCubit c) => c.state.quizSeedError);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -373,14 +297,14 @@ class SeedConfirm extends StatelessWidget {
                 SeedWordCell(
                   text: words[i],
                   onTap: () {
-                    c.read<SeedGenerateCubit>().seedWordSelected(words[i]);
+                    c.read<SeedBackupCubit>().seedWordSelected(words[i]);
                   },
                 ),
                 const SizedBox(width: 8),
                 SeedWordCell(
                   text: words[i + 1],
                   onTap: () {
-                    c.read<SeedGenerateCubit>().seedWordSelected(words[i + 1]);
+                    c.read<SeedBackupCubit>().seedWordSelected(words[i + 1]);
                   },
                 )
               ],

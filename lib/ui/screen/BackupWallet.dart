@@ -1,29 +1,21 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/api/interface/libbitcoin.dart';
-import 'package:sats/cubit/chain-select.dart';
-import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
-import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
-import 'package:sats/cubit/new-wallet/from-new-seed.dart';
-import 'package:sats/cubit/wallets.dart';
-import 'package:sats/pkg/_locator.dart';
+import 'package:sats/cubit/seed-backup.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/ui/component/NewWallet/SeedGenerate.dart';
-import 'package:sats/ui/component/NewWallet/SeedGenerate/Label.dart';
-import 'package:sats/ui/component/NewWallet/SeedGenerate/Stepper.dart';
-import 'package:sats/ui/component/NewWallet/SeedGenerate/Warning.dart';
+import 'package:sats/ui/component/BackupWallet/Complete.dart';
+import 'package:sats/ui/component/BackupWallet/Stepper.dart';
+import 'package:sats/ui/component/BackupWallet/Warning.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
-class _SeedGenerate extends StatefulWidget {
+class _BackupWallet extends StatefulWidget {
   @override
-  _SeedGenerateState createState() => _SeedGenerateState();
+  _BackupWalletState createState() => _BackupWalletState();
 }
 
-class _SeedGenerateState extends State<_SeedGenerate> {
+class _BackupWalletState extends State<_BackupWallet> {
   late ScrollController _scrollController;
 
   @override
@@ -34,10 +26,10 @@ class _SeedGenerateState extends State<_SeedGenerate> {
 
   @override
   Widget build(BuildContext c) {
-    return BlocConsumer<SeedGenerateWalletCubit, SeedGenerateWalletState>(
+    return BlocConsumer<SeedBackupCubit, SeedBackupState>(
       listenWhen: (previous, current) =>
           previous.currentStep != current.currentStep ||
-          previous.newWalletSaved != current.newWalletSaved,
+          previous.backupComplete != current.backupComplete,
       listener: (context, state) {
         _scrollController.animateTo(
           0,
@@ -45,7 +37,7 @@ class _SeedGenerateState extends State<_SeedGenerate> {
           curve: Curves.bounceIn,
         );
 
-        if (state.newWalletSaved) {
+        if (state.backupComplete) {
           context.go('/home');
         }
       },
@@ -54,10 +46,6 @@ class _SeedGenerateState extends State<_SeedGenerate> {
       builder: (context, state) {
         return WillPopScope(
           onWillPop: () async {
-            if (!state.canGoBack()) {
-              c.read<SeedGenerateWalletCubit>().backClicked();
-              return false;
-            }
             return true;
           },
           child: Scaffold(
@@ -68,12 +56,12 @@ class _SeedGenerateState extends State<_SeedGenerate> {
                   children: [
                     const SizedBox(height: 24),
                     Header(
-                      cornerTitle: 'KEYGEN',
+                      cornerTitle: 'BACKUP',
                       children: [
                         Back(
                           onPressed: () {
-                            if (!state.canGoBack()) {
-                              c.read<SeedGenerateWalletCubit>().backClicked();
+                            if (state.canGoBack()) {
+                              c.read<SeedBackupCubit>().backClicked();
                               return;
                             }
 
@@ -86,7 +74,7 @@ class _SeedGenerateState extends State<_SeedGenerate> {
                     const SizedBox(height: 24),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: GenerateWalletStepper(),
+                      child: BackupWalletStepper(),
                     ),
                     FadeInLeft(
                       child: Container(
@@ -101,12 +89,15 @@ class _SeedGenerateState extends State<_SeedGenerate> {
                         ),
                         child: () {
                           switch (state.currentStep) {
-                            case SeedGenerateWalletSteps.warning:
-                              return SeedGenerateWarning();
-                            case SeedGenerateWalletSteps.generate:
-                              return const SeedGenerateStepSelect();
-                            case SeedGenerateWalletSteps.label:
-                              return const SeedGenerateLabel();
+                            case SeedBackupSteps.warning:
+                              c.read<SeedBackupCubit>().init();
+                              return SeedBackupWarning();
+                            case SeedBackupSteps.display:
+                              return SeedBackup();
+                            case SeedBackupSteps.quiz:
+                              return SeedConfirm();
+                            case SeedBackupSteps.passphrase:
+                              return SeedBackupPassphrase();
                           }
                         }(),
                       ),
@@ -122,38 +113,20 @@ class _SeedGenerateState extends State<_SeedGenerate> {
   }
 }
 
-class SeedGenerateScreen extends StatelessWidget {
-  const SeedGenerateScreen({Key? key}) : super(key: key);
+class BackupWalletScreen extends StatelessWidget {
+  const BackupWalletScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final networkSelect = context.select((ChainSelectCubit c) => c);
-    final logger = context.select((Logger c) => c);
-    final wallets = context.select((WalletsCubit c) => c);
     final masterKey = context.select((MasterKeyCubit c) => c);
 
-    final seedGenerateCubit = SeedGenerateCubit(
-      locator<IStackMateBitcoin>(),
+    final seedBackupCubit = SeedBackupCubit(
       masterKey,
-      networkSelect,
-      logger,
     );
 
-    final seedGenerateWalletCubit = SeedGenerateWalletCubit(
-      locator<IStackMateBitcoin>(),
-      locator<IStorage>(),
-      logger,
-      wallets,
-      networkSelect,
-      seedGenerateCubit,
-    );
-
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: seedGenerateCubit),
-        BlocProvider.value(value: seedGenerateWalletCubit),
-      ],
-      child: _SeedGenerate(),
+    return BlocProvider.value(
+      value: seedBackupCubit,
+      child: _BackupWallet(),
     );
   }
 }

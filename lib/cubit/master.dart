@@ -53,8 +53,39 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
     }
   }
 
-  Future<void> save(String root, String fingerPrint) async {
+  Future<void> save(
+    String root,
+    String fingerPrint,
+  ) async {
     final masterKey = MasterKey(
+      seed: '',
+      passphrase: '',
+      root: root,
+      fingerprint: fingerPrint,
+      network: _chainSelect.state.blockchain.name,
+    );
+
+    final saved = await _storage.saveItemAt<MasterKey>(
+      StoreKeys.MasterKey.name,
+      _chainSelect.state.blockchain.index,
+      masterKey,
+    );
+    if (saved.hasError) {
+      emit(state.copyWith(error: saved.error.toString()));
+      return;
+    }
+    await Future.delayed(const Duration(milliseconds: 200));
+  }
+
+  Future<void> saveBackupPending(
+    String seed,
+    String passphrase,
+    String root,
+    String fingerPrint,
+  ) async {
+    final masterKey = MasterKey(
+      seed: seed,
+      passphrase: passphrase,
       root: root,
       fingerprint: fingerPrint,
       network: _chainSelect.state.blockchain.name,

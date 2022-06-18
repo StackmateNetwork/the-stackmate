@@ -68,7 +68,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
     this._wallets,
     this._blockchainCubit,
     this._generateCubit,
-    this._masterKeyCubit,
   ) : super(const SeedGenerateWalletState()) {
     _generateSub = _generateCubit.stream.listen((gstate) {
       if (gstate.wallet != null) {
@@ -86,7 +85,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   final ChainSelectCubit _blockchainCubit;
   final SeedGenerateCubit _generateCubit;
   late StreamSubscription _generateSub;
-  final MasterKeyCubit _masterKeyCubit;
 
   void backClicked() {
     switch (state.currentStep) {
@@ -112,6 +110,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
     switch (state.currentStep) {
       case SeedGenerateWalletSteps.warning:
         emit(state.copyWith(currentStep: SeedGenerateWalletSteps.generate));
+        _generateCubit.generateSeed();
+
         break;
 
       case SeedGenerateWalletSteps.generate:
@@ -165,11 +165,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         throw SMError.fromJson(descriptor.error!);
       }
 
-      await _masterKeyCubit.save(
-        root,
-        wallet.fingerPrint,
-      );
-      _masterKeyCubit.init();
       var newWallet = Wallet(
         label: state.walletLabel,
         walletType: signerWalletType,

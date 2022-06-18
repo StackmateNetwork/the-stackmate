@@ -13,6 +13,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
+import 'package:sats/ui/screen/BackupWallet.dart';
 import 'package:sats/ui/screen/Broadcast.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Landing.dart';
@@ -130,6 +131,10 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/broadcast',
         builder: (_, __) => const BroadcastScreen(),
+      ),
+      GoRoute(
+        path: '/backup-master',
+        builder: (_, __) => const BackupWalletScreen(),
       ),
       GoRoute(
         path: '/generate-seed',
