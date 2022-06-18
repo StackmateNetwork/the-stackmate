@@ -74,6 +74,7 @@ flutter:
     - assets/icon/bitcoin_icons/png/outline/ellipsis.png
     - assets/icon/bitcoin_icons/png/outline/satoshi-v2.png
     - assets/icon/bitcoin_icons/png/outline/proxy.png
+    - assets/icon/bitcoin_icons/png/outline/link.png
 
 flutter_icons:
   android: true

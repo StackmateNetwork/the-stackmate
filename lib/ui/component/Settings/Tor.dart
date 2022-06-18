@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/cubit/preferences.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class TorSettings extends StatelessWidget {

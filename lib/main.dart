@@ -55,15 +55,6 @@ void main() async {
 class Stackmate extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    compute(
-      daemonStart,
-      {
-        'path': Directory.systemTemp.toString(),
-        'socks5Port': '39050',
-        'httpProxy': '',
-      },
-    );
-
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);

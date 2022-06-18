@@ -94,6 +94,7 @@ class TorConfigScreen extends StatelessWidget {
                     onPrimary: c.colours.background,
                   ),
                   onPressed: () {
+                    c.read<TorCubit>().updateConfig();
                     Navigator.of(c).pop();
                   },
                   child: const Text('SAVE'),

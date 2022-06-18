@@ -26,9 +26,9 @@ class _Home extends StatelessWidget {
               displacement: 10.0,
               onRefresh: () async {
                 c.read<WalletsCubit>().refresh();
-                for (final element in wallets.state.wallets) {
-                  c.read<WalletsCubit>().walletSelected(element);
-                }
+                // for (final element in wallets.state.wallets) {
+                //   c.read<WalletsCubit>().walletSelected(element);
+                // }
                 c.read<TorCubit>().testConnection();
                 await c.read<FeesCubit>().update();
                 return;
@@ -52,12 +52,9 @@ class _Home extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const HomeLoader(),
-                              if (torState.isConnected) ...[
-                                TorHeader(),
-                                Networth(),
-                                WalletTools()
-                              ] else
-                                Container()
+                              TorHeader(),
+                              Networth(),
+                              WalletTools()
                             ],
                           ),
                         ),

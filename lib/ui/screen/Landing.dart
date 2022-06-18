@@ -28,11 +28,10 @@ class _Landing extends StatelessWidget {
               edgeOffset: 10.0,
               displacement: 10.0,
               onRefresh: () async {
-                // c.read<TorCubit>().start();
-                c.read<TorCubit>().checkStatus();
-                c.read<TorCubit>().testConnection();
-
-                // c.read<TorCubit>().getProgress();
+                if (torState.enforced) {
+                  c.read<TorCubit>().checkStatus();
+                  c.read<TorCubit>().testConnection();
+                }
               },
               child: CustomScrollView(
                 slivers: [
@@ -48,14 +47,11 @@ class _Landing extends StatelessWidget {
                       ],
                       background: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const LandingLoader(),
-                          const SizedBox(height: 48),
-                          const LandingLogo(),
-                          if (torState.isConnected) Container(),
-                          const SizedBox(height: 12),
-                          const ManualTor()
-                          // const Start(),
+                        children: const [
+                          LandingLoader(),
+                          SizedBox(height: 48),
+                          LandingLogo(),
+                          SizedBox(height: 12),
                         ],
                       ),
                     ),

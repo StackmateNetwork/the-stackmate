@@ -33,7 +33,7 @@ class _CubitsState extends State<Cubits> {
       logger,
     );
     networkSelectCubit.init();
-    final torCubit = TorCubit(logger);
+    final torCubit = TorCubit(storage, logger);
     torCubit.start();
 
     final masterKeyCubit = MasterKeyCubit(storage, networkSelectCubit);
