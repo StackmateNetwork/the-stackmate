@@ -8,7 +8,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/BackupWarning.dart';
-import 'package:sats/ui/component/Home/Header.dart';
+import 'package:sats/ui/component/Home/TorHeader.dart';
 import 'package:sats/ui/component/Home/Loader.dart';
 import 'package:sats/ui/component/Home/Networth.dart';
 import 'package:sats/ui/component/Home/Tools.dart';
@@ -53,7 +53,7 @@ class _Home extends StatelessWidget {
                             children: [
                               const HomeLoader(),
                               if (torState.isConnected) ...[
-                                HomeHeader(),
+                                TorHeader(),
                                 Networth(),
                                 WalletTools()
                               ] else

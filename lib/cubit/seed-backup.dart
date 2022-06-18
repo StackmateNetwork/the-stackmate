@@ -123,7 +123,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
           backupComplete: true,
         ),
       );
-      // clear();
+      clear();
     } catch (e) {
       emit(
         state.copyWith(
