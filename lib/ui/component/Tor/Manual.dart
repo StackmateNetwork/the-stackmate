@@ -35,7 +35,7 @@ class ManualTor extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Enforce Tor',
+                      'Strict Mode',
                       style: context.fonts.button!.copyWith(
                         color: context.colours.primary,
                         fontSize: 16,
@@ -209,6 +209,16 @@ class _ExternalTorState extends State<ExternalTor> {
             child: Text(
               'RESET TO DEFAULT',
               style: c.fonts.button!.copyWith(color: c.colours.error),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              c.read<TorCubit>().setExternalSocks5('9050');
+              c.read<TorCubit>().updateConfig();
+            },
+            child: Text(
+              'CHANGING BETWEEN INTERNAL AND EXTERNAL TOR REQUIRES RESTARTING THE APP.',
+              style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
             ),
           ),
           const SizedBox(height: 24),

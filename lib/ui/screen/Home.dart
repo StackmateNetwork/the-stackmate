@@ -29,7 +29,7 @@ class _Home extends StatelessWidget {
                 // for (final element in wallets.state.wallets) {
                 //   c.read<WalletsCubit>().walletSelected(element);
                 // }
-                c.read<TorCubit>().testConnection();
+                await c.read<TorCubit>().testConnection();
                 await c.read<FeesCubit>().update();
                 return;
               },
