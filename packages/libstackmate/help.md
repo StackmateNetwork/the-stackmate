@@ -18,9 +18,9 @@ The lib does the job of creating a purely native dart compatible wrapper around 
 
 - convert all outputs we get back from the ffi into to native dart types (outputs.dart)
 
-NOTE ON NAMING CONVENTIONS: rust uses snake_case for function and variable names while dart uses camelCase for variables and functions.
+NOTE ON NAMING CONVENTIONS: for function and variable names `rust uses snake_case` while `dart uses camelCase`.
 
-Both share their usage of PascalCase for type definitions.
+Both use PascalCase for type definitions.
 
 So,
 
