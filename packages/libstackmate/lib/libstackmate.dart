@@ -5,7 +5,7 @@ import 'package:libstackmate/inputs.dart';
 
 // import 'package:isolate/ports.dart';
 
-export 'package:libstackmate/types.dart';
+export 'package:libstackmate/outputs.dart';
 
 class LibStackmateFFI {
   LibStackmateFFI({required this.binary});
