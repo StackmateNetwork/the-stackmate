@@ -261,7 +261,9 @@ class SendCubit extends Cubit<SendState> {
       //final File file = File('$path/build.psbt');
       String _timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
-      await File('$path/build$_timestamp.psbt').writeAsString(state.psbt);
+      final psbtFile = File('$path/build.psbt');
+
+      await psbtFile.writeAsString(state.psbt, flush: true);
 
       emit(
         state.copyWith(
@@ -358,7 +360,7 @@ class SendCubit extends Cubit<SendState> {
           feeFast: fast.result!.absolute,
           feeMedium: medium.result!.absolute,
           feeSlow: slow.result!.absolute,
-          finalFee: medium.result!.absolute,
+          finalFee: fast.result!.absolute,
           weight: weight,
           calculatingFees: false,
           currentStep: SendSteps.fees,
