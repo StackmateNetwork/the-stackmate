@@ -53,7 +53,7 @@ android {
         minSdkVersion 28
         // targetSdkVersion 30
         // minSdkVersion flutter.minSdkVersion
-        // targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion flutter.targetSdkVersion
         multiDexEnabled true
         versionCode 9
         versionName flutterVersionName

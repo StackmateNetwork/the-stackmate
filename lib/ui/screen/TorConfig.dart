@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/tor.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Tor/Loader.dart';
 import 'package:sats/ui/component/Tor/Manual.dart';

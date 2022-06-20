@@ -15,7 +15,7 @@ import 'package:sats/ui/component/Home/TorHeader.dart';
 class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final wallets = c.select((WalletsCubit w) => w);
+    // final wallets = c.select((WalletsCubit w) => w);
 
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {

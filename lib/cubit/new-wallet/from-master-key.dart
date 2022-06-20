@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/types.dart';
+import 'package:libstackmate/outputs.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -120,7 +120,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       );
 
       final child = _core.deriveHardened(
-        masterXPriv: _masterKeyCubit.state.key?.root as String,
+        masterXPriv: _masterKeyCubit.state.key!.root!,
         account: '0',
         purpose: taprootPurpose,
       );
@@ -147,6 +147,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         throw SMError.fromJson(descriptor.error!);
       }
 
+      print(descriptor.result);
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 

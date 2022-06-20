@@ -19,7 +19,7 @@ class TorHeader extends StatelessWidget {
           ),
           if (tor.isConnected)
             Padding(
-              padding: EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.only(top: 16),
               child: Icon(
                 Icons.security_sharp,
                 color: context.colours.tertiaryContainer,

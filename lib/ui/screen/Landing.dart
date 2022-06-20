@@ -4,7 +4,6 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Landing/Loader.dart';
 import 'package:sats/ui/component/Landing/Logo.dart';
 import 'package:sats/ui/component/Landing/Start.dart';
-import 'package:sats/ui/component/Tor/Manual.dart';
 
 class _Landing extends StatelessWidget {
   @override

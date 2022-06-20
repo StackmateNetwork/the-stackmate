@@ -4,8 +4,8 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
-import 'package:sats/ui/component/Home/TorHeader.dart';
 import 'package:sats/ui/component/Home/Loader.dart';
+import 'package:sats/ui/component/Home/TorHeader.dart';
 import 'package:sats/ui/component/Network/MyIdentity/Entrypoint.dart';
 import 'package:sats/ui/component/Network/Tools.dart';
 

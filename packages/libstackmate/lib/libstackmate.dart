@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
-import 'package:libstackmate/ffi-types.dart';
+import 'package:libstackmate/inputs.dart';
 
 // import 'package:isolate/ports.dart';
 
@@ -118,7 +118,6 @@ class LibStackmateFFI {
       descriptor.toNativeUtf8(),
       index.toNativeUtf8(),
     ).toDartString();
-
     return resp;
   }
 

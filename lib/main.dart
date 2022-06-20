@@ -12,6 +12,7 @@ import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
 import 'package:sats/ui/screen/BackupWallet.dart';
 import 'package:sats/ui/screen/Broadcast.dart';
+import 'package:sats/ui/screen/Contracts.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
@@ -28,7 +29,6 @@ import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
 import 'package:sats/ui/screen/TorConfig.dart';
-import 'package:sats/ui/screen/Contracts.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
 

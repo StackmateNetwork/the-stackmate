@@ -55,7 +55,6 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   Future<void> updateFile() async {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowMultiple: false,
       allowedExtensions: ['json'],
     );
 

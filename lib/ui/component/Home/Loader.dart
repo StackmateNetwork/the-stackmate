@@ -17,7 +17,5 @@ class HomeLoader extends StatelessWidget {
     return const Loading(
       text: loading,
     );
-
-    return Container();
   }
 }

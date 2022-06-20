@@ -313,7 +313,7 @@ class LibBitcoin implements IStackMateBitcoin {
   }
 
   @override
-  R<AbsoluteFees> feeAbsoluteToRate({
+  R<NetworkFees> feeAbsoluteToRate({
     required String feeAbsolute,
     required String weight,
   }) {
@@ -324,11 +324,11 @@ class LibBitcoin implements IStackMateBitcoin {
     if (resp.contains('Error')) {
       return R(error: SMError.fromJson(resp).message);
     }
-    return R(result: AbsoluteFees.fromJson(resp));
+    return R(result: NetworkFees.fromJson(resp));
   }
 
   @override
-  R<AbsoluteFees> feeRateToAbsolute({
+  R<NetworkFees> feeRateToAbsolute({
     required String feeRate,
     required String weight,
   }) {
@@ -339,6 +339,6 @@ class LibBitcoin implements IStackMateBitcoin {
     if (resp.contains('Error')) {
       return R(error: SMError.fromJson(resp).message);
     }
-    return R(result: AbsoluteFees.fromJson(resp));
+    return R(result: NetworkFees.fromJson(resp));
   }
 }

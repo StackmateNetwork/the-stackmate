@@ -108,8 +108,6 @@ class SeedBackupStepSelect extends StatelessWidget {
       case SeedBackupSteps.passphrase:
         return SeedBackupPassphrase();
     }
-
-    return Container();
   }
 }
 

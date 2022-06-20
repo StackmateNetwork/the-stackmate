@@ -20,6 +20,7 @@ import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class _XpubColdcard extends StatelessWidget {
+  @override
   Widget build(BuildContext c) {
     return BlocConsumer<XpubImportWalletCubit, XpubImportWalletState>(
       listenWhen: (previous, current) =>

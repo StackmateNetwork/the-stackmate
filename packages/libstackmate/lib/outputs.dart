@@ -83,20 +83,21 @@ class DerivedKeys {
   @override
   int get hashCode => xprv.hashCode;
 
-  String get fullXPub => '[$fingerPrint/${hardenedPath.replaceFirst('m/', '')}]$xpub';
-  String get fullXPrv => '[$fingerPrint/${hardenedPath.replaceFirst('m/', '')}]$xprv';
-
+  String get fullXPub =>
+      '[$fingerPrint/${hardenedPath.replaceFirst('m/', '')}]$xpub';
+  String get fullXPrv =>
+      '[$fingerPrint/${hardenedPath.replaceFirst('m/', '')}]$xprv';
 }
 
-class AbsoluteFees {
-  const AbsoluteFees(
+class NetworkFees {
+  const NetworkFees(
     this.rate,
     this.absolute,
   );
 
-  factory AbsoluteFees.fromJson(String data) {
+  factory NetworkFees.fromJson(String data) {
     final json = jsonDecode(data);
-    return AbsoluteFees(
+    return NetworkFees(
       json['rate'] as double,
       json['absolute'] as int,
     );
