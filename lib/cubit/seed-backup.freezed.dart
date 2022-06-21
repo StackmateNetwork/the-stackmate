@@ -20,9 +20,6 @@ mixin _$SeedBackupState {
   List<String>? get seed => throw _privateConstructorUsedError;
   String? get rootXprv => throw _privateConstructorUsedError;
   String? get fingerPrint => throw _privateConstructorUsedError;
-  bool get generatingSeed => throw _privateConstructorUsedError;
-  int get seedLength => throw _privateConstructorUsedError;
-  String get seedError => throw _privateConstructorUsedError;
   int get quizSeedCompleted => throw _privateConstructorUsedError;
   String get quizSeedAnswer => throw _privateConstructorUsedError;
   int get quizSeedAnswerIdx => throw _privateConstructorUsedError;
@@ -50,9 +47,6 @@ abstract class $SeedBackupStateCopyWith<$Res> {
       List<String>? seed,
       String? rootXprv,
       String? fingerPrint,
-      bool generatingSeed,
-      int seedLength,
-      String seedError,
       int quizSeedCompleted,
       String quizSeedAnswer,
       int quizSeedAnswerIdx,
@@ -80,9 +74,6 @@ class _$SeedBackupStateCopyWithImpl<$Res>
     Object? seed = freezed,
     Object? rootXprv = freezed,
     Object? fingerPrint = freezed,
-    Object? generatingSeed = freezed,
-    Object? seedLength = freezed,
-    Object? seedError = freezed,
     Object? quizSeedCompleted = freezed,
     Object? quizSeedAnswer = freezed,
     Object? quizSeedAnswerIdx = freezed,
@@ -111,18 +102,6 @@ class _$SeedBackupStateCopyWithImpl<$Res>
           ? _value.fingerPrint
           : fingerPrint // ignore: cast_nullable_to_non_nullable
               as String?,
-      generatingSeed: generatingSeed == freezed
-          ? _value.generatingSeed
-          : generatingSeed // ignore: cast_nullable_to_non_nullable
-              as bool,
-      seedLength: seedLength == freezed
-          ? _value.seedLength
-          : seedLength // ignore: cast_nullable_to_non_nullable
-              as int,
-      seedError: seedError == freezed
-          ? _value.seedError
-          : seedError // ignore: cast_nullable_to_non_nullable
-              as String,
       quizSeedCompleted: quizSeedCompleted == freezed
           ? _value.quizSeedCompleted
           : quizSeedCompleted // ignore: cast_nullable_to_non_nullable
@@ -179,9 +158,6 @@ abstract class _$$_SeedBackupStateCopyWith<$Res>
       List<String>? seed,
       String? rootXprv,
       String? fingerPrint,
-      bool generatingSeed,
-      int seedLength,
-      String seedError,
       int quizSeedCompleted,
       String quizSeedAnswer,
       int quizSeedAnswerIdx,
@@ -211,9 +187,6 @@ class __$$_SeedBackupStateCopyWithImpl<$Res>
     Object? seed = freezed,
     Object? rootXprv = freezed,
     Object? fingerPrint = freezed,
-    Object? generatingSeed = freezed,
-    Object? seedLength = freezed,
-    Object? seedError = freezed,
     Object? quizSeedCompleted = freezed,
     Object? quizSeedAnswer = freezed,
     Object? quizSeedAnswerIdx = freezed,
@@ -242,18 +215,6 @@ class __$$_SeedBackupStateCopyWithImpl<$Res>
           ? _value.fingerPrint
           : fingerPrint // ignore: cast_nullable_to_non_nullable
               as String?,
-      generatingSeed: generatingSeed == freezed
-          ? _value.generatingSeed
-          : generatingSeed // ignore: cast_nullable_to_non_nullable
-              as bool,
-      seedLength: seedLength == freezed
-          ? _value.seedLength
-          : seedLength // ignore: cast_nullable_to_non_nullable
-              as int,
-      seedError: seedError == freezed
-          ? _value.seedError
-          : seedError // ignore: cast_nullable_to_non_nullable
-              as String,
       quizSeedCompleted: quizSeedCompleted == freezed
           ? _value.quizSeedCompleted
           : quizSeedCompleted // ignore: cast_nullable_to_non_nullable
@@ -306,9 +267,6 @@ class _$_SeedBackupState extends _SeedBackupState {
       final List<String>? seed,
       this.rootXprv,
       this.fingerPrint,
-      this.generatingSeed = false,
-      this.seedLength = 12,
-      this.seedError = '',
       this.quizSeedCompleted = 0,
       this.quizSeedAnswer = '',
       this.quizSeedAnswerIdx = -1,
@@ -340,15 +298,6 @@ class _$_SeedBackupState extends _SeedBackupState {
   final String? rootXprv;
   @override
   final String? fingerPrint;
-  @override
-  @JsonKey()
-  final bool generatingSeed;
-  @override
-  @JsonKey()
-  final int seedLength;
-  @override
-  @JsonKey()
-  final String seedError;
   @override
   @JsonKey()
   final int quizSeedCompleted;
@@ -392,7 +341,7 @@ class _$_SeedBackupState extends _SeedBackupState {
 
   @override
   String toString() {
-    return 'SeedBackupState(currentStep: $currentStep, seed: $seed, rootXprv: $rootXprv, fingerPrint: $fingerPrint, generatingSeed: $generatingSeed, seedLength: $seedLength, seedError: $seedError, quizSeedCompleted: $quizSeedCompleted, quizSeedAnswer: $quizSeedAnswer, quizSeedAnswerIdx: $quizSeedAnswerIdx, quizSeedList: $quizSeedList, quizSeedCompletedAnswers: $quizSeedCompletedAnswers, quizSeedError: $quizSeedError, passPhrase: $passPhrase, errMasterKeyUpdate: $errMasterKeyUpdate, backupLater: $backupLater, backupComplete: $backupComplete)';
+    return 'SeedBackupState(currentStep: $currentStep, seed: $seed, rootXprv: $rootXprv, fingerPrint: $fingerPrint, quizSeedCompleted: $quizSeedCompleted, quizSeedAnswer: $quizSeedAnswer, quizSeedAnswerIdx: $quizSeedAnswerIdx, quizSeedList: $quizSeedList, quizSeedCompletedAnswers: $quizSeedCompletedAnswers, quizSeedError: $quizSeedError, passPhrase: $passPhrase, errMasterKeyUpdate: $errMasterKeyUpdate, backupLater: $backupLater, backupComplete: $backupComplete)';
   }
 
   @override
@@ -406,11 +355,6 @@ class _$_SeedBackupState extends _SeedBackupState {
             const DeepCollectionEquality().equals(other.rootXprv, rootXprv) &&
             const DeepCollectionEquality()
                 .equals(other.fingerPrint, fingerPrint) &&
-            const DeepCollectionEquality()
-                .equals(other.generatingSeed, generatingSeed) &&
-            const DeepCollectionEquality()
-                .equals(other.seedLength, seedLength) &&
-            const DeepCollectionEquality().equals(other.seedError, seedError) &&
             const DeepCollectionEquality()
                 .equals(other.quizSeedCompleted, quizSeedCompleted) &&
             const DeepCollectionEquality()
@@ -440,9 +384,6 @@ class _$_SeedBackupState extends _SeedBackupState {
       const DeepCollectionEquality().hash(_seed),
       const DeepCollectionEquality().hash(rootXprv),
       const DeepCollectionEquality().hash(fingerPrint),
-      const DeepCollectionEquality().hash(generatingSeed),
-      const DeepCollectionEquality().hash(seedLength),
-      const DeepCollectionEquality().hash(seedError),
       const DeepCollectionEquality().hash(quizSeedCompleted),
       const DeepCollectionEquality().hash(quizSeedAnswer),
       const DeepCollectionEquality().hash(quizSeedAnswerIdx),
@@ -466,9 +407,6 @@ abstract class _SeedBackupState extends SeedBackupState {
       final List<String>? seed,
       final String? rootXprv,
       final String? fingerPrint,
-      final bool generatingSeed,
-      final int seedLength,
-      final String seedError,
       final int quizSeedCompleted,
       final String quizSeedAnswer,
       final int quizSeedAnswerIdx,
@@ -489,12 +427,6 @@ abstract class _SeedBackupState extends SeedBackupState {
   String? get rootXprv => throw _privateConstructorUsedError;
   @override
   String? get fingerPrint => throw _privateConstructorUsedError;
-  @override
-  bool get generatingSeed => throw _privateConstructorUsedError;
-  @override
-  int get seedLength => throw _privateConstructorUsedError;
-  @override
-  String get seedError => throw _privateConstructorUsedError;
   @override
   int get quizSeedCompleted => throw _privateConstructorUsedError;
   @override

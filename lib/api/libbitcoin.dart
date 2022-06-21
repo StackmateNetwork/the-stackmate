@@ -341,4 +341,22 @@ class LibBitcoin implements IStackMateBitcoin {
     }
     return R(result: NetworkFees.fromJson(resp));
   }
+
+  @override
+  R<int> getHeight({
+    required String network,
+    required String nodeAddress,
+    required String socks5,
+  }) {
+    final resp = _libstackmate.getHeight(
+      network: network,
+      nodeAddress: nodeAddress,
+      socks5: socks5,
+    );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    final height = jsonDecode(resp)['height'];
+    return R(result: height as int);
+  }
 }

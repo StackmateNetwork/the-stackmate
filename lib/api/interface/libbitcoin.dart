@@ -55,6 +55,12 @@ abstract class IStackMateBitcoin {
     required String socks5,
   });
 
+  R<int> getHeight({
+    required String network,
+    required String nodeAddress,
+    required String socks5,
+  });
+
   R<List<Transaction>> getHistory({
     required String descriptor,
     required String nodeAddress,
