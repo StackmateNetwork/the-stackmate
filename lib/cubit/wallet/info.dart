@@ -31,6 +31,7 @@ class InfoState with _$InfoState {
     @Default('') String errDeleting,
     @Default(false) bool deleted,
     @Default(false) bool showInfo,
+    @Default(0) int currentHeight,
   }) = _InfoState;
   const InfoState._();
 
@@ -96,12 +97,19 @@ class InfoCubit extends Cubit<InfoState> {
       final socks5 = _torCubit.state.getSocks5();
       final wallet = _walletsCubit.state.selectedWallet!;
 
+      final currentHeight = await compute(computeCurrentHeight, {
+        'network': 'main',
+        'nodeAddress': node,
+        'socks5': socks5,
+      });
+
       emit(
         state.copyWith(
           loadingBalance: true,
           loadingTransactions: true,
           balance: wallet.balance,
           transactions: wallet.transactions,
+          currentHeight: currentHeight,
         ),
       );
 
@@ -121,6 +129,7 @@ class InfoCubit extends Cubit<InfoState> {
           loadingBalance: false,
           errLoadingTransactions: '',
           balance: balance,
+          currentHeight: currentHeight,
         ),
       );
       _walletsCubit.addBalanceToSelectedWallet(balance);
@@ -139,6 +148,7 @@ class InfoCubit extends Cubit<InfoState> {
           transactions: transactions,
           errLoadingTransactions: '',
           balance: balance,
+          currentHeight: currentHeight,
         ),
       );
 
@@ -219,6 +229,19 @@ int computeBalance(dynamic obj) {
   final data = obj as Map<String, String?>;
   final resp = LibBitcoin().syncBalance(
     descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
+}
+
+int computeCurrentHeight(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().getHeight(
+    network: data['network']!,
     nodeAddress: data['nodeAddress']!,
     socks5: obj['socks5']!,
   );

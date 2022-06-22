@@ -34,6 +34,7 @@ void main() {
     expPrivateDesc = 'wpkh(${derived.result!.fullXPrv}/*)';
     expPublicDesc = 'wpkh(${derived.result!.fullXPub}/*)';
   });
+
   test('Create New Wallet Flow', () async {
     var root = libstackmate.generateMaster(
       length: '19',
@@ -80,6 +81,15 @@ void main() {
     );
     assert(!ffiAddress0.hasError);
     // assert(ffiAddress0.result! == myAddress0);
+  });
+  test('Height of current block', () async {
+    final height = libstackmate.getHeight(
+      network: 'test', //test,main
+      nodeAddress: nodeAddress,
+      socks5: 'none',
+    );
+    assert(!height.hasError);
+    print(height.result);
   });
 
   test('Wallet History & Balance Ops', () async {

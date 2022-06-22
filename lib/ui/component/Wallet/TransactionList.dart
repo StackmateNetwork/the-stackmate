@@ -9,7 +9,7 @@ class TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final transactions = c.select((InfoCubit w) => w.state.transactions);
-
+    final height = c.select((InfoCubit w) => w.state.currentHeight);
     if (transactions.isEmpty) return Container();
 
     return FadeIn(
