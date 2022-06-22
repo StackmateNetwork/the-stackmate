@@ -16,7 +16,8 @@ class TransactionItem extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final preferences = c.select((PreferencesCubit pc) => pc.state);
-
+    final currentHeight = c.select((InfoCubit w) => w.state.currentHeight);
+    final confirmations = currentHeight - transaction.height;
     final isReceive = transaction.isReceive();
     if (isReceive) {
       return GestureDetector(
@@ -95,6 +96,13 @@ class TransactionItem extends StatelessWidget {
                   'UNCONFIRMED',
                   style: c.fonts.overline!.copyWith(
                     color: c.colours.error,
+                  ),
+                ),
+              if (confirmations > 0)
+                Text(
+                  '$confirmations' + ' Confirmations',
+                  style: c.fonts.overline!.copyWith(
+                    color: c.colours.secondary,
                   ),
                 ),
             ],
@@ -179,6 +187,13 @@ class TransactionItem extends StatelessWidget {
                 'UNCONFIRMED',
                 style: c.fonts.overline!.copyWith(
                   color: c.colours.error,
+                ),
+              ),
+            if (confirmations > 0)
+              Text(
+                '$confirmations' + ' Confirmations',
+                style: c.fonts.overline!.copyWith(
+                  color: c.colours.secondary,
                 ),
               ),
           ],
