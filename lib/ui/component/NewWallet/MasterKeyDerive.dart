@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/from-master-key.dart';
+import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/NewWallet/MasterKeyDerive/Label.dart';
 
@@ -26,6 +27,15 @@ class MasterDerivePurpose extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
+    final wallets = c.select((WalletsCubit wc) => wc.state.wallets);
+    var hasSegwit = false;
+    var hasTaproot = false;
+    for (final wallet in wallets) {
+      if (wallet.descriptor.startsWith('tr')) hasTaproot = true;
+      if (wallet.descriptor.startsWith('wpkh')) hasSegwit = true;
+    }
+    final selectedPurpose =
+        c.select((MasterDeriveWalletCubit mdw) => mdw.state.purpose);
     return BlocBuilder<MasterDeriveWalletCubit, MasterDeriveWalletState>(
       builder: (context, state) {
         return Column(
@@ -39,48 +49,48 @@ class MasterDerivePurpose extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            ListTile(
-              selected: true,
-              title: Text(
-                'Taproot',
-                style: c.fonts.bodyMedium!.copyWith(
-                  color: c.colours.onPrimary,
-                  // fontWeight: FontWeight.bold,
+            if (!hasTaproot)
+              ListTile(
+                title: Text(
+                  'Taproot',
+                  style: c.fonts.bodyMedium!.copyWith(
+                    color: c.colours.onPrimary,
+                    // fontWeight: FontWeight.bold,
+                  ),
+                ),
+                leading: Radio<DerivationPurpose>(
+                  activeColor: c.colours.primary,
+                  value: DerivationPurpose.taproot,
+                  groupValue: selectedPurpose,
+                  onChanged: (DerivationPurpose? value) {
+                    c
+                        .read<MasterDeriveWalletCubit>()
+                        .purposeChanged(DerivationPurpose.taproot);
+                  },
                 ),
               ),
-              leading: Radio<DerivationPurpose>(
-                activeColor: c.colours.primary,
-                value: DerivationPurpose.taproot,
-                groupValue: DerivationPurpose.taproot,
-                onChanged: (DerivationPurpose? value) {
-                  c
-                      .read<MasterDeriveWalletCubit>()
-                      .purposeChanged(DerivationPurpose.taproot);
-                },
-              ),
-            ),
-            ListTile(
-              enabled: false,
-              selectedColor: c.colours.primary,
-              selectedTileColor: c.colours.primary,
-              title: Text(
-                'Legacy',
-                style: c.fonts.bodyMedium!.copyWith(
-                  color: c.colours.onPrimary,
-                  // fontWeight: FontWeight.bold,
+            if (!hasSegwit)
+              ListTile(
+                selectedColor: c.colours.primary,
+                selectedTileColor: c.colours.primary,
+                title: Text(
+                  'Segwit',
+                  style: c.fonts.bodyMedium!.copyWith(
+                    color: c.colours.onPrimary,
+                    // fontWeight: FontWeight.bold,
+                  ),
+                ),
+                leading: Radio<DerivationPurpose>(
+                  activeColor: c.colours.primary,
+                  value: DerivationPurpose.segwit,
+                  groupValue: selectedPurpose,
+                  onChanged: (DerivationPurpose? value) {
+                    c
+                        .read<MasterDeriveWalletCubit>()
+                        .purposeChanged(DerivationPurpose.segwit);
+                  },
                 ),
               ),
-              leading: Radio<DerivationPurpose>(
-                activeColor: c.colours.primary,
-                value: DerivationPurpose.legacy,
-                groupValue: DerivationPurpose.taproot,
-                onChanged: (DerivationPurpose? value) {
-                  c
-                      .read<MasterDeriveWalletCubit>()
-                      .purposeChanged(DerivationPurpose.legacy);
-                },
-              ),
-            ),
             const SizedBox(
               height: 12,
             ),

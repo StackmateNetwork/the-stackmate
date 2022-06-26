@@ -23,7 +23,7 @@ part 'from-master-key.freezed.dart';
 
 enum MasterDeriveWalletStep { purpose, label }
 
-enum DerivationPurpose { taproot, legacy }
+enum DerivationPurpose { segwit, taproot, legacy }
 
 @freezed
 class MasterDeriveWalletState with _$MasterDeriveWalletState {
@@ -66,6 +66,8 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
   static const signerWalletType = 'SIGNER';
   static const trScript = 'tr';
   static const taprootPurpose = '86';
+  static const segwitScript = 'wpkh';
+  static const segwitPurpose = '84';
   static const emptyString = '';
 
   void labelChanged(String text) {
@@ -76,7 +78,6 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
     switch (state.currentStep) {
       case MasterDeriveWalletStep.purpose:
         emit(state.copyWith(currentStep: MasterDeriveWalletStep.label));
-
         break;
 
       case MasterDeriveWalletStep.label:
@@ -86,7 +87,10 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
           emit(state.copyWith(errSavingWallet: invalidLabelError));
           return;
         }
-        if (!state.savingWallet) deriveTaproot();
+        if (!state.savingWallet)
+          (state.purpose == DerivationPurpose.taproot)
+              ? deriveTaproot()
+              : deriveSegwit();
         break;
     }
   }
@@ -148,6 +152,123 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       }
 
       print(descriptor.result);
+      final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+
+      var history = await compute(computeHistory, {
+        'descriptor': descriptor.result!,
+        'nodeAddress': nodeAddress,
+        'socks5': socks5,
+      });
+      var recievedCount = 0;
+
+      if (history.hasError) {
+        history = const R(result: []);
+      } else
+        for (final item in history.result!) {
+          if (item.sent == 0) {
+            recievedCount++;
+          }
+        }
+
+      var balance = await compute(computeBalance, {
+        'descriptor': descriptor.result!,
+        'nodeAddress': nodeAddress,
+        'socks5': socks5,
+      });
+
+      if (balance.hasError) {
+        balance = const R(result: 0);
+      }
+      // check balance and see if last address index needs update
+      var newWallet = Wallet(
+        label: state.label,
+        descriptor: descriptor.result!,
+        policy: readable,
+        requiredPolicyElements: 1,
+        policyElements: ['primary:$fullXPrv'],
+        blockchain: _blockchainCubit.state.blockchain.name,
+        walletType: signerWalletType,
+        lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
+        balance: balance.result!,
+        transactions: history.result!,
+      );
+
+      final savedId = await _storage.saveItem<Wallet>(
+        StoreKeys.Wallet.name,
+        newWallet,
+      );
+
+      if (savedId.hasError) return;
+
+      final id = savedId.result!;
+
+      newWallet = newWallet.copyWith(id: id);
+
+      await _storage.saveItemAt<Wallet>(
+        StoreKeys.Wallet.name,
+        id,
+        newWallet,
+      );
+
+      _wallets.walletSelected(newWallet);
+      _wallets.addTransactionsToSelectedWallet(history.result!);
+
+      emit(
+        state.copyWith(
+          savingWallet: false,
+          newWalletSaved: true,
+        ),
+      );
+    } catch (e, s) {
+      _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
+
+      emit(
+        state.copyWith(
+          errSavingWallet: internalError,
+          newWalletSaved: true,
+        ),
+      );
+    }
+  }
+
+  void deriveSegwit() async {
+    try {
+      emit(
+        state.copyWith(
+          savingWallet: true,
+          errSavingWallet: emptyString,
+        ),
+      );
+
+      final child = _core.deriveHardened(
+        masterXPriv: _masterKeyCubit.state.key!.root!,
+        account: '0',
+        purpose: segwitPurpose,
+      );
+
+      if (child.hasError) {
+        throw SMError.fromJson(child.error!);
+      }
+      final fingerprint = child.result!.fingerPrint;
+      final path = child.result!.hardenedPath;
+      final xprv = child.result!.xprv;
+      final fullXPrv =
+          '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
+
+      final policy = 'pk($fullXPrv/*)';
+
+      const readable = 'pk(__primary__)';
+
+      final descriptor = _core.compile(
+        policy: policy,
+        scriptType: segwitScript,
+      );
+
+      if (descriptor.hasError) {
+        throw SMError.fromJson(descriptor.error!);
+      }
+
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 

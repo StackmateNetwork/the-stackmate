@@ -12,8 +12,12 @@ class AddWalletScreen extends StatelessWidget {
   Widget build(BuildContext c) {
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
     final wallets = c.select((WalletsCubit wc) => wc.state);
-    final hasTaprootWallet =
-        wallets.wallets.map((e) => e.descriptor.startsWith('tr'));
+    var hasSegwit = false;
+    var hasTaproot = false;
+    for (final wallet in wallets.wallets) {
+      if (wallet.descriptor.startsWith('tr')) hasTaproot = true;
+      if (wallet.descriptor.startsWith('wpkh')) hasSegwit = true;
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -123,7 +127,7 @@ class AddWalletScreen extends StatelessWidget {
               //   },
               // ),
               const SizedBox(height: 16),
-              if (!hasTaprootWallet.contains(true)) ...[
+              if (!hasTaproot || !hasSegwit) ...[
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(

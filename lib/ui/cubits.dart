@@ -53,6 +53,7 @@ class _CubitsState extends State<Cubits> {
 
     final nodeAddressCubit = NodeAddressCubit(
       storage,
+      networkSelectCubit,
     );
     nodeAddressCubit.init();
 
