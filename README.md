@@ -45,10 +45,10 @@ This app communicates with [stackmate-core's](https://github.com/i5hi/stackmate-
 
 ## Features
 
-- **modern descriptor wallets:** uses all the latest technologies from the Bitcoin ecosystem
-- **address book:** store and organise public descriptors
-- **calculator:** calculate current exchange rates with our built-in calculator
-- **cross platform:** built using Flutter 💙 and Rust
+- **Descriptors** uses descriptor wallet specifications for simplicity in development and compatability in recovery 
+- **PSBT** uses psbt specifications to support watch-only wallets and compatability with hardware wallets
+- **Taproot** supports taproot for single-sig to improve the overall anonymity set of bitcoin transactions
+- **Cross Platform:** built using Flutter 💙 and Rust, allowing easy extension to multiple platforms
 
 ## Getting Started
 
@@ -80,21 +80,9 @@ Visibility of files and folders can be toggled from
 
 <br/>
 
-### Exchange Rates API
-
-The [coincap](https://docs.coincap.io/) API is currently implemented for calculating exchange rates.
-<br/>
-Request an API Key from [coincap](https://docs.coincap.io/) and update the `_apiKey` in
-
-    lib/
-    └── api/
-        └── rates.dart
-
-<br/>
 
 ### Updating stackmate-core
 
-_Optional Advanced Usage_
 <br/>
 Make sure Rust and Android NDK are installed.
 
@@ -112,11 +100,13 @@ sh update-core.sh
 
 [Vishal](https://github.com/i5hi)
 
+[Yashwanth](https://github.com/yashwanthambati)
+
 ## Contribution
 
 We are very active on git and we do our best to respond to contributers quickly.
 
-Lets build together.
+Feel free to express yourself in the Issues section.
 
 ## License
 
