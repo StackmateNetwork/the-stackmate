@@ -167,52 +167,58 @@ class WalletCard extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 context.read<WalletsCubit>().walletSelected(wallet);
-                if (!isSelection) {
+                if (!isSelection && wallet.balance > 0) {
                   context.push('/send');
                 }
               },
-              child: Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(12),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                color: context.colours.background,
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    tileMode: TileMode.mirror,
-                  ),
-                  child: Container(
-                    height: 92,
-                    width: context.width / 5,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        stops: const [0.3, 0.99],
-                        colors: [
-                          context.colours.surface,
-                          context.colours.surface,
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 300),
+                opacity: (wallet.balance == 0) ? 0.2 : 1,
+                child: Material(
+                  elevation: 4,
+                  borderRadius: BorderRadius.circular(12),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  color: context.colours.background,
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      tileMode: TileMode.mirror,
+                    ),
+                    child: Container(
+                      height: 92,
+                      width: context.width / 5,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          stops: const [0.3, 0.99],
+                          colors: [
+                            context.colours.surface,
+                            context.colours.surface,
+                          ],
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              context
+                                  .read<WalletsCubit>()
+                                  .walletSelected(wallet);
+                              if (!isSelection && wallet.balance > 0) {
+                                context.push('/send');
+                              }
+                            },
+                            icon: Icon(
+                              wallet.walletType == 'WATCHER'
+                                  ? Icons.build
+                                  : Icons.send,
+                              size: 21,
+                              color: context.colours.primary,
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            context.read<WalletsCubit>().walletSelected(wallet);
-                            if (!isSelection) {
-                              context.push('/send');
-                            }
-                          },
-                          icon: Icon(
-                            wallet.walletType == 'WATCHER'
-                                ? Icons.build
-                                : Icons.send,
-                            size: 21,
-                            color: context.colours.primary,
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ),
