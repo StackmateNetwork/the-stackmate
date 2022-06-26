@@ -42,10 +42,8 @@ class InfoState with _$InfoState {
 class InfoCubit extends Cubit<InfoState> {
   InfoCubit(
     this._walletsCubit,
-    // this._bitcoin,
     this._storage,
     this._logger,
-    // this._blockchain,
     this._launcher,
     this._share,
     this._vibrate,
@@ -53,13 +51,6 @@ class InfoCubit extends Cubit<InfoState> {
     this._torCubit,
     this._blockchainCubit,
   ) : super(const InfoState()) {
-    // scheduleMicrotask(() async {
-    //   await Future.delayed(const Duration(milliseconds: 1000));
-    //   getHistory();
-    // });
-    // getHistory();
-
-    // getHistory();
     _init();
   }
 

@@ -62,17 +62,6 @@ class TextAddress extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        SizedBox(
-          width: c.width / 4,
-          child: TextButton(
-            onPressed: () {
-              c.read<ReceiveCubit>().getAddress();
-            },
-            child: Text(
-              'ROTATE'.notLocalised(),
-            ),
-          ),
-        )
       ],
     );
   }
