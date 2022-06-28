@@ -203,8 +203,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         ),
       );
     } catch (e, s) {
-      final error = e;
-      print(error);
       _logger.logException(
         e,
         'SeedGenerateWalletCubit._createNewLocalWallet',

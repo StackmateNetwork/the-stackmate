@@ -151,7 +151,6 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         throw SMError.fromJson(descriptor.error!);
       }
 
-      print(descriptor.result);
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 

@@ -261,7 +261,6 @@ class TorCubit extends Cubit<TorState> {
           emit(
             state.copyWith(isConnected: true),
           );
-          print(value);
         },
       ).catchError((e) {
         state.copyWith(

@@ -58,7 +58,6 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       );
       final wallet = _walletsCubit.state.selectedWallet!;
       final nextIndex = wallet.lastAddressIndex + 1;
-      print(wallet.descriptor);
 
       final latestAddress = _core.getAddress(
         descriptor: wallet.descriptor,

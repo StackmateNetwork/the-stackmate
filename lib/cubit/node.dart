@@ -8,8 +8,8 @@ import 'package:sats/pkg/storage.dart';
 part 'node.freezed.dart';
 
 const defaultNodeAddress = 'default';
-const testnetBlockstream = 'ssl://electrum.blockstream:60002';
-const mainnetBlockstream = 'ssl://electrum.blockstream:50002';
+const testnetBlockstream = 'ssl://electrum.blockstream.info:60002';
+const mainnetBlockstream = 'ssl://electrum.blockstream.info:50002';
 
 @freezed
 class NodeAddressState with _$NodeAddressState {
@@ -34,13 +34,16 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
 
   final IStorage _storage;
   final ChainSelectCubit _network;
+
   void init() async {
     final node = _storage.getFirstItem<Node>(StoreKeys.Node.name);
     if (node.hasError) {
       if (node.error! == 'empty')
         emit(
           state.copyWith(
-            address: defaultNodeAddress,
+            address: (_network.state.blockchain.name == 'test')
+                ? testnetBlockstream
+                : mainnetBlockstream,
           ),
         );
       else
@@ -61,7 +64,12 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
 
   void revertToDefault() {
     emit(
-      state.copyWith(address: 'default', name: 'Blockstream'),
+      state.copyWith(
+        address: (_network.state.blockchain.name == 'test')
+            ? testnetBlockstream
+            : mainnetBlockstream,
+        name: 'Blockstream',
+      ),
     );
   }
 

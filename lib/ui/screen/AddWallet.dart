@@ -142,7 +142,7 @@ class AddWalletScreen extends StatelessWidget {
                 SelectButton(
                   text: 'DERIVE',
                   description:
-                      'Derive a taproot ("bc1p") or legacy ("3") account from your master key.',
+                      'Derive a taproot ("bc1p") or segwit ("bc1q") account from your master key.',
                   colour: c.colours.surface,
                   onPressed: () {
                     c.push('/derive-account');

@@ -128,7 +128,6 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
           currentStep: SeedBackupSteps.warning,
         ),
       );
-      print(e);
     }
   }
 

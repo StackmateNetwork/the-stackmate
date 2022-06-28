@@ -17,7 +17,7 @@ class TransactionItem extends StatelessWidget {
   Widget build(BuildContext c) {
     final preferences = c.select((PreferencesCubit pc) => pc.state);
     final currentHeight = c.select((InfoCubit w) => w.state.currentHeight);
-    final confirmations = currentHeight - transaction.height;
+    final confirmations = (currentHeight - transaction.height) + 1;
     final isReceive = transaction.isReceive();
     if (isReceive) {
       return GestureDetector(
@@ -98,7 +98,9 @@ class TransactionItem extends StatelessWidget {
                     color: c.colours.error,
                   ),
                 ),
-              if (confirmations > 0)
+              if (transaction.height != 0 &&
+                  confirmations <= 6 &&
+                  confirmations >= 1)
                 Text(
                   '$confirmations' + ' Confirmations',
                   style: c.fonts.overline!.copyWith(

@@ -77,19 +77,19 @@ class InfoCubit extends Cubit<InfoState> {
 
   void getHistory() async {
     try {
+      final node = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+      final wallet = _walletsCubit.state.selectedWallet!;
       emit(
         state.copyWith(
           loadingBalance: true,
           errLoadingTransactions: '',
+          balance: wallet.balance,
+          transactions: wallet.transactions,
         ),
       );
-
-      final node = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
-      final wallet = _walletsCubit.state.selectedWallet!;
-
       final currentHeight = await compute(computeCurrentHeight, {
-        'network': 'main',
+        'network': _blockchainCubit.state.blockchain.name,
         'nodeAddress': node,
         'socks5': socks5,
       });
