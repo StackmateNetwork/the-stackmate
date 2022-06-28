@@ -35,7 +35,7 @@ class TorState with _$TorState {
   const TorState._();
 
   String getSocks5() {
-    return '127.0.0.1:' + socks5Port.toString();
+    return (socks5Port == 0) ? 'none' : ('127.0.0.1:' + socks5Port.toString());
   }
 }
 
@@ -48,7 +48,7 @@ class TorCubit extends Cubit<TorState> {
     final settings = Tor(
       enforced: state.enforced,
       internal: state.internal,
-      externalPort: state.socks5Port,
+      externalPort: (!state.enforced) ? 0 : state.socks5Port,
     );
 
     final saved = await _storage.saveItemAt<Tor>(
@@ -83,8 +83,12 @@ class TorCubit extends Cubit<TorState> {
   }
 
   Future<void> toggleEnforce() async {
+    final newEnforcedState = !state.enforced;
     emit(
-      state.copyWith(enforced: !state.enforced),
+      state.copyWith(
+        enforced: newEnforcedState,
+        socks5Port: newEnforcedState ? state.socks5Port : 0,
+      ),
     );
     await updateConfig();
   }
