@@ -50,7 +50,6 @@ class TorCubit extends Cubit<TorState> {
       internal: state.internal,
       externalPort: (!state.enforced) ? 0 : state.socks5Port,
     );
-
     final saved = await _storage.saveItemAt<Tor>(
       StoreKeys.Tor.name,
       0,
@@ -59,6 +58,10 @@ class TorCubit extends Cubit<TorState> {
     if (saved.hasError) {
       emit(state.copyWith(errStorage: saved.error.toString()));
     }
+    if (!state.enforced)
+      await stop();
+    else
+      await start();
   }
 
   Future<void> _readConfig() async {
@@ -90,7 +93,6 @@ class TorCubit extends Cubit<TorState> {
         socks5Port: newEnforcedState ? state.socks5Port : 0,
       ),
     );
-    await updateConfig();
   }
 
   void toggleEditExternal() {

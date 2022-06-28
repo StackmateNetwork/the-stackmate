@@ -14,8 +14,11 @@ class HomeLoader extends StatelessWidget {
     const String loading = 'Connecting to Tor...';
     if (tor.isConnected) return Container();
     if (tor.errConnection != '') return Text(tor.errConnection);
-    return const Loading(
-      text: loading,
-    );
+    if (tor.enforced)
+      return const Loading(
+        text: loading,
+      );
+    else
+      return Container();
   }
 }
