@@ -39,18 +39,24 @@ abstract class IStackMateBitcoin {
     required String psbt,
   });
 
-  R<AbsoluteFees> feeAbsoluteToRate({
+  R<NetworkFees> feeAbsoluteToRate({
     required String feeAbsolute,
     required String weight,
   });
 
-  R<AbsoluteFees> feeRateToAbsolute({
+  R<NetworkFees> feeRateToAbsolute({
     required String feeRate,
     required String weight,
   });
 
   R<int> syncBalance({
     required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+  });
+
+  R<int> getHeight({
+    required String network,
     required String nodeAddress,
     required String socks5,
   });
@@ -97,5 +103,11 @@ abstract class IStackMateBitcoin {
     required String nodeAddress,
     required String socks5,
     required String signedPSBT,
+  });
+  Future<R<String>> broadcastTransactionHex({
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+    required String signedHex,
   });
 }

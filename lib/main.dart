@@ -1,32 +1,36 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
-import 'package:sats/ui/screen/CypherPost.dart';
+import 'package:sats/ui/screen/BackupWallet.dart';
+import 'package:sats/ui/screen/Broadcast.dart';
+import 'package:sats/ui/screen/Contracts.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
+import 'package:sats/ui/screen/Messages.dart';
+import 'package:sats/ui/screen/MyIdentity.dart';
+import 'package:sats/ui/screen/Network.dart';
+import 'package:sats/ui/screen/NewWallet/MasterKeyDerive.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
+import 'package:sats/ui/screen/NewWallet/XpubColdcard.dart';
 import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
-import 'package:sats/ui/screen/PSBT.dart';
+import 'package:sats/ui/screen/Peers.dart';
 import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
+import 'package:sats/ui/screen/TorConfig.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
-// ignore: import_of_legacy_library_into_null_safe
 
 void main() async {
   await initializeHive();
@@ -47,15 +51,6 @@ void main() async {
 class Stackmate extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    compute(
-      daemonStart,
-      {
-        'path': Directory.systemTemp.toString(),
-        'socks5Port': '39050',
-        'httpProxy': '',
-      },
-    );
-
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -99,15 +94,39 @@ class Stackmate extends StatelessWidget {
       ),
       GoRoute(
         path: '/network',
-        builder: (_, __) => const CypherPostHomeScreen(),
+        builder: (_, __) => const NetworkHomeScreen(),
+      ),
+      GoRoute(
+        path: '/my-identity',
+        builder: (_, __) => const MyIdentityScreen(),
+      ),
+      GoRoute(
+        path: '/peers',
+        builder: (_, __) => const PeersScreen(),
+      ),
+      GoRoute(
+        path: '/contracts',
+        builder: (_, __) => const ContractsScreen(),
+      ),
+      GoRoute(
+        path: '/messages',
+        builder: (_, __) => const MessagesScreen(),
       ),
       GoRoute(
         path: '/add-wallet',
         builder: (_, __) => const AddWalletScreen(),
       ),
       GoRoute(
-        path: '/psbt-tools',
-        builder: (_, __) => const PSBTScreen(),
+        path: '/broadcast',
+        builder: (_, __) => const BroadcastScreen(),
+      ),
+      GoRoute(
+        path: '/backup-master',
+        builder: (_, __) => const BackupWalletScreen(),
+      ),
+      GoRoute(
+        path: '/tor-config',
+        builder: (_, __) => const TorConfigScreen(),
       ),
       GoRoute(
         path: '/generate-seed',
@@ -118,8 +137,16 @@ class Stackmate extends StatelessWidget {
         builder: (_, __) => const SeedImportScreen(),
       ),
       GoRoute(
+        path: '/derive-account',
+        builder: (_, __) => const MasterDeriveScreen(),
+      ),
+      GoRoute(
         path: '/watch-only',
         builder: (_, __) => const XPubImportScreen(),
+      ),
+      GoRoute(
+        path: '/coldcard',
+        builder: (_, __) => const XPubColdcardScreen(),
       ),
       GoRoute(
         path: '/wallet',

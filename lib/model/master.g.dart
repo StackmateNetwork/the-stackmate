@@ -17,21 +17,27 @@ class MasterKeyClassAdapter extends TypeAdapter<_$_MasterKey> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return _$_MasterKey(
-      root: fields[0] as String?,
-      fingerprint: fields[1] as String?,
-      network: fields[2] as String?,
+      seed: fields[0] as String?,
+      passphrase: fields[1] as String?,
+      root: fields[2] as String?,
+      fingerprint: fields[3] as String?,
+      network: fields[4] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_MasterKey obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.root)
+      ..write(obj.seed)
       ..writeByte(1)
-      ..write(obj.fingerprint)
+      ..write(obj.passphrase)
       ..writeByte(2)
+      ..write(obj.root)
+      ..writeByte(3)
+      ..write(obj.fingerprint)
+      ..writeByte(4)
       ..write(obj.network);
   }
 

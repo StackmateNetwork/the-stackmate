@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/types.dart';
+import 'package:libstackmate/outputs.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -36,6 +40,7 @@ class SendState with _$SendState {
     @Default(false) bool calculatingFees,
     @Default(false) bool buildingTx,
     @Default(false) bool sendingTx,
+    bool? permissionGranted,
     @Default('') String errLoading,
     @Default('') String errAddress,
     @Default('') String errSending,
@@ -230,28 +235,55 @@ class SendCubit extends Cubit<SendState> {
     );
   }
 
-  // void savePSBTToFile(BuildContext context) async {
-  //   // final bool isDesktop = !(Platform.isAndroid || Platform.isIOS);
+  Future<void> _getStoragePermission() async {
+    if (await Permission.storage.request().isGranted) {
+      final permissionGranted = true;
+    } else if (await Permission.storage.request().isPermanentlyDenied) {
+      await openAppSettings();
+    } else if (await Permission.storage.request().isDenied) {
+      final permissionGranted = false;
+    }
+  }
 
-  //   final rootPath = await getTemporaryDirectory();
-  //   final String path = await FilesystemPicker.open(
-  //     title: 'Save to folder',
-  //     context: context,
-  //     rootDirectory: rootPath,
-  //     fsType: FilesystemType.folder,
-  //     pickText: 'Save file to this folder',
-  //     folderIconColor: Colors.teal,
-  //   );
-  //   await _file.saveTextToFile(state.psbt, path);
-  //   emit(
-  //     state.copyWith(
-  //       sendingTx: false,
-  //       errLoading: emptyString,
-  //       // currentStep: SendSteps.sent,
-  //     ),
-  //   );
-  //   return;
-  // }
+  Future<void> savePSBTToFile() async {
+    try {
+      await _getStoragePermission();
+      final path = await FilePicker.platform.getDirectoryPath();
+      if (path == null) {
+        emit(
+          state.copyWith(
+            sendingTx: false,
+            errLoading: 'Folder not selected',
+            currentStep: SendSteps.confirm,
+          ),
+        );
+      }
+      //final File file = File('$path/build.psbt');
+      // String _timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+
+      final psbtFile = File('$path/build.psbt');
+
+      await psbtFile.writeAsString(state.psbt, flush: true);
+
+      emit(
+        state.copyWith(
+          sendingTx: false,
+          errLoading: emptyString,
+          currentStep: SendSteps.sent,
+        ),
+      );
+    } catch (e, s) {
+      emit(
+        state.copyWith(
+          sendingTx: false,
+          errLoading: emptyString,
+          currentStep: SendSteps.confirm,
+        ),
+      );
+
+      _logger.logException(e.toString(), 'SendCubit.confirmclicked', s);
+    }
+  }
 
   bool _checkAmount(String amount) {
     final checked = amount.replaceAll(',', emptyString);
@@ -328,7 +360,7 @@ class SendCubit extends Cubit<SendState> {
           feeFast: fast.result!.absolute,
           feeMedium: medium.result!.absolute,
           feeSlow: slow.result!.absolute,
-          finalFee: medium.result!.absolute,
+          finalFee: fast.result!.absolute,
           weight: weight,
           calculatingFees: false,
           currentStep: SendSteps.fees,
@@ -586,7 +618,7 @@ int getWeight(dynamic data) {
   return resp.result!;
 }
 
-AbsoluteFees getAbsoluteFees(dynamic data) {
+NetworkFees getAbsoluteFees(dynamic data) {
   final obj = data as Map<String, String?>;
   final resp = LibBitcoin().feeAbsoluteToRate(
     feeAbsolute: obj['feeRate']!,

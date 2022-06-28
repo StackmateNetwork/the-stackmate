@@ -257,6 +257,26 @@ class LibBitcoin implements IStackMateBitcoin {
   }
 
   @override
+  Future<R<String>> broadcastTransactionHex({
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+    required String signedHex,
+  }) async {
+    final resp = await _libstackmate.broadcastTransactionHex(
+      descriptor: descriptor,
+      nodeAddress: nodeAddress,
+      signedHex: signedHex,
+      socks5: socks5,
+    );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    final data = jsonDecode(resp);
+    return R(result: data['txid'] as String);
+  }
+
+  @override
   R<double> estimateNetworkFee({
     required String network,
     required String nodeAddress,
@@ -293,7 +313,7 @@ class LibBitcoin implements IStackMateBitcoin {
   }
 
   @override
-  R<AbsoluteFees> feeAbsoluteToRate({
+  R<NetworkFees> feeAbsoluteToRate({
     required String feeAbsolute,
     required String weight,
   }) {
@@ -304,11 +324,11 @@ class LibBitcoin implements IStackMateBitcoin {
     if (resp.contains('Error')) {
       return R(error: SMError.fromJson(resp).message);
     }
-    return R(result: AbsoluteFees.fromJson(resp));
+    return R(result: NetworkFees.fromJson(resp));
   }
 
   @override
-  R<AbsoluteFees> feeRateToAbsolute({
+  R<NetworkFees> feeRateToAbsolute({
     required String feeRate,
     required String weight,
   }) {
@@ -319,6 +339,24 @@ class LibBitcoin implements IStackMateBitcoin {
     if (resp.contains('Error')) {
       return R(error: SMError.fromJson(resp).message);
     }
-    return R(result: AbsoluteFees.fromJson(resp));
+    return R(result: NetworkFees.fromJson(resp));
+  }
+
+  @override
+  R<int> getHeight({
+    required String network,
+    required String nodeAddress,
+    required String socks5,
+  }) {
+    final resp = _libstackmate.getHeight(
+      network: network,
+      nodeAddress: nodeAddress,
+      socks5: socks5,
+    );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    final height = jsonDecode(resp)['height'];
+    return R(result: height as int);
   }
 }

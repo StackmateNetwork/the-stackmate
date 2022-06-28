@@ -40,14 +40,14 @@ class TransactionComplete extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'PSBT\nCopied to Clipboard.',
+              'PSBT\nBuild Complete.',
               style: context.fonts.headline5!.copyWith(
                 color: context.colours.onBackground,
               ),
             ),
             const SizedBox(height: 16),
             Text(
-              'Pass it to a signer.',
+              'Pass it to a signing device.',
               style: context.fonts.caption!.copyWith(
                 color: context.colours.onBackground,
                 fontSize: 16,

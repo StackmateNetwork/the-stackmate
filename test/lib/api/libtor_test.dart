@@ -1,6 +1,5 @@
 // ignore: avoid_escaping_inner_quotes
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -89,7 +88,7 @@ void main() {
     );
     assert(!controlKey.hasError);
 
-    var progress = libtor.torStatus(
+    final progress = libtor.torStatus(
       controlPort: '28950',
       controlKey: controlKey.result!,
     );

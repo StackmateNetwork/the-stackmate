@@ -16,7 +16,7 @@ class TextAddress extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: c.width,
+          width: c.width / 1.2,
           child: Text(
             address,
             style: c.fonts.caption!.copyWith(
@@ -62,17 +62,6 @@ class TextAddress extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        SizedBox(
-          width: c.width / 4,
-          child: TextButton(
-            onPressed: () {
-              c.read<ReceiveCubit>().getAddress();
-            },
-            child: Text(
-              'ROTATE'.notLocalised(),
-            ),
-          ),
-        )
       ],
     );
   }

@@ -25,6 +25,7 @@ mixin _$InfoState {
   String get errDeleting => throw _privateConstructorUsedError;
   bool get deleted => throw _privateConstructorUsedError;
   bool get showInfo => throw _privateConstructorUsedError;
+  int get currentHeight => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $InfoStateCopyWith<InfoState> get copyWith =>
@@ -44,7 +45,8 @@ abstract class $InfoStateCopyWith<$Res> {
       List<Transaction> transactions,
       String errDeleting,
       bool deleted,
-      bool showInfo});
+      bool showInfo,
+      int currentHeight});
 }
 
 /// @nodoc
@@ -66,6 +68,7 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
     Object? errDeleting = freezed,
     Object? deleted = freezed,
     Object? showInfo = freezed,
+    Object? currentHeight = freezed,
   }) {
     return _then(_value.copyWith(
       loadingTransactions: loadingTransactions == freezed
@@ -104,6 +107,10 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
           ? _value.showInfo
           : showInfo // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentHeight: currentHeight == freezed
+          ? _value.currentHeight
+          : currentHeight // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -123,7 +130,8 @@ abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
       List<Transaction> transactions,
       String errDeleting,
       bool deleted,
-      bool showInfo});
+      bool showInfo,
+      int currentHeight});
 }
 
 /// @nodoc
@@ -147,6 +155,7 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
     Object? errDeleting = freezed,
     Object? deleted = freezed,
     Object? showInfo = freezed,
+    Object? currentHeight = freezed,
   }) {
     return _then(_$_InfoState(
       loadingTransactions: loadingTransactions == freezed
@@ -185,6 +194,10 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
           ? _value.showInfo
           : showInfo // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentHeight: currentHeight == freezed
+          ? _value.currentHeight
+          : currentHeight // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -201,7 +214,8 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       final List<Transaction> transactions = const [],
       this.errDeleting = '',
       this.deleted = false,
-      this.showInfo = false})
+      this.showInfo = false,
+      this.currentHeight = 0})
       : _transactions = transactions,
         super._();
 
@@ -237,10 +251,13 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final bool showInfo;
+  @override
+  @JsonKey()
+  final int currentHeight;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'InfoState(loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo)';
+    return 'InfoState(loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo, currentHeight: $currentHeight)';
   }
 
   @override
@@ -257,7 +274,8 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('transactions', transactions))
       ..add(DiagnosticsProperty('errDeleting', errDeleting))
       ..add(DiagnosticsProperty('deleted', deleted))
-      ..add(DiagnosticsProperty('showInfo', showInfo));
+      ..add(DiagnosticsProperty('showInfo', showInfo))
+      ..add(DiagnosticsProperty('currentHeight', currentHeight));
   }
 
   @override
@@ -279,7 +297,9 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.errDeleting, errDeleting) &&
             const DeepCollectionEquality().equals(other.deleted, deleted) &&
-            const DeepCollectionEquality().equals(other.showInfo, showInfo));
+            const DeepCollectionEquality().equals(other.showInfo, showInfo) &&
+            const DeepCollectionEquality()
+                .equals(other.currentHeight, currentHeight));
   }
 
   @override
@@ -293,7 +313,8 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(_transactions),
       const DeepCollectionEquality().hash(errDeleting),
       const DeepCollectionEquality().hash(deleted),
-      const DeepCollectionEquality().hash(showInfo));
+      const DeepCollectionEquality().hash(showInfo),
+      const DeepCollectionEquality().hash(currentHeight));
 
   @JsonKey(ignore: true)
   @override
@@ -311,7 +332,8 @@ abstract class _InfoState extends InfoState {
       final List<Transaction> transactions,
       final String errDeleting,
       final bool deleted,
-      final bool showInfo}) = _$_InfoState;
+      final bool showInfo,
+      final int currentHeight}) = _$_InfoState;
   const _InfoState._() : super._();
 
   @override
@@ -332,6 +354,8 @@ abstract class _InfoState extends InfoState {
   bool get deleted => throw _privateConstructorUsedError;
   @override
   bool get showInfo => throw _privateConstructorUsedError;
+  @override
+  int get currentHeight => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_InfoStateCopyWith<_$_InfoState> get copyWith =>

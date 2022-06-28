@@ -6,14 +6,16 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
-import 'package:sats/ui/component/Home/Header.dart';
+import 'package:sats/ui/component/Home/BackupWarning.dart';
 import 'package:sats/ui/component/Home/Loader.dart';
 import 'package:sats/ui/component/Home/Networth.dart';
 import 'package:sats/ui/component/Home/Tools.dart';
+import 'package:sats/ui/component/Home/TorHeader.dart';
 
 class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
+    // final wallets = c.select((WalletsCubit w) => w);
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
         return Scaffold(
@@ -22,8 +24,10 @@ class _Home extends StatelessWidget {
               displacement: 10.0,
               onRefresh: () async {
                 c.read<WalletsCubit>().refresh();
-                c.read<TorCubit>().checkStatus();
-                c.read<TorCubit>().start();
+                // for (final element in wallets.state.wallets) {
+                //   c.read<WalletsCubit>().walletSelected(element);
+                // }
+                await c.read<TorCubit>().testConnection();
                 await c.read<FeesCubit>().update();
                 return;
               },
@@ -46,12 +50,9 @@ class _Home extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const HomeLoader(),
-                              if (torState.isConnected) ...[
-                                HomeHeader(),
-                                Networth(),
-                                WalletTools()
-                              ] else
-                                Container()
+                              TorHeader(),
+                              Networth(),
+                              WalletTools()
                             ],
                           ),
                         ),
@@ -70,13 +71,7 @@ class _Home extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: [
-                                  if (torState.isConnected) ...[
-                                    Accounts()
-                                  ] else ...[
-                                    Container()
-                                  ]
-                                ],
+                                children: [BackupWarning(), Accounts()],
                               ),
                             ),
                           ],

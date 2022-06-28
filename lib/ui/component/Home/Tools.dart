@@ -19,7 +19,7 @@ class WalletTools extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  c.push('/psbt-tools');
+                  c.push('/broadcast');
                 },
                 icon: Icon(
                   Icons.language_sharp,

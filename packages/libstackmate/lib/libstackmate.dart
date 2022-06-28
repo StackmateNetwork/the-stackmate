@@ -1,11 +1,11 @@
 import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
-import 'package:libstackmate/ffi-types.dart';
+import 'package:libstackmate/inputs.dart';
 
 // import 'package:isolate/ports.dart';
 
-export 'package:libstackmate/types.dart';
+export 'package:libstackmate/outputs.dart';
 
 class LibStackmateFFI {
   LibStackmateFFI({required this.binary});
@@ -118,7 +118,6 @@ class LibStackmateFFI {
       descriptor.toNativeUtf8(),
       index.toNativeUtf8(),
     ).toDartString();
-
     return resp;
   }
 
@@ -182,6 +181,24 @@ class LibStackmateFFI {
       nodeAddress.toNativeUtf8(),
       socks5.toNativeUtf8(),
       signedPSBT.toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
+
+  Future<String> broadcastTransactionHex({
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+    required String signedHex,
+  }) async {
+    final func = binary.lookupFunction<BroadcastTHex, BroadcastTHex>(
+      'broadcast_hex',
+    );
+    final resp = func(
+      descriptor.toNativeUtf8(),
+      nodeAddress.toNativeUtf8(),
+      socks5.toNativeUtf8(),
+      signedHex.toNativeUtf8(),
     ).toDartString();
     return resp;
   }

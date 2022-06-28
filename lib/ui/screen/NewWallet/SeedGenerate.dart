@@ -134,6 +134,7 @@ class SeedGenerateScreen extends StatelessWidget {
 
     final seedGenerateCubit = SeedGenerateCubit(
       locator<IStackMateBitcoin>(),
+      masterKey,
       networkSelect,
       logger,
     );
@@ -145,7 +146,6 @@ class SeedGenerateScreen extends StatelessWidget {
       wallets,
       networkSelect,
       seedGenerateCubit,
-      masterKey,
     );
 
     return MultiBlocProvider(

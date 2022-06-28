@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -7,6 +8,8 @@ import 'package:sats/pkg/storage.dart';
 part 'node.freezed.dart';
 
 const defaultNodeAddress = 'default';
+const testnetBlockstream = 'ssl://electrum.blockstream.info:60002';
+const mainnetBlockstream = 'ssl://electrum.blockstream.info:50002';
 
 @freezed
 class NodeAddressState with _$NodeAddressState {
@@ -26,9 +29,11 @@ class NodeAddressState with _$NodeAddressState {
 class NodeAddressCubit extends Cubit<NodeAddressState> {
   NodeAddressCubit(
     this._storage,
+    this._network,
   ) : super(const NodeAddressState());
 
   final IStorage _storage;
+  final ChainSelectCubit _network;
 
   void init() async {
     final node = _storage.getFirstItem<Node>(StoreKeys.Node.name);
@@ -36,7 +41,9 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
       if (node.error! == 'empty')
         emit(
           state.copyWith(
-            address: defaultNodeAddress,
+            address: (_network.state.blockchain.name == 'test')
+                ? testnetBlockstream
+                : mainnetBlockstream,
           ),
         );
       else
@@ -57,7 +64,12 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
 
   void revertToDefault() {
     emit(
-      state.copyWith(address: 'default', name: 'Blockstream'),
+      state.copyWith(
+        address: (_network.state.blockchain.name == 'test')
+            ? testnetBlockstream
+            : mainnetBlockstream,
+        name: 'Blockstream',
+      ),
     );
   }
 

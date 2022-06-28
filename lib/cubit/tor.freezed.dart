@@ -17,13 +17,18 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TorState {
   String get workingDir => throw _privateConstructorUsedError;
+  bool get enforced => throw _privateConstructorUsedError;
+  bool get internal => throw _privateConstructorUsedError;
   int get socks5Port => throw _privateConstructorUsedError;
   String get httpProxy => throw _privateConstructorUsedError;
   String get bootstapProgress => throw _privateConstructorUsedError;
   bool get isRunning => throw _privateConstructorUsedError;
+  bool get isEdittingExternal => throw _privateConstructorUsedError;
   bool get isConnected => throw _privateConstructorUsedError;
   String get controlKey => throw _privateConstructorUsedError;
   String get errConnection => throw _privateConstructorUsedError;
+  String get errStorage => throw _privateConstructorUsedError;
+  String get errMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TorStateCopyWith<TorState> get copyWith =>
@@ -36,13 +41,18 @@ abstract class $TorStateCopyWith<$Res> {
       _$TorStateCopyWithImpl<$Res>;
   $Res call(
       {String workingDir,
+      bool enforced,
+      bool internal,
       int socks5Port,
       String httpProxy,
       String bootstapProgress,
       bool isRunning,
+      bool isEdittingExternal,
       bool isConnected,
       String controlKey,
-      String errConnection});
+      String errConnection,
+      String errStorage,
+      String errMessage});
 }
 
 /// @nodoc
@@ -56,19 +66,32 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
   @override
   $Res call({
     Object? workingDir = freezed,
+    Object? enforced = freezed,
+    Object? internal = freezed,
     Object? socks5Port = freezed,
     Object? httpProxy = freezed,
     Object? bootstapProgress = freezed,
     Object? isRunning = freezed,
+    Object? isEdittingExternal = freezed,
     Object? isConnected = freezed,
     Object? controlKey = freezed,
     Object? errConnection = freezed,
+    Object? errStorage = freezed,
+    Object? errMessage = freezed,
   }) {
     return _then(_value.copyWith(
       workingDir: workingDir == freezed
           ? _value.workingDir
           : workingDir // ignore: cast_nullable_to_non_nullable
               as String,
+      enforced: enforced == freezed
+          ? _value.enforced
+          : enforced // ignore: cast_nullable_to_non_nullable
+              as bool,
+      internal: internal == freezed
+          ? _value.internal
+          : internal // ignore: cast_nullable_to_non_nullable
+              as bool,
       socks5Port: socks5Port == freezed
           ? _value.socks5Port
           : socks5Port // ignore: cast_nullable_to_non_nullable
@@ -85,6 +108,10 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
           ? _value.isRunning
           : isRunning // ignore: cast_nullable_to_non_nullable
               as bool,
+      isEdittingExternal: isEdittingExternal == freezed
+          ? _value.isEdittingExternal
+          : isEdittingExternal // ignore: cast_nullable_to_non_nullable
+              as bool,
       isConnected: isConnected == freezed
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
@@ -96,6 +123,14 @@ class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
       errConnection: errConnection == freezed
           ? _value.errConnection
           : errConnection // ignore: cast_nullable_to_non_nullable
+              as String,
+      errStorage: errStorage == freezed
+          ? _value.errStorage
+          : errStorage // ignore: cast_nullable_to_non_nullable
+              as String,
+      errMessage: errMessage == freezed
+          ? _value.errMessage
+          : errMessage // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -109,13 +144,18 @@ abstract class _$$_TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
   @override
   $Res call(
       {String workingDir,
+      bool enforced,
+      bool internal,
       int socks5Port,
       String httpProxy,
       String bootstapProgress,
       bool isRunning,
+      bool isEdittingExternal,
       bool isConnected,
       String controlKey,
-      String errConnection});
+      String errConnection,
+      String errStorage,
+      String errMessage});
 }
 
 /// @nodoc
@@ -131,19 +171,32 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? workingDir = freezed,
+    Object? enforced = freezed,
+    Object? internal = freezed,
     Object? socks5Port = freezed,
     Object? httpProxy = freezed,
     Object? bootstapProgress = freezed,
     Object? isRunning = freezed,
+    Object? isEdittingExternal = freezed,
     Object? isConnected = freezed,
     Object? controlKey = freezed,
     Object? errConnection = freezed,
+    Object? errStorage = freezed,
+    Object? errMessage = freezed,
   }) {
     return _then(_$_TorState(
       workingDir: workingDir == freezed
           ? _value.workingDir
           : workingDir // ignore: cast_nullable_to_non_nullable
               as String,
+      enforced: enforced == freezed
+          ? _value.enforced
+          : enforced // ignore: cast_nullable_to_non_nullable
+              as bool,
+      internal: internal == freezed
+          ? _value.internal
+          : internal // ignore: cast_nullable_to_non_nullable
+              as bool,
       socks5Port: socks5Port == freezed
           ? _value.socks5Port
           : socks5Port // ignore: cast_nullable_to_non_nullable
@@ -160,6 +213,10 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
           ? _value.isRunning
           : isRunning // ignore: cast_nullable_to_non_nullable
               as bool,
+      isEdittingExternal: isEdittingExternal == freezed
+          ? _value.isEdittingExternal
+          : isEdittingExternal // ignore: cast_nullable_to_non_nullable
+              as bool,
       isConnected: isConnected == freezed
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
@@ -172,27 +229,46 @@ class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
           ? _value.errConnection
           : errConnection // ignore: cast_nullable_to_non_nullable
               as String,
+      errStorage: errStorage == freezed
+          ? _value.errStorage
+          : errStorage // ignore: cast_nullable_to_non_nullable
+              as String,
+      errMessage: errMessage == freezed
+          ? _value.errMessage
+          : errMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_TorState extends _TorState with DiagnosticableTreeMixin {
+class _$_TorState extends _TorState {
   const _$_TorState(
       {this.workingDir = '/tmp',
-      this.socks5Port = 9150,
+      this.enforced = true,
+      this.internal = true,
+      this.socks5Port = 9050,
       this.httpProxy = '',
-      this.bootstapProgress = '101',
+      this.bootstapProgress = 'Starting Tor.\nThis may take a while ...',
       this.isRunning = false,
+      this.isEdittingExternal = false,
       this.isConnected = false,
       this.controlKey = '',
-      this.errConnection = ''})
+      this.errConnection = '',
+      this.errStorage = '',
+      this.errMessage = ''})
       : super._();
 
   @override
   @JsonKey()
   final String workingDir;
+  @override
+  @JsonKey()
+  final bool enforced;
+  @override
+  @JsonKey()
+  final bool internal;
   @override
   @JsonKey()
   final int socks5Port;
@@ -207,6 +283,9 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
   final bool isRunning;
   @override
   @JsonKey()
+  final bool isEdittingExternal;
+  @override
+  @JsonKey()
   final bool isConnected;
   @override
   @JsonKey()
@@ -214,25 +293,16 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final String errConnection;
+  @override
+  @JsonKey()
+  final String errStorage;
+  @override
+  @JsonKey()
+  final String errMessage;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TorState(workingDir: $workingDir, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'TorState'))
-      ..add(DiagnosticsProperty('workingDir', workingDir))
-      ..add(DiagnosticsProperty('socks5Port', socks5Port))
-      ..add(DiagnosticsProperty('httpProxy', httpProxy))
-      ..add(DiagnosticsProperty('bootstapProgress', bootstapProgress))
-      ..add(DiagnosticsProperty('isRunning', isRunning))
-      ..add(DiagnosticsProperty('isConnected', isConnected))
-      ..add(DiagnosticsProperty('controlKey', controlKey))
-      ..add(DiagnosticsProperty('errConnection', errConnection));
+  String toString() {
+    return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isEdittingExternal: $isEdittingExternal, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage, errMessage: $errMessage)';
   }
 
   @override
@@ -242,6 +312,8 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
             other is _$_TorState &&
             const DeepCollectionEquality()
                 .equals(other.workingDir, workingDir) &&
+            const DeepCollectionEquality().equals(other.enforced, enforced) &&
+            const DeepCollectionEquality().equals(other.internal, internal) &&
             const DeepCollectionEquality()
                 .equals(other.socks5Port, socks5Port) &&
             const DeepCollectionEquality().equals(other.httpProxy, httpProxy) &&
@@ -249,24 +321,35 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
                 .equals(other.bootstapProgress, bootstapProgress) &&
             const DeepCollectionEquality().equals(other.isRunning, isRunning) &&
             const DeepCollectionEquality()
+                .equals(other.isEdittingExternal, isEdittingExternal) &&
+            const DeepCollectionEquality()
                 .equals(other.isConnected, isConnected) &&
             const DeepCollectionEquality()
                 .equals(other.controlKey, controlKey) &&
             const DeepCollectionEquality()
-                .equals(other.errConnection, errConnection));
+                .equals(other.errConnection, errConnection) &&
+            const DeepCollectionEquality()
+                .equals(other.errStorage, errStorage) &&
+            const DeepCollectionEquality()
+                .equals(other.errMessage, errMessage));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(workingDir),
+      const DeepCollectionEquality().hash(enforced),
+      const DeepCollectionEquality().hash(internal),
       const DeepCollectionEquality().hash(socks5Port),
       const DeepCollectionEquality().hash(httpProxy),
       const DeepCollectionEquality().hash(bootstapProgress),
       const DeepCollectionEquality().hash(isRunning),
+      const DeepCollectionEquality().hash(isEdittingExternal),
       const DeepCollectionEquality().hash(isConnected),
       const DeepCollectionEquality().hash(controlKey),
-      const DeepCollectionEquality().hash(errConnection));
+      const DeepCollectionEquality().hash(errConnection),
+      const DeepCollectionEquality().hash(errStorage),
+      const DeepCollectionEquality().hash(errMessage));
 
   @JsonKey(ignore: true)
   @override
@@ -277,17 +360,26 @@ class _$_TorState extends _TorState with DiagnosticableTreeMixin {
 abstract class _TorState extends TorState {
   const factory _TorState(
       {final String workingDir,
+      final bool enforced,
+      final bool internal,
       final int socks5Port,
       final String httpProxy,
       final String bootstapProgress,
       final bool isRunning,
+      final bool isEdittingExternal,
       final bool isConnected,
       final String controlKey,
-      final String errConnection}) = _$_TorState;
+      final String errConnection,
+      final String errStorage,
+      final String errMessage}) = _$_TorState;
   const _TorState._() : super._();
 
   @override
   String get workingDir => throw _privateConstructorUsedError;
+  @override
+  bool get enforced => throw _privateConstructorUsedError;
+  @override
+  bool get internal => throw _privateConstructorUsedError;
   @override
   int get socks5Port => throw _privateConstructorUsedError;
   @override
@@ -297,11 +389,17 @@ abstract class _TorState extends TorState {
   @override
   bool get isRunning => throw _privateConstructorUsedError;
   @override
+  bool get isEdittingExternal => throw _privateConstructorUsedError;
+  @override
   bool get isConnected => throw _privateConstructorUsedError;
   @override
   String get controlKey => throw _privateConstructorUsedError;
   @override
   String get errConnection => throw _privateConstructorUsedError;
+  @override
+  String get errStorage => throw _privateConstructorUsedError;
+  @override
+  String get errMessage => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_TorStateCopyWith<_$_TorState> get copyWith =>

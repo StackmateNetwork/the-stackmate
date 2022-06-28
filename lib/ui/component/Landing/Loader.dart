@@ -10,12 +10,33 @@ class LandingLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     final tor = context.select((TorCubit hc) => hc.state);
     // final fees = context.select((FeesCubit hc) => hc.state);
-    const String loading = 'Initializing Tor.\nThis can take a while...';
-    if (!tor.isRunning && tor.errConnection == '')
-      return const Loading(
-        text: loading,
+
+    if (tor.isConnected) return Container();
+    if (tor.isRunning)
+      return Loading(
+        text: tor.bootstapProgress,
       );
     else
-      return Container();
+      return Padding(
+        padding: const EdgeInsets.only(top: 5),
+        child: Text(
+          tor.errConnection,
+          style: context.fonts.caption!.copyWith(
+            color: context.colours.error,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      );
+    // else
+    //   return Padding(
+    //     padding: const EdgeInsets.only(top: 5),
+    //     child: Text(
+    //       tor.errConnection,
+    //       style: context.fonts.caption!.copyWith(
+    //         color: context.colours.error,
+    //       ),
+    //       textAlign: TextAlign.center,
+    //     ),
+    //   );
   }
 }

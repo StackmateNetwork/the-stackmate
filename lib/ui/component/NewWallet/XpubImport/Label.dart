@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -56,6 +57,7 @@ class XpubLabel extends StatelessWidget {
                     ),
                     onPressed: () {
                       c.read<XpubImportWalletCubit>().nextClicked();
+                      c.read<XpubImportCubit>().clearCachedFiles();
                     },
                     child: const Text('Confirm'),
                   ),

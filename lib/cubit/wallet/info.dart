@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/types.dart';
+import 'package:libstackmate/outputs.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
@@ -31,6 +31,7 @@ class InfoState with _$InfoState {
     @Default('') String errDeleting,
     @Default(false) bool deleted,
     @Default(false) bool showInfo,
+    @Default(0) int currentHeight,
   }) = _InfoState;
   const InfoState._();
 
@@ -41,10 +42,8 @@ class InfoState with _$InfoState {
 class InfoCubit extends Cubit<InfoState> {
   InfoCubit(
     this._walletsCubit,
-    // this._bitcoin,
     this._storage,
     this._logger,
-    // this._blockchain,
     this._launcher,
     this._share,
     this._vibrate,
@@ -52,13 +51,6 @@ class InfoCubit extends Cubit<InfoState> {
     this._torCubit,
     this._blockchainCubit,
   ) : super(const InfoState()) {
-    // scheduleMicrotask(() async {
-    //   await Future.delayed(const Duration(milliseconds: 1000));
-    //   getHistory();
-    // });
-    // getHistory();
-
-    // getHistory();
     _init();
   }
 
@@ -85,16 +77,22 @@ class InfoCubit extends Cubit<InfoState> {
 
   void getHistory() async {
     try {
+      final node = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+      final wallet = _walletsCubit.state.selectedWallet!;
       emit(
         state.copyWith(
           loadingBalance: true,
           errLoadingTransactions: '',
+          balance: wallet.balance,
+          transactions: wallet.transactions,
         ),
       );
-
-      final node = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
-      final wallet = _walletsCubit.state.selectedWallet!;
+      final currentHeight = await compute(computeCurrentHeight, {
+        'network': _blockchainCubit.state.blockchain.name,
+        'nodeAddress': node,
+        'socks5': socks5,
+      });
 
       emit(
         state.copyWith(
@@ -102,6 +100,7 @@ class InfoCubit extends Cubit<InfoState> {
           loadingTransactions: true,
           balance: wallet.balance,
           transactions: wallet.transactions,
+          currentHeight: currentHeight,
         ),
       );
 
@@ -121,6 +120,7 @@ class InfoCubit extends Cubit<InfoState> {
           loadingBalance: false,
           errLoadingTransactions: '',
           balance: balance,
+          currentHeight: currentHeight,
         ),
       );
       _walletsCubit.addBalanceToSelectedWallet(balance);
@@ -139,6 +139,7 @@ class InfoCubit extends Cubit<InfoState> {
           transactions: transactions,
           errLoadingTransactions: '',
           balance: balance,
+          currentHeight: currentHeight,
         ),
       );
 
@@ -219,6 +220,19 @@ int computeBalance(dynamic obj) {
   final data = obj as Map<String, String?>;
   final resp = LibBitcoin().syncBalance(
     descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
+}
+
+int computeCurrentHeight(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().getHeight(
+    network: data['network']!,
     nodeAddress: data['nodeAddress']!,
     socks5: obj['socks5']!,
   );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sats/api/interface/libbitcoin.dart';
+import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
@@ -33,7 +35,7 @@ class _CubitsState extends State<Cubits> {
       logger,
     );
     networkSelectCubit.init();
-    final torCubit = TorCubit(logger);
+    final torCubit = TorCubit(storage, logger);
     torCubit.start();
 
     final masterKeyCubit = MasterKeyCubit(storage, networkSelectCubit);
@@ -51,6 +53,7 @@ class _CubitsState extends State<Cubits> {
 
     final nodeAddressCubit = NodeAddressCubit(
       storage,
+      networkSelectCubit,
     );
     nodeAddressCubit.init();
 
@@ -60,6 +63,14 @@ class _CubitsState extends State<Cubits> {
       nodeAddressCubit,
       torCubit,
       logger,
+    );
+    final broadcastHex = BroadcastCubit(
+      logger,
+      locator<IStackMateBitcoin>(),
+      locator<IClipBoard>(),
+      nodeAddressCubit,
+      torCubit,
+      networkSelectCubit,
     );
 
     return MultiBlocProvider(
@@ -72,6 +83,7 @@ class _CubitsState extends State<Cubits> {
         BlocProvider.value(value: preferencesCubit),
         BlocProvider.value(value: torCubit),
         BlocProvider.value(value: masterKeyCubit),
+        BlocProvider.value(value: broadcastHex),
       ],
       child: BlocListener<ChainSelectCubit, BlockchainState>(
         listener: (context, state) {

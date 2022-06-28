@@ -5,21 +5,22 @@ import 'package:libstackmate/libstackmate.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/pkg/extensions.dart';
 
 part 'seed-generate.freezed.dart';
 
 enum SeedGenerateSteps {
-  passphrase,
   generate,
   quiz,
+  passphrase,
 }
 
 @freezed
 class SeedGenerateState with _$SeedGenerateState {
   const factory SeedGenerateState({
-    @Default(SeedGenerateSteps.passphrase) currentStep,
+    @Default(SeedGenerateSteps.generate) currentStep,
     List<String>? seed,
     String? masterXpriv,
     String? xpriv,
@@ -36,6 +37,7 @@ class SeedGenerateState with _$SeedGenerateState {
     @Default('') String quizSeedError,
     @Default('') String passPhrase,
     @Default('') String errPassphrase,
+    @Default(false) bool backupLater,
   }) = _SeedGenerateState;
   const SeedGenerateState._();
 }
@@ -43,11 +45,13 @@ class SeedGenerateState with _$SeedGenerateState {
 class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   SeedGenerateCubit(
     this._bitcoin,
+    this._masterKey,
     this._blockchainCubit,
     this._logger,
   ) : super(const SeedGenerateState());
 
   final IStackMateBitcoin _bitcoin;
+  final MasterKeyCubit _masterKey;
   final ChainSelectCubit _blockchainCubit;
   final Logger _logger;
 
@@ -101,6 +105,64 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
     return;
   }
 
+  void finalizePassphrase() async {
+    final root = _bitcoin.importMaster(
+      mnemonic: state.seed!.join(' '),
+      passphrase: state.passPhrase,
+      network: _blockchainCubit.state.blockchain.name,
+    );
+    if (root.hasError) {
+      final smError = SMError.fromJson(root.error!);
+      emit(
+        state.copyWith(
+          generatingSeed: false,
+          seedError: smError.message,
+          currentStep: SeedGenerateSteps.passphrase,
+        ),
+      );
+    }
+
+    if (state.backupLater) {
+      await _masterKey.saveBackupPending(
+        root.result!.mnemonic,
+        state.passPhrase,
+        root.result!.xprv,
+        root.result!.fingerprint,
+      );
+    } else {
+      await _masterKey.save(
+        root.result!.xprv,
+        root.result!.fingerprint,
+      );
+    }
+    _masterKey.init();
+
+    final wallet = _bitcoin.deriveHardened(
+      masterXPriv: root.result!.xprv,
+      account: accountZero,
+      purpose: segwitNativePurpose,
+    );
+
+    if (wallet.hasError) {
+      final smError = SMError.fromJson(wallet.error!);
+      emit(state.copyWith(seedError: unableToDeriveError));
+      _logger.logException(
+        smError.oneliner,
+        'SeedImportWalletCubit._createNewLocalWallet',
+        emptyString,
+      );
+    } else
+      emit(
+        state.copyWith(
+          wallet: wallet.result,
+          seed: [],
+          passPhrase: '',
+          quizSeedCompletedAnswers: [],
+          quizSeedAnswer: '',
+        ),
+      );
+  }
+
   void startQuiz() {
     if (state.seed!.isNotEmpty) {
       emit(
@@ -110,6 +172,19 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
         ),
       );
       _updateQuiz();
+    } else {
+      return;
+    }
+  }
+
+  void backupLater() {
+    if (state.seed!.isNotEmpty) {
+      emit(
+        state.copyWith(
+          currentStep: SeedGenerateSteps.passphrase,
+          backupLater: true,
+        ),
+      );
     } else {
       return;
     }
@@ -157,7 +232,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       await Future.delayed(const Duration(seconds: 1));
       emit(
         state.copyWith(
-          currentStep: SeedGenerateSteps.passphrase,
+          currentStep: SeedGenerateSteps.generate,
         ),
       );
       return;

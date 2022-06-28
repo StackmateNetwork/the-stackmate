@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/types.dart';
+import 'package:libstackmate/outputs.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
@@ -68,7 +67,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
     this._wallets,
     this._blockchainCubit,
     this._generateCubit,
-    this._masterKeyCubit,
   ) : super(const SeedGenerateWalletState()) {
     _generateSub = _generateCubit.stream.listen((gstate) {
       if (gstate.wallet != null) {
@@ -86,7 +84,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   final ChainSelectCubit _blockchainCubit;
   final SeedGenerateCubit _generateCubit;
   late StreamSubscription _generateSub;
-  final MasterKeyCubit _masterKeyCubit;
 
   void backClicked() {
     switch (state.currentStep) {
@@ -112,6 +109,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
     switch (state.currentStep) {
       case SeedGenerateWalletSteps.warning:
         emit(state.copyWith(currentStep: SeedGenerateWalletSteps.generate));
+        _generateCubit.generateSeed();
+
         break;
 
       case SeedGenerateWalletSteps.generate:
@@ -144,7 +143,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
 
       final wallet = _generateCubit.state.wallet;
       if (wallet == null) return;
-      final root = _generateCubit.state.masterXpriv!;
 
       final fullXPrv =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
@@ -165,14 +163,9 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         throw SMError.fromJson(descriptor.error!);
       }
 
-      await _masterKeyCubit.save(
-        root,
-        wallet.fingerPrint,
-      );
-      _masterKeyCubit.init();
       var newWallet = Wallet(
         label: state.walletLabel,
-        walletType: primaryWalletType,
+        walletType: signerWalletType,
         descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,
@@ -210,8 +203,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         ),
       );
     } catch (e, s) {
-      final error = e;
-      print(error);
       _logger.logException(
         e,
         'SeedGenerateWalletCubit._createNewLocalWallet',

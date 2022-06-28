@@ -31,7 +31,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
             children: [
               const SizedBox(height: 24),
               Text(
-                'optional\npassphrase (!)'.toUpperCase(),
+                'optional\npassphrase'.toUpperCase(),
                 style: c.fonts.headline5!.copyWith(
                   color: c.colours.onPrimary,
                   // fontWeight: FontWeight.bold,
@@ -48,6 +48,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
               Padding(
                 padding: EdgeInsets.zero,
                 child: TextFormField(
+                  enableIMEPersonalizedLearning: false,
                   autocorrect: false,
                   obscureText: true,
                   obscuringCharacter: '*',
@@ -68,6 +69,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
               Padding(
                 padding: EdgeInsets.zero,
                 child: TextFormField(
+                  enableIMEPersonalizedLearning: false,
                   autocorrect: false,
                   obscureText: true,
                   obscuringCharacter: '*',
@@ -100,7 +102,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
                   ),
                   onPressed: () {
                     if (_form.currentState!.validate()) {
-                      c.read<SeedGenerateCubit>().generateSeed();
+                      c.read<SeedGenerateCubit>().finalizePassphrase();
                     }
                   },
                   child: Text('Confirm'.toUpperCase()),
@@ -160,12 +162,12 @@ class SeedGenerateStepSelect extends StatelessWidget {
     final step = c.select((SeedGenerateCubit c) => c.state.currentStep);
 
     switch (step) {
-      case SeedGenerateSteps.passphrase:
-        return SeedGeneratePassphrase();
       case SeedGenerateSteps.generate:
         return SeedGenerate();
       case SeedGenerateSteps.quiz:
         return SeedConfirm();
+      case SeedGenerateSteps.passphrase:
+        return SeedGeneratePassphrase();
     }
 
     return Container();
@@ -194,9 +196,9 @@ class SeedGenerate extends StatelessWidget {
             'Store it somewhere reliable and safe.'.notLocalised(),
             style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -223,7 +225,7 @@ class SeedGenerate extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
           SizedBox(
             height: 52,
             child: ElevatedButton(
@@ -235,6 +237,21 @@ class SeedGenerate extends StatelessWidget {
                 c.read<SeedGenerateCubit>().startQuiz();
               },
               child: Text('Next'.toUpperCase()),
+            ),
+          ),
+          const SizedBox(height: 2),
+          SizedBox(
+            height: 52,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: c.colours.onPrimary),
+                primary: c.colours.primary,
+                onSurface: c.colours.background,
+              ),
+              onPressed: () {
+                c.read<SeedGenerateCubit>().backupLater();
+              },
+              child: Text('BackUp Later'.toUpperCase()),
             ),
           ),
           const SizedBox(height: 12)
