@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class EnterMyIdentity extends StatelessWidget {
@@ -45,7 +44,7 @@ class EnterMyIdentity extends StatelessWidget {
               onPrimary: c.colours.background,
             ),
             onPressed: () async {
-              c.push('/my-identity');
+              //c.push('/my-identity');
             },
             child: const Text('SETUP IDENTITY'),
           ),
