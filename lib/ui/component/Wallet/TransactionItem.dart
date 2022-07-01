@@ -191,7 +191,7 @@ class TransactionItem extends StatelessWidget {
                   color: c.colours.error,
                 ),
               ),
-            if (confirmations > 0)
+            if (confirmations >= 0 && confirmations <= 6)
               Text(
                 '$confirmations' + ' Confirmations',
                 style: c.fonts.overline!.copyWith(

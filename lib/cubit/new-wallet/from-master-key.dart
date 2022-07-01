@@ -137,7 +137,9 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       final xprv = child.result!.xprv;
       final fullXPrv =
           '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
-
+      final xpub = child.result!.xpub;
+      final fullXPub =
+          '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
       final policy = 'pk($fullXPrv/*)';
 
       const readable = 'pk(__primary__)';
@@ -185,7 +187,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,
-        policyElements: ['primary:$fullXPrv'],
+        policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: signerWalletType,
         lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
@@ -254,7 +256,9 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       final xprv = child.result!.xprv;
       final fullXPrv =
           '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
-
+      final xpub = child.result!.xpub;
+      final fullXPub =
+          '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
       final policy = 'pk($fullXPrv/*)';
 
       const readable = 'pk(__primary__)';
@@ -302,7 +306,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,
-        policyElements: ['primary:$fullXPrv'],
+        policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: signerWalletType,
         lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
