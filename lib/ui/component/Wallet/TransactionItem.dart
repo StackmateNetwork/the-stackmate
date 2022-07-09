@@ -97,10 +97,9 @@ class TransactionItem extends StatelessWidget {
                   style: c.fonts.overline!.copyWith(
                     color: c.colours.error,
                   ),
-                ),
-              if (transaction.height != 0 &&
-                  confirmations <= 6 &&
-                  confirmations >= 1)
+                )
+              else if (transaction.height != 0 &&
+                  (confirmations <= 6 && confirmations >= 1))
                 Text(
                   '$confirmations' + ' Confirmations',
                   style: c.fonts.overline!.copyWith(
@@ -190,8 +189,9 @@ class TransactionItem extends StatelessWidget {
                 style: c.fonts.overline!.copyWith(
                   color: c.colours.error,
                 ),
-              ),
-            if (confirmations >= 0 && confirmations <= 6)
+              )
+            else if (transaction.height != 0 &&
+                (confirmations <= 6 && confirmations >= 1))
               Text(
                 '$confirmations' + ' Confirmations',
                 style: c.fonts.overline!.copyWith(
@@ -250,7 +250,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                             style: c.fonts.overline!.copyWith(
                               color: c.colours.onBackground,
                             ),
-                          ),
+                          )
                       ],
                     ),
                   )
@@ -395,7 +395,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                             style: c.fonts.overline!.copyWith(
                               color: c.colours.onBackground,
                             ),
-                          ),
+                          )
                       ],
                     ),
                   )

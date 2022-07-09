@@ -29,7 +29,7 @@ enum DerivationPurpose { segwit, taproot, legacy }
 class MasterDeriveWalletState with _$MasterDeriveWalletState {
   const factory MasterDeriveWalletState({
     @Default(MasterDeriveWalletStep.purpose) MasterDeriveWalletStep currentStep,
-    @Default(DerivationPurpose.taproot) DerivationPurpose purpose,
+    @Default(DerivationPurpose.segwit) DerivationPurpose purpose,
     @Default('') String label,
     @Default('') String walletLabelError,
     @Default(false) bool savingWallet,

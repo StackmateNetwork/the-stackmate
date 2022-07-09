@@ -18,11 +18,16 @@ class SeedImportWarning extends StatelessWidget {
         const SizedBox(height: 24),
         Text(
           '''
-Typing your private key data or copying it via a clipboard makes it vulnerable
-to a larger attack surface.
+MAKE SURE you only type your seed manually.
 
-Android uses GBoard by deafult with analytics, consider disabling it or entirely
-opting out and using OpenBoards.
+We enforce incognito mode on your keyboard so typing your seed phrase is a bit safer.
+
+NEVER copy/paste it via your clipboard.
+
+Android uses GBoard by deafult with analytics, so consider disabling it or entirely
+opting out and using OpenBoards. 
+
+Incognito mode has your back for now.
 ''',
           style: c.fonts.caption!.copyWith(
             color: c.colours.onPrimary,

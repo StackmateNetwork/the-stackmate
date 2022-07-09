@@ -26,31 +26,30 @@ class AddWalletScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: (masterKey == null)
-                  ? Header(
-                      cornerTitle: 'Create Master Key'.toUpperCase(),
-                      children: [
-                        Back(
-                          onPressed: () {
-                            Navigator.pop(c);
-                          },
-                        ),
-                      ],
-                    )
-                  : Header(
-                      cornerTitle: 'Add Account'.toUpperCase(),
-                      children: [
-                        Back(
-                          onPressed: () {
-                            Navigator.pop(c);
-                          },
-                        ),
-                      ],
-                    ),
-            ),
+            const SizedBox(height: 24),
+            if (masterKey == null)
+              Header(
+                cornerTitle: 'Master Key'.toUpperCase(),
+                children: [
+                  Back(
+                    onPressed: () {
+                      Navigator.pop(c);
+                    },
+                  ),
+                ],
+              )
+            else
+              Header(
+                cornerTitle: 'Add Account'.toUpperCase(),
+                children: [
+                  Back(
+                    onPressed: () {
+                      Navigator.pop(c);
+                    },
+                  ),
+                ],
+              ),
+            const SizedBox(height: 24),
             if (masterKey == null) ...[
               const SizedBox(
                 height: 40,
@@ -58,7 +57,7 @@ class AddWalletScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'A 12 word mnemonic seed phrase and optional passphrase represents your master key. It can recover all accounts created on this wallet.',
+                  'A 12 word mnemonic seed phrase and optional passphrase represents your master key. You can use it to recover your funds on any Bitcoin wallet.',
                   style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.onPrimary,
                   ),
@@ -70,7 +69,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'New',
-                description: 'Master key from a new mnemonic seed phrase.',
+                description: 'New Master key from a new mnemonic seed.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/generate-seed');
@@ -79,7 +78,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'Import',
-                description: 'Import master key from an existing seed phrase.',
+                description: 'Import Master key from an existing seed.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/import-seed');

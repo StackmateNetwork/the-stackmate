@@ -109,14 +109,14 @@ class BroadcastHex extends StatelessWidget {
                 enableIMEPersonalizedLearning: false,
                 style: c.fonts.bodySmall!.copyWith(color: c.colours.onPrimary),
                 enableSuggestions: false,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.none,
                 autocorrect: false,
                 onChanged: (text) {
                   c.read<BroadcastCubit>().hexText(text);
                 },
                 maxLines: 8,
                 decoration: InputDecoration(
-                  hintText: 'hex',
+                  hintText: 'Transaction Hex / PSBT',
                   fillColor: c.colours.surface,
                   //errorText: state.seedError.nullIfEmpty(),
                 ),

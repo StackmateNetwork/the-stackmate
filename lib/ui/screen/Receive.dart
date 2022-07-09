@@ -32,29 +32,21 @@ class _Receive extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const Loader(),
+              const SizedBox(height: 24),
               Header(
-                cornerTitle: '',
+                cornerTitle: 'RECEIVE',
                 children: [
-                  const SizedBox(height: 8),
                   const Back(),
-                  const SizedBox(height: 28),
-                  Align(
-                    child: Text(
-                      'RECEIVE BITCOIN',
-                      style: c.fonts.headline6!.copyWith(
-                        color: c.colours.onPrimary,
-                      ),
-                    ),
-                  ),
+                  const SizedBox(height: 24),
                   Align(
                     child: Text(
                       walletLabel.toUpperCase(),
                       style: c.fonts.caption!.copyWith(
-                        color: c.colours.onPrimary,
+                        color: c.colours.primary,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 24),
                 ],
               ),
               FadeIn(

@@ -175,7 +175,7 @@ class _$_MasterDeriveWalletState
     implements _MasterDeriveWalletState {
   const _$_MasterDeriveWalletState(
       {this.currentStep = MasterDeriveWalletStep.purpose,
-      this.purpose = DerivationPurpose.taproot,
+      this.purpose = DerivationPurpose.segwit,
       this.label = '',
       this.walletLabelError = '',
       this.savingWallet = false,

@@ -20,7 +20,7 @@ import 'package:sats/ui/component/Send/SelectFee.dart';
 import 'package:sats/ui/component/Send/WalletDetails.dart';
 import 'package:sats/ui/component/Send/ZeroBalance.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/LogButton.dart';
+import 'package:sats/ui/component/common/header.dart';
 
 class _WalletSend extends StatelessWidget {
   const _WalletSend({Key? key}) : super(key: key);
@@ -58,51 +58,29 @@ class _WalletSend extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Loader(),
-                    const SizedBox(height: 8),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Back(
-                            onPressed: () {
-                              if (step == SendSteps.address ||
-                                  step == SendSteps.sent) {
-                                Navigator.pop(context);
-                                return;
-                              }
-                              if (step != SendSteps.fees) {
-                                context.read<SendCubit>().backClicked();
-                                return;
-                              }
-                            },
-                          ),
-                          LogButton(
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.lightbulb_outline_sharp,
-                                size: 32,
-                                color: context.colours.primary,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    const SizedBox(height: 24),
+                    Header(
+                      cornerTitle: (walletType == 'WATCHER') ? 'BUILD' : 'SEND',
+                      children: [
+                        Back(
+                          onPressed: () {
+                            if (step == SendSteps.address ||
+                                step == SendSteps.sent) {
+                              Navigator.pop(context);
+                              return;
+                            }
+                            if (step != SendSteps.fees) {
+                              context.read<SendCubit>().backClicked();
+                              return;
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                      ],
                     ),
                     const ZeroBalance(),
                     if (step == SendSteps.address) ...[
                       const SizedBox(height: 0),
-                      Align(
-                        child: Text(
-                          (walletType == 'WATCHER')
-                              ? 'BUILD TRANSACTION'
-                              : 'SEND BITCOIN',
-                          style: context.fonts.headline6!.copyWith(
-                            color: context.colours.onPrimary,
-                          ),
-                        ),
-                      ),
                       Align(
                         child: Text(
                           walletLabel.toUpperCase(),

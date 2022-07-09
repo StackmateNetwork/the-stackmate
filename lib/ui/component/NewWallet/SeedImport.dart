@@ -31,7 +31,7 @@ class SeedImportPhrase extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Enter recovery info',
+              'Import your seed phrase',
               style: c.fonts.headline5!.copyWith(
                 color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,

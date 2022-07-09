@@ -17,9 +17,9 @@ class _Broadcast extends StatelessWidget {
             bottom: false,
             child: Column(
               children: [
-                const SizedBox(height: 32),
+                const SizedBox(height: 24),
                 Header(
-                  cornerTitle: 'Broadcast Transaction',
+                  cornerTitle: 'Broadcaster'.toUpperCase(),
                   children: [
                     Back(
                       onPressed: () {
@@ -29,7 +29,7 @@ class _Broadcast extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 64),
                 const BroadcastHex()
               ],
             ),
