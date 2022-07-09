@@ -17,14 +17,6 @@ class BroadcastHex extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Broadcast Transaction'.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: context.fonts.overline!.copyWith(
-                color: context.colours.onBackground,
-              ),
-            ),
-            const SizedBox(height: 26),
             SizedBox(
               height: 52,
               child: OutlinedButton(

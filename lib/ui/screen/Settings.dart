@@ -22,10 +22,8 @@ class SettingsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const SizedBox(
-                height: 12,
-              ),
-              Row(
+              Header(
+                cornerTitle: 'Settings'.toUpperCase(),
                 children: [
                   const SizedBox(width: 16),
                   Back(
@@ -33,14 +31,6 @@ class SettingsScreen extends StatelessWidget {
                       Navigator.of(c).pop();
                     },
                   ),
-                  const Spacer(),
-                  const SizedBox(width: 8),
-                ],
-              ),
-              const Header(
-                cornerTitle: 'SETTINGS',
-                children: [
-                  SizedBox(height: 21),
                 ],
               ),
               const SizedBox(

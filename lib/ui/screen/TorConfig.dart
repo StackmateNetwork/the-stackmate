@@ -33,7 +33,8 @@ class TorConfigScreen extends StatelessWidget {
                 const SizedBox(
                   height: 12,
                 ),
-                Row(
+                Header(
+                  cornerTitle: 'TOR',
                   children: [
                     const SizedBox(width: 16),
                     Back(
@@ -41,14 +42,7 @@ class TorConfigScreen extends StatelessWidget {
                         Navigator.of(c).pop();
                       },
                     ),
-                    const Spacer(),
                     const SizedBox(width: 8),
-                  ],
-                ),
-                const Header(
-                  cornerTitle: 'TOR',
-                  children: [
-                    SizedBox(height: 21),
                   ],
                 ),
                 if (tor.isConnected)

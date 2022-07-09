@@ -4,6 +4,9 @@ import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/AddWallet/SelectButton.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
+import 'package:sats/ui/component/common/HeaderText.dart';
+import 'package:sats/ui/component/common/header.dart';
 
 class AddWalletScreen extends StatelessWidget {
   const AddWalletScreen({Key? key}) : super(key: key);
@@ -24,26 +27,35 @@ class AddWalletScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 48),
+            const SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(8.0),
               child: (masterKey == null)
-                  ? Text(
-                      'Create\nMaster Key'.toUpperCase(),
-                      textAlign: TextAlign.left,
-                      style: c.fonts.headline5!.copyWith(
-                        color: c.colours.onBackground,
-                      ),
+                  ? Header(
+                      cornerTitle: 'Create Master Key'.toUpperCase(),
+                      children: [
+                        Back(
+                          onPressed: () {
+                            Navigator.pop(c);
+                          },
+                        ),
+                      ],
                     )
-                  : Text(
-                      'Add\nAccount'.toUpperCase(),
-                      textAlign: TextAlign.left,
-                      style: c.fonts.headline5!.copyWith(
-                        color: c.colours.onBackground,
-                      ),
+                  : Header(
+                      cornerTitle: 'Add Account'.toUpperCase(),
+                      children: [
+                        Back(
+                          onPressed: () {
+                            Navigator.pop(c);
+                          },
+                        ),
+                      ],
                     ),
             ),
             if (masterKey == null) ...[
+              const SizedBox(
+                height: 40,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(

@@ -3,6 +3,7 @@ import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Broadcast/Hex.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
+import 'package:sats/ui/component/common/header.dart';
 
 class _Broadcast extends StatelessWidget {
   const _Broadcast({Key? key}) : super(key: key);
@@ -15,17 +16,15 @@ class _Broadcast extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 32),
-            Row(
+            Header(
+              cornerTitle: 'Broadcast Transaction',
               children: [
-                const SizedBox(width: 16),
                 Back(
                   onPressed: () {
                     Navigator.of(c).pop();
                     c.read<BroadcastCubit>().reset();
                   },
                 ),
-                const Spacer(),
-                const SizedBox(width: 8),
               ],
             ),
             const SizedBox(height: 32),
