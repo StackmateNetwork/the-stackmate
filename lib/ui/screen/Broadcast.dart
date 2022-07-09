@@ -10,28 +10,32 @@ class _Broadcast extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            const SizedBox(height: 32),
-            Header(
-              cornerTitle: 'Broadcast Transaction',
+    return BlocBuilder<BroadcastCubit, BroadcastState>(
+      builder: (context, broadcastState) {
+        return Scaffold(
+          body: SafeArea(
+            bottom: false,
+            child: Column(
               children: [
-                Back(
-                  onPressed: () {
-                    Navigator.of(c).pop();
-                    c.read<BroadcastCubit>().reset();
-                  },
+                const SizedBox(height: 32),
+                Header(
+                  cornerTitle: 'Broadcast Transaction',
+                  children: [
+                    Back(
+                      onPressed: () {
+                        Navigator.of(c).pop();
+                        c.read<BroadcastCubit>().reset();
+                      },
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 32),
+                const BroadcastHex()
               ],
             ),
-            const SizedBox(height: 32),
-            const BroadcastHex()
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

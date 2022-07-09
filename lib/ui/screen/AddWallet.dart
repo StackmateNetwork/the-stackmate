@@ -5,7 +5,6 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/AddWallet/SelectButton.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/HeaderText.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class AddWalletScreen extends StatelessWidget {

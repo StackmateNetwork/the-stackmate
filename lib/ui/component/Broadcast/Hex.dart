@@ -21,9 +21,9 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: context.colours.onPrimary),
-                  primary: context.colours.primary,
-                  onSurface: context.colours.background,
+                  side: BorderSide(color: c.colours.onPrimary),
+                  primary: c.colours.primary,
+                  onSurface: c.colours.background,
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().pasteHex();
@@ -133,7 +133,7 @@ class BroadcastHex extends StatelessWidget {
                 onPressed: () {
                   context.read<BroadcastCubit>().broadcastHexConfirmed();
                 },
-                child: const Text('Broadcast'),
+                child: Text('Broadcast'.toUpperCase()),
               ),
             ),
             const SizedBox(height: 16),

@@ -59,7 +59,12 @@ class BroadcastCubit extends Cubit<BroadcastState> {
   // }
   void reset() {
     emit(
-      state.copyWith(txId: emptyString),
+      state.copyWith(
+        txId: emptyString,
+        importedHexfileName: '',
+        importedPsbtfileName: '',
+        hex: '',
+      ),
     );
   }
 
