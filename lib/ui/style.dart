@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const richFogra = Color(0xFF13161f);
+const richFogra = Color(0xFF030303);
 const brightCrayola = Color(0xFFFFA827);
 const ghostWhite = Color(0xFFF7F7FF);
 const blueJeans = Color(0xFF00ABF5);
@@ -15,9 +15,9 @@ const torPurple = Color(0xFF7D4698);
 ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.aldrichTextTheme(),
       colorScheme: ColorScheme(
-        primary: brightCrayola,
+        primary: bitterLemon,
         secondary: blueJeans,
-        tertiary: bitterLemon,
+        tertiary: brightCrayola,
         tertiaryContainer: torPurple,
         surface: ghostWhite.withOpacity(0.009),
         background: richFogra,
