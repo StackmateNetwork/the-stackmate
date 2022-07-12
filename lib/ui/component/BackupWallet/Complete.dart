@@ -204,7 +204,7 @@ class ConfirmStepCell extends StatelessWidget {
           height: 8,
           width: c.width * 0.2,
           decoration: BoxDecoration(
-            color: isOn ? c.colours.secondary : c.colours.onPrimary,
+            color: isOn ? c.colours.primary : c.colours.onPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -213,7 +213,7 @@ class ConfirmStepCell extends StatelessWidget {
           child: Text(
             text,
             style: c.fonts.caption!.copyWith(
-              color: isSelected ? c.colours.secondary : c.colours.secondary,
+              color: isSelected ? c.colours.primary : c.colours.secondary,
             ),
           ),
         )

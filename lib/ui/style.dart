@@ -12,18 +12,28 @@ const maximumGreen = Color(0xFF548C2F);
 const frenchBistre = Color(0xFF726953);
 const cultured = Color(0xFFFCF5E8);
 const torPurple = Color(0xFF7D4698);
+const frenchViolet = Color.fromARGB(255, 109, 40, 174);
+const venetian = Color(0xFFBF211E);
+const cinnabar = Color(0xFFD64933);
+const flame = Color(0xFFE53D00);
+const lightSeaGreen = Color(0xFF00A9A5);
+const tealBlue = Color(0xFF4E8098);
+const paradisePink = Color(0xFFEF476F);
+
+const carolinaBlue = Color(0xFF009FFD);
+
 ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.aldrichTextTheme(),
       colorScheme: ColorScheme(
         primary: bitterLemon,
         secondary: blueJeans,
         tertiary: brightCrayola,
-        tertiaryContainer: torPurple,
+        tertiaryContainer: frenchViolet,
         surface: ghostWhite.withOpacity(0.009),
         background: richFogra,
-        error: goldenBridge,
+        error: venetian,
         onPrimary: cultured,
-        onSecondary: cultured,
+        onSecondary: lightSeaGreen,
         onSurface: cultured,
         onBackground: cultured,
         onError: cultured,

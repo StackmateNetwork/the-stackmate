@@ -155,7 +155,7 @@ class WalletCard extends StatelessWidget {
                       icon: Icon(
                         Icons.call_received,
                         size: 24,
-                        color: context.colours.primary,
+                        color: context.colours.secondary,
                       ),
                     ),
                   ],
@@ -212,7 +212,7 @@ class WalletCard extends StatelessWidget {
                               ? Icons.build
                               : Icons.send,
                           size: 21,
-                          color: context.colours.primary,
+                          color: context.colours.tertiary,
                         ),
                       ),
                     ],

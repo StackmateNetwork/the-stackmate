@@ -17,52 +17,50 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext c) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Header(
-                cornerTitle: 'Settings'.toUpperCase(),
-                children: [
-                  const SizedBox(width: 16),
-                  Back(
-                    onPressed: () {
-                      Navigator.of(c).pop();
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 28,
-              ),
-              const SelectNode(),
-              const SizedBox(height: 8),
-              const SelectNetwork(),
-              const SizedBox(height: 8),
-              const SetBitcoinUnit(),
-              const SizedBox(height: 8),
-              const SetIncognito(),
-              const SizedBox(height: 8),
-              const TorSettings(),
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: c.colours.primary,
-                    onPrimary: c.colours.background,
-                  ),
+        bottom: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 24),
+            Header(
+              cornerTitle: 'Settings'.toUpperCase(),
+              children: [
+                Back(
                   onPressed: () {
-                    c.read<MasterKeyCubit>().init();
-                    c.read<WalletsCubit>().refresh();
                     Navigator.of(c).pop();
                   },
-                  child: const Text('SAVE'),
                 ),
+              ],
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            const SelectNode(),
+            const SizedBox(height: 8),
+            const SelectNetwork(),
+            const SizedBox(height: 8),
+            const SetBitcoinUnit(),
+            const SizedBox(height: 8),
+            const SetIncognito(),
+            const SizedBox(height: 8),
+            const TorSettings(),
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 52,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: c.colours.primary,
+                  onPrimary: c.colours.background,
+                ),
+                onPressed: () {
+                  c.read<MasterKeyCubit>().init();
+                  c.read<WalletsCubit>().refresh();
+                  Navigator.of(c).pop();
+                },
+                child: const Text('SAVE'),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
