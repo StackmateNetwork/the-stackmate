@@ -137,18 +137,19 @@ class AddWalletScreen extends StatelessWidget {
               //   },
               // ),
               const SizedBox(height: 16),
-              if (!hasTaproot || !hasSegwit) ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'SIGNER'.toUpperCase(),
-                    textAlign: TextAlign.left,
-                    style: c.fonts.caption!.copyWith(
-                      color: c.colours.tertiary,
-                    ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'SIGNER'.toUpperCase(),
+                  textAlign: TextAlign.left,
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.tertiary,
                   ),
                 ),
-                const SizedBox(height: 8),
+              ),
+              const SizedBox(height: 8),
+              if (!hasTaproot || !hasSegwit)
                 SelectButton(
                   text: 'DERIVE',
                   description:
@@ -158,8 +159,15 @@ class AddWalletScreen extends StatelessWidget {
                     c.push('/derive-account');
                   },
                 ),
-                const SizedBox(height: 16),
-              ],
+              const SizedBox(height: 16),
+              SelectButton(
+                text: 'RECOVER',
+                description: 'Recover a wallet from an existing seed.',
+                colour: c.colours.surface,
+                onPressed: () {
+                  c.push('/import-seed');
+                },
+              ),
             ],
             const SizedBox(height: 48),
           ],

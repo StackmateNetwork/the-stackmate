@@ -27,7 +27,8 @@ class SeedImportState with _$SeedImportState {
   }) = _SeedImportState;
   const SeedImportState._();
 
-  bool showSeedCompleteButton() => seed.split(' ').length == 12;
+  bool showSeedCompleteButton() =>
+      seed.split(' ').length >= 12 && seed.split(' ').length <= 24;
 }
 
 class SeedImportCubit extends Cubit<SeedImportState> {
@@ -91,7 +92,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     try {
       final seed = state.seed;
 
-      if (seed.split(' ').length != 12) {
+      if (seed.split(' ').length < 12 || seed.split(' ').length > 24) {
         emit(state.copyWith(seedError: invalidSeedError));
         return;
       }

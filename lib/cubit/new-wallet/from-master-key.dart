@@ -63,7 +63,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
 
   static const invalidLabelError = 'Invalid Label';
   static const internalError = 'Internal Error';
-  static const signerWalletType = 'SIGNER';
+  static const signerWalletType = 'DERIVED';
   static const trScript = 'tr';
   static const taprootPurpose = '86';
   static const segwitScript = 'wpkh';

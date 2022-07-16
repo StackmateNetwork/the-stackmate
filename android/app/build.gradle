@@ -55,7 +55,7 @@ android {
         // minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         multiDexEnabled true
-        versionCode 11
+        versionCode 12
         versionName flutterVersionName
         ndk {
             abiFilters 'arm64-v8a', 'x86_64', 'x86', 'armeabi-v7a'
