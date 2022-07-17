@@ -51,17 +51,53 @@ class TextAddress extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-        Container(
-          width: c.width / 4,
-          child: Text(
-            'INDEX: ' + index.toString(),
-            style: c.fonts.caption!.copyWith(
-              color: c.colours.onPrimary,
-              fontSize: 18,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SizedBox(
+              width: c.width / 3,
+              child: TextButton(
+                onPressed: () {
+                  c.read<ReceiveCubit>().getLastAddress();
+                },
+                child: Text(
+                  '<'.notLocalised(),
+                ),
+              ),
             ),
-            textAlign: TextAlign.center,
-          ),
+            Container(
+              width: c.width / 4,
+              child: Text(
+                'INDEX: ' + index.toString(),
+                style: c.fonts.caption!.copyWith(
+                  color: c.colours.onPrimary,
+                  fontSize: 18,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              width: c.width / 3,
+              child: TextButton(
+                onPressed: () {
+                  c.read<ReceiveCubit>().getNewAddress();
+                },
+                child: Text(
+                  '>'.notLocalised(),
+                ),
+              ),
+            ),
+          ],
         ),
+        const SizedBox(height: 12),
+        Text(
+          'Always use a new address for each transaction.\nAdditionally, ensure not to create large gaps (10+) between used addresses.',
+          style: c.fonts.bodySmall!.copyWith(
+            color: c.colours.error,
+            fontSize: 12,
+          ),
+          textAlign: TextAlign.center,
+        )
       ],
     );
   }

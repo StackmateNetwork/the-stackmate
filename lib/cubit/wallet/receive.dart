@@ -44,11 +44,49 @@ class ReceiveCubit extends Cubit<ReceiveState> {
 
   static const emailShareSubject = 'Bitcoin Address';
 
-  void _init() {
-    getAddress();
+  Future<void> _init() async {
+    emit(
+      state.copyWith(
+        loadingAddress: true,
+        errLoadingAddress: '',
+      ),
+    );
+
+    final wallet = _walletsCubit.state.selectedWallet!;
+    final nextIndex = wallet.lastAddressIndex;
+
+    final latestAddress = _core.getAddress(
+      descriptor: wallet.descriptor,
+      index: nextIndex.toString(),
+    );
+    if (latestAddress.hasError) {
+      throw SMError.fromJson(latestAddress.error!);
+    }
+
+    // emit(
+    //   state.copyWith(
+    //     loadingAddress: true,
+    //     address: latestAddress.result!,
+    //   ),
+    // );
+
+    final updated = wallet.copyWith(
+      lastAddressIndex: nextIndex,
+    );
+    _walletsCubit.walletSelected(updated);
+
+    await _walletsCubit.updateAddressIndexToSelectedWallet(nextIndex);
+
+    emit(
+      state.copyWith(
+        loadingAddress: false,
+        address: latestAddress.result!,
+        index: nextIndex,
+      ),
+    );
   }
 
-  void getAddress() async {
+  void getNewAddress() async {
     try {
       emit(
         state.copyWith(
@@ -88,7 +126,50 @@ class ReceiveCubit extends Cubit<ReceiveState> {
           index: nextIndex,
         ),
       );
-      return;
+    } catch (e, s) {
+      emit(
+        state.copyWith(
+          loadingAddress: false,
+          errLoadingAddress: e.toString(),
+        ),
+      );
+      _logger.logException(e, 'ReceiveCubit.getAddress', s);
+    }
+  }
+
+  void getLastAddress() async {
+    try {
+      emit(
+        state.copyWith(
+          loadingAddress: true,
+          errLoadingAddress: '',
+        ),
+      );
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final nextIndex = wallet.lastAddressIndex - 1;
+
+      final latestAddress = _core.getAddress(
+        descriptor: wallet.descriptor,
+        index: nextIndex.toString(),
+      );
+      if (latestAddress.hasError) {
+        throw SMError.fromJson(latestAddress.error!);
+      }
+
+      final updated = wallet.copyWith(
+        lastAddressIndex: nextIndex,
+      );
+      _walletsCubit.walletSelected(updated);
+
+      await _walletsCubit.updateAddressIndexToSelectedWallet(nextIndex);
+
+      emit(
+        state.copyWith(
+          loadingAddress: false,
+          address: latestAddress.result!,
+          index: nextIndex,
+        ),
+      );
     } catch (e, s) {
       emit(
         state.copyWith(

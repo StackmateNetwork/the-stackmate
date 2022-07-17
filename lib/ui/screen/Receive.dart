@@ -17,13 +17,11 @@ import 'package:sats/ui/component/common/header.dart';
 
 class _Receive extends StatelessWidget {
   const _Receive({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext c) {
     final state = c.select((ReceiveCubit h) => h.state);
     final walletLabel =
         c.select((WalletsCubit c) => c.state.selectedWallet!.label);
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

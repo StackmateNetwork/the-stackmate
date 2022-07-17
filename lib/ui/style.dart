@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const richFogra = Color(0xFF030303);
+const vantaBlack = Color(0xFF030303);
 const brightCrayola = Color(0xFFFFA827);
 const ghostWhite = Color(0xFFF7F7FF);
 const blueJeans = Color(0xFF00ABF5);
@@ -30,7 +30,7 @@ ThemeData mainTheme() => ThemeData(
         tertiary: brightCrayola,
         tertiaryContainer: frenchViolet,
         surface: ghostWhite.withOpacity(0.009),
-        background: richFogra,
+        background: vantaBlack,
         error: venetian,
         onPrimary: cultured,
         onSecondary: lightSeaGreen,
