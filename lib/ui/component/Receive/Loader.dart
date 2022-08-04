@@ -14,6 +14,6 @@ class Loader extends StatelessWidget {
 
     if (!loading) return Container();
 
-    return const Loading(text: 'Syncing Last Unused Address');
+    return const Loading(text: 'Finding Last Unused Address');
   }
 }

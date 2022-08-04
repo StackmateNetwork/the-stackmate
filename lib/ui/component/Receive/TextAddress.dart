@@ -91,7 +91,7 @@ class TextAddress extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          'Always use a new address for each transaction.\nAdditionally, ensure not to create large gaps (10+) between used addresses.',
+          'When manually indexing addresses\n ensure not to create large gaps (10+)\nbetween used addresses.',
           style: c.fonts.bodySmall!.copyWith(
             color: c.colours.error,
             fontSize: 12,
