@@ -3,6 +3,7 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/tor.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
@@ -26,9 +27,11 @@ class _Home extends StatelessWidget {
             child: RefreshIndicator(
               displacement: 10.0,
               onRefresh: () async {
-                c.read<WalletsCubit>().refresh();
-                // for (final element in wallets.state.wallets) {
-                //   c.read<WalletsCubit>().walletSelected(element);
+                // c.read<WalletsCubit>().refresh();
+                // for (final wallet in wallets) {
+                //   c.read<WalletsCubit>().walletSelected(wallet);
+                //   final selected = c.select((InfoCubit ic) => ic);
+                //   selected.sqliteSyncHistory();
                 // }
                 await c.read<TorCubit>().testConnection();
                 await c.read<FeesCubit>().update();

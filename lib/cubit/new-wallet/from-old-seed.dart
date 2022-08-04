@@ -267,7 +267,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       requiredPolicyElements: 1,
       policyElements: ['primary:$fullXPub'],
       blockchain: _blockchainCubit.state.blockchain.name,
-      lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
+      lastAddressIndex: (recievedCount == 0) ? 0 : recievedCount,
       balance: balance.result!,
       transactions: history.result!,
     );

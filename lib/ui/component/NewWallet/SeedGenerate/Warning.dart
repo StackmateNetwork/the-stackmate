@@ -19,14 +19,13 @@ class SeedGenerateWarning extends StatelessWidget {
         const SizedBox(height: 32),
         Text(
           '''
-DO NOT TYPE THE FOLLOWING ON A KEYBOARD OR CREATE DIGITAL COPIES OF IT.
+DO NOT TYPE YOUR SEED WORDS ON A KEYBOARD OR CREATE DIGITAL COPIES OF IT.
 
-Note down your seed phrase (and optional passphrase) on a piece of paper/card/steel
+Note it down (with your optional passphrase) on a piece of paper/card/steel
 and store in a safe place.
 
 In case your device resets or fails, you will need it to recover your wallet on a 
 new device.
-
       ''',
           style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
         ),
