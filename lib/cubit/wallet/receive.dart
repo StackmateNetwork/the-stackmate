@@ -7,13 +7,14 @@ import 'package:path/path.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sqflite/sqflite.dart' hide Transaction;
-import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
+
 part 'receive.freezed.dart';
 
 @freezed
