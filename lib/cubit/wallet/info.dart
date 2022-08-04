@@ -83,10 +83,11 @@ class InfoCubit extends Cubit<InfoState> {
       final node = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
       final wallet = _walletsCubit.state.selectedWallet!;
-      final db = await openDatabase('stackmate.db');
+      final dbName = wallet.label + '_sm8.db';
+      final db = await openDatabase(dbName);
 
       final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, 'stackmate.db');
+      final dbPath = join(databasesPath, dbName);
 
       emit(
         state.copyWith(

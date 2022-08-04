@@ -95,6 +95,11 @@ abstract class IStackMateBitcoin {
     required String index,
   });
 
+  R<Address> lastUnusedAddress({
+    required String descriptor,
+    required String dbPath,
+  });
+
   R<PSBT> sqliteBuildTransaction({
     required String descriptor,
     required String dbPath,

@@ -132,9 +132,11 @@ class SendCubit extends Cubit<SendState> {
   // }
   void getBalance() async {
     try {
-      final db = await openDatabase('stackmate.db');
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final dbName = wallet.label + '_sm8.db';
+      final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, 'stackmate.db');
+      final dbPath = join(databasesPath, dbName);
 
       emit(
         state.copyWith(
@@ -162,6 +164,7 @@ class SendCubit extends Cubit<SendState> {
           loadingStart: false,
         ),
       );
+      db.close();
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -306,9 +309,11 @@ class SendCubit extends Cubit<SendState> {
     //get fees
 
     try {
-      final db = await openDatabase('stackmate.db');
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final dbName = wallet.label + '_sm8.db';
+      final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, 'stackmate.db');
+      final dbPath = join(databasesPath, dbName);
 
       emit(state.copyWith(errAmount: emptyString));
 
@@ -443,9 +448,11 @@ class SendCubit extends Cubit<SendState> {
 
   void feeConfirmedClicked() async {
     try {
-      final db = await openDatabase('stackmate.db');
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final dbName = wallet.label + '_sm8.db';
+      final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, 'stackmate.db');
+      final dbPath = join(databasesPath, dbName);
 
       emit(state.copyWith(errFees: emptyString));
 

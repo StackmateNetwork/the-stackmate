@@ -87,13 +87,18 @@ class LibStackmateFFI {
     required String descriptor,
     required String dbPath,
   }) {
-    final func =
-        binary.lookupFunction<WalletSQLiteT, WalletSQLiteT>('sqlite_balance');
-    final response = func(
-      descriptor.toNativeUtf8(),
-      dbPath.toNativeUtf8(),
-    );
-    return response.toDartString();
+    try {
+      final func =
+          binary.lookupFunction<WalletSQLiteT, WalletSQLiteT>('sqlite_balance');
+      final response = func(
+        descriptor.toNativeUtf8(),
+        dbPath.toNativeUtf8(),
+      );
+      return response.toDartString();
+    } catch (e) {
+      print(e);
+      return "Error";
+    }
   }
 
   String syncBalance({
@@ -159,6 +164,19 @@ class LibStackmateFFI {
     final resp = func(
       descriptor.toNativeUtf8(),
       index.toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
+
+  String getLastUnusedAddress({
+    required String descriptor,
+    required String dbPath,
+  }) {
+    final func =
+        binary.lookupFunction<AddressT, AddressT>('sqlite_last_unused_address');
+    final resp = func(
+      descriptor.toNativeUtf8(),
+      dbPath.toNativeUtf8(),
     ).toDartString();
     return resp;
   }

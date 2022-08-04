@@ -101,8 +101,8 @@ class LibBitcoin implements IStackMateBitcoin {
     required String socks5,
   }) {
     final resp = _libstackmate.sqliteSync(
-      descriptor: descriptor,
       dbPath: dbPath,
+      descriptor: descriptor,
       nodeAddress: nodeAddress,
       socks5: socks5,
     );
@@ -160,6 +160,21 @@ class LibBitcoin implements IStackMateBitcoin {
     }
     final address = jsonDecode(resp)['address'];
     return R(result: address as String);
+  }
+
+  @override
+  R<Address> lastUnusedAddress({
+    required String descriptor,
+    required String dbPath,
+  }) {
+    final resp = _libstackmate.getLastUnusedAddress(
+      descriptor: descriptor,
+      dbPath: dbPath,
+    );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    return R(result: Address.fromJson(resp));
   }
 
   @override
