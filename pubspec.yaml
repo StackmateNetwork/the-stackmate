@@ -16,6 +16,7 @@ dependencies:
   dio: ^4.0.5
   drag_and_drop_lists: ^0.3.2
   equatable: ^2.0.3
+  file_cryptor: ^0.0.3
   file_picker: ^4.6.1
   flutter:
     sdk: flutter
@@ -36,6 +37,7 @@ dependencies:
     path: packages/libstackmate
   oktoast: ^3.1.5
   open_mail_app: ^0.4.5
+  path: ^1.8.1
   path_provider: ^2.0.1
   pattern_formatter: ^2.0.0
   permission_handler: ^10.0.0
@@ -44,6 +46,7 @@ dependencies:
   retry: ^3.1.0
   share: ^2.0.1
   stream_transform: ^2.0.0
+  sqflite: ^2.0.3
   url_launcher: ^6.0.3
   utopic_tor_onion_proxy: ^0.4.0
   wasm: ^0.1.0+1

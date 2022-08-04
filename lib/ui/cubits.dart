@@ -14,6 +14,7 @@ import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
 // import 'package:sats/pkg/vibrate.dart';
+import 'package:sqflite/sqflite.dart';
 
 class Cubits extends StatefulWidget {
   const Cubits({Key? key, required this.child}) : super(key: key);

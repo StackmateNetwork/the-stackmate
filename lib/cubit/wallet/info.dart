@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/outputs.dart';
+import 'package:path/path.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
@@ -16,6 +18,7 @@ import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/pkg/storage.dart';
+import 'package:sqflite/sqflite.dart' hide Transaction;
 
 part 'info.freezed.dart';
 
@@ -72,7 +75,104 @@ class InfoCubit extends Cubit<InfoState> {
   static const walletHasFunds = 'Wallet has funds';
 
   void _init() async {
-    getHistory();
+    sqliteSyncHistory();
+  }
+
+  void sqliteSyncHistory() async {
+    try {
+      final node = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final db = await openDatabase('stackmate.db');
+
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, 'stackmate.db');
+
+      emit(
+        state.copyWith(
+          loadingBalance: true,
+          errLoadingTransactions: '',
+          balance: wallet.balance,
+          transactions: wallet.transactions,
+        ),
+      );
+      final currentHeight = await compute(computeCurrentHeight, {
+        'network': _blockchainCubit.state.blockchain.name,
+        'nodeAddress': node,
+        'socks5': socks5,
+      });
+
+      emit(
+        state.copyWith(
+          loadingBalance: true,
+          loadingTransactions: true,
+          balance: wallet.balance,
+          transactions: wallet.transactions,
+          currentHeight: currentHeight,
+        ),
+      );
+
+      // THIS PART NEEDS TO BE REVIEWS
+      // compute is used and errors are not properly handled
+
+      // ignore: unused_local_variable
+      final syncStat = await compute(sqliteSync, {
+        'dbPath': dbPath,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'nodeAddress': node,
+        'socks5': socks5,
+      });
+
+      final balance = await compute(sqliteBalance, {
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'dbPath': dbPath,
+      });
+
+      _vibrate.vibe();
+
+      emit(
+        state.copyWith(
+          loadingTransactions: true,
+          loadingBalance: false,
+          errLoadingTransactions: '',
+          balance: balance,
+          currentHeight: currentHeight,
+        ),
+      );
+      _walletsCubit.addBalanceToSelectedWallet(balance);
+
+      final transactions = await compute(sqliteHistory, {
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'dbPath': dbPath,
+      });
+
+      _vibrate.vibe();
+
+      emit(
+        state.copyWith(
+          loadingTransactions: false,
+          loadingBalance: false,
+          transactions: transactions,
+          errLoadingTransactions: '',
+          balance: balance,
+          currentHeight: currentHeight,
+        ),
+      );
+
+      _walletsCubit.addTransactionsToSelectedWallet(transactions);
+      db.close();
+
+      return;
+    } catch (e, s) {
+      emit(
+        state.copyWith(
+          loadingBalance: false,
+          loadingTransactions: false,
+          errLoadingTransactions: e.toString(),
+        ),
+      );
+      _logger.logException(e, 'HistoryCubit.getHistory', s);
+    }
   }
 
   void getHistory() async {
@@ -216,9 +316,48 @@ List<Transaction> computeHistory(dynamic obj) {
   return resp.result!;
 }
 
+List<Transaction> sqliteHistory(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().sqliteHistory(
+    descriptor: data['descriptor']!,
+    dbPath: data['dbPath']!,
+  );
+
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
+}
+
 int computeBalance(dynamic obj) {
   final data = obj as Map<String, String?>;
   final resp = LibBitcoin().syncBalance(
+    descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
+}
+
+int sqliteBalance(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().sqliteBalance(
+    descriptor: data['descriptor']!,
+    dbPath: data['dbPath']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
+}
+
+String sqliteSync(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().sqliteSync(
+    dbPath: obj['dbPath']!,
     descriptor: data['descriptor']!,
     nodeAddress: data['nodeAddress']!,
     socks5: obj['socks5']!,

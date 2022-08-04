@@ -94,6 +94,41 @@ class LibBitcoin implements IStackMateBitcoin {
   }
 
   @override
+  R<String> sqliteSync({
+    required String dbPath,
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+  }) {
+    final resp = _libstackmate.sqliteSync(
+      descriptor: descriptor,
+      dbPath: dbPath,
+      nodeAddress: nodeAddress,
+      socks5: socks5,
+    );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    return R(result: resp);
+  }
+
+  @override
+  R<int> sqliteBalance({
+    required String descriptor,
+    required String dbPath,
+  }) {
+    final resp = _libstackmate.sqliteBalance(
+      descriptor: descriptor,
+      dbPath: dbPath,
+    );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    final bal = jsonDecode(resp)['balance'];
+    return R(result: bal as int);
+  }
+
+  @override
   R<int> syncBalance({
     required String descriptor,
     required String nodeAddress,
@@ -125,6 +160,34 @@ class LibBitcoin implements IStackMateBitcoin {
     }
     final address = jsonDecode(resp)['address'];
     return R(result: address as String);
+  }
+
+  @override
+  R<List<Transaction>> sqliteHistory({
+    required String descriptor,
+    required String dbPath,
+  }) {
+    final resp = _libstackmate.sqliteHistory(
+      descriptor: descriptor,
+      dbPath: dbPath,
+    );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    final json = jsonDecode(resp);
+    final List<Transaction> transactions = [];
+    for (final t in json['history'] as List) {
+      var tx = Transaction.fromJson(t as Map<String, dynamic>);
+      if (!tx.isReceive())
+        tx = tx.copyWith(sent: tx.sent - tx.received - tx.fee);
+      transactions.add(tx);
+    }
+    transactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+    final unconfirmed =
+        transactions.where((item) => item.timestamp == 0).toList();
+    final confirmed = transactions.where((item) => item.timestamp > 0).toList();
+    final sorted = unconfirmed + confirmed;
+    return R(result: sorted);
   }
 
   @override
@@ -178,6 +241,29 @@ class LibBitcoin implements IStackMateBitcoin {
       utxos.add(utxo);
     }
     return R(result: utxos);
+  }
+
+  @override
+  R<PSBT> sqliteBuildTransaction({
+    required String descriptor,
+    required String dbPath,
+    required String txOutputs,
+    required String feeAbsolute,
+    required String policyPath,
+    required String sweep,
+  }) {
+    final resp = _libstackmate.sqliteBuildTransaction(
+      descriptor: descriptor,
+      dbPath: dbPath,
+      txOutputs: txOutputs,
+      feeAbsolute: feeAbsolute,
+      policyPath: policyPath,
+      sweep: sweep,
+    );
+    if (resp.contains('Error')) {
+      return R(error: resp);
+    }
+    return R(result: PSBT.fromJson(resp));
   }
 
   @override

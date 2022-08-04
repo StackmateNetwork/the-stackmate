@@ -124,7 +124,9 @@ class _Home extends StatelessWidget {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 24, vertical: 24),
+                                          horizontal: 24,
+                                          vertical: 24,
+                                        ),
                                         child: Text(
                                           'Click on + icon to Create wallet',
                                           style: c.fonts.caption!.copyWith(

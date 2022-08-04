@@ -67,6 +67,35 @@ class LibStackmateFFI {
     return resp;
   }
 
+  String sqliteSync({
+    required String dbPath,
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+  }) {
+    final func = binary.lookupFunction<SyncSQLiteT, SyncSQLiteT>('sqlite_sync');
+    final response = func(
+      dbPath.toNativeUtf8(),
+      descriptor.toNativeUtf8(),
+      nodeAddress.toNativeUtf8(),
+      socks5.toNativeUtf8(),
+    );
+    return response.toDartString();
+  }
+
+  String sqliteBalance({
+    required String descriptor,
+    required String dbPath,
+  }) {
+    final func =
+        binary.lookupFunction<WalletSQLiteT, WalletSQLiteT>('sqlite_balance');
+    final response = func(
+      descriptor.toNativeUtf8(),
+      dbPath.toNativeUtf8(),
+    );
+    return response.toDartString();
+  }
+
   String syncBalance({
     required String descriptor,
     required String nodeAddress,
@@ -77,6 +106,19 @@ class LibStackmateFFI {
       descriptor.toNativeUtf8(),
       nodeAddress.toNativeUtf8(),
       socks5.toNativeUtf8(),
+    );
+    return response.toDartString();
+  }
+
+  String sqliteHistory({
+    required String descriptor,
+    required String dbPath,
+  }) {
+    final func =
+        binary.lookupFunction<WalletSQLiteT, WalletSQLiteT>('sqlite_history');
+    final response = func(
+      descriptor.toNativeUtf8(),
+      dbPath.toNativeUtf8(),
     );
     return response.toDartString();
   }
@@ -117,6 +159,27 @@ class LibStackmateFFI {
     final resp = func(
       descriptor.toNativeUtf8(),
       index.toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
+
+  String sqliteBuildTransaction({
+    required String descriptor,
+    required String dbPath,
+    required String txOutputs,
+    required String feeAbsolute,
+    required String sweep,
+    required String policyPath,
+  }) {
+    final func =
+        binary.lookupFunction<BuildSQLiteT, BuildSQLiteT>('sqlite_build_tx');
+    final resp = func(
+      descriptor.toNativeUtf8(),
+      dbPath.toNativeUtf8(),
+      txOutputs.toNativeUtf8(),
+      feeAbsolute.toNativeUtf8(),
+      policyPath.toNativeUtf8(),
+      sweep.toNativeUtf8(),
     ).toDartString();
     return resp;
   }

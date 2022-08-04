@@ -46,7 +46,7 @@ class _Wallet extends StatelessWidget {
           body: SafeArea(
             child: RefreshIndicator(
               onRefresh: () async {
-                c.read<InfoCubit>().getHistory();
+                c.read<InfoCubit>().sqliteSyncHistory();
                 return;
               },
               child: SingleChildScrollView(

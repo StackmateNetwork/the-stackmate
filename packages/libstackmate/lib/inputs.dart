@@ -32,6 +32,27 @@ typedef SyncT = Pointer<Utf8> Function(
   Pointer<Utf8> socks5,
 );
 
+typedef SyncSQLiteT = Pointer<Utf8> Function(
+  Pointer<Utf8> db_path,
+  Pointer<Utf8> descriptor,
+  Pointer<Utf8> node_address,
+  Pointer<Utf8> socks5,
+);
+
+typedef WalletSQLiteT = Pointer<Utf8> Function(
+  Pointer<Utf8> descriptor,
+  Pointer<Utf8> db_path,
+);
+
+typedef BuildSQLiteT = Pointer<Utf8> Function(
+  Pointer<Utf8> descriptor,
+  Pointer<Utf8> db_path,
+  Pointer<Utf8> tx_outputs,
+  Pointer<Utf8> fee_absolute,
+  Pointer<Utf8> policyPath,
+  Pointer<Utf8> sweep,
+);
+
 typedef AddressT = Pointer<Utf8> Function(
   Pointer<Utf8> descriptor,
   Pointer<Utf8> index,

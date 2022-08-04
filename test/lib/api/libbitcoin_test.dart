@@ -117,6 +117,8 @@ void main() {
     assert(!utxos.hasError);
   });
 
+  test('SQLITE: Wallet History & Balance Ops', () async {});
+
   test('Wallet Transaction Flow', () async {
     final fees = libstackmate.estimateNetworkFee(
       network: network,
