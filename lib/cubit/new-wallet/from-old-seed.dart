@@ -8,6 +8,7 @@ import 'package:path/path.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/node.dart';
@@ -80,6 +81,7 @@ class SeedImportWalletState with _$SeedImportWalletState {
 class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   SeedImportWalletCubit(
     this._core,
+    this._logger,
     this._storage,
     this._wallets,
     this._blockchainCubit,
@@ -102,6 +104,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       }
     });
   }
+  final Logger _logger;
 
   final IStackMateBitcoin _core;
 
@@ -191,143 +194,153 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         savingWallet: true,
       ),
     );
+    try {
+      final istate = _importCubit.state;
+      final wallet = istate.wallet;
+      if (wallet == null) return;
 
-    final istate = _importCubit.state;
-    final wallet = istate.wallet;
-    if (wallet == null) return;
+      final root = _importCubit.state.masterXpriv!;
 
-    final root = _importCubit.state.masterXpriv!;
+      final fullXPrv =
+          '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
+              .replaceFirst('/m', emptyString);
 
-    final fullXPrv =
-        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
-            .replaceFirst('/m', emptyString);
+      final fullXPub =
+          '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
+              .replaceFirst('/m', emptyString);
 
-    final fullXPub =
-        '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
-            .replaceFirst('/m', emptyString);
+      final policy = 'pk($fullXPrv/*)';
 
-    final policy = 'pk($fullXPrv/*)';
+      const readable = 'pk(___primary___)';
 
-    const readable = 'pk(___primary___)';
-
-    final descriptor = _core.compile(
-      policy: policy,
-      scriptType: wpkhScript,
-    );
-    if (descriptor.hasError) {
-      throw SMError.fromJson(descriptor.error!);
-    }
-
-    final nodeAddress = _nodeAddressCubit.state.getAddress();
-    final socks5 = _torCubit.state.getSocks5();
-    final dbName = state.walletLabel + '_sm8.db';
-    final db = await openDatabase(dbName);
-
-    final databasesPath = await getDatabasesPath();
-    final dbPath = join(databasesPath, dbName);
-
-    final syncStat = await compute(sqliteSync, {
-      'dbPath': dbPath,
-      'descriptor': descriptor.result!,
-      'nodeAddress': nodeAddress,
-      'socks5': socks5,
-    });
-    if (syncStat.hasError) {
-      throw SMError.fromJson(syncStat.error!);
-    }
-
-    var history = await compute(sqliteHistory, {
-      'descriptor': descriptor.result!,
-      'dbPath': dbPath,
-    });
-
-    // ignore: unused_local_variable
-    var recievedCount = 0;
-
-    if (history.hasError) {
-      history = const R(result: []);
-    } else
-      for (final item in history.result!) {
-        if (item.sent == 0) {
-          recievedCount++;
-        }
+      final descriptor = _core.compile(
+        policy: policy,
+        scriptType: wpkhScript,
+      );
+      if (descriptor.hasError) {
+        throw SMError.fromJson(descriptor.error!);
       }
 
-    var balance = await compute(sqliteBalance, {
-      'descriptor': descriptor.result!,
-      'dbPath': dbPath,
-    });
+      final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+      final dbName = state.walletLabel + '_sm8.db';
+      final db = await openDatabase(dbName);
 
-    if (balance.hasError) {
-      balance = const R(result: 0);
-    }
-    final lastUnused = _core.lastUnusedAddress(
-      descriptor: descriptor.result!,
-      dbPath: dbPath,
-    );
-    if (lastUnused.hasError) {
-      throw SMError.fromJson(lastUnused.error!);
-    }
-    final needsMasterKey = _masterKeyCubit.state.key == null;
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, dbName);
 
-    if (needsMasterKey) {
-      await _masterKeyCubit.save(
-        root,
-        wallet.fingerPrint,
+      final syncStat = await compute(sqliteSync, {
+        'dbPath': dbPath,
+        'descriptor': descriptor.result!,
+        'nodeAddress': nodeAddress,
+        'socks5': socks5,
+      });
+      if (syncStat.hasError) {
+        throw SMError.fromJson(syncStat.error!);
+      }
+
+      var history = await compute(sqliteHistory, {
+        'descriptor': descriptor.result!,
+        'dbPath': dbPath,
+      });
+
+      // ignore: unused_local_variable
+      var recievedCount = 0;
+
+      if (history.hasError) {
+        history = const R(result: []);
+      } else
+        for (final item in history.result!) {
+          if (item.sent == 0) {
+            recievedCount++;
+          }
+        }
+
+      var balance = await compute(sqliteBalance, {
+        'descriptor': descriptor.result!,
+        'dbPath': dbPath,
+      });
+
+      if (balance.hasError) {
+        balance = const R(result: 0);
+      }
+      final lastUnused = _core.lastUnusedAddress(
+        descriptor: descriptor.result!,
+        dbPath: dbPath,
       );
-      _masterKeyCubit.init();
+      if (lastUnused.hasError) {
+        throw SMError.fromJson(lastUnused.error!);
+      }
+      final needsMasterKey = _masterKeyCubit.state.key == null;
+
+      if (needsMasterKey) {
+        await _masterKeyCubit.save(
+          root,
+          wallet.fingerPrint,
+        );
+        _masterKeyCubit.init();
+      }
+      // Future.delayed(Duration(seconds: 3));
+      // public descriptor
+      // Check history and whether this wallet needs to update its address index
+
+      var newWallet = Wallet(
+        label: state.walletLabel,
+        walletType: needsMasterKey ? signerWalletType : recoveryWalletType,
+        descriptor: descriptor.result!,
+        policy: readable,
+        requiredPolicyElements: 1,
+        policyElements: ['primary:$fullXPub'],
+        blockchain: _blockchainCubit.state.blockchain.name,
+        lastAddressIndex: int.parse(lastUnused.result!.index),
+        balance: balance.result!,
+        transactions: history.result!,
+      );
+
+      final savedId = await _storage.saveItem<Wallet>(
+        StoreKeys.Wallet.name,
+        newWallet,
+      );
+
+      if (savedId.hasError) return;
+
+      final id = savedId.result!;
+
+      newWallet = newWallet.copyWith(id: id);
+
+      await _storage.saveItemAt<Wallet>(
+        StoreKeys.Wallet.name,
+        id,
+        newWallet,
+      );
+
+      if (state.labelFixed) {
+        emit(state.copyWith(newWalletSaved: true));
+        return;
+      }
+      _wallets.walletSelected(newWallet);
+      _wallets.addTransactionsToSelectedWallet(history.result!);
+      await _wallets.updateAddressIndexToSelectedWallet(
+        int.parse(lastUnused.result!.index),
+      );
+      db.close();
+
+      emit(
+        state.copyWith(
+          savingWallet: false,
+          newWalletSaved: true,
+        ),
+      );
+    } catch (e, s) {
+      _logger.logException(e, 'SeedImportCubit._saveWallet', s);
+
+      emit(
+        state.copyWith(
+          savingWalletError: emptyString,
+          newWalletSaved: true,
+        ),
+      );
     }
-    // Future.delayed(Duration(seconds: 3));
-    // public descriptor
-    // Check history and whether this wallet needs to update its address index
-
-    var newWallet = Wallet(
-      label: state.walletLabel,
-      walletType: needsMasterKey ? signerWalletType : recoveryWalletType,
-      descriptor: descriptor.result!,
-      policy: readable,
-      requiredPolicyElements: 1,
-      policyElements: ['primary:$fullXPub'],
-      blockchain: _blockchainCubit.state.blockchain.name,
-      lastAddressIndex: int.parse(lastUnused.result!.index),
-      balance: balance.result!,
-      transactions: history.result!,
-    );
-
-    final savedId = await _storage.saveItem<Wallet>(
-      StoreKeys.Wallet.name,
-      newWallet,
-    );
-
-    if (savedId.hasError) return;
-
-    final id = savedId.result!;
-
-    newWallet = newWallet.copyWith(id: id);
-
-    await _storage.saveItemAt<Wallet>(
-      StoreKeys.Wallet.name,
-      id,
-      newWallet,
-    );
-
-    if (state.labelFixed) {
-      emit(state.copyWith(newWalletSaved: true));
-      return;
-    }
-    _wallets.walletSelected(newWallet);
-    _wallets.addTransactionsToSelectedWallet(history.result!);
-    await _wallets.updateAddressIndexToSelectedWallet(
-      int.parse(lastUnused.result!.index),
-    );
-    db.close();
-
-    emit(
-      state.copyWith(
-        savingWallet: false,
-        newWalletSaved: true,
-      ),
-    );
   }
 
   @override
