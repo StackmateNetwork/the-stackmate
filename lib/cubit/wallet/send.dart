@@ -250,11 +250,13 @@ class SendCubit extends Cubit<SendState> {
 
   Future<void> _getStoragePermission() async {
     if (await Permission.storage.request().isGranted) {
-      final permissionGranted = true;
+      // ignore: unused_local_variable
+      const permissionGranted = true;
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
     } else if (await Permission.storage.request().isDenied) {
-      final permissionGranted = false;
+      // ignore: unused_local_variable
+      const permissionGranted = false;
     }
   }
 

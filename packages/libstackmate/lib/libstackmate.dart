@@ -96,8 +96,7 @@ class LibStackmateFFI {
       );
       return response.toDartString();
     } catch (e) {
-      print(e);
-      return "Error";
+      return 'Error';
     }
   }
 

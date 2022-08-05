@@ -3,8 +3,6 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/tor.dart';
-import 'package:sats/cubit/wallet/info.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
@@ -120,24 +118,25 @@ class _Home extends StatelessWidget {
                                   right: 12,
                                 ),
                                 child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 24,
-                                          vertical: 24,
-                                        ),
-                                        child: Text(
-                                          'Click on + icon to Create wallet',
-                                          style: c.fonts.caption!.copyWith(
-                                            color: c.colours.onBackground,
-                                          ),
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 24,
+                                      ),
+                                      child: Text(
+                                        'Click on + icon to Create wallet',
+                                        style: c.fonts.caption!.copyWith(
+                                          color: c.colours.onBackground,
                                         ),
                                       ),
-                                    ]),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
