@@ -173,7 +173,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
           'primary:$fullXPub',
         ],
         blockchain: _blockchainCubit.state.blockchain.name,
-        lastAddressIndex: -1,
+        lastAddressIndex: 0,
         balance: 0,
         transactions: [],
       );

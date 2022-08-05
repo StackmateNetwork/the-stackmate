@@ -190,7 +190,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: signerWalletType,
-        lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
+        lastAddressIndex: (recievedCount == 0) ? 0 : recievedCount,
         balance: balance.result!,
         transactions: history.result!,
       );
