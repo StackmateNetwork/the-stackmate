@@ -160,14 +160,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final dbName = state.label + '_sm8.db';
-      final db = await openDatabase(dbName);
 
-      final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, dbName);
-
-      final syncStat = await compute(sqliteSync, {
-        'dbPath': dbPath,
+      var history = await compute(computeHistory, {
         'descriptor': descriptor.result!,
         'nodeAddress': nodeAddress,
         'socks5': socks5,
@@ -217,7 +211,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: watcherWalletType,
-        lastAddressIndex: int.parse(lastUnused.result!.index),
+        lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
         balance: balance.result!,
         transactions: history.result!,
       );
