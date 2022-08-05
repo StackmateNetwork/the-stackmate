@@ -153,14 +153,14 @@ class SendCubit extends Cubit<SendState> {
       //   'nodeAddress': nodeAddress,
       //   'socks5': socks5,
       // });
-      final bal = await compute(sqliteBalance, {
+      final balance = await compute(sqliteBalance, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'dbPath': dbPath,
       });
 
       emit(
         state.copyWith(
-          balance: bal,
+          balance: balance,
           loadingStart: false,
         ),
       );

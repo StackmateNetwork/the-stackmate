@@ -187,50 +187,53 @@ class ReceiveCubit extends Cubit<ReceiveState> {
         loadingAddress: true,
       ),
     );
+    try {
+      final node = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final dbName = wallet.label + '_sm8.db';
+      final db = await openDatabase(dbName);
 
-    final node = _nodeAddressCubit.state.getAddress();
-    final socks5 = _torCubit.state.getSocks5();
-    final wallet = _walletsCubit.state.selectedWallet!;
-    final dbName = wallet.label + '_sm8.db';
-    final db = await openDatabase(dbName);
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, dbName);
 
-    final databasesPath = await getDatabasesPath();
-    final dbPath = join(databasesPath, dbName);
+      // THIS PART NEEDS TO BE REVIEWS
+      // compute is used and errors are not properly handled
 
-    // THIS PART NEEDS TO BE REVIEWS
-    // compute is used and errors are not properly handled
+      // ignore: unused_local_variable
+      final syncStat = await compute(sqliteSync, {
+        'dbPath': dbPath,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'nodeAddress': node,
+        'socks5': socks5,
+      });
 
-    // ignore: unused_local_variable
-    final syncStat = await compute(sqliteSync, {
-      'dbPath': dbPath,
-      'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
-      'nodeAddress': node,
-      'socks5': socks5,
-    });
+      final lastUnused = _core.lastUnusedAddress(
+        descriptor: wallet.descriptor,
+        dbPath: dbPath,
+      );
+      if (lastUnused.hasError) {
+        throw SMError.fromJson(lastUnused.error!);
+      }
+      final updated = wallet.copyWith(
+        lastAddressIndex: int.parse(lastUnused.result!.index),
+      );
+      _walletsCubit.walletSelected(updated);
+      await _walletsCubit.updateAddressIndexToSelectedWallet(
+        int.parse(lastUnused.result!.index),
+      );
 
-    final lastUnused = _core.lastUnusedAddress(
-      descriptor: wallet.descriptor,
-      dbPath: dbPath,
-    );
-    if (lastUnused.hasError) {
-      throw SMError.fromJson(lastUnused.error!);
+      emit(
+        state.copyWith(
+          loadingAddress: false,
+          address: lastUnused.result!.address,
+          index: int.parse(lastUnused.result!.index),
+        ),
+      );
+      db.close();
+    } catch (e, s) {
+      _logger.logException(e, 'WalletCubit.lastUnusedAddress', s);
     }
-    final updated = wallet.copyWith(
-      lastAddressIndex: int.parse(lastUnused.result!.index),
-    );
-    _walletsCubit.walletSelected(updated);
-    await _walletsCubit.updateAddressIndexToSelectedWallet(
-      int.parse(lastUnused.result!.index),
-    );
-
-    emit(
-      state.copyWith(
-        loadingAddress: false,
-        address: lastUnused.result!.address,
-        index: int.parse(lastUnused.result!.index),
-      ),
-    );
-    db.close();
   }
 
   void copyAddress() {
