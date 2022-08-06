@@ -204,7 +204,7 @@ class SeedGenerate extends StatelessWidget {
               children: [
                 if (words != null)
                   for (var i = 0; i < words.length; i++)
-                    if (i.isEven && i < 12)
+                    if (i.isEven && i < 24)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Row(

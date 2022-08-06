@@ -65,8 +65,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   void passPhrasedChanged(String text) =>
       emit(state.copyWith(passPhrase: text));
 
-  void seedLengthChanged(String len) =>
-      emit(state.copyWith(seedLength: int.parse(len)));
+  void seedLengthChanged(int len) => emit(state.copyWith(seedLength: len));
 
   void generateSeed() async {
     emit(
@@ -250,7 +249,9 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       ),
     );
 
-    if (completedAnswers.length == 3) {
+    if (state.seedLength == 12 && completedAnswers.length == 6) {
+      _quizCompleted();
+    } else if (state.seedLength == 24 && completedAnswers.length == 12) {
       _quizCompleted();
     } else {
       _updateQuiz();
