@@ -27,8 +27,8 @@ class _Wallet extends StatelessWidget {
   Widget build(BuildContext c) {
     final zeroBal = c.select((InfoCubit wc) => wc.state.zeroBalance());
     final showInfo = c.select((InfoCubit wc) => wc.state.showInfo);
-    final isLoading = c.select((InfoCubit wc) => wc.state.loadingTransactions);
-
+    var isLoading = true;
+    isLoading = c.select((InfoCubit wc) => wc.state.loadingTransactions);
     final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet);
 
     if (wallet == null) return Container();
@@ -78,7 +78,6 @@ class _Wallet extends StatelessWidget {
                         Expanded(
                           child: Column(
                             children: const [
-                              //WalletName(),
                               Balance(),
                             ],
                           ),
@@ -95,8 +94,8 @@ class _Wallet extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 AnimatedOpacity(
-                                  duration: const Duration(milliseconds: 300),
-                                  opacity: (!isLoading) ? 1 : 0.2,
+                                  duration: const Duration(milliseconds: 100),
+                                  opacity: isLoading ? 0.2 : 1.0,
                                   child: IconButton(
                                     iconSize: 28,
                                     color: c.colours.error,
@@ -113,18 +112,6 @@ class _Wallet extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                // Opacity(
-                                //   opacity: 0.4,
-                                //   child: IconButton(
-                                //     iconSize: 28,
-                                //     color: c.colours.error,
-                                //     onPressed: () {
-                                //       _deleteWalletClicked(c, zeroBal, wallet);
-                                //     },
-                                //     icon:
-                                //         const Icon(Icons.delete_sweep_outlined),
-                                //   ),
-                                // ),
                                 IconButton(
                                   color: c.colours.primary,
                                   onPressed: () {

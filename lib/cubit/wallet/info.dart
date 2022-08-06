@@ -80,15 +80,7 @@ class InfoCubit extends Cubit<InfoState> {
 
   void sqliteSyncHistory() async {
     try {
-      final node = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
       final wallet = _walletsCubit.state.selectedWallet!;
-      final dbName = wallet.label + '_sm8.db';
-      final db = await openDatabase(dbName);
-
-      final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, dbName);
-
       emit(
         state.copyWith(
           loadingBalance: true,
@@ -97,6 +89,15 @@ class InfoCubit extends Cubit<InfoState> {
           transactions: wallet.transactions,
         ),
       );
+
+      final node = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+      final dbName = wallet.label + '_sm8.db';
+      final db = await openDatabase(dbName);
+
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, dbName);
+
       final currentHeight = await compute(computeCurrentHeight, {
         'network': _blockchainCubit.state.blockchain.name,
         'nodeAddress': node,
@@ -287,8 +288,14 @@ class InfoCubit extends Cubit<InfoState> {
     }
   }
 
-  void deleteClicked() {
+  void deleteClicked() async {
     emit(state.copyWith(errDeleting: ''));
+    final wallet = _walletsCubit.state.selectedWallet!;
+
+    final dbName = wallet.label + '_sm8.db';
+    final databasesPath = await getDatabasesPath();
+    final dbPath = join(databasesPath, dbName);
+    await deleteDatabase(dbPath);
 
     _storage.deleteItemAt<Wallet>(
       StoreKeys.Wallet.name,
