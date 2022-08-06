@@ -291,10 +291,11 @@ class InfoCubit extends Cubit<InfoState> {
   void deleteClicked() async {
     emit(state.copyWith(errDeleting: ''));
     final wallet = _walletsCubit.state.selectedWallet!;
-
     final dbName = wallet.label + '_sm8.db';
+    final db = await openDatabase(dbName);
     final databasesPath = await getDatabasesPath();
     final dbPath = join(databasesPath, dbName);
+    db.close();
     await deleteDatabase(dbPath);
 
     _storage.deleteItemAt<Wallet>(

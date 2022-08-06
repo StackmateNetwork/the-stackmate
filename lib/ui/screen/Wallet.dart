@@ -260,7 +260,7 @@ class _Wallet extends StatelessWidget {
     );
 
     if (delete != null && delete) {
-      c.read<InfoCubit>().deleteClicked();
+      await c.read<InfoCubit>().deleteClicked();
     }
   }
 }
