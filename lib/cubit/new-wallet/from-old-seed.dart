@@ -323,7 +323,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       await _wallets.updateAddressIndexToSelectedWallet(
         int.parse(lastUnused.result!.index),
       );
-      db.close();
 
       emit(
         state.copyWith(
@@ -331,6 +330,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
           newWalletSaved: true,
         ),
       );
+      db.close();
     } catch (e, s) {
       _logger.logException(e, 'SeedImportCubit._saveWallet', s);
 

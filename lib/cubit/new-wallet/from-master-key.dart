@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/outputs.dart';
+import 'package:path/path.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -18,6 +19,7 @@ import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
+import 'package:sqflite/sqflite.dart' hide Transaction;
 
 part 'from-master-key.freezed.dart';
 
@@ -155,12 +157,28 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
+      final dbName = state.label + '_sm8.db';
+      final db = await openDatabase(dbName);
 
-      var history = await compute(computeHistory, {
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, dbName);
+
+      final syncStat = await compute(sqliteSync, {
+        'dbPath': dbPath,
         'descriptor': descriptor.result!,
         'nodeAddress': nodeAddress,
         'socks5': socks5,
       });
+      if (syncStat.hasError) {
+        throw SMError.fromJson(syncStat.error!);
+      }
+
+      var history = await compute(sqliteHistory, {
+        'descriptor': descriptor.result!,
+        'dbPath': dbPath,
+      });
+
+      // ignore: unused_local_variable
       var recievedCount = 0;
 
       if (history.hasError) {
@@ -172,14 +190,20 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
           }
         }
 
-      var balance = await compute(computeBalance, {
+      var balance = await compute(sqliteBalance, {
         'descriptor': descriptor.result!,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
+        'dbPath': dbPath,
       });
 
       if (balance.hasError) {
         balance = const R(result: 0);
+      }
+      final lastUnused = _core.lastUnusedAddress(
+        descriptor: descriptor.result!,
+        dbPath: dbPath,
+      );
+      if (lastUnused.hasError) {
+        throw SMError.fromJson(lastUnused.error!);
       }
       // check balance and see if last address index needs update
       var newWallet = Wallet(
@@ -221,6 +245,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
           newWalletSaved: true,
         ),
       );
+      db.close();
     } catch (e, s) {
       _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
 
@@ -372,5 +397,56 @@ Future<R<int>> computeBalance(dynamic obj) async {
     socks5: obj['socks5']!,
   );
 
+  return resp;
+}
+
+R<int> sqliteBalance(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().sqliteBalance(
+    descriptor: data['descriptor']!,
+    dbPath: data['dbPath']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp;
+}
+
+R<List<Transaction>> sqliteHistory(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().sqliteHistory(
+    descriptor: data['descriptor']!,
+    dbPath: data['dbPath']!,
+  );
+
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp;
+}
+
+R<Address> getLastUnusedAddress(dynamic msg) {
+  final data = msg as Map<String, String?>;
+  final resp = LibBitcoin().lastUnusedAddress(
+    descriptor: data['descriptor']!,
+    dbPath: data['dbPath']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp;
+}
+
+R<String> sqliteSync(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().sqliteSync(
+    dbPath: obj['dbPath']!,
+    descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
   return resp;
 }

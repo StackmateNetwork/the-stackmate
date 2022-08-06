@@ -245,13 +245,13 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       await _wallets.updateAddressIndexToSelectedWallet(
         int.parse(lastUnused.result!.index),
       );
-      db.close();
       emit(
         state.copyWith(
           savingWallet: false,
           newWalletSaved: true,
         ),
       );
+      db.close();
     } catch (e, s) {
       _logger.logException(e, 'SeedXpubCubit._saveWallet', s);
 
