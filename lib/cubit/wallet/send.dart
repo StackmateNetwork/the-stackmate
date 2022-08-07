@@ -134,7 +134,13 @@ class SendCubit extends Cubit<SendState> {
     try {
       final wallet = _walletsCubit.state.selectedWallet!;
       final fingerprint = wallet.policyElements[0].split('[')[1].split('/')[0];
-      final dbName = wallet.label + fingerprint + '.db';
+      final purposePath = wallet.policyElements[0].split('[')[1].split('/')[1];
+      final networkPath = wallet.policyElements[0].split('[')[1].split('/')[2];
+      final accountPath =
+          wallet.policyElements[0].split('[')[1].split('/')[3].split(']')[0];
+      //for dbName uniqueness
+      final pathString = purposePath + networkPath + accountPath;
+      final dbName = wallet.label + fingerprint + pathString + '.db';
       final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
       final dbPath = join(databasesPath, dbName);
@@ -314,7 +320,13 @@ class SendCubit extends Cubit<SendState> {
     try {
       final wallet = _walletsCubit.state.selectedWallet!;
       final fingerprint = wallet.policyElements[0].split('[')[1].split('/')[0];
-      final dbName = wallet.label + fingerprint + '.db';
+      final purposePath = wallet.policyElements[0].split('[')[1].split('/')[1];
+      final networkPath = wallet.policyElements[0].split('[')[1].split('/')[2];
+      final accountPath =
+          wallet.policyElements[0].split('[')[1].split('/')[3].split(']')[0];
+      //for dbName uniqueness
+      final pathString = purposePath + networkPath + accountPath;
+      final dbName = wallet.label + fingerprint + pathString + '.db';
       final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
       final dbPath = join(databasesPath, dbName);
@@ -454,7 +466,13 @@ class SendCubit extends Cubit<SendState> {
     try {
       final wallet = _walletsCubit.state.selectedWallet!;
       final fingerprint = wallet.policyElements[0].split('[')[1].split('/')[0];
-      final dbName = wallet.label + fingerprint + '.db';
+      final purposePath = wallet.policyElements[0].split('[')[1].split('/')[1];
+      final networkPath = wallet.policyElements[0].split('[')[1].split('/')[2];
+      final accountPath =
+          wallet.policyElements[0].split('[')[1].split('/')[3].split(']')[0];
+      //for dbName uniqueness
+      final pathString = purposePath + networkPath + accountPath;
+      final dbName = wallet.label + fingerprint + pathString + '.db';
       final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
       final dbPath = join(databasesPath, dbName);

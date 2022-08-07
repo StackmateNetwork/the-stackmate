@@ -299,7 +299,10 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final dbName = state.label + fingerprint + '.db';
+      //for dbName uniqueness
+      final pathString =
+          path.replaceFirst('m', emptyString).replaceAll('/', emptyString);
+      final dbName = state.label + fingerprint + pathString + '.db';
       final db = await openDatabase(dbName);
 
       final databasesPath = await getDatabasesPath();
@@ -356,7 +359,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: signerWalletType,
-        lastAddressIndex: (recievedCount == 0) ? -1 : recievedCount,
+        lastAddressIndex: (recievedCount == 0) ? 0 : recievedCount,
         balance: balance.result!,
         transactions: history.result!,
       );

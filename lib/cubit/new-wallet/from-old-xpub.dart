@@ -160,7 +160,10 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final dbName = state.label + fingerprint + '.db';
+      //for dbName uniqueness
+      final pathString =
+          path.replaceFirst('m', emptyString).replaceAll('/', emptyString);
+      final dbName = state.label + fingerprint + pathString + '.db';
       final db = await openDatabase(dbName);
 
       final databasesPath = await getDatabasesPath();
