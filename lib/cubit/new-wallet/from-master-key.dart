@@ -387,6 +387,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
           newWalletSaved: true,
         ),
       );
+      db.close();
     } catch (e, s) {
       _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
 
