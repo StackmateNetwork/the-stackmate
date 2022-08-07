@@ -223,7 +223,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final dbName = state.walletLabel + '_sm8.db';
+      final dbName = state.walletLabel + wallet.fingerPrint + '.db';
       final db = await openDatabase(dbName);
 
       final databasesPath = await getDatabasesPath();

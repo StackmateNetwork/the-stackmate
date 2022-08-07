@@ -92,9 +92,9 @@ class InfoCubit extends Cubit<InfoState> {
 
       final node = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final dbName = wallet.label + '_sm8.db';
+      final fingerprint = wallet.policyElements[0].split('[')[1].split('/')[0];
+      final dbName = wallet.label + fingerprint + '.db';
       final db = await openDatabase(dbName);
-
       final databasesPath = await getDatabasesPath();
       final dbPath = join(databasesPath, dbName);
 
@@ -291,7 +291,8 @@ class InfoCubit extends Cubit<InfoState> {
   void deleteClicked() async {
     emit(state.copyWith(errDeleting: ''));
     final wallet = _walletsCubit.state.selectedWallet!;
-    final dbName = wallet.label + '_sm8.db';
+    final fingerprint = wallet.policyElements[0].split('[')[1].split('/')[0];
+    final dbName = wallet.label + fingerprint + '.db';
     final db = await openDatabase(dbName);
     final databasesPath = await getDatabasesPath();
     final dbPath = join(databasesPath, dbName);

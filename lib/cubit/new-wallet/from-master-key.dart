@@ -299,12 +299,28 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
+      final dbName = state.label + fingerprint + '.db';
+      final db = await openDatabase(dbName);
 
-      var history = await compute(computeHistory, {
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, dbName);
+
+      final syncStat = await compute(sqliteSync, {
+        'dbPath': dbPath,
         'descriptor': descriptor.result!,
         'nodeAddress': nodeAddress,
         'socks5': socks5,
       });
+
+      if (syncStat.hasError) {
+        throw SMError.fromJson(syncStat.error!);
+      }
+
+      var history = await compute(sqliteHistory, {
+        'descriptor': descriptor.result!,
+        'dbPath': dbPath,
+      });
+// ignore: unused_local_variable
       var recievedCount = 0;
 
       if (history.hasError) {
@@ -316,14 +332,20 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
           }
         }
 
-      var balance = await compute(computeBalance, {
+      var balance = await compute(sqliteBalance, {
         'descriptor': descriptor.result!,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
+        'dbPath': dbPath,
       });
 
       if (balance.hasError) {
         balance = const R(result: 0);
+      }
+      final lastUnused = _core.lastUnusedAddress(
+        descriptor: descriptor.result!,
+        dbPath: dbPath,
+      );
+      if (lastUnused.hasError) {
+        throw SMError.fromJson(lastUnused.error!);
       }
       // check balance and see if last address index needs update
       var newWallet = Wallet(

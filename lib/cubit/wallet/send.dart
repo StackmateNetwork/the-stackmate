@@ -133,7 +133,8 @@ class SendCubit extends Cubit<SendState> {
   void getBalance() async {
     try {
       final wallet = _walletsCubit.state.selectedWallet!;
-      final dbName = wallet.label + '_sm8.db';
+      final fingerprint = wallet.policyElements[0].split('[')[1].split('/')[0];
+      final dbName = wallet.label + fingerprint + '.db';
       final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
       final dbPath = join(databasesPath, dbName);
@@ -312,7 +313,8 @@ class SendCubit extends Cubit<SendState> {
 
     try {
       final wallet = _walletsCubit.state.selectedWallet!;
-      final dbName = wallet.label + '_sm8.db';
+      final fingerprint = wallet.policyElements[0].split('[')[1].split('/')[0];
+      final dbName = wallet.label + fingerprint + '.db';
       final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
       final dbPath = join(databasesPath, dbName);
@@ -451,7 +453,8 @@ class SendCubit extends Cubit<SendState> {
   void feeConfirmedClicked() async {
     try {
       final wallet = _walletsCubit.state.selectedWallet!;
-      final dbName = wallet.label + '_sm8.db';
+      final fingerprint = wallet.policyElements[0].split('[')[1].split('/')[0];
+      final dbName = wallet.label + fingerprint + '.db';
       final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
       final dbPath = join(databasesPath, dbName);
