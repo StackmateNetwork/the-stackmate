@@ -20,6 +20,8 @@ import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sqflite/sqflite.dart' hide Transaction;
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 part 'from-old-xpub.freezed.dart';
 
@@ -149,6 +151,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       final policy = 'pk($fullXPub/*)';
 
       const readable = 'pk(__primary__)';
+      final uid = sha1.convert(utf8.encode(xpub)).toString().substring(0, 21);
 
       final descriptor = _core.compile(
         policy: policy,
@@ -160,12 +163,9 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      //for dbName uniqueness
-      final pathString =
-          path.replaceFirst('m', emptyString).replaceAll('/', emptyString);
-      final dbName = state.label + fingerprint + pathString + '.db';
-      final db = await openDatabase(dbName);
 
+      final dbName = state.label + uid + '.db';
+      final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
       final dbPath = join(databasesPath, dbName);
 
@@ -224,6 +224,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         lastAddressIndex: int.parse(lastUnused.result!.index),
         balance: balance.result!,
         transactions: history.result!,
+        uid: uid,
       );
 
       final savedId = await _storage.saveItem<Wallet>(

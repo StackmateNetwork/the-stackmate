@@ -12,6 +12,7 @@ dependencies:
   animate_do: ^2.0.0
   animations: ^2.0.0
   bloc_concurrency: ^0.2.0
+  crypto: ^3.0.2
   # connectivity: ^3.0.3
   dio: ^4.0.5
   drag_and_drop_lists: ^0.3.2

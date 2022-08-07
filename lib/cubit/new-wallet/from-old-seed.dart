@@ -21,6 +21,8 @@ import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sqflite/sqflite.dart' hide Transaction;
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 part 'from-old-seed.freezed.dart';
 
@@ -212,6 +214,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       final policy = 'pk($fullXPrv/*)';
 
       const readable = 'pk(___primary___)';
+      final uid =
+          sha1.convert(utf8.encode(wallet.xpub)).toString().substring(0, 21);
 
       final descriptor = _core.compile(
         policy: policy,
@@ -223,12 +227,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      //for dbName uniqueness
-      final pathString = wallet.hardenedPath
-          .replaceFirst('m', emptyString)
-          .replaceAll('/', emptyString);
-      final dbName =
-          state.walletLabel + wallet.fingerPrint + pathString + '.db';
+
+      final dbName = state.walletLabel + uid + '.db';
       final db = await openDatabase(dbName);
 
       final databasesPath = await getDatabasesPath();
@@ -300,6 +300,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         lastAddressIndex: int.parse(lastUnused.result!.index),
         balance: balance.result!,
         transactions: history.result!,
+        uid: uid,
       );
 
       final savedId = await _storage.saveItem<Wallet>(

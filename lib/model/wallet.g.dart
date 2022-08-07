@@ -18,44 +18,47 @@ class WalletClassAdapter extends TypeAdapter<_$_Wallet> {
     };
     return _$_Wallet(
       id: fields[0] as int?,
-      label: fields[1] as String,
-      descriptor: fields[2] as String,
-      policy: fields[3] as String,
-      requiredPolicyElements: fields[4] as int,
-      policyElements: (fields[5] as List).cast<String>(),
-      blockchain: fields[6] as String,
-      transactions: (fields[7] as List).cast<Transaction>(),
-      balance: fields[8] as int,
-      lastAddressIndex: fields[9] as int,
-      walletType: fields[10] as String,
+      uid: fields[1] as String,
+      label: fields[2] as String,
+      descriptor: fields[3] as String,
+      policy: fields[4] as String,
+      requiredPolicyElements: fields[5] as int,
+      policyElements: (fields[6] as List).cast<String>(),
+      blockchain: fields[7] as String,
+      transactions: (fields[8] as List).cast<Transaction>(),
+      balance: fields[9] as int,
+      lastAddressIndex: fields[10] as int,
+      walletType: fields[11] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_Wallet obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.label)
+      ..write(obj.uid)
       ..writeByte(2)
-      ..write(obj.descriptor)
+      ..write(obj.label)
       ..writeByte(3)
-      ..write(obj.policy)
+      ..write(obj.descriptor)
       ..writeByte(4)
-      ..write(obj.requiredPolicyElements)
-      ..writeByte(6)
-      ..write(obj.blockchain)
-      ..writeByte(8)
-      ..write(obj.balance)
-      ..writeByte(9)
-      ..write(obj.lastAddressIndex)
-      ..writeByte(10)
-      ..write(obj.walletType)
+      ..write(obj.policy)
       ..writeByte(5)
-      ..write(obj.policyElements)
+      ..write(obj.requiredPolicyElements)
       ..writeByte(7)
+      ..write(obj.blockchain)
+      ..writeByte(9)
+      ..write(obj.balance)
+      ..writeByte(10)
+      ..write(obj.lastAddressIndex)
+      ..writeByte(11)
+      ..write(obj.walletType)
+      ..writeByte(6)
+      ..write(obj.policyElements)
+      ..writeByte(8)
       ..write(obj.transactions);
   }
 
@@ -76,6 +79,7 @@ class WalletClassAdapter extends TypeAdapter<_$_Wallet> {
 
 _$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
       id: json['id'] as int?,
+      uid: json['uid'] as String,
       label: json['label'] as String,
       descriptor: json['descriptor'] as String,
       policy: json['policy'] as String,
@@ -94,6 +98,7 @@ _$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
 
 Map<String, dynamic> _$$_WalletToJson(_$_Wallet instance) => <String, dynamic>{
       'id': instance.id,
+      'uid': instance.uid,
       'label': instance.label,
       'descriptor': instance.descriptor,
       'policy': instance.policy,

@@ -12,16 +12,17 @@ class Wallet with _$Wallet {
   @HiveType(typeId: 1, adapterName: 'WalletClassAdapter')
   const factory Wallet({
     @HiveField(0) int? id,
-    @HiveField(1) required String label,
-    @HiveField(2) required String descriptor,
-    @HiveField(3) required String policy,
-    @HiveField(4) required int requiredPolicyElements,
-    @HiveField(5) required List<String> policyElements,
-    @HiveField(6) required String blockchain,
-    @HiveField(7) required List<Transaction> transactions,
-    @HiveField(8) required int balance,
-    @HiveField(9) required int lastAddressIndex,
-    @HiveField(10) required String walletType,
+    @HiveField(1) required String uid,
+    @HiveField(2) required String label,
+    @HiveField(3) required String descriptor,
+    @HiveField(4) required String policy,
+    @HiveField(5) required int requiredPolicyElements,
+    @HiveField(6) required List<String> policyElements,
+    @HiveField(7) required String blockchain,
+    @HiveField(8) required List<Transaction> transactions,
+    @HiveField(9) required int balance,
+    @HiveField(10) required int lastAddressIndex,
+    @HiveField(11) required String walletType,
   }) = _Wallet;
   const Wallet._();
 

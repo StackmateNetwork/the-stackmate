@@ -13,6 +13,8 @@ import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 part 'from-new-seed.freezed.dart';
 
@@ -154,6 +156,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       final policy = 'pk($fullXPrv/*)'.replaceFirst('/m', emptyString);
 
       const readable = 'pk(___primary___)';
+      final uid =
+          sha1.convert(utf8.encode(wallet.xpub)).toString().substring(0, 21);
 
       final descriptor = _core.compile(
         policy: policy,
@@ -176,6 +180,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         lastAddressIndex: 0,
         balance: 0,
         transactions: [],
+        uid: uid,
       );
 
       final savedid = await _storage.saveItem<Wallet>(

@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/outputs.dart';
@@ -145,6 +147,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       final policy = 'pk($fullXPrv/*)';
 
       const readable = 'pk(__primary__)';
+      final uid = sha1.convert(utf8.encode(xpub)).toString().substring(0, 21);
 
       final descriptor = _core.compile(
         policy: policy,
@@ -157,9 +160,8 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final dbName = state.label + '_sm8.db';
+      final dbName = state.label + uid + '.db';
       final db = await openDatabase(dbName);
-
       final databasesPath = await getDatabasesPath();
       final dbPath = join(databasesPath, dbName);
 
@@ -217,6 +219,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         lastAddressIndex: (recievedCount == 0) ? 0 : recievedCount,
         balance: balance.result!,
         transactions: history.result!,
+        uid: uid,
       );
 
       final savedId = await _storage.saveItem<Wallet>(
@@ -287,6 +290,8 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       final policy = 'pk($fullXPrv/*)';
 
       const readable = 'pk(__primary__)';
+      final bytes = utf8.encode(xpub);
+      final uid = sha1.convert(bytes).toString().substring(0, 21);
 
       final descriptor = _core.compile(
         policy: policy,
@@ -362,6 +367,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         lastAddressIndex: (recievedCount == 0) ? 0 : recievedCount,
         balance: balance.result!,
         transactions: history.result!,
+        uid: uid,
       );
 
       final savedId = await _storage.saveItem<Wallet>(
