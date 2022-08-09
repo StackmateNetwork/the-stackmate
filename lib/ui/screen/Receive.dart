@@ -2,6 +2,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/receive.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -72,7 +74,8 @@ class ReceiveScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final logger = context.select((Logger c) => c);
     final wallets = context.select((WalletsCubit c) => c);
-
+    final nodeAddress = context.select((NodeAddressCubit c) => c);
+    final tor = context.select((TorCubit c) => c);
     final receive = ReceiveCubit(
       wallets,
       logger,
@@ -80,6 +83,8 @@ class ReceiveScreen extends StatelessWidget {
       locator<IShare>(),
       locator<IVibrate>(),
       locator<IStackMateBitcoin>(),
+      nodeAddress,
+      tor,
     );
 
     return BlocProvider.value(

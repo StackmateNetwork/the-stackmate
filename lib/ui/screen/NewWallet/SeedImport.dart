@@ -131,6 +131,7 @@ class SeedImportScreen extends StatelessWidget {
 
     final seedImportCubit = SeedImportWalletCubit(
       locator<IStackMateBitcoin>(),
+      logger,
       locator<IStorage>(),
       wallets,
       networkSelect,

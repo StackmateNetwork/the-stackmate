@@ -31,11 +31,13 @@ import 'package:sats/ui/screen/Settings.dart';
 import 'package:sats/ui/screen/TorConfig.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() async {
   await initializeHive();
   setupDependencies(useDummies: false);
-
+  await openDatabase('stackmate.db');
+  // await db.close();
   WidgetsFlutterBinding.ensureInitialized();
   // final p = ReceivePort();
 

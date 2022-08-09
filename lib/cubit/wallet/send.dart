@@ -6,6 +6,8 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/outputs.dart';
+import 'package:path/path.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
@@ -14,13 +16,13 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
-import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/validation.dart';
+import 'package:sqflite/sqflite.dart' hide Transaction;
 
 part 'send.freezed.dart';
 
@@ -130,6 +132,12 @@ class SendCubit extends Cubit<SendState> {
   // }
   void getBalance() async {
     try {
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final dbName = wallet.label + wallet.uid + '.db';
+      final db = await openDatabase(dbName);
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, dbName);
+
       emit(
         state.copyWith(
           balance: _walletsCubit.state.selectedWallet!.balance,
@@ -138,20 +146,25 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
-      final bal = await compute(computeBalance, {
+      // final nodeAddress = _nodeAddressCubit.state.getAddress();
+      // final socks5 = _torCubit.state.getSocks5();
+      // final bal = await compute(computeBalance, {
+      //   'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+      //   'nodeAddress': nodeAddress,
+      //   'socks5': socks5,
+      // });
+      final balance = await compute(sqliteBalance, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
+        'dbPath': dbPath,
       });
 
       emit(
         state.copyWith(
-          balance: bal,
+          balance: balance,
           loadingStart: false,
         ),
       );
+      db.close();
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -237,11 +250,13 @@ class SendCubit extends Cubit<SendState> {
 
   Future<void> _getStoragePermission() async {
     if (await Permission.storage.request().isGranted) {
-      final permissionGranted = true;
+      // ignore: unused_local_variable
+      const permissionGranted = true;
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
     } else if (await Permission.storage.request().isDenied) {
-      final permissionGranted = false;
+      // ignore: unused_local_variable
+      const permissionGranted = false;
     }
   }
 
@@ -296,6 +311,12 @@ class SendCubit extends Cubit<SendState> {
     //get fees
 
     try {
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final dbName = wallet.label + wallet.uid + '.db';
+      final db = await openDatabase(dbName);
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, dbName);
+
       emit(state.copyWith(errAmount: emptyString));
 
       if (!_checkAmount(state.amount)) {
@@ -316,10 +337,26 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
-      final psbt = await compute(buildTx, {
+      // final psbt = await compute(buildTx, {
+      //   'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+      //   'nodeAddress': nodeAddress,
+      //   'socks5': socks5,
+      //   'txOutputs': txOutputs,
+      //   'feeAbsolute': dummyFeeValue,
+      //   'policyPath': state.policyPath,
+      //   'sweep': state.sweepWallet.toString(),
+      // });
+      // ignore: unused_local_variable
+      final syncStat = await compute(sqliteSync, {
+        'dbPath': dbPath,
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'nodeAddress': nodeAddress,
         'socks5': socks5,
+      });
+
+      final psbt = await compute(sqliteBuildTx, {
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'dbPath': dbPath,
         'txOutputs': txOutputs,
         'feeAbsolute': dummyFeeValue,
         'policyPath': state.policyPath,
@@ -366,6 +403,7 @@ class SendCubit extends Cubit<SendState> {
           currentStep: SendSteps.fees,
         ),
       );
+      db.close();
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -412,6 +450,12 @@ class SendCubit extends Cubit<SendState> {
 
   void feeConfirmedClicked() async {
     try {
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final dbName = wallet.label + wallet.uid + '.db';
+      final db = await openDatabase(dbName);
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, dbName);
+
       emit(state.copyWith(errFees: emptyString));
 
       if (!_checkFee()) {
@@ -422,13 +466,22 @@ class SendCubit extends Cubit<SendState> {
 
       emit(state.copyWith(buildingTx: true, errLoading: emptyString));
 
-      final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
+      // final nodeAddress = _nodeAddressCubit.state.getAddress();
+      // final socks5 = _torCubit.state.getSocks5();
 
-      final psbt = await compute(buildTx, {
+      // final psbt = await compute(buildTx, {
+      //   'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+      //   'nodeAddress': nodeAddress,
+      //   'socks5': socks5,
+      //   'txOutputs': state.txOutputs,
+      //   'feeAbsolute': state.finalFee.toString(),
+      //   'policyPath': state.policyPath,
+      //   'sweep': state.sweepWallet.toString(),
+      // });
+
+      final psbt = await compute(sqliteBuildTx, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
+        'dbPath': dbPath,
         'txOutputs': state.txOutputs,
         'feeAbsolute': state.finalFee.toString(),
         'policyPath': state.policyPath,
@@ -453,6 +506,7 @@ class SendCubit extends Cubit<SendState> {
           errSending: emptyString,
         ),
       );
+      db.close();
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -647,6 +701,22 @@ String buildTx(dynamic data) {
   return resp.result!.psbt;
 }
 
+String sqliteBuildTx(dynamic data) {
+  final obj = data as Map<String, String?>;
+  final resp = LibBitcoin().sqliteBuildTransaction(
+    descriptor: obj['descriptor']!,
+    dbPath: obj['dbPath']!,
+    txOutputs: obj['txOutputs']!,
+    feeAbsolute: obj['feeAbsolute']!,
+    policyPath: obj['policyPath']!,
+    sweep: obj['sweep']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!.psbt;
+}
+
 List<DecodedTxOutput> decodePSBT(dynamic data) {
   final obj = data as Map<String, String?>;
   final resp = LibBitcoin().decodePsbt(
@@ -684,4 +754,30 @@ Future<R<String>> broadcastTx(dynamic data) async {
 
   return resp;
 }
+
 // tb1qcd0dej2spq73nlkr4d5w3scksqagz0nzmdnzgg
+int sqliteBalance(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().sqliteBalance(
+    descriptor: data['descriptor']!,
+    dbPath: data['dbPath']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
+}
+
+String sqliteSync(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().sqliteSync(
+    dbPath: obj['dbPath']!,
+    descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
+}

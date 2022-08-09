@@ -49,6 +49,18 @@ abstract class IStackMateBitcoin {
     required String weight,
   });
 
+  R<String> sqliteSync({
+    required String dbPath,
+    required String descriptor,
+    required String nodeAddress,
+    required String socks5,
+  });
+
+  R<int> sqliteBalance({
+    required String descriptor,
+    required String dbPath,
+  });
+
   R<int> syncBalance({
     required String descriptor,
     required String nodeAddress,
@@ -59,6 +71,11 @@ abstract class IStackMateBitcoin {
     required String network,
     required String nodeAddress,
     required String socks5,
+  });
+
+  R<List<Transaction>> sqliteHistory({
+    required String descriptor,
+    required String dbPath,
   });
 
   R<List<Transaction>> getHistory({
@@ -76,6 +93,20 @@ abstract class IStackMateBitcoin {
   R<String> getAddress({
     required String descriptor,
     required String index,
+  });
+
+  R<Address> lastUnusedAddress({
+    required String descriptor,
+    required String dbPath,
+  });
+
+  R<PSBT> sqliteBuildTransaction({
+    required String descriptor,
+    required String dbPath,
+    required String txOutputs,
+    required String feeAbsolute,
+    required String policyPath,
+    required String sweep,
   });
 
   R<PSBT> buildTransaction({

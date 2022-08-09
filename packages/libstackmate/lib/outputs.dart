@@ -156,6 +156,19 @@ class DecodedTxOutput {
   final String to;
 }
 
+class Address {
+  const Address(this.address, this.index);
+  factory Address.fromJson(String data) {
+    final json = jsonDecode(data);
+    return Address(
+      json['address'] as String,
+      json['index'] as String,
+    );
+  }
+  final String address;
+  final String index;
+}
+
 class UTXO {
   const UTXO(
     this.txid,

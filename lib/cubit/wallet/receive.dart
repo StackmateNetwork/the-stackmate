@@ -3,13 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/outputs.dart';
+import 'package:path/path.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
+import 'package:sqflite/sqflite.dart' hide Transaction;
 
 part 'receive.freezed.dart';
 
@@ -31,6 +35,8 @@ class ReceiveCubit extends Cubit<ReceiveState> {
     this._share,
     this._vibrate,
     this._core,
+    this._nodeAddressCubit,
+    this._torCubit,
   ) : super(const ReceiveState()) {
     _init();
   }
@@ -41,23 +47,24 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   final IClipBoard _clipBoard;
   final IVibrate _vibrate;
   final IStackMateBitcoin _core;
+  final NodeAddressCubit _nodeAddressCubit;
+  final TorCubit _torCubit;
 
   static const emailShareSubject = 'Bitcoin Address';
 
   Future<void> _init() async {
     emit(
       state.copyWith(
-        loadingAddress: true,
         errLoadingAddress: '',
       ),
     );
 
     final wallet = _walletsCubit.state.selectedWallet!;
-    final nextIndex = wallet.lastAddressIndex;
+    final index = wallet.lastAddressIndex;
 
     final latestAddress = _core.getAddress(
       descriptor: wallet.descriptor,
-      index: nextIndex.toString(),
+      index: index.toString(),
     );
     if (latestAddress.hasError) {
       throw SMError.fromJson(latestAddress.error!);
@@ -71,35 +78,33 @@ class ReceiveCubit extends Cubit<ReceiveState> {
     // );
 
     final updated = wallet.copyWith(
-      lastAddressIndex: nextIndex,
+      lastAddressIndex: index,
     );
     _walletsCubit.walletSelected(updated);
 
-    await _walletsCubit.updateAddressIndexToSelectedWallet(nextIndex);
-
+    await _walletsCubit.updateAddressIndexToSelectedWallet(index);
     emit(
       state.copyWith(
-        loadingAddress: false,
         address: latestAddress.result!,
-        index: nextIndex,
+        index: index,
       ),
     );
+    getLastUnusedAddress();
   }
 
   void getNewAddress() async {
     try {
       emit(
         state.copyWith(
-          loadingAddress: true,
           errLoadingAddress: '',
         ),
       );
       final wallet = _walletsCubit.state.selectedWallet!;
-      final nextIndex = wallet.lastAddressIndex + 1;
+      final currentIndex = wallet.lastAddressIndex + 1;
 
       final latestAddress = _core.getAddress(
         descriptor: wallet.descriptor,
-        index: nextIndex.toString(),
+        index: currentIndex.toString(),
       );
       if (latestAddress.hasError) {
         throw SMError.fromJson(latestAddress.error!);
@@ -113,23 +118,21 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       // );
 
       final updated = wallet.copyWith(
-        lastAddressIndex: nextIndex,
+        lastAddressIndex: currentIndex,
       );
       _walletsCubit.walletSelected(updated);
 
-      await _walletsCubit.updateAddressIndexToSelectedWallet(nextIndex);
+      await _walletsCubit.updateAddressIndexToSelectedWallet(currentIndex);
 
       emit(
         state.copyWith(
-          loadingAddress: false,
           address: latestAddress.result!,
-          index: nextIndex,
+          index: currentIndex,
         ),
       );
     } catch (e, s) {
       emit(
         state.copyWith(
-          loadingAddress: false,
           errLoadingAddress: e.toString(),
         ),
       );
@@ -141,43 +144,102 @@ class ReceiveCubit extends Cubit<ReceiveState> {
     try {
       emit(
         state.copyWith(
-          loadingAddress: true,
           errLoadingAddress: '',
         ),
       );
       final wallet = _walletsCubit.state.selectedWallet!;
-      final nextIndex = wallet.lastAddressIndex - 1;
+      final currentIndex = wallet.lastAddressIndex - 1;
 
       final latestAddress = _core.getAddress(
         descriptor: wallet.descriptor,
-        index: nextIndex.toString(),
+        index: currentIndex.toString(),
       );
       if (latestAddress.hasError) {
         throw SMError.fromJson(latestAddress.error!);
       }
 
       final updated = wallet.copyWith(
-        lastAddressIndex: nextIndex,
+        lastAddressIndex: currentIndex,
       );
       _walletsCubit.walletSelected(updated);
 
-      await _walletsCubit.updateAddressIndexToSelectedWallet(nextIndex);
+      await _walletsCubit.updateAddressIndexToSelectedWallet(currentIndex);
 
       emit(
         state.copyWith(
-          loadingAddress: false,
           address: latestAddress.result!,
-          index: nextIndex,
+          index: currentIndex,
         ),
       );
     } catch (e, s) {
       emit(
         state.copyWith(
-          loadingAddress: false,
           errLoadingAddress: e.toString(),
         ),
       );
       _logger.logException(e, 'ReceiveCubit.getAddress', s);
+    }
+  }
+
+  void getLastUnusedAddress() async {
+    emit(
+      state.copyWith(
+        loadingAddress: true,
+      ),
+    );
+    try {
+      final node = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+      final wallet = _walletsCubit.state.selectedWallet!;
+      final fingerprint = wallet.policyElements[0].split('[')[1].split('/')[0];
+      final purposePath = wallet.policyElements[0].split('[')[1].split('/')[1];
+      final networkPath = wallet.policyElements[0].split('[')[1].split('/')[2];
+      final accountPath =
+          wallet.policyElements[0].split('[')[1].split('/')[3].split(']')[0];
+      //for dbName uniqueness
+      final pathString = purposePath + networkPath + accountPath;
+      final dbName = wallet.label + fingerprint + pathString + '.db';
+      final db = await openDatabase(dbName);
+
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, dbName);
+
+      // THIS PART NEEDS TO BE REVIEWS
+      // compute is used and errors are not properly handled
+
+      // ignore: unused_local_variable
+      final syncStat = await compute(sqliteSync, {
+        'dbPath': dbPath,
+        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'nodeAddress': node,
+        'socks5': socks5,
+      });
+
+      final lastUnused = _core.lastUnusedAddress(
+        descriptor: wallet.descriptor,
+        dbPath: dbPath,
+      );
+      if (lastUnused.hasError) {
+        throw SMError.fromJson(lastUnused.error!);
+      }
+      final updated = wallet.copyWith(
+        lastAddressIndex: int.parse(lastUnused.result!.index),
+      );
+      _walletsCubit.walletSelected(updated);
+      await _walletsCubit.updateAddressIndexToSelectedWallet(
+        int.parse(lastUnused.result!.index),
+      );
+
+      emit(
+        state.copyWith(
+          loadingAddress: false,
+          address: lastUnused.result!.address,
+          index: int.parse(lastUnused.result!.index),
+        ),
+      );
+      db.close();
+    } catch (e, s) {
+      _logger.logException(e, 'WalletCubit.lastUnusedAddress', s);
     }
   }
 
@@ -201,11 +263,37 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   }
 }
 
-String getAdrr(dynamic msg) {
+String getAddressByIndex(dynamic msg) {
   final data = msg as Map<String, String?>;
   final resp = LibBitcoin().getAddress(
     descriptor: data['descriptor']!,
     index: data['index']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
+}
+
+Address getLastUnusedAddress(dynamic msg) {
+  final data = msg as Map<String, String?>;
+  final resp = LibBitcoin().lastUnusedAddress(
+    descriptor: data['descriptor']!,
+    dbPath: data['dbPath']!,
+  );
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
+}
+
+String sqliteSync(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().sqliteSync(
+    dbPath: obj['dbPath']!,
+    descriptor: data['descriptor']!,
+    nodeAddress: data['nodeAddress']!,
+    socks5: obj['socks5']!,
   );
   if (resp.hasError) {
     throw SMError.fromJson(resp.error!);
