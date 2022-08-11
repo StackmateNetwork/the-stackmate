@@ -78,7 +78,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
     // );
 
     final updated = wallet.copyWith(
-      lastAddressIndex: index,
+      lastAddressIndex: index + 1,
     );
     _walletsCubit.walletSelected(updated);
 
@@ -191,14 +191,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       final node = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
       final wallet = _walletsCubit.state.selectedWallet!;
-      final fingerprint = wallet.policyElements[0].split('[')[1].split('/')[0];
-      final purposePath = wallet.policyElements[0].split('[')[1].split('/')[1];
-      final networkPath = wallet.policyElements[0].split('[')[1].split('/')[2];
-      final accountPath =
-          wallet.policyElements[0].split('[')[1].split('/')[3].split(']')[0];
-      //for dbName uniqueness
-      final pathString = purposePath + networkPath + accountPath;
-      final dbName = wallet.label + fingerprint + pathString + '.db';
+      final dbName = wallet.label + wallet.uid + '.db';
       final db = await openDatabase(dbName);
 
       final databasesPath = await getDatabasesPath();
