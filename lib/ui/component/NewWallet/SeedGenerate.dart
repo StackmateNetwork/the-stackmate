@@ -102,6 +102,12 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
                   ),
                   onPressed: () {
                     if (_form.currentState!.validate()) {
+                      final FocusScopeNode currentFocus =
+                          FocusScope.of(context);
+
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
                       c.read<SeedGenerateCubit>().finalizePassphrase();
                     }
                   },

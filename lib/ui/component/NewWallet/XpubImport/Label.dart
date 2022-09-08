@@ -1,5 +1,5 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -43,11 +43,6 @@ class XpubLabel extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-                if (state.errSavingWallet != '')
-                  Text(
-                    state.errSavingWallet,
-                    style: c.fonts.caption!.copyWith(color: c.colours.error),
-                  ),
                 SizedBox(
                   height: 52,
                   child: ElevatedButton(
@@ -55,9 +50,27 @@ class XpubLabel extends StatelessWidget {
                       primary: c.colours.primary,
                       onPrimary: c.colours.background,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      final FocusScopeNode currentFocus =
+                          FocusScope.of(context);
+
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
                       c.read<XpubImportWalletCubit>().nextClicked();
-                      c.read<XpubImportCubit>().clearCachedFiles();
+                      if (state.errSavingWallet != '') {
+                        final snackBar = SnackBar(
+                          elevation: 0,
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Colors.transparent,
+                          content: AwesomeSnackbarContent(
+                            title: state.errSavingWallet,
+                            message: 'Please input minimum 4 letters',
+                            contentType: ContentType.warning,
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     },
                     child: const Text('Confirm'),
                   ),

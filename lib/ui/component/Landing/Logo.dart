@@ -24,6 +24,13 @@ class LandingLogo extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
+        SizedBox(
+          child: Image.asset(
+            'assets/icon/sm92.png',
+            width: 400,
+            height: 200,
+          ),
+        ),
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -66,18 +67,26 @@ class BroadcastHex extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Align(
                 alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () async {
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: c.colours.onPrimary),
+                    primary: c.colours.primary,
+                    onSurface: c.colours.background,
+                  ),
+                  onPressed: () async {
                     c.read<BroadcastCubit>().clearCachedFiles();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor:
-                            result ? c.colours.primary : c.colours.error,
-                        content: Text(
-                          result ? ' File removed' : 'Failed to clear file',
-                        ),
+                    final snackBar = SnackBar(
+                      elevation: 0,
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.transparent,
+                      content: AwesomeSnackbarContent(
+                        title: result ? '' : '',
+                        message: result ? ' Deleted' : 'Unable to clear file',
+                        contentType:
+                            result ? ContentType.success : ContentType.failure,
                       ),
                     );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                   child: Text(
                     'Clear file',
@@ -95,7 +104,7 @@ class BroadcastHex extends StatelessWidget {
                   primary: context.colours.primary,
                   onSurface: context.colours.background,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   context.read<BroadcastCubit>().verifyImportHex();
                 },
                 child: Text('verify file'.toUpperCase()),
@@ -130,8 +139,25 @@ class BroadcastHex extends StatelessWidget {
                   primary: context.colours.primary,
                   onPrimary: context.colours.background,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   context.read<BroadcastCubit>().broadcastHexConfirmed();
+                  if (broadcastState.errBroadcasting != '') {
+                    final snackBar = SnackBar(
+                      elevation: 0,
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.transparent,
+                      content: AwesomeSnackbarContent(
+                        title: '',
+                        message: broadcastState.txId != ''
+                            ? 'Broadcasted success'
+                            : 'Not a valid hex',
+                        contentType: broadcastState.txId != ''
+                            ? ContentType.success
+                            : ContentType.warning,
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
                 },
                 child: Text('Broadcast'.toUpperCase()),
               ),

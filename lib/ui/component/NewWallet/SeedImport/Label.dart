@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -53,7 +54,26 @@ class SeedImportLabel extends StatelessWidget {
                       onPrimary: c.colours.background,
                     ),
                     onPressed: () async {
+                      final FocusScopeNode currentFocus =
+                          FocusScope.of(context);
+
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
                       context.read<SeedImportWalletCubit>().nextClicked();
+                      if (state.walletLabelError != '') {
+                        final snackBar = SnackBar(
+                          elevation: 0,
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Colors.transparent,
+                          content: AwesomeSnackbarContent(
+                            title: state.walletLabelError,
+                            message: 'Please input minimum 4 letters',
+                            contentType: ContentType.warning,
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     },
                     child: const Text('Confirm'),
                   ),

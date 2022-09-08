@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -69,25 +70,33 @@ class XpubColdcardImport extends StatelessWidget {
                   ),
                 ),
               ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Align(
                 alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () async {
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: c.colours.onPrimary),
+                    primary: c.colours.primary,
+                    onSurface: c.colours.background,
+                  ),
+                  onPressed: () async {
                     c.read<XpubImportCubit>().clearCachedFiles();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor:
-                            result ? c.colours.primary : c.colours.error,
-                        content: Text(
-                          result
-                              ? 'Json file removed'
-                              : 'Failed to clear json file',
-                        ),
+                    final snackBar = SnackBar(
+                      elevation: 0,
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.transparent,
+                      content: AwesomeSnackbarContent(
+                        title: '',
+                        message: result
+                            ? 'Deleted json file'
+                            : 'Failed to delete json file',
+                        contentType:
+                            result ? ContentType.success : ContentType.warning,
                       ),
                     );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                   child: Text(
                     'Clear Json',
@@ -109,7 +118,7 @@ class XpubColdcardImport extends StatelessWidget {
                   primary: c.colours.primary,
                   onPrimary: c.colours.background,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   c.read<XpubImportCubit>().importColdCardSegwit();
                 },
                 child: const Text('CONFIRM'),

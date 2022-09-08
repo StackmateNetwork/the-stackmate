@@ -88,7 +88,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         if (state.label == emptyString ||
             state.label.length <= 3 ||
             state.label.length > 20) {
-          emit(state.copyWith(errSavingWallet: invalidLabelError));
+          emit(state.copyWith(walletLabelError: invalidLabelError));
           return;
         }
         if (!state.savingWallet)

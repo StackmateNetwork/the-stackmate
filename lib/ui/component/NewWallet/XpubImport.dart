@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -190,8 +191,21 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
                   primary: c.colours.primary,
                   onPrimary: c.colours.background,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   c.read<XpubImportCubit>().checkDetails();
+                  if (state.errXpub != '') {
+                    final snackBar = SnackBar(
+                      elevation: 0,
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.transparent,
+                      content: AwesomeSnackbarContent(
+                        title: state.errXpub,
+                        message: '',
+                        contentType: ContentType.warning,
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
                 },
                 child: const Text('CONFIRM'),
               ),
