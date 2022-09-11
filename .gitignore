@@ -59,7 +59,7 @@ app.*.map.json
 /android/key.properties
 
 **/target
-# /packages/bitcoin/ios/libstackmate.a
+/packages/libstackmate/ios/libstackmate.a
 android/src/main/jniLibs/x86_64/libstackmate.so
 android/src/main/jniLibs/x86/libstackmate.so
 android/src/main/jniLibs/armeabi-v7a/libstackmate.so

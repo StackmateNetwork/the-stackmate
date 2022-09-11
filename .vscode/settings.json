@@ -31,9 +31,9 @@
         "**/**.g.dart": true,
         "**/**.freezed.dart": true,
         "android": false,
-        "ios": true,
+        "ios": false,
         "**/android": false,
-        "**/ios": true,
+        "**/ios": false,
         //
         //
         "**/analysis_options.yaml": true,

@@ -12,13 +12,15 @@ class LibBitcoin implements IStackMateBitcoin {
     _libstackmate = LibStackmateFFI(
       binary: Platform.isAndroid
           ? DynamicLibrary.open('libstackmate.so')
-          : Platform.isMacOS
-              ? DynamicLibrary.open(
-                  'packages/libstackmate/macos/x86_64/libstackmate.dylib',
-                )
-              : DynamicLibrary.open(
-                  'packages/libstackmate/linux/x86_64/libstackmate.so',
-                ),
+          : Platform.isIOS
+              ? DynamicLibrary.process()
+              : Platform.isMacOS
+                  ? DynamicLibrary.open(
+                      'packages/libstackmate/macos/x86_64/libstackmate.dylib',
+                    )
+                  : DynamicLibrary.open(
+                      'packages/libstackmate/linux/x86_64/libstackmate.so',
+                    ),
     );
   }
 
