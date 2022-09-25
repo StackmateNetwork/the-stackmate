@@ -16,9 +16,9 @@ class BackupWarning extends StatelessWidget {
           height: 52,
           child: OutlinedButton(
             style: OutlinedButton.styleFrom(
+              foregroundColor: c.colours.error,
               side: BorderSide(color: c.colours.onPrimary),
-              primary: c.colours.error,
-              onSurface: c.colours.background,
+              disabledForegroundColor: c.colours.background.withOpacity(0.38),
             ),
             onPressed: () {
               c.push('/backup-master');

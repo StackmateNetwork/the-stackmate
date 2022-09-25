@@ -94,8 +94,8 @@ class _AmountRowState extends State<AmountRow> {
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: c.colours.primary,
-              onPrimary: c.colours.background,
+              foregroundColor: c.colours.background,
+              backgroundColor: c.colours.primary,
             ),
             onPressed: () {
               if (amount != '') {

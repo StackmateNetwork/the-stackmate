@@ -83,8 +83,8 @@ class _RegisterMyIdentityState extends State<RegisterMyIdentity> {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: context.colours.primary,
-                  onPrimary: context.colours.background,
+                  foregroundColor: context.colours.background,
+                  backgroundColor: context.colours.primary,
                 ),
                 onPressed: () {},
                 child: const Text('JOIN'),

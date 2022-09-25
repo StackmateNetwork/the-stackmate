@@ -16,8 +16,8 @@ class SetBitcoinUnit extends StatelessWidget {
       },
       style: ElevatedButton.styleFrom(
         elevation: 0,
+        backgroundColor: c.colours.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-        primary: c.colours.surface,
       ),
       child: Container(
         height: 80,

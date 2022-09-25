@@ -34,9 +34,10 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
+                  foregroundColor: c.colours.primary,
                   side: BorderSide(color: c.colours.onPrimary),
-                  primary: c.colours.primary,
-                  onSurface: c.colours.background,
+                  disabledForegroundColor:
+                      c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().pastePSBT();
@@ -49,9 +50,10 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
+                  foregroundColor: c.colours.primary,
                   side: BorderSide(color: c.colours.onPrimary),
-                  primary: c.colours.primary,
-                  onSurface: c.colours.background,
+                  disabledForegroundColor:
+                      c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   c.read<BroadcastCubit>().updatePSBTFile();
@@ -64,9 +66,10 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
+                  foregroundColor: c.colours.primary,
                   side: BorderSide(color: c.colours.onPrimary),
-                  primary: c.colours.primary,
-                  onSurface: c.colours.background,
+                  disabledForegroundColor:
+                      c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   c.read<BroadcastCubit>().verifyImportPSBT();
@@ -79,8 +82,8 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: c.colours.primary,
-                  onPrimary: c.colours.background,
+                  foregroundColor: c.colours.background,
+                  backgroundColor: c.colours.primary,
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().broadcastConfirmed();

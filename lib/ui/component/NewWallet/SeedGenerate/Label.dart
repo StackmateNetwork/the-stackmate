@@ -1,7 +1,8 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SeedGenerateLabel extends StatelessWidget {
   const SeedGenerateLabel({Key? key}) : super(key: key);
@@ -49,8 +50,8 @@ class SeedGenerateLabel extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: c.colours.primary,
-                  onPrimary: c.colours.background,
+                  foregroundColor: c.colours.background,
+                  backgroundColor: c.colours.primary,
                 ),
                 onPressed: () async {
                   final FocusScopeNode currentFocus = FocusScope.of(context);
@@ -60,17 +61,12 @@ class SeedGenerateLabel extends StatelessWidget {
                   }
                   c.read<SeedGenerateWalletCubit>().nextClicked();
                   if (state.walletLabelError != '') {
-                    final snackBar = SnackBar(
-                      elevation: 0,
-                      behavior: SnackBarBehavior.floating,
-                      backgroundColor: Colors.transparent,
-                      content: AwesomeSnackbarContent(
-                        title: state.walletLabelError,
-                        message: 'Please input minimum 4 letters',
-                        contentType: ContentType.warning,
+                    showTopSnackBar(
+                      context,
+                      const CustomSnackBar.error(
+                        message: 'Error Enter a valid name',
                       ),
                     );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
                 child: Text('Confirm'.toUpperCase()),

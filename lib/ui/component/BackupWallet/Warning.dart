@@ -34,8 +34,8 @@ In case your device resets or fails, you will need it to recover your wallet on 
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: c.colours.primary,
-              onPrimary: c.colours.background,
+              foregroundColor: c.colours.background,
+              backgroundColor: c.colours.primary,
             ),
             onPressed: () {
               c.read<SeedBackupCubit>().nextClicked();

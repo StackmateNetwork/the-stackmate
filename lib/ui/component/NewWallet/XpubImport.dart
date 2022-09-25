@@ -1,7 +1,8 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class XpubFieldsImport extends StatefulWidget {
   const XpubFieldsImport({
@@ -188,23 +189,18 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: c.colours.primary,
-                  onPrimary: c.colours.background,
+                  foregroundColor: c.colours.background,
+                  backgroundColor: c.colours.primary,
                 ),
                 onPressed: () async {
                   c.read<XpubImportCubit>().checkDetails();
                   if (state.errXpub != '') {
-                    final snackBar = SnackBar(
-                      elevation: 0,
-                      behavior: SnackBarBehavior.floating,
-                      backgroundColor: Colors.transparent,
-                      content: AwesomeSnackbarContent(
-                        title: state.errXpub,
+                    showTopSnackBar(
+                      context,
+                      const CustomSnackBar.error(
                         message: '',
-                        contentType: ContentType.warning,
                       ),
                     );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
                 child: const Text('CONFIRM'),

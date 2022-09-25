@@ -40,8 +40,8 @@ class EnterMyIdentity extends StatelessWidget {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: c.colours.primary,
-              onPrimary: c.colours.background,
+              foregroundColor: c.colours.background,
+              backgroundColor: c.colours.primary,
             ),
             onPressed: () async {
               //c.push('/my-identity');
