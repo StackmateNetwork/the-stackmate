@@ -53,8 +53,8 @@ class _RecoverMyIdentityState extends State<RecoverMyIdentity> {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: context.colours.background,
-                  backgroundColor: context.colours.primary,
+                  onPrimary: context.colours.background,
+                  primary: context.colours.primary,
                 ),
                 onPressed: () {},
                 child: const Text('RECOVER'),

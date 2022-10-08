@@ -44,10 +44,8 @@ dependencies:
   permission_handler: ^10.0.0
   petitparser: ^5.0.0
   qr_flutter: ^4.0.0
-  retry: ^3.1.0
   share: ^2.0.1
   sqflite: ^2.0.3
-  stream_transform: ^2.0.0
   top_snackbar_flutter: ^2.1.1
   url_launcher: ^6.0.3
   utopic_tor_onion_proxy: ^0.4.0

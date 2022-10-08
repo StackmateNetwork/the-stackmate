@@ -19,7 +19,7 @@ class EnterMyIdentity extends StatelessWidget {
           )
         else ...[
           Text(
-            'COMING SOON.',
+            'CYPHERPOST',
             style: c.fonts.caption!.copyWith(
               color: c.colours.primary,
             ),
@@ -34,19 +34,6 @@ class EnterMyIdentity extends StatelessWidget {
               color: c.colours.onPrimary,
             ),
             textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              foregroundColor: c.colours.background,
-              backgroundColor: c.colours.primary,
-            ),
-            onPressed: () async {
-              //c.push('/my-identity');
-            },
-            child: const Text('SETUP IDENTITY'),
           ),
         ],
       ],

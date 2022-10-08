@@ -97,8 +97,8 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: c.colours.background,
-                    backgroundColor: c.colours.primary,
+                    onPrimary: c.colours.background,
+                    primary: c.colours.primary,
                   ),
                   onPressed: () {
                     if (_form.currentState!.validate()) {
@@ -236,8 +236,8 @@ class SeedGenerate extends StatelessWidget {
             height: 52,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                foregroundColor: c.colours.background,
-                backgroundColor: c.colours.primary,
+                onPrimary: c.colours.background,
+                primary: c.colours.primary,
               ),
               onPressed: () {
                 c.read<SeedGenerateCubit>().startQuiz();
@@ -250,9 +250,9 @@ class SeedGenerate extends StatelessWidget {
             height: 52,
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
-                foregroundColor: c.colours.primary,
+                primary: c.colours.primary,
                 side: BorderSide(color: c.colours.onPrimary),
-                disabledForegroundColor: c.colours.background.withOpacity(0.38),
+                onSurface: c.colours.background.withOpacity(0.38),
               ),
               onPressed: () {
                 c.read<SeedGenerateCubit>().backupLater();

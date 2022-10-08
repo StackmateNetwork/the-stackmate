@@ -25,6 +25,7 @@ class TorConfigScreen extends StatelessWidget {
             c.read<TorCubit>().testConnection();
           },
           child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -47,7 +48,7 @@ class TorConfigScreen extends StatelessWidget {
                 ),
                 if (tor.isConnected)
                   Padding(
-                    padding: const EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Tooltip(
                       preferBelow: false,
                       triggerMode: TooltipTriggerMode.tap,
@@ -113,10 +114,9 @@ class TorConfigScreen extends StatelessWidget {
                     width: c.width,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: c.colours.primary,
+                        primary: c.colours.primary,
                         side: BorderSide(color: c.colours.onPrimary),
-                        disabledForegroundColor:
-                            c.colours.background.withOpacity(0.38),
+                        onSurface: c.colours.background.withOpacity(0.38),
                       ),
                       onPressed: () {
                         c.read<TorCubit>().start();

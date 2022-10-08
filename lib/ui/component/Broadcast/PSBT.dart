@@ -34,10 +34,9 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: c.colours.primary,
+                  primary: c.colours.primary,
                   side: BorderSide(color: c.colours.onPrimary),
-                  disabledForegroundColor:
-                      c.colours.background.withOpacity(0.38),
+                  onSurface: c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().pastePSBT();
@@ -50,10 +49,9 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: c.colours.primary,
+                  primary: c.colours.primary,
                   side: BorderSide(color: c.colours.onPrimary),
-                  disabledForegroundColor:
-                      c.colours.background.withOpacity(0.38),
+                  onSurface: c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   c.read<BroadcastCubit>().updatePSBTFile();
@@ -66,10 +64,9 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: c.colours.primary,
+                  primary: c.colours.primary,
                   side: BorderSide(color: c.colours.onPrimary),
-                  disabledForegroundColor:
-                      c.colours.background.withOpacity(0.38),
+                  onSurface: c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   c.read<BroadcastCubit>().verifyImportPSBT();
@@ -82,8 +79,8 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: c.colours.background,
-                  backgroundColor: c.colours.primary,
+                  onPrimary: c.colours.background,
+                  primary: c.colours.primary,
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().broadcastConfirmed();

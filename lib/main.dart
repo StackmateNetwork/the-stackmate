@@ -19,6 +19,7 @@ import 'package:sats/ui/screen/Logs.dart';
 import 'package:sats/ui/screen/Messages.dart';
 import 'package:sats/ui/screen/MyIdentity.dart';
 import 'package:sats/ui/screen/Network.dart';
+import 'package:sats/ui/screen/NetworkJoin.dart';
 import 'package:sats/ui/screen/NewWallet/MasterKeyDerive.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
@@ -97,6 +98,10 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/network',
         builder: (_, __) => const NetworkHomeScreen(),
+      ),
+      GoRoute(
+        path: '/network-join',
+        builder: (_, __) => const NetworkJoinScreen(),
       ),
       GoRoute(
         path: '/my-identity',

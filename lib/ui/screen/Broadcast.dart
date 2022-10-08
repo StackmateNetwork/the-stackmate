@@ -30,7 +30,10 @@ class _Broadcast extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 64),
-                const BroadcastHex()
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
+                  child: BroadcastHex(),
+                ),
               ],
             ),
           ),

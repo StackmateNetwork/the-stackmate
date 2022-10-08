@@ -19,6 +19,7 @@ class SettingsScreen extends StatelessWidget {
       body: SafeArea(
         bottom: false,
         child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -50,8 +51,8 @@ class SettingsScreen extends StatelessWidget {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: c.colours.background,
-                    backgroundColor: c.colours.primary,
+                    onPrimary: c.colours.background,
+                    primary: c.colours.primary,
                   ),
                   onPressed: () {
                     c.read<MasterKeyCubit>().init();

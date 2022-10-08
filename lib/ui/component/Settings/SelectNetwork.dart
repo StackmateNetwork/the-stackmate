@@ -18,7 +18,7 @@ class SelectNetwork extends StatelessWidget {
       },
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: c.colours.surface,
+        primary: c.colours.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       ),
       child: Container(

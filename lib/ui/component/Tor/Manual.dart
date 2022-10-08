@@ -17,7 +17,7 @@ class ManualTor extends StatelessWidget {
           },
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            backgroundColor: context.colours.surface,
+            primary: context.colours.surface,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           ),
@@ -75,7 +75,7 @@ class ManualTor extends StatelessWidget {
           },
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            backgroundColor: context.colours.surface,
+            primary: context.colours.surface,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           ),

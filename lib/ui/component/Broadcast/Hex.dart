@@ -23,10 +23,9 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: c.colours.primary,
+                  primary: c.colours.primary,
                   side: BorderSide(color: c.colours.onPrimary),
-                  disabledForegroundColor:
-                      c.colours.background.withOpacity(0.38),
+                  onSurface: c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().pasteHex();
@@ -39,10 +38,9 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: context.colours.primary,
+                  primary: context.colours.primary,
                   side: BorderSide(color: context.colours.onPrimary),
-                  disabledForegroundColor:
-                      context.colours.background.withOpacity(0.38),
+                  onSurface: context.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().updateHexFile();
@@ -72,10 +70,9 @@ class BroadcastHex extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: c.colours.primary,
+                    primary: c.colours.primary,
                     side: BorderSide(color: c.colours.onPrimary),
-                    disabledForegroundColor:
-                        c.colours.background.withOpacity(0.38),
+                    onSurface: c.colours.background.withOpacity(0.38),
                   ),
                   onPressed: () async {
                     c.read<BroadcastCubit>().clearCachedFiles();
@@ -105,10 +102,9 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: context.colours.primary,
+                  primary: context.colours.primary,
                   side: BorderSide(color: context.colours.onPrimary),
-                  disabledForegroundColor:
-                      context.colours.background.withOpacity(0.38),
+                  onSurface: context.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () async {
                   context.read<BroadcastCubit>().verifyImportHex();
@@ -142,8 +138,8 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: context.colours.background,
-                  backgroundColor: context.colours.primary,
+                  onPrimary: context.colours.background,
+                  primary: context.colours.primary,
                 ),
                 onPressed: () async {
                   context.read<BroadcastCubit>().broadcastHexConfirmed();
