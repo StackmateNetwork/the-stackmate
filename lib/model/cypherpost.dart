@@ -35,7 +35,7 @@ class CypherPostBadge {
     required this.genesis,
     required this.giver,
     required this.reciever,
-    required this.type,
+    required this.kind,
     required this.hash,
     required this.nonce,
     required this.signature,
@@ -44,40 +44,94 @@ class CypherPostBadge {
   final int genesis;
   final String giver;
   final String reciever;
-  final String type;
+  final String kind;
   final String hash;
   final String nonce;
   final String signature;
+
+  @override
+  String toString() {
+    return '$giver:$reciever:$kind:$nonce';
+  }
+
+  bool verify() {
+    return false;
+  }
 }
 
-class CypherPostDecryptionKey {
-  CypherPostDecryptionKey({
-    required this.reciever,
-    required this.decryptionKey,
-  });
-
-  final String reciever;
-  final String decryptionKey;
-}
-
-class CypherPost {
-  CypherPost({
+class PlainPost {
+  PlainPost({
     required this.id,
-    required this.reference,
     required this.genesis,
     required this.expiry,
     required this.owner,
-    required this.cypherJson,
-    required this.derivationScheme,
-    required this.decryptionKey,
+    required this.post,
   });
 
   final String id;
-  final String reference;
   final int genesis;
   final int expiry;
   final String owner;
-  final String cypherJson;
-  final String derivationScheme;
-  final String? decryptionKey;
+  final Post post;
+}
+
+class Post {
+  Post({
+    required this.to,
+    required this.payload,
+    required this.checksum,
+    required this.signature,
+  });
+
+  final Recipient to;
+  final Payload payload;
+  final String checksum;
+  final String signature;
+}
+
+class Payload {
+  Payload({
+    required this.kind,
+    required this.value,
+  });
+
+  final PayloadKind kind;
+  final String value;
+}
+
+enum PayloadKind {
+  preferences,
+  message,
+  secret,
+}
+
+enum RecipientKind {
+  direct,
+  group,
+}
+
+class Recipient {
+  Recipient({
+    required this.kind,
+    required this.value,
+  });
+
+  final RecipientKind kind;
+  final String value;
+}
+
+class Members {
+  Members({required this.members});
+
+  List<CypherPostIdentity> members;
+}
+
+class AllPosts {
+  AllPosts({
+    required this.mine,
+    required this.others,
+  });
+
+  List<PlainPost> mine;
+  List<PlainPost> others;
 }

@@ -1,5 +1,5 @@
 // import 'package:bitcoin/bitcoin.dart';
-// import 'package:sats/model/cypher-post.dart';
+// import 'package:sats/model/cypherpost.dart';
 // import 'package:sats/model/result.dart';
 
 // abstract class ICypherPostAPI {
