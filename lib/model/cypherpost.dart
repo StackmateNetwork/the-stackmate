@@ -18,6 +18,16 @@ class CypherPostHeader {
   }
 }
 
+class CypherPostServerIdentity {
+  CypherPostServerIdentity({
+    required this.name,
+    required this.pubkey,
+  });
+
+  final String name;
+  final String pubkey;
+}
+
 class CypherPostIdentity {
   CypherPostIdentity({
     required this.genesis,
@@ -73,6 +83,14 @@ class PlainPost {
   final int expiry;
   final String owner;
   final Post post;
+
+  RecipientKind getRecipientKind() {
+    return post.to.kind;
+  }
+
+  PayloadKind getPayloadKind() {
+    return post.payload.kind;
+  }
 }
 
 class Post {
@@ -118,12 +136,6 @@ class Recipient {
 
   final RecipientKind kind;
   final String value;
-}
-
-class Members {
-  Members({required this.members});
-
-  List<CypherPostIdentity> members;
 }
 
 class AllPosts {

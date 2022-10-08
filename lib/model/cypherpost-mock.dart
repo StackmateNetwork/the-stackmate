@@ -1,30 +1,33 @@
 import 'package:sats/model/cypherpost.dart';
 
-final myIdentity = CypherPostIdentity(
+final serverId = CypherPostServerIdentity(
+  name: 'cypherpostLounge',
+  pubkey: '448A68554199C47D08FFB10D4B826A3C4655DA4FBFC0E1108A8FD17B',
+);
+
+final myId = CypherPostIdentity(
   genesis: 27872872,
   username: 'sm8',
   pubkey: '26A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8',
 );
 
-final members = Members(
-  members: [
-    CypherPostIdentity(
-      genesis: 1127872872,
-      username: 'sm8',
-      pubkey: '26A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8',
-    ),
-    CypherPostIdentity(
-      genesis: 1527872872,
-      username: 'buff',
-      pubkey: 'F9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B1E56FFA',
-    ),
-    CypherPostIdentity(
-      genesis: 1327872872,
-      username: 'moses',
-      pubkey: '6A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8',
-    ),
-  ],
-);
+final members = [
+  CypherPostIdentity(
+    genesis: 1127872872,
+    username: 'sm8',
+    pubkey: '26A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8',
+  ),
+  CypherPostIdentity(
+    genesis: 1527872872,
+    username: 'buff',
+    pubkey: 'F9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B1E56FFA',
+  ),
+  CypherPostIdentity(
+    genesis: 1327872872,
+    username: 'moses',
+    pubkey: '6A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8',
+  ),
+];
 
 final posts = AllPosts(
   mine: [
