@@ -1,7 +1,7 @@
 import 'package:sats/model/cypherpost.dart';
 
 final serverId = CypherPostServerIdentity(
-  name: 'cypherpostLounge',
+  name: 'Cypherpost Lounge',
   pubkey: '448A68554199C47D08FFB10D4B826A3C4655DA4FBFC0E1108A8FD17B',
 );
 
@@ -26,6 +26,16 @@ final members = [
     genesis: 1327872872,
     username: 'moses',
     pubkey: '6A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8',
+  ),
+  CypherPostIdentity(
+    genesis: 1327872872,
+    username: 'zfr',
+    pubkey: 'A448A68554199C55DA4FBFC0E1108A8FD17B10D4B847D08FFB83C46',
+  ),
+  CypherPostIdentity(
+    genesis: 1327872872,
+    username: 'hombre',
+    pubkey: '17B4408FFB10D4B8268A68554199C47DA3C4655DA4FBFC0E1108A8FD',
   ),
 ];
 
