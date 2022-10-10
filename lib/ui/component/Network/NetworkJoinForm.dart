@@ -24,7 +24,6 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 32),
           Padding(
             padding: EdgeInsets.zero,
             child: TextFormField(
@@ -56,14 +55,14 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 15),
           Padding(
             padding: EdgeInsets.zero,
             child: TextFormField(
               enableIMEPersonalizedLearning: false,
               autocorrect: false,
               obscureText: false,
-              controller: textController,
+              //controller: textController,
               validator: (val) {
                 return null;
               },
@@ -74,14 +73,14 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
               ),
             ),
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 15),
           Padding(
             padding: EdgeInsets.zero,
             child: TextFormField(
               enableIMEPersonalizedLearning: false,
               autocorrect: false,
               obscureText: false,
-              controller: textController,
+              //controller: textController,
               validator: (val) {
                 return null;
               },
@@ -105,7 +104,7 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
               ),
             ),
           ),
-          const SizedBox(height: 44),
+          const SizedBox(height: 54),
           SizedBox(
             height: 52,
             child: ElevatedButton(
