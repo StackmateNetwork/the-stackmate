@@ -43,8 +43,8 @@ class CypherPostIdentity {
 class CypherPostBadge {
   CypherPostBadge({
     required this.genesis,
-    required this.giver,
-    required this.reciever,
+    required this.by,
+    required this.to,
     required this.kind,
     required this.hash,
     required this.nonce,
@@ -52,8 +52,8 @@ class CypherPostBadge {
   });
 
   final int genesis;
-  final String giver;
-  final String reciever;
+  final String by;
+  final String to;
   final String kind;
   final String hash;
   final String nonce;
@@ -61,11 +61,7 @@ class CypherPostBadge {
 
   @override
   String toString() {
-    return '$giver:$reciever:$kind:$nonce';
-  }
-
-  bool verify() {
-    return false;
+    return '$by:$to:$kind:$nonce';
   }
 }
 
