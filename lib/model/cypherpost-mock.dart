@@ -11,6 +11,21 @@ final myId = CypherPostIdentity(
   pubkey: '26A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8',
 );
 
+final networks = [
+  CypherPostServerIdentity(
+    name: 'cypherpostLounge',
+    pubkey: '448A68554199C47D08FFB10D4B826A3C4655DA4FBFC0E1108A8FD17B',
+  ),
+  CypherPostServerIdentity(
+    name: 'LightningLounge',
+    pubkey: '448A68554199C47D08FFB10D4B826A3C4655DA4FBFC0E1108A8FD1',
+  ),
+  CypherPostServerIdentity(
+    name: 'BitcoinLounge',
+    pubkey: '448A68554199C47D08FFB10D4B826A3C4655DA4FBFC1108A8FD17B',
+  ),
+];
+
 final members = [
   CypherPostIdentity(
     genesis: 1127872872,
