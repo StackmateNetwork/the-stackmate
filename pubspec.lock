@@ -631,7 +631,7 @@ packages:
       path: "packages/libstackmate"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.12.0"
   linkify:
     dependency: transitive
     description:

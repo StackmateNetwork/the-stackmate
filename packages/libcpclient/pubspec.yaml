@@ -20,7 +20,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.libstackmate
+        package: com.example.libcpclient
         pluginClass: LibCPClientPlugin
       ios:
         pluginClass: LibCPClientPlugin

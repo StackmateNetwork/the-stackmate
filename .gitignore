@@ -2,23 +2,6 @@
 *.git
 *.env
 
-#INFRA
-infra/vagrant/.vagrant
-infra/vagrant/Vagrantfile
-infra/terraform/.terraform
-infra/terraform/terraform.tfstate
-infra/terraform/terraform.tfstate.backup
-infra/terraform/terraform.tfvars
-infra/terraform/vars.json
-
-# APP
-
-#TS
-app/typescript/node_modules/
-app/typescript/dist/
-
-#RUST
-app/rust/target
 
 #DART
 # Miscellaneous
@@ -60,10 +43,18 @@ app.*.map.json
 
 **/target
 # /packages/bitcoin/ios/libstackmate.a
-android/src/main/jniLibs/x86_64/libstackmate.so
-android/src/main/jniLibs/x86/libstackmate.so
-android/src/main/jniLibs/armeabi-v7a/libstackmate.so
-android/src/main/jniLibs/arm64-v8a/libstackmate.so
-packages/bitcoin/test/libstackmate.dylib
+/packages/libstackmate/android/src/main/jniLibs/x86_64/libstackmate.so
+/packages/libstackmate/android/src/main/jniLibs/x86/libstackmate.so
+/packages/libstackmate/android/src/main/jniLibs/armeabi-v7a/libstackmate.so
+/packages/libstackmate/android/src/main/jniLibs/arm64-v8a/libstackmate.so
+/packages/libstackmate/linux/x86_64/libstackmate.so
+/packages/libstackmate/macos/x86_64/libstackmate.dylib
+
+/packages/libcpclient/android/src/main/jniLibs/x86_64/libcpclient.so
+/packages/libcpclient/android/src/main/jniLibs/x86/libcpclient.so
+/packages/libcpclient/android/src/main/jniLibs/armeabi-v7a/libcpclient.so
+/packages/libcpclient/android/src/main/jniLibs/arm64-v8a/libcpclient.so
+/packages/libcpclient/linux/x86_64/libcpclient.so
+/packages/libcpclient/macos/x86_64/libcpclient.dylib
 
 coverage/*
