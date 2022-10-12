@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/model/cypherpost-mock.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:go_router/go_router.dart';
 
 class NetworkName extends StatelessWidget {
   @override
@@ -19,25 +20,30 @@ class NetworkName extends StatelessWidget {
           height: 5,
         ),
         Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.info,
-                  size: 32,
-                  color: c.colours.primary,
-                ),
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(
+              onPressed: () {
+                c.push('/user-info');
+              },
+              icon: Icon(
+                Icons.info,
+                size: 32,
+                color: c.colours.primary,
               ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.message,
-                  size: 32,
-                  color: c.colours.primary,
-                ),
+            ),
+            IconButton(
+              onPressed: () {
+                c.push('/chat-directory');
+              },
+              icon: Icon(
+                Icons.message,
+                size: 32,
+                color: c.colours.primary,
               ),
-            ])
+            ),
+          ],
+        )
       ],
     );
   }

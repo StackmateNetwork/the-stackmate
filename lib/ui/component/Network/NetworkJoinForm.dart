@@ -29,7 +29,6 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
             child: TextFormField(
               enableIMEPersonalizedLearning: false,
               autocorrect: false,
-              obscureText: false,
               controller: textController,
               validator: (val) {
                 return null;
@@ -61,7 +60,6 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
             child: TextFormField(
               enableIMEPersonalizedLearning: false,
               autocorrect: false,
-              obscureText: false,
               //controller: textController,
               validator: (val) {
                 return null;
@@ -79,7 +77,6 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
             child: TextFormField(
               enableIMEPersonalizedLearning: false,
               autocorrect: false,
-              obscureText: false,
               //controller: textController,
               validator: (val) {
                 return null;

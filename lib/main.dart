@@ -32,6 +32,7 @@ import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
 import 'package:sats/ui/screen/TorConfig.dart';
+import 'package:sats/ui/screen/Userinfo.dart';
 import 'package:sats/ui/screen/Wallet.dart';
 import 'package:sats/ui/style.dart';
 import 'package:sqflite/sqflite.dart';
@@ -110,8 +111,12 @@ class Stackmate extends StatelessWidget {
         builder: (_, __) => const DiscoverScreen(),
       ),
       GoRoute(
-        path: '/chat',
+        path: '/chat-directory',
         builder: (_, __) => const ChatScreen(),
+      ),
+      GoRoute(
+        path: '/user-info',
+        builder: (_, __) => const UserInfoScreen(),
       ),
       GoRoute(
         path: '/my-identity',

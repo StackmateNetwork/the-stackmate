@@ -18,6 +18,15 @@ class DiscoverSearchState extends State<DiscoverSearch> {
   //
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
+
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    _controller = TextEditingController();
+    super.initState();
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -33,25 +42,18 @@ class DiscoverSearchState extends State<DiscoverSearch> {
             child: TextFormField(
               enableIMEPersonalizedLearning: false,
               autocorrect: false,
-              obscureText: false,
               validator: (val) {
                 return null;
               },
               onChanged: (text) {},
               style: TextStyle(color: c.colours.onBackground),
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
+                suffixIcon: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.search),
+                ),
                 labelText: 'Search username,pubkey',
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 204.0),
-            child: SizedBox(
-              child: IconButton(
-                icon: const Icon(Icons.search_sharp),
-                tooltip: 'Check username',
-                onPressed: () {},
               ),
             ),
           ),

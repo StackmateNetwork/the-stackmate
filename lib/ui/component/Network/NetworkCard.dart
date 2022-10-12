@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/model/cypherpost-mock.dart';
 import 'package:sats/model/cypherpost.dart';
 import 'package:sats/pkg/extensions.dart';
 

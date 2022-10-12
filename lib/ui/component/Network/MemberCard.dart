@@ -18,7 +18,7 @@ class MemberCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (!isSelection) {
-          context.push('/chat');
+          // context.push('/chat-directory');
         }
       },
       child: Material(
