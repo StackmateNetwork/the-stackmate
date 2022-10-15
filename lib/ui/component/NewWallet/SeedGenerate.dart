@@ -40,7 +40,7 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
               // const HeaderTextDark(text: 'Enter an\noptional\npassphrase'),
               const SizedBox(height: 24),
               Text(
-                'Add an (optional) security layer to your seed.\n\nIf you feel paranoid about 12 words not being enough, add some more entropy here.\n\nIf set, you cannot recover funds without it.',
+                'Leave this blank if you are not sure.\nIf you set a passphrase, you cannot recover your funds without it.',
                 style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
               ),
               const SizedBox(height: 32),

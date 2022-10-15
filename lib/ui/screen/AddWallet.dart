@@ -57,7 +57,7 @@ class AddWalletScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'A 12/24 word mnemonic seed phrase and optional passphrase represents your master key. You can use it to recover your funds on any Bitcoin wallet.',
+                  'A 12/24 word mnemonic seed phrase and optional passphrase represents your master key. You will require it to recover your wallet and social accounts.',
                   style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.onPrimary,
                   ),

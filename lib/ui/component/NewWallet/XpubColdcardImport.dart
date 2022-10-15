@@ -28,7 +28,7 @@ class XpubColdcardImport extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              "Once you have your account loaded in your ColdCard (APPLY passphrase if required), navigate to:\n\n-> Advanced\n-> Micro SD Card\n-> Export Wallet\n-> Generic JSON\n-> Account 0\n\nThis will dump your ColdCard account's public keys into a .json file.\nImport the JSON file here.\n\nWE RECOMMEND USING AN SD ADAPTOR, AND AVOID STORING YOUR PUBLIC KEYS ON YOUR PHONE'S SHARED MEMORY.\n\nWe only derive the Segwit account from your ColdCard. Ask us if you need support for Legacy.",
+              'Once you have your account loaded in your ColdCard (APPLY passphrase if required), navigate to:\n\n-> Advanced\n-> Micro SD Card\n-> Export Wallet\n-> Generic JSON\n\n\nImport this JSON via an SD Adaptor.\n\nWe only derive the Segwit account from your ColdCard. Ask us if you need support for Legacy.',
               style: context.fonts.bodySmall!.copyWith(
                 color: context.colours.onPrimary,
               ),

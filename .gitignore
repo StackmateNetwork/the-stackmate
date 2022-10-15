@@ -43,18 +43,18 @@ app.*.map.json
 
 **/target
 # /packages/bitcoin/ios/libstackmate.a
-/packages/libstackmate/android/src/main/jniLibs/x86_64/libstackmate.so
-/packages/libstackmate/android/src/main/jniLibs/x86/libstackmate.so
-/packages/libstackmate/android/src/main/jniLibs/armeabi-v7a/libstackmate.so
-/packages/libstackmate/android/src/main/jniLibs/arm64-v8a/libstackmate.so
-/packages/libstackmate/linux/x86_64/libstackmate.so
-/packages/libstackmate/macos/x86_64/libstackmate.dylib
+# /packages/libstackmate/android/src/main/jniLibs/x86_64/libstackmate.so
+# /packages/libstackmate/android/src/main/jniLibs/x86/libstackmate.so
+# /packages/libstackmate/android/src/main/jniLibs/armeabi-v7a/libstackmate.so
+# /packages/libstackmate/android/src/main/jniLibs/arm64-v8a/libstackmate.so
+# /packages/libstackmate/linux/x86_64/libstackmate.so
+# /packages/libstackmate/macos/x86_64/libstackmate.dylib
 
-/packages/libcpclient/android/src/main/jniLibs/x86_64/libcpclient.so
-/packages/libcpclient/android/src/main/jniLibs/x86/libcpclient.so
-/packages/libcpclient/android/src/main/jniLibs/armeabi-v7a/libcpclient.so
-/packages/libcpclient/android/src/main/jniLibs/arm64-v8a/libcpclient.so
-/packages/libcpclient/linux/x86_64/libcpclient.so
-/packages/libcpclient/macos/x86_64/libcpclient.dylib
+# /packages/libcpclient/android/src/main/jniLibs/x86_64/libcpclient.so
+# /packages/libcpclient/android/src/main/jniLibs/x86/libcpclient.so
+# /packages/libcpclient/android/src/main/jniLibs/armeabi-v7a/libcpclient.so
+# /packages/libcpclient/android/src/main/jniLibs/arm64-v8a/libcpclient.so
+# /packages/libcpclient/linux/x86_64/libcpclient.so
+# /packages/libcpclient/macos/x86_64/libcpclient.dylib
 
 coverage/*

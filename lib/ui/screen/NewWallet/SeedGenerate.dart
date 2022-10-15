@@ -10,6 +10,7 @@ import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/interface/launcher.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Label.dart';
@@ -137,6 +138,7 @@ class SeedGenerateScreen extends StatelessWidget {
       masterKey,
       networkSelect,
       logger,
+      locator<ILauncher>(),
     );
 
     final seedGenerateWalletCubit = SeedGenerateWalletCubit(

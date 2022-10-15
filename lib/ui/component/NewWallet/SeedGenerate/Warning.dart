@@ -4,6 +4,8 @@ import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class SeedGenerateWarning extends StatelessWidget {
+  final learnUrl = 'https://stackmate.org/learn';
+
   @override
   Widget build(BuildContext c) {
     final selectedSeedPhraseLength =
@@ -22,15 +24,24 @@ class SeedGenerateWarning extends StatelessWidget {
         const SizedBox(height: 32),
         Text(
           '''
-DO NOT TYPE YOUR SEED WORDS ON A KEYBOARD OR CREATE DIGITAL COPIES OF IT.
-
-Note it down (with your optional passphrase) on a piece of paper/card/steel
-and store in a safe place.
-
-In case your device resets or fails, you will need it to recover your wallet on a 
-new device.
+The following steps are critical to ensure safety of your funds. Take the time to understand it before proceeding.
       ''',
           style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
+        ),
+        GestureDetector(
+          onTap: () {
+            c.read<SeedGenerateCubit>().openLink(learnUrl);
+          },
+          child: Container(
+            width: c.width / 2,
+            child: Text(
+              // transaction.txIdBlur(),
+              'Click here to learn more.',
+              style: c.fonts.caption!.copyWith(
+                color: c.colours.primary,
+              ),
+            ),
+          ),
         ),
         const SizedBox(height: 16),
         ListTile(
@@ -52,7 +63,7 @@ new device.
         ),
         Text(
           '''
-12 Words is strong enough and easy to memorize. Passphrase is recommended to make it bullet-proof. Make the passphrase easy to access, like a passage from your favorite book or a song.
+A balance between easy of use and security.
       ''',
           style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
         ),
@@ -77,7 +88,7 @@ new device.
         ),
         Text(
           '''
-24 Words offers the highest grade of security.\n
+Offers highest grade of security.
       ''',
           style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
         ),

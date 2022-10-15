@@ -8,6 +8,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/interface/launcher.dart';
 
 part 'seed-generate.freezed.dart';
 
@@ -48,12 +49,14 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
     this._masterKey,
     this._blockchainCubit,
     this._logger,
+    this._launcher,
   ) : super(const SeedGenerateState());
 
   final IStackMateBitcoin _bitcoin;
   final MasterKeyCubit _masterKey;
   final ChainSelectCubit _blockchainCubit;
   final Logger _logger;
+  final ILauncher _launcher;
 
   static const accountZero = '0';
   static const segwitNativePurpose = '84';
@@ -284,6 +287,14 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
           quizSeedAnswer: '',
         ),
       );
+  }
+
+  void openLink(String url) {
+    try {
+      _launcher.launchApp(url);
+    } catch (e, s) {
+      _logger.logException(e, 'LearnSeedBitcoin.openLink', s);
+    }
   }
 
   void clear() => emit(const SeedGenerateState());

@@ -18,16 +18,7 @@ class SeedImportWarning extends StatelessWidget {
         const SizedBox(height: 24),
         Text(
           '''
-MAKE SURE you only type your seed manually.
-
-We enforce incognito mode on your keyboard so typing your seed phrase is a bit safer.
-
-NEVER copy/paste it via your clipboard.
-
-Android uses GBoard by deafult with analytics, so consider disabling it or entirely
-opting out and using OpenBoards. 
-
-Incognito mode has your back for now.
+Incognito mode is enforced on your keyboard.
 ''',
           style: c.fonts.caption!.copyWith(
             color: c.colours.onPrimary,
