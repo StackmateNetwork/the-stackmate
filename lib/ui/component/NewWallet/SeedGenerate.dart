@@ -97,11 +97,17 @@ class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: c.colours.primary,
                     onPrimary: c.colours.background,
+                    primary: c.colours.primary,
                   ),
                   onPressed: () {
                     if (_form.currentState!.validate()) {
+                      final FocusScopeNode currentFocus =
+                          FocusScope.of(context);
+
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
                       c.read<SeedGenerateCubit>().finalizePassphrase();
                     }
                   },
@@ -230,8 +236,8 @@ class SeedGenerate extends StatelessWidget {
             height: 52,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: c.colours.primary,
                 onPrimary: c.colours.background,
+                primary: c.colours.primary,
               ),
               onPressed: () {
                 c.read<SeedGenerateCubit>().startQuiz();
@@ -244,9 +250,9 @@ class SeedGenerate extends StatelessWidget {
             height: 52,
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
-                side: BorderSide(color: c.colours.onPrimary),
                 primary: c.colours.primary,
-                onSurface: c.colours.background,
+                side: BorderSide(color: c.colours.onPrimary),
+                onSurface: c.colours.background.withOpacity(0.38),
               ),
               onPressed: () {
                 c.read<SeedGenerateCubit>().backupLater();

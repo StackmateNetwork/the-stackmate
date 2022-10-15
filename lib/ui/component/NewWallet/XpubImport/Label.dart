@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-xpub.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class XpubLabel extends StatelessWidget {
   const XpubLabel({Key? key}) : super(key: key);
@@ -43,21 +44,29 @@ class XpubLabel extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-                if (state.errSavingWallet != '')
-                  Text(
-                    state.errSavingWallet,
-                    style: c.fonts.caption!.copyWith(color: c.colours.error),
-                  ),
                 SizedBox(
                   height: 52,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: c.colours.primary,
                       onPrimary: c.colours.background,
+                      primary: c.colours.primary,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      final FocusScopeNode currentFocus =
+                          FocusScope.of(context);
+
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
                       c.read<XpubImportWalletCubit>().nextClicked();
-                      c.read<XpubImportCubit>().clearCachedFiles();
+                      if (state.errSavingWallet != '') {
+                        showTopSnackBar(
+                          context,
+                          const CustomSnackBar.error(
+                            message: 'Error Enter a valid name',
+                          ),
+                        );
+                      }
                     },
                     child: const Text('Confirm'),
                   ),

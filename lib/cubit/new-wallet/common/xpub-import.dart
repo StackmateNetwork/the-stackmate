@@ -68,7 +68,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
         ),
       );
     } else {
-      emit(state.copyWith(errFileImport: 'Could not find file.'));
+      emit(state.copyWith(errFileImport: 'Error importing file'));
     }
   }
 
@@ -79,11 +79,11 @@ class XpubImportCubit extends Cubit<XpubImportState> {
         state.copyWith(
           clearJson: true,
           detailsReady: false,
-          importedJSONfileName: '',
+          importedJSONfileName: emptyString,
         ),
       );
     } else {
-      emit(state.copyWith(errFileImport: 'Could not find file.'));
+      emit(state.copyWith(errFileImport: 'Error importing file'));
     }
   }
 
@@ -183,7 +183,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
         ),
       );
     } catch (e, s) {
-      emit(state.copyWith(errFileImport: e.toString()));
+      emit(state.copyWith(detailsReady: false, errFileImport: e.toString()));
       _logger.logException(e, 'ColdCardJSON.ImportSegwit', s);
     }
   }

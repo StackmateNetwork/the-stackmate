@@ -88,8 +88,8 @@ new device.
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: c.colours.primary,
               onPrimary: c.colours.background,
+              primary: c.colours.primary,
             ),
             onPressed: () {
               c.read<SeedGenerateWalletCubit>().nextClicked();

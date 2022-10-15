@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/from-master-key.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class MasterDeriveLabel extends StatelessWidget {
   const MasterDeriveLabel({Key? key}) : super(key: key);
@@ -49,11 +51,25 @@ class MasterDeriveLabel extends StatelessWidget {
                   height: 52,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: c.colours.primary,
                       onPrimary: c.colours.background,
+                      primary: c.colours.primary,
                     ),
                     onPressed: () async {
+                      final FocusScopeNode currentFocus =
+                          FocusScope.of(context);
+
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
                       context.read<MasterDeriveWalletCubit>().nextClicked();
+                      if (state.walletLabelError != '') {
+                        showTopSnackBar(
+                          context,
+                          const CustomSnackBar.error(
+                            message: 'Error Enter a valid name',
+                          ),
+                        );
+                      }
                     },
                     child: const Text('Confirm'),
                   ),

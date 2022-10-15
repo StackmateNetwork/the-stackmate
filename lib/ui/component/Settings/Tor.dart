@@ -13,8 +13,8 @@ class TorSettings extends StatelessWidget {
       },
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
         primary: c.colours.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       ),
       child: Container(
         height: 80,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class BroadcastHex extends StatelessWidget {
   const BroadcastHex({Key? key}) : super(key: key);
@@ -21,9 +23,9 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: c.colours.onPrimary),
                   primary: c.colours.primary,
-                  onSurface: c.colours.background,
+                  side: BorderSide(color: c.colours.onPrimary),
+                  onSurface: c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().pasteHex();
@@ -36,9 +38,9 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: context.colours.onPrimary),
                   primary: context.colours.primary,
-                  onSurface: context.colours.background,
+                  side: BorderSide(color: context.colours.onPrimary),
+                  onSurface: context.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().updateHexFile();
@@ -66,18 +68,27 @@ class BroadcastHex extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Align(
                 alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () async {
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    primary: c.colours.primary,
+                    side: BorderSide(color: c.colours.onPrimary),
+                    onSurface: c.colours.background.withOpacity(0.38),
+                  ),
+                  onPressed: () async {
                     c.read<BroadcastCubit>().clearCachedFiles();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor:
-                            result ? c.colours.primary : c.colours.error,
-                        content: Text(
-                          result ? ' File removed' : 'Failed to clear file',
-                        ),
-                      ),
-                    );
+                    result
+                        ? showTopSnackBar(
+                            context,
+                            const CustomSnackBar.success(
+                              message: 'Delete successfully',
+                            ),
+                          )
+                        : showTopSnackBar(
+                            context,
+                            const CustomSnackBar.error(
+                              message: 'Error deleting file',
+                            ),
+                          );
                   },
                   child: Text(
                     'Clear file',
@@ -91,11 +102,11 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: context.colours.onPrimary),
                   primary: context.colours.primary,
-                  onSurface: context.colours.background,
+                  side: BorderSide(color: context.colours.onPrimary),
+                  onSurface: context.colours.background.withOpacity(0.38),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   context.read<BroadcastCubit>().verifyImportHex();
                 },
                 child: Text('verify file'.toUpperCase()),
@@ -127,11 +138,19 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: context.colours.primary,
                   onPrimary: context.colours.background,
+                  primary: context.colours.primary,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   context.read<BroadcastCubit>().broadcastHexConfirmed();
+                  if (broadcastState.errBroadcasting != '') {
+                    showTopSnackBar(
+                      context,
+                      const CustomSnackBar.error(
+                        message: 'Error detecting valid hex',
+                      ),
+                    );
+                  }
                 },
                 child: Text('Broadcast'.toUpperCase()),
               ),
