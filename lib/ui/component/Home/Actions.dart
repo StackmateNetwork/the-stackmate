@@ -27,7 +27,7 @@ class HomeActions extends StatelessWidget {
                 context.push('/network');
             },
             icon: Icon(
-              Icons.schema_outlined,
+              Icons.message_sharp,
               size: 32,
               color: context.colours.primary,
             ),

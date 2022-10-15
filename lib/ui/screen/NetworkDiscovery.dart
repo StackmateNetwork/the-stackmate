@@ -4,10 +4,12 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/Loader.dart';
-import 'package:sats/ui/component/Home/TorHeader.dart';
 import 'package:sats/ui/component/Network/DiscoverSearch.dart';
 import 'package:sats/ui/component/Network/MembersList.dart';
 import 'package:sats/ui/component/Network/NetworkName.dart';
+import 'package:sats/ui/component/Network/NetworkTools.dart';
+import 'package:sats/ui/component/common/BackButton.dart';
+import 'package:sats/ui/component/common/header.dart';
 
 class _Discover extends StatelessWidget {
   @override
@@ -17,12 +19,6 @@ class _Discover extends StatelessWidget {
         child: RefreshIndicator(
           displacement: 10.0,
           onRefresh: () async {
-            // c.read<WalletsCubit>().refresh();
-            // for (final wallet in wallets) {
-            //   c.read<WalletsCubit>().walletSelected(wallet);
-            //   final selected = c.select((InfoCubit ic) => ic);
-            //   selected.sqliteSyncHistory();
-            // }
             await c.read<TorCubit>().testConnection();
             await c.read<FeesCubit>().update();
             return;
@@ -34,7 +30,8 @@ class _Discover extends StatelessWidget {
                   SliverAppBar(
                     stretch: true,
                     pinned: true,
-                    expandedHeight: c.height / 3,
+                    collapsedHeight: 256,
+                    expandedHeight: 256,
                     automaticallyImplyLeading: false,
                     backgroundColor: c.colours.background,
                     flexibleSpace: FlexibleSpaceBar(
@@ -43,11 +40,27 @@ class _Discover extends StatelessWidget {
                       ],
                       background: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const HomeLoader(),
-                          TorHeader(),
-                          NetworkName(),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Header(
+                            cornerTitle: 'Discover'.toUpperCase(),
+                            children: [
+                              Back(
+                                onPressed: () {
+                                  Navigator.of(c).pop();
+                                },
+                              ),
+                            ],
+                          ),
+                          Icon(
+                            Icons.travel_explore,
+                            size: 32,
+                            color: context.colours.primary,
+                          ),
                           const DiscoverSearch()
                         ],
                       ),
@@ -77,8 +90,8 @@ class _Discover extends StatelessWidget {
   }
 }
 
-class DiscoverScreen extends StatelessWidget {
-  const DiscoverScreen({Key? key}) : super(key: key);
+class DiscoveryScreen extends StatelessWidget {
+  const DiscoveryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -12,15 +12,13 @@ import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
 import 'package:sats/ui/screen/BackupWallet.dart';
 import 'package:sats/ui/screen/Broadcast.dart';
-import 'package:sats/ui/screen/Chat.dart';
-import 'package:sats/ui/screen/Contracts.dart';
 import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
-import 'package:sats/ui/screen/Messages.dart';
 import 'package:sats/ui/screen/MyIdentity.dart';
 import 'package:sats/ui/screen/Network.dart';
-import 'package:sats/ui/screen/NetworkDiscover.dart';
+import 'package:sats/ui/screen/NetworkChat.dart';
+import 'package:sats/ui/screen/NetworkDiscovery.dart';
 import 'package:sats/ui/screen/NetworkJoin.dart';
 import 'package:sats/ui/screen/NewWallet/MasterKeyDerive.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
@@ -107,12 +105,12 @@ class Stackmate extends StatelessWidget {
         builder: (_, __) => const NetworkJoinScreen(),
       ),
       GoRoute(
-        path: '/discover',
-        builder: (_, __) => const DiscoverScreen(),
+        path: '/chat-members',
+        builder: (_, __) => const NetworkChat(),
       ),
       GoRoute(
-        path: '/chat-directory',
-        builder: (_, __) => const ChatScreen(),
+        path: '/discover-members',
+        builder: (_, __) => const DiscoveryScreen(),
       ),
       GoRoute(
         path: '/user-info',
@@ -127,12 +125,8 @@ class Stackmate extends StatelessWidget {
         builder: (_, __) => const PeersScreen(),
       ),
       GoRoute(
-        path: '/contracts',
-        builder: (_, __) => const ContractsScreen(),
-      ),
-      GoRoute(
-        path: '/messages',
-        builder: (_, __) => const MessagesScreen(),
+        path: '/chat',
+        builder: (_, __) => const NetworkChat(),
       ),
       GoRoute(
         path: '/add-wallet',

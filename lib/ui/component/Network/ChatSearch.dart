@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:sats/pkg/extensions.dart';
 
-class DiscoverSearch extends StatefulWidget {
-  const DiscoverSearch({Key? key}) : super(key: key);
+class ChatSearch extends StatefulWidget {
+  const ChatSearch({Key? key}) : super(key: key);
 
   @override
-  DiscoverSearchState createState() {
-    return DiscoverSearchState();
+  ChatSearchState createState() {
+    return ChatSearchState();
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class DiscoverSearchState extends State<DiscoverSearch> {
+class ChatSearchState extends State<ChatSearch> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
@@ -56,7 +56,7 @@ class DiscoverSearchState extends State<DiscoverSearch> {
                   onPressed: () {},
                   icon: const Icon(Icons.search),
                 ),
-                labelText: 'Search username,pubkey',
+                labelText: 'Search by username or group',
               ),
             ),
           ),

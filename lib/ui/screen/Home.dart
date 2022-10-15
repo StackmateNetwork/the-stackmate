@@ -43,7 +43,8 @@ class _Home extends StatelessWidget {
                         SliverAppBar(
                           stretch: true,
                           pinned: true,
-                          expandedHeight: c.height / 3,
+                          collapsedHeight: 256,
+                          expandedHeight: 256,
                           automaticallyImplyLeading: false,
                           backgroundColor: c.colours.background,
                           flexibleSpace: FlexibleSpaceBar(
@@ -52,7 +53,7 @@ class _Home extends StatelessWidget {
                             ],
                             background: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 const HomeLoader(),
                                 TorHeader(),

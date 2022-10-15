@@ -33,55 +33,75 @@ class UserInfoScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 56),
                     Text(
-                      'USER\nINFORMATION',
+                      'PUBLIC KEY',
                       style: c.fonts.overline!.copyWith(
-                        color: c.colours.onBackground,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Text(
-                      'Public Key',
-                      style: c.fonts.headlineSmall!.copyWith(
                         color: c.colours.onBackground,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       myId.pubkey,
-                      style: c.fonts.headline6!.copyWith(
-                        color: c.colours.primary,
+                      style: c.fonts.bodySmall!.copyWith(
+                        color: c.colours.onBackground,
                       ),
                     ),
                     const SizedBox(height: 24),
                     Text(
-                      'Username',
+                      'USERNAME',
+                      style: c.fonts.overline!.copyWith(
+                        color: c.colours.onBackground,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      myId.username,
                       style: c.fonts.headline6!.copyWith(
                         color: c.colours.onBackground,
                       ),
                     ),
+                    const SizedBox(height: 24),
                     Text(
-                      myId.username,
+                      'TYPE',
+                      style: c.fonts.overline!.copyWith(
+                        color: c.colours.onBackground,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Privileged',
                       style: c.fonts.headline6!.copyWith(
-                        color: c.colours.primary,
+                        color: c.colours.onBackground,
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    TextButton(
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(EdgeInsets.zero),
-                        alignment: Alignment.centerLeft,
-                      ),
-                      onPressed: () {},
-                      child: Text('Copy'.toUpperCase()),
                     ),
                     const SizedBox(height: 24),
                     Text(
-                      'Only your mnemonic and passphrase are enough to recover this wallet.',
-                      style: c.fonts.caption!.copyWith(
-                        color: c.colours.onPrimary,
+                      'INVITES REMAINING',
+                      style: c.fonts.overline!.copyWith(
+                        color: c.colours.onBackground,
                       ),
                     ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '7',
+                      style: c.fonts.headline6!.copyWith(
+                        color: c.colours.onBackground,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Align(
+                      alignment: Alignment.center,
+                      child: TextButton(
+                        style: ButtonStyle(
+                          padding: MaterialStateProperty.all(
+                            const EdgeInsets.all(16),
+                          ),
+                          alignment: Alignment.bottomCenter,
+                        ),
+                        onPressed: () {},
+                        child: Text('Generate Invite Code'.toUpperCase()),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),

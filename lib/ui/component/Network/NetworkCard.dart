@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/model/cypherpost.dart';
@@ -15,18 +17,66 @@ class NetworkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    return SizedBox(
-      height: 52,
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          primary: c.colours.primary,
-          side: BorderSide(color: c.colours.onPrimary),
-          onSurface: c.colours.background.withOpacity(0.38),
+    return GestureDetector(
+      onTap: () {
+        c.push('/chat-members');
+      },
+      child: Material(
+        elevation: 4,
+        borderRadius: BorderRadius.circular(12),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        color: c.colours.background,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+            // sigmaX: 0,
+            // sigmaY: 0,
+            tileMode: TileMode.mirror,
+          ),
+          child: Container(
+            height: 92,
+            width: c.width,
+            padding: const EdgeInsets.only(
+              top: 16,
+              left: 12,
+              right: 12,
+              bottom: 12,
+            ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                // end: Alignment.centerRight,
+                stops: const [0.3, 0.99],
+                colors: [
+                  c.colours.surface,
+                  c.colours.surface,
+                ],
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  network.name,
+                  style: c.fonts.subtitle1!.copyWith(
+                    color: c.colours.onPrimary,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  '10 Members',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 10,
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.secondary,
+                    fontSize: 10,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-        onPressed: () {
-          c.push('/discover');
-        },
-        child: Text(network.name),
       ),
     );
   }

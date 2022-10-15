@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sats/model/cypherpost-mock.dart';
-import 'package:sats/ui/component/Network/MemberCard.dart';
+import 'package:sats/ui/component/Network/ChatCard.dart';
 
-class MembersList extends StatelessWidget {
+class ChatList extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     return SingleChildScrollView(
@@ -11,7 +11,7 @@ class MembersList extends StatelessWidget {
         children: [
           for (var m in members) ...[
             const SizedBox(height: 2),
-            MemberCard(member: m),
+            ChatCard(member: m),
             const SizedBox(height: 2),
           ],
         ],

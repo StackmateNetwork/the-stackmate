@@ -42,15 +42,16 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
           ),
           SizedBox(
             child: IconButton(
-              icon: const Icon(Icons.https_outlined),
-              tooltip: 'Check host',
+              icon: const Icon(Icons.network_ping),
+              color: context.colours.primary,
+              tooltip: 'Ping Server',
               onPressed: () {},
             ),
           ),
           Text(
-            'click to ping',
+            'Ping Server',
             style: c.fonts.bodySmall!.copyWith(
-              color: c.colours.onPrimary,
+              color: c.colours.primary,
             ),
             textAlign: TextAlign.center,
           ),
@@ -89,7 +90,10 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 16,
+            ),
             child: Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(

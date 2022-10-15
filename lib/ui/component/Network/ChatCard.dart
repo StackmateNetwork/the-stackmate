@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sats/model/cypherpost.dart';
 import 'package:sats/pkg/extensions.dart';
 
-class MemberCard extends StatelessWidget {
-  const MemberCard({
+class ChatCard extends StatelessWidget {
+  const ChatCard({
     Key? key,
     this.isSelection = false,
     required this.member,
@@ -60,16 +59,6 @@ class MemberCard extends StatelessWidget {
                     color: context.colours.onBackground,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  member.pubkey,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 10,
-                  style: context.fonts.caption!.copyWith(
-                    color: context.colours.secondary,
-                    fontSize: 8,
                   ),
                 ),
               ],

@@ -14,9 +14,6 @@ class TorHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(
-            height: 2,
-          ),
           if (tor.isConnected)
             Padding(
               padding: const EdgeInsets.only(top: 16),

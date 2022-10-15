@@ -28,7 +28,8 @@ class _NetworkHome extends StatelessWidget {
                 slivers: [
                   SliverAppBar(
                     stretch: true,
-                    expandedHeight: c.height / 5,
+                    pinned: true,
+                    expandedHeight: 256,
                     automaticallyImplyLeading: false,
                     backgroundColor: c.colours.background,
                     flexibleSpace: FlexibleSpaceBar(
@@ -37,14 +38,31 @@ class _NetworkHome extends StatelessWidget {
                       ],
                       background: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const HomeLoader(),
-                          if (torState.isConnected) ...[
-                            TorHeader(),
-                            EnterMyIdentity(),
-                          ] else
-                            Container()
+                          TorHeader(),
+                          EnterMyIdentity(),
+                          Container(),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 16,
+                              bottom: 16,
+                              left: 12,
+                              right: 12,
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                c.push('/network-join');
+                              },
+                              tooltip: 'Click to join network',
+                              icon: Icon(
+                                Icons.add_circle,
+                                size: 42,
+                                color: c.colours.primary,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -64,25 +82,6 @@ class _NetworkHome extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               if (torState.isConnected) ...[
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                    bottom: 12,
-                                    left: 12,
-                                    right: 12,
-                                  ),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      c.push('/network-join');
-                                    },
-                                    tooltip: 'Click to join network',
-                                    icon: Icon(
-                                      Icons.add_circle,
-                                      size: 42,
-                                      color: c.colours.primary,
-                                    ),
-                                  ),
-                                ),
                                 Networks(),
                               ] else ...[
                                 Container()
