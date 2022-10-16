@@ -134,12 +134,24 @@ class Recipient {
   final String value;
 }
 
-class AllPosts {
-  AllPosts({
-    required this.mine,
-    required this.others,
+class ChatHistory {
+  ChatHistory({
+    required this.counterParty,
+    required this.posts,
   });
 
-  List<PlainPost> mine;
-  List<PlainPost> others;
+  String counterParty;
+  List<PlainPost> posts;
+}
+
+class AllChatHistory {
+  AllChatHistory({
+    required this.lastGenesis,
+    required this.verified,
+    required this.corrupted,
+  });
+
+  int lastGenesis;
+  List<ChatHistory> verified;
+  List<String> corrupted;
 }

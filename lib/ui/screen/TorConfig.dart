@@ -25,7 +25,6 @@ class TorConfigScreen extends StatelessWidget {
             c.read<TorCubit>().testConnection();
           },
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.end,
