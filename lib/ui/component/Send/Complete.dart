@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -22,7 +23,7 @@ class TransactionComplete extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Check your wallet history for details.',
+              'Open your wallet to update your balance and history.',
               style: context.fonts.caption!.copyWith(
                 color: context.colours.onBackground,
                 fontSize: 16,
@@ -30,6 +31,20 @@ class TransactionComplete extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             const Icon(Icons.check_circle, size: 80),
+            const SizedBox(height: 32),
+            SizedBox(
+              height: 52,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  onPrimary: context.colours.background,
+                  primary: context.colours.primary,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('RETURN'),
+              ),
+            )
           ],
         ),
       );

@@ -25,12 +25,6 @@ class _Home extends StatelessWidget {
             child: RefreshIndicator(
               displacement: 10.0,
               onRefresh: () async {
-                // c.read<WalletsCubit>().refresh();
-                // for (final wallet in wallets) {
-                //   c.read<WalletsCubit>().walletSelected(wallet);
-                //   final selected = c.select((InfoCubit ic) => ic);
-                //   selected.sqliteSyncHistory();
-                // }
                 await c.read<TorCubit>().testConnection();
                 await c.read<FeesCubit>().update();
                 return;

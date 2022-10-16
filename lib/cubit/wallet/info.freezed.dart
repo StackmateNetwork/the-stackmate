@@ -21,6 +21,7 @@ mixin _$InfoState {
   bool get loadingBalance => throw _privateConstructorUsedError;
   String get errLoadingBalance => throw _privateConstructorUsedError;
   int get balance => throw _privateConstructorUsedError;
+  int get uconfBalance => throw _privateConstructorUsedError;
   List<Transaction> get transactions => throw _privateConstructorUsedError;
   String get errDeleting => throw _privateConstructorUsedError;
   bool get deleted => throw _privateConstructorUsedError;
@@ -42,6 +43,7 @@ abstract class $InfoStateCopyWith<$Res> {
       bool loadingBalance,
       String errLoadingBalance,
       int balance,
+      int uconfBalance,
       List<Transaction> transactions,
       String errDeleting,
       bool deleted,
@@ -64,6 +66,7 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
     Object? loadingBalance = freezed,
     Object? errLoadingBalance = freezed,
     Object? balance = freezed,
+    Object? uconfBalance = freezed,
     Object? transactions = freezed,
     Object? errDeleting = freezed,
     Object? deleted = freezed,
@@ -90,6 +93,10 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
+              as int,
+      uconfBalance: uconfBalance == freezed
+          ? _value.uconfBalance
+          : uconfBalance // ignore: cast_nullable_to_non_nullable
               as int,
       transactions: transactions == freezed
           ? _value.transactions
@@ -127,6 +134,7 @@ abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
       bool loadingBalance,
       String errLoadingBalance,
       int balance,
+      int uconfBalance,
       List<Transaction> transactions,
       String errDeleting,
       bool deleted,
@@ -151,6 +159,7 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
     Object? loadingBalance = freezed,
     Object? errLoadingBalance = freezed,
     Object? balance = freezed,
+    Object? uconfBalance = freezed,
     Object? transactions = freezed,
     Object? errDeleting = freezed,
     Object? deleted = freezed,
@@ -177,6 +186,10 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
+              as int,
+      uconfBalance: uconfBalance == freezed
+          ? _value.uconfBalance
+          : uconfBalance // ignore: cast_nullable_to_non_nullable
               as int,
       transactions: transactions == freezed
           ? _value._transactions
@@ -211,6 +224,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       this.loadingBalance = true,
       this.errLoadingBalance = '',
       this.balance = 0,
+      this.uconfBalance = 0,
       final List<Transaction> transactions = const [],
       this.errDeleting = '',
       this.deleted = false,
@@ -234,6 +248,9 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final int balance;
+  @override
+  @JsonKey()
+  final int uconfBalance;
   final List<Transaction> _transactions;
   @override
   @JsonKey()
@@ -257,7 +274,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'InfoState(loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo, currentHeight: $currentHeight)';
+    return 'InfoState(loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, uconfBalance: $uconfBalance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo, currentHeight: $currentHeight)';
   }
 
   @override
@@ -271,6 +288,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('loadingBalance', loadingBalance))
       ..add(DiagnosticsProperty('errLoadingBalance', errLoadingBalance))
       ..add(DiagnosticsProperty('balance', balance))
+      ..add(DiagnosticsProperty('uconfBalance', uconfBalance))
       ..add(DiagnosticsProperty('transactions', transactions))
       ..add(DiagnosticsProperty('errDeleting', errDeleting))
       ..add(DiagnosticsProperty('deleted', deleted))
@@ -293,6 +311,8 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
                 .equals(other.errLoadingBalance, errLoadingBalance) &&
             const DeepCollectionEquality().equals(other.balance, balance) &&
             const DeepCollectionEquality()
+                .equals(other.uconfBalance, uconfBalance) &&
+            const DeepCollectionEquality()
                 .equals(other._transactions, _transactions) &&
             const DeepCollectionEquality()
                 .equals(other.errDeleting, errDeleting) &&
@@ -310,6 +330,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(loadingBalance),
       const DeepCollectionEquality().hash(errLoadingBalance),
       const DeepCollectionEquality().hash(balance),
+      const DeepCollectionEquality().hash(uconfBalance),
       const DeepCollectionEquality().hash(_transactions),
       const DeepCollectionEquality().hash(errDeleting),
       const DeepCollectionEquality().hash(deleted),
@@ -329,6 +350,7 @@ abstract class _InfoState extends InfoState {
       final bool loadingBalance,
       final String errLoadingBalance,
       final int balance,
+      final int uconfBalance,
       final List<Transaction> transactions,
       final String errDeleting,
       final bool deleted,
@@ -346,6 +368,8 @@ abstract class _InfoState extends InfoState {
   String get errLoadingBalance => throw _privateConstructorUsedError;
   @override
   int get balance => throw _privateConstructorUsedError;
+  @override
+  int get uconfBalance => throw _privateConstructorUsedError;
   @override
   List<Transaction> get transactions => throw _privateConstructorUsedError;
   @override

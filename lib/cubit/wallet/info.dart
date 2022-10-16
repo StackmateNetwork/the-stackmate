@@ -30,6 +30,7 @@ class InfoState with _$InfoState {
     @Default(true) bool loadingBalance,
     @Default('') String errLoadingBalance,
     @Default(0) int balance,
+    @Default(0) int uconfBalance,
     @Default([]) List<Transaction> transactions,
     @Default('') String errDeleting,
     @Default(false) bool deleted,
