@@ -6,7 +6,6 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/Loader.dart';
 import 'package:sats/ui/component/Home/TorHeader.dart';
-import 'package:sats/ui/component/Network/MyIdentity/Entrypoint.dart';
 import 'package:sats/ui/component/Network/Networks.dart';
 
 class _NetworkHome extends StatelessWidget {
@@ -42,7 +41,23 @@ class _NetworkHome extends StatelessWidget {
                         children: [
                           const HomeLoader(),
                           TorHeader(),
-                          EnterMyIdentity(),
+                          Text(
+                            'CYPHERPOST',
+                            style: c.fonts.caption!.copyWith(
+                              color: c.colours.primary,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            'cypherpost is a free and open-source\nend-to-end encrypted social networking protocol.',
+                            style: c.fonts.caption!.copyWith(
+                              color: c.colours.onPrimary,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                           Container(),
                           Padding(
                             padding: const EdgeInsets.only(

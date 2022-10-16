@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/model/cypherpost-mock.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -12,9 +11,10 @@ class UserInfoScreen extends StatelessWidget {
   Widget build(BuildContext c) {
     return Scaffold(
       body: SafeArea(
-          bottom: false,
-          child: SingleChildScrollView(
-            child: Column(children: [
+        bottom: false,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
               const SizedBox(height: 24),
               Header(
                 cornerTitle: 'User Details'.toUpperCase(),
@@ -89,7 +89,6 @@ class UserInfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     Align(
-                      alignment: Alignment.center,
                       child: TextButton(
                         style: ButtonStyle(
                           padding: MaterialStateProperty.all(
@@ -105,8 +104,10 @@ class UserInfoScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            ]),
-          )),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

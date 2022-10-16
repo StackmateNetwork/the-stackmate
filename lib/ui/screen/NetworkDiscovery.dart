@@ -6,8 +6,6 @@ import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/Loader.dart';
 import 'package:sats/ui/component/Network/DiscoverSearch.dart';
 import 'package:sats/ui/component/Network/MembersList.dart';
-import 'package:sats/ui/component/Network/NetworkName.dart';
-import 'package:sats/ui/component/Network/NetworkTools.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 

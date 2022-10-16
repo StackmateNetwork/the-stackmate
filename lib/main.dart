@@ -12,14 +12,12 @@ import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
 import 'package:sats/ui/screen/BackupWallet.dart';
 import 'package:sats/ui/screen/Broadcast.dart';
-import 'package:sats/ui/screen/Home.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
-import 'package:sats/ui/screen/MyIdentity.dart';
-import 'package:sats/ui/screen/Network.dart';
-import 'package:sats/ui/screen/NetworkChat.dart';
 import 'package:sats/ui/screen/NetworkDiscovery.dart';
 import 'package:sats/ui/screen/NetworkJoin.dart';
+import 'package:sats/ui/screen/NetworkSingle.dart';
+import 'package:sats/ui/screen/NetworksHome.dart';
 import 'package:sats/ui/screen/NewWallet/MasterKeyDerive.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
@@ -31,7 +29,8 @@ import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
 import 'package:sats/ui/screen/TorConfig.dart';
 import 'package:sats/ui/screen/Userinfo.dart';
-import 'package:sats/ui/screen/Wallet.dart';
+import 'package:sats/ui/screen/WalletSingle.dart';
+import 'package:sats/ui/screen/WalletsHome.dart';
 import 'package:sats/ui/style.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -115,10 +114,6 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/user-info',
         builder: (_, __) => const UserInfoScreen(),
-      ),
-      GoRoute(
-        path: '/my-identity',
-        builder: (_, __) => const MyIdentityScreen(),
       ),
       GoRoute(
         path: '/peers',
