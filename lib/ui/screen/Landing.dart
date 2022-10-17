@@ -3,6 +3,7 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Landing/Loader.dart';
 import 'package:sats/ui/component/Landing/Logo.dart';
+import 'package:sats/ui/component/Landing/Pin.dart';
 import 'package:sats/ui/component/Landing/Start.dart';
 
 class _Landing extends StatelessWidget {
@@ -50,6 +51,7 @@ class _Landing extends StatelessWidget {
                           SizedBox(height: 48),
                           LandingLogo(),
                           SizedBox(height: 12),
+                          PIN(),
                         ],
                       ),
                     ),

@@ -8,7 +8,7 @@ part of 'network-members.dart';
 
 class NetworkMembersClassAdapter extends TypeAdapter<_$_NetworkMembers> {
   @override
-  final int typeId = 11;
+  final int typeId = 12;
 
   @override
   _$_NetworkMembers read(BinaryReader reader) {

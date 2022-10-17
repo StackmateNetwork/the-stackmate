@@ -7,7 +7,7 @@ part 'network-chat-history.freezed.dart';
 
 @freezed
 class NetworkChatHistory with _$NetworkChatHistory {
-  @HiveType(typeId: 12, adapterName: 'NetworkChatHistoryClassAdapter')
+  @HiveType(typeId: 13, adapterName: 'NetworkChatHistoryClassAdapter')
   const factory NetworkChatHistory({
     @HiveField(0) required String counterParty,
     @HiveField(1) required List<PlainPost> posts,

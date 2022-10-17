@@ -55,10 +55,16 @@ class FeesCubit extends Cubit<FeesState> {
             fast: 0.000,
           );
           emit(
-            state.copyWith(fees: defaultFees),
+            state.copyWith(
+              fees: defaultFees,
+            ),
           );
         } else
-          emit(state.copyWith(errUpdating: fees.error.toString()));
+          emit(
+            state.copyWith(
+              errUpdating: fees.error.toString(),
+            ),
+          );
       } else {
         emit(
           state.copyWith(

@@ -8,7 +8,7 @@ part of 'network-posts-info.dart';
 
 class NetworkPostsInfoClassAdapter extends TypeAdapter<_$_NetworkPostsInfo> {
   @override
-  final int typeId = 13;
+  final int typeId = 14;
 
   @override
   _$_NetworkPostsInfo read(BinaryReader reader) {
