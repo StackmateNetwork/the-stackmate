@@ -1,36 +1,41 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'network-chat-history.dart';
+part of 'pin.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NetworkChatHistoryClassAdapter
-    extends TypeAdapter<_$_NetworkChatHistory> {
+class PinClassAdapter extends TypeAdapter<_$_Pin> {
   @override
-  final int typeId = 13;
+  final int typeId = 9;
 
   @override
-  _$_NetworkChatHistory read(BinaryReader reader) {
+  _$_Pin read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_NetworkChatHistory(
-      counterParty: fields[0] as String,
-      posts: (fields[1] as List).cast<PlainPost>(),
+    return _$_Pin(
+      value: fields[0] as String,
+      attemptsLeft: fields[1] as int,
+      lastFailure: fields[2] as int,
+      isLocked: fields[3] as bool,
     );
   }
 
   @override
-  void write(BinaryWriter writer, _$_NetworkChatHistory obj) {
+  void write(BinaryWriter writer, _$_Pin obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.counterParty)
+      ..write(obj.value)
       ..writeByte(1)
-      ..write(obj.posts);
+      ..write(obj.attemptsLeft)
+      ..writeByte(2)
+      ..write(obj.lastFailure)
+      ..writeByte(3)
+      ..write(obj.isLocked);
   }
 
   @override
@@ -39,7 +44,7 @@ class NetworkChatHistoryClassAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NetworkChatHistoryClassAdapter &&
+      other is PinClassAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

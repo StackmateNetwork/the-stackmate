@@ -6,7 +6,7 @@ part 'network-posts-info.freezed.dart';
 
 @freezed
 class NetworkPostsInfo with _$NetworkPostsInfo {
-  @HiveType(typeId: 13, adapterName: 'NetworkPostsInfoClassAdapter')
+  @HiveType(typeId: 14, adapterName: 'NetworkPostsInfoClassAdapter')
   const factory NetworkPostsInfo({
     @HiveField(0) required int lastGenesis,
     @HiveField(1) required List<String> corruptedPostIds,

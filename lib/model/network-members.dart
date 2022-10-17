@@ -6,7 +6,7 @@ part 'network-members.freezed.dart';
 
 @freezed
 class NetworkMembers with _$NetworkMembers {
-  @HiveType(typeId: 11, adapterName: 'NetworkMembersClassAdapter')
+  @HiveType(typeId: 12, adapterName: 'NetworkMembersClassAdapter')
   const factory NetworkMembers({
     @HiveField(0) required int genesis,
     @HiveField(1) required String pubkey,

@@ -7,6 +7,7 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
+import 'package:sats/cubit/pin.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -73,6 +74,9 @@ class _CubitsState extends State<Cubits> {
       networkSelectCubit,
     );
 
+    final pinCubit = PinCubit(
+      storage,
+    );
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: networkSelectCubit),
@@ -84,6 +88,7 @@ class _CubitsState extends State<Cubits> {
         BlocProvider.value(value: torCubit),
         BlocProvider.value(value: masterKeyCubit),
         BlocProvider.value(value: broadcastHex),
+        BlocProvider.value(value: pinCubit),
       ],
       child: BlocListener<ChainSelectCubit, BlockchainState>(
         listener: (context, state) {

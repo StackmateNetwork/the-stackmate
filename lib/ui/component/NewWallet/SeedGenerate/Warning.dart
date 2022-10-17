@@ -4,7 +4,7 @@ import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class SeedGenerateWarning extends StatelessWidget {
-  final learnUrl = 'https://stackmate.org/learn';
+  final learnUrl = 'https://stackmate.org/primer';
 
   @override
   Widget build(BuildContext c) {

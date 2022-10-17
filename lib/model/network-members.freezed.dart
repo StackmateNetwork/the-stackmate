@@ -125,7 +125,7 @@ class __$$_NetworkMembersCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-@HiveType(typeId: 11, adapterName: 'NetworkMembersClassAdapter')
+@HiveType(typeId: 12, adapterName: 'NetworkMembersClassAdapter')
 class _$_NetworkMembers extends _NetworkMembers {
   const _$_NetworkMembers(
       {@HiveField(0) required this.genesis,

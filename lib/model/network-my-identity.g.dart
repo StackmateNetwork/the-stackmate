@@ -8,7 +8,7 @@ part of 'network-my-identity.dart';
 
 class NetworkMyIdentityClassAdapter extends TypeAdapter<_$_NetworkMyIdentity> {
   @override
-  final int typeId = 10;
+  final int typeId = 11;
 
   @override
   _$_NetworkMyIdentity read(BinaryReader reader) {

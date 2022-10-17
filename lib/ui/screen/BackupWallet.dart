@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/seed-backup.dart';
+import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/interface/launcher.dart';
 import 'package:sats/ui/component/BackupWallet/Complete.dart';
 import 'package:sats/ui/component/BackupWallet/Stepper.dart';
 import 'package:sats/ui/component/BackupWallet/Warning.dart';
@@ -122,6 +124,7 @@ class BackupWalletScreen extends StatelessWidget {
 
     final seedBackupCubit = SeedBackupCubit(
       masterKey,
+      locator<ILauncher>(),
     );
 
     return BlocProvider.value(

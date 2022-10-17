@@ -125,7 +125,7 @@ class __$$_NetworkMyIdentityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-@HiveType(typeId: 10, adapterName: 'NetworkMyIdentityClassAdapter')
+@HiveType(typeId: 11, adapterName: 'NetworkMyIdentityClassAdapter')
 class _$_NetworkMyIdentity extends _NetworkMyIdentity {
   const _$_NetworkMyIdentity(
       {@HiveField(0) required this.hostname,

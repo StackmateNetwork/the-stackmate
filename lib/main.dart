@@ -38,10 +38,7 @@ void main() async {
   await initializeHive();
   setupDependencies(useDummies: false);
   await openDatabase('stackmate.db');
-  // await db.close();
   WidgetsFlutterBinding.ensureInitialized();
-  // final p = ReceivePort();
-
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };

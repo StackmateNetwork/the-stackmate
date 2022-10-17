@@ -104,7 +104,7 @@ class __$$_NetworkChatHistoryCopyWithImpl<$Res>
 
 /// @nodoc
 
-@HiveType(typeId: 12, adapterName: 'NetworkChatHistoryClassAdapter')
+@HiveType(typeId: 13, adapterName: 'NetworkChatHistoryClassAdapter')
 class _$_NetworkChatHistory extends _NetworkChatHistory {
   const _$_NetworkChatHistory(
       {@HiveField(0) required this.counterParty,

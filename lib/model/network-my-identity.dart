@@ -6,7 +6,7 @@ part 'network-my-identity.freezed.dart';
 
 @freezed
 class NetworkMyIdentity with _$NetworkMyIdentity {
-  @HiveType(typeId: 10, adapterName: 'NetworkMyIdentityClassAdapter')
+  @HiveType(typeId: 11, adapterName: 'NetworkMyIdentityClassAdapter')
   const factory NetworkMyIdentity({
     @HiveField(0) required String hostname,
     @HiveField(1) required String username,

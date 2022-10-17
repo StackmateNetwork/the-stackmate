@@ -9,6 +9,7 @@ import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/fees.dart';
 import 'package:sats/model/master.dart';
 import 'package:sats/model/node.dart';
+import 'package:sats/model/pin.dart';
 import 'package:sats/model/preferences.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/model/tor.dart';
@@ -17,7 +18,16 @@ import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/storage.dart';
 
-enum StoreKeys { Wallet, Blockchain, Node, Fees, Preferences, MasterKey, Tor }
+enum StoreKeys {
+  Wallet,
+  Blockchain,
+  Node,
+  Fees,
+  Preferences,
+  MasterKey,
+  Tor,
+  Pin,
+}
 
 extension StoreKeysFunctions on StoreKeys {
   String get name => const {
@@ -28,6 +38,7 @@ extension StoreKeysFunctions on StoreKeys {
         StoreKeys.Preferences: 'preferences',
         StoreKeys.MasterKey: 'master',
         StoreKeys.Tor: 'tor',
+        StoreKeys.Pin: 'pin',
       }[this]!;
 }
 
@@ -41,6 +52,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(TransactionClassAdapter()); // typeId: 6
   Hive.registerAdapter(MasterKeyClassAdapter()); // typeId: 7
   Hive.registerAdapter(TorClassAdapter()); // typeId: 8
+  Hive.registerAdapter(PinClassAdapter()); // typeId: 9
 
   const secureStorage = FlutterSecureStorage();
   final encryprionKey = await secureStorage.read(key: 'key');
@@ -82,7 +94,10 @@ Future<void> initializeHive() async {
     StoreKeys.Tor.name,
     encryptionCipher: HiveAesCipher(encryptionKey),
   );
-
+  await Hive.openBox<Pin>(
+    StoreKeys.Pin.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
   await Hive.openBox<String>(
     'storage',
     encryptionCipher: HiveAesCipher(encryptionKey),

@@ -111,7 +111,7 @@ class __$$_NetworkPostsInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-@HiveType(typeId: 13, adapterName: 'NetworkPostsInfoClassAdapter')
+@HiveType(typeId: 14, adapterName: 'NetworkPostsInfoClassAdapter')
 class _$_NetworkPostsInfo extends _NetworkPostsInfo {
   const _$_NetworkPostsInfo(
       {@HiveField(0) required this.lastGenesis,
