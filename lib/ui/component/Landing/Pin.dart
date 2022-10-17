@@ -36,6 +36,9 @@ class PINState extends State<PIN> {
             setState(() {
               pinText = pinText.substring(0, pinText.length - 1);
               hidden = hidden.substring(0, hidden.length - 1);
+              if (pinText.length == 4) {
+                pinCubit.setConfirmedPin(pinText);
+              }
             });
           },
           rightIcon: const Icon(
@@ -74,7 +77,6 @@ class PINState extends State<PIN> {
               onPressed: () async {
                 pinCubit.setConfirmedPin(pinText);
                 pinCubit.verifyChosenPin();
-                await pinCubit.checkPin(pinText);
                 if (pinCubit.state.isVerified) {
                   // cubit updated, must unlock start button.
                   await pinCubit.saveNewPin(pinText);
