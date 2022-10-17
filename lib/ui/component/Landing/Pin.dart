@@ -36,6 +36,9 @@ class PINState extends State<PIN> {
             setState(() {
               pinText = pinText.substring(0, pinText.length - 1);
               hidden = hidden.substring(0, hidden.length - 1);
+              if (pinText.length == 4) {
+                pinCubit.setConfirmedPin(pinText);
+              }
             });
           },
           rightIcon: const Icon(
@@ -47,52 +50,55 @@ class PINState extends State<PIN> {
           height: 16,
         ),
         // ignore: prefer_if_elements_to_conditional_expressions
-        (pinCubit.state.value == null)
-            ? SizedBox(
-                height: 72,
-                width: context.width,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    onPrimary: context.colours.background,
-                    primary: context.colours.primary,
-                  ),
-                  onPressed: () {
-                    pinCubit.saveNewPin(pinText);
-                  },
-                  child: const Text('SET'),
-                ),
-              )
-            : SizedBox(
-                height: 72,
-                width: context.width,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    onPrimary: context.colours.primary,
-                    primary: context.colours.background,
-                  ),
-                  onPressed: () async {
-                    await pinCubit.checkPin(pinText);
-                    if (pinCubit.state.isVerified) {
-                      // cubit updated, must unlock start button.
-                    } else {
-                      final snackBar = SnackBar(
-                        content: Text(
-                          'Bad PIN!',
-                          style: context.fonts.headline5!.copyWith(
-                            color: context.colours.error,
-                          ),
-                        ),
-                        duration: const Duration(seconds: 1),
-                        backgroundColor: context.colours.background,
-                        //default is 4s
-                      );
-                      // ignore: deprecated_member_use
-                      Scaffold.of(context).showSnackBar(snackBar);
-                    }
-                  },
-                  child: const Text('SET'),
-                ),
+        if (pinCubit.state.value == null && pinCubit.state.chosenValue == '')
+          SizedBox(
+            height: 72,
+            width: context.width,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                onPrimary: context.colours.background,
+                primary: context.colours.primary,
               ),
+              onPressed: () {
+                pinCubit.setChosenPin(pinText);
+              },
+              child: const Text('SET'),
+            ),
+          ),
+        if (pinCubit.state.value == null && pinCubit.state.chosenValue != '')
+          SizedBox(
+            height: 72,
+            width: context.width,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                onPrimary: context.colours.primary,
+                primary: context.colours.background,
+              ),
+              onPressed: () async {
+                pinCubit.setConfirmedPin(pinText);
+                pinCubit.verifyChosenPin();
+                if (pinCubit.state.isVerified) {
+                  // cubit updated, must unlock start button.
+                  await pinCubit.saveNewPin(pinText);
+                } else {
+                  final snackBar = SnackBar(
+                    content: Text(
+                      'Bad PIN!',
+                      style: context.fonts.headline5!.copyWith(
+                        color: context.colours.error,
+                      ),
+                    ),
+                    duration: const Duration(seconds: 1),
+                    backgroundColor: context.colours.background,
+                    //default is 4s
+                  );
+                  // ignore: deprecated_member_use
+                  Scaffold.of(context).showSnackBar(snackBar);
+                }
+              },
+              child: const Text('CONFIRM'),
+            ),
+          ),
       ],
     );
   }

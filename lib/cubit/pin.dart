@@ -87,16 +87,13 @@ class PinCubit extends Cubit<PinState> {
     );
   }
 
-  bool verifyChosenPin() {
+  void verifyChosenPin() {
     if (state.chosenValue == state.confirmedValue) {
       emit(
         state.copyWith(
           isVerified: true,
         ),
       );
-      return true;
-    } else {
-      return false;
     }
   }
 
@@ -147,6 +144,8 @@ class PinCubit extends Cubit<PinState> {
         attemptsLeft: state.attemptsLeft - 1,
         lastFailure: lastFailure,
         isLocked: isLocked,
+        chosenValue: '',
+        confirmedValue: '',
         error: null,
       ),
     );
@@ -187,6 +186,8 @@ class PinCubit extends Cubit<PinState> {
             lastFailure: state.lastFailure,
             isLocked: false,
             isVerified: false,
+            chosenValue: '',
+            confirmedValue: '',
             error: null,
           ),
         );
@@ -221,6 +222,8 @@ class PinCubit extends Cubit<PinState> {
       emit(
         state.copyWith(
           isVerified: true,
+          chosenValue: '',
+          confirmedValue: '',
         ),
       );
     } else {
@@ -228,6 +231,8 @@ class PinCubit extends Cubit<PinState> {
       emit(
         state.copyWith(
           isVerified: false,
+          chosenValue: '',
+          confirmedValue: '',
         ),
       );
     }

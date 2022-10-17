@@ -19,8 +19,10 @@ class Start extends StatelessWidget {
           onPrimary: context.colours.background,
           primary: context.colours.primary,
         ),
-        onPressed: () {
+        onPressed: () async {
           // CHECK IF PIN IS VERIFIED
+          await pinCubit.checkPin(pinCubit.state.confirmedValue);
+
           if (true | pinCubit.state.isVerified) {
             // pinCubit.init(); // reset pinCubit state with init() so that isVerified is back to false
             if (masterKey != null) {
