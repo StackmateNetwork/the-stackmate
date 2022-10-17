@@ -24,7 +24,9 @@ class PinState with _$PinState {
 class PinCubit extends Cubit<PinState> {
   PinCubit(
     this._storage,
-  ) : super(const PinState());
+  ) : super(const PinState()) {
+    init();
+  }
 
   final IStorage _storage;
 
@@ -62,16 +64,23 @@ class PinCubit extends Cubit<PinState> {
     }
   }
 
-  Future<void> saveNewPin(String value, String fingerPrint) async {
+  Future<void> saveNewPin(String value) async {
+    if (value.length != 4) {
+      emit(
+        state.copyWith(
+          error: 'PIN Must be 4 Digits!',
+        ),
+      );
+      return;
+    }
     final pin = Pin(
       attemptsLeft: 3,
       lastFailure: 0,
       value: value,
       isLocked: false,
     );
-    final saved = await _storage.saveItemAt<Pin>(
+    final saved = await _storage.saveItem<Pin>(
       StoreKeys.Pin.name,
-      0,
       pin,
     );
     if (saved.hasError) {
@@ -92,18 +101,22 @@ class PinCubit extends Cubit<PinState> {
   Future<void> saveFailedAttempt() async {
     init();
     final lastFailure = DateTime.now().millisecondsSinceEpoch;
+    var isLocked = false;
+    if (state.attemptsLeft == 1) {
+      isLocked = true;
+    }
     emit(
       state.copyWith(
         value: state.value,
         attemptsLeft: state.attemptsLeft - 1,
         lastFailure: lastFailure,
-        isLocked: state.isLocked,
+        isLocked: isLocked,
         error: null,
       ),
     );
     final pin = Pin(
       attemptsLeft: state.attemptsLeft,
-      lastFailure: lastFailure,
+      lastFailure: state.lastFailure,
       value: state.value!,
       isLocked: state.isLocked,
     );
@@ -151,7 +164,23 @@ class PinCubit extends Cubit<PinState> {
     }
 
     if (value == state.value) {
-      // allow
+      final pin = Pin(
+        attemptsLeft: 3,
+        lastFailure: state.lastFailure,
+        value: state.value!,
+        isLocked: state.isLocked,
+      );
+      final saved = await _storage.saveItem<Pin>(
+        StoreKeys.Pin.name,
+        pin,
+      );
+      if (saved.hasError) {
+        emit(
+          state.copyWith(
+            error: saved.error.toString(),
+          ),
+        );
+      }
       return true;
     } else {
       saveFailedAttempt();

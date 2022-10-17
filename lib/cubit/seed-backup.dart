@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/interface/launcher.dart';
 
 part 'seed-backup.freezed.dart';
 
@@ -41,9 +43,11 @@ class SeedBackupState with _$SeedBackupState {
 class SeedBackupCubit extends Cubit<SeedBackupState> {
   SeedBackupCubit(
     this._masterKey,
+    this._launcher,
   ) : super(const SeedBackupState());
 
   final MasterKeyCubit _masterKey;
+  final ILauncher _launcher;
 
   static const accountZero = '0';
   static const segwitNativePurpose = '84';
@@ -221,6 +225,18 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
       ),
     );
     nextClicked();
+  }
+
+  void openLink(String url) {
+    try {
+      _launcher.launchApp(url);
+    } catch (e, s) {
+      emit(
+        state.copyWith(
+          errMasterKeyUpdate: 'Could not open url',
+        ),
+      );
+    }
   }
 
   void clear() => emit(const SeedBackupState());

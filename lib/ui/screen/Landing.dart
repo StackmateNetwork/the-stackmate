@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/tor.dart';
+// import 'package:sats/model/pin.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Landing/Loader.dart';
 import 'package:sats/ui/component/Landing/Logo.dart';
@@ -50,7 +51,6 @@ class _Landing extends StatelessWidget {
                           LandingLoader(),
                           SizedBox(height: 48),
                           LandingLogo(),
-                          SizedBox(height: 12),
                           PIN(),
                         ],
                       ),

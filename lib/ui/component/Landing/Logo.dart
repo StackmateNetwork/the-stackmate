@@ -10,20 +10,6 @@ class LandingLogo extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Text(
-          'Stackmate'.toUpperCase(),
-          style: context.fonts.headline3!.copyWith(
-            color: context.colours.primary,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        Text(
-          'Self-sovereign tools for bitcoin finance.'.toUpperCase(),
-          style: context.fonts.caption!.copyWith(
-            color: context.colours.onPrimary,
-          ),
-          textAlign: TextAlign.center,
-        ),
         SizedBox(
           child: Image.asset(
             'assets/icon/sm92.png',
