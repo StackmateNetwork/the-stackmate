@@ -13,13 +13,12 @@ class PIN extends StatefulWidget {
 }
 
 class PINState extends State<PIN> {
-  String text = '';
+  String pinText = '';
   String hidden = '';
 
   @override
   Widget build(BuildContext context) {
     final pinCubit = context.select((PinCubit pc) => pc);
-    final masterKey = context.select((MasterKeyCubit mc) => mc.state.key);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -35,7 +34,7 @@ class PINState extends State<PIN> {
           textColor: Colors.white,
           rightButtonFn: () {
             setState(() {
-              text = text.substring(0, text.length - 1);
+              pinText = pinText.substring(0, pinText.length - 1);
               hidden = hidden.substring(0, hidden.length - 1);
             });
           },
@@ -58,7 +57,7 @@ class PINState extends State<PIN> {
                     primary: context.colours.primary,
                   ),
                   onPressed: () {
-                    pinCubit.saveNewPin(text);
+                    pinCubit.saveNewPin(pinText);
                   },
                   child: const Text('SET'),
                 ),
@@ -72,8 +71,8 @@ class PINState extends State<PIN> {
                     primary: context.colours.background,
                   ),
                   onPressed: () async {
-                    final status = true | await pinCubit.checkPin(text);
-                    if (status) {
+                    await pinCubit.checkPin(pinText);
+                    if (pinCubit.state.isVerified) {
                       // cubit updated, must unlock start button.
                     } else {
                       final snackBar = SnackBar(
@@ -101,9 +100,9 @@ class PINState extends State<PIN> {
   // ignore: always_declare_return_types
   _onKeyboardTap(String value) {
     setState(() {
-      if (text.length == 4) {
+      if (pinText.length == 4) {
       } else {
-        text = text + value;
+        pinText = pinText + value;
         hidden = hidden + '*';
       }
     });

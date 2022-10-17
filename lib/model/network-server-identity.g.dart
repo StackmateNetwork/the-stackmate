@@ -9,7 +9,7 @@ part of 'network-server-identity.dart';
 class NetworkServerIdentityClassAdapter
     extends TypeAdapter<_$_NetworkServerIdentity> {
   @override
-  final int typeId = 9;
+  final int typeId = 10;
 
   @override
   _$_NetworkServerIdentity read(BinaryReader reader) {

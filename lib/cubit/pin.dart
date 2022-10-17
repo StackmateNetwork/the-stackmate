@@ -15,6 +15,9 @@ class PinState with _$PinState {
     @Default(3) int attemptsLeft,
     @Default(0) int lastFailure,
     @Default(false) bool isLocked,
+    @Default(false) bool isVerified,
+    @Default('') String chosenValue,
+    @Default('') String confirmedValue,
     String? error,
   }) = _PinState;
 
@@ -42,6 +45,7 @@ class PinCubit extends Cubit<PinState> {
             attemptsLeft: 3,
             lastFailure: 0,
             isLocked: false,
+            isVerified: false,
             error: null,
           ),
         );
@@ -58,9 +62,41 @@ class PinCubit extends Cubit<PinState> {
           attemptsLeft: pin.result!.attemptsLeft,
           lastFailure: pin.result!.lastFailure,
           isLocked: pin.result!.isLocked,
+          isVerified: false,
+          chosenValue: '',
+          confirmedValue: '',
           error: null,
         ),
       );
+    }
+  }
+
+  void setChosenPin(String value) {
+    emit(
+      state.copyWith(
+        chosenValue: value,
+      ),
+    );
+  }
+
+  void setConfirmedPin(String value) {
+    emit(
+      state.copyWith(
+        confirmedValue: value,
+      ),
+    );
+  }
+
+  bool verifyChosenPin() {
+    if (state.chosenValue == state.confirmedValue) {
+      emit(
+        state.copyWith(
+          isVerified: true,
+        ),
+      );
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -139,7 +175,7 @@ class PinCubit extends Cubit<PinState> {
     );
   }
 
-  Future<bool> checkPin(String value) async {
+  Future<void> checkPin(String value) async {
     if (state.isLocked) {
       final now = DateTime.now().millisecondsSinceEpoch;
       if (state.lastFailure - now == 10000) {
@@ -150,6 +186,7 @@ class PinCubit extends Cubit<PinState> {
             attemptsLeft: 3,
             lastFailure: state.lastFailure,
             isLocked: false,
+            isVerified: false,
             error: null,
           ),
         );
@@ -157,9 +194,9 @@ class PinCubit extends Cubit<PinState> {
         emit(
           state.copyWith(
             error: 'Locked! Try in 10 seconds.',
+            isVerified: false,
           ),
         );
-        return false;
       }
     }
 
@@ -181,10 +218,18 @@ class PinCubit extends Cubit<PinState> {
           ),
         );
       }
-      return true;
+      emit(
+        state.copyWith(
+          isVerified: true,
+        ),
+      );
     } else {
       saveFailedAttempt();
-      return false;
+      emit(
+        state.copyWith(
+          isVerified: false,
+        ),
+      );
     }
   }
 }

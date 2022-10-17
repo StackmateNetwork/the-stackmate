@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
+import 'package:sats/cubit/pin.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class Start extends StatelessWidget {
@@ -8,6 +9,7 @@ class Start extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pinCubit = context.select((PinCubit pc) => pc);
     final masterKey = context.select((MasterKeyCubit mc) => mc.state.key);
 
     return SizedBox(
@@ -18,11 +20,15 @@ class Start extends StatelessWidget {
           primary: context.colours.primary,
         ),
         onPressed: () {
-          if (masterKey != null) {
-            context.push('/home');
-          }
-          if (masterKey == null) {
-            context.push('/add-wallet');
+          // CHECK IF PIN IS VERIFIED
+          if (true | pinCubit.state.isVerified) {
+            // pinCubit.init(); // reset pinCubit state with init() so that isVerified is back to false
+            if (masterKey != null) {
+              context.push('/home');
+            }
+            if (masterKey == null) {
+              context.push('/add-wallet');
+            }
           }
         },
         child: const Text('START'),

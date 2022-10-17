@@ -20,6 +20,9 @@ mixin _$PinState {
   int get attemptsLeft => throw _privateConstructorUsedError;
   int get lastFailure => throw _privateConstructorUsedError;
   bool get isLocked => throw _privateConstructorUsedError;
+  bool get isVerified => throw _privateConstructorUsedError;
+  String get chosenValue => throw _privateConstructorUsedError;
+  String get confirmedValue => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,6 +39,9 @@ abstract class $PinStateCopyWith<$Res> {
       int attemptsLeft,
       int lastFailure,
       bool isLocked,
+      bool isVerified,
+      String chosenValue,
+      String confirmedValue,
       String? error});
 }
 
@@ -53,6 +59,9 @@ class _$PinStateCopyWithImpl<$Res> implements $PinStateCopyWith<$Res> {
     Object? attemptsLeft = freezed,
     Object? lastFailure = freezed,
     Object? isLocked = freezed,
+    Object? isVerified = freezed,
+    Object? chosenValue = freezed,
+    Object? confirmedValue = freezed,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -72,6 +81,18 @@ class _$PinStateCopyWithImpl<$Res> implements $PinStateCopyWith<$Res> {
           ? _value.isLocked
           : isLocked // ignore: cast_nullable_to_non_nullable
               as bool,
+      isVerified: isVerified == freezed
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      chosenValue: chosenValue == freezed
+          ? _value.chosenValue
+          : chosenValue // ignore: cast_nullable_to_non_nullable
+              as String,
+      confirmedValue: confirmedValue == freezed
+          ? _value.confirmedValue
+          : confirmedValue // ignore: cast_nullable_to_non_nullable
+              as String,
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -91,6 +112,9 @@ abstract class _$$_PinStateCopyWith<$Res> implements $PinStateCopyWith<$Res> {
       int attemptsLeft,
       int lastFailure,
       bool isLocked,
+      bool isVerified,
+      String chosenValue,
+      String confirmedValue,
       String? error});
 }
 
@@ -110,6 +134,9 @@ class __$$_PinStateCopyWithImpl<$Res> extends _$PinStateCopyWithImpl<$Res>
     Object? attemptsLeft = freezed,
     Object? lastFailure = freezed,
     Object? isLocked = freezed,
+    Object? isVerified = freezed,
+    Object? chosenValue = freezed,
+    Object? confirmedValue = freezed,
     Object? error = freezed,
   }) {
     return _then(_$_PinState(
@@ -129,6 +156,18 @@ class __$$_PinStateCopyWithImpl<$Res> extends _$PinStateCopyWithImpl<$Res>
           ? _value.isLocked
           : isLocked // ignore: cast_nullable_to_non_nullable
               as bool,
+      isVerified: isVerified == freezed
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      chosenValue: chosenValue == freezed
+          ? _value.chosenValue
+          : chosenValue // ignore: cast_nullable_to_non_nullable
+              as String,
+      confirmedValue: confirmedValue == freezed
+          ? _value.confirmedValue
+          : confirmedValue // ignore: cast_nullable_to_non_nullable
+              as String,
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -145,6 +184,9 @@ class _$_PinState extends _PinState {
       this.attemptsLeft = 3,
       this.lastFailure = 0,
       this.isLocked = false,
+      this.isVerified = false,
+      this.chosenValue = '',
+      this.confirmedValue = '',
       this.error})
       : super._();
 
@@ -160,11 +202,20 @@ class _$_PinState extends _PinState {
   @JsonKey()
   final bool isLocked;
   @override
+  @JsonKey()
+  final bool isVerified;
+  @override
+  @JsonKey()
+  final String chosenValue;
+  @override
+  @JsonKey()
+  final String confirmedValue;
+  @override
   final String? error;
 
   @override
   String toString() {
-    return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, error: $error)';
+    return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, isVerified: $isVerified, chosenValue: $chosenValue, confirmedValue: $confirmedValue, error: $error)';
   }
 
   @override
@@ -178,6 +229,12 @@ class _$_PinState extends _PinState {
             const DeepCollectionEquality()
                 .equals(other.lastFailure, lastFailure) &&
             const DeepCollectionEquality().equals(other.isLocked, isLocked) &&
+            const DeepCollectionEquality()
+                .equals(other.isVerified, isVerified) &&
+            const DeepCollectionEquality()
+                .equals(other.chosenValue, chosenValue) &&
+            const DeepCollectionEquality()
+                .equals(other.confirmedValue, confirmedValue) &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -188,6 +245,9 @@ class _$_PinState extends _PinState {
       const DeepCollectionEquality().hash(attemptsLeft),
       const DeepCollectionEquality().hash(lastFailure),
       const DeepCollectionEquality().hash(isLocked),
+      const DeepCollectionEquality().hash(isVerified),
+      const DeepCollectionEquality().hash(chosenValue),
+      const DeepCollectionEquality().hash(confirmedValue),
       const DeepCollectionEquality().hash(error));
 
   @JsonKey(ignore: true)
@@ -202,6 +262,9 @@ abstract class _PinState extends PinState {
       final int attemptsLeft,
       final int lastFailure,
       final bool isLocked,
+      final bool isVerified,
+      final String chosenValue,
+      final String confirmedValue,
       final String? error}) = _$_PinState;
   const _PinState._() : super._();
 
@@ -213,6 +276,12 @@ abstract class _PinState extends PinState {
   int get lastFailure => throw _privateConstructorUsedError;
   @override
   bool get isLocked => throw _privateConstructorUsedError;
+  @override
+  bool get isVerified => throw _privateConstructorUsedError;
+  @override
+  String get chosenValue => throw _privateConstructorUsedError;
+  @override
+  String get confirmedValue => throw _privateConstructorUsedError;
   @override
   String? get error => throw _privateConstructorUsedError;
   @override
