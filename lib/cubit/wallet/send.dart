@@ -289,16 +289,28 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void toggleSweep() {
-    emit(
-      state.copyWith(
-        sweepWallet: !state.sweepWallet,
-        amount: 'WALLET WILL BE EMPTIED.',
-        errLoading: emptyString,
-        errAddress: emptyString,
-        errSending: emptyString,
-        errAmount: emptyString,
-      ),
-    );
+    if (state.sweepWallet) {
+      emit(
+        state.copyWith(
+          sweepWallet: !state.sweepWallet,
+          amount: emptyString,
+          errLoading: emptyString,
+          errAddress: emptyString,
+          errSending: emptyString,
+          errAmount: emptyString,
+        ),
+      );
+    } else
+      emit(
+        state.copyWith(
+          sweepWallet: !state.sweepWallet,
+          amount: 'WALLET WILL BE EMPTIED.',
+          errLoading: emptyString,
+          errAddress: emptyString,
+          errSending: emptyString,
+          errAmount: emptyString,
+        ),
+      );
   }
 
   Future<void> _getStoragePermission() async {
