@@ -65,7 +65,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
   final TorCubit _torCubit;
   final MasterKeyCubit _masterKeyCubit;
 
-  static const invalidLabelError = 'Invalid Label';
+  static const invalidLabelError = 'Invalid Label (must be 3-20 chars)';
   static const internalError = 'Internal Error';
   static const signerWalletType = 'DERIVED';
   static const trScript = 'tr';
@@ -75,7 +75,13 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
   static const emptyString = '';
 
   void labelChanged(String text) {
-    emit(state.copyWith(label: text, errSavingWallet: emptyString));
+    emit(
+      state.copyWith(
+        label: text,
+        errSavingWallet: emptyString,
+        walletLabelError: emptyString,
+      ),
+    );
   }
 
   void nextClicked() async {
@@ -86,10 +92,12 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
 
       case MasterDeriveWalletStep.label:
         if (state.label == emptyString ||
-            state.label.length <= 3 ||
+            state.label.length < 3 ||
             state.label.length > 20) {
           emit(state.copyWith(walletLabelError: invalidLabelError));
           return;
+        } else {
+          emit(state.copyWith(walletLabelError: emptyString));
         }
         if (!state.savingWallet)
           (state.purpose == DerivationPurpose.taproot)
@@ -112,6 +120,8 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
           state.copyWith(
             currentStep: MasterDeriveWalletStep.purpose,
             label: emptyString,
+            errSavingWallet: emptyString,
+            walletLabelError: emptyString,
           ),
         );
         break;
@@ -124,6 +134,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         state.copyWith(
           savingWallet: true,
           errSavingWallet: emptyString,
+          walletLabelError: emptyString,
         ),
       );
 
@@ -164,7 +175,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
       final dbPath = join(databasesPath, dbName);
-
+      // ensure to delete db if process errors
       final syncStat = await compute(sqliteSync, {
         'dbPath': dbPath,
         'descriptor': descriptor.result!,
@@ -184,6 +195,11 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       var recievedCount = 0;
 
       if (history.hasError) {
+        emit(
+          state.copyWith(
+            errSavingWallet: history.error!,
+          ),
+        );
         history = const R(result: []);
       } else
         for (final item in history.result!) {
@@ -198,6 +214,11 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       });
 
       if (balance.hasError) {
+        emit(
+          state.copyWith(
+            errSavingWallet: balance.error!,
+          ),
+        );
         balance = const R(result: 0);
       }
       final lastUnused = _core.lastUnusedAddress(
@@ -250,14 +271,25 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       );
       db.close();
     } catch (e, s) {
-      _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
-
+      print(e);
       emit(
         state.copyWith(
-          errSavingWallet: internalError,
+          errSavingWallet: e.toString(),
+          savingWallet: false,
+        ),
+      );
+      await Future.delayed(
+        const Duration(
+          milliseconds: 3000,
+        ),
+      );
+      emit(
+        state.copyWith(
+          errSavingWallet: emptyString,
           newWalletSaved: true,
         ),
       );
+      _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
     }
   }
 
