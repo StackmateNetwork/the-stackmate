@@ -166,7 +166,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
       );
 
       if (descriptor.hasError) {
-        throw SMError.fromJson(descriptor.error!);
+        throw SMError.fromJson(descriptor.error!).message;
       }
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
@@ -225,8 +225,15 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         descriptor: descriptor.result!,
         dbPath: dbPath,
       );
+      var lastIndex = 0;
       if (lastUnused.hasError) {
-        throw SMError.fromJson(lastUnused.error!);
+        emit(
+          state.copyWith(
+            errSavingWallet: 'Could not set last unused address.',
+          ),
+        );
+      } else {
+        lastIndex = int.parse(lastUnused.result!.index);
       }
       // check balance and see if last address index needs update
       var newWallet = Wallet(
@@ -237,7 +244,7 @@ class MasterDeriveWalletCubit extends Cubit<MasterDeriveWalletState> {
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: signerWalletType,
-        lastAddressIndex: (recievedCount == 0) ? 0 : recievedCount,
+        lastAddressIndex: lastIndex,
         balance: balance.result!,
         transactions: history.result!,
         uid: uid,

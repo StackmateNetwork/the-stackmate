@@ -87,7 +87,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
   late StreamSubscription _importSub;
 
-  static const invalidLabelError = 'Invalid Label';
+  static const invalidLabelError = 'Invalid Label (must be 3-20 chars).';
   static const internalError = 'Internal Error';
   static const watcherWalletType = 'WATCHER';
   static const wpkhScript = 'wpkh';
@@ -104,9 +104,13 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       case XpubImportWalletStep.label:
         if (state.label == emptyString ||
-            state.label.length <= 3 ||
+            state.label.length < 3 ||
             state.label.length > 20) {
-          emit(state.copyWith(errSavingWallet: invalidLabelError));
+          emit(
+            state.copyWith(
+              errSavingWallet: invalidLabelError,
+            ),
+          );
           return;
         }
         if (!state.savingWallet) _saveWallet();
@@ -124,6 +128,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
           state.copyWith(
             currentStep: XpubImportWalletStep.import,
             label: emptyString,
+            errSavingWallet: emptyString,
           ),
         );
         break;
@@ -158,7 +163,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         scriptType: wpkhScript,
       );
       if (descriptor.hasError) {
-        throw SMError.fromJson(descriptor.error!);
+        throw SMError.fromJson(descriptor.error!).message;
       }
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
@@ -177,7 +182,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       });
 
       if (syncStat.hasError) {
-        throw SMError.fromJson(syncStat.error!);
+        throw SMError.fromJson(syncStat.error!).message;
       }
 
       var history = await compute(sqliteHistory, {
@@ -188,6 +193,11 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       var recievedCount = 0;
 
       if (history.hasError) {
+        emit(
+          state.copyWith(
+            errSavingWallet: 'Could not fetch history.',
+          ),
+        );
         history = const R(result: []);
       } else
         for (final item in history.result!) {
@@ -202,14 +212,26 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       });
 
       if (balance.hasError) {
+        emit(
+          state.copyWith(
+            errSavingWallet: 'Could not fetch balance.',
+          ),
+        );
         balance = const R(result: 0);
       }
       final lastUnused = _core.lastUnusedAddress(
         descriptor: descriptor.result!,
         dbPath: dbPath,
       );
+      var lastIndex = 0;
       if (lastUnused.hasError) {
-        throw SMError.fromJson(lastUnused.error!);
+        emit(
+          state.copyWith(
+            errSavingWallet: 'Could not set last unused address.',
+          ),
+        );
+      } else {
+        lastIndex = int.parse(lastUnused.result!.index);
       }
 
       // check balance and see if last address index needs update
@@ -221,7 +243,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
         walletType: watcherWalletType,
-        lastAddressIndex: int.parse(lastUnused.result!.index),
+        lastAddressIndex: lastIndex,
         balance: balance.result!,
         transactions: history.result!,
         uid: uid,
@@ -261,8 +283,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       emit(
         state.copyWith(
-          errSavingWallet: internalError,
-          newWalletSaved: true,
+          errSavingWallet: e.toString(),
+          newWalletSaved: false,
         ),
       );
     }
@@ -303,9 +325,7 @@ R<int> sqliteBalance(dynamic obj) {
     descriptor: data['descriptor']!,
     dbPath: data['dbPath']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
+
   return resp;
 }
 
@@ -316,9 +336,6 @@ R<List<Transaction>> sqliteHistory(dynamic obj) {
     dbPath: data['dbPath']!,
   );
 
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
   return resp;
 }
 
@@ -328,9 +345,7 @@ R<Address> getLastUnusedAddress(dynamic msg) {
     descriptor: data['descriptor']!,
     dbPath: data['dbPath']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
+
   return resp;
 }
 
@@ -342,8 +357,6 @@ R<String> sqliteSync(dynamic obj) {
     nodeAddress: data['nodeAddress']!,
     socks5: obj['socks5']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
+
   return resp;
 }

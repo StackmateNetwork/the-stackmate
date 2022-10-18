@@ -24,7 +24,8 @@ enum SeedGenerateWalletSteps {
   label,
 }
 
-const invalidLabelError = 'Invalid Label';
+const invalidLabelError = 'Invalid Label (must be 3-20 chars)';
+const couldNotSaveError = 'Error Saving Wallet!';
 const primaryWalletType = 'PRIMARY';
 const signerWalletType = 'SIGNER';
 const wpkhScript = 'wpkh';
@@ -78,10 +79,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   }
 
   final IStackMateBitcoin _core;
-
   final IStorage _storage;
   final Logger _logger;
-
   final WalletsCubit _wallets;
   final ChainSelectCubit _blockchainCubit;
   final SeedGenerateCubit _generateCubit;
@@ -129,10 +128,15 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   }
 
   void saveClicked() async {
-    if (state.walletLabel.length <= 3 ||
+    if (state.walletLabel.length < 3 ||
         state.walletLabel.length > 20 ||
         state.walletLabel == emptyString) {
-      emit(state.copyWith(walletLabelError: invalidLabelError));
+      emit(
+        state.copyWith(
+          walletLabelError: invalidLabelError,
+          savingWalletError: emptyString,
+        ),
+      );
       return;
     }
 
@@ -140,6 +144,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       emit(
         state.copyWith(
           savingWallet: true,
+          walletLabelError: emptyString,
+          savingWalletError: emptyString,
         ),
       );
 
@@ -164,7 +170,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         scriptType: wpkhScript,
       );
       if (descriptor.hasError) {
-        throw SMError.fromJson(descriptor.error!);
+        throw SMError.fromJson(descriptor.error!).message;
       }
 
       var newWallet = Wallet(
@@ -187,7 +193,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         StoreKeys.Wallet.name,
         newWallet,
       );
-      if (savedid.hasError) return;
+      if (savedid.hasError) throw couldNotSaveError;
 
       final id = savedid.result!;
 
@@ -202,12 +208,21 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       _wallets.refresh();
       emit(
         state.copyWith(
+          walletLabelError: emptyString,
           savingWalletError: emptyString,
           savingWallet: false,
           newWalletSaved: true,
         ),
       );
     } catch (e, s) {
+      emit(
+        state.copyWith(
+          walletLabelError: emptyString,
+          savingWalletError: e.toString(),
+          savingWallet: false,
+          newWalletSaved: false,
+        ),
+      );
       _logger.logException(
         e,
         'SeedGenerateWalletCubit._createNewLocalWallet',

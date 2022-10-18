@@ -13,6 +13,7 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
+import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -120,7 +121,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   final TorCubit _torCubit;
   final MasterKeyCubit _masterKeyCubit;
 
-  static const invalidLabelError = 'Invalid Label';
+  static const invalidLabelError = 'Invalid Label (must be 3-20 chars).';
+  static const couldNotSaveError = 'Error Saving Wallet!';
   static const signerWalletType = 'PRIMARY';
   static const recoveryWalletType = 'RECOVERED';
 
@@ -159,6 +161,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
             emit(
               const SeedImportWalletState(
                 currentStep: SeedImportWalletSteps.warning,
+                walletLabelError: emptyString,
+                savingWalletError: emptyString,
               ),
             );
             _importCubit.backOnPassphaseClicked();
@@ -173,6 +177,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         emit(
           const SeedImportWalletState(
             currentStep: SeedImportWalletSteps.import,
+            walletLabelError: emptyString,
+            savingWalletError: emptyString,
           ),
         );
         _importCubit.backOnSeedClicked();
@@ -181,19 +187,32 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   }
 
   void labelChanged(String text) {
-    emit(state.copyWith(walletLabel: text, walletLabelError: ''));
+    emit(
+      state.copyWith(
+        walletLabel: text,
+        walletLabelError: emptyString,
+        savingWalletError: emptyString,
+      ),
+    );
   }
 
   Future<void> _saveClicked() async {
-    if (state.walletLabel.length <= 3 ||
+    if (state.walletLabel.length < 3 ||
         state.walletLabel.length > 20 ||
         state.walletLabel == emptyString) {
-      emit(state.copyWith(walletLabelError: invalidLabelError));
+      emit(
+        state.copyWith(
+          walletLabelError: invalidLabelError,
+          savingWalletError: emptyString,
+        ),
+      );
       return;
     }
     emit(
       state.copyWith(
         savingWallet: true,
+        savingWalletError: emptyString,
+        walletLabelError: emptyString,
       ),
     );
     try {
@@ -222,7 +241,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         scriptType: wpkhScript,
       );
       if (descriptor.hasError) {
-        throw SMError.fromJson(descriptor.error!);
+        throw SMError.fromJson(descriptor.error!).message;
       }
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
@@ -241,7 +260,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         'socks5': socks5,
       });
       if (syncStat.hasError) {
-        throw SMError.fromJson(syncStat.error!);
+        throw SMError.fromJson(syncStat.error!).message;
       }
 
       var history = await compute(sqliteHistory, {
@@ -253,6 +272,11 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       var recievedCount = 0;
 
       if (history.hasError) {
+        emit(
+          state.copyWith(
+            savingWalletError: 'Could not fetch history.',
+          ),
+        );
         history = const R(result: []);
       } else
         for (final item in history.result!) {
@@ -267,14 +291,26 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       });
 
       if (balance.hasError) {
+        emit(
+          state.copyWith(
+            savingWalletError: 'Could not fetch balance.',
+          ),
+        );
         balance = const R(result: 0);
       }
       final lastUnused = _core.lastUnusedAddress(
         descriptor: descriptor.result!,
         dbPath: dbPath,
       );
+      var lastIndex = 0;
       if (lastUnused.hasError) {
-        throw SMError.fromJson(lastUnused.error!);
+        emit(
+          state.copyWith(
+            savingWalletError: 'Could not set last unused address.',
+          ),
+        );
+      } else {
+        lastIndex = int.parse(lastUnused.result!.index);
       }
       final needsMasterKey = _masterKeyCubit.state.key == null;
 
@@ -297,7 +333,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         requiredPolicyElements: 1,
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
-        lastAddressIndex: int.parse(lastUnused.result!.index),
+        lastAddressIndex: lastIndex,
         balance: balance.result!,
         transactions: history.result!,
         uid: uid,
@@ -308,7 +344,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         newWallet,
       );
 
-      if (savedId.hasError) return;
+      if (savedId.hasError) throw couldNotSaveError;
 
       final id = savedId.result!;
 
@@ -342,8 +378,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
       emit(
         state.copyWith(
-          savingWalletError: emptyString,
-          newWalletSaved: true,
+          savingWalletError: e.toString(),
+          savingWallet: false,
+          newWalletSaved: false,
         ),
       );
     }
@@ -397,9 +434,6 @@ R<List<Transaction>> sqliteHistory(dynamic obj) {
     dbPath: data['dbPath']!,
   );
 
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
   return resp;
 }
 
@@ -409,9 +443,7 @@ R<Address> getLastUnusedAddress(dynamic msg) {
     descriptor: data['descriptor']!,
     dbPath: data['dbPath']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
+
   return resp;
 }
 
@@ -423,8 +455,5 @@ R<String> sqliteSync(dynamic obj) {
     nodeAddress: data['nodeAddress']!,
     socks5: obj['socks5']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
   return resp;
 }
