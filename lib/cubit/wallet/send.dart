@@ -109,6 +109,7 @@ class SendCubit extends Cubit<SendState> {
   static const emailShareTxidSubject = 'Transaction ID';
   static const emailSharePSBTSubject = 'PSBT Requires Signature';
   static const belowDustError = 'Amount is below dust (546).';
+  static const insufficientBalanceError = 'Insufficient balance.';
   static const invalidAddressError = 'Invalid Address';
   static const invalidAmountError = 'Invalid Amount';
   static const invalidFeeError = 'Invalid Fee';
@@ -150,13 +151,6 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      // final nodeAddress = _nodeAddressCubit.state.getAddress();
-      // final socks5 = _torCubit.state.getSocks5();
-      // final bal = await compute(computeBalance, {
-      //   'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
-      //   'nodeAddress': nodeAddress,
-      //   'socks5': socks5,
-      // });
       final balance = await compute(sqliteBalance, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
         'dbPath': dbPath,
@@ -166,6 +160,11 @@ class SendCubit extends Cubit<SendState> {
         state.copyWith(
           balance: balance,
           loadingStart: false,
+          errLoading: emptyString,
+          errAddress: emptyString,
+          errSending: emptyString,
+          errAmount: emptyString,
+          errFees: emptyString,
         ),
       );
       db.close();
@@ -174,6 +173,10 @@ class SendCubit extends Cubit<SendState> {
         state.copyWith(
           loadingStart: false,
           errLoading: e.toString(),
+          errAddress: emptyString,
+          errSending: emptyString,
+          errAmount: emptyString,
+          errFees: emptyString,
         ),
       );
       _logger.logException(e, 'SendCubit.getBalance', s);
@@ -238,8 +241,11 @@ class SendCubit extends Cubit<SendState> {
       if (onStart) getBalance();
       emit(
         state.copyWith(
-          // loadingStart: false,
           errLoading: e.toString(),
+          errAddress: emptyString,
+          errSending: emptyString,
+          errAmount: emptyString,
+          errFees: emptyString,
         ),
       );
       _logger.logException(e, 'SendCubit.scanqr', s);
@@ -253,6 +259,7 @@ class SendCubit extends Cubit<SendState> {
         errAddress: emptyString,
         errSending: emptyString,
         errAmount: emptyString,
+        errFees: emptyString,
       ),
     );
 
@@ -260,6 +267,10 @@ class SendCubit extends Cubit<SendState> {
       emit(
         state.copyWith(
           errAddress: invalidAddressError,
+          errLoading: emptyString,
+          errSending: emptyString,
+          errAmount: emptyString,
+          errFees: emptyString,
         ),
       );
       return;
@@ -271,6 +282,7 @@ class SendCubit extends Cubit<SendState> {
         errAddress: emptyString,
         errSending: emptyString,
         errAmount: emptyString,
+        errFees: emptyString,
       ),
     );
   }
@@ -284,6 +296,7 @@ class SendCubit extends Cubit<SendState> {
         errAddress: emptyString,
         errSending: emptyString,
         errAmount: emptyString,
+        errFees: emptyString,
       ),
     );
   }
@@ -298,6 +311,7 @@ class SendCubit extends Cubit<SendState> {
           errAddress: emptyString,
           errSending: emptyString,
           errAmount: emptyString,
+          errFees: emptyString,
         ),
       );
     } else
@@ -309,6 +323,7 @@ class SendCubit extends Cubit<SendState> {
           errAddress: emptyString,
           errSending: emptyString,
           errAmount: emptyString,
+          errFees: emptyString,
         ),
       );
   }
@@ -335,6 +350,10 @@ class SendCubit extends Cubit<SendState> {
             sendingTx: false,
             errLoading: 'Folder not selected',
             currentStep: SendSteps.confirm,
+            errAddress: emptyString,
+            errSending: emptyString,
+            errAmount: emptyString,
+            errFees: emptyString,
           ),
         );
       }
@@ -350,6 +369,10 @@ class SendCubit extends Cubit<SendState> {
           sendingTx: false,
           errLoading: emptyString,
           currentStep: SendSteps.sent,
+          errAddress: emptyString,
+          errSending: emptyString,
+          errAmount: emptyString,
+          errFees: emptyString,
         ),
       );
     } catch (e, s) {
@@ -358,6 +381,10 @@ class SendCubit extends Cubit<SendState> {
           sendingTx: false,
           errLoading: emptyString,
           currentStep: SendSteps.confirm,
+          errAddress: emptyString,
+          errSending: emptyString,
+          errAmount: emptyString,
+          errFees: emptyString,
         ),
       );
 
@@ -368,7 +395,19 @@ class SendCubit extends Cubit<SendState> {
   bool _parseAmount() {
     final parsed = state.amount.replaceAll(',', emptyString);
     final intParsed = int.parse(parsed);
-
+    if (intParsed > state.balance!) {
+      emit(
+        state.copyWith(
+          amount: emptyString,
+          errLoading: emptyString,
+          errAddress: emptyString,
+          errSending: emptyString,
+          errAmount: insufficientBalanceError,
+          errFees: emptyString,
+        ),
+      );
+      return false;
+    }
     if (intParsed > 546 || (intParsed == 0 && state.sweepWallet)) {
       emit(
         state.copyWith(
@@ -419,6 +458,9 @@ class SendCubit extends Cubit<SendState> {
       final txOutputs =
           '${state.address}:${state.sweepWallet ? 0 : state.amount}';
 
+      final nodeAddress = _nodeAddressCubit.state.getAddress();
+      final socks5 = _torCubit.state.getSocks5();
+
       emit(
         state.copyWith(
           calculatingFees: true,
@@ -426,9 +468,6 @@ class SendCubit extends Cubit<SendState> {
           txOutputs: txOutputs,
         ),
       );
-
-      final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
 
       final syncRes = await compute(sqliteSync, {
         'dbPath': dbPath,
@@ -524,6 +563,11 @@ class SendCubit extends Cubit<SendState> {
       state.copyWith(
         finalFee: finalFee,
         fees: emptyString,
+        errLoading: emptyString,
+        errAddress: emptyString,
+        errSending: emptyString,
+        errAmount: emptyString,
+        errFees: emptyString,
       ),
     );
   }
@@ -534,12 +578,22 @@ class SendCubit extends Cubit<SendState> {
       state.copyWith(
         fees: checked,
         feesOption: 4,
+        errLoading: emptyString,
+        errAddress: emptyString,
+        errSending: emptyString,
+        errAmount: emptyString,
+        errFees: emptyString,
       ),
     );
 
     emit(
       state.copyWith(
         finalFee: int.parse(checked),
+        errLoading: emptyString,
+        errAddress: emptyString,
+        errSending: emptyString,
+        errAmount: emptyString,
+        errFees: emptyString,
       ),
     );
   }
@@ -558,6 +612,10 @@ class SendCubit extends Cubit<SendState> {
 
       emit(
         state.copyWith(
+          errLoading: emptyString,
+          errAddress: emptyString,
+          errSending: emptyString,
+          errAmount: emptyString,
           errFees: emptyString,
         ),
       );
@@ -566,6 +624,10 @@ class SendCubit extends Cubit<SendState> {
         emit(
           state.copyWith(
             errFees: invalidFeeError,
+            errLoading: emptyString,
+            errAddress: emptyString,
+            errSending: emptyString,
+            errAmount: emptyString,
           ),
         );
         return;
@@ -578,19 +640,6 @@ class SendCubit extends Cubit<SendState> {
           errLoading: emptyString,
         ),
       );
-
-      // final nodeAddress = _nodeAddressCubit.state.getAddress();
-      // final socks5 = _torCubit.state.getSocks5();
-
-      // final psbt = await compute(buildTx, {
-      //   'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
-      //   'nodeAddress': nodeAddress,
-      //   'socks5': socks5,
-      //   'txOutputs': state.txOutputs,
-      //   'feeAbsolute': state.finalFee.toString(),
-      //   'policyPath': state.policyPath,
-      //   'sweep': state.sweepWallet.toString(),
-      // });
 
       final psbt = await compute(sqliteBuildTx, {
         'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
@@ -621,6 +670,10 @@ class SendCubit extends Cubit<SendState> {
           finalAmount: amtoutput.value,
           currentStep: SendSteps.confirm,
           errSending: emptyString,
+          errLoading: emptyString,
+          errAddress: emptyString,
+          errAmount: emptyString,
+          errFees: emptyString,
         ),
       );
       db.close();
@@ -637,7 +690,18 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void clearPsbt() {
-    emit(state.copyWith(psbt: emptyString, finalAmount: null, finalFee: null));
+    emit(
+      state.copyWith(
+        psbt: emptyString,
+        finalAmount: null,
+        finalFee: null,
+        errLoading: emptyString,
+        errAddress: emptyString,
+        errSending: emptyString,
+        errAmount: emptyString,
+        errFees: emptyString,
+      ),
+    );
   }
 
   void backClicked() {
@@ -645,13 +709,40 @@ class SendCubit extends Cubit<SendState> {
       case SendSteps.address:
         break;
       case SendSteps.amount:
-        emit(state.copyWith(currentStep: SendSteps.address));
+        emit(
+          state.copyWith(
+            currentStep: SendSteps.address,
+            errLoading: emptyString,
+            errAddress: emptyString,
+            errSending: emptyString,
+            errAmount: emptyString,
+            errFees: emptyString,
+          ),
+        );
         break;
       case SendSteps.fees:
-        emit(state.copyWith(currentStep: SendSteps.amount));
+        emit(
+          state.copyWith(
+            currentStep: SendSteps.amount,
+            errLoading: emptyString,
+            errAddress: emptyString,
+            errSending: emptyString,
+            errAmount: emptyString,
+            errFees: emptyString,
+          ),
+        );
         break;
       case SendSteps.confirm:
-        emit(state.copyWith(currentStep: SendSteps.fees));
+        emit(
+          state.copyWith(
+            currentStep: SendSteps.fees,
+            errLoading: emptyString,
+            errAddress: emptyString,
+            errSending: emptyString,
+            errAmount: emptyString,
+            errFees: emptyString,
+          ),
+        );
         break;
       case SendSteps.sent:
         break;
@@ -669,6 +760,7 @@ class SendCubit extends Cubit<SendState> {
           errAmount: emptyString,
           errAddress: emptyString,
           errSending: emptyString,
+          errFees: emptyString,
         ),
       );
 
@@ -739,6 +831,10 @@ class SendCubit extends Cubit<SendState> {
         sendingTx: false,
         errLoading: emptyString,
         currentStep: SendSteps.sent,
+        errAddress: emptyString,
+        errSending: emptyString,
+        errAmount: emptyString,
+        errFees: emptyString,
       ),
     );
   }
@@ -753,6 +849,10 @@ class SendCubit extends Cubit<SendState> {
         sendingTx: false,
         errLoading: emptyString,
         currentStep: SendSteps.sent,
+        errAddress: emptyString,
+        errSending: emptyString,
+        errAmount: emptyString,
+        errFees: emptyString,
       ),
     );
   }

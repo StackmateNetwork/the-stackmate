@@ -23,7 +23,6 @@ class _AmountRowState extends State<AmountRow> {
   @override
   Widget build(BuildContext c) {
     final amount = c.select((SendCubit sc) => sc.state.amount);
-    final errAmount = c.select((SendCubit sc) => sc.state.errAmount);
     final isSweep = c.select((SendCubit sc) => sc.state.sweepWallet);
     final balance = c.select((SendCubit sc) => sc.state.balance);
 
@@ -77,7 +76,6 @@ class _AmountRowState extends State<AmountRow> {
                               color: c.colours.onBackground,
                             )
                           : null,
-                      errorText: errAmount.nullIfEmpty(),
                     ),
                     onChanged: (t) {
                       if (!isSweep) c.read<SendCubit>().amountChanged(t);
