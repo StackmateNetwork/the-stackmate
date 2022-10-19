@@ -56,9 +56,10 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
   Future<void> save(
     String root,
     String fingerPrint,
+    String seed,
   ) async {
     final masterKey = MasterKey(
-      seed: '',
+      seed: seed,
       passphrase: '',
       root: root,
       fingerprint: fingerPrint,

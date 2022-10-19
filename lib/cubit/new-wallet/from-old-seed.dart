@@ -317,6 +317,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         await _masterKeyCubit.save(
           root,
           wallet.fingerPrint,
+          _importCubit.state.seed,
         );
         _masterKeyCubit.init();
       }

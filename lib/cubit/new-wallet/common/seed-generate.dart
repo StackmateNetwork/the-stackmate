@@ -135,6 +135,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       await _masterKey.save(
         root.result!.xprv,
         root.result!.fingerprint,
+        root.result!.mnemonic,
       );
     }
     _masterKey.init();
