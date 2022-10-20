@@ -14,7 +14,6 @@ class KeyInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 16),
           Text(
             'KEY INFORMATION',
             style: c.fonts.overline!.copyWith(
@@ -49,12 +48,6 @@ class KeyInfo extends StatelessWidget {
             child: const Text('COPY'),
           ),
           const SizedBox(height: 24),
-          Text(
-            'Only your mnemonic and passphrase are enough to recover this wallet.',
-            style: c.fonts.caption!.copyWith(
-              color: c.colours.onPrimary,
-            ),
-          ),
         ],
       ),
     );

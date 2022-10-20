@@ -18,7 +18,6 @@ class BackupOps extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 16),
           Text(
             'BACKUP OPERATIONS',
             style: c.fonts.overline!.copyWith(
@@ -28,21 +27,12 @@ class BackupOps extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           if (!isBackedUp) ...[
-            Text(
-              'STANDARD BACKUP PENDING!',
-              style: c.fonts.overline!.copyWith(
-                color: c.colours.onBackground,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
             SizedBox(
               height: 52,
               width: c.width,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   primary: c.colours.error,
-                  side: BorderSide(color: c.colours.error),
                   onSurface: c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
@@ -52,31 +42,22 @@ class BackupOps extends StatelessWidget {
               ),
             ),
           ],
-          if (isBackedUp)
-            Text(
-              'STANDARD BACKUP COMPLETE.',
-              style: c.fonts.overline!.copyWith(
-                color: c.colours.onBackground,
-                fontWeight: FontWeight.bold,
+          if (true || isBackedUp) ...[
+            const SizedBox(height: 24),
+            SizedBox(
+              height: 52,
+              width: c.width,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  primary: c.colours.tertiary,
+                ),
+                onPressed: () async {
+                  // c.push('/test-recovery');
+                },
+                child: const Text('TEST RECOVERY'),
               ),
             ),
-          const SizedBox(height: 24),
-          SizedBox(
-            height: 52,
-            width: c.width,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                onPrimary: c.colours.background,
-                primary: c.colours.primary,
-              ),
-              onPressed: () async {
-                //
-              },
-              child: const Text('TEST RECOVERY'),
-            ),
-          ),
-          const SizedBox(height: 24),
-          if (true) // WALLET HAS A PASSPHRASE
+            const SizedBox(height: 24),
             SizedBox(
               height: 52,
               width: c.width,
@@ -90,6 +71,21 @@ class BackupOps extends StatelessWidget {
                 child: const Text('ENCRYPTED BACKUP'),
               ),
             ),
+            const SizedBox(height: 24),
+            SizedBox(
+              height: 52,
+              width: c.width,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  primary: c.colours.secondary,
+                ),
+                onPressed: () async {
+                  //
+                },
+                child: const Text('SHAMIR SECRET SHARES'),
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -117,21 +113,14 @@ Future<void> _showCipherBackupWarning(BuildContext context) async {
           child: ListBody(
             children: <Widget>[
               Text(
-                'Your passphrase will be used to encrypt your mnemonic seed phrase as a cipher.\n\n',
+                'This is an advanced feature. Please read before proceeding!\n\n',
                 style: context.fonts.bodyMedium!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: context.colours.onPrimary,
                 ),
               ),
               Text(
-                'DO NOT STORE THIS BACKUP ON YOUR PHONE!\nTHIS WILL MAKE IT AN OPEN TARGET TO THEFT!\n',
-                style: context.fonts.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: context.colours.onPrimary,
-                ),
-              ),
-              Text(
-                'ONLY STORE A THIS BACKUP ON AN SD CARD!\n',
+                'DO NOT STORE ENCRYPTED BACKUPS ON YOUR DEVICE!\n\nONLY STORE THESE BACKUPS ON AN SD CARD!\n',
                 style: context.fonts.bodyMedium!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: context.colours.onPrimary,
@@ -159,6 +148,7 @@ Future<void> _showCipherBackupWarning(BuildContext context) async {
             onPressed: () {
               Navigator.of(context).pop();
               // context.push('/contracts');
+              //c.push('/encrypted-backup');
             },
           ),
           TextButton(
