@@ -52,4 +52,10 @@ class Validation {
     }
     return str != '0' && str != 'false' && str != '';
   }
+
+  static String fingerPrintFromXKey(String xkey) {
+    final startIndex = xkey.indexOf("[", 0);
+    final fingerPrintEndIndex = xkey.indexOf("/", 0);
+    return xkey.substring(startIndex + 1, fingerPrintEndIndex);
+  }
 }
