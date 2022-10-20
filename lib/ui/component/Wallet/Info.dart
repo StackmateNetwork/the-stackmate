@@ -32,7 +32,7 @@ class WalletInfo extends StatelessWidget {
                   tabs: [
                     Tab(
                       child: Text(
-                        'Info',
+                        'INFO',
                         style: c.fonts.headline6!.copyWith(
                           color: c.colours.onBackground,
                         ),
@@ -40,7 +40,7 @@ class WalletInfo extends StatelessWidget {
                     ),
                     Tab(
                       child: Text(
-                        'Backup',
+                        'BACKUP',
                         style: c.fonts.headline6!.copyWith(
                           color: c.colours.onBackground,
                           fontWeight: FontWeight.normal,

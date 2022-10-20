@@ -42,7 +42,7 @@ class BackupOps extends StatelessWidget {
             onPressed: () async {
               _showCipherBackupWarning(c);
             },
-            child: const Text('CREATE BACKUP CIPHER'),
+            child: const Text('CREATE CYPHERBACKUP'),
           ),
         ],
       ),
@@ -56,39 +56,64 @@ Future<void> _showCipherBackupWarning(BuildContext context) async {
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        backgroundColor: context.colours.onPrimary,
-        title: Text('P2P Contract Terms.', style: context.fonts.headline3),
+        backgroundColor: context.colours.onPrimaryContainer,
+        title: Text(
+          'CYPHERBACKUP',
+          style: context.fonts.headline5,
+        ),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               Text(
-                'DO NOT STORE CIPHER BACKUPS ON YOUR PHONE! THIS WILL MAKE IT AN OPEN TARGET TO THEFT!\n',
-                style: context.fonts.bodyMedium!
-                    .copyWith(fontWeight: FontWeight.bold),
+                'Your passphrase will be used to encrypt your mnemonic seed phrase as a cipher.\n\n',
+                style: context.fonts.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
-                'ONLY STORE CIPHER BACKUPS ON AN SD CARD!\n',
-                style: context.fonts.bodyMedium!
-                    .copyWith(fontWeight: FontWeight.bold),
+                'DO NOT STORE A CYPHERBACKUP ON YOUR PHONE!\nTHIS WILL MAKE IT AN OPEN TARGET TO THEFT!\n',
+                style: context.fonts.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
-                'If you are unsure of what to do, do not proceed, and ask our team for support!',
-                style: context.fonts.bodyMedium!
-                    .copyWith(fontWeight: FontWeight.bold),
+                'ONLY STORE A CYPHERBACKUP ON AN SD CARD!\n',
+                style: context.fonts.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'ABORT if you are not sure! Contact our team for more information.\n',
+                style: context.fonts.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: context.colours.error,
+                ),
               ),
             ],
           ),
         ),
         actions: <Widget>[
           TextButton(
-            child: const Text('I Understand.'),
+            child: Text(
+              'I Understand.',
+              style: context.fonts.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colours.secondary,
+              ),
+            ),
             onPressed: () {
               Navigator.of(context).pop();
               // context.push('/contracts');
             },
           ),
           TextButton(
-            child: const Text('Abort!'),
+            child: Text(
+              'Abort!',
+              style: context.fonts.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colours.error,
+              ),
+            ),
             onPressed: () {
               Navigator.of(context).pop();
               // context.push('/contracts');
