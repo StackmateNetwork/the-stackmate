@@ -117,6 +117,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
         state.rootXprv!,
         state.fingerPrint!,
         state.seed!.toString(),
+        state.passPhrase,
       );
       _masterKey.init();
       emit(

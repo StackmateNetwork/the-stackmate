@@ -205,6 +205,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         newWallet,
       );
 
+      _generateCubit.clear();
       _wallets.refresh();
       emit(
         state.copyWith(

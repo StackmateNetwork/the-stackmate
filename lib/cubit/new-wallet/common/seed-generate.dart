@@ -136,6 +136,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
         root.result!.xprv,
         root.result!.fingerprint,
         root.result!.mnemonic,
+        state.passPhrase,
       );
     }
     _masterKey.init();
@@ -158,8 +159,6 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       emit(
         state.copyWith(
           wallet: wallet.result,
-          seed: [],
-          passPhrase: '',
           quizSeedCompletedAnswers: [],
           quizSeedAnswer: '',
         ),
@@ -282,8 +281,6 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       emit(
         state.copyWith(
           wallet: wallet.result,
-          seed: [],
-          passPhrase: '',
           quizSeedCompletedAnswers: [],
           quizSeedAnswer: '',
         ),

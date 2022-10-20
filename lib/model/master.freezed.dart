@@ -26,6 +26,8 @@ mixin _$MasterKey {
   String? get fingerprint => throw _privateConstructorUsedError;
   @HiveField(4)
   String? get network => throw _privateConstructorUsedError;
+  @HiveField(5)
+  bool? get hasPassphrase => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MasterKeyCopyWith<MasterKey> get copyWith =>
@@ -41,7 +43,8 @@ abstract class $MasterKeyCopyWith<$Res> {
       @HiveField(1) String? passphrase,
       @HiveField(2) String? root,
       @HiveField(3) String? fingerprint,
-      @HiveField(4) String? network});
+      @HiveField(4) String? network,
+      @HiveField(5) bool? hasPassphrase});
 }
 
 /// @nodoc
@@ -59,6 +62,7 @@ class _$MasterKeyCopyWithImpl<$Res> implements $MasterKeyCopyWith<$Res> {
     Object? root = freezed,
     Object? fingerprint = freezed,
     Object? network = freezed,
+    Object? hasPassphrase = freezed,
   }) {
     return _then(_value.copyWith(
       seed: seed == freezed
@@ -81,6 +85,10 @@ class _$MasterKeyCopyWithImpl<$Res> implements $MasterKeyCopyWith<$Res> {
           ? _value.network
           : network // ignore: cast_nullable_to_non_nullable
               as String?,
+      hasPassphrase: hasPassphrase == freezed
+          ? _value.hasPassphrase
+          : hasPassphrase // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -96,7 +104,8 @@ abstract class _$$_MasterKeyCopyWith<$Res> implements $MasterKeyCopyWith<$Res> {
       @HiveField(1) String? passphrase,
       @HiveField(2) String? root,
       @HiveField(3) String? fingerprint,
-      @HiveField(4) String? network});
+      @HiveField(4) String? network,
+      @HiveField(5) bool? hasPassphrase});
 }
 
 /// @nodoc
@@ -116,6 +125,7 @@ class __$$_MasterKeyCopyWithImpl<$Res> extends _$MasterKeyCopyWithImpl<$Res>
     Object? root = freezed,
     Object? fingerprint = freezed,
     Object? network = freezed,
+    Object? hasPassphrase = freezed,
   }) {
     return _then(_$_MasterKey(
       seed: seed == freezed
@@ -138,6 +148,10 @@ class __$$_MasterKeyCopyWithImpl<$Res> extends _$MasterKeyCopyWithImpl<$Res>
           ? _value.network
           : network // ignore: cast_nullable_to_non_nullable
               as String?,
+      hasPassphrase: hasPassphrase == freezed
+          ? _value.hasPassphrase
+          : hasPassphrase // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -151,7 +165,8 @@ class _$_MasterKey extends _MasterKey {
       @HiveField(1) this.passphrase,
       @HiveField(2) this.root,
       @HiveField(3) this.fingerprint,
-      @HiveField(4) this.network})
+      @HiveField(4) this.network,
+      @HiveField(5) this.hasPassphrase})
       : super._();
 
   @override
@@ -169,10 +184,13 @@ class _$_MasterKey extends _MasterKey {
   @override
   @HiveField(4)
   final String? network;
+  @override
+  @HiveField(5)
+  final bool? hasPassphrase;
 
   @override
   String toString() {
-    return 'MasterKey(seed: $seed, passphrase: $passphrase, root: $root, fingerprint: $fingerprint, network: $network)';
+    return 'MasterKey(seed: $seed, passphrase: $passphrase, root: $root, fingerprint: $fingerprint, network: $network, hasPassphrase: $hasPassphrase)';
   }
 
   @override
@@ -186,7 +204,9 @@ class _$_MasterKey extends _MasterKey {
             const DeepCollectionEquality().equals(other.root, root) &&
             const DeepCollectionEquality()
                 .equals(other.fingerprint, fingerprint) &&
-            const DeepCollectionEquality().equals(other.network, network));
+            const DeepCollectionEquality().equals(other.network, network) &&
+            const DeepCollectionEquality()
+                .equals(other.hasPassphrase, hasPassphrase));
   }
 
   @override
@@ -196,7 +216,8 @@ class _$_MasterKey extends _MasterKey {
       const DeepCollectionEquality().hash(passphrase),
       const DeepCollectionEquality().hash(root),
       const DeepCollectionEquality().hash(fingerprint),
-      const DeepCollectionEquality().hash(network));
+      const DeepCollectionEquality().hash(network),
+      const DeepCollectionEquality().hash(hasPassphrase));
 
   @JsonKey(ignore: true)
   @override
@@ -210,7 +231,8 @@ abstract class _MasterKey extends MasterKey {
       @HiveField(1) final String? passphrase,
       @HiveField(2) final String? root,
       @HiveField(3) final String? fingerprint,
-      @HiveField(4) final String? network}) = _$_MasterKey;
+      @HiveField(4) final String? network,
+      @HiveField(5) final bool? hasPassphrase}) = _$_MasterKey;
   const _MasterKey._() : super._();
 
   @override
@@ -228,6 +250,9 @@ abstract class _MasterKey extends MasterKey {
   @override
   @HiveField(4)
   String? get network => throw _privateConstructorUsedError;
+  @override
+  @HiveField(5)
+  bool? get hasPassphrase => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_MasterKeyCopyWith<_$_MasterKey> get copyWith =>

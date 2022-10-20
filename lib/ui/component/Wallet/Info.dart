@@ -22,7 +22,7 @@ class WalletInfo extends StatelessWidget {
             Container(
               constraints: BoxConstraints(
                 maxWidth: c.width,
-                maxHeight: 92,
+                maxHeight: 64,
               ),
               child: AppBar(
                 automaticallyImplyLeading: false,

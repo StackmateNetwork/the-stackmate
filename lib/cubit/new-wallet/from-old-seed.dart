@@ -220,6 +220,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       if (wallet == null) return;
 
       final root = _importCubit.state.masterXpriv!;
+      final passphrase = _importCubit.state.passPhrase;
 
       final fullXPrv =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
@@ -318,6 +319,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
           root,
           wallet.fingerPrint,
           _importCubit.state.seed,
+          _importCubit.state.passPhrase,
         );
         _masterKeyCubit.init();
       }
@@ -365,13 +367,13 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       await _wallets.updateAddressIndexToSelectedWallet(
         int.parse(lastUnused.result!.index),
       );
-
       emit(
         state.copyWith(
           savingWallet: false,
           newWalletSaved: true,
         ),
       );
+      _importCubit.clear();
       db.close();
     } catch (e, s) {
       _logger.logException(e, 'SeedImportCubit._saveWallet', s);
