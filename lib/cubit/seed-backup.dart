@@ -210,7 +210,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
       ),
     );
 
-    if (completedAnswers.length == 3) {
+    if (state.seed!.length == completedAnswers.length) {
       _quizCompleted();
     } else {
       _updateQuiz();
