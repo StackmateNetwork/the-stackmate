@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
-import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/pin.dart';
 import 'package:sats/pkg/extensions.dart';
 

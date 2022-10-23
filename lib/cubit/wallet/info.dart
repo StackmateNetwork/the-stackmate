@@ -25,7 +25,7 @@ part 'info.freezed.dart';
 @freezed
 class InfoState with _$InfoState {
   const factory InfoState({
-    @Default(false) bool loadingTransactions,
+    @Default(true) bool loadingTransactions,
     @Default('') String errLoadingTransactions,
     @Default(true) bool loadingBalance,
     @Default('') String errLoadingBalance,

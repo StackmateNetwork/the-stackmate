@@ -113,7 +113,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
       );
 
       if (wallet.hasError) {
-        throw SMError.fromJson(wallet.error!);
+        throw SMError.fromJson(wallet.error!).message;
       }
 
       emit(
@@ -121,8 +121,6 @@ class SeedImportCubit extends Cubit<SeedImportState> {
           seedReady: true,
           masterXpriv: root.result!.xprv,
           wallet: wallet.result,
-          passPhrase: '',
-          seed: '',
         ),
       );
     } catch (e, s) {

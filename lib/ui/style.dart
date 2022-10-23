@@ -30,6 +30,7 @@ ThemeData mainTheme() => ThemeData(
         tertiary: brightCrayola,
         tertiaryContainer: frenchViolet,
         surface: ghostWhite.withOpacity(0.009),
+        onPrimaryContainer: vantaBlack.withOpacity(0.99),
         background: vantaBlack,
         error: venetian,
         onPrimary: cultured,

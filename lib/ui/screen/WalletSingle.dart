@@ -27,8 +27,7 @@ class _Wallet extends StatelessWidget {
   Widget build(BuildContext c) {
     final zeroBal = c.select((InfoCubit wc) => wc.state.zeroBalance());
     final showInfo = c.select((InfoCubit wc) => wc.state.showInfo);
-    var isLoading = true;
-    isLoading = c.select((InfoCubit wc) => wc.state.loadingTransactions);
+    final isLoading = c.select((InfoCubit wc) => wc.state.loadingTransactions);
     final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet);
 
     if (wallet == null) return Container();

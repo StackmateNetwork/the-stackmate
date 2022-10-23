@@ -14,6 +14,6 @@ class DeriveLoader extends StatelessWidget {
         c.select((MasterDeriveWalletCubit mc) => mc.state.savingWallet);
 
     if (!deriving) return Container();
-    return const Loading(text: 'Importing derived wallet...');
+    return const Loading(text: 'Deriving wallet...');
   }
 }

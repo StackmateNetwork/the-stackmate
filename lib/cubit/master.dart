@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/model/master.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -56,13 +57,16 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
   Future<void> save(
     String root,
     String fingerPrint,
+    String seed,
+    String passphrase,
   ) async {
     final masterKey = MasterKey(
-      seed: '',
+      seed: seed,
       passphrase: '',
       root: root,
       fingerprint: fingerPrint,
       network: _chainSelect.state.blockchain.name,
+      hasPassphrase: passphrase != emptyString,
     );
 
     final saved = await _storage.saveItemAt<MasterKey>(
@@ -89,6 +93,7 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       root: root,
       fingerprint: fingerPrint,
       network: _chainSelect.state.blockchain.name,
+      hasPassphrase: passphrase != emptyString,
     );
 
     final saved = await _storage.saveItemAt<MasterKey>(

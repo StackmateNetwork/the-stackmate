@@ -219,7 +219,7 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
 
 class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   const _$_InfoState(
-      {this.loadingTransactions = false,
+      {this.loadingTransactions = true,
       this.errLoadingTransactions = '',
       this.loadingBalance = true,
       this.errLoadingBalance = '',

@@ -14,6 +14,6 @@ class Loader extends StatelessWidget {
 
     if (!loading) return Container();
 
-    return const Loading(text: 'Recovering wallet...');
+    return const Loading(text: 'Importing watcher wallet...');
   }
 }
