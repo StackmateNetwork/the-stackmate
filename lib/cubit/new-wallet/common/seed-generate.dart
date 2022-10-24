@@ -252,9 +252,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       ),
     );
 
-    if (state.seedLength == 12 && completedAnswers.length == 6) {
-      _quizCompleted();
-    } else if (state.seedLength == 24 && completedAnswers.length == 12) {
+    if (state.seedLength == completedAnswers.length) {
       _quizCompleted();
     } else {
       _updateQuiz();
