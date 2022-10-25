@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/pin.dart';
 import 'package:sats/cubit/tor.dart';
 // import 'package:sats/model/pin.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -10,7 +11,7 @@ import 'package:sats/ui/component/Landing/Start.dart';
 class _Landing extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    return BlocBuilder<TorCubit, TorState>(
+    return BlocBuilder<PinCubit, PinState>(
       // listener: (context, state) {
       // if (state.isRunning && masterKey != null) {
       //   c.pop();
@@ -24,40 +25,30 @@ class _Landing extends StatelessWidget {
       builder: (context, torState) {
         return Scaffold(
           body: SafeArea(
-            child: RefreshIndicator(
-              triggerMode: RefreshIndicatorTriggerMode.anywhere,
-              edgeOffset: 10.0,
-              displacement: 10.0,
-              onRefresh: () async {
-                if (torState.enforced) {
-                  c.read<TorCubit>().testConnection();
-                }
-              },
-              child: CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    stretch: true,
-                    pinned: true,
-                    expandedHeight: c.height / 1.2,
-                    automaticallyImplyLeading: false,
-                    backgroundColor: c.colours.background,
-                    flexibleSpace: FlexibleSpaceBar(
-                      stretchModes: const [
-                        StretchMode.fadeTitle,
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  stretch: true,
+                  pinned: true,
+                  expandedHeight: c.height / 1.2,
+                  automaticallyImplyLeading: false,
+                  backgroundColor: c.colours.background,
+                  flexibleSpace: FlexibleSpaceBar(
+                    stretchModes: const [
+                      StretchMode.fadeTitle,
+                    ],
+                    background: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: const [
+                        LandingLoader(),
+                        SizedBox(height: 48),
+                        LandingLogo(),
+                        PIN(),
                       ],
-                      background: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: const [
-                          LandingLoader(),
-                          SizedBox(height: 48),
-                          LandingLogo(),
-                          PIN(),
-                        ],
-                      ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           bottomNavigationBar: const Start(),

@@ -7,6 +7,8 @@ import 'package:sats/pkg/storage.dart';
 part 'pin.freezed.dart';
 
 const defaultNodeAddress = 'default';
+String pinText = '';
+String hidden = '';
 
 @freezed
 class PinState with _$PinState {
@@ -94,6 +96,19 @@ class PinCubit extends Cubit<PinState> {
           isVerified: true,
         ),
       );
+    }
+  }
+
+  void onKeyboardTap(String value) {
+    if (pinText.length == 4) {
+      emit(
+        state.copyWith(
+          value: value,
+        ),
+      );
+    } else {
+      pinText = pinText + value;
+      hidden = hidden + '*';
     }
   }
 

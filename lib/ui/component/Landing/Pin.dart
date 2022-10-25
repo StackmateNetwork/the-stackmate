@@ -3,16 +3,11 @@ import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:sats/cubit/pin.dart';
 import 'package:sats/pkg/extensions.dart';
 
-class PIN extends StatefulWidget {
+class PIN extends StatelessWidget {
   const PIN({Key? key}) : super(key: key);
-
-  @override
-  PINState createState() => PINState();
-}
-
-class PINState extends State<PIN> {
-  String pinText = '';
-  String hidden = '';
+  void initState() {
+    initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +19,18 @@ class PINState extends State<PIN> {
         Text(
           hidden,
           style: context.fonts.headline5!.copyWith(
-            color: context.colours.onPrimary,
+            color: context.colours.primary,
           ),
         ),
         NumericKeyboard(
-          onKeyboardTap: _onKeyboardTap,
+          onKeyboardTap: pinCubit.onKeyboardTap,
           textColor: Colors.white,
           rightButtonFn: () {
-            setState(() {
-              pinText = pinText.substring(0, pinText.length - 1);
-              hidden = hidden.substring(0, hidden.length - 1);
-              if (pinText.length == 4) {
-                pinCubit.setConfirmedPin(pinText);
-              }
-            });
+            pinText = pinText.substring(0, pinText.length - 1);
+            hidden = hidden.substring(0, hidden.length - 1);
+            if (pinText.length == 4) {
+              pinCubit.setConfirmedPin(pinText);
+            }
           },
           rightIcon: const Icon(
             Icons.backspace,
@@ -58,7 +51,7 @@ class PINState extends State<PIN> {
                 primary: context.colours.primary,
               ),
               onPressed: () {
-                pinCubit.setChosenPin(pinText);
+                context.read<PinCubit>().setChosenPin(pinText);
               },
               child: const Text('SET'),
             ),
@@ -73,8 +66,10 @@ class PINState extends State<PIN> {
                 primary: context.colours.background,
               ),
               onPressed: () async {
-                pinCubit.setConfirmedPin(pinText);
-                pinCubit.verifyChosenPin();
+                context.read<PinCubit>().setConfirmedPin(pinText);
+                context.read<PinCubit>().verifyChosenPin();
+                // pinCubit.setConfirmedPin(pinText);
+                //  pinCubit.verifyChosenPin();
                 if (pinCubit.state.isVerified) {
                   // cubit updated, must unlock start button.
                   await pinCubit.saveNewPin(pinText);
@@ -99,16 +94,5 @@ class PINState extends State<PIN> {
           ),
       ],
     );
-  }
-
-  // ignore: always_declare_return_types
-  _onKeyboardTap(String value) {
-    setState(() {
-      if (pinText.length == 4) {
-      } else {
-        pinText = pinText + value;
-        hidden = hidden + '*';
-      }
-    });
   }
 }
