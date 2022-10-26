@@ -99,19 +99,6 @@ class PinCubit extends Cubit<PinState> {
     }
   }
 
-  void onKeyboardTap(String value) {
-    if (pinText.length == 4) {
-      emit(
-        state.copyWith(
-          value: value,
-        ),
-      );
-    } else {
-      pinText = pinText + value;
-      hidden = hidden + '*';
-    }
-  }
-
   Future<void> saveNewPin(String value) async {
     if (value.length != 4) {
       emit(
