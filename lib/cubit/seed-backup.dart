@@ -232,7 +232,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
   void openLink(String url) {
     try {
       _launcher.launchApp(url);
-    } catch (e, s) {
+    } catch (e, _) {
       emit(
         state.copyWith(
           errMasterKeyUpdate: 'Could not open url',

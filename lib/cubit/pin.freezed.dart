@@ -20,6 +20,7 @@ mixin _$PinState {
   int get attemptsLeft => throw _privateConstructorUsedError;
   int get lastFailure => throw _privateConstructorUsedError;
   bool get isLocked => throw _privateConstructorUsedError;
+  bool get hasChosenPin => throw _privateConstructorUsedError;
   bool get isVerified => throw _privateConstructorUsedError;
   String get chosenValue => throw _privateConstructorUsedError;
   String get confirmedValue => throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $PinStateCopyWith<$Res> {
       int attemptsLeft,
       int lastFailure,
       bool isLocked,
+      bool hasChosenPin,
       bool isVerified,
       String chosenValue,
       String confirmedValue,
@@ -63,6 +65,7 @@ class _$PinStateCopyWithImpl<$Res> implements $PinStateCopyWith<$Res> {
     Object? attemptsLeft = freezed,
     Object? lastFailure = freezed,
     Object? isLocked = freezed,
+    Object? hasChosenPin = freezed,
     Object? isVerified = freezed,
     Object? chosenValue = freezed,
     Object? confirmedValue = freezed,
@@ -85,6 +88,10 @@ class _$PinStateCopyWithImpl<$Res> implements $PinStateCopyWith<$Res> {
       isLocked: isLocked == freezed
           ? _value.isLocked
           : isLocked // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasChosenPin: hasChosenPin == freezed
+          ? _value.hasChosenPin
+          : hasChosenPin // ignore: cast_nullable_to_non_nullable
               as bool,
       isVerified: isVerified == freezed
           ? _value.isVerified
@@ -132,6 +139,7 @@ abstract class _$$_PinStateCopyWith<$Res> implements $PinStateCopyWith<$Res> {
       int attemptsLeft,
       int lastFailure,
       bool isLocked,
+      bool hasChosenPin,
       bool isVerified,
       String chosenValue,
       String confirmedValue,
@@ -158,6 +166,7 @@ class __$$_PinStateCopyWithImpl<$Res> extends _$PinStateCopyWithImpl<$Res>
     Object? attemptsLeft = freezed,
     Object? lastFailure = freezed,
     Object? isLocked = freezed,
+    Object? hasChosenPin = freezed,
     Object? isVerified = freezed,
     Object? chosenValue = freezed,
     Object? confirmedValue = freezed,
@@ -180,6 +189,10 @@ class __$$_PinStateCopyWithImpl<$Res> extends _$PinStateCopyWithImpl<$Res>
       isLocked: isLocked == freezed
           ? _value.isLocked
           : isLocked // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasChosenPin: hasChosenPin == freezed
+          ? _value.hasChosenPin
+          : hasChosenPin // ignore: cast_nullable_to_non_nullable
               as bool,
       isVerified: isVerified == freezed
           ? _value.isVerified
@@ -213,6 +226,7 @@ class _$_PinState extends _PinState {
       this.attemptsLeft = 3,
       this.lastFailure = 0,
       this.isLocked = false,
+      this.hasChosenPin = false,
       this.isVerified = false,
       this.chosenValue = '',
       this.confirmedValue = '',
@@ -233,6 +247,9 @@ class _$_PinState extends _PinState {
   final bool isLocked;
   @override
   @JsonKey()
+  final bool hasChosenPin;
+  @override
+  @JsonKey()
   final bool isVerified;
   @override
   @JsonKey()
@@ -247,7 +264,7 @@ class _$_PinState extends _PinState {
 
   @override
   String toString() {
-    return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, isVerified: $isVerified, chosenValue: $chosenValue, confirmedValue: $confirmedValue, error: $error, pin: $pin)';
+    return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, hasChosenPin: $hasChosenPin, isVerified: $isVerified, chosenValue: $chosenValue, confirmedValue: $confirmedValue, error: $error, pin: $pin)';
   }
 
   @override
@@ -261,6 +278,8 @@ class _$_PinState extends _PinState {
             const DeepCollectionEquality()
                 .equals(other.lastFailure, lastFailure) &&
             const DeepCollectionEquality().equals(other.isLocked, isLocked) &&
+            const DeepCollectionEquality()
+                .equals(other.hasChosenPin, hasChosenPin) &&
             const DeepCollectionEquality()
                 .equals(other.isVerified, isVerified) &&
             const DeepCollectionEquality()
@@ -278,6 +297,7 @@ class _$_PinState extends _PinState {
       const DeepCollectionEquality().hash(attemptsLeft),
       const DeepCollectionEquality().hash(lastFailure),
       const DeepCollectionEquality().hash(isLocked),
+      const DeepCollectionEquality().hash(hasChosenPin),
       const DeepCollectionEquality().hash(isVerified),
       const DeepCollectionEquality().hash(chosenValue),
       const DeepCollectionEquality().hash(confirmedValue),
@@ -296,6 +316,7 @@ abstract class _PinState extends PinState {
       final int attemptsLeft,
       final int lastFailure,
       final bool isLocked,
+      final bool hasChosenPin,
       final bool isVerified,
       final String chosenValue,
       final String confirmedValue,
@@ -311,6 +332,8 @@ abstract class _PinState extends PinState {
   int get lastFailure => throw _privateConstructorUsedError;
   @override
   bool get isLocked => throw _privateConstructorUsedError;
+  @override
+  bool get hasChosenPin => throw _privateConstructorUsedError;
   @override
   bool get isVerified => throw _privateConstructorUsedError;
   @override
