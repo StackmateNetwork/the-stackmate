@@ -117,6 +117,7 @@ class SendCubit extends Cubit<SendState> {
   static const dummyFeeValue = '500';
   static const minerOutput = 'miner';
   static const emptyString = '';
+  static const sweepMessage = 'WALLET WILL BE EMPTIED.';
 
   void _init(bool withQR) async {
     if (withQR) {
@@ -318,7 +319,7 @@ class SendCubit extends Cubit<SendState> {
       emit(
         state.copyWith(
           sweepWallet: !state.sweepWallet,
-          amount: 'WALLET WILL BE EMPTIED.',
+          amount: sweepMessage,
           errLoading: emptyString,
           errAddress: emptyString,
           errSending: emptyString,
@@ -393,7 +394,9 @@ class SendCubit extends Cubit<SendState> {
   }
 
   bool _parseAmount() {
-    final parsed = state.amount.replaceAll(',', emptyString);
+    final parsed = (state.amount == sweepMessage)
+        ? '0'
+        : state.amount.replaceAll(',', emptyString);
     final intParsed = int.parse(parsed);
     if (intParsed > state.balance!) {
       emit(

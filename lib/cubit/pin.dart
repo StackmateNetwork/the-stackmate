@@ -99,8 +99,7 @@ class PinCubit extends Cubit<PinState> {
         : state.chosenValue.substring(0, state.chosenValue.length - 1);
     final newHidden = (state.hiddenValue.isEmpty)
         ? emptyString
-        : state.chosenValue.substring(0, state.hiddenValue.length - 3);
-
+        : state.hiddenValue.substring(0, state.hiddenValue.length - 3);
     emit(
       state.copyWith(
         chosenValue: newValue,
@@ -127,6 +126,7 @@ class PinCubit extends Cubit<PinState> {
       state.copyWith(
         chosenValue: state.chosenValue,
         hiddenValue: emptyString,
+        confirmedValue: emptyString,
         hasChosenPin: true,
         error: null,
       ),
@@ -150,7 +150,7 @@ class PinCubit extends Cubit<PinState> {
         : state.confirmedValue.substring(0, state.confirmedValue.length - 1);
     final newHidden = (state.hiddenValue.isEmpty)
         ? emptyString
-        : state.chosenValue.substring(0, state.hiddenValue.length - 3);
+        : state.hiddenValue.substring(0, state.hiddenValue.length - 3);
     emit(
       state.copyWith(
         confirmedValue: newValue,
@@ -203,7 +203,6 @@ class PinCubit extends Cubit<PinState> {
             lastFailure: state.lastFailure,
             isLocked: false,
             isVerified: false,
-            chosenValue: '',
             confirmedValue: '',
             hiddenValue: emptyString,
             error: null,
@@ -216,7 +215,6 @@ class PinCubit extends Cubit<PinState> {
       emit(
         state.copyWith(
           isVerified: false,
-          chosenValue: '',
           confirmedValue: '',
           hiddenValue: emptyString,
           error: 'PIN Must be 4 Digits.',
@@ -224,7 +222,70 @@ class PinCubit extends Cubit<PinState> {
       );
       return;
     }
-    if (state.confirmedValue == state.value) {
+    if (state.confirmedValue == state.chosenValue) {
+      final pin = Pin(
+        attemptsLeft: 3,
+        lastFailure: state.lastFailure,
+        value: state.confirmedValue,
+        isLocked: state.isLocked,
+      );
+      final saved = await _storage.saveItem<Pin>(
+        StoreKeys.Pin.name,
+        pin,
+      );
+      if (saved.hasError) {
+        emit(
+          state.copyWith(
+            error: saved.error.toString(),
+          ),
+        );
+      }
+      emit(
+        state.copyWith(
+          isVerified: true,
+          confirmedValue: '',
+          hasChosenPin: true,
+          error: null,
+          hiddenValue: emptyString,
+        ),
+      );
+    } else {
+      await saveFailedAttempt();
+    }
+  }
+
+  Future<void> checkEnterPin() async {
+    if (state.isLocked) {
+      final now = DateTime.now().millisecondsSinceEpoch;
+      if (state.lastFailure - now == 10000) {
+        // allow retry
+        emit(
+          state.copyWith(
+            value: state.value,
+            attemptsLeft: 3,
+            lastFailure: state.lastFailure,
+            isLocked: false,
+            isVerified: false,
+            confirmedValue: '',
+            hiddenValue: emptyString,
+            error: null,
+          ),
+        );
+      }
+    }
+
+    if (state.confirmedValue.length != 4) {
+      emit(
+        state.copyWith(
+          isVerified: false,
+          confirmedValue: '',
+          hiddenValue: emptyString,
+          error: 'PIN Must be 4 Digits.',
+        ),
+      );
+      return;
+    }
+    if (state.confirmedValue == state.chosenValue) {
       final pin = Pin(
         attemptsLeft: 3,
         lastFailure: state.lastFailure,
@@ -245,7 +306,6 @@ class PinCubit extends Cubit<PinState> {
       emit(
         state.copyWith(
           isVerified: true,
-          chosenValue: '',
           confirmedValue: '',
           hasChosenPin: true,
           error: null,

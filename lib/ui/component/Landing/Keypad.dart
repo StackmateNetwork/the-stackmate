@@ -10,39 +10,45 @@ class PinKeypad extends StatelessWidget {
   Widget build(BuildContext context) {
     final pinCubit = context.select((PinCubit pc) => pc);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        NumericKeyboard(
-          textColor: Colors.white,
-          rightIcon: Icon(
-            Icons.backspace,
-            color: context.colours.onPrimary,
-          ),
-          leftIcon: Icon(
-            Icons.cancel,
-            color: context.colours.error,
-          ),
-          onKeyboardTap: (String value) {
-            if (pinCubit.state.value == null && !pinCubit.state.hasChosenPin)
-              pinCubit.addToChosenPin(value);
+    return BlocBuilder<PinCubit, PinState>(
+      buildWhen: (previous, current) =>
+          previous.hasChosenPin != current.hasChosenPin,
+      builder: (context, state) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            NumericKeyboard(
+              textColor: Colors.white,
+              rightIcon: Icon(
+                Icons.backspace,
+                color: context.colours.onPrimary,
+              ),
+              leftIcon: Icon(
+                Icons.cancel,
+                color: context.colours.error,
+              ),
+              onKeyboardTap: (String value) {
+                if (state.value == null && !state.hasChosenPin)
+                  pinCubit.addToChosenPin(value);
 
-            if (pinCubit.state.hasChosenPin) pinCubit.addToConfPin(value);
-          },
-          rightButtonFn: () {
-            if (pinCubit.state.value == null && !pinCubit.state.hasChosenPin)
-              pinCubit.deleteOneFromChosenPin();
+                if (state.hasChosenPin) pinCubit.addToConfPin(value);
+              },
+              rightButtonFn: () {
+                if (state.value == null && !state.hasChosenPin)
+                  pinCubit.deleteOneFromChosenPin();
 
-            if (pinCubit.state.hasChosenPin) pinCubit.deleteOneFromConfPin();
-          },
-          leftButtonFn: () {
-            if (pinCubit.state.value == null && !pinCubit.state.hasChosenPin)
-              pinCubit.clearChosenPin();
+                if (state.hasChosenPin) pinCubit.deleteOneFromConfPin();
+              },
+              leftButtonFn: () {
+                if (state.value == null && !state.hasChosenPin)
+                  pinCubit.clearChosenPin();
 
-            if (pinCubit.state.hasChosenPin) pinCubit.clearConfPin();
-          },
-        ),
-      ],
+                if (state.hasChosenPin) pinCubit.clearConfPin();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
