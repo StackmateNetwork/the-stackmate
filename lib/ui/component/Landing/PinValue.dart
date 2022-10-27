@@ -16,8 +16,8 @@ class PinValue extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              (state.hasChosenPin) ? state.confirmedValue : state.chosenValue,
-              style: context.fonts.headline5!.copyWith(
+              state.hiddenValue,
+              style: context.fonts.headline3!.copyWith(
                 color: context.colours.onPrimary,
               ),
             ),

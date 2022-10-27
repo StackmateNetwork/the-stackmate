@@ -8,8 +8,7 @@ import 'package:sats/pkg/storage.dart';
 part 'pin.freezed.dart';
 
 const defaultNodeAddress = 'default';
-String pinText = '';
-String hidden = '';
+const String hiddenPin = ' . ';
 
 @freezed
 class PinState with _$PinState {
@@ -21,6 +20,7 @@ class PinState with _$PinState {
     @Default(false) bool hasChosenPin,
     @Default(false) bool isVerified,
     @Default('') String chosenValue,
+    @Default('') String hiddenValue,
     @Default('') String confirmedValue,
     String? error,
     Pin? pin,
@@ -74,6 +74,7 @@ class PinCubit extends Cubit<PinState> {
           hasChosenPin: true,
           chosenValue: '',
           confirmedValue: '',
+          hiddenValue: '',
           error: (pin.result!.isLocked) ? 'PIN LOCKED!' : null,
         ),
       );
@@ -85,6 +86,7 @@ class PinCubit extends Cubit<PinState> {
       emit(
         state.copyWith(
           chosenValue: state.chosenValue + value,
+          hiddenValue: state.hiddenValue + hiddenPin,
           hasChosenPin: false,
           error: null,
         ),
@@ -95,9 +97,14 @@ class PinCubit extends Cubit<PinState> {
     final newValue = (state.chosenValue.isEmpty)
         ? emptyString
         : state.chosenValue.substring(0, state.chosenValue.length - 1);
+    final newHidden = (state.hiddenValue.isEmpty)
+        ? emptyString
+        : state.chosenValue.substring(0, state.hiddenValue.length - 3);
+
     emit(
       state.copyWith(
         chosenValue: newValue,
+        hiddenValue: newHidden,
         hasChosenPin: false,
         error: null,
       ),
@@ -108,6 +115,7 @@ class PinCubit extends Cubit<PinState> {
     emit(
       state.copyWith(
         chosenValue: emptyString,
+        hiddenValue: emptyString,
         hasChosenPin: false,
         error: null,
       ),
@@ -118,6 +126,7 @@ class PinCubit extends Cubit<PinState> {
     emit(
       state.copyWith(
         chosenValue: state.chosenValue,
+        hiddenValue: emptyString,
         hasChosenPin: true,
         error: null,
       ),
@@ -129,6 +138,7 @@ class PinCubit extends Cubit<PinState> {
       emit(
         state.copyWith(
           confirmedValue: state.confirmedValue + value,
+          hiddenValue: state.hiddenValue + hiddenPin,
           error: null,
         ),
       );
@@ -138,9 +148,13 @@ class PinCubit extends Cubit<PinState> {
     final newValue = (state.confirmedValue.isEmpty)
         ? emptyString
         : state.confirmedValue.substring(0, state.confirmedValue.length - 1);
+    final newHidden = (state.hiddenValue.isEmpty)
+        ? emptyString
+        : state.chosenValue.substring(0, state.hiddenValue.length - 3);
     emit(
       state.copyWith(
         confirmedValue: newValue,
+        hiddenValue: newHidden,
         error: null,
       ),
     );
@@ -150,6 +164,7 @@ class PinCubit extends Cubit<PinState> {
     emit(
       state.copyWith(
         confirmedValue: emptyString,
+        hiddenValue: emptyString,
         error: null,
       ),
     );
@@ -170,6 +185,7 @@ class PinCubit extends Cubit<PinState> {
           hasChosenPin: false,
           error: 'PINs do not match!',
           confirmedValue: emptyString,
+          hiddenValue: emptyString,
         ),
       );
     }
@@ -189,6 +205,7 @@ class PinCubit extends Cubit<PinState> {
             isVerified: false,
             chosenValue: '',
             confirmedValue: '',
+            hiddenValue: emptyString,
             error: null,
           ),
         );
@@ -201,6 +218,7 @@ class PinCubit extends Cubit<PinState> {
           isVerified: false,
           chosenValue: '',
           confirmedValue: '',
+          hiddenValue: emptyString,
           error: 'PIN Must be 4 Digits.',
         ),
       );
@@ -231,6 +249,7 @@ class PinCubit extends Cubit<PinState> {
           confirmedValue: '',
           hasChosenPin: true,
           error: null,
+          hiddenValue: emptyString,
         ),
       );
     } else {
@@ -292,6 +311,7 @@ class PinCubit extends Cubit<PinState> {
           isLocked: isLocked,
           chosenValue: '',
           confirmedValue: '',
+          hiddenValue: emptyString,
         ),
       );
     } else
@@ -305,6 +325,7 @@ class PinCubit extends Cubit<PinState> {
           isLocked: isLocked,
           chosenValue: '',
           confirmedValue: '',
+          hiddenValue: emptyString,
         ),
       );
 

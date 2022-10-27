@@ -6,8 +6,8 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Landing/Keypad.dart';
 import 'package:sats/ui/component/Landing/Loader.dart';
 import 'package:sats/ui/component/Landing/Logo.dart';
-import 'package:sats/ui/component/Landing/PinValue.dart';
 import 'package:sats/ui/component/Landing/PinButton.dart';
+import 'package:sats/ui/component/Landing/PinValue.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class _Landing extends StatelessWidget {
@@ -54,9 +54,11 @@ class _Landing extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: const [
                       LandingLoader(),
-                      SizedBox(height: 48),
+                      SizedBox(height: 36),
                       LandingLogo(),
+                      SizedBox(height: 12),
                       PinValue(),
+                      SizedBox(height: 92),
                       PinKeypad(),
                     ],
                   ),
