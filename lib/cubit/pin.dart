@@ -21,6 +21,7 @@ class PinState with _$PinState {
     @Default('') String chosenValue,
     @Default('') String confirmedValue,
     String? error,
+    Pin? pin,
   }) = _PinState;
 
   const PinState._();

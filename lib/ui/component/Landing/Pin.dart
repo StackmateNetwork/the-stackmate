@@ -10,10 +10,8 @@ class PIN extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pinCubit = context.select((PinCubit pc) => pc.state);
-
     return BlocListener<PinCubit, PinState>(
-      listener: (context, state) => {},
+      listener: (context, state) => {if (state.value == state.chosenValue) {}},
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
@@ -31,8 +29,9 @@ class _MainPart extends StatelessWidget {
     final masterKey = context.select((MasterKeyCubit mc) => mc.state.key);
     return BlocBuilder<PinCubit, PinState>(
       buildWhen: (previous, current) =>
-          previous.chosenValue != current.chosenValue ||
-          previous.confirmedValue != current.confirmedValue,
+          previous.value != current.value ||
+          previous.isVerified != current.isVerified ||
+          previous.chosenValue != current.chosenValue,
       builder: (context, state) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -56,9 +55,6 @@ class _MainPart extends StatelessWidget {
               rightButtonFn: () {
                 pinText = pinText.substring(0, pinText.length - 1);
                 hidden = hidden.substring(0, hidden.length - 1);
-                if (pinText.length == 4) {
-                  pinCubit.setConfirmedPin(pinText);
-                }
               },
               rightIcon: const Icon(
                 Icons.backspace,
