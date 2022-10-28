@@ -210,7 +210,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
       ),
     );
 
-    if (state.seed!.length == completedAnswers.length) {
+    if (completedAnswers.length == 3) {
       _quizCompleted();
     } else {
       _updateQuiz();
@@ -232,7 +232,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
   void openLink(String url) {
     try {
       _launcher.launchApp(url);
-    } catch (e, _) {
+    } catch (e, s) {
       emit(
         state.copyWith(
           errMasterKeyUpdate: 'Could not open url',

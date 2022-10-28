@@ -67,6 +67,7 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       fingerprint: fingerPrint,
       network: _chainSelect.state.blockchain.name,
       hasPassphrase: passphrase != emptyString,
+      backedUp: true,
     );
 
     final saved = await _storage.saveItemAt<MasterKey>(
@@ -94,6 +95,7 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       fingerprint: fingerPrint,
       network: _chainSelect.state.blockchain.name,
       hasPassphrase: passphrase != emptyString,
+      backedUp: false,
     );
 
     final saved = await _storage.saveItemAt<MasterKey>(

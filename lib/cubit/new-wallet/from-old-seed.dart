@@ -220,7 +220,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       if (wallet == null) return;
 
       final root = _importCubit.state.masterXpriv!;
-      final passphrase = _importCubit.state.passPhrase;
 
       final fullXPrv =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'

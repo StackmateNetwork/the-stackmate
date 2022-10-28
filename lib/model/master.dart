@@ -14,6 +14,7 @@ class MasterKey with _$MasterKey {
     @HiveField(3) String? fingerprint,
     @HiveField(4) String? network,
     @HiveField(5) bool? hasPassphrase,
+    @HiveField(6) bool? backedUp,
   }) = _MasterKey;
   const MasterKey._();
 }

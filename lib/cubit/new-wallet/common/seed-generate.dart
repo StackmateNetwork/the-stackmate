@@ -252,7 +252,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       ),
     );
 
-    if (state.seedLength == completedAnswers.length) {
+    if (completedAnswers.length == 3) {
       _quizCompleted();
     } else {
       _updateQuiz();
@@ -261,28 +261,13 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   }
 
   void _quizCompleted() {
-    final wallet = _bitcoin.deriveHardened(
-      masterXPriv: state.masterXpriv!,
-      account: accountZero,
-      purpose: segwitNativePurpose,
+    emit(
+      state.copyWith(
+        currentStep: SeedGenerateSteps.passphrase,
+        quizSeedCompletedAnswers: [],
+        quizSeedAnswer: '',
+      ),
     );
-
-    if (wallet.hasError) {
-      final smError = SMError.fromJson(wallet.error!);
-      emit(state.copyWith(seedError: unableToDeriveError));
-      _logger.logException(
-        smError.oneliner,
-        'SeedImportWalletCubit._createNewLocalWallet',
-        emptyString,
-      );
-    } else
-      emit(
-        state.copyWith(
-          wallet: wallet.result,
-          quizSeedCompletedAnswers: [],
-          quizSeedAnswer: '',
-        ),
-      );
   }
 
   void openLink(String url) {

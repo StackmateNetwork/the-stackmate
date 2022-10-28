@@ -7,7 +7,7 @@ class BackupWarning extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
-    final isBackedUp = masterKeyState.key!.seed!.isEmpty;
+    final isBackedUp = masterKeyState.key!.backedUp!;
 
     if (!isBackedUp)
       return Padding(

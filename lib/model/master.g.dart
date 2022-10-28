@@ -23,13 +23,14 @@ class MasterKeyClassAdapter extends TypeAdapter<_$_MasterKey> {
       fingerprint: fields[3] as String?,
       network: fields[4] as String?,
       hasPassphrase: fields[5] as bool?,
+      backedUp: fields[6] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_MasterKey obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.seed)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class MasterKeyClassAdapter extends TypeAdapter<_$_MasterKey> {
       ..writeByte(4)
       ..write(obj.network)
       ..writeByte(5)
-      ..write(obj.hasPassphrase);
+      ..write(obj.hasPassphrase)
+      ..writeByte(6)
+      ..write(obj.backedUp);
   }
 
   @override

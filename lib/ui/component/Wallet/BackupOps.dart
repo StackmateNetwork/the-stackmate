@@ -9,9 +9,12 @@ class BackupOps extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
+    const primaryWallet = 'PRIMARY';
+
     final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet!);
     final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
-    final isBackedUp = masterKeyState.key!.seed!.isEmpty;
+    final isBackedUp = masterKeyState.key!.backedUp!;
+    final walletType = wallet.walletType;
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -26,7 +29,7 @@ class BackupOps extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          if (!isBackedUp) ...[
+          if (!isBackedUp && walletType == primaryWallet) ...[
             SizedBox(
               height: 52,
               width: c.width,
@@ -42,7 +45,7 @@ class BackupOps extends StatelessWidget {
               ),
             ),
           ],
-          if (true || isBackedUp) ...[
+          ...[
             const SizedBox(height: 24),
             SizedBox(
               height: 52,
@@ -58,33 +61,6 @@ class BackupOps extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            SizedBox(
-              height: 52,
-              width: c.width,
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  primary: c.colours.primary,
-                ),
-                onPressed: () async {
-                  _showCipherBackupWarning(c);
-                },
-                child: const Text('ENCRYPTED BACKUP'),
-              ),
-            ),
-            const SizedBox(height: 24),
-            SizedBox(
-              height: 52,
-              width: c.width,
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  primary: c.colours.secondary,
-                ),
-                onPressed: () async {
-                  //
-                },
-                child: const Text('SHAMIR SECRET SHARES'),
-              ),
-            ),
           ],
         ],
       ),
