@@ -17,11 +17,14 @@ class PinState with _$PinState {
     @Default(3) int attemptsLeft,
     @Default(0) int lastFailure,
     @Default(false) bool isLocked,
-    @Default(false) bool hasChosenPin,
     @Default(false) bool isVerified,
-    @Default('') String chosenValue,
-    @Default('') String hiddenValue,
+    @Default(false) bool hasChosenPin,
+    @Default(false) bool hasSetPin,
+    @Default(false) bool hasEnteredPin,
+    @Default('') String setValue,
     @Default('') String confirmedValue,
+    @Default('') String enteredValue,
+    @Default('') String hiddenValue,
     String? error,
   }) = _PinState;
 
@@ -38,8 +41,9 @@ class PinCubit extends Cubit<PinState> {
   final IStorage _storage;
 
   void init() async {
-    final pin = _storage.getFirstItem<Pin>(
+    final pin = _storage.getItem<Pin>(
       StoreKeys.Pin.name,
+      0,
     );
     if (pin.hasError) {
       if (pin.error! == 'empty')
@@ -48,9 +52,9 @@ class PinCubit extends Cubit<PinState> {
             value: null,
             attemptsLeft: 3,
             lastFailure: 0,
-            isLocked: false, // state changer
-            isVerified: false, // state changer
-            hasChosenPin: false, // important state changer
+            isLocked: false,
+            isVerified: false,
+            hasChosenPin: false,
             error: null,
           ),
         );
@@ -70,7 +74,7 @@ class PinCubit extends Cubit<PinState> {
           isLocked: pin.result!.isLocked,
           isVerified: false,
           hasChosenPin: pin.result!.value != emptyString,
-          chosenValue: emptyString,
+          setValue: emptyString,
           confirmedValue: emptyString,
           hiddenValue: emptyString,
           error: (pin.result!.isLocked) ? 'PIN LOCKED!' : null,
@@ -80,10 +84,10 @@ class PinCubit extends Cubit<PinState> {
   }
 
   void addToChosenPin(String value) {
-    if (state.chosenValue.length < 4)
+    if (state.setValue.length < 4)
       emit(
         state.copyWith(
-          chosenValue: state.chosenValue + value,
+          setValue: state.setValue + value,
           hiddenValue: state.hiddenValue + hiddenPin,
           hasChosenPin: false,
           error: null,
@@ -92,15 +96,15 @@ class PinCubit extends Cubit<PinState> {
   }
 
   void deleteOneFromChosenPin() {
-    final newValue = (state.chosenValue.isEmpty)
+    final newValue = (state.setValue.isEmpty)
         ? emptyString
-        : state.chosenValue.substring(0, state.chosenValue.length - 1);
+        : state.setValue.substring(0, state.setValue.length - 1);
     final newHidden = (state.hiddenValue.isEmpty)
         ? emptyString
         : state.hiddenValue.substring(0, state.hiddenValue.length - 3);
     emit(
       state.copyWith(
-        chosenValue: newValue,
+        setValue: newValue,
         hiddenValue: newHidden,
         hasChosenPin: false,
         error: null,
@@ -111,7 +115,7 @@ class PinCubit extends Cubit<PinState> {
   void clearChosenPin() {
     emit(
       state.copyWith(
-        chosenValue: emptyString,
+        setValue: emptyString,
         hiddenValue: emptyString,
         hasChosenPin: false,
         error: null,
@@ -122,7 +126,7 @@ class PinCubit extends Cubit<PinState> {
   void setChosenPin() {
     emit(
       state.copyWith(
-        chosenValue: state.chosenValue,
+        setValue: state.setValue,
         hiddenValue: emptyString,
         confirmedValue: emptyString,
         hasChosenPin: true,
@@ -169,7 +173,7 @@ class PinCubit extends Cubit<PinState> {
   }
 
   void verifyChosenPin() {
-    if (state.chosenValue == state.confirmedValue) {
+    if (state.setValue == state.confirmedValue) {
       emit(
         state.copyWith(
           isVerified: true,
@@ -190,26 +194,6 @@ class PinCubit extends Cubit<PinState> {
   }
 
   Future<void> checkConfirmedPin() async {
-    // if (state.isLocked) {
-    //   final now = DateTime.now().millisecondsSinceEpoch;
-    //   if (state.lastFailure - now == 60000) {
-    //     // allow retry
-    //     emit(
-    //       state.copyWith(
-    //         value: state.value,
-    //         attemptsLeft: 3,
-    //         lastFailure: state.lastFailure,
-    //         isLocked: false,
-    //         isVerified: false,
-    //         confirmedValue: emptyString,
-    //         chosenValue: emptyString,
-    //         hiddenValue: emptyString,
-    //         error: null,
-    //       ),
-    //     );
-    //   }
-    // }
-
     if (state.confirmedValue.length != 4) {
       emit(
         state.copyWith(
@@ -222,15 +206,17 @@ class PinCubit extends Cubit<PinState> {
       return;
     }
 
-    if (state.confirmedValue == state.chosenValue) {
+    if (state.confirmedValue != emptyString &&
+        state.confirmedValue == state.setValue) {
       final pin = Pin(
         attemptsLeft: 3,
         lastFailure: state.lastFailure,
         value: state.confirmedValue,
         isLocked: false,
       );
-      final saved = await _storage.saveItem<Pin>(
+      final saved = await _storage.saveItemAt<Pin>(
         StoreKeys.Pin.name,
+        0,
         pin,
       );
       if (saved.hasError) {
@@ -240,6 +226,11 @@ class PinCubit extends Cubit<PinState> {
           ),
         );
       }
+      await Future.delayed(
+        const Duration(
+          milliseconds: 500,
+        ),
+      );
       emit(
         state.copyWith(
           isVerified: true,
@@ -248,7 +239,7 @@ class PinCubit extends Cubit<PinState> {
         ),
       );
     } else {
-      await saveFailedAttempt();
+      await saveFailedAttempt(); // we dont have to save this resetSetPin();
     }
   }
 
@@ -283,15 +274,17 @@ class PinCubit extends Cubit<PinState> {
       );
       return;
     }
-    if (state.confirmedValue == state.chosenValue) {
+
+    if (state.confirmedValue == state.value) {
       final pin = Pin(
         attemptsLeft: 3,
         lastFailure: state.lastFailure,
         value: state.value!,
         isLocked: state.isLocked,
       );
-      final saved = await _storage.saveItem<Pin>(
+      final saved = await _storage.saveItemAt<Pin>(
         StoreKeys.Pin.name,
+        0,
         pin,
       );
       if (saved.hasError) {
@@ -315,46 +308,47 @@ class PinCubit extends Cubit<PinState> {
     }
   }
 
-  Future<void> saveNewPin(String value) async {
-    if (value.length != 4) {
-      emit(
-        state.copyWith(
-          error: 'PIN Must be 4 Digits!',
-        ),
-      );
-      return;
-    }
-    final pin = Pin(
-      attemptsLeft: 3,
-      lastFailure: 0,
-      value: value,
-      isLocked: false,
-    );
-    final saved = await _storage.saveItem<Pin>(
-      StoreKeys.Pin.name,
-      pin,
-    );
-    if (saved.hasError) {
-      emit(
-        state.copyWith(
-          error: saved.error.toString(),
-        ),
-      );
-      return;
-    }
-    await Future.delayed(
-      const Duration(
-        milliseconds: 200,
-      ),
-    );
-  }
+  // Future<void> saveNewPin(String value) async {
+  //   if (value.length != 4) {
+  //     emit(
+  //       state.copyWith(
+  //         error: 'PIN Must be 4 Digits!',
+  //       ),
+  //     );
+  //     return;
+  //   }
+  //   final pin = Pin(
+  //     attemptsLeft: 3,
+  //     lastFailure: 0,
+  //     value: value,
+  //     isLocked: false,
+  //   );
+  //   final saved = await _storage.saveItem<Pin>(
+  //     StoreKeys.Pin.name,
+  //     pin,
+  //   );
+  //   if (saved.hasError) {
+  //     emit(
+  //       state.copyWith(
+  //         error: saved.error.toString(),
+  //       ),
+  //     );
+  //     return;
+  //   }
+  //   await Future.delayed(
+  //     const Duration(
+  //       milliseconds: 200,
+  //     ),
+  //   );
+  // }
 
   Future<void> saveFailedAttempt() async {
-    var attempts = state.attemptsLeft - 1;
+    final updatedAttempts = state.attemptsLeft - 1;
 
     final lastFailure = DateTime.now().millisecondsSinceEpoch;
     var isLocked = false;
-    if (attempts <= 0) {
+
+    if (updatedAttempts <= 0) {
       isLocked = true;
     }
 
@@ -364,14 +358,14 @@ class PinCubit extends Cubit<PinState> {
           error: 'Locked! Try in 1 minute.',
           isVerified: false,
           value: state.value,
-          attemptsLeft: (state.value == null) ? 3 : attempts,
+          attemptsLeft: (state.value == null) ? 3 : updatedAttempts,
           lastFailure: lastFailure,
           isLocked: state.value ==
               null, // will be false if pin is set(stays locked) true if no pin set(unlock to set again)
           // ignore: avoid_bool_literals_in_conditional_expressions
           hasChosenPin: state.value !=
               null, // will be true if pin is set, will be false if not set (triggers a reset)
-          chosenValue: emptyString,
+          setValue: emptyString,
           confirmedValue: emptyString,
           hiddenValue: emptyString,
         ),
@@ -381,31 +375,36 @@ class PinCubit extends Cubit<PinState> {
         state.copyWith(
           error: (state.value == null)
               ? 'Wrong PIN! Set again.'
-              : 'Wrong PIN! $attempts attempts left. ',
-          value: state.value,
+              : 'Wrong PIN! $updatedAttempts attempts left. ',
           isVerified: false,
-          attemptsLeft: attempts,
+          attemptsLeft: updatedAttempts,
           lastFailure: lastFailure,
           isLocked: isLocked,
           hiddenValue: emptyString,
         ),
       );
 
-    if (state.value == null) {
-      // still in set/confirm stage (do not lock)
-      attempts = 3;
-      isLocked = false;
-    }
+    // if (state.value == null || state.value == emptyString) {
+    //   // still in set/confirm stage (do not lock)
+    //   updatedAttempts = 3;
+    //   isLocked = false;
+    // }
 
     final pin = Pin(
-      attemptsLeft: attempts,
+      attemptsLeft: (state.value == null || state.value == emptyString)
+          ? 3
+          : updatedAttempts,
       lastFailure: lastFailure,
-      value: (state.value == null) ? '' : state.value!,
-      isLocked: isLocked,
+      value: (state.value == null) ? emptyString : state.value!,
+      // ignore: avoid_bool_literals_in_conditional_expressions
+      isLocked: (state.value == null || state.value == emptyString)
+          ? false
+          : isLocked,
     );
 
-    final saved = await _storage.saveItem<Pin>(
+    final saved = await _storage.saveItemAt<Pin>(
       StoreKeys.Pin.name,
+      0,
       pin,
     );
     if (saved.hasError) {
@@ -415,11 +414,13 @@ class PinCubit extends Cubit<PinState> {
         ),
       );
     }
-    init();
+
     await Future.delayed(
       const Duration(
         milliseconds: 200,
       ),
     );
+
+    init();
   }
 }

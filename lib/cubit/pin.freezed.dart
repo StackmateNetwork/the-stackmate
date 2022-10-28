@@ -20,11 +20,14 @@ mixin _$PinState {
   int get attemptsLeft => throw _privateConstructorUsedError;
   int get lastFailure => throw _privateConstructorUsedError;
   bool get isLocked => throw _privateConstructorUsedError;
-  bool get hasChosenPin => throw _privateConstructorUsedError;
   bool get isVerified => throw _privateConstructorUsedError;
-  String get chosenValue => throw _privateConstructorUsedError;
-  String get hiddenValue => throw _privateConstructorUsedError;
+  bool get hasChosenPin => throw _privateConstructorUsedError;
+  bool get hasSetPin => throw _privateConstructorUsedError;
+  bool get hasEnteredPin => throw _privateConstructorUsedError;
+  String get setValue => throw _privateConstructorUsedError;
   String get confirmedValue => throw _privateConstructorUsedError;
+  String get enteredValue => throw _privateConstructorUsedError;
+  String get hiddenValue => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -41,11 +44,14 @@ abstract class $PinStateCopyWith<$Res> {
       int attemptsLeft,
       int lastFailure,
       bool isLocked,
-      bool hasChosenPin,
       bool isVerified,
-      String chosenValue,
-      String hiddenValue,
+      bool hasChosenPin,
+      bool hasSetPin,
+      bool hasEnteredPin,
+      String setValue,
       String confirmedValue,
+      String enteredValue,
+      String hiddenValue,
       String? error});
 }
 
@@ -63,11 +69,14 @@ class _$PinStateCopyWithImpl<$Res> implements $PinStateCopyWith<$Res> {
     Object? attemptsLeft = freezed,
     Object? lastFailure = freezed,
     Object? isLocked = freezed,
-    Object? hasChosenPin = freezed,
     Object? isVerified = freezed,
-    Object? chosenValue = freezed,
-    Object? hiddenValue = freezed,
+    Object? hasChosenPin = freezed,
+    Object? hasSetPin = freezed,
+    Object? hasEnteredPin = freezed,
+    Object? setValue = freezed,
     Object? confirmedValue = freezed,
+    Object? enteredValue = freezed,
+    Object? hiddenValue = freezed,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -87,25 +96,37 @@ class _$PinStateCopyWithImpl<$Res> implements $PinStateCopyWith<$Res> {
           ? _value.isLocked
           : isLocked // ignore: cast_nullable_to_non_nullable
               as bool,
-      hasChosenPin: hasChosenPin == freezed
-          ? _value.hasChosenPin
-          : hasChosenPin // ignore: cast_nullable_to_non_nullable
-              as bool,
       isVerified: isVerified == freezed
           ? _value.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
               as bool,
-      chosenValue: chosenValue == freezed
-          ? _value.chosenValue
-          : chosenValue // ignore: cast_nullable_to_non_nullable
-              as String,
-      hiddenValue: hiddenValue == freezed
-          ? _value.hiddenValue
-          : hiddenValue // ignore: cast_nullable_to_non_nullable
+      hasChosenPin: hasChosenPin == freezed
+          ? _value.hasChosenPin
+          : hasChosenPin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasSetPin: hasSetPin == freezed
+          ? _value.hasSetPin
+          : hasSetPin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasEnteredPin: hasEnteredPin == freezed
+          ? _value.hasEnteredPin
+          : hasEnteredPin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      setValue: setValue == freezed
+          ? _value.setValue
+          : setValue // ignore: cast_nullable_to_non_nullable
               as String,
       confirmedValue: confirmedValue == freezed
           ? _value.confirmedValue
           : confirmedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+      enteredValue: enteredValue == freezed
+          ? _value.enteredValue
+          : enteredValue // ignore: cast_nullable_to_non_nullable
+              as String,
+      hiddenValue: hiddenValue == freezed
+          ? _value.hiddenValue
+          : hiddenValue // ignore: cast_nullable_to_non_nullable
               as String,
       error: error == freezed
           ? _value.error
@@ -126,11 +147,14 @@ abstract class _$$_PinStateCopyWith<$Res> implements $PinStateCopyWith<$Res> {
       int attemptsLeft,
       int lastFailure,
       bool isLocked,
-      bool hasChosenPin,
       bool isVerified,
-      String chosenValue,
-      String hiddenValue,
+      bool hasChosenPin,
+      bool hasSetPin,
+      bool hasEnteredPin,
+      String setValue,
       String confirmedValue,
+      String enteredValue,
+      String hiddenValue,
       String? error});
 }
 
@@ -150,11 +174,14 @@ class __$$_PinStateCopyWithImpl<$Res> extends _$PinStateCopyWithImpl<$Res>
     Object? attemptsLeft = freezed,
     Object? lastFailure = freezed,
     Object? isLocked = freezed,
-    Object? hasChosenPin = freezed,
     Object? isVerified = freezed,
-    Object? chosenValue = freezed,
-    Object? hiddenValue = freezed,
+    Object? hasChosenPin = freezed,
+    Object? hasSetPin = freezed,
+    Object? hasEnteredPin = freezed,
+    Object? setValue = freezed,
     Object? confirmedValue = freezed,
+    Object? enteredValue = freezed,
+    Object? hiddenValue = freezed,
     Object? error = freezed,
   }) {
     return _then(_$_PinState(
@@ -174,25 +201,37 @@ class __$$_PinStateCopyWithImpl<$Res> extends _$PinStateCopyWithImpl<$Res>
           ? _value.isLocked
           : isLocked // ignore: cast_nullable_to_non_nullable
               as bool,
-      hasChosenPin: hasChosenPin == freezed
-          ? _value.hasChosenPin
-          : hasChosenPin // ignore: cast_nullable_to_non_nullable
-              as bool,
       isVerified: isVerified == freezed
           ? _value.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
               as bool,
-      chosenValue: chosenValue == freezed
-          ? _value.chosenValue
-          : chosenValue // ignore: cast_nullable_to_non_nullable
-              as String,
-      hiddenValue: hiddenValue == freezed
-          ? _value.hiddenValue
-          : hiddenValue // ignore: cast_nullable_to_non_nullable
+      hasChosenPin: hasChosenPin == freezed
+          ? _value.hasChosenPin
+          : hasChosenPin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasSetPin: hasSetPin == freezed
+          ? _value.hasSetPin
+          : hasSetPin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasEnteredPin: hasEnteredPin == freezed
+          ? _value.hasEnteredPin
+          : hasEnteredPin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      setValue: setValue == freezed
+          ? _value.setValue
+          : setValue // ignore: cast_nullable_to_non_nullable
               as String,
       confirmedValue: confirmedValue == freezed
           ? _value.confirmedValue
           : confirmedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+      enteredValue: enteredValue == freezed
+          ? _value.enteredValue
+          : enteredValue // ignore: cast_nullable_to_non_nullable
+              as String,
+      hiddenValue: hiddenValue == freezed
+          ? _value.hiddenValue
+          : hiddenValue // ignore: cast_nullable_to_non_nullable
               as String,
       error: error == freezed
           ? _value.error
@@ -210,11 +249,14 @@ class _$_PinState extends _PinState {
       this.attemptsLeft = 3,
       this.lastFailure = 0,
       this.isLocked = false,
-      this.hasChosenPin = false,
       this.isVerified = false,
-      this.chosenValue = '',
-      this.hiddenValue = '',
+      this.hasChosenPin = false,
+      this.hasSetPin = false,
+      this.hasEnteredPin = false,
+      this.setValue = '',
       this.confirmedValue = '',
+      this.enteredValue = '',
+      this.hiddenValue = '',
       this.error})
       : super._();
 
@@ -231,25 +273,34 @@ class _$_PinState extends _PinState {
   final bool isLocked;
   @override
   @JsonKey()
-  final bool hasChosenPin;
-  @override
-  @JsonKey()
   final bool isVerified;
   @override
   @JsonKey()
-  final String chosenValue;
+  final bool hasChosenPin;
   @override
   @JsonKey()
-  final String hiddenValue;
+  final bool hasSetPin;
+  @override
+  @JsonKey()
+  final bool hasEnteredPin;
+  @override
+  @JsonKey()
+  final String setValue;
   @override
   @JsonKey()
   final String confirmedValue;
+  @override
+  @JsonKey()
+  final String enteredValue;
+  @override
+  @JsonKey()
+  final String hiddenValue;
   @override
   final String? error;
 
   @override
   String toString() {
-    return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, hasChosenPin: $hasChosenPin, isVerified: $isVerified, chosenValue: $chosenValue, hiddenValue: $hiddenValue, confirmedValue: $confirmedValue, error: $error)';
+    return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, isVerified: $isVerified, hasChosenPin: $hasChosenPin, hasSetPin: $hasSetPin, hasEnteredPin: $hasEnteredPin, setValue: $setValue, confirmedValue: $confirmedValue, enteredValue: $enteredValue, hiddenValue: $hiddenValue, error: $error)';
   }
 
   @override
@@ -264,15 +315,19 @@ class _$_PinState extends _PinState {
                 .equals(other.lastFailure, lastFailure) &&
             const DeepCollectionEquality().equals(other.isLocked, isLocked) &&
             const DeepCollectionEquality()
-                .equals(other.hasChosenPin, hasChosenPin) &&
-            const DeepCollectionEquality()
                 .equals(other.isVerified, isVerified) &&
             const DeepCollectionEquality()
-                .equals(other.chosenValue, chosenValue) &&
+                .equals(other.hasChosenPin, hasChosenPin) &&
+            const DeepCollectionEquality().equals(other.hasSetPin, hasSetPin) &&
             const DeepCollectionEquality()
-                .equals(other.hiddenValue, hiddenValue) &&
+                .equals(other.hasEnteredPin, hasEnteredPin) &&
+            const DeepCollectionEquality().equals(other.setValue, setValue) &&
             const DeepCollectionEquality()
                 .equals(other.confirmedValue, confirmedValue) &&
+            const DeepCollectionEquality()
+                .equals(other.enteredValue, enteredValue) &&
+            const DeepCollectionEquality()
+                .equals(other.hiddenValue, hiddenValue) &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -283,11 +338,14 @@ class _$_PinState extends _PinState {
       const DeepCollectionEquality().hash(attemptsLeft),
       const DeepCollectionEquality().hash(lastFailure),
       const DeepCollectionEquality().hash(isLocked),
-      const DeepCollectionEquality().hash(hasChosenPin),
       const DeepCollectionEquality().hash(isVerified),
-      const DeepCollectionEquality().hash(chosenValue),
-      const DeepCollectionEquality().hash(hiddenValue),
+      const DeepCollectionEquality().hash(hasChosenPin),
+      const DeepCollectionEquality().hash(hasSetPin),
+      const DeepCollectionEquality().hash(hasEnteredPin),
+      const DeepCollectionEquality().hash(setValue),
       const DeepCollectionEquality().hash(confirmedValue),
+      const DeepCollectionEquality().hash(enteredValue),
+      const DeepCollectionEquality().hash(hiddenValue),
       const DeepCollectionEquality().hash(error));
 
   @JsonKey(ignore: true)
@@ -302,11 +360,14 @@ abstract class _PinState extends PinState {
       final int attemptsLeft,
       final int lastFailure,
       final bool isLocked,
-      final bool hasChosenPin,
       final bool isVerified,
-      final String chosenValue,
-      final String hiddenValue,
+      final bool hasChosenPin,
+      final bool hasSetPin,
+      final bool hasEnteredPin,
+      final String setValue,
       final String confirmedValue,
+      final String enteredValue,
+      final String hiddenValue,
       final String? error}) = _$_PinState;
   const _PinState._() : super._();
 
@@ -319,15 +380,21 @@ abstract class _PinState extends PinState {
   @override
   bool get isLocked => throw _privateConstructorUsedError;
   @override
-  bool get hasChosenPin => throw _privateConstructorUsedError;
-  @override
   bool get isVerified => throw _privateConstructorUsedError;
   @override
-  String get chosenValue => throw _privateConstructorUsedError;
+  bool get hasChosenPin => throw _privateConstructorUsedError;
   @override
-  String get hiddenValue => throw _privateConstructorUsedError;
+  bool get hasSetPin => throw _privateConstructorUsedError;
+  @override
+  bool get hasEnteredPin => throw _privateConstructorUsedError;
+  @override
+  String get setValue => throw _privateConstructorUsedError;
   @override
   String get confirmedValue => throw _privateConstructorUsedError;
+  @override
+  String get enteredValue => throw _privateConstructorUsedError;
+  @override
+  String get hiddenValue => throw _privateConstructorUsedError;
   @override
   String? get error => throw _privateConstructorUsedError;
   @override

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/pin.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -24,7 +22,7 @@ class PinButton extends StatelessWidget {
               onPressed: () async {
                 // CHECK IF PIN IS VERIFIED
                 context.read<PinCubit>().setChosenPin();
-                if (state.hasChosenPin) pinCubit.clearConfPin();
+                // if (state.hasChosenPin) pinCubit.clearConfPin();
               },
               child: const Text('SET'),
             ),
@@ -40,7 +38,7 @@ class PinButton extends StatelessWidget {
               onPressed: () async {
                 // CHECK IF PIN IS VERIFIED
                 await pinCubit.checkConfirmedPin();
-                if (state.hasChosenPin) pinCubit.clearConfPin();
+                // if (state.hasChosenPin) pinCubit.clearConfPin();
               },
               child: const Text('CONFIRM'),
             ),
