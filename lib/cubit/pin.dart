@@ -23,7 +23,6 @@ class PinState with _$PinState {
     @Default('') String hiddenValue,
     @Default('') String confirmedValue,
     String? error,
-    Pin? pin,
   }) = _PinState;
 
   const PinState._();
@@ -47,7 +46,6 @@ class PinCubit extends Cubit<PinState> {
         emit(
           state.copyWith(
             value: null,
-            pin: null,
             attemptsLeft: 3,
             lastFailure: 0,
             isLocked: false,
@@ -243,10 +241,8 @@ class PinCubit extends Cubit<PinState> {
       emit(
         state.copyWith(
           isVerified: true,
-          confirmedValue: '',
           hasChosenPin: true,
           error: null,
-          hiddenValue: emptyString,
         ),
       );
     } else {
@@ -383,8 +379,6 @@ class PinCubit extends Cubit<PinState> {
           attemptsLeft: attempts,
           lastFailure: lastFailure,
           isLocked: isLocked,
-          chosenValue: '',
-          confirmedValue: '',
           hiddenValue: emptyString,
         ),
       );

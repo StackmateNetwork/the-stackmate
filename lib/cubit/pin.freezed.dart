@@ -26,7 +26,6 @@ mixin _$PinState {
   String get hiddenValue => throw _privateConstructorUsedError;
   String get confirmedValue => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
-  Pin? get pin => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PinStateCopyWith<PinState> get copyWith =>
@@ -47,10 +46,7 @@ abstract class $PinStateCopyWith<$Res> {
       String chosenValue,
       String hiddenValue,
       String confirmedValue,
-      String? error,
-      Pin? pin});
-
-  $PinCopyWith<$Res>? get pin;
+      String? error});
 }
 
 /// @nodoc
@@ -73,7 +69,6 @@ class _$PinStateCopyWithImpl<$Res> implements $PinStateCopyWith<$Res> {
     Object? hiddenValue = freezed,
     Object? confirmedValue = freezed,
     Object? error = freezed,
-    Object? pin = freezed,
   }) {
     return _then(_value.copyWith(
       value: value == freezed
@@ -116,22 +111,7 @@ class _$PinStateCopyWithImpl<$Res> implements $PinStateCopyWith<$Res> {
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
-      pin: pin == freezed
-          ? _value.pin
-          : pin // ignore: cast_nullable_to_non_nullable
-              as Pin?,
     ));
-  }
-
-  @override
-  $PinCopyWith<$Res>? get pin {
-    if (_value.pin == null) {
-      return null;
-    }
-
-    return $PinCopyWith<$Res>(_value.pin!, (value) {
-      return _then(_value.copyWith(pin: value));
-    });
   }
 }
 
@@ -151,11 +131,7 @@ abstract class _$$_PinStateCopyWith<$Res> implements $PinStateCopyWith<$Res> {
       String chosenValue,
       String hiddenValue,
       String confirmedValue,
-      String? error,
-      Pin? pin});
-
-  @override
-  $PinCopyWith<$Res>? get pin;
+      String? error});
 }
 
 /// @nodoc
@@ -180,7 +156,6 @@ class __$$_PinStateCopyWithImpl<$Res> extends _$PinStateCopyWithImpl<$Res>
     Object? hiddenValue = freezed,
     Object? confirmedValue = freezed,
     Object? error = freezed,
-    Object? pin = freezed,
   }) {
     return _then(_$_PinState(
       value: value == freezed
@@ -223,10 +198,6 @@ class __$$_PinStateCopyWithImpl<$Res> extends _$PinStateCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
-      pin: pin == freezed
-          ? _value.pin
-          : pin // ignore: cast_nullable_to_non_nullable
-              as Pin?,
     ));
   }
 }
@@ -244,8 +215,7 @@ class _$_PinState extends _PinState {
       this.chosenValue = '',
       this.hiddenValue = '',
       this.confirmedValue = '',
-      this.error,
-      this.pin})
+      this.error})
       : super._();
 
   @override
@@ -276,12 +246,10 @@ class _$_PinState extends _PinState {
   final String confirmedValue;
   @override
   final String? error;
-  @override
-  final Pin? pin;
 
   @override
   String toString() {
-    return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, hasChosenPin: $hasChosenPin, isVerified: $isVerified, chosenValue: $chosenValue, hiddenValue: $hiddenValue, confirmedValue: $confirmedValue, error: $error, pin: $pin)';
+    return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, hasChosenPin: $hasChosenPin, isVerified: $isVerified, chosenValue: $chosenValue, hiddenValue: $hiddenValue, confirmedValue: $confirmedValue, error: $error)';
   }
 
   @override
@@ -305,8 +273,7 @@ class _$_PinState extends _PinState {
                 .equals(other.hiddenValue, hiddenValue) &&
             const DeepCollectionEquality()
                 .equals(other.confirmedValue, confirmedValue) &&
-            const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality().equals(other.pin, pin));
+            const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
@@ -321,8 +288,7 @@ class _$_PinState extends _PinState {
       const DeepCollectionEquality().hash(chosenValue),
       const DeepCollectionEquality().hash(hiddenValue),
       const DeepCollectionEquality().hash(confirmedValue),
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(pin));
+      const DeepCollectionEquality().hash(error));
 
   @JsonKey(ignore: true)
   @override
@@ -341,8 +307,7 @@ abstract class _PinState extends PinState {
       final String chosenValue,
       final String hiddenValue,
       final String confirmedValue,
-      final String? error,
-      final Pin? pin}) = _$_PinState;
+      final String? error}) = _$_PinState;
   const _PinState._() : super._();
 
   @override
@@ -365,8 +330,6 @@ abstract class _PinState extends PinState {
   String get confirmedValue => throw _privateConstructorUsedError;
   @override
   String? get error => throw _privateConstructorUsedError;
-  @override
-  Pin? get pin => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_PinStateCopyWith<_$_PinState> get copyWith =>

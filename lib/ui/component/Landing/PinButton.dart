@@ -24,6 +24,7 @@ class PinButton extends StatelessWidget {
               onPressed: () async {
                 // CHECK IF PIN IS VERIFIED
                 context.read<PinCubit>().setChosenPin();
+                if (state.hasChosenPin) pinCubit.clearConfPin();
               },
               child: const Text('SET'),
             ),
@@ -39,6 +40,7 @@ class PinButton extends StatelessWidget {
               onPressed: () async {
                 // CHECK IF PIN IS VERIFIED
                 await pinCubit.checkConfirmedPin();
+                if (state.hasChosenPin) pinCubit.clearConfPin();
               },
               child: const Text('CONFIRM'),
             ),
