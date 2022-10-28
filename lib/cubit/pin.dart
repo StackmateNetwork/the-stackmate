@@ -77,7 +77,7 @@ class PinCubit extends Cubit<PinState> {
           setValue: emptyString,
           confirmedValue: emptyString,
           hiddenValue: emptyString,
-          error: (pin.result!.isLocked) ? 'PIN LOCKED!' : null,
+          error: null,
         ),
       );
     }
@@ -226,11 +226,11 @@ class PinCubit extends Cubit<PinState> {
           ),
         );
       }
-      await Future.delayed(
-        const Duration(
-          milliseconds: 500,
-        ),
-      );
+      // await Future.delayed(
+      //   const Duration(
+      //     milliseconds: 500,
+      //   ),
+      // );
       emit(
         state.copyWith(
           isVerified: true,
@@ -246,7 +246,7 @@ class PinCubit extends Cubit<PinState> {
   Future<void> checkEnterPin() async {
     if (state.isLocked) {
       final now = DateTime.now().millisecondsSinceEpoch;
-      if (state.lastFailure - now >= 60000) {
+      if (now - state.lastFailure >= 60000) {
         // allow retry
         emit(
           state.copyWith(
@@ -275,7 +275,7 @@ class PinCubit extends Cubit<PinState> {
       return;
     }
 
-    if (state.confirmedValue == state.value) {
+    if (!state.isLocked && state.confirmedValue == state.value) {
       final pin = Pin(
         attemptsLeft: 3,
         lastFailure: state.lastFailure,
@@ -343,25 +343,28 @@ class PinCubit extends Cubit<PinState> {
   // }
 
   Future<void> saveFailedAttempt() async {
-    final updatedAttempts = state.attemptsLeft - 1;
+    final updatedAttempts =
+        (state.attemptsLeft - 1 <= 0) ? 0 : state.attemptsLeft - 1;
 
-    final lastFailure = DateTime.now().millisecondsSinceEpoch;
-    var isLocked = false;
-
+    final now = DateTime.now().millisecondsSinceEpoch;
     if (updatedAttempts <= 0) {
-      isLocked = true;
-    }
-
-    if (isLocked) {
       emit(
         state.copyWith(
-          error: 'Locked! Try in 1 minute.',
+          isLocked: true,
+        ),
+      );
+    }
+
+    if (state.isLocked) {
+      final timeLeft = 60 - ((now - state.lastFailure) / (1000)).round();
+      emit(
+        state.copyWith(
+          error: 'Locked! Try in $timeLeft seconds.',
           isVerified: false,
-          value: state.value,
+          lastFailure: (updatedAttempts == 0) ? state.lastFailure : now,
           attemptsLeft: (state.value == null) ? 3 : updatedAttempts,
-          lastFailure: lastFailure,
-          isLocked: state.value ==
-              null, // will be false if pin is set(stays locked) true if no pin set(unlock to set again)
+          isLocked: state.value == null,
+          // will be false if pin is set(stays locked) true if no pin set(unlock to set again)
           // ignore: avoid_bool_literals_in_conditional_expressions
           hasChosenPin: state.value !=
               null, // will be true if pin is set, will be false if not set (triggers a reset)
@@ -378,8 +381,7 @@ class PinCubit extends Cubit<PinState> {
               : 'Wrong PIN! $updatedAttempts attempts left. ',
           isVerified: false,
           attemptsLeft: updatedAttempts,
-          lastFailure: lastFailure,
-          isLocked: isLocked,
+          lastFailure: now,
           hiddenValue: emptyString,
         ),
       );
@@ -394,12 +396,12 @@ class PinCubit extends Cubit<PinState> {
       attemptsLeft: (state.value == null || state.value == emptyString)
           ? 3
           : updatedAttempts,
-      lastFailure: lastFailure,
+      lastFailure: state.lastFailure,
       value: (state.value == null) ? emptyString : state.value!,
       // ignore: avoid_bool_literals_in_conditional_expressions
       isLocked: (state.value == null || state.value == emptyString)
           ? false
-          : isLocked,
+          : state.isLocked,
     );
 
     final saved = await _storage.saveItemAt<Pin>(
@@ -415,11 +417,11 @@ class PinCubit extends Cubit<PinState> {
       );
     }
 
-    await Future.delayed(
-      const Duration(
-        milliseconds: 200,
-      ),
-    );
+    // await Future.delayed(
+    //   const Duration(
+    //     milliseconds: 200,
+    //   ),
+    // );
 
     init();
   }
