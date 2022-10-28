@@ -10,6 +10,7 @@ class PinValue extends StatelessWidget {
     return BlocBuilder<PinCubit, PinState>(
       buildWhen: (previous, current) =>
           previous.chosenValue != current.chosenValue ||
+          previous.hiddenValue != current.hiddenValue ||
           previous.confirmedValue != current.confirmedValue,
       builder: (context, state) {
         return Column(

@@ -13,6 +13,7 @@ class Pin with _$Pin {
     @HiveField(1) required int attemptsLeft,
     @HiveField(2) required int lastFailure,
     @HiveField(3) required bool isLocked,
+    // @HiveField(3) required bool enabled,
   }) = _Pin;
   const Pin._();
 }
