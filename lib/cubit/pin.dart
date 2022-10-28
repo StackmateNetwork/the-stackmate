@@ -244,9 +244,21 @@ class PinCubit extends Cubit<PinState> {
   }
 
   Future<void> checkEnterPin() async {
+    if (state.confirmedValue.length != 4) {
+      emit(
+        state.copyWith(
+          isVerified: false,
+          confirmedValue: emptyString,
+          hiddenValue: emptyString,
+          error: 'PIN Must be 4 Digits.',
+        ),
+      );
+      return;
+    }
+    final now = DateTime.now().millisecondsSinceEpoch;
+
     if (state.isLocked) {
-      final now = DateTime.now().millisecondsSinceEpoch;
-      if (now - state.lastFailure >= 60000) {
+      if (now - state.lastFailure >= 1000 * 60) {
         // allow retry
         emit(
           state.copyWith(
@@ -260,25 +272,41 @@ class PinCubit extends Cubit<PinState> {
             error: null,
           ),
         );
+        final pin = Pin(
+          attemptsLeft: state.attemptsLeft,
+          lastFailure: state.lastFailure,
+          value: state.value!,
+          isLocked: state.isLocked,
+        );
+        final saved = await _storage.saveItemAt<Pin>(
+          StoreKeys.Pin.name,
+          0,
+          pin,
+        );
+        if (saved.hasError) {
+          emit(
+            state.copyWith(
+              error: saved.error.toString(),
+            ),
+          );
+        }
+      } else {
+        final timePassed = ((now - state.lastFailure) / (1000)).round();
+        emit(
+          state.copyWith(
+            error: 'Locked! $timePassed seconds passed.',
+            setValue: emptyString,
+            confirmedValue: emptyString,
+            hiddenValue: emptyString,
+          ),
+        );
       }
-    }
-
-    if (state.confirmedValue.length != 4) {
-      emit(
-        state.copyWith(
-          isVerified: false,
-          confirmedValue: emptyString,
-          hiddenValue: emptyString,
-          error: 'PIN Must be 4 Digits.',
-        ),
-      );
-      return;
     }
 
     if (!state.isLocked && state.confirmedValue == state.value) {
       final pin = Pin(
         attemptsLeft: 3,
-        lastFailure: state.lastFailure,
+        lastFailure: now,
         value: state.value!,
         isLocked: state.isLocked,
       );
@@ -303,63 +331,22 @@ class PinCubit extends Cubit<PinState> {
           hiddenValue: emptyString,
         ),
       );
-    } else {
+    } else if (!state.isLocked) {
       await saveFailedAttempt();
     }
   }
-
-  // Future<void> saveNewPin(String value) async {
-  //   if (value.length != 4) {
-  //     emit(
-  //       state.copyWith(
-  //         error: 'PIN Must be 4 Digits!',
-  //       ),
-  //     );
-  //     return;
-  //   }
-  //   final pin = Pin(
-  //     attemptsLeft: 3,
-  //     lastFailure: 0,
-  //     value: value,
-  //     isLocked: false,
-  //   );
-  //   final saved = await _storage.saveItem<Pin>(
-  //     StoreKeys.Pin.name,
-  //     pin,
-  //   );
-  //   if (saved.hasError) {
-  //     emit(
-  //       state.copyWith(
-  //         error: saved.error.toString(),
-  //       ),
-  //     );
-  //     return;
-  //   }
-  //   await Future.delayed(
-  //     const Duration(
-  //       milliseconds: 200,
-  //     ),
-  //   );
-  // }
 
   Future<void> saveFailedAttempt() async {
     final updatedAttempts =
         (state.attemptsLeft - 1 <= 0) ? 0 : state.attemptsLeft - 1;
 
     final now = DateTime.now().millisecondsSinceEpoch;
-    if (updatedAttempts <= 0) {
-      emit(
-        state.copyWith(
-          isLocked: true,
-        ),
-      );
-    }
 
     if (state.isLocked) {
       final timeLeft = 60 - ((now - state.lastFailure) / (1000)).round();
       emit(
         state.copyWith(
-          error: 'Locked! Try in $timeLeft seconds.',
+          error: 'Locked! $timeLeft seconds left.',
           isVerified: false,
           lastFailure: (updatedAttempts == 0) ? state.lastFailure : now,
           attemptsLeft: (state.value == null) ? 3 : updatedAttempts,
@@ -378,9 +365,12 @@ class PinCubit extends Cubit<PinState> {
         state.copyWith(
           error: (state.value == null)
               ? 'Wrong PIN! Set again.'
-              : 'Wrong PIN! $updatedAttempts attempts left. ',
+              : (updatedAttempts == 0)
+                  ? 'Pin Locked for 1 minute'
+                  : 'Wrong PIN! $updatedAttempts attempts left. ',
           isVerified: false,
           attemptsLeft: updatedAttempts,
+          isLocked: updatedAttempts == 0,
           lastFailure: now,
           hiddenValue: emptyString,
         ),
