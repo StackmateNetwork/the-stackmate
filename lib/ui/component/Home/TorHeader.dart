@@ -7,6 +7,8 @@ class TorHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tor = context.select((TorCubit t) => t.state);
+    context.read<TorCubit>().testConnection();
+
     return GestureDetector(
       onTap: () {
         context.push('/tor-config');
