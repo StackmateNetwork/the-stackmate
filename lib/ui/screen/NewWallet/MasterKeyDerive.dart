@@ -35,11 +35,6 @@ class _MasterDerive extends StatelessWidget {
       builder: (context, state) {
         return WillPopScope(
           onWillPop: () async {
-            // if (!state.canGoBack()) {
-            //   c.read<MasterDeriveWalletCubit>().backClicked();
-            //   return false;
-            // }
-
             return true;
           },
           child: Scaffold(
@@ -55,11 +50,6 @@ class _MasterDerive extends StatelessWidget {
                       children: [
                         Back(
                           onPressed: () {
-                            // if (!state.canGoBack()) {
-                            //   c.read<MasterDeriveWalletCubit>().backClicked();
-                            //   return;
-                            // }
-
                             Navigator.pop(c);
                           },
                         ),

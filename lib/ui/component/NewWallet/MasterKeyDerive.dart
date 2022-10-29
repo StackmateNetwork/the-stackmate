@@ -31,8 +31,10 @@ class MasterDerivePurpose extends StatelessWidget {
     var hasSegwit = false;
     var hasTaproot = false;
     for (final wallet in wallets) {
-      if (wallet.descriptor.startsWith('tr')) hasTaproot = true;
-      if (wallet.descriptor.startsWith('wpkh')) hasSegwit = true;
+      if (wallet.walletType == 'PRIMARY' && wallet.descriptor.startsWith('tr'))
+        hasTaproot = true;
+      if (wallet.walletType == 'PRIMARY' &&
+          wallet.descriptor.startsWith('wpkh')) hasSegwit = true;
     }
     final selectedPurpose =
         c.select((MasterDeriveWalletCubit mdw) => mdw.state.purpose);

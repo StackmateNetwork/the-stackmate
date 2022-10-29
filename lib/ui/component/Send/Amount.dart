@@ -44,6 +44,13 @@ class _AmountRowState extends State<AmountRow> {
               state.errAmount,
             )
           }
+        else if (state.errFees != '')
+          {
+            handleError(
+              context,
+              state.errAmount,
+            )
+          }
       },
       child: BlocBuilder<SendCubit, SendState>(
         builder: (context, state) {

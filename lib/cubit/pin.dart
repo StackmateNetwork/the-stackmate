@@ -291,10 +291,10 @@ class PinCubit extends Cubit<PinState> {
           );
         }
       } else {
-        final timePassed = ((now - state.lastFailure) / (1000)).round();
+        final timeLeft = 60 - ((now - state.lastFailure) / (1000)).round();
         emit(
           state.copyWith(
-            error: 'Locked! $timePassed seconds passed.',
+            error: 'Locked! $timeLeft seconds left.',
             setValue: emptyString,
             confirmedValue: emptyString,
             hiddenValue: emptyString,
