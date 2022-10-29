@@ -30,8 +30,6 @@ class _Home extends StatelessWidget {
                 return;
               },
               child: BlocBuilder<TorCubit, TorState>(
-                buildWhen: (previous, current) =>
-                    previous.isConnected != current.isConnected,
                 builder: (context, torState) {
                   return CustomScrollView(
                     slivers: [
