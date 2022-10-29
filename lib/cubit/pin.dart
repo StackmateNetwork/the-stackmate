@@ -118,7 +118,6 @@ class PinCubit extends Cubit<PinState> {
         setValue: emptyString,
         hiddenValue: emptyString,
         hasChosenPin: false,
-        error: null,
       ),
     );
   }
@@ -167,7 +166,6 @@ class PinCubit extends Cubit<PinState> {
       state.copyWith(
         confirmedValue: emptyString,
         hiddenValue: emptyString,
-        error: null,
       ),
     );
   }
@@ -334,6 +332,7 @@ class PinCubit extends Cubit<PinState> {
     } else if (!state.isLocked) {
       await saveFailedAttempt();
     }
+    clearConfPin();
   }
 
   Future<void> saveFailedAttempt() async {

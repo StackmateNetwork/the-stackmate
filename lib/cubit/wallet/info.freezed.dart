@@ -27,6 +27,9 @@ mixin _$InfoState {
   bool get deleted => throw _privateConstructorUsedError;
   bool get showInfo => throw _privateConstructorUsedError;
   int get currentHeight => throw _privateConstructorUsedError;
+  String get passPhraseTest => throw _privateConstructorUsedError;
+  bool get ppTestPassed => throw _privateConstructorUsedError;
+  String get errorPPTest => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $InfoStateCopyWith<InfoState> get copyWith =>
@@ -48,7 +51,10 @@ abstract class $InfoStateCopyWith<$Res> {
       String errDeleting,
       bool deleted,
       bool showInfo,
-      int currentHeight});
+      int currentHeight,
+      String passPhraseTest,
+      bool ppTestPassed,
+      String errorPPTest});
 }
 
 /// @nodoc
@@ -72,6 +78,9 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
     Object? deleted = freezed,
     Object? showInfo = freezed,
     Object? currentHeight = freezed,
+    Object? passPhraseTest = freezed,
+    Object? ppTestPassed = freezed,
+    Object? errorPPTest = freezed,
   }) {
     return _then(_value.copyWith(
       loadingTransactions: loadingTransactions == freezed
@@ -118,6 +127,18 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
           ? _value.currentHeight
           : currentHeight // ignore: cast_nullable_to_non_nullable
               as int,
+      passPhraseTest: passPhraseTest == freezed
+          ? _value.passPhraseTest
+          : passPhraseTest // ignore: cast_nullable_to_non_nullable
+              as String,
+      ppTestPassed: ppTestPassed == freezed
+          ? _value.ppTestPassed
+          : ppTestPassed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorPPTest: errorPPTest == freezed
+          ? _value.errorPPTest
+          : errorPPTest // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -139,7 +160,10 @@ abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
       String errDeleting,
       bool deleted,
       bool showInfo,
-      int currentHeight});
+      int currentHeight,
+      String passPhraseTest,
+      bool ppTestPassed,
+      String errorPPTest});
 }
 
 /// @nodoc
@@ -165,6 +189,9 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
     Object? deleted = freezed,
     Object? showInfo = freezed,
     Object? currentHeight = freezed,
+    Object? passPhraseTest = freezed,
+    Object? ppTestPassed = freezed,
+    Object? errorPPTest = freezed,
   }) {
     return _then(_$_InfoState(
       loadingTransactions: loadingTransactions == freezed
@@ -211,6 +238,18 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
           ? _value.currentHeight
           : currentHeight // ignore: cast_nullable_to_non_nullable
               as int,
+      passPhraseTest: passPhraseTest == freezed
+          ? _value.passPhraseTest
+          : passPhraseTest // ignore: cast_nullable_to_non_nullable
+              as String,
+      ppTestPassed: ppTestPassed == freezed
+          ? _value.ppTestPassed
+          : ppTestPassed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorPPTest: errorPPTest == freezed
+          ? _value.errorPPTest
+          : errorPPTest // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -229,7 +268,10 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       this.errDeleting = '',
       this.deleted = false,
       this.showInfo = false,
-      this.currentHeight = 0})
+      this.currentHeight = 0,
+      this.passPhraseTest = '',
+      this.ppTestPassed = false,
+      this.errorPPTest = ''})
       : _transactions = transactions,
         super._();
 
@@ -271,10 +313,19 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final int currentHeight;
+  @override
+  @JsonKey()
+  final String passPhraseTest;
+  @override
+  @JsonKey()
+  final bool ppTestPassed;
+  @override
+  @JsonKey()
+  final String errorPPTest;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'InfoState(loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, uconfBalance: $uconfBalance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo, currentHeight: $currentHeight)';
+    return 'InfoState(loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, uconfBalance: $uconfBalance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo, currentHeight: $currentHeight, passPhraseTest: $passPhraseTest, ppTestPassed: $ppTestPassed, errorPPTest: $errorPPTest)';
   }
 
   @override
@@ -293,7 +344,10 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('errDeleting', errDeleting))
       ..add(DiagnosticsProperty('deleted', deleted))
       ..add(DiagnosticsProperty('showInfo', showInfo))
-      ..add(DiagnosticsProperty('currentHeight', currentHeight));
+      ..add(DiagnosticsProperty('currentHeight', currentHeight))
+      ..add(DiagnosticsProperty('passPhraseTest', passPhraseTest))
+      ..add(DiagnosticsProperty('ppTestPassed', ppTestPassed))
+      ..add(DiagnosticsProperty('errorPPTest', errorPPTest));
   }
 
   @override
@@ -319,7 +373,13 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.deleted, deleted) &&
             const DeepCollectionEquality().equals(other.showInfo, showInfo) &&
             const DeepCollectionEquality()
-                .equals(other.currentHeight, currentHeight));
+                .equals(other.currentHeight, currentHeight) &&
+            const DeepCollectionEquality()
+                .equals(other.passPhraseTest, passPhraseTest) &&
+            const DeepCollectionEquality()
+                .equals(other.ppTestPassed, ppTestPassed) &&
+            const DeepCollectionEquality()
+                .equals(other.errorPPTest, errorPPTest));
   }
 
   @override
@@ -335,7 +395,10 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(errDeleting),
       const DeepCollectionEquality().hash(deleted),
       const DeepCollectionEquality().hash(showInfo),
-      const DeepCollectionEquality().hash(currentHeight));
+      const DeepCollectionEquality().hash(currentHeight),
+      const DeepCollectionEquality().hash(passPhraseTest),
+      const DeepCollectionEquality().hash(ppTestPassed),
+      const DeepCollectionEquality().hash(errorPPTest));
 
   @JsonKey(ignore: true)
   @override
@@ -355,7 +418,10 @@ abstract class _InfoState extends InfoState {
       final String errDeleting,
       final bool deleted,
       final bool showInfo,
-      final int currentHeight}) = _$_InfoState;
+      final int currentHeight,
+      final String passPhraseTest,
+      final bool ppTestPassed,
+      final String errorPPTest}) = _$_InfoState;
   const _InfoState._() : super._();
 
   @override
@@ -380,6 +446,12 @@ abstract class _InfoState extends InfoState {
   bool get showInfo => throw _privateConstructorUsedError;
   @override
   int get currentHeight => throw _privateConstructorUsedError;
+  @override
+  String get passPhraseTest => throw _privateConstructorUsedError;
+  @override
+  bool get ppTestPassed => throw _privateConstructorUsedError;
+  @override
+  String get errorPPTest => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_InfoStateCopyWith<_$_InfoState> get copyWith =>

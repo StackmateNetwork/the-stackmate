@@ -3,7 +3,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-void handleError(BuildContext context, String message) {
+void handleSuccess(BuildContext context, String message) {
   final FocusScopeNode currentFocus = FocusScope.of(context);
 
   if (!currentFocus.hasPrimaryFocus) {
@@ -11,12 +11,12 @@ void handleError(BuildContext context, String message) {
   }
   showTopSnackBar(
     context,
-    CustomSnackBar.error(
+    CustomSnackBar.success(
       textStyle: context.fonts.bodyLarge!.copyWith(
-        color: context.colours.onBackground,
+        color: context.colours.onPrimaryContainer,
       ),
       message: message,
-      backgroundColor: context.colours.error,
+      backgroundColor: context.colours.primary,
     ),
   );
 }

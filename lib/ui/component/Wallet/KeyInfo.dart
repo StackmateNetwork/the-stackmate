@@ -95,86 +95,8 @@ class KeyInfo extends StatelessWidget {
             },
             child: const Text('COPY'),
           ),
-          const SizedBox(height: 24),
-          if (wallet.walletType == 'PRIMARY')
-            SizedBox(
-              height: 52,
-              width: c.width,
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  primary: c.colours.error,
-                  onSurface: c.colours.background.withOpacity(0.38),
-                ),
-                onPressed: () {
-                  peekSeed(c, masterKey!);
-                },
-                child: Text('PEEK SEED'.toUpperCase()),
-              ),
-            ),
         ],
       ),
     );
   }
-}
-
-Future<void> peekSeed(BuildContext context, MasterKey key) async {
-  // final masterKey = context.select((MasterKeyCubit mk) => mk.state);
-
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: true,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        contentPadding: const EdgeInsets.all(24.0),
-        insetPadding: const EdgeInsets.all(24.0),
-        backgroundColor: context.colours.onPrimaryContainer,
-        elevation: 2.0,
-        title: Text(
-          'MNEMONIC\nSEED',
-          style: context.fonts.headline5!.copyWith(
-            fontWeight: FontWeight.bold,
-            color: context.colours.onPrimary,
-          ),
-        ),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(
-                key.seed!,
-                style: context.fonts.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: context.colours.onPrimary,
-                ),
-              ),
-              const SizedBox(height: 12),
-              if (key.hasPassphrase!) ...[
-                Text(
-                  'This wallet also needs a passphrase to be recovered.',
-                  style: context.fonts.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: context.colours.error,
-                  ),
-                ),
-                const SizedBox(height: 12),
-              ],
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text(
-              'Got it!',
-              style: context.fonts.bodyMedium!.copyWith(
-                fontWeight: FontWeight.bold,
-                color: context.colours.primary,
-              ),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

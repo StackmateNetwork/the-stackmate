@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/info.dart';
@@ -19,6 +20,8 @@ import 'package:sats/ui/component/Wallet/Info.dart';
 import 'package:sats/ui/component/Wallet/Loader.dart';
 import 'package:sats/ui/component/Wallet/TransactionList.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
+import 'package:sats/ui/component/common/ErrorHandler.dart';
+import 'package:sats/ui/component/common/SuccessHandler.dart';
 
 class _Wallet extends StatelessWidget {
   const _Wallet({Key? key}) : super(key: key);
@@ -35,6 +38,12 @@ class _Wallet extends StatelessWidget {
     return BlocListener<InfoCubit, InfoState>(
       listener: (c, s) {
         if (s.deleted) Navigator.pop(c);
+        if (s.errorPPTest != emptyString) {
+          handleError(c, s.errorPPTest);
+        }
+        if (s.ppTestPassed) {
+          handleSuccess(c, 'Fingerprint Match!');
+        }
       },
       child: WillPopScope(
         onWillPop: () async {

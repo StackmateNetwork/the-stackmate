@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
+import 'package:sats/model/master.dart';
 import 'package:sats/pkg/extensions.dart';
 
-class BackupOps extends StatelessWidget {
+class BackupOps extends StatefulWidget {
   const BackupOps({Key? key}) : super(key: key);
+
+  @override
+  State<BackupOps> createState() => _BackupOpsState();
+}
+
+class _BackupOpsState extends State<BackupOps> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    _controller = TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext c) {
     const primaryWallet = 'PRIMARY';
-
     final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet!);
+    final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
+
     final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
     final isBackedUp = masterKeyState.key!.backedUp!;
     final walletType = wallet.walletType;
@@ -20,6 +36,7 @@ class BackupOps extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             'BACKUP OPERATIONS',
@@ -45,8 +62,30 @@ class BackupOps extends StatelessWidget {
               ),
             ),
           ],
-          ...[
+          if (isBackedUp &&
+              walletType == primaryWallet &&
+              masterKey!.hasPassphrase!) ...[
             const SizedBox(height: 24),
+            Padding(
+              padding: EdgeInsets.zero,
+              child: TextFormField(
+                enableIMEPersonalizedLearning: false,
+                autocorrect: false,
+                obscureText: true,
+                obscuringCharacter: '*',
+                controller: _controller,
+                validator: (val) {
+                  return null;
+                },
+                onChanged: (text) {
+                  c.read<InfoCubit>().passPhraseChanged(text);
+                },
+                style: TextStyle(color: c.colours.onBackground),
+                decoration: const InputDecoration(
+                  labelText: 'Passphrase',
+                ),
+              ),
+            ),
             SizedBox(
               height: 52,
               width: c.width,
@@ -55,23 +94,56 @@ class BackupOps extends StatelessWidget {
                   primary: c.colours.tertiary,
                 ),
                 onPressed: () async {
-                  // c.push('/test-recovery');
+                  c.read<InfoCubit>().testPassPhrase(
+                        masterKey.seed!,
+                        masterKey.fingerprint!,
+                      );
+                  _controller.clear();
                 },
-                child: const Text('TEST RECOVERY'),
+                child: const Text('TEST PASSPHRASE'),
               ),
             ),
             const SizedBox(height: 24),
           ],
+          if (isBackedUp &&
+              walletType == primaryWallet &&
+              !masterKey!.hasPassphrase!) ...[
+            Text(
+              'This wallet is backed up and does not require a passphrase to recover.',
+              style: c.fonts.bodyMedium!.copyWith(
+                color: c.colours.onBackground,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+          const SizedBox(height: 24),
+          if (isBackedUp && wallet.walletType == 'PRIMARY')
+            SizedBox(
+              height: 52,
+              width: c.width,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  primary: c.colours.error,
+                  onSurface: c.colours.background.withOpacity(0.38),
+                ),
+                onPressed: () {
+                  peekSeed(c, masterKey!);
+                },
+                child: Text('PEEK SEED'.toUpperCase()),
+              ),
+            ),
         ],
       ),
     );
   }
 }
 
-Future<void> _showCipherBackupWarning(BuildContext context) async {
+Future<void> peekSeed(BuildContext context, MasterKey key) async {
+  // final masterKey = context.select((MasterKeyCubit mk) => mk.state);
+
   return showDialog<void>(
     context: context,
-    barrierDismissible: false,
+    barrierDismissible: true,
     builder: (BuildContext context) {
       return AlertDialog(
         contentPadding: const EdgeInsets.all(24.0),
@@ -79,7 +151,7 @@ Future<void> _showCipherBackupWarning(BuildContext context) async {
         backgroundColor: context.colours.onPrimaryContainer,
         elevation: 2.0,
         title: Text(
-          'ENCRYPTED\nBACKUP',
+          'MNEMONIC\nSEED',
           style: context.fonts.headline5!.copyWith(
             fontWeight: FontWeight.bold,
             color: context.colours.onPrimary,
@@ -89,55 +161,37 @@ Future<void> _showCipherBackupWarning(BuildContext context) async {
           child: ListBody(
             children: <Widget>[
               Text(
-                'This is an advanced feature. Please read before proceeding!\n\n',
+                key.seed!,
                 style: context.fonts.bodyMedium!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: context.colours.onPrimary,
                 ),
               ),
-              Text(
-                'DO NOT STORE ENCRYPTED BACKUPS ON YOUR DEVICE!\n\nONLY STORE THESE BACKUPS ON AN SD CARD!\n',
-                style: context.fonts.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: context.colours.onPrimary,
+              const SizedBox(height: 12),
+              if (key.hasPassphrase!) ...[
+                Text(
+                  'This wallet also needs a passphrase to be recovered.',
+                  style: context.fonts.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.colours.error,
+                  ),
                 ),
-              ),
-              Text(
-                'ABORT if you are not sure! Contact our team for more information.\n',
-                style: context.fonts.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: context.colours.error,
-                ),
-              ),
+                const SizedBox(height: 12),
+              ],
             ],
           ),
         ),
         actions: <Widget>[
           TextButton(
             child: Text(
-              'I Understand.',
+              'Got it!',
               style: context.fonts.bodyMedium!.copyWith(
                 fontWeight: FontWeight.bold,
-                color: context.colours.secondary,
+                color: context.colours.primary,
               ),
             ),
             onPressed: () {
               Navigator.of(context).pop();
-              // context.push('/contracts');
-              //c.push('/encrypted-backup');
-            },
-          ),
-          TextButton(
-            child: Text(
-              'Abort!',
-              style: context.fonts.bodyMedium!.copyWith(
-                fontWeight: FontWeight.bold,
-                color: context.colours.error,
-              ),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-              // context.push('/contracts');
             },
           ),
         ],

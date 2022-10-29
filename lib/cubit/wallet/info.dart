@@ -11,6 +11,7 @@ import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/launcher.dart';
@@ -36,6 +37,9 @@ class InfoState with _$InfoState {
     @Default(false) bool deleted,
     @Default(false) bool showInfo,
     @Default(0) int currentHeight,
+    @Default('') String passPhraseTest,
+    @Default(false) bool ppTestPassed,
+    @Default('') String errorPPTest,
   }) = _InfoState;
   const InfoState._();
 
@@ -88,6 +92,8 @@ class InfoCubit extends Cubit<InfoState> {
           errLoadingTransactions: '',
           balance: wallet.balance,
           transactions: wallet.transactions,
+          errorPPTest: '',
+          ppTestPassed: false,
         ),
       );
 
@@ -310,6 +316,71 @@ class InfoCubit extends Cubit<InfoState> {
   void toggleShowInfo() {
     emit(state.copyWith(showInfo: !state.showInfo));
   }
+
+  void passPhraseChanged(String text) {
+    emit(
+      state.copyWith(
+        passPhraseTest: text,
+      ),
+    );
+  }
+
+  void testPassPhrase(String mnemonic, String fingerprint) async {
+    final seed = await compute(importMaster, {
+      'mnemonic': mnemonic,
+      'passphrase': state.passPhraseTest,
+      'network': _blockchainCubit.state.blockchain.name,
+    });
+
+    if (seed.hasError)
+      emit(
+        state.copyWith(
+          errorPPTest: seed.error!,
+          passPhraseTest: '',
+          ppTestPassed: false,
+        ),
+      );
+    else if (seed.result!.fingerprint == fingerprint) {
+      emit(
+        state.copyWith(
+          errorPPTest: '',
+          passPhraseTest: '',
+          ppTestPassed: true,
+        ),
+      );
+    } else
+      emit(
+        state.copyWith(
+          errorPPTest: 'Fingerprint Mismatch!',
+          passPhraseTest: '',
+          ppTestPassed: false,
+        ),
+      );
+
+    await Future.delayed(
+      const Duration(
+        milliseconds: 500,
+      ),
+    );
+    emit(
+      state.copyWith(
+        ppTestPassed: false,
+        errorPPTest: '',
+        passPhraseTest: '',
+      ),
+    );
+  }
+}
+
+R<Seed> importMaster(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().importMaster(
+    mnemonic: data['mnemonic']!,
+    passphrase: data['passphrase']!,
+    network: obj['network']!,
+  );
+
+  return resp;
 }
 
 List<Transaction> computeHistory(dynamic obj) {
