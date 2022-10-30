@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -221,7 +220,6 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
   void _quizCompleted() {
     emit(
       state.copyWith(
-        seed: [],
         quizSeedCompletedAnswers: [],
         quizSeedAnswer: '',
       ),
@@ -232,7 +230,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
   void openLink(String url) {
     try {
       _launcher.launchApp(url);
-    } catch (e, s) {
+    } catch (e, _) {
       emit(
         state.copyWith(
           errMasterKeyUpdate: 'Could not open url',
