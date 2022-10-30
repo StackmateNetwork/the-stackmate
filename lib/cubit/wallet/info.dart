@@ -286,7 +286,7 @@ class InfoCubit extends Cubit<InfoState> {
     try {
       String text = '';
       text += '\nTxId: ' + transaction.txid;
-      text += 'Amount: ' + transaction.amountToBtc() + ' BTC';
+      text += '\nAmount: ' + transaction.amountToBtc() + ' BTC';
       text += '\nFee: ' + transaction.feesToBtc() + ' BTC';
 
       _share.share(text: text, subjectForEmail: emailShareSubject);
