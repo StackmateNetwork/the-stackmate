@@ -140,7 +140,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       );
     }
     _masterKey.init();
-
+    clear();
     final wallet = _bitcoin.deriveHardened(
       masterXPriv: root.result!.xprv,
       account: accountZero,
