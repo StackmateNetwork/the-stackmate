@@ -100,6 +100,7 @@ class TorConfigScreen extends StatelessWidget {
                     onPressed: () {
                       c.read<TorCubit>().testConnection();
                       c.read<TorCubit>().updateConfig();
+                      Navigator.of(c).pop();
                     },
                     child: const Text('SAVE'),
                   ),
@@ -119,6 +120,7 @@ class TorConfigScreen extends StatelessWidget {
                       ),
                       onPressed: () {
                         c.read<TorCubit>().start();
+                        Navigator.of(c).pop();
                       },
                       child: Text('RESTART TOR'.toUpperCase()),
                     ),

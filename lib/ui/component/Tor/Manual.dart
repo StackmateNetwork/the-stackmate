@@ -209,16 +209,10 @@ class _ExternalTorState extends State<ExternalTor> {
               style: c.fonts.button!.copyWith(color: c.colours.error),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              c.read<TorCubit>().setExternalSocks5('9050');
-              c.read<TorCubit>().updateConfig();
-            },
-            child: Text(
-              'CHANGING BETWEEN INTERNAL AND EXTERNAL TOR REQUIRES RESTARTING THE APP.',
-              style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
-              textAlign: TextAlign.center,
-            ),
+          Text(
+            'CHANGING BETWEEN INTERNAL AND EXTERNAL TOR REQUIRES RESTARTING THE APP.',
+            style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
         ],

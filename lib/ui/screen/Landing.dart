@@ -56,7 +56,7 @@ class _Landing extends StatelessWidget {
                       LandingLogo(),
                       SizedBox(height: 12),
                       PinValue(),
-                      SizedBox(height: 72),
+                      SizedBox(height: 60),
                       PinKeypad(),
                     ],
                   ),

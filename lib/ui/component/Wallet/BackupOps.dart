@@ -25,6 +25,8 @@ class _BackupOpsState extends State<BackupOps> {
   @override
   Widget build(BuildContext c) {
     const primaryWallet = 'PRIMARY';
+    const recoveredWallet = 'RECOVERED';
+
     final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet!);
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
 
@@ -117,7 +119,7 @@ class _BackupOpsState extends State<BackupOps> {
             ),
           ],
           const SizedBox(height: 24),
-          if (isBackedUp && wallet.walletType == 'PRIMARY')
+          if (isBackedUp && wallet.walletType == primaryWallet)
             SizedBox(
               height: 52,
               width: c.width,
@@ -132,6 +134,15 @@ class _BackupOpsState extends State<BackupOps> {
                 child: Text('PEEK SEED'.toUpperCase()),
               ),
             ),
+          if (walletType == recoveredWallet) ...[
+            Text(
+              'There are no backup operations for recovered wallets.',
+              style: c.fonts.bodyMedium!.copyWith(
+                color: c.colours.onBackground,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ],
       ),
     );
