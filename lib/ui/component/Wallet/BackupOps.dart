@@ -25,11 +25,9 @@ class _BackupOpsState extends State<BackupOps> {
   @override
   Widget build(BuildContext c) {
     const primaryWallet = 'PRIMARY';
-    const recoveredWallet = 'RECOVERED';
-
+    // const recoveredWallet = 'RECOVERED';
     final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet!);
-    final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
-
+    final masterKey = c.select((MasterKeyCubit mc) => mc.state.key!);
     final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
     final isBackedUp = masterKeyState.key!.backedUp!;
     final walletType = wallet.walletType;
@@ -38,7 +36,6 @@ class _BackupOpsState extends State<BackupOps> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             'BACKUP OPERATIONS',
@@ -64,9 +61,7 @@ class _BackupOpsState extends State<BackupOps> {
               ),
             ),
           ],
-          if (isBackedUp &&
-              walletType == primaryWallet &&
-              masterKey!.hasPassphrase!) ...[
+          if (isBackedUp && walletType == primaryWallet) ...[
             const SizedBox(height: 24),
             Padding(
               padding: EdgeInsets.zero,
@@ -109,7 +104,7 @@ class _BackupOpsState extends State<BackupOps> {
           ],
           if (isBackedUp &&
               walletType == primaryWallet &&
-              !masterKey!.hasPassphrase!) ...[
+              !masterKey.hasPassphrase!) ...[
             Text(
               'This wallet is backed up and does not require a passphrase to recover.',
               style: c.fonts.bodyMedium!.copyWith(
@@ -129,14 +124,14 @@ class _BackupOpsState extends State<BackupOps> {
                   onSurface: c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
-                  peekSeed(c, masterKey!);
+                  peekSeed(c, masterKey);
                 },
                 child: Text('PEEK SEED'.toUpperCase()),
               ),
             ),
-          if (walletType == recoveredWallet) ...[
+          if (walletType != primaryWallet) ...[
             Text(
-              'There are no backup operations for recovered wallets.',
+              'There are no backup operations for this wallet.',
               style: c.fonts.bodyMedium!.copyWith(
                 color: c.colours.onBackground,
                 fontWeight: FontWeight.bold,
@@ -150,8 +145,6 @@ class _BackupOpsState extends State<BackupOps> {
 }
 
 Future<void> peekSeed(BuildContext context, MasterKey key) async {
-  // final masterKey = context.select((MasterKeyCubit mk) => mk.state);
-
   return showDialog<void>(
     context: context,
     barrierDismissible: true,

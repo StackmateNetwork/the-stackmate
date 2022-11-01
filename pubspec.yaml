@@ -1,6 +1,6 @@
 name: sats
 description: Self-Sovereign Bitcoin Wallet
-version: 0.0.19+19
+version: 0.0.21+21
 publish_to: none
 platforms:
   android:
