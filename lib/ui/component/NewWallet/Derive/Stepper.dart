@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:sats/cubit/new-wallet/derivation.dart';
+import 'package:sats/pkg/extensions.dart';
+import 'package:sats/ui/component/common/StepLine.dart';
+
+class DeriveStepper extends StatelessWidget {
+  const DeriveStepper({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext c) {
+    return BlocBuilder<DeriveWalletCubit, DeriveWalletState>(
+      builder: (context, state) {
+        final steps = DeriveWalletStep.values.length;
+        final idx = state.currentStep.index;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            StepLine(length: steps, idx: idx),
+            const SizedBox(height: 24),
+          ],
+        );
+      },
+    );
+  }
+}
