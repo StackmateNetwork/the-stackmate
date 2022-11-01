@@ -21,9 +21,10 @@ class SeedBackupWarning extends StatelessWidget {
         const SizedBox(height: 32),
         Text(
           '''
-The following steps are critical to ensure safety of your funds. Take the time to understand it before proceeding.
+The following steps are critical to ensure safe recovery of your funds.
       ''',
-          style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
+          style: c.theme.primaryTextTheme.bodyLarge!
+              .copyWith(color: c.colours.onPrimary),
         ),
         GestureDetector(
           onTap: () {
@@ -34,7 +35,7 @@ The following steps are critical to ensure safety of your funds. Take the time t
             child: Text(
               // transaction.txIdBlur(),
               'Click here to learn more.',
-              style: c.fonts.caption!.copyWith(
+              style: c.theme.primaryTextTheme.bodyLarge!.copyWith(
                 color: c.colours.primary,
               ),
             ),

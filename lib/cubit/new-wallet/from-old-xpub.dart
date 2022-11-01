@@ -91,6 +91,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
   static const internalError = 'Internal Error';
   static const watcherWalletType = 'WATCHER';
   static const wpkhScript = 'wpkh';
+  static const trScript = 'tr';
   static const emptyString = '';
 
   void labelChanged(String text) {
@@ -158,10 +159,20 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       const readable = 'pk(__primary__)';
       final uid = sha1.convert(utf8.encode(xpub)).toString().substring(0, 21);
 
+      // fix this using Validation.extractPathFromPolicy
+      final scriptType = policy.contains('/84h/')
+          ? wpkhScript
+          : policy.contains('/86h/')
+              ? trScript
+              : 'error';
+      if (scriptType == 'error')
+        throw 'Only Segwit 84h and Taproot 86h purpose paths are allowd.';
+
       final descriptor = _core.compile(
         policy: policy,
-        scriptType: wpkhScript,
+        scriptType: scriptType,
       );
+
       if (descriptor.hasError) {
         throw SMError.fromJson(descriptor.error!).message;
       }

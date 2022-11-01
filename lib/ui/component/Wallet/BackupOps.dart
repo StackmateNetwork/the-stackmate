@@ -61,7 +61,7 @@ class _BackupOpsState extends State<BackupOps> {
               ),
             ),
           ],
-          if (isBackedUp && walletType == primaryWallet) ...[
+          if (walletType == primaryWallet) ...[
             const SizedBox(height: 24),
             Padding(
               padding: EdgeInsets.zero,
@@ -91,27 +91,13 @@ class _BackupOpsState extends State<BackupOps> {
                   primary: c.colours.tertiary,
                 ),
                 onPressed: () async {
-                  c.read<InfoCubit>().testPassPhrase(
-                        masterKey.seed!,
-                        masterKey.fingerprint!,
-                      );
+                  c.read<InfoCubit>().testPassPhrase(masterKey.seed!);
                   _controller.clear();
                 },
                 child: const Text('TEST PASSPHRASE'),
               ),
             ),
             const SizedBox(height: 24),
-          ],
-          if (isBackedUp &&
-              walletType == primaryWallet &&
-              !masterKey.hasPassphrase!) ...[
-            Text(
-              'This wallet is backed up and does not require a passphrase to recover.',
-              style: c.fonts.bodyMedium!.copyWith(
-                color: c.colours.onBackground,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
           ],
           const SizedBox(height: 24),
           if (isBackedUp && wallet.walletType == primaryWallet)
@@ -172,16 +158,6 @@ Future<void> peekSeed(BuildContext context, MasterKey key) async {
                 ),
               ),
               const SizedBox(height: 12),
-              if (key.hasPassphrase!) ...[
-                Text(
-                  'This wallet also needs a passphrase to be recovered.',
-                  style: context.fonts.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: context.colours.error,
-                  ),
-                ),
-                const SizedBox(height: 12),
-              ],
             ],
           ),
         ),

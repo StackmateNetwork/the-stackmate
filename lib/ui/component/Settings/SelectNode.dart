@@ -34,9 +34,10 @@ class SelectNode extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Change Electrum Node',
+                  'Full Node'.toUpperCase(),
                   style: c.fonts.button!.copyWith(
-                    color: c.colours.primary,
+                    color: c.colours.onPrimary,
+                    fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
@@ -46,8 +47,8 @@ class SelectNode extends StatelessWidget {
                     nodeString,
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
-                    style: c.fonts.bodyMedium!.copyWith(
-                      color: c.colours.onSurface.withOpacity(0.7),
+                    style: c.fonts.caption!.copyWith(
+                      color: c.colours.primary,
                     ),
                   ),
                 ),

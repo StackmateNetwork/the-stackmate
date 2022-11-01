@@ -33,18 +33,19 @@ class SelectNetwork extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Change Network',
+                  'Network'.toUpperCase(),
                   style: c.fonts.button!.copyWith(
-                    color: c.colours.primary,
+                    color: c.colours.onPrimary,
+                    fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  blockchain.displayName.toUpperCase(),
+                  blockchain.displayName,
                   maxLines: 3,
-                  style: c.fonts.bodyMedium!.copyWith(
-                    color: c.colours.onSurface.withOpacity(0.7),
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.primary,
                   ),
                 ),
               ],

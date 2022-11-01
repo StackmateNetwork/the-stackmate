@@ -24,6 +24,22 @@ class KeyInfo extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
+            'Fingerprint',
+            style: c.fonts.overline!.copyWith(
+              color: c.colours.onBackground,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            Validation.fingerPrintFromXKey(
+              wallet.policyElements[0].split(':')[1],
+            ),
+            style: c.fonts.headline5!.copyWith(
+              color: c.colours.primary,
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
             'Kind',
             style: c.fonts.overline!.copyWith(
               color: c.colours.onBackground,
@@ -46,22 +62,6 @@ class KeyInfo extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             wallet.descriptor.startsWith('w') ? 'SEGWIT' : 'TAPROOT',
-            style: c.fonts.caption!.copyWith(
-              color: c.colours.onBackground,
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            'Fingerprint',
-            style: c.fonts.overline!.copyWith(
-              color: c.colours.onBackground,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            Validation.fingerPrintFromXKey(
-              wallet.policyElements[0].split(':')[1],
-            ),
             style: c.fonts.caption!.copyWith(
               color: c.colours.onBackground,
             ),

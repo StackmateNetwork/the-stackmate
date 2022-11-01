@@ -9,16 +9,18 @@ import 'package:sats/ui/component/common/header.dart';
 
 class AddWalletScreen extends StatelessWidget {
   const AddWalletScreen({Key? key}) : super(key: key);
+  final primaryWallet = 'PRIMARY';
+  final importWallet = 'IMPORT';
 
   @override
   Widget build(BuildContext c) {
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
     final wallets = c.select((WalletsCubit wc) => wc.state);
-    var hasSegwit = false;
-    var hasTaproot = false;
+    var signerExists = false;
+
     for (final wallet in wallets.wallets) {
-      if (wallet.descriptor.startsWith('tr')) hasTaproot = true;
-      if (wallet.descriptor.startsWith('wpkh')) hasSegwit = true;
+      if (wallet.walletType == primaryWallet ||
+          wallet.walletType == importWallet) signerExists = true;
     }
 
     return Scaffold(
@@ -57,8 +59,8 @@ class AddWalletScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'A 12/24 word mnemonic seed phrase and optional passphrase represents your master key. You will require it to recover your wallet and social accounts.',
-                  style: c.fonts.bodySmall!.copyWith(
+                  'A 12/24 word mnemonic seed phrase represents your Master Key.\n\nPrimary wallets and social accounts will be derived from it.\n\nYou need it to recover your funds and social data.',
+                  style: c.theme.primaryTextTheme.bodyLarge!.copyWith(
                     color: c.colours.onPrimary,
                   ),
                 ),
@@ -69,7 +71,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'New',
-                description: 'New Master key from a new mnemonic seed.',
+                description: 'Generate new mnemonic seed.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/generate-seed');
@@ -78,7 +80,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'Import',
-                description: 'Import Master key from an existing seed.',
+                description: 'Import an old seed.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/import-seed');
@@ -94,13 +96,14 @@ class AddWalletScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: c.fonts.caption!.copyWith(
                     color: c.colours.secondary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               const SizedBox(height: 8),
               SelectButton(
                 text: 'Coldcard',
-                description: 'Import a generic.json from your ColdCard.',
+                description: 'Import JSON from ColdCard.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/coldcard');
@@ -109,8 +112,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 8),
               SelectButton(
                 text: 'Manual',
-                description:
-                    'Import a raw public key.\nMonitor any hardware if your know what youre doing.',
+                description: 'Import a raw public key.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/watch-only');
@@ -145,24 +147,23 @@ class AddWalletScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: c.fonts.caption!.copyWith(
                     color: c.colours.tertiary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               const SizedBox(height: 8),
-              if (!hasTaproot || !hasSegwit)
-                SelectButton(
-                  text: 'DERIVE',
-                  description:
-                      'Derive a taproot ("bc1p") or segwit ("bc1q") account from your master key.',
-                  colour: c.colours.surface,
-                  onPressed: () {
-                    c.push('/derive-account');
-                  },
-                ),
+              SelectButton(
+                text: 'DERIVE',
+                description: 'Derive accounts from master key.',
+                colour: c.colours.surface,
+                onPressed: () {
+                  c.push('/derive-account');
+                },
+              ),
               const SizedBox(height: 16),
               SelectButton(
                 text: 'RECOVER',
-                description: 'Recover a wallet from an existing seed.',
+                description: 'Recover an old wallet.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/import-seed');

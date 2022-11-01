@@ -11,7 +11,6 @@ enum SeedBackupSteps {
   warning,
   display,
   quiz,
-  passphrase,
 }
 
 @freezed
@@ -27,7 +26,6 @@ class SeedBackupState with _$SeedBackupState {
     @Default([]) List<String> quizSeedList,
     @Default([]) List<String> quizSeedCompletedAnswers,
     @Default('') String quizSeedError,
-    @Default('') String passPhrase,
     @Default('') String errMasterKeyUpdate,
     @Default(false) bool backupLater,
     @Default(false) bool backupComplete,
@@ -59,7 +57,6 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
       state.copyWith(
         backupComplete: false,
         seed: _masterKey.state.key!.seed?.split(' '),
-        passPhrase: _masterKey.state.key!.passphrase!,
         rootXprv: _masterKey.state.key!.root,
         fingerPrint: _masterKey.state.key!.fingerprint,
       ),
@@ -84,9 +81,6 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
           ),
         );
         break;
-
-      case SeedBackupSteps.passphrase:
-        break;
     }
   }
 
@@ -101,10 +95,6 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
         break;
 
       case SeedBackupSteps.quiz:
-        emit(state.copyWith(currentStep: SeedBackupSteps.passphrase));
-        break;
-
-      case SeedBackupSteps.passphrase:
         if (!state.backupComplete) _completeBackup();
         break;
     }
@@ -116,12 +106,10 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
         state.rootXprv!,
         state.fingerPrint!,
         state.seed!.join(' '),
-        state.passPhrase,
       );
       _masterKey.init();
       emit(
         state.copyWith(
-          passPhrase: '',
           backupComplete: true,
         ),
       );
@@ -222,6 +210,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
       state.copyWith(
         quizSeedCompletedAnswers: [],
         quizSeedAnswer: '',
+        backupComplete: true,
       ),
     );
     nextClicked();

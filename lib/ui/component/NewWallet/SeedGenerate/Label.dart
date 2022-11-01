@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
@@ -65,6 +66,7 @@ class SeedGenerateLabel extends StatelessWidget {
                     primary: c.colours.primary,
                   ),
                   onPressed: () async {
+                    await c.read<SeedGenerateCubit>().finalize();
                     c.read<SeedGenerateWalletCubit>().nextClicked();
                   },
                   child: Text('Confirm'.toUpperCase()),

@@ -23,7 +23,7 @@ class NodeAddressState with _$NodeAddressState {
 
   String getAddress() => address;
 
-  String mainString() => name.toUpperCase();
+  String mainString() => name;
 }
 
 class NodeAddressCubit extends Cubit<NodeAddressState> {

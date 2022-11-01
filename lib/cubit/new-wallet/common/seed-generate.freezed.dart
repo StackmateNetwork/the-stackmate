@@ -32,8 +32,6 @@ mixin _$SeedGenerateState {
   List<String> get quizSeedCompletedAnswers =>
       throw _privateConstructorUsedError;
   String get quizSeedError => throw _privateConstructorUsedError;
-  String get passPhrase => throw _privateConstructorUsedError;
-  String get errPassphrase => throw _privateConstructorUsedError;
   bool get backupLater => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -62,8 +60,6 @@ abstract class $SeedGenerateStateCopyWith<$Res> {
       List<String> quizSeedList,
       List<String> quizSeedCompletedAnswers,
       String quizSeedError,
-      String passPhrase,
-      String errPassphrase,
       bool backupLater});
 }
 
@@ -93,8 +89,6 @@ class _$SeedGenerateStateCopyWithImpl<$Res>
     Object? quizSeedList = freezed,
     Object? quizSeedCompletedAnswers = freezed,
     Object? quizSeedError = freezed,
-    Object? passPhrase = freezed,
-    Object? errPassphrase = freezed,
     Object? backupLater = freezed,
   }) {
     return _then(_value.copyWith(
@@ -158,14 +152,6 @@ class _$SeedGenerateStateCopyWithImpl<$Res>
           ? _value.quizSeedError
           : quizSeedError // ignore: cast_nullable_to_non_nullable
               as String,
-      passPhrase: passPhrase == freezed
-          ? _value.passPhrase
-          : passPhrase // ignore: cast_nullable_to_non_nullable
-              as String,
-      errPassphrase: errPassphrase == freezed
-          ? _value.errPassphrase
-          : errPassphrase // ignore: cast_nullable_to_non_nullable
-              as String,
       backupLater: backupLater == freezed
           ? _value.backupLater
           : backupLater // ignore: cast_nullable_to_non_nullable
@@ -197,8 +183,6 @@ abstract class _$$_SeedGenerateStateCopyWith<$Res>
       List<String> quizSeedList,
       List<String> quizSeedCompletedAnswers,
       String quizSeedError,
-      String passPhrase,
-      String errPassphrase,
       bool backupLater});
 }
 
@@ -230,8 +214,6 @@ class __$$_SeedGenerateStateCopyWithImpl<$Res>
     Object? quizSeedList = freezed,
     Object? quizSeedCompletedAnswers = freezed,
     Object? quizSeedError = freezed,
-    Object? passPhrase = freezed,
-    Object? errPassphrase = freezed,
     Object? backupLater = freezed,
   }) {
     return _then(_$_SeedGenerateState(
@@ -292,14 +274,6 @@ class __$$_SeedGenerateStateCopyWithImpl<$Res>
           ? _value.quizSeedError
           : quizSeedError // ignore: cast_nullable_to_non_nullable
               as String,
-      passPhrase: passPhrase == freezed
-          ? _value.passPhrase
-          : passPhrase // ignore: cast_nullable_to_non_nullable
-              as String,
-      errPassphrase: errPassphrase == freezed
-          ? _value.errPassphrase
-          : errPassphrase // ignore: cast_nullable_to_non_nullable
-              as String,
       backupLater: backupLater == freezed
           ? _value.backupLater
           : backupLater // ignore: cast_nullable_to_non_nullable
@@ -327,8 +301,6 @@ class _$_SeedGenerateState extends _SeedGenerateState {
       final List<String> quizSeedList = const [],
       final List<String> quizSeedCompletedAnswers = const [],
       this.quizSeedError = '',
-      this.passPhrase = '',
-      this.errPassphrase = '',
       this.backupLater = false})
       : _seed = seed,
         _quizSeedList = quizSeedList,
@@ -394,17 +366,11 @@ class _$_SeedGenerateState extends _SeedGenerateState {
   final String quizSeedError;
   @override
   @JsonKey()
-  final String passPhrase;
-  @override
-  @JsonKey()
-  final String errPassphrase;
-  @override
-  @JsonKey()
   final bool backupLater;
 
   @override
   String toString() {
-    return 'SeedGenerateState(currentStep: $currentStep, seed: $seed, masterXpriv: $masterXpriv, xpriv: $xpriv, fingerPrint: $fingerPrint, wallet: $wallet, generatingSeed: $generatingSeed, seedLength: $seedLength, seedError: $seedError, quizSeedCompleted: $quizSeedCompleted, quizSeedAnswer: $quizSeedAnswer, quizSeedAnswerIdx: $quizSeedAnswerIdx, quizSeedList: $quizSeedList, quizSeedCompletedAnswers: $quizSeedCompletedAnswers, quizSeedError: $quizSeedError, passPhrase: $passPhrase, errPassphrase: $errPassphrase, backupLater: $backupLater)';
+    return 'SeedGenerateState(currentStep: $currentStep, seed: $seed, masterXpriv: $masterXpriv, xpriv: $xpriv, fingerPrint: $fingerPrint, wallet: $wallet, generatingSeed: $generatingSeed, seedLength: $seedLength, seedError: $seedError, quizSeedCompleted: $quizSeedCompleted, quizSeedAnswer: $quizSeedAnswer, quizSeedAnswerIdx: $quizSeedAnswerIdx, quizSeedList: $quizSeedList, quizSeedCompletedAnswers: $quizSeedCompletedAnswers, quizSeedError: $quizSeedError, backupLater: $backupLater)';
   }
 
   @override
@@ -439,10 +405,6 @@ class _$_SeedGenerateState extends _SeedGenerateState {
             const DeepCollectionEquality()
                 .equals(other.quizSeedError, quizSeedError) &&
             const DeepCollectionEquality()
-                .equals(other.passPhrase, passPhrase) &&
-            const DeepCollectionEquality()
-                .equals(other.errPassphrase, errPassphrase) &&
-            const DeepCollectionEquality()
                 .equals(other.backupLater, backupLater));
   }
 
@@ -464,8 +426,6 @@ class _$_SeedGenerateState extends _SeedGenerateState {
       const DeepCollectionEquality().hash(_quizSeedList),
       const DeepCollectionEquality().hash(_quizSeedCompletedAnswers),
       const DeepCollectionEquality().hash(quizSeedError),
-      const DeepCollectionEquality().hash(passPhrase),
-      const DeepCollectionEquality().hash(errPassphrase),
       const DeepCollectionEquality().hash(backupLater));
 
   @JsonKey(ignore: true)
@@ -492,8 +452,6 @@ abstract class _SeedGenerateState extends SeedGenerateState {
       final List<String> quizSeedList,
       final List<String> quizSeedCompletedAnswers,
       final String quizSeedError,
-      final String passPhrase,
-      final String errPassphrase,
       final bool backupLater}) = _$_SeedGenerateState;
   const _SeedGenerateState._() : super._();
 
@@ -528,10 +486,6 @@ abstract class _SeedGenerateState extends SeedGenerateState {
       throw _privateConstructorUsedError;
   @override
   String get quizSeedError => throw _privateConstructorUsedError;
-  @override
-  String get passPhrase => throw _privateConstructorUsedError;
-  @override
-  String get errPassphrase => throw _privateConstructorUsedError;
   @override
   bool get backupLater => throw _privateConstructorUsedError;
   @override

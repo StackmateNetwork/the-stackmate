@@ -27,7 +27,6 @@ mixin _$SeedBackupState {
   List<String> get quizSeedCompletedAnswers =>
       throw _privateConstructorUsedError;
   String get quizSeedError => throw _privateConstructorUsedError;
-  String get passPhrase => throw _privateConstructorUsedError;
   String get errMasterKeyUpdate => throw _privateConstructorUsedError;
   bool get backupLater => throw _privateConstructorUsedError;
   bool get backupComplete => throw _privateConstructorUsedError;
@@ -53,7 +52,6 @@ abstract class $SeedBackupStateCopyWith<$Res> {
       List<String> quizSeedList,
       List<String> quizSeedCompletedAnswers,
       String quizSeedError,
-      String passPhrase,
       String errMasterKeyUpdate,
       bool backupLater,
       bool backupComplete});
@@ -80,7 +78,6 @@ class _$SeedBackupStateCopyWithImpl<$Res>
     Object? quizSeedList = freezed,
     Object? quizSeedCompletedAnswers = freezed,
     Object? quizSeedError = freezed,
-    Object? passPhrase = freezed,
     Object? errMasterKeyUpdate = freezed,
     Object? backupLater = freezed,
     Object? backupComplete = freezed,
@@ -126,10 +123,6 @@ class _$SeedBackupStateCopyWithImpl<$Res>
           ? _value.quizSeedError
           : quizSeedError // ignore: cast_nullable_to_non_nullable
               as String,
-      passPhrase: passPhrase == freezed
-          ? _value.passPhrase
-          : passPhrase // ignore: cast_nullable_to_non_nullable
-              as String,
       errMasterKeyUpdate: errMasterKeyUpdate == freezed
           ? _value.errMasterKeyUpdate
           : errMasterKeyUpdate // ignore: cast_nullable_to_non_nullable
@@ -164,7 +157,6 @@ abstract class _$$_SeedBackupStateCopyWith<$Res>
       List<String> quizSeedList,
       List<String> quizSeedCompletedAnswers,
       String quizSeedError,
-      String passPhrase,
       String errMasterKeyUpdate,
       bool backupLater,
       bool backupComplete});
@@ -193,7 +185,6 @@ class __$$_SeedBackupStateCopyWithImpl<$Res>
     Object? quizSeedList = freezed,
     Object? quizSeedCompletedAnswers = freezed,
     Object? quizSeedError = freezed,
-    Object? passPhrase = freezed,
     Object? errMasterKeyUpdate = freezed,
     Object? backupLater = freezed,
     Object? backupComplete = freezed,
@@ -239,10 +230,6 @@ class __$$_SeedBackupStateCopyWithImpl<$Res>
           ? _value.quizSeedError
           : quizSeedError // ignore: cast_nullable_to_non_nullable
               as String,
-      passPhrase: passPhrase == freezed
-          ? _value.passPhrase
-          : passPhrase // ignore: cast_nullable_to_non_nullable
-              as String,
       errMasterKeyUpdate: errMasterKeyUpdate == freezed
           ? _value.errMasterKeyUpdate
           : errMasterKeyUpdate // ignore: cast_nullable_to_non_nullable
@@ -273,7 +260,6 @@ class _$_SeedBackupState extends _SeedBackupState {
       final List<String> quizSeedList = const [],
       final List<String> quizSeedCompletedAnswers = const [],
       this.quizSeedError = '',
-      this.passPhrase = '',
       this.errMasterKeyUpdate = '',
       this.backupLater = false,
       this.backupComplete = false})
@@ -328,9 +314,6 @@ class _$_SeedBackupState extends _SeedBackupState {
   final String quizSeedError;
   @override
   @JsonKey()
-  final String passPhrase;
-  @override
-  @JsonKey()
   final String errMasterKeyUpdate;
   @override
   @JsonKey()
@@ -341,7 +324,7 @@ class _$_SeedBackupState extends _SeedBackupState {
 
   @override
   String toString() {
-    return 'SeedBackupState(currentStep: $currentStep, seed: $seed, rootXprv: $rootXprv, fingerPrint: $fingerPrint, quizSeedCompleted: $quizSeedCompleted, quizSeedAnswer: $quizSeedAnswer, quizSeedAnswerIdx: $quizSeedAnswerIdx, quizSeedList: $quizSeedList, quizSeedCompletedAnswers: $quizSeedCompletedAnswers, quizSeedError: $quizSeedError, passPhrase: $passPhrase, errMasterKeyUpdate: $errMasterKeyUpdate, backupLater: $backupLater, backupComplete: $backupComplete)';
+    return 'SeedBackupState(currentStep: $currentStep, seed: $seed, rootXprv: $rootXprv, fingerPrint: $fingerPrint, quizSeedCompleted: $quizSeedCompleted, quizSeedAnswer: $quizSeedAnswer, quizSeedAnswerIdx: $quizSeedAnswerIdx, quizSeedList: $quizSeedList, quizSeedCompletedAnswers: $quizSeedCompletedAnswers, quizSeedError: $quizSeedError, errMasterKeyUpdate: $errMasterKeyUpdate, backupLater: $backupLater, backupComplete: $backupComplete)';
   }
 
   @override
@@ -368,8 +351,6 @@ class _$_SeedBackupState extends _SeedBackupState {
             const DeepCollectionEquality()
                 .equals(other.quizSeedError, quizSeedError) &&
             const DeepCollectionEquality()
-                .equals(other.passPhrase, passPhrase) &&
-            const DeepCollectionEquality()
                 .equals(other.errMasterKeyUpdate, errMasterKeyUpdate) &&
             const DeepCollectionEquality()
                 .equals(other.backupLater, backupLater) &&
@@ -390,7 +371,6 @@ class _$_SeedBackupState extends _SeedBackupState {
       const DeepCollectionEquality().hash(_quizSeedList),
       const DeepCollectionEquality().hash(_quizSeedCompletedAnswers),
       const DeepCollectionEquality().hash(quizSeedError),
-      const DeepCollectionEquality().hash(passPhrase),
       const DeepCollectionEquality().hash(errMasterKeyUpdate),
       const DeepCollectionEquality().hash(backupLater),
       const DeepCollectionEquality().hash(backupComplete));
@@ -413,7 +393,6 @@ abstract class _SeedBackupState extends SeedBackupState {
       final List<String> quizSeedList,
       final List<String> quizSeedCompletedAnswers,
       final String quizSeedError,
-      final String passPhrase,
       final String errMasterKeyUpdate,
       final bool backupLater,
       final bool backupComplete}) = _$_SeedBackupState;
@@ -440,8 +419,6 @@ abstract class _SeedBackupState extends SeedBackupState {
       throw _privateConstructorUsedError;
   @override
   String get quizSeedError => throw _privateConstructorUsedError;
-  @override
-  String get passPhrase => throw _privateConstructorUsedError;
   @override
   String get errMasterKeyUpdate => throw _privateConstructorUsedError;
   @override

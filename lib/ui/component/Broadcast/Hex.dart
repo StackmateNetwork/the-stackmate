@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/ui/component/common/ErrorHandler.dart';
+import 'package:sats/ui/component/common/SuccessHandler.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -24,13 +26,11 @@ class BroadcastHex extends StatelessWidget {
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   primary: c.colours.primary,
-                  side: BorderSide(color: c.colours.onPrimary),
-                  onSurface: c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().pasteHex();
                 },
-                child: const Text('PASTE from Clipboard'),
+                child: const Text('PASTE'),
               ),
             ),
             const SizedBox(height: 30),
@@ -39,13 +39,11 @@ class BroadcastHex extends StatelessWidget {
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   primary: context.colours.primary,
-                  side: BorderSide(color: context.colours.onPrimary),
-                  onSurface: context.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().updateHexFile();
                 },
-                child: Text('Import Signed file'.toUpperCase()),
+                child: Text('Import File'.toUpperCase()),
               ),
             ),
             const SizedBox(height: 10),
@@ -64,36 +62,18 @@ class BroadcastHex extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    primary: c.colours.primary,
-                    side: BorderSide(color: c.colours.onPrimary),
-                    onSurface: c.colours.background.withOpacity(0.38),
-                  ),
-                  onPressed: () async {
-                    c.read<BroadcastCubit>().clearCachedFiles();
-                    result
-                        ? showTopSnackBar(
-                            context,
-                            const CustomSnackBar.success(
-                              message: 'Delete successfully',
-                            ),
-                          )
-                        : showTopSnackBar(
-                            context,
-                            const CustomSnackBar.error(
-                              message: 'Error deleting file',
-                            ),
-                          );
-                  },
-                  child: Text(
-                    'Clear file',
-                    style: c.fonts.button!.copyWith(color: c.colours.primary),
-                  ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () {
+                  c.read<BroadcastCubit>().clearCachedFiles();
+                  result
+                      ? handleSuccess(context, 'Successfully Cleared.')
+                      : handleError(context, 'Could not clear!');
+                },
+                child: Text(
+                  'CLEAR FILE'.notLocalised(),
+                  style: c.fonts.button!.copyWith(color: c.colours.error),
                 ),
               ),
             ),
@@ -103,8 +83,6 @@ class BroadcastHex extends StatelessWidget {
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   primary: context.colours.primary,
-                  side: BorderSide(color: context.colours.onPrimary),
-                  onSurface: context.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () async {
                   context.read<BroadcastCubit>().verifyImportHex();

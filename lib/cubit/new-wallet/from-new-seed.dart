@@ -111,10 +111,10 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       case SeedGenerateWalletSteps.warning:
         emit(state.copyWith(currentStep: SeedGenerateWalletSteps.generate));
         _generateCubit.generateSeed();
-
         break;
 
       case SeedGenerateWalletSteps.generate:
+        emit(state.copyWith(currentStep: SeedGenerateWalletSteps.label));
         break;
 
       case SeedGenerateWalletSteps.label:
@@ -150,7 +150,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       );
 
       final wallet = _generateCubit.state.wallet;
-      if (wallet == null) return;
+      if (wallet == null) throw 'No wallet in state. Contact support.';
 
       final fullXPrv =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';

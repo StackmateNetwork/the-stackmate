@@ -98,8 +98,6 @@ class _BackupWalletState extends State<_BackupWallet> {
                               return SeedBackup();
                             case SeedBackupSteps.quiz:
                               return SeedConfirm();
-                            case SeedBackupSteps.passphrase:
-                              return SeedBackupPassphrase();
                           }
                         }(),
                       ),

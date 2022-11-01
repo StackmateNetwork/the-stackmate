@@ -15,7 +15,7 @@ class SeedGenerateWarning extends StatelessWidget {
       children: [
         const SizedBox(height: 16),
         Text(
-          'Security\nInformation'.toUpperCase(),
+          'KEY\nSECURITY'.toUpperCase(),
           style: c.fonts.headline5!.copyWith(
             color: c.colours.onPrimary,
             // fontWeight: FontWeight.bold,
@@ -24,9 +24,11 @@ class SeedGenerateWarning extends StatelessWidget {
         const SizedBox(height: 32),
         Text(
           '''
-The following steps are critical to ensure safety of your funds. Take the time to understand it before proceeding.
+The following steps are critical to ensure safety of your funds.
       ''',
-          style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
+          style: c.theme.primaryTextTheme.bodyLarge!.copyWith(
+            color: c.colours.onPrimary,
+          ),
         ),
         GestureDetector(
           onTap: () {
@@ -37,7 +39,7 @@ The following steps are critical to ensure safety of your funds. Take the time t
             child: Text(
               // transaction.txIdBlur(),
               'Click here to learn more.',
-              style: c.fonts.caption!.copyWith(
+              style: c.theme.primaryTextTheme.bodyLarge!.copyWith(
                 color: c.colours.primary,
               ),
             ),
@@ -47,7 +49,7 @@ The following steps are critical to ensure safety of your funds. Take the time t
         ListTile(
           title: Text(
             '12 Words',
-            style: c.fonts.bodyMedium!.copyWith(
+            style: c.fonts.bodyLarge!.copyWith(
               color: c.colours.onPrimary,
               // fontWeight: FontWeight.bold,
             ),
@@ -61,18 +63,12 @@ The following steps are critical to ensure safety of your funds. Take the time t
             },
           ),
         ),
-        Text(
-          '''
-A balance between easy of use and security.
-      ''',
-          style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
-        ),
         ListTile(
           selectedColor: c.colours.primary,
           selectedTileColor: c.colours.primary,
           title: Text(
             '24 Words',
-            style: c.fonts.bodyMedium!.copyWith(
+            style: c.fonts.bodyLarge!.copyWith(
               color: c.colours.onPrimary,
               // fontWeight: FontWeight.bold,
             ),
@@ -85,12 +81,6 @@ A balance between easy of use and security.
               c.read<SeedGenerateCubit>().seedLengthChanged(24);
             },
           ),
-        ),
-        Text(
-          '''
-Offers highest grade of security.
-      ''',
-          style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
         ),
         const SizedBox(
           height: 24,

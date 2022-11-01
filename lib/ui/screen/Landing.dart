@@ -6,6 +6,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Landing/Keypad.dart';
 import 'package:sats/ui/component/Landing/Logo.dart';
 import 'package:sats/ui/component/Landing/PinButton.dart';
+import 'package:sats/ui/component/Landing/PinPrompt.dart';
 import 'package:sats/ui/component/Landing/PinValue.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
@@ -55,8 +56,10 @@ class _Landing extends StatelessWidget {
                       SizedBox(height: 36),
                       LandingLogo(),
                       SizedBox(height: 12),
+                      PinPrompt(),
+                      SizedBox(height: 12),
                       PinValue(),
-                      SizedBox(height: 60),
+                      SizedBox(height: 55),
                       PinKeypad(),
                     ],
                   ),

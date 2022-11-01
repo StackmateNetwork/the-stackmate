@@ -3,56 +3,6 @@ import 'package:sats/cubit/seed-backup.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/BackupWallet/Warning.dart';
 
-class SeedBackupPassphrase extends StatelessWidget {
-  @override
-  Widget build(BuildContext c) {
-    return BlocBuilder<SeedBackupCubit, SeedBackupState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 24),
-            Text(
-              'Passphrase'.toUpperCase(),
-              style: c.fonts.headline5!.copyWith(
-                color: c.colours.onPrimary,
-                // fontWeight: FontWeight.bold,
-              ),
-            ),
-            // const HeaderTextDark(text: 'Enter an\noptional\npassphrase'),
-            const SizedBox(height: 24),
-            Text(
-              (state.passPhrase != '')
-                  ? 'You have a passphrase set.\n\nMake sure you write this down with your seed.\n\nYOU WILL NOT BE ABLE TO RECOVER YOUR COINS WITHOUT IT.'
-                  : 'You have not set a passphrase.',
-              style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              (state.passPhrase != '') ? state.passPhrase : '',
-              style: c.fonts.headline6!.copyWith(color: c.colours.secondary),
-            ),
-            const SizedBox(height: 32),
-            SizedBox(
-              height: 52,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  onPrimary: c.colours.background,
-                  primary: c.colours.primary,
-                ),
-                onPressed: () {
-                  c.read<SeedBackupCubit>().nextClicked();
-                },
-                child: Text('Done'.toUpperCase()),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
 class SeedWordCell extends StatelessWidget {
   const SeedWordCell({
     Key? key,
@@ -105,8 +55,6 @@ class SeedBackupStepSelect extends StatelessWidget {
         return SeedBackup();
       case SeedBackupSteps.quiz:
         return SeedConfirm();
-      case SeedBackupSteps.passphrase:
-        return SeedBackupPassphrase();
     }
   }
 }

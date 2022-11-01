@@ -46,8 +46,9 @@ class SelectButton extends StatelessWidget {
                 Text(
                   text.toUpperCase(),
                   style: context.fonts.button!.copyWith(
-                    color: context.colours.primary,
+                    color: context.colours.onPrimary,
                     fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -60,7 +61,7 @@ class SelectButton extends StatelessWidget {
                     // softWrap: true,
                     // overflow: TextOverflow.fade,
                     style: context.fonts.caption!.copyWith(
-                      color: context.colours.onSurface.withOpacity(0.7),
+                      color: context.colours.primary,
                       // fontWeight: FontWeight.w100,
                     ),
                   ),

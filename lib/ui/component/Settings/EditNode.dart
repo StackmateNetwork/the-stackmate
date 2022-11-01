@@ -30,77 +30,82 @@ class _EditNodeState extends State<EditNode> {
     final nodeState = c.select((NodeAddressCubit nac) => nac.state);
     _checkFields(nodeState);
 
-    return Container(
-      color: c.colours.surface,
-      padding: const EdgeInsets.only(
-        top: 16,
-        bottom: 16,
-        left: 16,
-        right: 16,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Change Electrum Node'.toUpperCase(),
-            style: c.fonts.button!.copyWith(
-              color: c.colours.onBackground,
-              fontSize: 16,
+    return GestureDetector(
+      onTap: () {
+        context.read<NodeAddressCubit>().toggleIsEditting();
+      },
+      child: Container(
+        color: c.colours.surface,
+        padding: const EdgeInsets.only(
+          top: 16,
+          bottom: 16,
+          left: 16,
+          right: 16,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Change Electrum Node'.toUpperCase(),
+              style: c.fonts.button!.copyWith(
+                color: c.colours.onBackground,
+                fontSize: 16,
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'Provide Full Address (URL:PORT) and give it a name.',
-            maxLines: 3,
-            style: c.fonts.caption!.copyWith(
-              color: c.colours.onSurface.withOpacity(0.7),
+            const SizedBox(height: 4),
+            Text(
+              'Provide Full Address (URL:PORT) and give it a name.',
+              maxLines: 3,
+              style: c.fonts.caption!.copyWith(
+                color: c.colours.onSurface.withOpacity(0.7),
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _address,
-            autocorrect: false,
-            style: TextStyle(color: context.colours.onBackground),
-            decoration: InputDecoration(
-              hintText: 'Enter Full Address'.toUpperCase(),
+            const SizedBox(height: 16),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _address,
+              autocorrect: false,
+              style: TextStyle(color: context.colours.onBackground),
+              decoration: InputDecoration(
+                hintText: 'Enter Full Address'.toUpperCase(),
+              ),
+              onChanged: (t) {
+                context.read<NodeAddressCubit>().addressChanged(t);
+              },
             ),
-            onChanged: (t) {
-              context.read<NodeAddressCubit>().addressChanged(t);
-            },
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _name,
-            autocorrect: false,
-            style: TextStyle(color: context.colours.onBackground),
-            decoration: InputDecoration(
-              hintText: 'Name Your Node'.toUpperCase(),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _name,
+              autocorrect: false,
+              style: TextStyle(color: context.colours.onBackground),
+              decoration: InputDecoration(
+                hintText: 'Name Your Node'.toUpperCase(),
+              ),
+              onChanged: (t) {
+                context.read<NodeAddressCubit>().nameChanged(t);
+              },
             ),
-            onChanged: (t) {
-              context.read<NodeAddressCubit>().nameChanged(t);
-            },
-          ),
-          const SizedBox(height: 32),
-          TextButton(
-            onPressed: () {
-              c.read<NodeAddressCubit>().saveClicked();
-            },
-            child: const Text('SAVE'),
-          ),
-          const SizedBox(height: 24),
-          TextButton(
-            onPressed: () {
-              c.read<NodeAddressCubit>().revertToDefault();
-              c.read<NodeAddressCubit>().saveClicked();
-            },
-            child: Text(
-              'RESET TO DEFAULT',
-              style: c.fonts.button!.copyWith(color: c.colours.error),
+            const SizedBox(height: 32),
+            TextButton(
+              onPressed: () {
+                c.read<NodeAddressCubit>().saveClicked();
+              },
+              child: const Text('SAVE'),
             ),
-          ),
-          const SizedBox(height: 24),
-        ],
+            const SizedBox(height: 24),
+            TextButton(
+              onPressed: () {
+                c.read<NodeAddressCubit>().revertToDefault();
+                c.read<NodeAddressCubit>().saveClicked();
+              },
+              child: Text(
+                'RESET TO DEFAULT',
+                style: c.fonts.button!.copyWith(color: c.colours.error),
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+        ),
       ),
     );
   }

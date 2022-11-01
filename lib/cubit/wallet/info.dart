@@ -19,6 +19,7 @@ import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/pkg/storage.dart';
+import 'package:sats/pkg/validation.dart';
 import 'package:sqflite/sqflite.dart' hide Transaction;
 
 part 'info.freezed.dart';
@@ -325,13 +326,14 @@ class InfoCubit extends Cubit<InfoState> {
     );
   }
 
-  void testPassPhrase(String mnemonic, String fingerprint) async {
+  void testPassPhrase(String mnemonic) async {
     final seed = await compute(importMaster, {
       'mnemonic': mnemonic,
       'passphrase': state.passPhraseTest,
       'network': _blockchainCubit.state.blockchain.name,
     });
 
+    final wallet = _walletsCubit.state.selectedWallet!;
     if (seed.hasError)
       emit(
         state.copyWith(
@@ -340,7 +342,8 @@ class InfoCubit extends Cubit<InfoState> {
           ppTestPassed: false,
         ),
       );
-    else if (seed.result!.fingerprint == fingerprint) {
+    else if (Validation.fingerPrintFromXKey(wallet.policyElements[0]) ==
+        seed.result!.fingerprint) {
       emit(
         state.copyWith(
           errorPPTest: '',

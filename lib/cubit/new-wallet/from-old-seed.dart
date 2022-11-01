@@ -123,7 +123,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   static const invalidLabelError = 'Invalid Label (must be 3-20 chars).';
   static const couldNotSaveError = 'Error Saving Wallet!';
   static const signerWalletType = 'PRIMARY';
-  static const recoveryWalletType = 'RECOVERED';
+  static const importWalletType = 'IMPORT';
 
   static const wpkhScript = 'wpkh';
   static const wshScript = 'wsh';
@@ -318,7 +318,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
           root,
           wallet.fingerPrint,
           _importCubit.state.seed,
-          _importCubit.state.passPhrase,
         );
         _masterKeyCubit.init();
       }
@@ -328,7 +327,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
       var newWallet = Wallet(
         label: state.walletLabel,
-        walletType: needsMasterKey ? signerWalletType : recoveryWalletType,
+        walletType: needsMasterKey ? signerWalletType : importWalletType,
         descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,

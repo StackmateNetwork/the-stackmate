@@ -24,6 +24,7 @@ const carolinaBlue = Color(0xFF009FFD);
 
 ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.aldrichTextTheme(),
+      primaryTextTheme: GoogleFonts.anaheimTextTheme(),
       colorScheme: ColorScheme(
         primary: bitterLemon,
         secondary: blueJeans,
@@ -33,7 +34,7 @@ ThemeData mainTheme() => ThemeData(
         onPrimaryContainer: vantaBlack.withOpacity(0.92),
         background: vantaBlack,
         error: venetian,
-        onPrimary: cultured,
+        onPrimary: cultured.withOpacity(0.82),
         onSecondary: lightSeaGreen,
         onSurface: cultured,
         onBackground: cultured,

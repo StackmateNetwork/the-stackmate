@@ -51,6 +51,9 @@ class _Home extends StatelessWidget {
                               children: [
                                 const HomeLoader(),
                                 TorHeader(),
+                                const SizedBox(
+                                  height: 16,
+                                ),
                                 Networth(),
                                 WalletTools()
                               ],

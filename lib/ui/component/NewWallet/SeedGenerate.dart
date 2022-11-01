@@ -1,126 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
+import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/pkg/extensions.dart';
-
-class SeedGeneratePassphrase extends StatefulWidget {
-  @override
-  State<SeedGeneratePassphrase> createState() => _SeedGeneratePassphraseState();
-}
-
-class _SeedGeneratePassphraseState extends State<SeedGeneratePassphrase> {
-  late TextEditingController _textController;
-  late TextEditingController _textControllerP;
-  final GlobalKey<FormState> _form = GlobalKey<FormState>();
-  @override
-  void initState() {
-    _textController = TextEditingController();
-    _textControllerP = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext c) {
-    return BlocBuilder<SeedGenerateCubit, SeedGenerateState>(
-      builder: (context, state) {
-        if (_textController.text != state.passPhrase)
-          _textController.text = state.passPhrase;
-        return Form(
-          key: _form,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 24),
-              Text(
-                'optional\npassphrase'.toUpperCase(),
-                style: c.fonts.headline5!.copyWith(
-                  color: c.colours.onPrimary,
-                  // fontWeight: FontWeight.bold,
-                ),
-              ),
-              // const HeaderTextDark(text: 'Enter an\noptional\npassphrase'),
-              const SizedBox(height: 24),
-              Text(
-                'Leave this blank if you are not sure.\nIf you set a passphrase, you cannot recover your funds without it.',
-                style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
-              ),
-              const SizedBox(height: 32),
-
-              Padding(
-                padding: EdgeInsets.zero,
-                child: TextFormField(
-                  enableIMEPersonalizedLearning: false,
-                  autocorrect: false,
-                  obscureText: true,
-                  obscuringCharacter: '*',
-                  controller: _textController,
-                  validator: (val) {
-                    return null;
-                  },
-                  onChanged: (text) {
-                    c.read<SeedGenerateCubit>().passPhrasedChanged(text);
-                  },
-                  style: TextStyle(color: c.colours.onBackground),
-                  decoration: const InputDecoration(
-                    labelText: 'Passphrase',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: EdgeInsets.zero,
-                child: TextFormField(
-                  enableIMEPersonalizedLearning: false,
-                  autocorrect: false,
-                  obscureText: true,
-                  obscuringCharacter: '*',
-                  controller: _textControllerP,
-                  validator: (val) {
-                    if (val != _textController.text) return 'Not Matched';
-                    return null;
-                  },
-                  style: TextStyle(color: c.colours.onBackground),
-                  decoration: const InputDecoration(
-                    labelText: 'Verify Passphrase',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 18),
-              if (state.errPassphrase != '')
-                Text(
-                  state.errPassphrase,
-                  style: c.fonts.caption!.copyWith(
-                    color: c.colours.error,
-                  ),
-                ),
-              const SizedBox(height: 14),
-              SizedBox(
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    onPrimary: c.colours.background,
-                    primary: c.colours.primary,
-                  ),
-                  onPressed: () {
-                    if (_form.currentState!.validate()) {
-                      final FocusScopeNode currentFocus =
-                          FocusScope.of(context);
-
-                      if (!currentFocus.hasPrimaryFocus) {
-                        currentFocus.unfocus();
-                      }
-                      c.read<SeedGenerateCubit>().finalizePassphrase();
-                    }
-                  },
-                  child: Text('Confirm'.toUpperCase()),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
 
 class SeedWordCell extends StatelessWidget {
   const SeedWordCell({
@@ -172,8 +53,6 @@ class SeedGenerateStepSelect extends StatelessWidget {
         return SeedGenerate();
       case SeedGenerateSteps.quiz:
         return SeedConfirm();
-      case SeedGenerateSteps.passphrase:
-        return SeedGeneratePassphrase();
     }
 
     return Container();
@@ -199,8 +78,10 @@ class SeedGenerate extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Store it somewhere reliable and safe.'.notLocalised(),
-            style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
+            'If you cannot reliably secure your key now, make sure to backup later.\nYou cannot recover funds and data until you backup.'
+                .notLocalised(),
+            style: c.theme.primaryTextTheme.bodyLarge!
+                .copyWith(color: c.colours.onPrimary),
           ),
           const SizedBox(height: 8),
           Container(
@@ -250,12 +131,11 @@ class SeedGenerate extends StatelessWidget {
             height: 52,
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
-                primary: c.colours.primary,
-                side: BorderSide(color: c.colours.onPrimary),
-                onSurface: c.colours.background.withOpacity(0.38),
+                primary: c.colours.error,
               ),
               onPressed: () {
                 c.read<SeedGenerateCubit>().backupLater();
+                c.read<SeedGenerateWalletCubit>().nextClicked();
               },
               child: Text('BackUp Later'.toUpperCase()),
             ),

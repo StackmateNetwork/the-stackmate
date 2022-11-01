@@ -18,8 +18,8 @@ extension Blo on Blockchain {
       }[this]!;
 
   String get displayName => const {
-        Blockchain.main: 'mainnet',
-        Blockchain.test: 'testnet',
+        Blockchain.main: 'Main Network',
+        Blockchain.test: 'Test Network',
       }[this]!;
 
   int get index => const {
