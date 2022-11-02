@@ -1,6 +1,6 @@
 name: sats
 description: Bitcoin Key Manager
-version: 0.1.0+22
+version: 0.1.1+23
 publish_to: none
 platforms:
   android:
