@@ -24,7 +24,7 @@ const carolinaBlue = Color(0xFF009FFD);
 
 ThemeData mainTheme() => ThemeData(
       textTheme: GoogleFonts.aldrichTextTheme(),
-      primaryTextTheme: GoogleFonts.anaheimTextTheme(),
+      primaryTextTheme: GoogleFonts.poppinsTextTheme(),
       colorScheme: ColorScheme(
         primary: bitterLemon,
         secondary: blueJeans,

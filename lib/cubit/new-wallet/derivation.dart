@@ -150,188 +150,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
     }
   }
 
-  // void derivePassphrase() async {
-  //   try {
-  //     emit(
-  //       state.copyWith(
-  //         savingWallet: true,
-  //         errSavingWallet: emptyString,
-  //         walletLabelError: emptyString,
-  //       ),
-  //     );
-
-  //     final parent = _core.importMaster(
-  //       mnemonic: _masterKeyCubit.state.key!.seed!,
-  //       passphrase: state.passPhrase,
-  //       network: _blockchainCubit.state.blockchain.name,
-  //     );
-  //     if (parent.hasError) {
-  //       throw SMError.fromJson(parent.error!);
-  //     }
-
-  //     final child = _core.deriveHardened(
-  //       masterXPriv: parent.result!.xprv,
-  //       account: '0',
-  //       purpose: taprootPurpose,
-  //     );
-
-  //     if (child.hasError) {
-  //       throw SMError.fromJson(child.error!);
-  //     }
-
-  //     final fingerprint = parent.result!.fingerprint;
-  //     final path = child.result!.hardenedPath;
-  //     final xprv = child.result!.xprv;
-  //     final fullXPrv =
-  //         '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
-  //     final xpub = child.result!.xpub;
-  //     final fullXPub =
-  //         '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
-  //     final policy = 'pk($fullXPrv/*)';
-
-  //     const readable = 'pk(__primary__)';
-  //     final uid = sha1.convert(utf8.encode(xpub)).toString().substring(0, 21);
-
-  //     final descriptor = _core.compile(
-  //       policy: policy,
-  //       scriptType: trScript,
-  //     );
-
-  //     if (descriptor.hasError) {
-  //       throw SMError.fromJson(descriptor.error!).message;
-  //     }
-
-  //     final nodeAddress = _nodeAddressCubit.state.getAddress();
-  //     final socks5 = _torCubit.state.getSocks5();
-  //     final dbName = state.label + uid + '.db';
-  //     final db = await openDatabase(dbName);
-  //     final databasesPath = await getDatabasesPath();
-  //     final dbPath = join(databasesPath, dbName);
-  //     // ensure to delete db if process errors
-  //     final syncStat = await compute(sqliteSync, {
-  //       'dbPath': dbPath,
-  //       'descriptor': descriptor.result!,
-  //       'nodeAddress': nodeAddress,
-  //       'socks5': socks5,
-  //     });
-  //     if (syncStat.hasError) {
-  //       throw SMError.fromJson(syncStat.error!);
-  //     }
-
-  //     var history = await compute(sqliteHistory, {
-  //       'descriptor': descriptor.result!,
-  //       'dbPath': dbPath,
-  //     });
-
-  //     // ignore: unused_local_variable
-  //     var recievedCount = 0;
-
-  //     if (history.hasError) {
-  //       emit(
-  //         state.copyWith(
-  //           errSavingWallet: history.error!,
-  //         ),
-  //       );
-  //       history = const R(result: []);
-  //     } else
-  //       for (final item in history.result!) {
-  //         if (item.sent == 0) {
-  //           recievedCount++;
-  //         }
-  //       }
-
-  //     var balance = await compute(sqliteBalance, {
-  //       'descriptor': descriptor.result!,
-  //       'dbPath': dbPath,
-  //     });
-
-  //     if (balance.hasError) {
-  //       emit(
-  //         state.copyWith(
-  //           errSavingWallet: balance.error!,
-  //         ),
-  //       );
-  //       balance = const R(result: 0);
-  //     }
-  //     final lastUnused = _core.lastUnusedAddress(
-  //       descriptor: descriptor.result!,
-  //       dbPath: dbPath,
-  //     );
-  //     var lastIndex = 0;
-  //     if (lastUnused.hasError) {
-  //       emit(
-  //         state.copyWith(
-  //           errSavingWallet: 'Could not set last unused address.',
-  //         ),
-  //       );
-  //     } else {
-  //       lastIndex = int.parse(lastUnused.result!.index);
-  //     }
-  //     // check balance and see if last address index needs update
-  //     var newWallet = Wallet(
-  //       label: state.label,
-  //       descriptor: descriptor.result!,
-  //       policy: readable,
-  //       requiredPolicyElements: 1,
-  //       policyElements: ['primary:$fullXPub'],
-  //       blockchain: _blockchainCubit.state.blockchain.name,
-  //       walletType: signerWalletType,
-  //       lastAddressIndex: lastIndex,
-  //       balance: balance.result!,
-  //       transactions: history.result!,
-  //       uid: uid,
-  //     );
-
-  //     final savedId = await _storage.saveItem<Wallet>(
-  //       StoreKeys.Wallet.name,
-  //       newWallet,
-  //     );
-
-  //     if (savedId.hasError) return;
-
-  //     final id = savedId.result!;
-
-  //     newWallet = newWallet.copyWith(id: id);
-
-  //     await _storage.saveItemAt<Wallet>(
-  //       StoreKeys.Wallet.name,
-  //       id,
-  //       newWallet,
-  //     );
-
-  //     _wallets.walletSelected(newWallet);
-  //     _wallets.addTransactionsToSelectedWallet(history.result!);
-
-  //     emit(
-  //       state.copyWith(
-  //         savingWallet: false,
-  //         newWalletSaved: true,
-  //       ),
-  //     );
-  //     db.close();
-  //   } catch (e, s) {
-  //     print(e);
-  //     emit(
-  //       state.copyWith(
-  //         errSavingWallet: e.toString(),
-  //         savingWallet: false,
-  //       ),
-  //     );
-  //     await Future.delayed(
-  //       const Duration(
-  //         milliseconds: 3000,
-  //       ),
-  //     );
-  //     emit(
-  //       state.copyWith(
-  //         errSavingWallet: emptyString,
-  //         newWalletSaved: true,
-  //       ),
-  //     );
-  //     _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
-  //   }
-  // }
-
   void deriveTaproot() async {
     try {
       emit(
@@ -348,7 +166,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         network: _blockchainCubit.state.blockchain.name,
       );
       if (parent.hasError) {
-        throw SMError.fromJson(parent.error!);
+        throw SMError.fromJson(parent.error!).message;
       }
 
       final child = _core.deriveHardened(
@@ -498,24 +316,14 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       );
       db.close();
     } catch (e, s) {
-      print(e);
       emit(
         state.copyWith(
           errSavingWallet: e.toString(),
           savingWallet: false,
-        ),
-      );
-      await Future.delayed(
-        const Duration(
-          milliseconds: 3000,
-        ),
-      );
-      emit(
-        state.copyWith(
-          errSavingWallet: emptyString,
           newWalletSaved: true,
         ),
       );
+
       _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
     }
   }
@@ -672,14 +480,15 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       );
       db.close();
     } catch (e, s) {
-      _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
-
       emit(
         state.copyWith(
-          errSavingWallet: internalError,
+          errSavingWallet: e.toString(),
+          savingWallet: false,
           newWalletSaved: true,
         ),
       );
+
+      _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
     }
   }
 }
