@@ -140,6 +140,12 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         break;
 
       case SeedImportWalletSteps.import:
+        if (_masterKeyCubit.state.key != null)
+          emit(
+            const SeedImportWalletState(
+              currentStep: SeedImportWalletSteps.label,
+            ),
+          );
         break;
 
       case SeedImportWalletSteps.label:
@@ -156,7 +162,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       case SeedImportWalletSteps.import:
         final importStep = _importCubit.state.currentStep;
         switch (importStep) {
-          case SeedImportStep.passphrase:
+          case SeedImportStep.import:
             emit(
               const SeedImportWalletState(
                 currentStep: SeedImportWalletSteps.warning,
@@ -166,7 +172,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
             );
             _importCubit.backOnPassphaseClicked();
             break;
-          case SeedImportStep.import:
+          case SeedImportStep.passphrase:
             _importCubit.backOnSeedClicked();
             break;
         }

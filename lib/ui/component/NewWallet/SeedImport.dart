@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
+import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class SeedImportSteps extends StatelessWidget {
@@ -13,9 +15,9 @@ class SeedImportSteps extends StatelessWidget {
 
     switch (step) {
       case SeedImportStep.passphrase:
-        return const SeedImportPhrase();
-      case SeedImportStep.import:
         return const SeedImportPassphrase();
+      case SeedImportStep.import:
+        return const SeedImportPhrase();
     }
   }
 }
@@ -25,6 +27,8 @@ class SeedImportPhrase extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
+    final hasMaster = c.select((MasterKeyCubit mk) => mk.state.key != null);
+
     return BlocBuilder<SeedImportCubit, SeedImportState>(
       builder: (context, state) {
         return Column(
@@ -68,9 +72,12 @@ class SeedImportPhrase extends StatelessWidget {
                     onPrimary: c.colours.background,
                     primary: c.colours.primary,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (state.showSeedCompleteButton())
-                      c.read<SeedImportCubit>().checkPassPhrase();
+                      !hasMaster
+                          ? await c.read<SeedImportCubit>().checkSeed()
+                          : c.read<SeedImportCubit>().gotoPassPhrase();
+                    context.read<SeedImportWalletCubit>().nextClicked();
                   },
                   child: const Text('Next'),
                 ),

@@ -4,6 +4,7 @@ import 'package:libstackmate/libstackmate.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
 
 part 'seed-import.freezed.dart';
 
@@ -15,7 +16,7 @@ enum SeedImportStep {
 @freezed
 class SeedImportState with _$SeedImportState {
   const factory SeedImportState({
-    @Default(SeedImportStep.passphrase) SeedImportStep currentStep,
+    @Default(SeedImportStep.import) SeedImportStep currentStep,
     @Default('') String seed,
     @Default('') String seedError,
     @Default('') String passPhrase,
@@ -34,11 +35,13 @@ class SeedImportState with _$SeedImportState {
 class SeedImportCubit extends Cubit<SeedImportState> {
   SeedImportCubit(
     this.logger,
+    this._masterKey,
     this._blockchainCubit,
     this._core,
   ) : super(const SeedImportState());
 
   final IStackMateBitcoin _core;
+  final MasterKeyCubit _masterKey;
   final Logger logger;
   final ChainSelectCubit _blockchainCubit;
 
@@ -49,7 +52,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
   void backOnPassphaseClicked() {
     emit(
       state.copyWith(
-        currentStep: SeedImportStep.passphrase,
+        currentStep: SeedImportStep.import,
         passPhrase: emptyString,
         errPassPhrase: emptyString,
       ),
@@ -60,10 +63,10 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     emit(state.copyWith(passPhrase: text));
   }
 
-  void checkPassPhrase() {
+  void gotoPassPhrase() {
     emit(
       state.copyWith(
-        currentStep: SeedImportStep.import,
+        currentStep: SeedImportStep.passphrase,
         errPassPhrase: emptyString,
       ),
     );
@@ -72,7 +75,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
   void backOnSeedClicked() {
     emit(
       state.copyWith(
-        currentStep: SeedImportStep.passphrase,
+        currentStep: SeedImportStep.import,
         seed: emptyString,
         seedError: emptyString,
       ),
@@ -88,7 +91,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     );
   }
 
-  void checkSeed() {
+  Future<void> checkSeed() async {
     try {
       final seed = state.seed;
 
@@ -96,14 +99,15 @@ class SeedImportCubit extends Cubit<SeedImportState> {
         emit(state.copyWith(seedError: invalidSeedError));
         return;
       }
-
+      final pp =
+          (_masterKey.state.key != null) ? emptyString : state.passPhrase;
       final root = _core.importMaster(
         mnemonic: state.seed,
-        passphrase: state.passPhrase,
+        passphrase: pp,
         network: _blockchainCubit.state.blockchain.name,
       );
       if (root.hasError) {
-        throw SMError.fromJson(root.error!);
+        throw SMError.fromJson(root.error!).message;
       }
 
       final wallet = _core.deriveHardened(

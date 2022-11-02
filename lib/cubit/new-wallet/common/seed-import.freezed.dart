@@ -197,7 +197,7 @@ class __$$_SeedImportStateCopyWithImpl<$Res>
 
 class _$_SeedImportState extends _SeedImportState {
   const _$_SeedImportState(
-      {this.currentStep = SeedImportStep.passphrase,
+      {this.currentStep = SeedImportStep.import,
       this.seed = '',
       this.seedError = '',
       this.passPhrase = '',

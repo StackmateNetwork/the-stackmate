@@ -125,6 +125,7 @@ class SeedImportScreen extends StatelessWidget {
 
     final importCubit = SeedImportCubit(
       logger,
+      masterKey,
       networkSelect,
       locator<IStackMateBitcoin>(),
     );
