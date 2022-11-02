@@ -37,6 +37,7 @@ class DeriveWalletState with _$DeriveWalletState {
     @Default(0) int index,
     @Default('m/0h/0h/0h') String rawPath,
     @Default('') String passPhrase,
+    @Default('') String errPassphrase,
     @Default('') String label,
     @Default('') String walletLabelError,
     @Default(false) bool savingWallet,

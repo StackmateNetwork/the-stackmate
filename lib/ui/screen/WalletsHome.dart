@@ -17,7 +17,6 @@ class _Home extends StatelessWidget {
   Widget build(BuildContext c) {
     // final wallets = c.select((WalletsCubit w) => w);
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
-
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, prefState) {
         return Scaffold(

@@ -21,6 +21,7 @@ mixin _$DeriveWalletState {
   int get index => throw _privateConstructorUsedError;
   String get rawPath => throw _privateConstructorUsedError;
   String get passPhrase => throw _privateConstructorUsedError;
+  String get errPassphrase => throw _privateConstructorUsedError;
   String get label => throw _privateConstructorUsedError;
   String get walletLabelError => throw _privateConstructorUsedError;
   bool get savingWallet => throw _privateConstructorUsedError;
@@ -43,6 +44,7 @@ abstract class $DeriveWalletStateCopyWith<$Res> {
       int index,
       String rawPath,
       String passPhrase,
+      String errPassphrase,
       String label,
       String walletLabelError,
       bool savingWallet,
@@ -66,6 +68,7 @@ class _$DeriveWalletStateCopyWithImpl<$Res>
     Object? index = freezed,
     Object? rawPath = freezed,
     Object? passPhrase = freezed,
+    Object? errPassphrase = freezed,
     Object? label = freezed,
     Object? walletLabelError = freezed,
     Object? savingWallet = freezed,
@@ -92,6 +95,10 @@ class _$DeriveWalletStateCopyWithImpl<$Res>
       passPhrase: passPhrase == freezed
           ? _value.passPhrase
           : passPhrase // ignore: cast_nullable_to_non_nullable
+              as String,
+      errPassphrase: errPassphrase == freezed
+          ? _value.errPassphrase
+          : errPassphrase // ignore: cast_nullable_to_non_nullable
               as String,
       label: label == freezed
           ? _value.label
@@ -130,6 +137,7 @@ abstract class _$$_DeriveWalletStateCopyWith<$Res>
       int index,
       String rawPath,
       String passPhrase,
+      String errPassphrase,
       String label,
       String walletLabelError,
       bool savingWallet,
@@ -155,6 +163,7 @@ class __$$_DeriveWalletStateCopyWithImpl<$Res>
     Object? index = freezed,
     Object? rawPath = freezed,
     Object? passPhrase = freezed,
+    Object? errPassphrase = freezed,
     Object? label = freezed,
     Object? walletLabelError = freezed,
     Object? savingWallet = freezed,
@@ -181,6 +190,10 @@ class __$$_DeriveWalletStateCopyWithImpl<$Res>
       passPhrase: passPhrase == freezed
           ? _value.passPhrase
           : passPhrase // ignore: cast_nullable_to_non_nullable
+              as String,
+      errPassphrase: errPassphrase == freezed
+          ? _value.errPassphrase
+          : errPassphrase // ignore: cast_nullable_to_non_nullable
               as String,
       label: label == freezed
           ? _value.label
@@ -217,6 +230,7 @@ class _$_DeriveWalletState
       this.index = 0,
       this.rawPath = 'm/0h/0h/0h',
       this.passPhrase = '',
+      this.errPassphrase = '',
       this.label = '',
       this.walletLabelError = '',
       this.savingWallet = false,
@@ -240,6 +254,9 @@ class _$_DeriveWalletState
   final String passPhrase;
   @override
   @JsonKey()
+  final String errPassphrase;
+  @override
+  @JsonKey()
   final String label;
   @override
   @JsonKey()
@@ -256,7 +273,7 @@ class _$_DeriveWalletState
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DeriveWalletState(currentStep: $currentStep, purpose: $purpose, index: $index, rawPath: $rawPath, passPhrase: $passPhrase, label: $label, walletLabelError: $walletLabelError, savingWallet: $savingWallet, errSavingWallet: $errSavingWallet, newWalletSaved: $newWalletSaved)';
+    return 'DeriveWalletState(currentStep: $currentStep, purpose: $purpose, index: $index, rawPath: $rawPath, passPhrase: $passPhrase, errPassphrase: $errPassphrase, label: $label, walletLabelError: $walletLabelError, savingWallet: $savingWallet, errSavingWallet: $errSavingWallet, newWalletSaved: $newWalletSaved)';
   }
 
   @override
@@ -269,6 +286,7 @@ class _$_DeriveWalletState
       ..add(DiagnosticsProperty('index', index))
       ..add(DiagnosticsProperty('rawPath', rawPath))
       ..add(DiagnosticsProperty('passPhrase', passPhrase))
+      ..add(DiagnosticsProperty('errPassphrase', errPassphrase))
       ..add(DiagnosticsProperty('label', label))
       ..add(DiagnosticsProperty('walletLabelError', walletLabelError))
       ..add(DiagnosticsProperty('savingWallet', savingWallet))
@@ -288,6 +306,8 @@ class _$_DeriveWalletState
             const DeepCollectionEquality().equals(other.rawPath, rawPath) &&
             const DeepCollectionEquality()
                 .equals(other.passPhrase, passPhrase) &&
+            const DeepCollectionEquality()
+                .equals(other.errPassphrase, errPassphrase) &&
             const DeepCollectionEquality().equals(other.label, label) &&
             const DeepCollectionEquality()
                 .equals(other.walletLabelError, walletLabelError) &&
@@ -307,6 +327,7 @@ class _$_DeriveWalletState
       const DeepCollectionEquality().hash(index),
       const DeepCollectionEquality().hash(rawPath),
       const DeepCollectionEquality().hash(passPhrase),
+      const DeepCollectionEquality().hash(errPassphrase),
       const DeepCollectionEquality().hash(label),
       const DeepCollectionEquality().hash(walletLabelError),
       const DeepCollectionEquality().hash(savingWallet),
@@ -327,6 +348,7 @@ abstract class _DeriveWalletState implements DeriveWalletState {
       final int index,
       final String rawPath,
       final String passPhrase,
+      final String errPassphrase,
       final String label,
       final String walletLabelError,
       final bool savingWallet,
@@ -343,6 +365,8 @@ abstract class _DeriveWalletState implements DeriveWalletState {
   String get rawPath => throw _privateConstructorUsedError;
   @override
   String get passPhrase => throw _privateConstructorUsedError;
+  @override
+  String get errPassphrase => throw _privateConstructorUsedError;
   @override
   String get label => throw _privateConstructorUsedError;
   @override

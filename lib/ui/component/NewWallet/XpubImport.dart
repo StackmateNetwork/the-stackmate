@@ -107,6 +107,33 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
                 child: Text('SCAN'.toUpperCase()),
               ),
             ),
+            const SizedBox(height: 36),
+            if (state.errXpub != '')
+              Text(
+                state.errXpub,
+                style: c.fonts.caption!.copyWith(color: c.colours.error),
+              ),
+            SizedBox(
+              height: 52,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  onPrimary: c.colours.background,
+                  primary: c.colours.primary,
+                ),
+                onPressed: () async {
+                  c.read<XpubImportCubit>().checkDetails();
+                  if (state.errXpub != '') {
+                    showTopSnackBar(
+                      context,
+                      const CustomSnackBar.error(
+                        message: '',
+                      ),
+                    );
+                  }
+                },
+                child: const Text('CONFIRM'),
+              ),
+            ),
           ],
         );
       },

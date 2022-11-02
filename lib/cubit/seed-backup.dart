@@ -50,8 +50,8 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
   static const segwitNativePurpose = '84';
   static const incorerctWordError = 'Incorrect Word Selected.';
   static const emptyString = '';
-  void init() {
-    _masterKey.init();
+  void init() async {
+    await _masterKey.init();
 
     emit(
       state.copyWith(
@@ -84,7 +84,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
     }
   }
 
-  void nextClicked() {
+  Future<void> nextClicked() async {
     switch (state.currentStep) {
       case SeedBackupSteps.warning:
         emit(state.copyWith(currentStep: SeedBackupSteps.display));
@@ -95,7 +95,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
         break;
 
       case SeedBackupSteps.quiz:
-        if (!state.backupComplete) _completeBackup();
+        if (!state.backupComplete) await _completeBackup();
         break;
     }
   }
@@ -107,7 +107,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
         state.fingerPrint!,
         state.seed!.join(' '),
       );
-      _masterKey.init();
+      await _masterKey.init();
       emit(
         state.copyWith(
           backupComplete: true,
@@ -205,15 +205,14 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
     return;
   }
 
-  void _quizCompleted() {
+  Future<void> _quizCompleted() async {
     emit(
       state.copyWith(
         quizSeedCompletedAnswers: [],
         quizSeedAnswer: '',
-        backupComplete: true,
       ),
     );
-    nextClicked();
+    await nextClicked();
   }
 
   void openLink(String url) {

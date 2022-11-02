@@ -9,10 +9,14 @@ class DerivePassphrase extends StatefulWidget {
 
 class _DerivePassphraseState extends State<DerivePassphrase> {
   late TextEditingController _textController;
+  late TextEditingController _textControllerP;
+
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   @override
   void initState() {
     _textController = TextEditingController();
+    _textControllerP = TextEditingController();
+
     super.initState();
   }
 
@@ -58,6 +62,34 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
                   ),
                 ),
               ),
+              const SizedBox(height: 14),
+              const SizedBox(height: 12),
+              Padding(
+                padding: EdgeInsets.zero,
+                child: TextFormField(
+                  enableIMEPersonalizedLearning: false,
+                  autocorrect: false,
+                  obscureText: true,
+                  obscuringCharacter: '*',
+                  controller: _textControllerP,
+                  validator: (val) {
+                    if (val != _textController.text) return 'Not Matched';
+                    return null;
+                  },
+                  style: TextStyle(color: c.colours.onBackground),
+                  decoration: const InputDecoration(
+                    labelText: 'Verify Passphrase',
+                  ),
+                ),
+              ),
+              const SizedBox(height: 18),
+              if (state.errPassphrase != '')
+                Text(
+                  state.errPassphrase,
+                  style: c.fonts.caption!.copyWith(
+                    color: c.colours.error,
+                  ),
+                ),
               const SizedBox(height: 14),
               SizedBox(
                 height: 52,
