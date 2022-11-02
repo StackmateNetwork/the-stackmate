@@ -93,6 +93,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
   static const wpkhScript = 'wpkh';
   static const trScript = 'tr';
   static const emptyString = '';
+  static const couldNotSaveError = 'Error Saving Wallet!';
 
   void labelChanged(String text) {
     emit(state.copyWith(label: text, errSavingWallet: emptyString));
@@ -246,7 +247,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       }
 
       // check balance and see if last address index needs update
-      var newWallet = Wallet(
+      final newWallet = Wallet(
         label: state.label,
         descriptor: descriptor.result!,
         policy: readable,
@@ -260,28 +261,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         uid: uid,
       );
 
-      final savedId = await _storage.saveItem<Wallet>(
-        StoreKeys.Wallet.name,
-        newWallet,
-      );
+      updateWalletStorage(newWallet);
 
-      if (savedId.hasError) return;
-
-      final id = savedId.result!;
-
-      newWallet = newWallet.copyWith(id: id);
-
-      await _storage.saveItemAt<Wallet>(
-        StoreKeys.Wallet.name,
-        id,
-        newWallet,
-      );
-
-      _wallets.walletSelected(newWallet);
-      _wallets.addTransactionsToSelectedWallet(history.result!);
-      await _wallets.updateAddressIndexToSelectedWallet(
-        int.parse(lastUnused.result!.index),
-      );
       emit(
         state.copyWith(
           savingWallet: false,
@@ -299,6 +280,25 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         ),
       );
     }
+  }
+
+  Future<void> updateWalletStorage(Wallet wallet) async {
+    final savedid = await _storage.saveItem<Wallet>(
+      StoreKeys.Wallet.name,
+      wallet,
+    );
+    if (savedid.hasError) throw couldNotSaveError;
+
+    final id = savedid.result!;
+
+    final newWallet = wallet.copyWith(id: id);
+
+    await _storage.saveItemAt<Wallet>(
+      StoreKeys.Wallet.name,
+      id,
+      newWallet,
+    );
+    _wallets.refresh();
   }
 
   @override

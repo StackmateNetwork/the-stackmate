@@ -27,9 +27,10 @@ part 'info.freezed.dart';
 @freezed
 class InfoState with _$InfoState {
   const factory InfoState({
+    required Wallet wallet,
     @Default(true) bool loadingTransactions,
     @Default('') String errLoadingTransactions,
-    @Default(true) bool loadingBalance,
+    @Default(false) bool loadingBalance,
     @Default('') String errLoadingBalance,
     @Default(0) int balance,
     @Default(0) int uconfBalance,
@@ -59,7 +60,8 @@ class InfoCubit extends Cubit<InfoState> {
     this._nodeAddressCubit,
     this._torCubit,
     this._blockchainCubit,
-  ) : super(const InfoState()) {
+    Wallet wallet,
+  ) : super(InfoState(wallet: wallet)) {
     _init();
   }
 
@@ -86,7 +88,7 @@ class InfoCubit extends Cubit<InfoState> {
 
   void sqliteSyncHistory() async {
     try {
-      final wallet = _walletsCubit.state.selectedWallet!;
+      final wallet = state.wallet;
       emit(
         state.copyWith(
           loadingBalance: true,
@@ -128,13 +130,13 @@ class InfoCubit extends Cubit<InfoState> {
       // ignore: unused_local_variable
       final syncStat = await compute(sqliteSync, {
         'dbPath': dbPath,
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'descriptor': state.wallet.descriptor,
         'nodeAddress': node,
         'socks5': socks5,
       });
 
       final balance = await compute(sqliteBalance, {
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'descriptor': state.wallet.descriptor,
         'dbPath': dbPath,
       });
 
@@ -149,10 +151,10 @@ class InfoCubit extends Cubit<InfoState> {
           currentHeight: currentHeight,
         ),
       );
-      _walletsCubit.addBalanceToSelectedWallet(balance);
+      await addBalanceToStorage(balance);
 
       final transactions = await compute(sqliteHistory, {
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'descriptor': state.wallet.descriptor,
         'dbPath': dbPath,
       });
 
@@ -169,7 +171,7 @@ class InfoCubit extends Cubit<InfoState> {
         ),
       );
 
-      _walletsCubit.addTransactionsToSelectedWallet(transactions);
+      await addTransactionsToStorage(transactions);
       db.close();
 
       return;
@@ -185,11 +187,13 @@ class InfoCubit extends Cubit<InfoState> {
     }
   }
 
-  void getHistory() async {
+  void updateBalance() async {
     try {
+      final wallet = state.wallet;
+
       final node = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final wallet = _walletsCubit.state.selectedWallet!;
+
       emit(
         state.copyWith(
           loadingBalance: true,
@@ -198,6 +202,12 @@ class InfoCubit extends Cubit<InfoState> {
           transactions: wallet.transactions,
         ),
       );
+
+      final dbName = wallet.label + wallet.uid + '.db';
+      final db = await openDatabase(dbName);
+      final databasesPath = await getDatabasesPath();
+      final dbPath = join(databasesPath, dbName);
+
       final currentHeight = await compute(computeCurrentHeight, {
         'network': _blockchainCubit.state.blockchain.name,
         'nodeAddress': node,
@@ -214,12 +224,16 @@ class InfoCubit extends Cubit<InfoState> {
         ),
       );
 
-      // THIS PART NEEDS TO BE REVIEWS
-      // compute is used and errors are not properly handled
-      final balance = await compute(computeBalance, {
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+      final syncStat = await compute(sqliteSync, {
+        'dbPath': dbPath,
+        'descriptor': state.wallet.descriptor,
         'nodeAddress': node,
         'socks5': socks5,
+      });
+
+      final balance = await compute(sqliteBalance, {
+        'descriptor': state.wallet.descriptor,
+        'dbPath': dbPath,
       });
 
       _vibrate.vibe();
@@ -233,28 +247,9 @@ class InfoCubit extends Cubit<InfoState> {
           currentHeight: currentHeight,
         ),
       );
-      _walletsCubit.addBalanceToSelectedWallet(balance);
+      await addBalanceToStorage(balance);
 
-      final transactions = await compute(computeHistory, {
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
-        'nodeAddress': node,
-        'socks5': socks5,
-      });
-      _vibrate.vibe();
-
-      emit(
-        state.copyWith(
-          loadingTransactions: false,
-          loadingBalance: false,
-          transactions: transactions,
-          errLoadingTransactions: '',
-          balance: balance,
-          currentHeight: currentHeight,
-        ),
-      );
-
-      _walletsCubit.addTransactionsToSelectedWallet(transactions);
-      return;
+      db.close();
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -265,6 +260,36 @@ class InfoCubit extends Cubit<InfoState> {
       );
       _logger.logException(e, 'HistoryCubit.getHistory', s);
     }
+  }
+
+  Future<void> addTransactionsToStorage(List<Transaction> transactions) async {
+    final wallet = state.wallet.copyWith(
+      transactions: transactions,
+    );
+    emit(
+      state.copyWith(
+        wallet: wallet,
+      ),
+    );
+    await _storage.saveItemAt<Wallet>(
+        StoreKeys.Wallet.name, wallet.id!, wallet);
+    _walletsCubit.update(wallet);
+  }
+
+  Future<void> addBalanceToStorage(int balance) async {
+    final wallet = state.wallet.copyWith(
+      balance: balance,
+    );
+
+    emit(
+      state.copyWith(
+        wallet: wallet,
+      ),
+    );
+
+    await _storage.saveItemAt<Wallet>(
+        StoreKeys.Wallet.name, wallet.id!, wallet);
+    _walletsCubit.update(wallet);
   }
 
   void openLink(Transaction transaction) {
@@ -298,7 +323,7 @@ class InfoCubit extends Cubit<InfoState> {
 
   void deleteClicked() async {
     emit(state.copyWith(errDeleting: ''));
-    final wallet = _walletsCubit.state.selectedWallet!;
+    final wallet = state.wallet;
     final dbName = wallet.label + wallet.uid + '.db';
     final db = await openDatabase(dbName);
     final databasesPath = await getDatabasesPath();
@@ -308,7 +333,7 @@ class InfoCubit extends Cubit<InfoState> {
 
     _storage.deleteItemAt<Wallet>(
       StoreKeys.Wallet.name,
-      _walletsCubit.state.selectedWallet!.id!,
+      state.wallet.id!,
     );
     _walletsCubit.refresh();
     emit(state.copyWith(deleted: true));
@@ -333,7 +358,7 @@ class InfoCubit extends Cubit<InfoState> {
       'network': _blockchainCubit.state.blockchain.name,
     });
 
-    final wallet = _walletsCubit.state.selectedWallet!;
+    final wallet = state.wallet;
     if (seed.hasError)
       emit(
         state.copyWith(

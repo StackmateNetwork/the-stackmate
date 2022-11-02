@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$InfoState {
+  Wallet get wallet => throw _privateConstructorUsedError;
   bool get loadingTransactions => throw _privateConstructorUsedError;
   String get errLoadingTransactions => throw _privateConstructorUsedError;
   bool get loadingBalance => throw _privateConstructorUsedError;
@@ -41,7 +42,8 @@ abstract class $InfoStateCopyWith<$Res> {
   factory $InfoStateCopyWith(InfoState value, $Res Function(InfoState) then) =
       _$InfoStateCopyWithImpl<$Res>;
   $Res call(
-      {bool loadingTransactions,
+      {Wallet wallet,
+      bool loadingTransactions,
       String errLoadingTransactions,
       bool loadingBalance,
       String errLoadingBalance,
@@ -55,6 +57,8 @@ abstract class $InfoStateCopyWith<$Res> {
       String passPhraseTest,
       bool ppTestPassed,
       String errorPPTest});
+
+  $WalletCopyWith<$Res> get wallet;
 }
 
 /// @nodoc
@@ -67,6 +71,7 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? wallet = freezed,
     Object? loadingTransactions = freezed,
     Object? errLoadingTransactions = freezed,
     Object? loadingBalance = freezed,
@@ -83,6 +88,10 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
     Object? errorPPTest = freezed,
   }) {
     return _then(_value.copyWith(
+      wallet: wallet == freezed
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as Wallet,
       loadingTransactions: loadingTransactions == freezed
           ? _value.loadingTransactions
           : loadingTransactions // ignore: cast_nullable_to_non_nullable
@@ -141,6 +150,13 @@ class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
               as String,
     ));
   }
+
+  @override
+  $WalletCopyWith<$Res> get wallet {
+    return $WalletCopyWith<$Res>(_value.wallet, (value) {
+      return _then(_value.copyWith(wallet: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -150,7 +166,8 @@ abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
       __$$_InfoStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {bool loadingTransactions,
+      {Wallet wallet,
+      bool loadingTransactions,
       String errLoadingTransactions,
       bool loadingBalance,
       String errLoadingBalance,
@@ -164,6 +181,9 @@ abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
       String passPhraseTest,
       bool ppTestPassed,
       String errorPPTest});
+
+  @override
+  $WalletCopyWith<$Res> get wallet;
 }
 
 /// @nodoc
@@ -178,6 +198,7 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? wallet = freezed,
     Object? loadingTransactions = freezed,
     Object? errLoadingTransactions = freezed,
     Object? loadingBalance = freezed,
@@ -194,6 +215,10 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
     Object? errorPPTest = freezed,
   }) {
     return _then(_$_InfoState(
+      wallet: wallet == freezed
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as Wallet,
       loadingTransactions: loadingTransactions == freezed
           ? _value.loadingTransactions
           : loadingTransactions // ignore: cast_nullable_to_non_nullable
@@ -258,9 +283,10 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
 
 class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   const _$_InfoState(
-      {this.loadingTransactions = true,
+      {required this.wallet,
+      this.loadingTransactions = true,
       this.errLoadingTransactions = '',
-      this.loadingBalance = true,
+      this.loadingBalance = false,
       this.errLoadingBalance = '',
       this.balance = 0,
       this.uconfBalance = 0,
@@ -275,6 +301,8 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
       : _transactions = transactions,
         super._();
 
+  @override
+  final Wallet wallet;
   @override
   @JsonKey()
   final bool loadingTransactions;
@@ -325,7 +353,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'InfoState(loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, uconfBalance: $uconfBalance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo, currentHeight: $currentHeight, passPhraseTest: $passPhraseTest, ppTestPassed: $ppTestPassed, errorPPTest: $errorPPTest)';
+    return 'InfoState(wallet: $wallet, loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, uconfBalance: $uconfBalance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo, currentHeight: $currentHeight, passPhraseTest: $passPhraseTest, ppTestPassed: $ppTestPassed, errorPPTest: $errorPPTest)';
   }
 
   @override
@@ -333,6 +361,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'InfoState'))
+      ..add(DiagnosticsProperty('wallet', wallet))
       ..add(DiagnosticsProperty('loadingTransactions', loadingTransactions))
       ..add(
           DiagnosticsProperty('errLoadingTransactions', errLoadingTransactions))
@@ -355,6 +384,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_InfoState &&
+            const DeepCollectionEquality().equals(other.wallet, wallet) &&
             const DeepCollectionEquality()
                 .equals(other.loadingTransactions, loadingTransactions) &&
             const DeepCollectionEquality()
@@ -385,6 +415,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(wallet),
       const DeepCollectionEquality().hash(loadingTransactions),
       const DeepCollectionEquality().hash(errLoadingTransactions),
       const DeepCollectionEquality().hash(loadingBalance),
@@ -408,7 +439,8 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
 
 abstract class _InfoState extends InfoState {
   const factory _InfoState(
-      {final bool loadingTransactions,
+      {required final Wallet wallet,
+      final bool loadingTransactions,
       final String errLoadingTransactions,
       final bool loadingBalance,
       final String errLoadingBalance,
@@ -424,6 +456,8 @@ abstract class _InfoState extends InfoState {
       final String errorPPTest}) = _$_InfoState;
   const _InfoState._() : super._();
 
+  @override
+  Wallet get wallet => throw _privateConstructorUsedError;
   @override
   bool get loadingTransactions => throw _privateConstructorUsedError;
   @override

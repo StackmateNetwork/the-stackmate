@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/preferences.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
+import 'package:sats/ui/screen/Receive.dart';
 
 class WalletCard extends StatelessWidget {
   const WalletCard({
@@ -21,17 +23,14 @@ class WalletCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final preferences = context.select((PreferencesCubit p) => p);
-
+    final loading = context.select((InfoCubit x) => x.state.loadingBalance);
     return Row(
       // crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         GestureDetector(
           onTap: () {
-            context.read<WalletsCubit>().walletSelected(wallet);
-            if (!isSelection) {
-              context.push('/wallet');
-            }
+            context.push('/wallet', extra: wallet);
           },
           child: Material(
             elevation: 4,
@@ -113,12 +112,7 @@ class WalletCard extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            context.read<WalletsCubit>().walletSelected(wallet);
-            if (!isSelection) {
-              context.push('/receive');
-            }
-          },
+          onTap: () {},
           child: Material(
             elevation: 4,
             borderRadius: BorderRadius.circular(12),
@@ -147,10 +141,9 @@ class WalletCard extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        context.read<WalletsCubit>().walletSelected(wallet);
-                        if (!isSelection) {
-                          context.push('/receive');
-                        }
+                        context.push('/receive', extra: wallet);
+
+                        // context.push('/receive', extra: wallet);
                       },
                       icon: Icon(
                         Icons.call_received,
@@ -168,7 +161,7 @@ class WalletCard extends StatelessWidget {
           onTap: () {
             context.read<WalletsCubit>().walletSelected(wallet);
             if (!isSelection && wallet.balance > 0) {
-              context.push('/send');
+              context.read<InfoCubit>().updateBalance();
             }
           },
           child: AnimatedOpacity(
@@ -202,17 +195,12 @@ class WalletCard extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () {
-                          context.read<WalletsCubit>().walletSelected(wallet);
-                          if (!isSelection && wallet.balance > 0) {
-                            context.push('/send');
-                          }
+                          // context.read<InfoCubit>().updateBalance();
                         },
                         icon: Icon(
-                          wallet.walletType == 'WATCHER'
-                              ? Icons.build
-                              : Icons.send,
+                          Icons.sync,
                           size: 21,
-                          color: context.colours.tertiary,
+                          color: loading ? Colors.red : Colors.green,
                         ),
                       ),
                     ],

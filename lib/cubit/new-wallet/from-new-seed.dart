@@ -173,7 +173,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         throw SMError.fromJson(descriptor.error!).message;
       }
 
-      var newWallet = Wallet(
+      final newWallet = Wallet(
         label: state.walletLabel,
         walletType: primaryWalletType,
         descriptor: descriptor.result!,
@@ -189,24 +189,10 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         uid: uid,
       );
 
-      final savedid = await _storage.saveItem<Wallet>(
-        StoreKeys.Wallet.name,
-        newWallet,
-      );
-      if (savedid.hasError) throw couldNotSaveError;
-
-      final id = savedid.result!;
-
-      newWallet = newWallet.copyWith(id: id);
-
-      await _storage.saveItemAt<Wallet>(
-        StoreKeys.Wallet.name,
-        id,
-        newWallet,
-      );
+      await updateWalletStorage(newWallet);
 
       _generateCubit.clear();
-      _wallets.refresh();
+
       emit(
         state.copyWith(
           walletLabelError: emptyString,
@@ -230,6 +216,25 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         s,
       );
     }
+  }
+
+  Future<void> updateWalletStorage(Wallet wallet) async {
+    final savedid = await _storage.saveItem<Wallet>(
+      StoreKeys.Wallet.name,
+      wallet,
+    );
+    if (savedid.hasError) throw couldNotSaveError;
+
+    final id = savedid.result!;
+
+    final newWallet = wallet.copyWith(id: id);
+
+    await _storage.saveItemAt<Wallet>(
+      StoreKeys.Wallet.name,
+      id,
+      newWallet,
+    );
+    _wallets.refresh();
   }
 
   @override

@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ReceiveState {
+  Wallet get wallet => throw _privateConstructorUsedError;
   bool get loadingAddress => throw _privateConstructorUsedError;
   String get errLoadingAddress => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
@@ -32,10 +33,13 @@ abstract class $ReceiveStateCopyWith<$Res> {
           ReceiveState value, $Res Function(ReceiveState) then) =
       _$ReceiveStateCopyWithImpl<$Res>;
   $Res call(
-      {bool loadingAddress,
+      {Wallet wallet,
+      bool loadingAddress,
       String errLoadingAddress,
       String address,
       int index});
+
+  $WalletCopyWith<$Res> get wallet;
 }
 
 /// @nodoc
@@ -48,12 +52,17 @@ class _$ReceiveStateCopyWithImpl<$Res> implements $ReceiveStateCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? wallet = freezed,
     Object? loadingAddress = freezed,
     Object? errLoadingAddress = freezed,
     Object? address = freezed,
     Object? index = freezed,
   }) {
     return _then(_value.copyWith(
+      wallet: wallet == freezed
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as Wallet,
       loadingAddress: loadingAddress == freezed
           ? _value.loadingAddress
           : loadingAddress // ignore: cast_nullable_to_non_nullable
@@ -72,6 +81,13 @@ class _$ReceiveStateCopyWithImpl<$Res> implements $ReceiveStateCopyWith<$Res> {
               as int,
     ));
   }
+
+  @override
+  $WalletCopyWith<$Res> get wallet {
+    return $WalletCopyWith<$Res>(_value.wallet, (value) {
+      return _then(_value.copyWith(wallet: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -82,10 +98,14 @@ abstract class _$$_ReceiveStateCopyWith<$Res>
       __$$_ReceiveStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {bool loadingAddress,
+      {Wallet wallet,
+      bool loadingAddress,
       String errLoadingAddress,
       String address,
       int index});
+
+  @override
+  $WalletCopyWith<$Res> get wallet;
 }
 
 /// @nodoc
@@ -101,12 +121,17 @@ class __$$_ReceiveStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? wallet = freezed,
     Object? loadingAddress = freezed,
     Object? errLoadingAddress = freezed,
     Object? address = freezed,
     Object? index = freezed,
   }) {
     return _then(_$_ReceiveState(
+      wallet: wallet == freezed
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as Wallet,
       loadingAddress: loadingAddress == freezed
           ? _value.loadingAddress
           : loadingAddress // ignore: cast_nullable_to_non_nullable
@@ -129,13 +154,17 @@ class __$$_ReceiveStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
+class _$_ReceiveState extends _ReceiveState with DiagnosticableTreeMixin {
   const _$_ReceiveState(
-      {this.loadingAddress = true,
+      {required this.wallet,
+      this.loadingAddress = true,
       this.errLoadingAddress = '',
       this.address = '',
-      this.index = 0});
+      this.index = 0})
+      : super._();
 
+  @override
+  final Wallet wallet;
   @override
   @JsonKey()
   final bool loadingAddress;
@@ -151,7 +180,7 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ReceiveState(loadingAddress: $loadingAddress, errLoadingAddress: $errLoadingAddress, address: $address, index: $index)';
+    return 'ReceiveState(wallet: $wallet, loadingAddress: $loadingAddress, errLoadingAddress: $errLoadingAddress, address: $address, index: $index)';
   }
 
   @override
@@ -159,6 +188,7 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ReceiveState'))
+      ..add(DiagnosticsProperty('wallet', wallet))
       ..add(DiagnosticsProperty('loadingAddress', loadingAddress))
       ..add(DiagnosticsProperty('errLoadingAddress', errLoadingAddress))
       ..add(DiagnosticsProperty('address', address))
@@ -170,6 +200,7 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ReceiveState &&
+            const DeepCollectionEquality().equals(other.wallet, wallet) &&
             const DeepCollectionEquality()
                 .equals(other.loadingAddress, loadingAddress) &&
             const DeepCollectionEquality()
@@ -181,6 +212,7 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(wallet),
       const DeepCollectionEquality().hash(loadingAddress),
       const DeepCollectionEquality().hash(errLoadingAddress),
       const DeepCollectionEquality().hash(address),
@@ -192,13 +224,17 @@ class _$_ReceiveState with DiagnosticableTreeMixin implements _ReceiveState {
       __$$_ReceiveStateCopyWithImpl<_$_ReceiveState>(this, _$identity);
 }
 
-abstract class _ReceiveState implements ReceiveState {
+abstract class _ReceiveState extends ReceiveState {
   const factory _ReceiveState(
-      {final bool loadingAddress,
+      {required final Wallet wallet,
+      final bool loadingAddress,
       final String errLoadingAddress,
       final String address,
       final int index}) = _$_ReceiveState;
+  const _ReceiveState._() : super._();
 
+  @override
+  Wallet get wallet => throw _privateConstructorUsedError;
   @override
   bool get loadingAddress => throw _privateConstructorUsedError;
   @override

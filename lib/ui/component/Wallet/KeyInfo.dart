@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/validation.dart';
@@ -8,7 +9,7 @@ class KeyInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet!);
+    final wallet = c.select((InfoCubit wc) => wc.state.wallet);
 
     return Padding(
       padding: const EdgeInsets.all(16.0),

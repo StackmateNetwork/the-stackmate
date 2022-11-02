@@ -10,9 +10,13 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
+import 'package:sats/model/result.dart';
+import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
+import 'package:sats/pkg/storage.dart';
 import 'package:sqflite/sqflite.dart' hide Transaction;
 
 part 'receive.freezed.dart';
@@ -20,16 +24,18 @@ part 'receive.freezed.dart';
 @freezed
 class ReceiveState with _$ReceiveState {
   const factory ReceiveState({
+    required Wallet wallet,
     @Default(true) bool loadingAddress,
     @Default('') String errLoadingAddress,
     @Default('') String address,
     @Default(0) int index,
   }) = _ReceiveState;
+  const ReceiveState._();
 }
 
 class ReceiveCubit extends Cubit<ReceiveState> {
   ReceiveCubit(
-    this._walletsCubit,
+    this.walletsCubit,
     this._logger,
     this._clipBoard,
     this._share,
@@ -37,11 +43,14 @@ class ReceiveCubit extends Cubit<ReceiveState> {
     this._core,
     this._nodeAddressCubit,
     this._torCubit,
-  ) : super(const ReceiveState()) {
+    this._storage,
+    Wallet wallet,
+  ) : super(ReceiveState(wallet: wallet)) {
     _init();
   }
 
-  final WalletsCubit _walletsCubit;
+  final IStorage _storage;
+  final WalletsCubit walletsCubit;
   final Logger _logger;
   final IShare _share;
   final IClipBoard _clipBoard;
@@ -59,7 +68,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       ),
     );
 
-    final wallet = _walletsCubit.state.selectedWallet!;
+    final wallet = state.wallet;
     final index = wallet.lastAddressIndex;
 
     final latestAddress = _core.getAddress(
@@ -67,29 +76,25 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       index: index.toString(),
     );
     if (latestAddress.hasError) {
-      throw SMError.fromJson(latestAddress.error!);
+      throw SMError.fromJson(latestAddress.error!).message;
     }
-
-    // emit(
-    //   state.copyWith(
-    //     loadingAddress: true,
-    //     address: latestAddress.result!,
-    //   ),
-    // );
-
-    final updated = wallet.copyWith(
-      lastAddressIndex: index + 1,
-    );
-    _walletsCubit.walletSelected(updated);
-
-    await _walletsCubit.updateAddressIndexToSelectedWallet(index);
     emit(
       state.copyWith(
+        loadingAddress: true,
         address: latestAddress.result!,
-        index: index,
       ),
     );
-    getLastUnusedAddress();
+
+    await getLastUnusedAddress();
+  }
+
+  Future<void> updateWalletStorage(Wallet wallet) async {
+    await _storage.saveItemAt<Wallet>(
+      StoreKeys.Wallet.name,
+      wallet.id!,
+      wallet,
+    );
+    walletsCubit.refresh();
   }
 
   void getNewAddress() async {
@@ -99,8 +104,8 @@ class ReceiveCubit extends Cubit<ReceiveState> {
           errLoadingAddress: '',
         ),
       );
-      final wallet = _walletsCubit.state.selectedWallet!;
-      final currentIndex = wallet.lastAddressIndex + 1;
+      final wallet = state.wallet;
+      final currentIndex = state.index + 1;
 
       final latestAddress = _core.getAddress(
         descriptor: wallet.descriptor,
@@ -110,19 +115,11 @@ class ReceiveCubit extends Cubit<ReceiveState> {
         throw SMError.fromJson(latestAddress.error!);
       }
 
-      // emit(
-      //   state.copyWith(
-      //     loadingAddress: true,
-      //     address: latestAddress.result!,
-      //   ),
+      // final updated = wallet.copyWith(
+      //   lastAddressIndex: currentIndex,
       // );
 
-      final updated = wallet.copyWith(
-        lastAddressIndex: currentIndex,
-      );
-      _walletsCubit.walletSelected(updated);
-
-      await _walletsCubit.updateAddressIndexToSelectedWallet(currentIndex);
+      // updateWalletStorage(updated);
 
       emit(
         state.copyWith(
@@ -147,8 +144,8 @@ class ReceiveCubit extends Cubit<ReceiveState> {
           errLoadingAddress: '',
         ),
       );
-      final wallet = _walletsCubit.state.selectedWallet!;
-      final currentIndex = wallet.lastAddressIndex - 1;
+      final wallet = state.wallet;
+      final currentIndex = state.index - 1;
 
       final latestAddress = _core.getAddress(
         descriptor: wallet.descriptor,
@@ -158,12 +155,11 @@ class ReceiveCubit extends Cubit<ReceiveState> {
         throw SMError.fromJson(latestAddress.error!);
       }
 
-      final updated = wallet.copyWith(
-        lastAddressIndex: currentIndex,
-      );
-      _walletsCubit.walletSelected(updated);
+      // final updated = wallet.copyWith(
+      //   lastAddressIndex: currentIndex,
+      // );
 
-      await _walletsCubit.updateAddressIndexToSelectedWallet(currentIndex);
+      // await updateWalletStorage(updated);
 
       emit(
         state.copyWith(
@@ -181,7 +177,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
     }
   }
 
-  void getLastUnusedAddress() async {
+  Future<void> getLastUnusedAddress() async {
     emit(
       state.copyWith(
         loadingAddress: true,
@@ -190,7 +186,8 @@ class ReceiveCubit extends Cubit<ReceiveState> {
     try {
       final node = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final wallet = _walletsCubit.state.selectedWallet!;
+      final wallet = state.wallet;
+
       final dbName = wallet.label + wallet.uid + '.db';
       final db = await openDatabase(dbName);
 
@@ -203,24 +200,25 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       // ignore: unused_local_variable
       final syncStat = await compute(sqliteSync, {
         'dbPath': dbPath,
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'descriptor': state.wallet.descriptor,
         'nodeAddress': node,
         'socks5': socks5,
       });
+      if (syncStat.hasError) throw SMError.fromJson(syncStat.error!).message;
 
       final lastUnused = _core.lastUnusedAddress(
         descriptor: wallet.descriptor,
         dbPath: dbPath,
       );
+
       if (lastUnused.hasError) {
-        throw SMError.fromJson(lastUnused.error!);
+        throw SMError.fromJson(lastUnused.error!).message;
       }
       final updated = wallet.copyWith(
         lastAddressIndex: int.parse(lastUnused.result!.index),
       );
-      _walletsCubit.walletSelected(updated);
-      await _walletsCubit.updateAddressIndexToSelectedWallet(
-        int.parse(lastUnused.result!.index),
+      await updateWalletStorage(
+        updated,
       );
 
       emit(
@@ -232,6 +230,12 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       );
       db.close();
     } catch (e, s) {
+      emit(
+        state.copyWith(
+          loadingAddress: false,
+          errLoadingAddress: e.toString(),
+        ),
+      );
       _logger.logException(e, 'WalletCubit.lastUnusedAddress', s);
     }
   }
@@ -256,31 +260,26 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   }
 }
 
-String getAddressByIndex(dynamic msg) {
+R<String> getAddressByIndex(dynamic msg) {
   final data = msg as Map<String, String?>;
   final resp = LibBitcoin().getAddress(
     descriptor: data['descriptor']!,
     index: data['index']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
+
+  return resp;
 }
 
-Address getLastUnusedAddress(dynamic msg) {
+R<Address> getLastUnusedAddress(dynamic msg) {
   final data = msg as Map<String, String?>;
   final resp = LibBitcoin().lastUnusedAddress(
     descriptor: data['descriptor']!,
     dbPath: data['dbPath']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
+  return resp;
 }
 
-String sqliteSync(dynamic obj) {
+R<String> sqliteSync(dynamic obj) {
   final data = obj as Map<String, String?>;
   final resp = LibBitcoin().sqliteSync(
     dbPath: obj['dbPath']!,
@@ -288,8 +287,6 @@ String sqliteSync(dynamic obj) {
     nodeAddress: data['nodeAddress']!,
     socks5: obj['socks5']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
+
+  return resp;
 }

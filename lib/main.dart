@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/storage.dart';
@@ -158,22 +159,24 @@ class Stackmate extends StatelessWidget {
       ),
       GoRoute(
         path: '/wallet',
-        builder: (_, __) => const WalletScreen(),
+        builder: (_, state) => WalletScreen(wallet: state.extra! as Wallet),
       ),
       GoRoute(
         path: '/receive',
-        builder: (_, __) => const ReceiveScreen(),
+        builder: (_, state) => ReceiveScreen(wallet: state.extra! as Wallet),
       ),
       GoRoute(
         path: '/send',
-        builder: (_, __) => const WalletSendScreen(
+        builder: (_, state) => WalletSendScreen(
           fromQr: false,
+          wallet: state.extra! as Wallet,
         ),
       ),
       GoRoute(
         path: '/send-from-qr',
-        builder: (_, __) => const WalletSendScreen(
+        builder: (_, state) => WalletSendScreen(
           fromQr: true,
+          wallet: state.extra! as Wallet,
         ),
       ),
       GoRoute(

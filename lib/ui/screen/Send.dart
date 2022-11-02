@@ -7,10 +7,12 @@ import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/cubit/wallets.dart';
+import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
+import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/ui/component/Send/Address.dart';
 import 'package:sats/ui/component/Send/Amount.dart';
 import 'package:sats/ui/component/Send/Complete.dart';
@@ -149,35 +151,32 @@ class _WalletSend extends StatelessWidget {
 }
 
 class WalletSendScreen extends StatelessWidget {
-  const WalletSendScreen({Key? key, required this.fromQr}) : super(key: key);
+  const WalletSendScreen({Key? key, required this.fromQr, required this.wallet})
+      : super(key: key);
 
   final bool fromQr;
+  final Wallet wallet;
 
   @override
   Widget build(BuildContext context) {
-    final networkSelect = context.select((ChainSelectCubit c) => c);
-    final logger = context.select((Logger c) => c);
-    final wallets = context.select((WalletsCubit c) => c);
-    final nodeAddress = context.select((NodeAddressCubit c) => c);
-    final fees = context.select((FeesCubit c) => c);
-    final tor = context.select((TorCubit c) => c);
-
-    final s = SendCubit(
+    final send = SendCubit(
       fromQr,
-      wallets,
-      networkSelect,
-      logger,
+      context.read<WalletsCubit>(),
+      context.read<ChainSelectCubit>(),
+      context.read<Logger>(),
       locator<IClipBoard>(),
       locator<IShare>(),
-      nodeAddress,
-      tor,
+      context.read<NodeAddressCubit>(),
+      context.read<TorCubit>(),
       locator<IStackMateBitcoin>(),
-      fees,
+      context.read<FeesCubit>(),
+      locator<IStorage>(),
+      wallet,
       // locator<FileManager>(),
     );
 
     return BlocProvider.value(
-      value: s,
+      value: send,
       child: const _WalletSend(),
     );
   }

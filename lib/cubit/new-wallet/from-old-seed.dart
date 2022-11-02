@@ -331,7 +331,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       // public descriptor
       // Check history and whether this wallet needs to update its address index
 
-      var newWallet = Wallet(
+      final newWallet = Wallet(
         label: state.walletLabel,
         walletType: needsMasterKey ? signerWalletType : importWalletType,
         descriptor: descriptor.result!,
@@ -345,32 +345,8 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         uid: uid,
       );
 
-      final savedId = await _storage.saveItem<Wallet>(
-        StoreKeys.Wallet.name,
-        newWallet,
-      );
+      updateWalletStorage(newWallet);
 
-      if (savedId.hasError) throw couldNotSaveError;
-
-      final id = savedId.result!;
-
-      newWallet = newWallet.copyWith(id: id);
-
-      await _storage.saveItemAt<Wallet>(
-        StoreKeys.Wallet.name,
-        id,
-        newWallet,
-      );
-
-      if (state.labelFixed) {
-        emit(state.copyWith(newWalletSaved: true));
-        return;
-      }
-      _wallets.walletSelected(newWallet);
-      _wallets.addTransactionsToSelectedWallet(history.result!);
-      await _wallets.updateAddressIndexToSelectedWallet(
-        int.parse(lastUnused.result!.index),
-      );
       emit(
         state.copyWith(
           savingWallet: false,
@@ -390,6 +366,30 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         ),
       );
     }
+  }
+
+  // Future<void> updateWalletStorage(Wallet wallet) async {
+  //   await _storage.saveItemAt<Wallet>(
+  //       StoreKeys.Wallet.name, wallet.id!, wallet);
+  //   _wallets.update(wallet);
+  // }
+  Future<void> updateWalletStorage(Wallet wallet) async {
+    final savedid = await _storage.saveItem<Wallet>(
+      StoreKeys.Wallet.name,
+      wallet,
+    );
+    if (savedid.hasError) throw couldNotSaveError;
+
+    final id = savedid.result!;
+
+    final newWallet = wallet.copyWith(id: id);
+
+    await _storage.saveItemAt<Wallet>(
+      StoreKeys.Wallet.name,
+      id,
+      newWallet,
+    );
+    _wallets.refresh();
   }
 
   @override

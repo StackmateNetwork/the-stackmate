@@ -77,6 +77,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
   static const segwitScript = 'wpkh';
   static const segwitPurpose = '84';
   static const emptyString = '';
+  static const couldNotSaveError = 'Error Saving Wallet!';
 
   void passPhrasedChanged(String text) => emit(
         state.copyWith(
@@ -275,7 +276,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         lastIndex = int.parse(lastUnused.result!.index);
       }
       // check balance and see if last address index needs update
-      var newWallet = Wallet(
+      final newWallet = Wallet(
         label: state.label,
         descriptor: descriptor.result!,
         policy: readable,
@@ -289,25 +290,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         uid: uid,
       );
 
-      final savedId = await _storage.saveItem<Wallet>(
-        StoreKeys.Wallet.name,
-        newWallet,
-      );
-
-      if (savedId.hasError) return;
-
-      final id = savedId.result!;
-
-      newWallet = newWallet.copyWith(id: id);
-
-      await _storage.saveItemAt<Wallet>(
-        StoreKeys.Wallet.name,
-        id,
-        newWallet,
-      );
-
-      _wallets.walletSelected(newWallet);
-      _wallets.addTransactionsToSelectedWallet(history.result!);
+      updateWalletStorage(newWallet);
 
       emit(
         state.copyWith(
@@ -439,7 +422,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         throw SMError.fromJson(lastUnused.error!);
       }
       // check balance and see if last address index needs update
-      var newWallet = Wallet(
+      final newWallet = Wallet(
         label: state.label,
         descriptor: descriptor.result!,
         policy: readable,
@@ -453,25 +436,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         uid: uid,
       );
 
-      final savedId = await _storage.saveItem<Wallet>(
-        StoreKeys.Wallet.name,
-        newWallet,
-      );
-
-      if (savedId.hasError) return;
-
-      final id = savedId.result!;
-
-      newWallet = newWallet.copyWith(id: id);
-
-      await _storage.saveItemAt<Wallet>(
-        StoreKeys.Wallet.name,
-        id,
-        newWallet,
-      );
-
-      _wallets.walletSelected(newWallet);
-      _wallets.addTransactionsToSelectedWallet(history.result!);
+      updateWalletStorage(newWallet);
 
       emit(
         state.copyWith(
@@ -491,6 +456,25 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
 
       _logger.logException(e, 'MasterKeyDeriveCubit._deriveTaproot', s);
     }
+  }
+
+  Future<void> updateWalletStorage(Wallet wallet) async {
+    final savedid = await _storage.saveItem<Wallet>(
+      StoreKeys.Wallet.name,
+      wallet,
+    );
+    if (savedid.hasError) throw couldNotSaveError;
+
+    final id = savedid.result!;
+
+    final newWallet = wallet.copyWith(id: id);
+
+    await _storage.saveItemAt<Wallet>(
+      StoreKeys.Wallet.name,
+      id,
+      newWallet,
+    );
+    _wallets.refresh();
   }
 }
 

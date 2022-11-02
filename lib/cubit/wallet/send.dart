@@ -19,8 +19,12 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
+import 'package:sats/model/transaction.dart';
+import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/share.dart';
+import 'package:sats/pkg/interface/storage.dart';
+import 'package:sats/pkg/storage.dart';
 import 'package:sats/pkg/validation.dart';
 import 'package:sqflite/sqflite.dart' hide Transaction;
 
@@ -37,6 +41,7 @@ enum SendSteps {
 @freezed
 class SendState with _$SendState {
   const factory SendState({
+    required Wallet wallet,
     @Default(SendSteps.address) SendSteps currentStep,
     @Default(true) bool loadingStart,
     @Default(false) bool calculatingFees,
@@ -89,11 +94,15 @@ class SendCubit extends Cubit<SendState> {
     this._torCubit,
     this._core,
     this._fees,
+    this._storage,
+    Wallet wallet,
+
     // this._file,
-  ) : super(const SendState()) {
+  ) : super(SendState(wallet: wallet)) {
     _init(withQR);
   }
 
+  final IStorage _storage;
   final WalletsCubit _walletsCubit;
   // final IBitcoin _bitcoin;
   final Logger _logger;
@@ -132,9 +141,19 @@ class SendCubit extends Cubit<SendState> {
   // void completed() {
   //   _walletsCubit.walletSelected(wallet)
   // }
+
+  Future<void> updateWalletStorage(Wallet wallet) async {
+    await _storage.saveItemAt<Wallet>(
+      StoreKeys.Wallet.name,
+      wallet.id!,
+      wallet,
+    );
+    _walletsCubit.refresh();
+  }
+
   void getBalance() async {
     try {
-      final wallet = _walletsCubit.state.selectedWallet!;
+      final wallet = state.wallet;
       final dbName = wallet.label + wallet.uid + '.db';
       final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
@@ -142,7 +161,7 @@ class SendCubit extends Cubit<SendState> {
 
       emit(
         state.copyWith(
-          balance: _walletsCubit.state.selectedWallet!.balance,
+          balance: state.wallet.balance,
           loadingStart: false,
           errLoading: emptyString,
           errAddress: emptyString,
@@ -153,7 +172,7 @@ class SendCubit extends Cubit<SendState> {
       );
 
       final balance = await compute(sqliteBalance, {
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'descriptor': state.wallet.descriptor,
         'dbPath': dbPath,
       });
 
@@ -182,6 +201,42 @@ class SendCubit extends Cubit<SendState> {
       );
       _logger.logException(e, 'SendCubit.getBalance', s);
     }
+  }
+
+  Future<void> syncWallet() async {
+    final wallet = state.wallet;
+
+    final node = _nodeAddressCubit.state.getAddress();
+    final socks5 = _torCubit.state.getSocks5();
+
+    final dbName = wallet.label + wallet.uid + '.db';
+    final db = await openDatabase(dbName);
+    final databasesPath = await getDatabasesPath();
+    final dbPath = join(databasesPath, dbName);
+
+    final syncStat = await compute(sqliteSync, {
+      'dbPath': dbPath,
+      'descriptor': state.wallet.descriptor,
+      'nodeAddress': node,
+      'socks5': socks5,
+    });
+
+    final balance = await compute(sqliteBalance, {
+      'descriptor': state.wallet.descriptor,
+      'dbPath': dbPath,
+    });
+
+    final transactions = await compute(sqliteHistory, {
+      'descriptor': state.wallet.descriptor,
+      'dbPath': dbPath,
+    });
+
+    final updated = state.wallet.copyWith(
+      balance: balance,
+      transactions: transactions,
+    );
+    await updateWalletStorage(updated);
+    db.close();
   }
 
   void adddressChanged(String text) {
@@ -439,7 +494,7 @@ class SendCubit extends Cubit<SendState> {
 
   void amountConfirmedClicked() async {
     try {
-      final wallet = _walletsCubit.state.selectedWallet!;
+      final wallet = state.wallet;
       final dbName = wallet.label + wallet.uid + '.db';
       final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
@@ -474,7 +529,7 @@ class SendCubit extends Cubit<SendState> {
 
       final syncRes = await compute(sqliteSync, {
         'dbPath': dbPath,
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'descriptor': state.wallet.descriptor,
         'nodeAddress': nodeAddress,
         'socks5': socks5,
       });
@@ -483,7 +538,7 @@ class SendCubit extends Cubit<SendState> {
       }
 
       final psbt = await compute(sqliteBuildTx, {
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'descriptor': state.wallet.descriptor,
         'dbPath': dbPath,
         'txOutputs': txOutputs,
         'feeAbsolute': dummyFeeValue,
@@ -495,7 +550,7 @@ class SendCubit extends Cubit<SendState> {
       }
 
       final weight = await compute(getWeight, {
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'descriptor': state.wallet.descriptor,
         'psbt': psbt.result!.psbt,
       });
 
@@ -607,7 +662,7 @@ class SendCubit extends Cubit<SendState> {
 
   void feeConfirmedClicked() async {
     try {
-      final wallet = _walletsCubit.state.selectedWallet!;
+      final wallet = state.wallet;
       final dbName = wallet.label + wallet.uid + '.db';
       final db = await openDatabase(dbName);
       final databasesPath = await getDatabasesPath();
@@ -645,7 +700,7 @@ class SendCubit extends Cubit<SendState> {
       );
 
       final psbt = await compute(sqliteBuildTx, {
-        'descriptor': _walletsCubit.state.selectedWallet!.descriptor,
+        'descriptor': state.wallet.descriptor,
         'dbPath': dbPath,
         'txOutputs': state.txOutputs,
         'feeAbsolute': state.finalFee.toString(),
@@ -767,7 +822,7 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final descriptor = _walletsCubit.state.selectedWallet!.descriptor;
+      final descriptor = state.wallet.descriptor;
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
@@ -799,6 +854,8 @@ class SendCubit extends Cubit<SendState> {
       if (txid.hasError)
         throw SMError.fromJson(txid.error!).message;
       else
+        // update balances and storage
+
         emit(
           state.copyWith(
             sendingTx: false,
@@ -988,4 +1045,17 @@ R<String> sqliteSync(dynamic obj) {
   );
 
   return resp;
+}
+
+List<Transaction> sqliteHistory(dynamic obj) {
+  final data = obj as Map<String, String?>;
+  final resp = LibBitcoin().sqliteHistory(
+    descriptor: data['descriptor']!,
+    dbPath: data['dbPath']!,
+  );
+
+  if (resp.hasError) {
+    throw SMError.fromJson(resp.error!);
+  }
+  return resp.result!;
 }

@@ -26,7 +26,7 @@ class _BackupOpsState extends State<BackupOps> {
   Widget build(BuildContext c) {
     const primaryWallet = 'PRIMARY';
     // const recoveredWallet = 'RECOVERED';
-    final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet!);
+    final wallet = c.select((InfoCubit wc) => wc.state.wallet);
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key!);
     final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
     final isBackedUp = masterKeyState.key!.backedUp!;

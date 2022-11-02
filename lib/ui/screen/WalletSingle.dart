@@ -31,9 +31,7 @@ class _Wallet extends StatelessWidget {
     final zeroBal = c.select((InfoCubit wc) => wc.state.zeroBalance());
     final showInfo = c.select((InfoCubit wc) => wc.state.showInfo);
     final isLoading = c.select((InfoCubit wc) => wc.state.loadingTransactions);
-    final wallet = c.select((WalletsCubit wc) => wc.state.selectedWallet);
-
-    if (wallet == null) return Container();
+    final wallet = c.select((InfoCubit wc) => wc.state.wallet);
 
     return BlocListener<InfoCubit, InfoState>(
       listener: (c, s) {
@@ -130,7 +128,7 @@ class _Wallet extends StatelessWidget {
                                 IconButton(
                                   color: c.colours.secondary,
                                   onPressed: () {
-                                    c.push('/receive');
+                                    c.push('/receive', extra: wallet);
                                   },
                                   icon: Icon(
                                     Icons.call_received,
@@ -199,7 +197,7 @@ class _Wallet extends StatelessWidget {
                 onPressed: () async {
                   Navigator.pop(context, true);
                   await Future.delayed(const Duration(milliseconds: 200));
-                  c.push('/send');
+                  c.push('/send', extra: wallet);
                 },
               ),
             ),
@@ -274,26 +272,23 @@ class _Wallet extends StatelessWidget {
 }
 
 class WalletScreen extends StatelessWidget {
-  const WalletScreen({Key? key}) : super(key: key);
+  const WalletScreen({Key? key, required this.wallet}) : super(key: key);
+
+  final Wallet wallet;
 
   @override
-  Widget build(BuildContext context) {
-    final logger = context.select((Logger c) => c);
-    final wallets = context.select((WalletsCubit c) => c);
-    final nodeAddress = context.select((NodeAddressCubit c) => c);
-    final networkSelect = context.select((ChainSelectCubit c) => c);
-    final tor = context.select((TorCubit c) => c);
-
+  Widget build(BuildContext c) {
     final history = InfoCubit(
-      wallets,
+      c.read<WalletsCubit>(),
       locator<IStorage>(),
-      logger,
+      c.read<Logger>(),
       locator<ILauncher>(),
       locator<IShare>(),
       locator<IVibrate>(),
-      nodeAddress,
-      tor,
-      networkSelect,
+      c.read<NodeAddressCubit>(),
+      c.read<TorCubit>(),
+      c.read<ChainSelectCubit>(),
+      wallet,
     );
 
     return BlocProvider.value(

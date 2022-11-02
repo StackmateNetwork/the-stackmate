@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SendState {
+  Wallet get wallet => throw _privateConstructorUsedError;
   SendSteps get currentStep => throw _privateConstructorUsedError;
   bool get loadingStart => throw _privateConstructorUsedError;
   bool get calculatingFees => throw _privateConstructorUsedError;
@@ -54,7 +55,8 @@ abstract class $SendStateCopyWith<$Res> {
   factory $SendStateCopyWith(SendState value, $Res Function(SendState) then) =
       _$SendStateCopyWithImpl<$Res>;
   $Res call(
-      {SendSteps currentStep,
+      {Wallet wallet,
+      SendSteps currentStep,
       bool loadingStart,
       bool calculatingFees,
       bool buildingTx,
@@ -81,6 +83,8 @@ abstract class $SendStateCopyWith<$Res> {
       int? finalFee,
       int? finalAmount,
       bool sweepWallet});
+
+  $WalletCopyWith<$Res> get wallet;
 }
 
 /// @nodoc
@@ -93,6 +97,7 @@ class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? wallet = freezed,
     Object? currentStep = freezed,
     Object? loadingStart = freezed,
     Object? calculatingFees = freezed,
@@ -122,6 +127,10 @@ class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
     Object? sweepWallet = freezed,
   }) {
     return _then(_value.copyWith(
+      wallet: wallet == freezed
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as Wallet,
       currentStep: currentStep == freezed
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
@@ -232,6 +241,13 @@ class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
               as bool,
     ));
   }
+
+  @override
+  $WalletCopyWith<$Res> get wallet {
+    return $WalletCopyWith<$Res>(_value.wallet, (value) {
+      return _then(_value.copyWith(wallet: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -241,7 +257,8 @@ abstract class _$$_SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
       __$$_SendStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {SendSteps currentStep,
+      {Wallet wallet,
+      SendSteps currentStep,
       bool loadingStart,
       bool calculatingFees,
       bool buildingTx,
@@ -268,6 +285,9 @@ abstract class _$$_SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
       int? finalFee,
       int? finalAmount,
       bool sweepWallet});
+
+  @override
+  $WalletCopyWith<$Res> get wallet;
 }
 
 /// @nodoc
@@ -282,6 +302,7 @@ class __$$_SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? wallet = freezed,
     Object? currentStep = freezed,
     Object? loadingStart = freezed,
     Object? calculatingFees = freezed,
@@ -311,6 +332,10 @@ class __$$_SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
     Object? sweepWallet = freezed,
   }) {
     return _then(_$_SendState(
+      wallet: wallet == freezed
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as Wallet,
       currentStep: currentStep == freezed
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
@@ -427,7 +452,8 @@ class __$$_SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
 
 class _$_SendState extends _SendState with DiagnosticableTreeMixin {
   const _$_SendState(
-      {this.currentStep = SendSteps.address,
+      {required this.wallet,
+      this.currentStep = SendSteps.address,
       this.loadingStart = true,
       this.calculatingFees = false,
       this.buildingTx = false,
@@ -456,6 +482,8 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
       this.sweepWallet = false})
       : super._();
 
+  @override
+  final Wallet wallet;
   @override
   @JsonKey()
   final SendSteps currentStep;
@@ -533,7 +561,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SendState(currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, permissionGranted: $permissionGranted, errLoading: $errLoading, errAddress: $errAddress, errSending: $errSending, errAmount: $errAmount, errFees: $errFees, policyPath: $policyPath, txOutputs: $txOutputs, address: $address, amount: $amount, weight: $weight, fees: $fees, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
+    return 'SendState(wallet: $wallet, currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, permissionGranted: $permissionGranted, errLoading: $errLoading, errAddress: $errAddress, errSending: $errSending, errAmount: $errAmount, errFees: $errFees, policyPath: $policyPath, txOutputs: $txOutputs, address: $address, amount: $amount, weight: $weight, fees: $fees, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
   }
 
   @override
@@ -541,6 +569,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SendState'))
+      ..add(DiagnosticsProperty('wallet', wallet))
       ..add(DiagnosticsProperty('currentStep', currentStep))
       ..add(DiagnosticsProperty('loadingStart', loadingStart))
       ..add(DiagnosticsProperty('calculatingFees', calculatingFees))
@@ -575,6 +604,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SendState &&
+            const DeepCollectionEquality().equals(other.wallet, wallet) &&
             const DeepCollectionEquality()
                 .equals(other.currentStep, currentStep) &&
             const DeepCollectionEquality()
@@ -619,6 +649,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        const DeepCollectionEquality().hash(wallet),
         const DeepCollectionEquality().hash(currentStep),
         const DeepCollectionEquality().hash(loadingStart),
         const DeepCollectionEquality().hash(calculatingFees),
@@ -656,7 +687,8 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
 
 abstract class _SendState extends SendState {
   const factory _SendState(
-      {final SendSteps currentStep,
+      {required final Wallet wallet,
+      final SendSteps currentStep,
       final bool loadingStart,
       final bool calculatingFees,
       final bool buildingTx,
@@ -685,6 +717,8 @@ abstract class _SendState extends SendState {
       final bool sweepWallet}) = _$_SendState;
   const _SendState._() : super._();
 
+  @override
+  Wallet get wallet => throw _privateConstructorUsedError;
   @override
   SendSteps get currentStep => throw _privateConstructorUsedError;
   @override

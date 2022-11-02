@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/info.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/BitcoinDisplayLarge.dart';
 
@@ -15,7 +14,7 @@ class Balance extends StatelessWidget {
   Widget build(BuildContext c) {
     final balance = c.select((InfoCubit hc) => hc.state.balance);
     final preferences = c.select((PreferencesCubit pc) => pc.state);
-    final wallet = c.select((WalletsCubit w) => w.state.selectedWallet!);
+    final wallet = c.select((InfoCubit w) => w.state.wallet);
 
     return FadeIn(
       child: Padding(

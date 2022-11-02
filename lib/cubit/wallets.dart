@@ -55,42 +55,53 @@ class WalletsCubit extends Cubit<WalletsState> {
     }
   }
 
+  void update(Wallet wallet) {
+    final toUpdate =
+        state.wallets.firstWhere((element) => element.uid == wallet.uid);
+    final replaceIndex = state.wallets.indexOf(toUpdate);
+    state.wallets.replaceRange(replaceIndex, replaceIndex, [wallet]);
+    // find and remove wallet from state wallet array
+    // save new wallet in place of old wallet
+    // refresh
+  }
+  // update()
+
   void walletSelected(Wallet wallet) async {
     emit(state.copyWith(selectedWallet: wallet));
   }
 
-  void addTransactionsToSelectedWallet(List<Transaction> transactions) {
-    final wallet = state.selectedWallet!.copyWith(
-      transactions: transactions,
-    );
-    emit(state.copyWith(selectedWallet: wallet));
-    _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
-    refresh();
-  }
+  // void addTransactionsToSelectedWallet(List<Transaction> transactions) {
+  //   final wallet = state.selectedWallet!.copyWith(
+  //     transactions: transactions,
+  //   );
+  //   emit(state.copyWith(selectedWallet: wallet));
+  //   _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
+  //   refresh();
+  // }
 
-  Future<void> addBalanceToSelectedWallet(int balance) async {
-    if (state.selectedWallet == null) return;
+  // Future<void> addBalanceToSelectedWallet(int balance) async {
+  //   if (state.selectedWallet == null) return;
 
-    final wallet = state.selectedWallet!.copyWith(
-      balance: balance,
-    );
+  //   final wallet = state.selectedWallet!.copyWith(
+  //     balance: balance,
+  //   );
 
-    emit(state.copyWith(selectedWallet: wallet));
+  //   emit(state.copyWith(selectedWallet: wallet));
 
-    _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
-    refresh();
-  }
+  //   _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
+  //   refresh();
+  // }
 
-  Future<void> updateAddressIndexToSelectedWallet(int lastIndex) async {
-    if (state.selectedWallet == null) return;
+  // Future<void> updateAddressIndexToSelectedWallet(int lastIndex) async {
+  //   if (state.selectedWallet == null) return;
 
-    final wallet = state.selectedWallet!.copyWith(
-      lastAddressIndex: lastIndex,
-    );
+  //   final wallet = state.selectedWallet!.copyWith(
+  //     lastAddressIndex: lastIndex,
+  //   );
 
-    _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
-    refresh();
-  }
+  //   _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
+  //   refresh();
+  // }
 
   void clearSelectedWallet() async {
     await Future.delayed(const Duration(milliseconds: 500));
