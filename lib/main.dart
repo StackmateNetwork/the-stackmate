@@ -163,7 +163,8 @@ class Stackmate extends StatelessWidget {
       ),
       GoRoute(
         path: '/receive',
-        builder: (_, state) => ReceiveScreen(wallet: state.extra! as Wallet),
+        builder: (context, state) =>
+            ReceiveScreen(wallet: state.extra! as Wallet),
       ),
       GoRoute(
         path: '/send',

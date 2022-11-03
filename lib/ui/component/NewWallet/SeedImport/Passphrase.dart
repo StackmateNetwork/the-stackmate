@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/new-wallet/derivation.dart';
+import 'package:sats/cubit/new-wallet/common/seed-import.dart';
+import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/pkg/extensions.dart';
 
-class DerivePassphrase extends StatefulWidget {
+class SeedImportPassphrase extends StatefulWidget {
   @override
-  State<DerivePassphrase> createState() => _DerivePassphraseState();
+  State<SeedImportPassphrase> createState() => _SeedImportPassphraseState();
 }
 
-class _DerivePassphraseState extends State<DerivePassphrase> {
+class _SeedImportPassphraseState extends State<SeedImportPassphrase> {
   late TextEditingController _textController;
   late TextEditingController _textControllerP;
 
@@ -22,7 +23,7 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
 
   @override
   Widget build(BuildContext c) {
-    return BlocBuilder<DeriveWalletCubit, DeriveWalletState>(
+    return BlocBuilder<SeedImportCubit, SeedImportState>(
       builder: (context, state) {
         if (_textController.text != state.passPhrase)
           _textController.text = state.passPhrase;
@@ -54,7 +55,7 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
                     return null;
                   },
                   onChanged: (text) {
-                    c.read<DeriveWalletCubit>().passPhrasedChanged(text);
+                    c.read<SeedImportCubit>().passPhraseChanged(text);
                   },
                   style: TextStyle(color: c.colours.onBackground),
                   decoration: const InputDecoration(
@@ -75,7 +76,6 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
                   validator: (val) {
                     if (val != _textController.text)
                       return 'Passphrases do no match!';
-
                     return null;
                   },
                   style: TextStyle(color: c.colours.onBackground),
@@ -85,9 +85,9 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
                 ),
               ),
               const SizedBox(height: 18),
-              if (state.errPassphrase != '')
+              if (state.errPassPhrase != '')
                 Text(
-                  state.errPassphrase,
+                  state.errPassPhrase,
                   style: c.fonts.caption!.copyWith(
                     color: c.colours.error,
                   ),
@@ -100,7 +100,7 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
                     onPrimary: c.colours.background,
                     primary: c.colours.primary,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_form.currentState!.validate()) {
                       final FocusScopeNode currentFocus =
                           FocusScope.of(context);
@@ -108,7 +108,8 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
                       if (!currentFocus.hasPrimaryFocus) {
                         currentFocus.unfocus();
                       }
-                      c.read<DeriveWalletCubit>().nextClicked();
+                      await c.read<SeedImportCubit>().checkSeed();
+                      c.read<SeedImportWalletCubit>().nextClicked();
                     }
                   },
                   child: Text('Confirm'.toUpperCase()),

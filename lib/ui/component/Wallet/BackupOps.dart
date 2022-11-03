@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/master.dart';
+import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class BackupOps extends StatefulWidget {
@@ -31,6 +33,8 @@ class _BackupOpsState extends State<BackupOps> {
     final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
     final isBackedUp = masterKeyState.key!.backedUp!;
     final walletType = wallet.walletType;
+    final isLoading = c.select((InfoCubit wc) => wc.state.loadingTransactions);
+    final zeroBal = c.select((InfoCubit wc) => wc.state.zeroBalance());
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -62,7 +66,6 @@ class _BackupOpsState extends State<BackupOps> {
             ),
           ],
           if (walletType == primaryWallet) ...[
-            const SizedBox(height: 24),
             Padding(
               padding: EdgeInsets.zero,
               child: TextFormField(
@@ -88,7 +91,7 @@ class _BackupOpsState extends State<BackupOps> {
               width: c.width,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: c.colours.tertiary,
+                  primary: c.colours.secondary,
                 ),
                 onPressed: () async {
                   c.read<InfoCubit>().testPassPhrase(masterKey.seed!);
@@ -99,14 +102,13 @@ class _BackupOpsState extends State<BackupOps> {
             ),
             const SizedBox(height: 24),
           ],
-          const SizedBox(height: 24),
-          if (isBackedUp && wallet.walletType == primaryWallet)
+          if (isBackedUp && wallet.walletType == primaryWallet) ...[
             SizedBox(
               height: 52,
               width: c.width,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: c.colours.error,
+                  primary: c.colours.tertiary,
                   onSurface: c.colours.background.withOpacity(0.38),
                 ),
                 onPressed: () {
@@ -115,6 +117,8 @@ class _BackupOpsState extends State<BackupOps> {
                 child: Text('PEEK SEED'.toUpperCase()),
               ),
             ),
+            const SizedBox(height: 24),
+          ],
           if (walletType != primaryWallet) ...[
             Text(
               'There are no backup operations for this wallet.',
@@ -123,7 +127,26 @@ class _BackupOpsState extends State<BackupOps> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 24),
           ],
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 100),
+            opacity: isLoading ? 0.3 : 1.0,
+            child: SizedBox(
+              height: 52,
+              width: c.width,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  primary: c.colours.error,
+                  onSurface: c.colours.background.withOpacity(0.38),
+                ),
+                onPressed: () {
+                  _deleteWalletClicked(c, zeroBal, wallet);
+                },
+                child: Text('DELETE WALLET'.toUpperCase()),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -178,4 +201,104 @@ Future<void> peekSeed(BuildContext context, MasterKey key) async {
       );
     },
   );
+}
+
+void _deleteWalletClicked(
+  BuildContext c,
+  bool zeroBalance,
+  Wallet wallet,
+) async {
+  if (!zeroBalance && wallet.isNotWatchOnly()) {
+    await showCupertinoModalPopup<bool>(
+      context: c,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: Text(
+          'Wallet is not empty'.toUpperCase(),
+          style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+        ),
+        message: Text(
+          'Please send transfer all funds before deleting wallet.',
+          style: c.fonts.subtitle2!.copyWith(color: c.colours.onBackground),
+        ),
+        actions: [
+          Container(
+            color: c.colours.background,
+            child: CupertinoActionSheetAction(
+              child: Text(
+                'Please sweep your funds'.toUpperCase(),
+                style: c.fonts.button!.copyWith(color: c.colours.error),
+              ),
+              onPressed: () async {
+                Navigator.pop(context, true);
+                await Future.delayed(const Duration(milliseconds: 200));
+                c.push('/send', extra: wallet);
+              },
+            ),
+          ),
+          Container(
+            color: c.colours.background,
+            child: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text(
+                'BACK',
+                style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    return;
+  }
+
+  final delete = await showCupertinoModalPopup<bool>(
+    context: c,
+    builder: (BuildContext context) => CupertinoActionSheet(
+      title: Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: Text(
+          'Delete Wallet ?'.toUpperCase(),
+          style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+        ),
+      ),
+      message: Text(
+        'All wallet information will be deleted.',
+        style: c.fonts.subtitle2!.copyWith(color: c.colours.onBackground),
+      ),
+      actions: [
+        Container(
+          color: c.colours.background,
+          child: CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            child: Text(
+              'DELETE IT!',
+              style: c.fonts.button!.copyWith(color: c.colours.error),
+            ),
+          ),
+        ),
+        // const SizedBox(height: 24),
+        Container(
+          color: c.colours.background,
+          child: CupertinoActionSheetAction(
+            child: Text(
+              'CANCEL',
+              style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+            ),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+        )
+      ],
+    ),
+  );
+
+  if (delete != null && delete) {
+    c.read<InfoCubit>().deleteClicked();
+  }
 }

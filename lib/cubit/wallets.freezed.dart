@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$WalletsState {
   List<Wallet> get wallets => throw _privateConstructorUsedError;
   Wallet? get selectedWallet => throw _privateConstructorUsedError;
+  bool get toggler => throw _privateConstructorUsedError;
   String get errDeleting => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +31,11 @@ abstract class $WalletsStateCopyWith<$Res> {
   factory $WalletsStateCopyWith(
           WalletsState value, $Res Function(WalletsState) then) =
       _$WalletsStateCopyWithImpl<$Res>;
-  $Res call({List<Wallet> wallets, Wallet? selectedWallet, String errDeleting});
+  $Res call(
+      {List<Wallet> wallets,
+      Wallet? selectedWallet,
+      bool toggler,
+      String errDeleting});
 
   $WalletCopyWith<$Res>? get selectedWallet;
 }
@@ -47,6 +52,7 @@ class _$WalletsStateCopyWithImpl<$Res> implements $WalletsStateCopyWith<$Res> {
   $Res call({
     Object? wallets = freezed,
     Object? selectedWallet = freezed,
+    Object? toggler = freezed,
     Object? errDeleting = freezed,
   }) {
     return _then(_value.copyWith(
@@ -58,6 +64,10 @@ class _$WalletsStateCopyWithImpl<$Res> implements $WalletsStateCopyWith<$Res> {
           ? _value.selectedWallet
           : selectedWallet // ignore: cast_nullable_to_non_nullable
               as Wallet?,
+      toggler: toggler == freezed
+          ? _value.toggler
+          : toggler // ignore: cast_nullable_to_non_nullable
+              as bool,
       errDeleting: errDeleting == freezed
           ? _value.errDeleting
           : errDeleting // ignore: cast_nullable_to_non_nullable
@@ -84,7 +94,11 @@ abstract class _$$_WalletsStateCopyWith<$Res>
           _$_WalletsState value, $Res Function(_$_WalletsState) then) =
       __$$_WalletsStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<Wallet> wallets, Wallet? selectedWallet, String errDeleting});
+  $Res call(
+      {List<Wallet> wallets,
+      Wallet? selectedWallet,
+      bool toggler,
+      String errDeleting});
 
   @override
   $WalletCopyWith<$Res>? get selectedWallet;
@@ -105,6 +119,7 @@ class __$$_WalletsStateCopyWithImpl<$Res>
   $Res call({
     Object? wallets = freezed,
     Object? selectedWallet = freezed,
+    Object? toggler = freezed,
     Object? errDeleting = freezed,
   }) {
     return _then(_$_WalletsState(
@@ -116,6 +131,10 @@ class __$$_WalletsStateCopyWithImpl<$Res>
           ? _value.selectedWallet
           : selectedWallet // ignore: cast_nullable_to_non_nullable
               as Wallet?,
+      toggler: toggler == freezed
+          ? _value.toggler
+          : toggler // ignore: cast_nullable_to_non_nullable
+              as bool,
       errDeleting: errDeleting == freezed
           ? _value.errDeleting
           : errDeleting // ignore: cast_nullable_to_non_nullable
@@ -130,6 +149,7 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
   const _$_WalletsState(
       {final List<Wallet> wallets = const [],
       this.selectedWallet,
+      this.toggler = true,
       this.errDeleting = ''})
       : _wallets = wallets;
 
@@ -145,11 +165,14 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
   final Wallet? selectedWallet;
   @override
   @JsonKey()
+  final bool toggler;
+  @override
+  @JsonKey()
   final String errDeleting;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletsState(wallets: $wallets, selectedWallet: $selectedWallet, errDeleting: $errDeleting)';
+    return 'WalletsState(wallets: $wallets, selectedWallet: $selectedWallet, toggler: $toggler, errDeleting: $errDeleting)';
   }
 
   @override
@@ -159,6 +182,7 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
       ..add(DiagnosticsProperty('type', 'WalletsState'))
       ..add(DiagnosticsProperty('wallets', wallets))
       ..add(DiagnosticsProperty('selectedWallet', selectedWallet))
+      ..add(DiagnosticsProperty('toggler', toggler))
       ..add(DiagnosticsProperty('errDeleting', errDeleting));
   }
 
@@ -170,6 +194,7 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
             const DeepCollectionEquality().equals(other._wallets, _wallets) &&
             const DeepCollectionEquality()
                 .equals(other.selectedWallet, selectedWallet) &&
+            const DeepCollectionEquality().equals(other.toggler, toggler) &&
             const DeepCollectionEquality()
                 .equals(other.errDeleting, errDeleting));
   }
@@ -179,6 +204,7 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
       runtimeType,
       const DeepCollectionEquality().hash(_wallets),
       const DeepCollectionEquality().hash(selectedWallet),
+      const DeepCollectionEquality().hash(toggler),
       const DeepCollectionEquality().hash(errDeleting));
 
   @JsonKey(ignore: true)
@@ -191,12 +217,15 @@ abstract class _WalletsState implements WalletsState {
   const factory _WalletsState(
       {final List<Wallet> wallets,
       final Wallet? selectedWallet,
+      final bool toggler,
       final String errDeleting}) = _$_WalletsState;
 
   @override
   List<Wallet> get wallets => throw _privateConstructorUsedError;
   @override
   Wallet? get selectedWallet => throw _privateConstructorUsedError;
+  @override
+  bool get toggler => throw _privateConstructorUsedError;
   @override
   String get errDeleting => throw _privateConstructorUsedError;
   @override

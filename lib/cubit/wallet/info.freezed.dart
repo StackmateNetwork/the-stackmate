@@ -284,7 +284,7 @@ class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
 class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   const _$_InfoState(
       {required this.wallet,
-      this.loadingTransactions = true,
+      this.loadingTransactions = false,
       this.errLoadingTransactions = '',
       this.loadingBalance = false,
       this.errLoadingBalance = '',

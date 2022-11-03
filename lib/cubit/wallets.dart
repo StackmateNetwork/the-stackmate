@@ -4,7 +4,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
-import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -17,6 +16,7 @@ class WalletsState with _$WalletsState {
   const factory WalletsState({
     @Default([]) List<Wallet> wallets,
     Wallet? selectedWallet,
+    @Default(true) bool toggler,
     @Default('') String errDeleting,
   }) = _WalletsState;
 }
@@ -49,7 +49,12 @@ class WalletsCubit extends Cubit<WalletsState> {
 
       wallets.sort((a, b) => a.id!.compareTo(b.id!));
 
-      emit(state.copyWith(wallets: wallets));
+      emit(
+        state.copyWith(
+          wallets: wallets,
+          toggler: !state.toggler,
+        ),
+      );
     } catch (e, s) {
       _logger.logException(e, 'WalletsCubit.refresh', s);
     }
@@ -59,12 +64,15 @@ class WalletsCubit extends Cubit<WalletsState> {
     final toUpdate =
         state.wallets.firstWhere((element) => element.uid == wallet.uid);
     final replaceIndex = state.wallets.indexOf(toUpdate);
-    state.wallets.replaceRange(replaceIndex, replaceIndex, [wallet]);
-    // find and remove wallet from state wallet array
-    // save new wallet in place of old wallet
-    // refresh
+    final updatedList = List<Wallet>.from(state.wallets);
+    updatedList[replaceIndex] = wallet;
+
+    emit(
+      state.copyWith(
+        wallets: updatedList,
+      ),
+    );
   }
-  // update()
 
   void walletSelected(Wallet wallet) async {
     emit(state.copyWith(selectedWallet: wallet));

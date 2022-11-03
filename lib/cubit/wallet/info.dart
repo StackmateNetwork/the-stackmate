@@ -28,7 +28,7 @@ part 'info.freezed.dart';
 class InfoState with _$InfoState {
   const factory InfoState({
     required Wallet wallet,
-    @Default(true) bool loadingTransactions,
+    @Default(false) bool loadingTransactions,
     @Default('') String errLoadingTransactions,
     @Default(false) bool loadingBalance,
     @Default('') String errLoadingBalance,
@@ -83,7 +83,28 @@ class InfoCubit extends Cubit<InfoState> {
   static const walletHasFunds = 'Wallet has funds';
 
   void _init() async {
-    sqliteSyncHistory();
+    try {
+      final wallet = state.wallet;
+      emit(
+        state.copyWith(
+          errLoadingTransactions: '',
+          balance: wallet.balance,
+          transactions: wallet.transactions,
+          errorPPTest: '',
+          ppTestPassed: false,
+        ),
+      );
+      return;
+    } catch (e, s) {
+      emit(
+        state.copyWith(
+          loadingBalance: false,
+          loadingTransactions: false,
+          errLoadingTransactions: e.toString(),
+        ),
+      );
+      _logger.logException(e, 'HistoryCubit.getHistory', s);
+    }
   }
 
   void sqliteSyncHistory() async {
@@ -92,6 +113,7 @@ class InfoCubit extends Cubit<InfoState> {
       emit(
         state.copyWith(
           loadingBalance: true,
+          loadingTransactions: true,
           errLoadingTransactions: '',
           balance: wallet.balance,
           transactions: wallet.transactions,
@@ -172,6 +194,7 @@ class InfoCubit extends Cubit<InfoState> {
       );
 
       await addTransactionsToStorage(transactions);
+
       db.close();
 
       return;
@@ -190,7 +213,6 @@ class InfoCubit extends Cubit<InfoState> {
   void updateBalance() async {
     try {
       final wallet = state.wallet;
-
       final node = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
@@ -231,6 +253,8 @@ class InfoCubit extends Cubit<InfoState> {
         'socks5': socks5,
       });
 
+      if (syncStat.hasError) throw SMError.fromJson(syncStat.error!).message;
+
       final balance = await compute(sqliteBalance, {
         'descriptor': state.wallet.descriptor,
         'dbPath': dbPath,
@@ -240,7 +264,7 @@ class InfoCubit extends Cubit<InfoState> {
 
       emit(
         state.copyWith(
-          loadingTransactions: true,
+          loadingTransactions: false,
           loadingBalance: false,
           errLoadingTransactions: '',
           balance: balance,
@@ -248,7 +272,6 @@ class InfoCubit extends Cubit<InfoState> {
         ),
       );
       await addBalanceToStorage(balance);
-
       db.close();
     } catch (e, s) {
       emit(
@@ -274,22 +297,33 @@ class InfoCubit extends Cubit<InfoState> {
     await _storage.saveItemAt<Wallet>(
         StoreKeys.Wallet.name, wallet.id!, wallet);
     _walletsCubit.update(wallet);
+    // emit(
+    //   state.copyWith(
+    //     wallet: wallet,
+    //   ),
+    // );
   }
 
   Future<void> addBalanceToStorage(int balance) async {
     final wallet = state.wallet.copyWith(
       balance: balance,
     );
-
     emit(
       state.copyWith(
         wallet: wallet,
       ),
     );
-
     await _storage.saveItemAt<Wallet>(
-        StoreKeys.Wallet.name, wallet.id!, wallet);
+      StoreKeys.Wallet.name,
+      wallet.id!,
+      wallet,
+    );
     _walletsCubit.update(wallet);
+    // emit(
+    //   state.copyWith(
+    //     wallet: wallet,
+    //   ),
+    // );
   }
 
   void openLink(Transaction transaction) {
@@ -463,7 +497,7 @@ int sqliteBalance(dynamic obj) {
   return resp.result!;
 }
 
-String sqliteSync(dynamic obj) {
+R<String> sqliteSync(dynamic obj) {
   final data = obj as Map<String, String?>;
   final resp = LibBitcoin().sqliteSync(
     dbPath: obj['dbPath']!,
@@ -471,10 +505,8 @@ String sqliteSync(dynamic obj) {
     nodeAddress: data['nodeAddress']!,
     socks5: obj['socks5']!,
   );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
+
+  return resp;
 }
 
 int computeCurrentHeight(dynamic obj) {

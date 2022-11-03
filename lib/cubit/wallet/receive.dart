@@ -82,6 +82,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       state.copyWith(
         loadingAddress: true,
         address: latestAddress.result!,
+        index: index,
       ),
     );
 
@@ -89,12 +90,25 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   }
 
   Future<void> updateWalletStorage(Wallet wallet) async {
+    emit(
+      state.copyWith(
+        wallet: wallet,
+      ),
+    );
     await _storage.saveItemAt<Wallet>(
       StoreKeys.Wallet.name,
       wallet.id!,
       wallet,
     );
-    walletsCubit.refresh();
+
+    walletsCubit.update(wallet);
+    // walletsCubit.refresh();
+
+    // emit(
+    //   state.copyWith(
+    //     wallet: wallet,
+    //   ),
+    // );
   }
 
   void getNewAddress() async {
@@ -214,6 +228,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       if (lastUnused.hasError) {
         throw SMError.fromJson(lastUnused.error!).message;
       }
+
       final updated = wallet.copyWith(
         lastAddressIndex: int.parse(lastUnused.result!.index),
       );

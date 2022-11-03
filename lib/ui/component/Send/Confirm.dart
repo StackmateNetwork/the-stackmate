@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/send.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/BitcoinDisplayMedium.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
@@ -12,7 +11,7 @@ class ConfirmTransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.select((SendCubit sc) => sc.state);
-    final wallet = context.select((WalletsCubit w) => w.state.selectedWallet!);
+    final wallet = context.select((SendCubit w) => w.state.wallet);
     final preferences = context.select((PreferencesCubit p) => p.state);
 
     if (state.finalAmount == null) return Container();

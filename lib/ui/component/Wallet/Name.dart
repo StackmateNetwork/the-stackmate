@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -10,8 +11,7 @@ class WalletName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wallet = context.select((WalletsCubit wc) => wc.state.selectedWallet);
-    if (wallet == null) return Container();
+    final wallet = context.select((InfoCubit wc) => wc.state.wallet);
 
     return Align(
       child: Padding(

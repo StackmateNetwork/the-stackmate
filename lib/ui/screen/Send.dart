@@ -30,10 +30,9 @@ class _WalletSend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final step = context.select((SendCubit sc) => sc.state.currentStep);
-    final walletLabel =
-        context.select((WalletsCubit c) => c.state.selectedWallet!.label);
+    final walletLabel = context.select((SendCubit c) => c.state.wallet.label);
     final walletType =
-        context.select((WalletsCubit c) => c.state.selectedWallet!.walletType);
+        context.select((SendCubit c) => c.state.wallet.walletType);
 
     return WillPopScope(
       onWillPop: () async {

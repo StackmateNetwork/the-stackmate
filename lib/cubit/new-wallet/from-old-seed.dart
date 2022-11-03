@@ -123,7 +123,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   static const invalidLabelError = 'Invalid Label (must be 3-20 chars).';
   static const couldNotSaveError = 'Error Saving Wallet!';
   static const signerWalletType = 'PRIMARY';
-  static const importWalletType = 'IMPORT';
+  static const importWalletType = 'RECOVERED';
 
   static const wpkhScript = 'wpkh';
   static const wshScript = 'wsh';

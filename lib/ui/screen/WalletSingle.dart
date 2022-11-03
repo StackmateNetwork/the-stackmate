@@ -99,31 +99,29 @@ class _Wallet extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                AnimatedOpacity(
-                                  duration: const Duration(milliseconds: 100),
-                                  opacity: isLoading ? 0.2 : 1.0,
-                                  child: IconButton(
-                                    iconSize: 28,
-                                    color: c.colours.error,
-                                    onPressed: () {
-                                      if (!isLoading)
-                                        _deleteWalletClicked(
-                                          c,
-                                          zeroBal,
-                                          wallet,
-                                        );
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete_sweep_outlined,
-                                    ),
-                                  ),
-                                ),
                                 IconButton(
                                   color: c.colours.primary,
                                   onPressed: () {
                                     c.read<InfoCubit>().toggleShowInfo();
                                   },
                                   icon: const Icon(Icons.info_outline),
+                                ),
+                                AnimatedOpacity(
+                                  duration: const Duration(milliseconds: 100),
+                                  opacity: isLoading ? 0.2 : 1.0,
+                                  child: IconButton(
+                                    iconSize: 28,
+                                    color: isLoading
+                                        ? c.colours.tertiary
+                                        : c.colours.primary,
+                                    onPressed: () {
+                                      if (!isLoading)
+                                        c.read<InfoCubit>().sqliteSyncHistory();
+                                    },
+                                    icon: const Icon(
+                                      Icons.sync,
+                                    ),
+                                  ),
                                 ),
                                 IconButton(
                                   color: c.colours.secondary,
@@ -137,11 +135,12 @@ class _Wallet extends StatelessWidget {
                                 ),
                                 AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
-                                  opacity: zeroBal ? 0.4 : 1,
+                                  opacity: zeroBal ? 0.3 : 1,
                                   child: IconButton(
                                     color: c.colours.tertiary,
                                     onPressed: () {
-                                      if (!zeroBal) c.push('/send');
+                                      if (!zeroBal)
+                                        c.push('/send', extra: wallet);
                                     },
                                     icon: Icon(
                                       wallet.walletType == 'WATCHER'

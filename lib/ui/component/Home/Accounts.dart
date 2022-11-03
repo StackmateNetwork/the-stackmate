@@ -12,7 +12,6 @@ import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/ui/component/Home/WalletCard.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Accounts extends StatelessWidget {
   @override

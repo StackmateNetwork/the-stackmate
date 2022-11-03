@@ -62,7 +62,6 @@ class _SeedImport extends StatelessWidget {
                               c.read<SeedImportWalletCubit>().backClicked();
                               return;
                             }
-
                             Navigator.pop(c);
                           },
                         ),

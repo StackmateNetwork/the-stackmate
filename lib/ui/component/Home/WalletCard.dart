@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/info.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
-import 'package:sats/ui/screen/Receive.dart';
 
 class WalletCard extends StatelessWidget {
   const WalletCard({
@@ -24,6 +22,7 @@ class WalletCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final preferences = context.select((PreferencesCubit p) => p);
     final loading = context.select((InfoCubit x) => x.state.loadingBalance);
+
     return Row(
       // crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -112,7 +111,9 @@ class WalletCard extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            // context.push('/receive', extra: wallet);
+          },
           child: Material(
             elevation: 4,
             borderRadius: BorderRadius.circular(12),
@@ -142,8 +143,6 @@ class WalletCard extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         context.push('/receive', extra: wallet);
-
-                        // context.push('/receive', extra: wallet);
                       },
                       icon: Icon(
                         Icons.call_received,
@@ -158,15 +157,10 @@ class WalletCard extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            context.read<WalletsCubit>().walletSelected(wallet);
-            if (!isSelection && wallet.balance > 0) {
-              context.read<InfoCubit>().updateBalance();
-            }
-          },
+          onTap: () {},
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 300),
-            opacity: (wallet.balance == 0) ? 0.2 : 1,
+            opacity: loading ? 0.3 : 1,
             child: Material(
               elevation: 4,
               borderRadius: BorderRadius.circular(12),
@@ -195,12 +189,14 @@ class WalletCard extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () {
-                          // context.read<InfoCubit>().updateBalance();
+                          context.read<InfoCubit>().updateBalance();
                         },
                         icon: Icon(
                           Icons.sync,
                           size: 21,
-                          color: loading ? Colors.red : Colors.green,
+                          color: loading
+                              ? context.colours.tertiary
+                              : context.colours.primary,
                         ),
                       ),
                     ],

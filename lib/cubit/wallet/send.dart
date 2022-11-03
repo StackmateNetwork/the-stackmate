@@ -148,6 +148,12 @@ class SendCubit extends Cubit<SendState> {
       wallet.id!,
       wallet,
     );
+    emit(
+      state.copyWith(
+        wallet: wallet,
+      ),
+    );
+    // _walletsCubit.update(wallet);
     _walletsCubit.refresh();
   }
 
@@ -854,17 +860,19 @@ class SendCubit extends Cubit<SendState> {
       if (txid.hasError)
         throw SMError.fromJson(txid.error!).message;
       else
-        // update balances and storage
+        await syncWallet();
 
-        emit(
-          state.copyWith(
-            sendingTx: false,
-            errLoading: emptyString,
-            errSending: emptyString,
-            txId: txid.result!,
-            currentStep: SendSteps.sent,
-          ),
-        );
+      updateWalletStorage(state.wallet);
+
+      emit(
+        state.copyWith(
+          sendingTx: false,
+          errLoading: emptyString,
+          errSending: emptyString,
+          txId: txid.result!,
+          currentStep: SendSteps.sent,
+        ),
+      );
     } catch (e, s) {
       emit(
         state.copyWith(
