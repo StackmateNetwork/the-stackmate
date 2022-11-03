@@ -10,7 +10,11 @@ class KeyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final wallet = c.select((InfoCubit wc) => wc.state.wallet);
-
+    final walletTypeColor = (wallet.walletType == 'PRIMARY')
+        ? c.colours.tertiary
+        : (wallet.walletType == 'WATCHER')
+            ? c.colours.secondary
+            : c.colours.error;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -50,7 +54,7 @@ class KeyInfo extends StatelessWidget {
           Text(
             wallet.walletType,
             style: c.fonts.caption!.copyWith(
-              color: c.colours.onBackground,
+              color: walletTypeColor,
             ),
           ),
           const SizedBox(height: 24),

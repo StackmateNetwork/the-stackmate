@@ -77,7 +77,6 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
         ),
       );
     }
-
     if (state.backupLater) {
       await _masterKey.saveBackupPending(
         root.result!.mnemonic,

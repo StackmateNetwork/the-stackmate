@@ -85,6 +85,7 @@ class InfoCubit extends Cubit<InfoState> {
   void _init() async {
     try {
       final wallet = state.wallet;
+
       emit(
         state.copyWith(
           errLoadingTransactions: '',
@@ -92,6 +93,7 @@ class InfoCubit extends Cubit<InfoState> {
           transactions: wallet.transactions,
           errorPPTest: '',
           ppTestPassed: false,
+          showInfo: wallet.transactions.isEmpty,
         ),
       );
       return;

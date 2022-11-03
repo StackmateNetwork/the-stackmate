@@ -64,6 +64,7 @@ class _BackupOpsState extends State<BackupOps> {
                 child: Text('BACKUP WALLET!'.toUpperCase()),
               ),
             ),
+            const SizedBox(height: 24),
           ],
           if (walletType == primaryWallet) ...[
             Padding(

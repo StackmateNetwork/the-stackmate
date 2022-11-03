@@ -59,8 +59,8 @@ class AddWalletScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'A 12/24 word mnemonic seed phrase represents your Master Key.\n\nPrimary wallets and social accounts will be derived from it.\n\nYou need it to recover your funds and social data.',
-                  style: c.theme.primaryTextTheme.bodyLarge!.copyWith(
+                  'A 12/24 word mnemonic phrase represents your MASTER KEY.\n\nPRIMARY and SOCIAL accounts will be created from it.\n\nYou need it to recover these accounts.',
+                  style: c.theme.primaryTextTheme.bodySmall!.copyWith(
                     color: c.colours.onPrimary,
                   ),
                 ),
@@ -71,7 +71,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'New',
-                description: 'Generate new mnemonic seed.',
+                description: 'Create a new mnemonic.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/generate-seed');
@@ -80,7 +80,7 @@ class AddWalletScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SelectButton(
                 text: 'Import',
-                description: 'Import an old seed.',
+                description: 'Import an existing mnemonic.',
                 colour: c.colours.surface,
                 onPressed: () {
                   c.push('/import-seed');

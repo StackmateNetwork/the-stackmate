@@ -66,6 +66,12 @@ class SeedGenerateLabel extends StatelessWidget {
                     primary: c.colours.primary,
                   ),
                   onPressed: () async {
+                    final FocusScopeNode currentFocus = FocusScope.of(context);
+
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
+
                     await c.read<SeedGenerateCubit>().finalize();
                     c.read<SeedGenerateWalletCubit>().nextClicked();
                   },

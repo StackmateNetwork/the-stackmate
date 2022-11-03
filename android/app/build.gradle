@@ -33,7 +33,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     compileSdkVersion 33
-
+    
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -78,6 +78,17 @@ android {
             zipAlignEnabled false
             minifyEnabled false
         }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.all {
+        outputFileName = "stackmate-0.1.2.apk"
     }
 }
 
