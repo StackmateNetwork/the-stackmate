@@ -29,7 +29,7 @@ class WalletCard extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            context.push('/wallet', extra: wallet);
+            context.push('/wallet', extra: context.read<InfoCubit>());
           },
           child: Material(
             elevation: 4,

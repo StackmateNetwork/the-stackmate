@@ -295,7 +295,10 @@ class InfoCubit extends Cubit<InfoState> {
       ),
     );
     await _storage.saveItemAt<Wallet>(
-        StoreKeys.Wallet.name, wallet.id!, wallet);
+      StoreKeys.Wallet.name,
+      wallet.id!,
+      wallet,
+    );
     _walletsCubit.update(wallet);
     // emit(
     //   state.copyWith(

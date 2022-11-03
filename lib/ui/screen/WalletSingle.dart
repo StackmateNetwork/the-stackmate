@@ -271,27 +271,27 @@ class _Wallet extends StatelessWidget {
 }
 
 class WalletScreen extends StatelessWidget {
-  const WalletScreen({Key? key, required this.wallet}) : super(key: key);
+  const WalletScreen({Key? key, required this.infoCubit}) : super(key: key);
 
-  final Wallet wallet;
+  final InfoCubit infoCubit;
 
   @override
   Widget build(BuildContext c) {
-    final history = InfoCubit(
-      c.read<WalletsCubit>(),
-      locator<IStorage>(),
-      c.read<Logger>(),
-      locator<ILauncher>(),
-      locator<IShare>(),
-      locator<IVibrate>(),
-      c.read<NodeAddressCubit>(),
-      c.read<TorCubit>(),
-      c.read<ChainSelectCubit>(),
-      wallet,
-    );
+    // final history = InfoCubit(
+    //   c.read<WalletsCubit>(),
+    //   locator<IStorage>(),
+    //   c.read<Logger>(),
+    //   locator<ILauncher>(),
+    //   locator<IShare>(),
+    //   locator<IVibrate>(),
+    //   c.read<NodeAddressCubit>(),
+    //   c.read<TorCubit>(),
+    //   c.read<ChainSelectCubit>(),
+    //   wallet,
+    // );
 
     return BlocProvider.value(
-      value: history,
+      value: infoCubit,
       child: const _Wallet(),
     );
   }

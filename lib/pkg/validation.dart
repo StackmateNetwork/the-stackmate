@@ -46,6 +46,10 @@ class Validation {
     return amt.replaceAll(' ', '');
   }
 
+  static String formatHardenedPath(String value) {
+    return value.replaceAll("'", 'h');
+  }
+
   static bool toBoolean(String str, [bool strict = false]) {
     if (strict == true) {
       return str == '1' || str == 'true';

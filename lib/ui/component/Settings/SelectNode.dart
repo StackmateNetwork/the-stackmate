@@ -55,11 +55,10 @@ class SelectNode extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            Image.asset(
-              'assets/icon/bitcoin_icons/png/outline/home.png',
-              width: 52,
-              height: 52,
-              color: c.colours.onPrimary,
+            Icon(
+              Icons.private_connectivity_rounded,
+              size: 32,
+              color: c.colours.primary,
             ),
           ],
         ),

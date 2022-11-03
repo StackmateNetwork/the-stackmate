@@ -8,6 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/coldcard.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
+import 'package:sats/pkg/validation.dart';
 
 part 'xpub-import.freezed.dart';
 
@@ -100,7 +101,12 @@ class XpubImportCubit extends Cubit<XpubImportState> {
 
       if (barcodeScanRes == '-1') barcodeScanRes = emptyString;
 
-      emit(state.copyWith(xpub: barcodeScanRes, cameraOpened: false));
+      emit(
+        state.copyWith(
+          xpub: Validation.formatHardenedPath(barcodeScanRes),
+          cameraOpened: false,
+        ),
+      );
     } catch (e, s) {
       emit(state.copyWith(cameraOpened: false, errXpub: cameraError));
 
@@ -111,11 +117,21 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   void xpubPasteClicked() async {
     final text = await _clipboard.pasteFromClipBoard();
     if (text.hasError) return;
-    emit(state.copyWith(xpub: text.result!, errXpub: emptyString));
+    emit(
+      state.copyWith(
+        xpub: Validation.formatHardenedPath(text.result!),
+        errXpub: emptyString,
+      ),
+    );
   }
 
   void xpubChanged(String text) {
-    emit(state.copyWith(xpub: text, errXpub: emptyString));
+    emit(
+      state.copyWith(
+        xpub: Validation.formatHardenedPath(text),
+        errXpub: emptyString,
+      ),
+    );
   }
 
   void fingerPrintChanged(String text) {
@@ -129,14 +145,24 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   }
 
   void pathChanged(String text) {
-    emit(state.copyWith(path: text, errXpub: emptyString));
+    emit(
+      state.copyWith(
+        path: Validation.formatHardenedPath(text),
+        errXpub: emptyString,
+      ),
+    );
   }
 
   void pathPasteClicked() async {
     final text = await _clipboard.pasteFromClipBoard();
     if (text.hasError) return;
 
-    emit(state.copyWith(path: text.result!, errXpub: emptyString));
+    emit(
+      state.copyWith(
+        path: Validation.formatHardenedPath(text.result!),
+        errXpub: emptyString,
+      ),
+    );
   }
 
   void checkDetails() {

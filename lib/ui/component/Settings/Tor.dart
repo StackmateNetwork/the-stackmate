@@ -45,11 +45,10 @@ class TorSettings extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            Image.asset(
-              'assets/icon/bitcoin_icons/png/outline/proxy.png',
-              width: 52,
-              height: 52,
-              color: c.colours.onPrimary,
+            Icon(
+              Icons.security,
+              size: 24,
+              color: c.colours.tertiaryContainer,
             ),
           ],
         ),
