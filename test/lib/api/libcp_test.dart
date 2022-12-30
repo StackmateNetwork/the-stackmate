@@ -11,7 +11,7 @@ void main() {
       'permit fuel media speak loud decline color street piano put nothing fog';
   const adminSecret = '9caff0735bc6e80121cedcb98ca51821';
   const kind = 'priv';
-  const inviteCode = 'G3tNe5GipUhQyVfctTt9Sorq3bL3x4ig';
+  const inviteCode = 'J7vsmPKeFYkkWwD9jAEjPAeD1knkQVuZ';
   const hostname = 'https://lotr.toma.tech';
   const socks5 = 0;
   const username = 'ika';
@@ -21,14 +21,14 @@ void main() {
   setUp(() async {
     libcp = LibCypherpost();
   });
-
+  // run admin invite first and update inviteCode
   test('Admin Invite', () async {
     final adminInvite = libcp.adminInvite(
       hostname: hostname,
       socks5: socks5,
       adminSecret: adminSecret,
       kind: kind,
-      count: 1,
+      count: 10,
     );
     print(adminInvite.result!.inviteCode);
   });
@@ -56,14 +56,21 @@ void main() {
   });
 
   test('User Priv Invite', () async {
-    final privInvite = libcp.privUserInvite(
+    // final privInvite = libcp.privUserInvite(
+    //   hostname: hostname,
+    //   socks5: socks5,
+    //   socialRoot: expectedSocialRoot,
+    //   inviteCode: inviteCode,
+    // );
+
+    final inviteDetail = libcp.userInviteDetail(
       hostname: hostname,
       socks5: socks5,
       socialRoot: expectedSocialRoot,
       inviteCode: inviteCode,
     );
-
-    inspect(privInvite.result);
+    assert(inviteDetail.result!.inviteCode == inviteCode);
+    // assert(inviteDetail.result!.count == 1);
   });
   test('Member fx', () async {
     final serverId = libcp.getServerIdentity(

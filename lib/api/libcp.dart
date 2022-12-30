@@ -48,7 +48,7 @@ class LibCypherpost implements ICypherpost {
   }) {
     print(hostname);
     print(socialRoot);
-    
+
     final resp = _libcp.getServerIdentity(
       hostname: hostname,
       socks5: socks5,
@@ -57,9 +57,8 @@ class LibCypherpost implements ICypherpost {
 
     if (resp.contains('error')) {
       return R(error: SMError.fromJson(resp).error);
-    }
-    else
-    return R(result: ServerIdentity.fromJson(resp));
+    } else
+      return R(result: ServerIdentity.fromJson(resp));
   }
 
   @override
@@ -80,9 +79,8 @@ class LibCypherpost implements ICypherpost {
 
     if (resp.contains('error')) {
       return R(error: SMError.fromJson(resp).error);
-    }
-    else
-    return R(result: Invitation.fromJson(resp));
+    } else
+      return R(result: Invitation.fromJson(resp));
   }
 
   @override
@@ -101,9 +99,27 @@ class LibCypherpost implements ICypherpost {
 
     if (resp.contains('error')) {
       return R(error: SMError.fromJson(resp).error);
-    }
-    else
-    return R(result: Invitation.fromJson(resp));
+    } else
+      return R(result: Invitation.fromJson(resp));
+  }
+
+  @override
+  R<InvitationDetail> userInviteDetail({
+    required String hostname,
+    required int socks5,
+    required String socialRoot,
+    required String inviteCode,
+  }) {
+    final resp = _libcp.userInviteDetail(
+      hostname: hostname,
+      socks5: socks5,
+      socialRoot: socialRoot,
+      inviteCode: inviteCode,
+    );
+    if (resp.contains('error')) {
+      return R(error: SMError.fromJson(resp).error);
+    } else
+      return R(result: InvitationDetail.fromJson(resp));
   }
 
   @override
@@ -121,7 +137,7 @@ class LibCypherpost implements ICypherpost {
     if (resp.contains('error')) {
       return R(error: SMError.fromJson(resp).error);
     }
-    
+
     final json = jsonDecode(resp);
     final List<MemberIdentity> members = [];
     for (final t in json['identities'] as List) {
@@ -130,7 +146,6 @@ class LibCypherpost implements ICypherpost {
     }
 
     return R(result: members);
-
   }
 
   @override
@@ -151,8 +166,7 @@ class LibCypherpost implements ICypherpost {
 
     if (resp.contains('error')) {
       return R(error: SMError.fromJson(resp).error);
-    }
-    else
+    } else
       return R(result: ServerStatus.fromJson(resp));
   }
 
@@ -247,7 +261,6 @@ class LibCypherpost implements ICypherpost {
 
   //   return R(result: CompletePost.fromJson(resp));
   // }
-
 
   // @override
   // R<DerivationIndex> lastIndex({

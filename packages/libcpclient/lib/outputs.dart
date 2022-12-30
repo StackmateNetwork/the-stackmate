@@ -34,7 +34,6 @@ class SocialRoot {
   }
   final String xprv;
   final String mnemonic;
-
 }
 
 class ServerIdentity {
@@ -65,6 +64,37 @@ class Invitation {
     );
   }
   final String inviteCode;
+}
+
+class InvitationDetail {
+  const InvitationDetail(
+    this.genesis,
+    this.inviteCode,
+    this.claimedBy,
+    this.createdBy,
+    this.status,
+    this.kind,
+    this.count,
+  );
+  factory InvitationDetail.fromJson(String data) {
+    final json = jsonDecode(data);
+    return InvitationDetail(
+      json['genesis'] as int,
+      json['invite_code'] as String,
+      (json['claimed_by'] != null) ? json['claimed_by'] as String : 'None',
+      (json['created_by'] != null) ? json['created_by'] as String : 'None',
+      json['status'] as String,
+      json['kind'] as String,
+      json['count'] as int,
+    );
+  }
+  final int genesis;
+  final String inviteCode;
+  final String kind;
+  final String status;
+  final String claimedBy;
+  final String createdBy;
+  final int count;
 }
 
 class MemberIdentity {

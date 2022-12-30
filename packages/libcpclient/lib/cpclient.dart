@@ -35,7 +35,7 @@ class LibCPClientFFI {
     ).toDartString();
     return resp;
   }
-  
+
   String adminInvite({
     required String hostname,
     required int socks5,
@@ -43,7 +43,8 @@ class LibCPClientFFI {
     required String kind,
     required int count,
   }) {
-    final func = binary.lookupFunction<AdminInviteT, AdminInviteT>('admin_invite');
+    final func =
+        binary.lookupFunction<AdminInviteT, AdminInviteT>('admin_invite');
     final resp = func(
       hostname.toNativeUtf8(),
       socks5.toString().toNativeUtf8(),
@@ -61,6 +62,22 @@ class LibCPClientFFI {
     required String inviteCode,
   }) {
     final func = binary.lookupFunction<InviteT, InviteT>('priv_user_invite');
+    final resp = func(
+      hostname.toNativeUtf8(),
+      socks5.toString().toNativeUtf8(),
+      socialRoot.toNativeUtf8(),
+      inviteCode.toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
+
+  String userInviteDetail({
+    required String hostname,
+    required int socks5,
+    required String socialRoot,
+    required String inviteCode,
+  }) {
+    final func = binary.lookupFunction<InviteT, InviteT>('user_invite_detail');
     final resp = func(
       hostname.toNativeUtf8(),
       socks5.toString().toNativeUtf8(),
