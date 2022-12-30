@@ -7,8 +7,9 @@ void main() {
       'xprv9s21ZrQH143K2FJMh7DKFuDx9gNMjzA5BPA8NKkrmdF4p8fvpn5PUZsPKwGM1tydUQKQmYZXtgszJPKdiYXwyqAVSZCfRNpYZ7LVaeXJMdG';
   const expectedSocialRoot =
       'xprv9s21ZrQH143K4HgkGgtpYw9Ub8a8ZH33ZTeEJwAnyVvr91Zdkn3xbXxR8jo7Txu3tycENfX6k65SDsz7fS2dXsy5VCM6xLmVwS6ERRwu8rA';
-  const expectedMnemonic = 'permit fuel media speak loud decline color street piano put nothing fog';
-  const adminSecret = 'd1f10770c10db3d8b93a02431424eb8f';
+  const expectedMnemonic =
+      'permit fuel media speak loud decline color street piano put nothing fog';
+  const adminSecret = '9caff0735bc6e80121cedcb98ca51821';
   const kind = 'priv';
   const inviteCode = 'G3tNe5GipUhQyVfctTt9Sorq3bL3x4ig';
   const hostname = 'https://lotr.toma.tech';
@@ -33,7 +34,6 @@ void main() {
   });
 
   test('Create cp account', () async {
-
     final root = libcp.createSocialRoot(
       masterRoot: masterRoot,
       account: 0,

@@ -22,12 +22,14 @@ NetworkServerIdentity _$NetworkServerIdentityFromJson(
 /// @nodoc
 mixin _$NetworkServerIdentity {
   @HiveField(0)
-  String get hostname => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @HiveField(1)
-  String get name => throw _privateConstructorUsedError;
+  String get hostname => throw _privateConstructorUsedError;
   @HiveField(2)
-  String get pubkey => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   @HiveField(3)
+  String get pubkey => throw _privateConstructorUsedError;
+  @HiveField(4)
   String get kind => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,10 +44,11 @@ abstract class $NetworkServerIdentityCopyWith<$Res> {
           $Res Function(NetworkServerIdentity) then) =
       _$NetworkServerIdentityCopyWithImpl<$Res>;
   $Res call(
-      {@HiveField(0) String hostname,
-      @HiveField(1) String name,
-      @HiveField(2) String pubkey,
-      @HiveField(3) String kind});
+      {@HiveField(0) int? id,
+      @HiveField(1) String hostname,
+      @HiveField(2) String name,
+      @HiveField(3) String pubkey,
+      @HiveField(4) String kind});
 }
 
 /// @nodoc
@@ -59,12 +62,17 @@ class _$NetworkServerIdentityCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? hostname = freezed,
     Object? name = freezed,
     Object? pubkey = freezed,
     Object? kind = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       hostname: hostname == freezed
           ? _value.hostname
           : hostname // ignore: cast_nullable_to_non_nullable
@@ -93,10 +101,11 @@ abstract class _$$_NetworkServerIdentityCopyWith<$Res>
       __$$_NetworkServerIdentityCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@HiveField(0) String hostname,
-      @HiveField(1) String name,
-      @HiveField(2) String pubkey,
-      @HiveField(3) String kind});
+      {@HiveField(0) int? id,
+      @HiveField(1) String hostname,
+      @HiveField(2) String name,
+      @HiveField(3) String pubkey,
+      @HiveField(4) String kind});
 }
 
 /// @nodoc
@@ -113,12 +122,17 @@ class __$$_NetworkServerIdentityCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? hostname = freezed,
     Object? name = freezed,
     Object? pubkey = freezed,
     Object? kind = freezed,
   }) {
     return _then(_$_NetworkServerIdentity(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       hostname: hostname == freezed
           ? _value.hostname
           : hostname // ignore: cast_nullable_to_non_nullable
@@ -144,10 +158,11 @@ class __$$_NetworkServerIdentityCopyWithImpl<$Res>
 @HiveType(typeId: 11, adapterName: 'NetworkServerIdentityClassAdapter')
 class _$_NetworkServerIdentity extends _NetworkServerIdentity {
   const _$_NetworkServerIdentity(
-      {@HiveField(0) required this.hostname,
-      @HiveField(1) required this.name,
-      @HiveField(2) required this.pubkey,
-      @HiveField(3) required this.kind})
+      {@HiveField(0) this.id,
+      @HiveField(1) required this.hostname,
+      @HiveField(2) required this.name,
+      @HiveField(3) required this.pubkey,
+      @HiveField(4) required this.kind})
       : super._();
 
   factory _$_NetworkServerIdentity.fromJson(Map<String, dynamic> json) =>
@@ -155,20 +170,23 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
 
   @override
   @HiveField(0)
-  final String hostname;
+  final int? id;
   @override
   @HiveField(1)
-  final String name;
+  final String hostname;
   @override
   @HiveField(2)
-  final String pubkey;
+  final String name;
   @override
   @HiveField(3)
+  final String pubkey;
+  @override
+  @HiveField(4)
   final String kind;
 
   @override
   String toString() {
-    return 'NetworkServerIdentity(hostname: $hostname, name: $name, pubkey: $pubkey, kind: $kind)';
+    return 'NetworkServerIdentity(id: $id, hostname: $hostname, name: $name, pubkey: $pubkey, kind: $kind)';
   }
 
   @override
@@ -176,6 +194,7 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NetworkServerIdentity &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.hostname, hostname) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.pubkey, pubkey) &&
@@ -186,6 +205,7 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(hostname),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(pubkey),
@@ -205,10 +225,11 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
 
 abstract class _NetworkServerIdentity extends NetworkServerIdentity {
   const factory _NetworkServerIdentity(
-      {@HiveField(0) required final String hostname,
-      @HiveField(1) required final String name,
-      @HiveField(2) required final String pubkey,
-      @HiveField(3) required final String kind}) = _$_NetworkServerIdentity;
+      {@HiveField(0) final int? id,
+      @HiveField(1) required final String hostname,
+      @HiveField(2) required final String name,
+      @HiveField(3) required final String pubkey,
+      @HiveField(4) required final String kind}) = _$_NetworkServerIdentity;
   const _NetworkServerIdentity._() : super._();
 
   factory _NetworkServerIdentity.fromJson(Map<String, dynamic> json) =
@@ -216,15 +237,18 @@ abstract class _NetworkServerIdentity extends NetworkServerIdentity {
 
   @override
   @HiveField(0)
-  String get hostname => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @override
   @HiveField(1)
-  String get name => throw _privateConstructorUsedError;
+  String get hostname => throw _privateConstructorUsedError;
   @override
   @HiveField(2)
-  String get pubkey => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   @override
   @HiveField(3)
+  String get pubkey => throw _privateConstructorUsedError;
+  @override
+  @HiveField(4)
   String get kind => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

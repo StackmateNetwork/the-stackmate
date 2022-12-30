@@ -6,6 +6,7 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
+import 'package:sats/cubit/networks.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/pin.dart';
 import 'package:sats/cubit/preferences.dart';
@@ -77,7 +78,13 @@ class _CubitsState extends State<Cubits> {
       torCubit,
       networkSelectCubit,
     );
-
+    final networksCubit = NetworksCubit(
+      locator<IStorage>(),
+      logger,
+      locator<IClipBoard>(),
+      torCubit,
+      socialRootCubit,
+    );
     final pinCubit = PinCubit(
       storage,
     );
@@ -94,6 +101,7 @@ class _CubitsState extends State<Cubits> {
         BlocProvider.value(value: socialRootCubit),
         BlocProvider.value(value: broadcastHex),
         BlocProvider.value(value: pinCubit),
+        BlocProvider.value(value: networksCubit),
       ],
       child: BlocListener<ChainSelectCubit, BlockchainState>(
         listener: (context, state) {

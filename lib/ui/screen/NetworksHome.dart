@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sats/cubit/networks.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -11,6 +12,8 @@ import 'package:sats/ui/component/Network/Networks.dart';
 class _NetworkHome extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
+    c.read<NetworksCubit>().load();
+
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
@@ -18,6 +21,7 @@ class _NetworkHome extends StatelessWidget {
           onRefresh: () async {
             c.read<WalletsCubit>().refresh();
             c.read<TorCubit>().testConnection();
+            c.read<NetworksCubit>().load();
             // if (c.select((TorCubit t) => t.state).isRunning
             return;
           },
@@ -52,7 +56,7 @@ class _NetworkHome extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            'cypherpost is a free and open-source\nend-to-end encrypted social networking protocol.',
+                            'cypherpost is F.O.S.S.\nFor end-to-end encrypted social networking.',
                             style: c.fonts.caption!.copyWith(
                               color: c.colours.onPrimary,
                             ),

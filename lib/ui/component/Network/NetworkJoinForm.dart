@@ -22,20 +22,20 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
   @override
   Widget build(BuildContext c) {
     final networksCubit = c.select((NetworksCubit n) => n);
-    final name = c.select((NetworksCubit nc)=> nc.state.name);
+    final name = c.select((NetworksCubit nc) => nc.state.name);
 
     return BlocListener<NetworksCubit, NetworksState>(
       listener: (c, s) {
         if (s.error != '') {
           handleError(c, s.error);
         }
-        // if (s.name != '') {
-        //   handleSuccess(c, s.name!);
-        // }
+        if (s.joined) {
+          networksCubit.clear();
+          Navigator.of(c).pop();
+        }
       },
       child: WillPopScope(
         onWillPop: () async {
-          c.read<NetworksCubit>().clear();
           return true;
         },
         child: Form(
@@ -62,56 +62,55 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
                 ),
               ),
               if (name == null)
-              Column(
-                children: [
-              SizedBox(
-                child: IconButton(
-                  icon: const Icon(Icons.network_ping),
-                  color: context.colours.primary,
-                  tooltip: 'Ping Server',
-                  onPressed: () async {
-                    await networksCubit.pingHost();
-                  },
+                Column(
+                  children: [
+                    SizedBox(
+                      child: IconButton(
+                        icon: const Icon(Icons.network_ping),
+                        color: context.colours.primary,
+                        tooltip: 'Ping Server',
+                        onPressed: () async {
+                          await networksCubit.pingHost();
+                        },
+                      ),
+                    ),
+                    Text(
+                      'Ping Host',
+                      style: c.fonts.bodySmall!.copyWith(
+                        color: c.colours.primary,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                )
+              else
+                Column(
+                  children: [
+                    SizedBox(
+                      child: IconButton(
+                        icon: const Icon(Icons.network_check),
+                        color: context.colours.secondary,
+                        tooltip: 'Found Host',
+                        onPressed: () {},
+                      ),
+                    ),
+                    Text(
+                      'Found Host!',
+                      style: c.fonts.bodySmall!.copyWith(
+                        color: c.colours.secondary,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      name,
+                      style: c.fonts.bodyMedium!.copyWith(
+                        color: c.colours.secondary,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-              ),
-              Text(
-                'Ping Host',
-                style: c.fonts.bodySmall!.copyWith(
-                  color: c.colours.primary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-                ],
-              )
-              else Column(
-                children: [
-              SizedBox(
-                child: IconButton(
-                  icon: const Icon(Icons.network_check),
-                  color: context.colours.secondary,
-                  tooltip: 'Found Host',
-                  onPressed: () {
-                    
-                  },
-                ),
-              ),
-              Text(
-                'Found Host!',
-                style: c.fonts.bodySmall!.copyWith(
-                  color: c.colours.secondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 24),
-              Text(
-                name,
-                style: c.fonts.bodyMedium!.copyWith(
-                  color: c.colours.secondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-                ],
-              ),              
               const SizedBox(height: 15),
               Padding(
                 padding: EdgeInsets.zero,
@@ -174,16 +173,8 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
                     onPrimary: c.colours.background,
                     primary: c.colours.primary,
                   ),
-                  onPressed: () {
-                    if (_form.currentState!.validate()) {
-                      final FocusScopeNode currentFocus =
-                          FocusScope.of(context);
-
-                      if (!currentFocus.hasPrimaryFocus) {
-                        currentFocus.unfocus();
-                      }
-                      Navigator.pop(context);
-                    }
+                  onPressed: () async {
+                    networksCubit.join();
                   },
                   child: Text('JOIN'.toUpperCase()),
                 ),

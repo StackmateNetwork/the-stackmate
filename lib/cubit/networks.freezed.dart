@@ -26,6 +26,7 @@ mixin _$NetworksState {
   String? get kind => throw _privateConstructorUsedError;
   String? get pubkey => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get joined => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NetworksStateCopyWith<NetworksState> get copyWith =>
@@ -46,7 +47,8 @@ abstract class $NetworksStateCopyWith<$Res> {
       String? name,
       String? kind,
       String? pubkey,
-      bool isLoading});
+      bool isLoading,
+      bool joined});
 }
 
 /// @nodoc
@@ -69,6 +71,7 @@ class _$NetworksStateCopyWithImpl<$Res>
     Object? kind = freezed,
     Object? pubkey = freezed,
     Object? isLoading = freezed,
+    Object? joined = freezed,
   }) {
     return _then(_value.copyWith(
       networks: networks == freezed
@@ -107,6 +110,10 @@ class _$NetworksStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      joined: joined == freezed
+          ? _value.joined
+          : joined // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -127,7 +134,8 @@ abstract class _$$_NetworksStateCopyWith<$Res>
       String? name,
       String? kind,
       String? pubkey,
-      bool isLoading});
+      bool isLoading,
+      bool joined});
 }
 
 /// @nodoc
@@ -152,6 +160,7 @@ class __$$_NetworksStateCopyWithImpl<$Res>
     Object? kind = freezed,
     Object? pubkey = freezed,
     Object? isLoading = freezed,
+    Object? joined = freezed,
   }) {
     return _then(_$_NetworksState(
       networks: networks == freezed
@@ -190,6 +199,10 @@ class __$$_NetworksStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      joined: joined == freezed
+          ? _value.joined
+          : joined // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -206,7 +219,8 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
       this.name,
       this.kind,
       this.pubkey,
-      this.isLoading = false})
+      this.isLoading = false,
+      this.joined = false})
       : _networks = networks;
 
   final List<NetworkServerIdentity> _networks;
@@ -237,10 +251,13 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool joined;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NetworksState(networks: $networks, hostname: $hostname, username: $username, inviteCode: $inviteCode, error: $error, name: $name, kind: $kind, pubkey: $pubkey, isLoading: $isLoading)';
+    return 'NetworksState(networks: $networks, hostname: $hostname, username: $username, inviteCode: $inviteCode, error: $error, name: $name, kind: $kind, pubkey: $pubkey, isLoading: $isLoading, joined: $joined)';
   }
 
   @override
@@ -256,7 +273,8 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('kind', kind))
       ..add(DiagnosticsProperty('pubkey', pubkey))
-      ..add(DiagnosticsProperty('isLoading', isLoading));
+      ..add(DiagnosticsProperty('isLoading', isLoading))
+      ..add(DiagnosticsProperty('joined', joined));
   }
 
   @override
@@ -273,7 +291,8 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.kind, kind) &&
             const DeepCollectionEquality().equals(other.pubkey, pubkey) &&
-            const DeepCollectionEquality().equals(other.isLoading, isLoading));
+            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
+            const DeepCollectionEquality().equals(other.joined, joined));
   }
 
   @override
@@ -287,7 +306,8 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(kind),
       const DeepCollectionEquality().hash(pubkey),
-      const DeepCollectionEquality().hash(isLoading));
+      const DeepCollectionEquality().hash(isLoading),
+      const DeepCollectionEquality().hash(joined));
 
   @JsonKey(ignore: true)
   @override
@@ -305,7 +325,8 @@ abstract class _NetworksState implements NetworksState {
       final String? name,
       final String? kind,
       final String? pubkey,
-      final bool isLoading}) = _$_NetworksState;
+      final bool isLoading,
+      final bool joined}) = _$_NetworksState;
 
   @override
   List<NetworkServerIdentity> get networks =>
@@ -326,6 +347,8 @@ abstract class _NetworksState implements NetworksState {
   String? get pubkey => throw _privateConstructorUsedError;
   @override
   bool get isLoading => throw _privateConstructorUsedError;
+  @override
+  bool get joined => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_NetworksStateCopyWith<_$_NetworksState> get copyWith =>

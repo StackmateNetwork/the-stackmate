@@ -59,21 +59,6 @@ class NetworkJoinScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final torCubit = context.select((TorCubit c) => c);
-    final logger = context.select((Logger c) => c);
-    final socialRoot = context.select((SocialRootCubit c) => c);
-
-    final networksCubit = NetworksCubit(
-      locator<IStorage>(),
-      logger,
-      locator<IClipBoard>(),
-      torCubit,
-      socialRoot,
-    );
-
-    return BlocProvider.value(
-      value: networksCubit,
-      child: const _NetworkJoin(),
-    );
+    return const _NetworkJoin();
   }
 }

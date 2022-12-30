@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/model/cypherpost.dart';
+import 'package:sats/model/network-server-identity.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class NetworkCard extends StatelessWidget {
@@ -12,7 +13,7 @@ class NetworkCard extends StatelessWidget {
     required this.network,
   }) : super(key: key);
 
-  final CypherPostServerIdentity network;
+  final NetworkServerIdentity network;
   final bool isSelection;
 
   @override
@@ -65,7 +66,7 @@ class NetworkCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  '10 Members',
+                  network.kind,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 10,
                   style: c.fonts.caption!.copyWith(
