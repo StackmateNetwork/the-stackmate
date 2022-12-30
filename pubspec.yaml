@@ -36,6 +36,8 @@ dependencies:
   hive_flutter: ^1.1.0
   image_picker: ^0.8.6
   intl: ^0.17.0
+  libcpclient:
+    path: packages/libcpclient
   libstackmate:
     path: packages/libstackmate
   numeric_keyboard: ^1.1.0

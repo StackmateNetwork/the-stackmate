@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/libstackmate.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
+import 'package:sats/api/libcp.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
+import 'package:sats/cubit/social-root.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/launcher.dart';
@@ -47,6 +49,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
     this._blockchainCubit,
     this._logger,
     this._launcher,
+    this._socialRoot,
   ) : super(const SeedGenerateState());
 
   final IStackMateBitcoin _bitcoin;
@@ -54,6 +57,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   final ChainSelectCubit _blockchainCubit;
   final Logger _logger;
   final ILauncher _launcher;
+  final SocialRootCubit _socialRoot;
 
   static const accountZero = '0';
   static const segwitNativePurpose = '84';
@@ -91,7 +95,17 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       );
     }
     await _masterKey.init();
+
+    final libcp = LibCypherpost();
+    final socialRoot = libcp.createSocialRoot(
+      masterRoot: root.result!.xprv,
+      account: 0,
+    );
+    await _socialRoot.save(
+        socialRoot.result!.xprv, socialRoot.result!.mnemonic,);
+    await _socialRoot.init();
     clear();
+    
     final wallet = _bitcoin.deriveHardened(
       masterXPriv: root.result!.xprv,
       account: accountZero,

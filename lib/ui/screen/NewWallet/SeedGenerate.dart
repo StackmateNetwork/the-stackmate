@@ -7,7 +7,9 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
+import 'package:sats/cubit/social-root.dart';
 import 'package:sats/cubit/wallets.dart';
+import 'package:sats/model/social-root.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/launcher.dart';
@@ -132,6 +134,7 @@ class SeedGenerateScreen extends StatelessWidget {
     final logger = context.select((Logger c) => c);
     final wallets = context.select((WalletsCubit c) => c);
     final masterKey = context.select((MasterKeyCubit c) => c);
+    final socialRoot = context.select((SocialRootCubit c) => c);
 
     final seedGenerateCubit = SeedGenerateCubit(
       locator<IStackMateBitcoin>(),
@@ -139,6 +142,7 @@ class SeedGenerateScreen extends StatelessWidget {
       networkSelect,
       logger,
       locator<ILauncher>(),
+      socialRoot,
     );
 
     final seedGenerateWalletCubit = SeedGenerateWalletCubit(

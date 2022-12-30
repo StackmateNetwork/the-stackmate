@@ -5,6 +5,7 @@ import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
+import 'package:sats/cubit/social-root.dart';
 
 part 'seed-import.freezed.dart';
 
@@ -44,7 +45,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
   final MasterKeyCubit _masterKey;
   final Logger logger;
   final ChainSelectCubit _blockchainCubit;
-
+  
   static const segwitNativePurpose = '84';
   static const invalidSeedError = 'Invalid Seed Words.';
   static const emptyString = '';
@@ -99,6 +100,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
         emit(state.copyWith(seedError: invalidSeedError));
         return;
       }
+      // we cannot import a primary key with passphrase - pp wallets can be derived later
       final pp =
           (_masterKey.state.key != null) ? emptyString : state.passPhrase;
       final root = _core.importMaster(

@@ -14,6 +14,14 @@ typedef ServerIdT = Pointer<Utf8> Function(
   Pointer<Utf8> social_root,
 );
 
+typedef AdminInviteT = Pointer<Utf8> Function(
+  Pointer<Utf8> hostname,
+  Pointer<Utf8> socks5,
+  Pointer<Utf8> admin_secret,
+  Pointer<Utf8> kind,
+  Pointer<Utf8> count,
+);
+
 typedef InviteT = Pointer<Utf8> Function(
   Pointer<Utf8> hostname,
   Pointer<Utf8> socks5,

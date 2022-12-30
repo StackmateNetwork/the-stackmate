@@ -8,9 +8,10 @@ part 'network-members.freezed.dart';
 class NetworkMembers with _$NetworkMembers {
   @HiveType(typeId: 12, adapterName: 'NetworkMembersClassAdapter')
   const factory NetworkMembers({
-    @HiveField(0) required int genesis,
-    @HiveField(1) required String pubkey,
-    @HiveField(2) required String username,
+    @HiveField(0) required int hostname,
+    @HiveField(1) required int genesis,
+    @HiveField(2) required String pubkey,
+    @HiveField(3) required String username,
   }) = _NetworkMembers;
   const NetworkMembers._();
 

@@ -625,6 +625,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.2.0"
+  libcpclient:
+    dependency: "direct main"
+    description:
+      path: "packages/libcpclient"
+      relative: true
+    source: path
+    version: "0.1.0"
   libstackmate:
     dependency: "direct main"
     description:

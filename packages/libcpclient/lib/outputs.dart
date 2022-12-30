@@ -5,47 +5,55 @@ import 'dart:convert';
 class SMError {
   const SMError(
     this.kind,
-    this.message,
+    this.error,
   );
   factory SMError.fromJson(String data) {
     final json = jsonDecode(data);
     return SMError(
       json['kind'] as String,
-      json['message'] as String,
+      json['error'] as String,
     );
   }
   final String kind;
-  final String message;
+  final String error;
 
-  String get oneliner => '$kind:$message';
+  String get oneliner => '$kind:$error';
 }
 
 class SocialRoot {
-  // ignore: avoid_positional_boolean_parameters
-  const SocialRoot(this.socialRoot);
+  const SocialRoot(
+    this.xprv,
+    this.mnemonic,
+  );
   factory SocialRoot.fromJson(String data) {
     final json = jsonDecode(data);
     return SocialRoot(
-      json['social_root'] as String,
+      json['xprv'] as String,
+      json['mnemonic'] as String,
     );
   }
-  final String socialRoot;
+  final String xprv;
+  final String mnemonic;
+
 }
 
 class ServerIdentity {
   const ServerIdentity(
     this.name,
     this.kind,
+    this.pubkey,
   );
   factory ServerIdentity.fromJson(String data) {
     final json = jsonDecode(data);
     return ServerIdentity(
       json['name'] as String,
       json['kind'] as String,
+      json['pubkey'] as String,
     );
   }
   final String name;
   final String kind;
+  final String pubkey;
 }
 
 class Invitation {
@@ -64,8 +72,7 @@ class MemberIdentity {
     this.username,
     this.pubkey,
   );
-  factory MemberIdentity.fromJson(String data) {
-    final json = jsonDecode(data);
+  factory MemberIdentity.fromJson(Map<String, dynamic> json) {
     return MemberIdentity(
       json['username'] as String,
       json['pubkey'] as String,

@@ -26,8 +26,8 @@ class HomeActions extends StatelessWidget {
           IconButton(
             onPressed: () async {
               if (ModalRoute.of(context)!.settings.name != '/network')
-                // context.push('/network');
-                await locator<ILauncher>().launchApp('https://cypherpost.io');
+                context.push('/network');
+                // await locator<ILauncher>().launchApp('https://cypherpost.io');
             },
             icon: Icon(
               Icons.message_sharp,

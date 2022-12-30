@@ -176,19 +176,6 @@ class WalletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    // final history = InfoCubit(
-    //   c.read<WalletsCubit>(),
-    //   locator<IStorage>(),
-    //   c.read<Logger>(),
-    //   locator<ILauncher>(),
-    //   locator<IShare>(),
-    //   locator<IVibrate>(),
-    //   c.read<NodeAddressCubit>(),
-    //   c.read<TorCubit>(),
-    //   c.read<ChainSelectCubit>(),
-    //   wallet,
-    // );
-
     return BlocProvider.value(
       value: infoCubit,
       child: const _Wallet(),

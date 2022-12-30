@@ -35,6 +35,24 @@ class LibCPClientFFI {
     ).toDartString();
     return resp;
   }
+  
+  String adminInvite({
+    required String hostname,
+    required int socks5,
+    required String adminSecret,
+    required String kind,
+    required int count,
+  }) {
+    final func = binary.lookupFunction<AdminInviteT, AdminInviteT>('admin_invite');
+    final resp = func(
+      hostname.toNativeUtf8(),
+      socks5.toString().toNativeUtf8(),
+      adminSecret.toNativeUtf8(),
+      kind.toNativeUtf8(),
+      count.toString().toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
 
   String privUserInvite({
     required String hostname,

@@ -6,13 +6,12 @@ part 'network-server-identity.freezed.dart';
 
 @freezed
 class NetworkServerIdentity with _$NetworkServerIdentity {
-  @HiveType(typeId: 10, adapterName: 'NetworkServerIdentityClassAdapter')
+  @HiveType(typeId: 11, adapterName: 'NetworkServerIdentityClassAdapter')
   const factory NetworkServerIdentity({
-    @HiveField(0) required String hostName,
+    @HiveField(0) required String hostname,
     @HiveField(1) required String name,
     @HiveField(2) required String pubkey,
     @HiveField(3) required String kind,
-    @HiveField(4) required int memberCount,
   }) = _NetworkServerIdentity;
   const NetworkServerIdentity._();
 

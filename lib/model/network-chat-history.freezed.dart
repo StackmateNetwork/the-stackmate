@@ -17,8 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$NetworkChatHistory {
   @HiveField(0)
-  String get counterParty => throw _privateConstructorUsedError;
+  String get hostname => throw _privateConstructorUsedError;
   @HiveField(1)
+  String get counterParty => throw _privateConstructorUsedError;
+  @HiveField(2)
   List<PlainPost> get posts => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -32,7 +34,9 @@ abstract class $NetworkChatHistoryCopyWith<$Res> {
           NetworkChatHistory value, $Res Function(NetworkChatHistory) then) =
       _$NetworkChatHistoryCopyWithImpl<$Res>;
   $Res call(
-      {@HiveField(0) String counterParty, @HiveField(1) List<PlainPost> posts});
+      {@HiveField(0) String hostname,
+      @HiveField(1) String counterParty,
+      @HiveField(2) List<PlainPost> posts});
 }
 
 /// @nodoc
@@ -46,10 +50,15 @@ class _$NetworkChatHistoryCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? hostname = freezed,
     Object? counterParty = freezed,
     Object? posts = freezed,
   }) {
     return _then(_value.copyWith(
+      hostname: hostname == freezed
+          ? _value.hostname
+          : hostname // ignore: cast_nullable_to_non_nullable
+              as String,
       counterParty: counterParty == freezed
           ? _value.counterParty
           : counterParty // ignore: cast_nullable_to_non_nullable
@@ -70,7 +79,9 @@ abstract class _$$_NetworkChatHistoryCopyWith<$Res>
       __$$_NetworkChatHistoryCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@HiveField(0) String counterParty, @HiveField(1) List<PlainPost> posts});
+      {@HiveField(0) String hostname,
+      @HiveField(1) String counterParty,
+      @HiveField(2) List<PlainPost> posts});
 }
 
 /// @nodoc
@@ -86,10 +97,15 @@ class __$$_NetworkChatHistoryCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? hostname = freezed,
     Object? counterParty = freezed,
     Object? posts = freezed,
   }) {
     return _then(_$_NetworkChatHistory(
+      hostname: hostname == freezed
+          ? _value.hostname
+          : hostname // ignore: cast_nullable_to_non_nullable
+              as String,
       counterParty: counterParty == freezed
           ? _value.counterParty
           : counterParty // ignore: cast_nullable_to_non_nullable
@@ -107,17 +123,21 @@ class __$$_NetworkChatHistoryCopyWithImpl<$Res>
 @HiveType(typeId: 13, adapterName: 'NetworkChatHistoryClassAdapter')
 class _$_NetworkChatHistory extends _NetworkChatHistory {
   const _$_NetworkChatHistory(
-      {@HiveField(0) required this.counterParty,
-      @HiveField(1) required final List<PlainPost> posts})
+      {@HiveField(0) required this.hostname,
+      @HiveField(1) required this.counterParty,
+      @HiveField(2) required final List<PlainPost> posts})
       : _posts = posts,
         super._();
 
   @override
   @HiveField(0)
+  final String hostname;
+  @override
+  @HiveField(1)
   final String counterParty;
   final List<PlainPost> _posts;
   @override
-  @HiveField(1)
+  @HiveField(2)
   List<PlainPost> get posts {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_posts);
@@ -125,7 +145,7 @@ class _$_NetworkChatHistory extends _NetworkChatHistory {
 
   @override
   String toString() {
-    return 'NetworkChatHistory(counterParty: $counterParty, posts: $posts)';
+    return 'NetworkChatHistory(hostname: $hostname, counterParty: $counterParty, posts: $posts)';
   }
 
   @override
@@ -133,6 +153,7 @@ class _$_NetworkChatHistory extends _NetworkChatHistory {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NetworkChatHistory &&
+            const DeepCollectionEquality().equals(other.hostname, hostname) &&
             const DeepCollectionEquality()
                 .equals(other.counterParty, counterParty) &&
             const DeepCollectionEquality().equals(other._posts, _posts));
@@ -141,6 +162,7 @@ class _$_NetworkChatHistory extends _NetworkChatHistory {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(hostname),
       const DeepCollectionEquality().hash(counterParty),
       const DeepCollectionEquality().hash(_posts));
 
@@ -153,16 +175,20 @@ class _$_NetworkChatHistory extends _NetworkChatHistory {
 
 abstract class _NetworkChatHistory extends NetworkChatHistory {
   const factory _NetworkChatHistory(
-          {@HiveField(0) required final String counterParty,
-          @HiveField(1) required final List<PlainPost> posts}) =
+          {@HiveField(0) required final String hostname,
+          @HiveField(1) required final String counterParty,
+          @HiveField(2) required final List<PlainPost> posts}) =
       _$_NetworkChatHistory;
   const _NetworkChatHistory._() : super._();
 
   @override
   @HiveField(0)
-  String get counterParty => throw _privateConstructorUsedError;
+  String get hostname => throw _privateConstructorUsedError;
   @override
   @HiveField(1)
+  String get counterParty => throw _privateConstructorUsedError;
+  @override
+  @HiveField(2)
   List<PlainPost> get posts => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

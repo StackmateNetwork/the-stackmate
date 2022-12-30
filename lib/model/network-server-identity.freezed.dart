@@ -22,15 +22,13 @@ NetworkServerIdentity _$NetworkServerIdentityFromJson(
 /// @nodoc
 mixin _$NetworkServerIdentity {
   @HiveField(0)
-  String get hostName => throw _privateConstructorUsedError;
+  String get hostname => throw _privateConstructorUsedError;
   @HiveField(1)
   String get name => throw _privateConstructorUsedError;
   @HiveField(2)
   String get pubkey => throw _privateConstructorUsedError;
   @HiveField(3)
   String get kind => throw _privateConstructorUsedError;
-  @HiveField(4)
-  int get memberCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,11 +42,10 @@ abstract class $NetworkServerIdentityCopyWith<$Res> {
           $Res Function(NetworkServerIdentity) then) =
       _$NetworkServerIdentityCopyWithImpl<$Res>;
   $Res call(
-      {@HiveField(0) String hostName,
+      {@HiveField(0) String hostname,
       @HiveField(1) String name,
       @HiveField(2) String pubkey,
-      @HiveField(3) String kind,
-      @HiveField(4) int memberCount});
+      @HiveField(3) String kind});
 }
 
 /// @nodoc
@@ -62,16 +59,15 @@ class _$NetworkServerIdentityCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? hostName = freezed,
+    Object? hostname = freezed,
     Object? name = freezed,
     Object? pubkey = freezed,
     Object? kind = freezed,
-    Object? memberCount = freezed,
   }) {
     return _then(_value.copyWith(
-      hostName: hostName == freezed
-          ? _value.hostName
-          : hostName // ignore: cast_nullable_to_non_nullable
+      hostname: hostname == freezed
+          ? _value.hostname
+          : hostname // ignore: cast_nullable_to_non_nullable
               as String,
       name: name == freezed
           ? _value.name
@@ -85,10 +81,6 @@ class _$NetworkServerIdentityCopyWithImpl<$Res>
           ? _value.kind
           : kind // ignore: cast_nullable_to_non_nullable
               as String,
-      memberCount: memberCount == freezed
-          ? _value.memberCount
-          : memberCount // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -101,11 +93,10 @@ abstract class _$$_NetworkServerIdentityCopyWith<$Res>
       __$$_NetworkServerIdentityCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@HiveField(0) String hostName,
+      {@HiveField(0) String hostname,
       @HiveField(1) String name,
       @HiveField(2) String pubkey,
-      @HiveField(3) String kind,
-      @HiveField(4) int memberCount});
+      @HiveField(3) String kind});
 }
 
 /// @nodoc
@@ -122,16 +113,15 @@ class __$$_NetworkServerIdentityCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? hostName = freezed,
+    Object? hostname = freezed,
     Object? name = freezed,
     Object? pubkey = freezed,
     Object? kind = freezed,
-    Object? memberCount = freezed,
   }) {
     return _then(_$_NetworkServerIdentity(
-      hostName: hostName == freezed
-          ? _value.hostName
-          : hostName // ignore: cast_nullable_to_non_nullable
+      hostname: hostname == freezed
+          ? _value.hostname
+          : hostname // ignore: cast_nullable_to_non_nullable
               as String,
       name: name == freezed
           ? _value.name
@@ -145,24 +135,19 @@ class __$$_NetworkServerIdentityCopyWithImpl<$Res>
           ? _value.kind
           : kind // ignore: cast_nullable_to_non_nullable
               as String,
-      memberCount: memberCount == freezed
-          ? _value.memberCount
-          : memberCount // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-@HiveType(typeId: 10, adapterName: 'NetworkServerIdentityClassAdapter')
+@HiveType(typeId: 11, adapterName: 'NetworkServerIdentityClassAdapter')
 class _$_NetworkServerIdentity extends _NetworkServerIdentity {
   const _$_NetworkServerIdentity(
-      {@HiveField(0) required this.hostName,
+      {@HiveField(0) required this.hostname,
       @HiveField(1) required this.name,
       @HiveField(2) required this.pubkey,
-      @HiveField(3) required this.kind,
-      @HiveField(4) required this.memberCount})
+      @HiveField(3) required this.kind})
       : super._();
 
   factory _$_NetworkServerIdentity.fromJson(Map<String, dynamic> json) =>
@@ -170,7 +155,7 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
 
   @override
   @HiveField(0)
-  final String hostName;
+  final String hostname;
   @override
   @HiveField(1)
   final String name;
@@ -180,13 +165,10 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
   @override
   @HiveField(3)
   final String kind;
-  @override
-  @HiveField(4)
-  final int memberCount;
 
   @override
   String toString() {
-    return 'NetworkServerIdentity(hostName: $hostName, name: $name, pubkey: $pubkey, kind: $kind, memberCount: $memberCount)';
+    return 'NetworkServerIdentity(hostname: $hostname, name: $name, pubkey: $pubkey, kind: $kind)';
   }
 
   @override
@@ -194,23 +176,20 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NetworkServerIdentity &&
-            const DeepCollectionEquality().equals(other.hostName, hostName) &&
+            const DeepCollectionEquality().equals(other.hostname, hostname) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.pubkey, pubkey) &&
-            const DeepCollectionEquality().equals(other.kind, kind) &&
-            const DeepCollectionEquality()
-                .equals(other.memberCount, memberCount));
+            const DeepCollectionEquality().equals(other.kind, kind));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(hostName),
+      const DeepCollectionEquality().hash(hostname),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(pubkey),
-      const DeepCollectionEquality().hash(kind),
-      const DeepCollectionEquality().hash(memberCount));
+      const DeepCollectionEquality().hash(kind));
 
   @JsonKey(ignore: true)
   @override
@@ -226,11 +205,10 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
 
 abstract class _NetworkServerIdentity extends NetworkServerIdentity {
   const factory _NetworkServerIdentity(
-      {@HiveField(0) required final String hostName,
+      {@HiveField(0) required final String hostname,
       @HiveField(1) required final String name,
       @HiveField(2) required final String pubkey,
-      @HiveField(3) required final String kind,
-      @HiveField(4) required final int memberCount}) = _$_NetworkServerIdentity;
+      @HiveField(3) required final String kind}) = _$_NetworkServerIdentity;
   const _NetworkServerIdentity._() : super._();
 
   factory _NetworkServerIdentity.fromJson(Map<String, dynamic> json) =
@@ -238,7 +216,7 @@ abstract class _NetworkServerIdentity extends NetworkServerIdentity {
 
   @override
   @HiveField(0)
-  String get hostName => throw _privateConstructorUsedError;
+  String get hostname => throw _privateConstructorUsedError;
   @override
   @HiveField(1)
   String get name => throw _privateConstructorUsedError;
@@ -248,9 +226,6 @@ abstract class _NetworkServerIdentity extends NetworkServerIdentity {
   @override
   @HiveField(3)
   String get kind => throw _privateConstructorUsedError;
-  @override
-  @HiveField(4)
-  int get memberCount => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_NetworkServerIdentityCopyWith<_$_NetworkServerIdentity> get copyWith =>

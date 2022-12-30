@@ -21,10 +21,12 @@ NetworkMembers _$NetworkMembersFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$NetworkMembers {
   @HiveField(0)
-  int get genesis => throw _privateConstructorUsedError;
+  int get hostname => throw _privateConstructorUsedError;
   @HiveField(1)
-  String get pubkey => throw _privateConstructorUsedError;
+  int get genesis => throw _privateConstructorUsedError;
   @HiveField(2)
+  String get pubkey => throw _privateConstructorUsedError;
+  @HiveField(3)
   String get username => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,9 +41,10 @@ abstract class $NetworkMembersCopyWith<$Res> {
           NetworkMembers value, $Res Function(NetworkMembers) then) =
       _$NetworkMembersCopyWithImpl<$Res>;
   $Res call(
-      {@HiveField(0) int genesis,
-      @HiveField(1) String pubkey,
-      @HiveField(2) String username});
+      {@HiveField(0) int hostname,
+      @HiveField(1) int genesis,
+      @HiveField(2) String pubkey,
+      @HiveField(3) String username});
 }
 
 /// @nodoc
@@ -55,11 +58,16 @@ class _$NetworkMembersCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? hostname = freezed,
     Object? genesis = freezed,
     Object? pubkey = freezed,
     Object? username = freezed,
   }) {
     return _then(_value.copyWith(
+      hostname: hostname == freezed
+          ? _value.hostname
+          : hostname // ignore: cast_nullable_to_non_nullable
+              as int,
       genesis: genesis == freezed
           ? _value.genesis
           : genesis // ignore: cast_nullable_to_non_nullable
@@ -84,9 +92,10 @@ abstract class _$$_NetworkMembersCopyWith<$Res>
       __$$_NetworkMembersCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@HiveField(0) int genesis,
-      @HiveField(1) String pubkey,
-      @HiveField(2) String username});
+      {@HiveField(0) int hostname,
+      @HiveField(1) int genesis,
+      @HiveField(2) String pubkey,
+      @HiveField(3) String username});
 }
 
 /// @nodoc
@@ -102,11 +111,16 @@ class __$$_NetworkMembersCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? hostname = freezed,
     Object? genesis = freezed,
     Object? pubkey = freezed,
     Object? username = freezed,
   }) {
     return _then(_$_NetworkMembers(
+      hostname: hostname == freezed
+          ? _value.hostname
+          : hostname // ignore: cast_nullable_to_non_nullable
+              as int,
       genesis: genesis == freezed
           ? _value.genesis
           : genesis // ignore: cast_nullable_to_non_nullable
@@ -128,9 +142,10 @@ class __$$_NetworkMembersCopyWithImpl<$Res>
 @HiveType(typeId: 12, adapterName: 'NetworkMembersClassAdapter')
 class _$_NetworkMembers extends _NetworkMembers {
   const _$_NetworkMembers(
-      {@HiveField(0) required this.genesis,
-      @HiveField(1) required this.pubkey,
-      @HiveField(2) required this.username})
+      {@HiveField(0) required this.hostname,
+      @HiveField(1) required this.genesis,
+      @HiveField(2) required this.pubkey,
+      @HiveField(3) required this.username})
       : super._();
 
   factory _$_NetworkMembers.fromJson(Map<String, dynamic> json) =>
@@ -138,17 +153,20 @@ class _$_NetworkMembers extends _NetworkMembers {
 
   @override
   @HiveField(0)
-  final int genesis;
+  final int hostname;
   @override
   @HiveField(1)
-  final String pubkey;
+  final int genesis;
   @override
   @HiveField(2)
+  final String pubkey;
+  @override
+  @HiveField(3)
   final String username;
 
   @override
   String toString() {
-    return 'NetworkMembers(genesis: $genesis, pubkey: $pubkey, username: $username)';
+    return 'NetworkMembers(hostname: $hostname, genesis: $genesis, pubkey: $pubkey, username: $username)';
   }
 
   @override
@@ -156,6 +174,7 @@ class _$_NetworkMembers extends _NetworkMembers {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NetworkMembers &&
+            const DeepCollectionEquality().equals(other.hostname, hostname) &&
             const DeepCollectionEquality().equals(other.genesis, genesis) &&
             const DeepCollectionEquality().equals(other.pubkey, pubkey) &&
             const DeepCollectionEquality().equals(other.username, username));
@@ -165,6 +184,7 @@ class _$_NetworkMembers extends _NetworkMembers {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(hostname),
       const DeepCollectionEquality().hash(genesis),
       const DeepCollectionEquality().hash(pubkey),
       const DeepCollectionEquality().hash(username));
@@ -182,9 +202,10 @@ class _$_NetworkMembers extends _NetworkMembers {
 
 abstract class _NetworkMembers extends NetworkMembers {
   const factory _NetworkMembers(
-      {@HiveField(0) required final int genesis,
-      @HiveField(1) required final String pubkey,
-      @HiveField(2) required final String username}) = _$_NetworkMembers;
+      {@HiveField(0) required final int hostname,
+      @HiveField(1) required final int genesis,
+      @HiveField(2) required final String pubkey,
+      @HiveField(3) required final String username}) = _$_NetworkMembers;
   const _NetworkMembers._() : super._();
 
   factory _NetworkMembers.fromJson(Map<String, dynamic> json) =
@@ -192,12 +213,15 @@ abstract class _NetworkMembers extends NetworkMembers {
 
   @override
   @HiveField(0)
-  int get genesis => throw _privateConstructorUsedError;
+  int get hostname => throw _privateConstructorUsedError;
   @override
   @HiveField(1)
-  String get pubkey => throw _privateConstructorUsedError;
+  int get genesis => throw _privateConstructorUsedError;
   @override
   @HiveField(2)
+  String get pubkey => throw _privateConstructorUsedError;
+  @override
+  @HiveField(3)
   String get username => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

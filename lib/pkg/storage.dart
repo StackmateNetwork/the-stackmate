@@ -11,7 +11,9 @@ import 'package:sats/model/master.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/model/pin.dart';
 import 'package:sats/model/preferences.dart';
+import 'package:sats/model/network-server-identity.dart';
 import 'package:sats/model/result.dart';
+import 'package:sats/model/social-root.dart';
 import 'package:sats/model/tor.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
@@ -27,6 +29,8 @@ enum StoreKeys {
   MasterKey,
   Tor,
   Pin,
+  SocialRoot,
+  Networks,
 }
 
 extension StoreKeysFunctions on StoreKeys {
@@ -39,6 +43,8 @@ extension StoreKeysFunctions on StoreKeys {
         StoreKeys.MasterKey: 'master',
         StoreKeys.Tor: 'tor',
         StoreKeys.Pin: 'pin',
+        StoreKeys.SocialRoot: 'socialRoot',
+        StoreKeys.Networks: 'networks',
       }[this]!;
 }
 
@@ -53,6 +59,8 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(MasterKeyClassAdapter()); // typeId: 7
   Hive.registerAdapter(TorClassAdapter()); // typeId: 8
   Hive.registerAdapter(PinClassAdapter()); // typeId: 9
+  Hive.registerAdapter(SocialRootClassAdapter()); // typeId: 10
+  Hive.registerAdapter(NetworkServerIdentityClassAdapter()); // typeId: 11
 
   const secureStorage = FlutterSecureStorage();
   final encryprionKey = await secureStorage.read(key: 'key');
@@ -96,6 +104,14 @@ Future<void> initializeHive() async {
   );
   await Hive.openBox<Pin>(
     StoreKeys.Pin.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<SocialRoot>(
+    StoreKeys.SocialRoot.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<NetworkServerIdentity>(
+    StoreKeys.Networks.name,
     encryptionCipher: HiveAesCipher(encryptionKey),
   );
   await Hive.openBox<String>(

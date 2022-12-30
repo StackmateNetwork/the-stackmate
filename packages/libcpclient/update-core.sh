@@ -1,12 +1,12 @@
 #!/bin/bash -e
 
-RELEASE=v0.1.0
+RELEASE=v0.1.3
 
-rm -rf releases
-mkdir -p releases
+# rm -rf releases
+# mkdir -p releases
 cd releases
-printf "Fetching cpclient release $RELEASE\n ..."
-wget https://github.com/StackmateNetwork/cpclient/releases/download/$RELEASE/$RELEASE.tar.gz
+# printf "Fetching cpclient release $RELEASE\n ..."
+# wget https://github.com/StackmateNetwork/cpclient/releases/download/$RELEASE/$RELEASE.tar.gz
 tar -xzf $RELEASE.tar.gz 
 rm -rf $RELEASE.tar.gz
 cd ..
