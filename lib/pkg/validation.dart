@@ -58,8 +58,8 @@ class Validation {
   }
 
   static String fingerPrintFromXKey(String xkey) {
-    final startIndex = xkey.indexOf("[", 0);
-    final fingerPrintEndIndex = xkey.indexOf("/", 0);
+    final startIndex = xkey.indexOf('[');
+    final fingerPrintEndIndex = xkey.indexOf('/');
     return xkey.substring(startIndex + 1, fingerPrintEndIndex);
   }
 }

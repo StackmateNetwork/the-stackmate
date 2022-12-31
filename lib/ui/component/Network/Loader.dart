@@ -10,11 +10,22 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    final loading = c.select((NetworksCubit h) => h.state.isLoading);
+    final loading = c.select((NetworksCubit h) => h.state.loading);
 
-    const text = 'Connecting to host...';
+    switch (loading) {
+      case 'ping':
+        {
+          return const Loading(text: 'Pinging host...');
+        }
 
-    if (!loading) return Container();
-    else return const Loading(text: text);
+      case 'joining':
+        {
+          return const Loading(text: 'Attempting to register...');
+        }
+      default:
+        {
+          return Container();
+        }
+    }
   }
 }

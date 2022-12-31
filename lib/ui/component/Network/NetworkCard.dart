@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/model/cypherpost.dart';
 import 'package:sats/model/network-server-identity.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -20,7 +19,7 @@ class NetworkCard extends StatelessWidget {
   Widget build(BuildContext c) {
     return GestureDetector(
       onTap: () {
-        c.push('/chat-members');
+        c.push('/network-overview');
       },
       child: Material(
         elevation: 4,

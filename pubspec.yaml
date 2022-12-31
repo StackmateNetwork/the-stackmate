@@ -86,6 +86,20 @@ flutter:
     - assets/icon/bitcoin_icons/png/outline/satoshi-v2.png
     - assets/icon/bitcoin_icons/png/outline/proxy.png
     - assets/icon/bitcoin_icons/png/outline/link.png
+  fonts:
+    - family: NF3270
+      fonts:
+        - asset: assets/3270-Medium.otf
+        - asset: assets/3270-Narrow.otf
+    - family: Hurmit
+      fonts:
+        - asset: assets/Hurmit-Light.otf
+        - asset: assets/Hurmit-Medium.otf
+        - asset: assets/Hurmit-Bold.otf
+    - family: Aldrich
+      fonts:
+        - asset: assets/Aldrich/Aldrich-Regular.ttf
+    
 
 flutter_icons:
   android: true

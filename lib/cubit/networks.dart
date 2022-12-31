@@ -6,13 +6,11 @@ import 'package:sats/api/libcp.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/social-root.dart';
 import 'package:sats/cubit/tor.dart';
-import 'package:sats/model/master.dart';
 import 'package:sats/model/network-server-identity.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sats/api/interface/libcp.dart';
 
 part 'networks.freezed.dart';
 
@@ -28,7 +26,8 @@ class NetworksState with _$NetworksState {
     @Default('') String error,
     String? name,
     String? kind,
-    String? pubkey,
+    String? serverPubkey,
+    @Default('') String loading,
     @Default(false) bool isLoading,
     @Default(false) bool joined,
   }) = _NetworksState;
@@ -56,11 +55,12 @@ class NetworksCubit extends Cubit<NetworksState> {
       final storedNetworks =
           _storage.getAll<NetworkServerIdentity>(StoreKeys.Networks.name);
       if (storedNetworks.hasError) return;
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 300));
       final networks = storedNetworks.result!;
       emit(
         state.copyWith(
           networks: networks,
+          loading: '',
         ),
       );
     } catch (e, s) {
@@ -102,7 +102,7 @@ class NetworksCubit extends Cubit<NetworksState> {
       emit(
         state.copyWith(
           error: '',
-          isLoading: true,
+          loading: 'ping',
         ),
       );
       final socks5 = _torCubit.state.socks5Port;
@@ -117,7 +117,7 @@ class NetworksCubit extends Cubit<NetworksState> {
         emit(
           state.copyWith(
             error: 'Could not find host!',
-            isLoading: false,
+            loading: '',
           ),
         );
       } else {
@@ -125,9 +125,9 @@ class NetworksCubit extends Cubit<NetworksState> {
           state.copyWith(
             name: serverId.result!.name,
             kind: serverId.result!.kind,
-            pubkey: serverId.result!.pubkey,
+            serverPubkey: serverId.result!.pubkey,
             error: '',
-            isLoading: false,
+            loading: '',
           ),
         );
       }
@@ -164,7 +164,7 @@ class NetworksCubit extends Cubit<NetworksState> {
     try {
       emit(
         state.copyWith(
-          isLoading: true,
+          loading: 'ping',
         ),
       );
 
@@ -173,7 +173,7 @@ class NetworksCubit extends Cubit<NetworksState> {
         emit(
           state.copyWith(
             error: 'Username must be 12 Alphanumeric Characters',
-            isLoading: false,
+            loading: '',
           ),
         );
         return;
@@ -182,7 +182,7 @@ class NetworksCubit extends Cubit<NetworksState> {
         emit(
           state.copyWith(
             error: 'Invalid Invite Code Length.',
-            isLoading: false,
+            loading: '',
           ),
         );
         return;
@@ -203,14 +203,20 @@ class NetworksCubit extends Cubit<NetworksState> {
           emit(
             state.copyWith(
               error: 'Could not find host!',
-              isLoading: false,
+              loading: '',
             ),
           );
           return;
         }
       }
 
-      final status = await compute(joinHostServer, {
+      emit(
+        state.copyWith(
+          loading: 'joining',
+        ),
+      );
+
+      final inviteDetail = await compute(joinHostServer, {
         'hostname': 'https://' + state.hostname!,
         'socks5': socks5.toString(),
         'socialRoot': socialRoot,
@@ -218,29 +224,36 @@ class NetworksCubit extends Cubit<NetworksState> {
         'inviteCode': state.inviteCode,
       });
 
-      if (status.hasError) {
+      if (inviteDetail.hasError) {
         emit(
           state.copyWith(
-            error: serverId.error!,
-            isLoading: false,
+            error: inviteDetail.error!,
+            loading: '',
           ),
         );
         return;
-      } else {
-        final networkServerId = NetworkServerIdentity(
-          hostname: state.hostname!,
-          name: (state.name == null) ? serverId.result!.name : state.name!,
-          kind: (state.kind == null) ? serverId.result!.kind : state.kind!,
-          pubkey:
-              (state.pubkey == null) ? serverId.result!.pubkey : state.pubkey!,
-        );
-        await updateServerIdStorage(networkServerId);
-        emit(
-          state.copyWith(
-            joined: true,
-          ),
-        );
       }
+
+      final networkServerId = NetworkServerIdentity(
+        hostname: state.hostname!,
+        name: (state.name == null) ? serverId.result!.name : state.name!,
+        kind: (state.kind == null) ? serverId.result!.kind : state.kind!,
+        serverPubkey: (state.serverPubkey == null)
+            ? serverId.result!.pubkey
+            : state.serverPubkey!,
+        username: state.username,
+        inviteCode: state.inviteCode,
+        inviteCount: inviteDetail.result!.count,
+      );
+
+      await updateServerIdStorage(networkServerId);
+      await load();
+
+      emit(
+        state.copyWith(
+          joined: true,
+        ),
+      );
     } catch (e, s) {
       _logger.logException(e, 'NetworksCubit.join', s);
     }
@@ -256,7 +269,7 @@ class NetworksCubit extends Cubit<NetworksState> {
         emit(
           state.copyWith(
             error: couldNotSaveError,
-            isLoading: false,
+            loading: '',
           ),
         );
         return;
@@ -268,7 +281,6 @@ class NetworksCubit extends Cubit<NetworksState> {
         id,
         newId,
       );
-      await load();
     } catch (e, s) {
       _logger.logException(e, 'NetworksCubit.updateServerIdStorage', s);
     }
@@ -277,7 +289,7 @@ class NetworksCubit extends Cubit<NetworksState> {
   void clear() => emit(
         NetworksState(
           networks: state.networks,
-          isLoading: false,
+          loading: '',
           joined: false,
         ),
       );
@@ -293,7 +305,7 @@ R<ServerIdentity> serverIdentity(dynamic data) {
   return resp;
 }
 
-R<ServerStatus> joinHostServer(dynamic data) {
+R<InvitationDetail> joinHostServer(dynamic data) {
   final obj = data as Map<String, String?>;
   final resp = LibCypherpost().joinServer(
     hostname: obj['hostname']!,

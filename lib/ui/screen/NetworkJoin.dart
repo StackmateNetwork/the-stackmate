@@ -1,21 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sats/api/interface/logger.dart';
-import 'package:sats/cubit/chain-select.dart';
-import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/networks.dart';
-import 'package:sats/cubit/social-root.dart';
-import 'package:sats/cubit/tor.dart';
-import 'package:sats/model/cypherpost-mock.dart';
-import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/interface/clipboard.dart';
-import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/ui/component/Network/Loader.dart';
 import 'package:sats/ui/component/Network/NetworkJoinForm.dart';
 
 import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/ErrorHandler.dart';
-import 'package:sats/ui/component/common/SuccessHandler.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class _NetworkJoin extends StatelessWidget {
@@ -23,6 +12,7 @@ class _NetworkJoin extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
+    final networksCubit = c.select((NetworksCubit n) => n);
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -36,6 +26,7 @@ class _NetworkJoin extends StatelessWidget {
                 children: [
                   Back(
                     onPressed: () {
+                      networksCubit.clear();
                       Navigator.of(c).pop();
                     },
                   ),

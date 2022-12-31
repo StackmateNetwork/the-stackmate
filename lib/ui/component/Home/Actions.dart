@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/pkg/interface/launcher.dart';
 
 class HomeActions extends StatelessWidget {
   @override
@@ -27,7 +25,7 @@ class HomeActions extends StatelessWidget {
             onPressed: () async {
               if (ModalRoute.of(context)!.settings.name != '/network')
                 context.push('/network');
-                // await locator<ILauncher>().launchApp('https://cypherpost.io');
+              // await locator<ILauncher>().launchApp('https://cypherpost.io');
             },
             icon: Icon(
               Icons.message_sharp,

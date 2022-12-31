@@ -9,7 +9,7 @@ import 'package:sats/ui/component/Network/ChatSearch.dart';
 import 'package:sats/ui/component/Network/NetworkName.dart';
 import 'package:sats/ui/component/Network/NetworkTools.dart';
 
-class _ChatOverview extends StatelessWidget {
+class _NetworkOverview extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     return Scaffold(
@@ -19,7 +19,6 @@ class _ChatOverview extends StatelessWidget {
           onRefresh: () async {
             await c.read<TorCubit>().testConnection();
             await c.read<FeesCubit>().update();
-            return;
           },
           child: BlocBuilder<TorCubit, TorState>(
             builder: (context, torState) {
@@ -72,11 +71,11 @@ class _ChatOverview extends StatelessWidget {
   }
 }
 
-class NetworkChat extends StatelessWidget {
-  const NetworkChat({Key? key}) : super(key: key);
+class NetworkOverview extends StatelessWidget {
+  const NetworkOverview({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return _ChatOverview();
+    return _NetworkOverview();
   }
 }

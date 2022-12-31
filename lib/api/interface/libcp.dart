@@ -29,20 +29,13 @@ abstract class ICypherpost {
     required String inviteCode,
   });
 
-  R<InvitationDetail> userInviteDetail({
-    required String hostname,
-    required int socks5,
-    required String socialRoot,
-    required String inviteCode,
-  });
-
   R<List<MemberIdentity>> getMembers({
     required String hostname,
     required int socks5,
     required String socialRoot,
   });
 
-  R<ServerStatus> joinServer({
+  R<InvitationDetail> joinServer({
     required String hostname,
     required int socks5,
     required String socialRoot,

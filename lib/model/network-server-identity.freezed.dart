@@ -28,9 +28,15 @@ mixin _$NetworkServerIdentity {
   @HiveField(2)
   String get name => throw _privateConstructorUsedError;
   @HiveField(3)
-  String get pubkey => throw _privateConstructorUsedError;
+  String get serverPubkey => throw _privateConstructorUsedError;
   @HiveField(4)
   String get kind => throw _privateConstructorUsedError;
+  @HiveField(5)
+  String get username => throw _privateConstructorUsedError;
+  @HiveField(6)
+  String get inviteCode => throw _privateConstructorUsedError;
+  @HiveField(7)
+  int get inviteCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,8 +53,11 @@ abstract class $NetworkServerIdentityCopyWith<$Res> {
       {@HiveField(0) int? id,
       @HiveField(1) String hostname,
       @HiveField(2) String name,
-      @HiveField(3) String pubkey,
-      @HiveField(4) String kind});
+      @HiveField(3) String serverPubkey,
+      @HiveField(4) String kind,
+      @HiveField(5) String username,
+      @HiveField(6) String inviteCode,
+      @HiveField(7) int inviteCount});
 }
 
 /// @nodoc
@@ -65,8 +74,11 @@ class _$NetworkServerIdentityCopyWithImpl<$Res>
     Object? id = freezed,
     Object? hostname = freezed,
     Object? name = freezed,
-    Object? pubkey = freezed,
+    Object? serverPubkey = freezed,
     Object? kind = freezed,
+    Object? username = freezed,
+    Object? inviteCode = freezed,
+    Object? inviteCount = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -81,14 +93,26 @@ class _$NetworkServerIdentityCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      pubkey: pubkey == freezed
-          ? _value.pubkey
-          : pubkey // ignore: cast_nullable_to_non_nullable
+      serverPubkey: serverPubkey == freezed
+          ? _value.serverPubkey
+          : serverPubkey // ignore: cast_nullable_to_non_nullable
               as String,
       kind: kind == freezed
           ? _value.kind
           : kind // ignore: cast_nullable_to_non_nullable
               as String,
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      inviteCode: inviteCode == freezed
+          ? _value.inviteCode
+          : inviteCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      inviteCount: inviteCount == freezed
+          ? _value.inviteCount
+          : inviteCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -104,8 +128,11 @@ abstract class _$$_NetworkServerIdentityCopyWith<$Res>
       {@HiveField(0) int? id,
       @HiveField(1) String hostname,
       @HiveField(2) String name,
-      @HiveField(3) String pubkey,
-      @HiveField(4) String kind});
+      @HiveField(3) String serverPubkey,
+      @HiveField(4) String kind,
+      @HiveField(5) String username,
+      @HiveField(6) String inviteCode,
+      @HiveField(7) int inviteCount});
 }
 
 /// @nodoc
@@ -125,8 +152,11 @@ class __$$_NetworkServerIdentityCopyWithImpl<$Res>
     Object? id = freezed,
     Object? hostname = freezed,
     Object? name = freezed,
-    Object? pubkey = freezed,
+    Object? serverPubkey = freezed,
     Object? kind = freezed,
+    Object? username = freezed,
+    Object? inviteCode = freezed,
+    Object? inviteCount = freezed,
   }) {
     return _then(_$_NetworkServerIdentity(
       id: id == freezed
@@ -141,14 +171,26 @@ class __$$_NetworkServerIdentityCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      pubkey: pubkey == freezed
-          ? _value.pubkey
-          : pubkey // ignore: cast_nullable_to_non_nullable
+      serverPubkey: serverPubkey == freezed
+          ? _value.serverPubkey
+          : serverPubkey // ignore: cast_nullable_to_non_nullable
               as String,
       kind: kind == freezed
           ? _value.kind
           : kind // ignore: cast_nullable_to_non_nullable
               as String,
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      inviteCode: inviteCode == freezed
+          ? _value.inviteCode
+          : inviteCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      inviteCount: inviteCount == freezed
+          ? _value.inviteCount
+          : inviteCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -161,8 +203,11 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
       {@HiveField(0) this.id,
       @HiveField(1) required this.hostname,
       @HiveField(2) required this.name,
-      @HiveField(3) required this.pubkey,
-      @HiveField(4) required this.kind})
+      @HiveField(3) required this.serverPubkey,
+      @HiveField(4) required this.kind,
+      @HiveField(5) required this.username,
+      @HiveField(6) required this.inviteCode,
+      @HiveField(7) required this.inviteCount})
       : super._();
 
   factory _$_NetworkServerIdentity.fromJson(Map<String, dynamic> json) =>
@@ -179,14 +224,23 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
   final String name;
   @override
   @HiveField(3)
-  final String pubkey;
+  final String serverPubkey;
   @override
   @HiveField(4)
   final String kind;
+  @override
+  @HiveField(5)
+  final String username;
+  @override
+  @HiveField(6)
+  final String inviteCode;
+  @override
+  @HiveField(7)
+  final int inviteCount;
 
   @override
   String toString() {
-    return 'NetworkServerIdentity(id: $id, hostname: $hostname, name: $name, pubkey: $pubkey, kind: $kind)';
+    return 'NetworkServerIdentity(id: $id, hostname: $hostname, name: $name, serverPubkey: $serverPubkey, kind: $kind, username: $username, inviteCode: $inviteCode, inviteCount: $inviteCount)';
   }
 
   @override
@@ -197,8 +251,14 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.hostname, hostname) &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.pubkey, pubkey) &&
-            const DeepCollectionEquality().equals(other.kind, kind));
+            const DeepCollectionEquality()
+                .equals(other.serverPubkey, serverPubkey) &&
+            const DeepCollectionEquality().equals(other.kind, kind) &&
+            const DeepCollectionEquality().equals(other.username, username) &&
+            const DeepCollectionEquality()
+                .equals(other.inviteCode, inviteCode) &&
+            const DeepCollectionEquality()
+                .equals(other.inviteCount, inviteCount));
   }
 
   @JsonKey(ignore: true)
@@ -208,8 +268,11 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(hostname),
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(pubkey),
-      const DeepCollectionEquality().hash(kind));
+      const DeepCollectionEquality().hash(serverPubkey),
+      const DeepCollectionEquality().hash(kind),
+      const DeepCollectionEquality().hash(username),
+      const DeepCollectionEquality().hash(inviteCode),
+      const DeepCollectionEquality().hash(inviteCount));
 
   @JsonKey(ignore: true)
   @override
@@ -228,8 +291,11 @@ abstract class _NetworkServerIdentity extends NetworkServerIdentity {
       {@HiveField(0) final int? id,
       @HiveField(1) required final String hostname,
       @HiveField(2) required final String name,
-      @HiveField(3) required final String pubkey,
-      @HiveField(4) required final String kind}) = _$_NetworkServerIdentity;
+      @HiveField(3) required final String serverPubkey,
+      @HiveField(4) required final String kind,
+      @HiveField(5) required final String username,
+      @HiveField(6) required final String inviteCode,
+      @HiveField(7) required final int inviteCount}) = _$_NetworkServerIdentity;
   const _NetworkServerIdentity._() : super._();
 
   factory _NetworkServerIdentity.fromJson(Map<String, dynamic> json) =
@@ -246,10 +312,19 @@ abstract class _NetworkServerIdentity extends NetworkServerIdentity {
   String get name => throw _privateConstructorUsedError;
   @override
   @HiveField(3)
-  String get pubkey => throw _privateConstructorUsedError;
+  String get serverPubkey => throw _privateConstructorUsedError;
   @override
   @HiveField(4)
   String get kind => throw _privateConstructorUsedError;
+  @override
+  @HiveField(5)
+  String get username => throw _privateConstructorUsedError;
+  @override
+  @HiveField(6)
+  String get inviteCode => throw _privateConstructorUsedError;
+  @override
+  @HiveField(7)
+  int get inviteCount => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_NetworkServerIdentityCopyWith<_$_NetworkServerIdentity> get copyWith =>

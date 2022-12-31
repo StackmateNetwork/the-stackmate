@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallet/send.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class TransactionComplete extends StatelessWidget {

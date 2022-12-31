@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/networks.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
-import 'package:sats/ui/component/common/SuccessHandler.dart';
 
 class NetworkJoinForm extends StatefulWidget {
   @override
@@ -36,6 +35,7 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
       },
       child: WillPopScope(
         onWillPop: () async {
+          networksCubit.clear();
           return true;
         },
         child: Form(

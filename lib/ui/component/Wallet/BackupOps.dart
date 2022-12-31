@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/wallet/info.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/master.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';

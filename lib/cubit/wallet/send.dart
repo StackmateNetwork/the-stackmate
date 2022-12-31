@@ -220,7 +220,7 @@ class SendCubit extends Cubit<SendState> {
     final databasesPath = await getDatabasesPath();
     final dbPath = join(databasesPath, dbName);
 
-    final syncStat = await compute(sqliteSync, {
+    await compute(sqliteSync, {
       'dbPath': dbPath,
       'descriptor': state.wallet.descriptor,
       'nodeAddress': node,

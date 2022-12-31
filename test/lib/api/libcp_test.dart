@@ -11,10 +11,10 @@ void main() {
       'permit fuel media speak loud decline color street piano put nothing fog';
   const adminSecret = '9caff0735bc6e80121cedcb98ca51821';
   const kind = 'priv';
-  const inviteCode = 'J7vsmPKeFYkkWwD9jAEjPAeD1knkQVuZ';
+  const inviteCode = 'HsmXXpWgS28NQvsgL62sGoQu7mVCfBDX';
   const hostname = 'https://lotr.toma.tech';
   const socks5 = 0;
-  const username = 'ika';
+  const username = 'ika0009';
 
   late LibCypherpost libcp;
 
@@ -52,24 +52,17 @@ void main() {
     );
 
     print(joinResult.result);
-    assert(joinResult.result!.status);
+    assert(joinResult.result!.inviteCode == inviteCode);
   });
 
   test('User Priv Invite', () async {
-    // final privInvite = libcp.privUserInvite(
-    //   hostname: hostname,
-    //   socks5: socks5,
-    //   socialRoot: expectedSocialRoot,
-    //   inviteCode: inviteCode,
-    // );
-
-    final inviteDetail = libcp.userInviteDetail(
+    final privInvite = libcp.privUserInvite(
       hostname: hostname,
       socks5: socks5,
       socialRoot: expectedSocialRoot,
       inviteCode: inviteCode,
     );
-    assert(inviteDetail.result!.inviteCode == inviteCode);
+
     // assert(inviteDetail.result!.count == 1);
   });
   test('Member fx', () async {

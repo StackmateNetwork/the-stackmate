@@ -24,7 +24,8 @@ mixin _$NetworksState {
   String get error => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get kind => throw _privateConstructorUsedError;
-  String? get pubkey => throw _privateConstructorUsedError;
+  String? get serverPubkey => throw _privateConstructorUsedError;
+  String get loading => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get joined => throw _privateConstructorUsedError;
 
@@ -46,7 +47,8 @@ abstract class $NetworksStateCopyWith<$Res> {
       String error,
       String? name,
       String? kind,
-      String? pubkey,
+      String? serverPubkey,
+      String loading,
       bool isLoading,
       bool joined});
 }
@@ -69,7 +71,8 @@ class _$NetworksStateCopyWithImpl<$Res>
     Object? error = freezed,
     Object? name = freezed,
     Object? kind = freezed,
-    Object? pubkey = freezed,
+    Object? serverPubkey = freezed,
+    Object? loading = freezed,
     Object? isLoading = freezed,
     Object? joined = freezed,
   }) {
@@ -102,10 +105,14 @@ class _$NetworksStateCopyWithImpl<$Res>
           ? _value.kind
           : kind // ignore: cast_nullable_to_non_nullable
               as String?,
-      pubkey: pubkey == freezed
-          ? _value.pubkey
-          : pubkey // ignore: cast_nullable_to_non_nullable
+      serverPubkey: serverPubkey == freezed
+          ? _value.serverPubkey
+          : serverPubkey // ignore: cast_nullable_to_non_nullable
               as String?,
+      loading: loading == freezed
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as String,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -133,7 +140,8 @@ abstract class _$$_NetworksStateCopyWith<$Res>
       String error,
       String? name,
       String? kind,
-      String? pubkey,
+      String? serverPubkey,
+      String loading,
       bool isLoading,
       bool joined});
 }
@@ -158,7 +166,8 @@ class __$$_NetworksStateCopyWithImpl<$Res>
     Object? error = freezed,
     Object? name = freezed,
     Object? kind = freezed,
-    Object? pubkey = freezed,
+    Object? serverPubkey = freezed,
+    Object? loading = freezed,
     Object? isLoading = freezed,
     Object? joined = freezed,
   }) {
@@ -191,10 +200,14 @@ class __$$_NetworksStateCopyWithImpl<$Res>
           ? _value.kind
           : kind // ignore: cast_nullable_to_non_nullable
               as String?,
-      pubkey: pubkey == freezed
-          ? _value.pubkey
-          : pubkey // ignore: cast_nullable_to_non_nullable
+      serverPubkey: serverPubkey == freezed
+          ? _value.serverPubkey
+          : serverPubkey // ignore: cast_nullable_to_non_nullable
               as String?,
+      loading: loading == freezed
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as String,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -218,7 +231,8 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
       this.error = '',
       this.name,
       this.kind,
-      this.pubkey,
+      this.serverPubkey,
+      this.loading = '',
       this.isLoading = false,
       this.joined = false})
       : _networks = networks;
@@ -247,7 +261,10 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
   @override
   final String? kind;
   @override
-  final String? pubkey;
+  final String? serverPubkey;
+  @override
+  @JsonKey()
+  final String loading;
   @override
   @JsonKey()
   final bool isLoading;
@@ -257,7 +274,7 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NetworksState(networks: $networks, hostname: $hostname, username: $username, inviteCode: $inviteCode, error: $error, name: $name, kind: $kind, pubkey: $pubkey, isLoading: $isLoading, joined: $joined)';
+    return 'NetworksState(networks: $networks, hostname: $hostname, username: $username, inviteCode: $inviteCode, error: $error, name: $name, kind: $kind, serverPubkey: $serverPubkey, loading: $loading, isLoading: $isLoading, joined: $joined)';
   }
 
   @override
@@ -272,7 +289,8 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
       ..add(DiagnosticsProperty('error', error))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('kind', kind))
-      ..add(DiagnosticsProperty('pubkey', pubkey))
+      ..add(DiagnosticsProperty('serverPubkey', serverPubkey))
+      ..add(DiagnosticsProperty('loading', loading))
       ..add(DiagnosticsProperty('isLoading', isLoading))
       ..add(DiagnosticsProperty('joined', joined));
   }
@@ -290,7 +308,9 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
             const DeepCollectionEquality().equals(other.error, error) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.kind, kind) &&
-            const DeepCollectionEquality().equals(other.pubkey, pubkey) &&
+            const DeepCollectionEquality()
+                .equals(other.serverPubkey, serverPubkey) &&
+            const DeepCollectionEquality().equals(other.loading, loading) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.joined, joined));
   }
@@ -305,7 +325,8 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
       const DeepCollectionEquality().hash(error),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(kind),
-      const DeepCollectionEquality().hash(pubkey),
+      const DeepCollectionEquality().hash(serverPubkey),
+      const DeepCollectionEquality().hash(loading),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(joined));
 
@@ -324,7 +345,8 @@ abstract class _NetworksState implements NetworksState {
       final String error,
       final String? name,
       final String? kind,
-      final String? pubkey,
+      final String? serverPubkey,
+      final String loading,
       final bool isLoading,
       final bool joined}) = _$_NetworksState;
 
@@ -344,7 +366,9 @@ abstract class _NetworksState implements NetworksState {
   @override
   String? get kind => throw _privateConstructorUsedError;
   @override
-  String? get pubkey => throw _privateConstructorUsedError;
+  String? get serverPubkey => throw _privateConstructorUsedError;
+  @override
+  String get loading => throw _privateConstructorUsedError;
   @override
   bool get isLoading => throw _privateConstructorUsedError;
   @override

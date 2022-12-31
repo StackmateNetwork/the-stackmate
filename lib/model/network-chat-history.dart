@@ -15,5 +15,3 @@ class NetworkChatHistory with _$NetworkChatHistory {
   }) = _NetworkChatHistory;
   const NetworkChatHistory._();
 }
-
-

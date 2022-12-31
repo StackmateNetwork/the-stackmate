@@ -104,25 +104,6 @@ class LibCypherpost implements ICypherpost {
   }
 
   @override
-  R<InvitationDetail> userInviteDetail({
-    required String hostname,
-    required int socks5,
-    required String socialRoot,
-    required String inviteCode,
-  }) {
-    final resp = _libcp.userInviteDetail(
-      hostname: hostname,
-      socks5: socks5,
-      socialRoot: socialRoot,
-      inviteCode: inviteCode,
-    );
-    if (resp.contains('error')) {
-      return R(error: SMError.fromJson(resp).error);
-    } else
-      return R(result: InvitationDetail.fromJson(resp));
-  }
-
-  @override
   R<List<MemberIdentity>> getMembers({
     required String hostname,
     required int socks5,
@@ -149,7 +130,7 @@ class LibCypherpost implements ICypherpost {
   }
 
   @override
-  R<ServerStatus> joinServer({
+  R<InvitationDetail> joinServer({
     required String hostname,
     required int socks5,
     required String socialRoot,
@@ -167,7 +148,7 @@ class LibCypherpost implements ICypherpost {
     if (resp.contains('error')) {
       return R(error: SMError.fromJson(resp).error);
     } else
-      return R(result: ServerStatus.fromJson(resp));
+      return R(result: InvitationDetail.fromJson(resp));
   }
 
   @override

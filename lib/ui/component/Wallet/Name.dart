@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallet/info.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class WalletName extends StatelessWidget {

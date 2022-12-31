@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 const vantaBlack = Color(0xFF030303);
 const brightCrayola = Color(0xFFFFA827);
@@ -23,8 +22,7 @@ const paradisePink = Color(0xFFEF476F);
 const carolinaBlue = Color(0xFF009FFD);
 
 ThemeData mainTheme() => ThemeData(
-      textTheme: GoogleFonts.aldrichTextTheme(),
-      primaryTextTheme: GoogleFonts.poppinsTextTheme(),
+      fontFamily: 'Aldrich',
       colorScheme: ColorScheme(
         primary: bitterLemon,
         secondary: blueJeans,

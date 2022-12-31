@@ -17,9 +17,10 @@ import 'package:sats/ui/screen/Broadcast.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
 import 'package:sats/ui/screen/MyNetworkInfo.dart';
+import 'package:sats/ui/screen/NetworkChat.dart';
 import 'package:sats/ui/screen/NetworkDiscovery.dart';
 import 'package:sats/ui/screen/NetworkJoin.dart';
-import 'package:sats/ui/screen/NetworkSingle.dart';
+import 'package:sats/ui/screen/NetworkOverview.dart';
 import 'package:sats/ui/screen/NetworksHome.dart';
 import 'package:sats/ui/screen/NewWallet/Derive.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
@@ -103,11 +104,11 @@ class Stackmate extends StatelessWidget {
         builder: (_, __) => const NetworkJoinScreen(),
       ),
       GoRoute(
-        path: '/chat-members',
-        builder: (_, __) => const NetworkChat(),
+        path: '/network-overview',
+        builder: (_, __) => const NetworkOverview(),
       ),
       GoRoute(
-        path: '/discover-members',
+        path: '/network-discover',
         builder: (_, __) => const DiscoveryScreen(),
       ),
       GoRoute(
@@ -119,7 +120,7 @@ class Stackmate extends StatelessWidget {
         builder: (_, __) => const PeersScreen(),
       ),
       GoRoute(
-        path: '/chat',
+        path: '/network-chat',
         builder: (_, __) => const NetworkChat(),
       ),
       GoRoute(

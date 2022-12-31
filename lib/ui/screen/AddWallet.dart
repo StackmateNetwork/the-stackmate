@@ -7,10 +7,11 @@ import 'package:sats/ui/component/AddWallet/SelectButton.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
+const primaryWallet = 'PRIMARY';
+const importWallet = 'IMPORT';
+
 class AddWalletScreen extends StatelessWidget {
   const AddWalletScreen({Key? key}) : super(key: key);
-  final primaryWallet = 'PRIMARY';
-  final importWallet = 'IMPORT';
 
   @override
   Widget build(BuildContext c) {
