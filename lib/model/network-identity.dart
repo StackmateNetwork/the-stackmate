@@ -1,13 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
-part 'network-server-identity.g.dart';
-part 'network-server-identity.freezed.dart';
+part 'network-identity.g.dart';
+part 'network-identity.freezed.dart';
 
 @freezed
-class NetworkServerIdentity with _$NetworkServerIdentity {
-  @HiveType(typeId: 11, adapterName: 'NetworkServerIdentityClassAdapter')
-  const factory NetworkServerIdentity({
+class NetworkIdentity with _$NetworkIdentity {
+  @HiveType(typeId: 11, adapterName: 'NetworkIdentityClassAdapter')
+  const factory NetworkIdentity({
     @HiveField(0) int? id,
     @HiveField(1) required String hostname,
     @HiveField(2) required String name,
@@ -16,9 +16,9 @@ class NetworkServerIdentity with _$NetworkServerIdentity {
     @HiveField(5) required String username,
     @HiveField(6) required String inviteCode,
     @HiveField(7) required int inviteCount,
-  }) = _NetworkServerIdentity;
-  const NetworkServerIdentity._();
+  }) = _NetworkIdentity;
+  const NetworkIdentity._();
 
-  factory NetworkServerIdentity.fromJson(Map<String, dynamic> json) =>
-      _$NetworkServerIdentityFromJson(json);
+  factory NetworkIdentity.fromJson(Map<String, dynamic> json) =>
+      _$NetworkIdentityFromJson(json);
 }

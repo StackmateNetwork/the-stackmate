@@ -18,8 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SocialRoot {
   @HiveField(0)
   String get mnemonic => throw _privateConstructorUsedError;
-  @HiveField(2)
+  @HiveField(1)
   String get xprv => throw _privateConstructorUsedError;
+  @HiveField(2)
+  String get pubkey => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SocialRootCopyWith<SocialRoot> get copyWith =>
@@ -31,7 +33,10 @@ abstract class $SocialRootCopyWith<$Res> {
   factory $SocialRootCopyWith(
           SocialRoot value, $Res Function(SocialRoot) then) =
       _$SocialRootCopyWithImpl<$Res>;
-  $Res call({@HiveField(0) String mnemonic, @HiveField(2) String xprv});
+  $Res call(
+      {@HiveField(0) String mnemonic,
+      @HiveField(1) String xprv,
+      @HiveField(2) String pubkey});
 }
 
 /// @nodoc
@@ -46,6 +51,7 @@ class _$SocialRootCopyWithImpl<$Res> implements $SocialRootCopyWith<$Res> {
   $Res call({
     Object? mnemonic = freezed,
     Object? xprv = freezed,
+    Object? pubkey = freezed,
   }) {
     return _then(_value.copyWith(
       mnemonic: mnemonic == freezed
@@ -55,6 +61,10 @@ class _$SocialRootCopyWithImpl<$Res> implements $SocialRootCopyWith<$Res> {
       xprv: xprv == freezed
           ? _value.xprv
           : xprv // ignore: cast_nullable_to_non_nullable
+              as String,
+      pubkey: pubkey == freezed
+          ? _value.pubkey
+          : pubkey // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -67,7 +77,10 @@ abstract class _$$_SocialRootCopyWith<$Res>
           _$_SocialRoot value, $Res Function(_$_SocialRoot) then) =
       __$$_SocialRootCopyWithImpl<$Res>;
   @override
-  $Res call({@HiveField(0) String mnemonic, @HiveField(2) String xprv});
+  $Res call(
+      {@HiveField(0) String mnemonic,
+      @HiveField(1) String xprv,
+      @HiveField(2) String pubkey});
 }
 
 /// @nodoc
@@ -84,6 +97,7 @@ class __$$_SocialRootCopyWithImpl<$Res> extends _$SocialRootCopyWithImpl<$Res>
   $Res call({
     Object? mnemonic = freezed,
     Object? xprv = freezed,
+    Object? pubkey = freezed,
   }) {
     return _then(_$_SocialRoot(
       mnemonic: mnemonic == freezed
@@ -94,6 +108,10 @@ class __$$_SocialRootCopyWithImpl<$Res> extends _$SocialRootCopyWithImpl<$Res>
           ? _value.xprv
           : xprv // ignore: cast_nullable_to_non_nullable
               as String,
+      pubkey: pubkey == freezed
+          ? _value.pubkey
+          : pubkey // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -103,19 +121,24 @@ class __$$_SocialRootCopyWithImpl<$Res> extends _$SocialRootCopyWithImpl<$Res>
 @HiveType(typeId: 10, adapterName: 'SocialRootClassAdapter')
 class _$_SocialRoot extends _SocialRoot {
   const _$_SocialRoot(
-      {@HiveField(0) required this.mnemonic, @HiveField(2) required this.xprv})
+      {@HiveField(0) required this.mnemonic,
+      @HiveField(1) required this.xprv,
+      @HiveField(2) required this.pubkey})
       : super._();
 
   @override
   @HiveField(0)
   final String mnemonic;
   @override
-  @HiveField(2)
+  @HiveField(1)
   final String xprv;
+  @override
+  @HiveField(2)
+  final String pubkey;
 
   @override
   String toString() {
-    return 'SocialRoot(mnemonic: $mnemonic, xprv: $xprv)';
+    return 'SocialRoot(mnemonic: $mnemonic, xprv: $xprv, pubkey: $pubkey)';
   }
 
   @override
@@ -124,14 +147,16 @@ class _$_SocialRoot extends _SocialRoot {
         (other.runtimeType == runtimeType &&
             other is _$_SocialRoot &&
             const DeepCollectionEquality().equals(other.mnemonic, mnemonic) &&
-            const DeepCollectionEquality().equals(other.xprv, xprv));
+            const DeepCollectionEquality().equals(other.xprv, xprv) &&
+            const DeepCollectionEquality().equals(other.pubkey, pubkey));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(mnemonic),
-      const DeepCollectionEquality().hash(xprv));
+      const DeepCollectionEquality().hash(xprv),
+      const DeepCollectionEquality().hash(pubkey));
 
   @JsonKey(ignore: true)
   @override
@@ -142,15 +167,19 @@ class _$_SocialRoot extends _SocialRoot {
 abstract class _SocialRoot extends SocialRoot {
   const factory _SocialRoot(
       {@HiveField(0) required final String mnemonic,
-      @HiveField(2) required final String xprv}) = _$_SocialRoot;
+      @HiveField(1) required final String xprv,
+      @HiveField(2) required final String pubkey}) = _$_SocialRoot;
   const _SocialRoot._() : super._();
 
   @override
   @HiveField(0)
   String get mnemonic => throw _privateConstructorUsedError;
   @override
-  @HiveField(2)
+  @HiveField(1)
   String get xprv => throw _privateConstructorUsedError;
+  @override
+  @HiveField(2)
+  String get pubkey => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_SocialRootCopyWith<_$_SocialRoot> get copyWith =>

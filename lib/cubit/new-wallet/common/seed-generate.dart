@@ -102,10 +102,13 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       account: 0,
     );
     await _socialRoot.save(
-        socialRoot.result!.xprv, socialRoot.result!.mnemonic,);
+      socialRoot.result!.xprv,
+      socialRoot.result!.mnemonic,
+      socialRoot.result!.pubkey,
+    );
     await _socialRoot.init();
     clear();
-    
+
     final wallet = _bitcoin.deriveHardened(
       masterXPriv: root.result!.xprv,
       account: accountZero,

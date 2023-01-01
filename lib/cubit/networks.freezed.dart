@@ -16,8 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$NetworksState {
-  List<NetworkServerIdentity> get networks =>
-      throw _privateConstructorUsedError;
+  List<NetworkIdentity> get networks => throw _privateConstructorUsedError;
   String? get hostname => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get inviteCode => throw _privateConstructorUsedError;
@@ -40,7 +39,7 @@ abstract class $NetworksStateCopyWith<$Res> {
           NetworksState value, $Res Function(NetworksState) then) =
       _$NetworksStateCopyWithImpl<$Res>;
   $Res call(
-      {List<NetworkServerIdentity> networks,
+      {List<NetworkIdentity> networks,
       String? hostname,
       String username,
       String inviteCode,
@@ -80,7 +79,7 @@ class _$NetworksStateCopyWithImpl<$Res>
       networks: networks == freezed
           ? _value.networks
           : networks // ignore: cast_nullable_to_non_nullable
-              as List<NetworkServerIdentity>,
+              as List<NetworkIdentity>,
       hostname: hostname == freezed
           ? _value.hostname
           : hostname // ignore: cast_nullable_to_non_nullable
@@ -133,7 +132,7 @@ abstract class _$$_NetworksStateCopyWith<$Res>
       __$$_NetworksStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<NetworkServerIdentity> networks,
+      {List<NetworkIdentity> networks,
       String? hostname,
       String username,
       String inviteCode,
@@ -175,7 +174,7 @@ class __$$_NetworksStateCopyWithImpl<$Res>
       networks: networks == freezed
           ? _value._networks
           : networks // ignore: cast_nullable_to_non_nullable
-              as List<NetworkServerIdentity>,
+              as List<NetworkIdentity>,
       hostname: hostname == freezed
           ? _value.hostname
           : hostname // ignore: cast_nullable_to_non_nullable
@@ -224,7 +223,7 @@ class __$$_NetworksStateCopyWithImpl<$Res>
 
 class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
   const _$_NetworksState(
-      {final List<NetworkServerIdentity> networks = const [],
+      {final List<NetworkIdentity> networks = const [],
       this.hostname,
       this.username = '',
       this.inviteCode = '',
@@ -237,10 +236,10 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
       this.joined = false})
       : _networks = networks;
 
-  final List<NetworkServerIdentity> _networks;
+  final List<NetworkIdentity> _networks;
   @override
   @JsonKey()
-  List<NetworkServerIdentity> get networks {
+  List<NetworkIdentity> get networks {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_networks);
   }
@@ -338,7 +337,7 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
 
 abstract class _NetworksState implements NetworksState {
   const factory _NetworksState(
-      {final List<NetworkServerIdentity> networks,
+      {final List<NetworkIdentity> networks,
       final String? hostname,
       final String username,
       final String inviteCode,
@@ -351,8 +350,7 @@ abstract class _NetworksState implements NetworksState {
       final bool joined}) = _$_NetworksState;
 
   @override
-  List<NetworkServerIdentity> get networks =>
-      throw _privateConstructorUsedError;
+  List<NetworkIdentity> get networks => throw _privateConstructorUsedError;
   @override
   String? get hostname => throw _privateConstructorUsedError;
   @override

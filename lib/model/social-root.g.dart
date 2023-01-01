@@ -18,18 +18,21 @@ class SocialRootClassAdapter extends TypeAdapter<_$_SocialRoot> {
     };
     return _$_SocialRoot(
       mnemonic: fields[0] as String,
-      xprv: fields[2] as String,
+      xprv: fields[1] as String,
+      pubkey: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_SocialRoot obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.mnemonic)
+      ..writeByte(1)
+      ..write(obj.xprv)
       ..writeByte(2)
-      ..write(obj.xprv);
+      ..write(obj.pubkey);
   }
 
   @override

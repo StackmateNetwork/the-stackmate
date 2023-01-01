@@ -45,8 +45,20 @@ class PinCubit extends Cubit<PinState> {
       StoreKeys.Pin.name,
       0,
     );
-    if (pin.hasError) {
-      if (pin.error! == 'empty')
+    if (pin.result == null) {
+      if (pin.hasError && pin.error! == 'empty')
+        emit(
+          state.copyWith(
+            value: null,
+            attemptsLeft: 3,
+            lastFailure: 0,
+            isLocked: false,
+            isVerified: false,
+            hasChosenPin: false,
+            error: null,
+          ),
+        );
+      else if (pin.error == null)
         emit(
           state.copyWith(
             value: null,
@@ -68,7 +80,7 @@ class PinCubit extends Cubit<PinState> {
     } else {
       emit(
         state.copyWith(
-          value: (pin.result!.value == emptyString) ? null : pin.result!.value,
+          value: pin.result!.value,
           attemptsLeft: pin.result!.attemptsLeft,
           lastFailure: pin.result!.lastFailure,
           isLocked: pin.result!.isLocked,

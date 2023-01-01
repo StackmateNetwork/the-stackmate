@@ -21,7 +21,7 @@ NetworkPostsInfo _$NetworkPostsInfoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$NetworkPostsInfo {
   @HiveField(0)
-  int get lastGenesis => throw _privateConstructorUsedError;
+  int get latestGenesis => throw _privateConstructorUsedError;
   @HiveField(1)
   List<String> get corruptedPostIds => throw _privateConstructorUsedError;
 
@@ -37,7 +37,7 @@ abstract class $NetworkPostsInfoCopyWith<$Res> {
           NetworkPostsInfo value, $Res Function(NetworkPostsInfo) then) =
       _$NetworkPostsInfoCopyWithImpl<$Res>;
   $Res call(
-      {@HiveField(0) int lastGenesis,
+      {@HiveField(0) int latestGenesis,
       @HiveField(1) List<String> corruptedPostIds});
 }
 
@@ -52,13 +52,13 @@ class _$NetworkPostsInfoCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? lastGenesis = freezed,
+    Object? latestGenesis = freezed,
     Object? corruptedPostIds = freezed,
   }) {
     return _then(_value.copyWith(
-      lastGenesis: lastGenesis == freezed
-          ? _value.lastGenesis
-          : lastGenesis // ignore: cast_nullable_to_non_nullable
+      latestGenesis: latestGenesis == freezed
+          ? _value.latestGenesis
+          : latestGenesis // ignore: cast_nullable_to_non_nullable
               as int,
       corruptedPostIds: corruptedPostIds == freezed
           ? _value.corruptedPostIds
@@ -76,7 +76,7 @@ abstract class _$$_NetworkPostsInfoCopyWith<$Res>
       __$$_NetworkPostsInfoCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@HiveField(0) int lastGenesis,
+      {@HiveField(0) int latestGenesis,
       @HiveField(1) List<String> corruptedPostIds});
 }
 
@@ -93,13 +93,13 @@ class __$$_NetworkPostsInfoCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? lastGenesis = freezed,
+    Object? latestGenesis = freezed,
     Object? corruptedPostIds = freezed,
   }) {
     return _then(_$_NetworkPostsInfo(
-      lastGenesis: lastGenesis == freezed
-          ? _value.lastGenesis
-          : lastGenesis // ignore: cast_nullable_to_non_nullable
+      latestGenesis: latestGenesis == freezed
+          ? _value.latestGenesis
+          : latestGenesis // ignore: cast_nullable_to_non_nullable
               as int,
       corruptedPostIds: corruptedPostIds == freezed
           ? _value._corruptedPostIds
@@ -114,7 +114,7 @@ class __$$_NetworkPostsInfoCopyWithImpl<$Res>
 @HiveType(typeId: 14, adapterName: 'NetworkPostsInfoClassAdapter')
 class _$_NetworkPostsInfo extends _NetworkPostsInfo {
   const _$_NetworkPostsInfo(
-      {@HiveField(0) required this.lastGenesis,
+      {@HiveField(0) required this.latestGenesis,
       @HiveField(1) required final List<String> corruptedPostIds})
       : _corruptedPostIds = corruptedPostIds,
         super._();
@@ -124,7 +124,7 @@ class _$_NetworkPostsInfo extends _NetworkPostsInfo {
 
   @override
   @HiveField(0)
-  final int lastGenesis;
+  final int latestGenesis;
   final List<String> _corruptedPostIds;
   @override
   @HiveField(1)
@@ -135,7 +135,7 @@ class _$_NetworkPostsInfo extends _NetworkPostsInfo {
 
   @override
   String toString() {
-    return 'NetworkPostsInfo(lastGenesis: $lastGenesis, corruptedPostIds: $corruptedPostIds)';
+    return 'NetworkPostsInfo(latestGenesis: $latestGenesis, corruptedPostIds: $corruptedPostIds)';
   }
 
   @override
@@ -144,7 +144,7 @@ class _$_NetworkPostsInfo extends _NetworkPostsInfo {
         (other.runtimeType == runtimeType &&
             other is _$_NetworkPostsInfo &&
             const DeepCollectionEquality()
-                .equals(other.lastGenesis, lastGenesis) &&
+                .equals(other.latestGenesis, latestGenesis) &&
             const DeepCollectionEquality()
                 .equals(other._corruptedPostIds, _corruptedPostIds));
   }
@@ -153,7 +153,7 @@ class _$_NetworkPostsInfo extends _NetworkPostsInfo {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(lastGenesis),
+      const DeepCollectionEquality().hash(latestGenesis),
       const DeepCollectionEquality().hash(_corruptedPostIds));
 
   @JsonKey(ignore: true)
@@ -169,7 +169,7 @@ class _$_NetworkPostsInfo extends _NetworkPostsInfo {
 
 abstract class _NetworkPostsInfo extends NetworkPostsInfo {
   const factory _NetworkPostsInfo(
-          {@HiveField(0) required final int lastGenesis,
+          {@HiveField(0) required final int latestGenesis,
           @HiveField(1) required final List<String> corruptedPostIds}) =
       _$_NetworkPostsInfo;
   const _NetworkPostsInfo._() : super._();
@@ -179,7 +179,7 @@ abstract class _NetworkPostsInfo extends NetworkPostsInfo {
 
   @override
   @HiveField(0)
-  int get lastGenesis => throw _privateConstructorUsedError;
+  int get latestGenesis => throw _privateConstructorUsedError;
   @override
   @HiveField(1)
   List<String> get corruptedPostIds => throw _privateConstructorUsedError;

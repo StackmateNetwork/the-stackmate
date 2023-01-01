@@ -170,78 +170,101 @@ class LibCypherpost implements ICypherpost {
     return R(result: ServerStatus.fromJson(resp));
   }
 
-  // @override
-  // R<PostId> sendPost({
-  //   required String hostname,
-  //   required int socks5,
-  //   required String socialRoot,
-  //   required int index,
-  //   required String to,
-  //   required String kind,
-  //   required String value,
-  // }) {
-  //   final resp = _libcp.sendPost(
-  //     hostname: hostname,
-  //     socks5: socks5,
-  //     socialRoot: socialRoot,
-  //     index: index,
-  //     to: to,
-  //     kind: kind,
-  //     value: value,
-  //   );
+  @override
+  R<PostId> sendPost({
+    required String hostname,
+    required int socks5,
+    required String socialRoot,
+    required int index,
+    required String to,
+    required String kind,
+    required String value,
+  }) {
+    final resp = _libcp.sendPost(
+      hostname: hostname,
+      socks5: socks5,
+      socialRoot: socialRoot,
+      index: index,
+      to: to,
+      kind: kind,
+      value: value,
+    );
 
-  //   if (resp.contains('error')) {
-  //     return R(error: SMError.fromJson(resp).error);
-  //   }
+    if (resp.contains('error')) {
+      return R(error: SMError.fromJson(resp).error);
+    }
 
-  //   return R(result: PostId.fromJson(resp));
-  // }
+    return R(result: PostId.fromJson(resp));
+  }
 
-  // @override
-  // R<ServerStatus> sendKeys({
-  //   required String hostname,
-  //   required int socks5,
-  //   required String socialRoot,
-  //   required int index,
-  //   required String postId,
-  //   required String recipients,
-  // }) {
-  //   final resp = _libcp.sendKeys(
-  //     hostname: hostname,
-  //     socks5: socks5,
-  //     socialRoot: socialRoot,
-  //     index: index,
-  //     postId: postId,
-  //     recipients: recipients,
-  //   );
+  @override
+  R<ServerStatus> sendKeys({
+    required String hostname,
+    required int socks5,
+    required String socialRoot,
+    required int index,
+    required String postId,
+    required String recipients,
+  }) {
+    final resp = _libcp.sendKeys(
+      hostname: hostname,
+      socks5: socks5,
+      socialRoot: socialRoot,
+      index: index,
+      postId: postId,
+      recipients: recipients,
+    );
 
-  //   if (resp.contains('error')) {
-  //     return R(error: SMError.fromJson(resp).error);
-  //   }
+    if (resp.contains('error')) {
+      return R(error: SMError.fromJson(resp).error);
+    }
 
-  //   return R(result: ServerStatus.fromJson(resp));
-  // }
+    return R(result: ServerStatus.fromJson(resp));
+  }
 
-  // @override
-  // R<CompletePost> getOnePost({
-  //   required String hostname,
-  //   required int socks5,
-  //   required String socialRoot,
-  //   required String postId,
-  // }) {
-  //   final resp = _libcp.getOnePost(
-  //     hostname: hostname,
-  //     socks5: socks5,
-  //     socialRoot: socialRoot,
-  //     postId: postId,
-  //   );
+  @override
+  R<CompletePost> getOnePost({
+    required String hostname,
+    required int socks5,
+    required String socialRoot,
+    required String postId,
+  }) {
+    final resp = _libcp.getOnePost(
+      hostname: hostname,
+      socks5: socks5,
+      socialRoot: socialRoot,
+      postId: postId,
+    );
 
-  //   if (resp.contains('error')) {
-  //     return R(error: SMError.fromJson(resp).error);
-  //   }
+    if (resp.contains('error')) {
+      return R(error: SMError.fromJson(resp).error);
+    }
 
-  //   return R(result: CompletePost.fromJson(resp));
-  // }
+    return R(result: CompletePost.fromJson(resp as Map<String, dynamic>));
+  }
+
+  @override
+  R<SortedPosts> getAllPosts({
+    required String hostname,
+    required int socks5,
+    required String socialRoot,
+    required int genesisFilter,
+  }) {
+    final resp = _libcp.getAllPosts(
+      hostname: hostname,
+      socks5: socks5,
+      socialRoot: socialRoot,
+      genesisFilter: genesisFilter,
+    );
+
+    if (resp.contains('error')) {
+      return R(error: SMError.fromJson(resp).error);
+    }
+
+    final json = jsonDecode(resp);
+
+    return R(result: SortedPosts.fromJson(json as Map<String, dynamic>));
+  }
 
   // @override
   // R<DerivationIndex> lastIndex({

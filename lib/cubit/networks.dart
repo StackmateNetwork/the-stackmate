@@ -6,7 +6,7 @@ import 'package:sats/api/libcp.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/social-root.dart';
 import 'package:sats/cubit/tor.dart';
-import 'package:sats/model/network-server-identity.dart';
+import 'package:sats/model/network-identity.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -14,12 +14,12 @@ import 'package:sats/pkg/storage.dart';
 
 part 'networks.freezed.dart';
 
-const couldNotSaveError = 'Error Saving Wallet!';
+const couldNotSaveError = 'Error Save Network!';
 
 @freezed
 class NetworksState with _$NetworksState {
   const factory NetworksState({
-    @Default([]) List<NetworkServerIdentity> networks,
+    @Default([]) List<NetworkIdentity> networks,
     String? hostname,
     @Default('') String username,
     @Default('') String inviteCode,
@@ -53,7 +53,7 @@ class NetworksCubit extends Cubit<NetworksState> {
   Future<void> load() async {
     try {
       final storedNetworks =
-          _storage.getAll<NetworkServerIdentity>(StoreKeys.Networks.name);
+          _storage.getAll<NetworkIdentity>(StoreKeys.Networks.name);
       if (storedNetworks.hasError) return;
       await Future.delayed(const Duration(milliseconds: 300));
       final networks = storedNetworks.result!;
@@ -234,7 +234,7 @@ class NetworksCubit extends Cubit<NetworksState> {
         return;
       }
 
-      final networkServerId = NetworkServerIdentity(
+      final networkServerId = NetworkIdentity(
         hostname: state.hostname!,
         name: (state.name == null) ? serverId.result!.name : state.name!,
         kind: (state.kind == null) ? serverId.result!.kind : state.kind!,
@@ -259,9 +259,9 @@ class NetworksCubit extends Cubit<NetworksState> {
     }
   }
 
-  Future<void> updateServerIdStorage(NetworkServerIdentity serverId) async {
+  Future<void> updateServerIdStorage(NetworkIdentity serverId) async {
     try {
-      final savedid = await _storage.saveItem<NetworkServerIdentity>(
+      final savedid = await _storage.saveItem<NetworkIdentity>(
         StoreKeys.Networks.name,
         serverId,
       );
@@ -276,7 +276,7 @@ class NetworksCubit extends Cubit<NetworksState> {
       }
       final id = savedid.result!;
       final newId = serverId.copyWith(id: id);
-      await _storage.saveItemAt<NetworkServerIdentity>(
+      await _storage.saveItemAt<NetworkIdentity>(
         StoreKeys.Networks.name,
         id,
         newId,

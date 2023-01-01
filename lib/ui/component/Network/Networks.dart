@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/networks.dart';
-import 'package:sats/model/cypherpost-mock.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Network/NetworkCard.dart';
 

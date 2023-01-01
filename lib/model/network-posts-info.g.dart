@@ -17,7 +17,7 @@ class NetworkPostsInfoClassAdapter extends TypeAdapter<_$_NetworkPostsInfo> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return _$_NetworkPostsInfo(
-      lastGenesis: fields[0] as int,
+      latestGenesis: fields[0] as int,
       corruptedPostIds: (fields[1] as List).cast<String>(),
     );
   }
@@ -27,7 +27,7 @@ class NetworkPostsInfoClassAdapter extends TypeAdapter<_$_NetworkPostsInfo> {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.lastGenesis)
+      ..write(obj.latestGenesis)
       ..writeByte(1)
       ..write(obj.corruptedPostIds);
   }
@@ -49,7 +49,7 @@ class NetworkPostsInfoClassAdapter extends TypeAdapter<_$_NetworkPostsInfo> {
 
 _$_NetworkPostsInfo _$$_NetworkPostsInfoFromJson(Map<String, dynamic> json) =>
     _$_NetworkPostsInfo(
-      lastGenesis: json['lastGenesis'] as int,
+      latestGenesis: json['latestGenesis'] as int,
       corruptedPostIds: (json['corruptedPostIds'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
@@ -57,6 +57,6 @@ _$_NetworkPostsInfo _$$_NetworkPostsInfoFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_NetworkPostsInfoToJson(_$_NetworkPostsInfo instance) =>
     <String, dynamic>{
-      'lastGenesis': instance.lastGenesis,
+      'latestGenesis': instance.latestGenesis,
       'corruptedPostIds': instance.corruptedPostIds,
     };

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sats/api/libcp.dart';
+import 'package:sats/model/cypherpost.dart';
 
 void main() {
   const masterRoot =
@@ -15,6 +16,8 @@ void main() {
   const hostname = 'https://lotr.toma.tech';
   const socks5 = 0;
   const username = 'ika0009';
+  const recipient =
+      '76015c9bbf0b6d45a953a3ff4dcf6142624481ad747b45e1f775db1e0463c02e';
 
   late LibCypherpost libcp;
 
@@ -80,6 +83,39 @@ void main() {
     );
 
     inspect(memberList.result);
+  });
+  test('Send Post And Get All', () {
+    final postId = libcp.sendPost(
+      hostname: hostname,
+      socks5: socks5,
+      socialRoot: expectedSocialRoot,
+      index: 1,
+      to: 'direct:$recipient',
+      kind: 'message',
+      value: 'Hi sm8!',
+    );
+
+    inspect(postId.result);
+
+    final status = libcp.sendKeys(
+      hostname: hostname,
+      socks5: socks5,
+      socialRoot: expectedSocialRoot,
+      index: 1,
+      postId: postId.result!.id,
+      recipients: recipient,
+    );
+
+    inspect(status.result);
+
+    final postsAsChat = libcp.getAllPosts(
+      hostname: hostname,
+      socks5: socks5,
+      socialRoot: expectedSocialRoot,
+      genesisFilter: 0,
+    );
+
+    inspect(postsAsChat.result);
   });
   test('Leave', () async {
     final leaveResult = libcp.leaveServer(

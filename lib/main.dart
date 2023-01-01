@@ -16,7 +16,7 @@ import 'package:sats/ui/screen/BackupWallet.dart';
 import 'package:sats/ui/screen/Broadcast.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
-import 'package:sats/ui/screen/MyNetworkInfo.dart';
+import 'package:sats/ui/screen/NetworkInfo.dart';
 import 'package:sats/ui/screen/NetworkChat.dart';
 import 'package:sats/ui/screen/NetworkDiscovery.dart';
 import 'package:sats/ui/screen/NetworkJoin.dart';
@@ -105,6 +105,8 @@ class Stackmate extends StatelessWidget {
       ),
       GoRoute(
         path: '/network-overview',
+        //  builder: (_, state) =>
+        //   NetworkOverview(networkOverviewCubit: state.extra! as NetworkOverviewCubit)
         builder: (_, __) => const NetworkOverview(),
       ),
       GoRoute(

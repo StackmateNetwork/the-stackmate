@@ -66,7 +66,6 @@ class _NetworkOverview extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: HomeActions(),
     );
   }
 }

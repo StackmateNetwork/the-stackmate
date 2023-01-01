@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'network-server-identity.dart';
+part of 'network-identity.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,13 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-NetworkServerIdentity _$NetworkServerIdentityFromJson(
-    Map<String, dynamic> json) {
-  return _NetworkServerIdentity.fromJson(json);
+NetworkIdentity _$NetworkIdentityFromJson(Map<String, dynamic> json) {
+  return _NetworkIdentity.fromJson(json);
 }
 
 /// @nodoc
-mixin _$NetworkServerIdentity {
+mixin _$NetworkIdentity {
   @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
   @HiveField(1)
@@ -40,15 +39,15 @@ mixin _$NetworkServerIdentity {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $NetworkServerIdentityCopyWith<NetworkServerIdentity> get copyWith =>
+  $NetworkIdentityCopyWith<NetworkIdentity> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NetworkServerIdentityCopyWith<$Res> {
-  factory $NetworkServerIdentityCopyWith(NetworkServerIdentity value,
-          $Res Function(NetworkServerIdentity) then) =
-      _$NetworkServerIdentityCopyWithImpl<$Res>;
+abstract class $NetworkIdentityCopyWith<$Res> {
+  factory $NetworkIdentityCopyWith(
+          NetworkIdentity value, $Res Function(NetworkIdentity) then) =
+      _$NetworkIdentityCopyWithImpl<$Res>;
   $Res call(
       {@HiveField(0) int? id,
       @HiveField(1) String hostname,
@@ -61,13 +60,13 @@ abstract class $NetworkServerIdentityCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NetworkServerIdentityCopyWithImpl<$Res>
-    implements $NetworkServerIdentityCopyWith<$Res> {
-  _$NetworkServerIdentityCopyWithImpl(this._value, this._then);
+class _$NetworkIdentityCopyWithImpl<$Res>
+    implements $NetworkIdentityCopyWith<$Res> {
+  _$NetworkIdentityCopyWithImpl(this._value, this._then);
 
-  final NetworkServerIdentity _value;
+  final NetworkIdentity _value;
   // ignore: unused_field
-  final $Res Function(NetworkServerIdentity) _then;
+  final $Res Function(NetworkIdentity) _then;
 
   @override
   $Res call({
@@ -118,11 +117,11 @@ class _$NetworkServerIdentityCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_NetworkServerIdentityCopyWith<$Res>
-    implements $NetworkServerIdentityCopyWith<$Res> {
-  factory _$$_NetworkServerIdentityCopyWith(_$_NetworkServerIdentity value,
-          $Res Function(_$_NetworkServerIdentity) then) =
-      __$$_NetworkServerIdentityCopyWithImpl<$Res>;
+abstract class _$$_NetworkIdentityCopyWith<$Res>
+    implements $NetworkIdentityCopyWith<$Res> {
+  factory _$$_NetworkIdentityCopyWith(
+          _$_NetworkIdentity value, $Res Function(_$_NetworkIdentity) then) =
+      __$$_NetworkIdentityCopyWithImpl<$Res>;
   @override
   $Res call(
       {@HiveField(0) int? id,
@@ -136,16 +135,15 @@ abstract class _$$_NetworkServerIdentityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NetworkServerIdentityCopyWithImpl<$Res>
-    extends _$NetworkServerIdentityCopyWithImpl<$Res>
-    implements _$$_NetworkServerIdentityCopyWith<$Res> {
-  __$$_NetworkServerIdentityCopyWithImpl(_$_NetworkServerIdentity _value,
-      $Res Function(_$_NetworkServerIdentity) _then)
-      : super(_value, (v) => _then(v as _$_NetworkServerIdentity));
+class __$$_NetworkIdentityCopyWithImpl<$Res>
+    extends _$NetworkIdentityCopyWithImpl<$Res>
+    implements _$$_NetworkIdentityCopyWith<$Res> {
+  __$$_NetworkIdentityCopyWithImpl(
+      _$_NetworkIdentity _value, $Res Function(_$_NetworkIdentity) _then)
+      : super(_value, (v) => _then(v as _$_NetworkIdentity));
 
   @override
-  _$_NetworkServerIdentity get _value =>
-      super._value as _$_NetworkServerIdentity;
+  _$_NetworkIdentity get _value => super._value as _$_NetworkIdentity;
 
   @override
   $Res call({
@@ -158,7 +156,7 @@ class __$$_NetworkServerIdentityCopyWithImpl<$Res>
     Object? inviteCode = freezed,
     Object? inviteCount = freezed,
   }) {
-    return _then(_$_NetworkServerIdentity(
+    return _then(_$_NetworkIdentity(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -197,9 +195,9 @@ class __$$_NetworkServerIdentityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-@HiveType(typeId: 11, adapterName: 'NetworkServerIdentityClassAdapter')
-class _$_NetworkServerIdentity extends _NetworkServerIdentity {
-  const _$_NetworkServerIdentity(
+@HiveType(typeId: 11, adapterName: 'NetworkIdentityClassAdapter')
+class _$_NetworkIdentity extends _NetworkIdentity {
+  const _$_NetworkIdentity(
       {@HiveField(0) this.id,
       @HiveField(1) required this.hostname,
       @HiveField(2) required this.name,
@@ -210,8 +208,8 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
       @HiveField(7) required this.inviteCount})
       : super._();
 
-  factory _$_NetworkServerIdentity.fromJson(Map<String, dynamic> json) =>
-      _$$_NetworkServerIdentityFromJson(json);
+  factory _$_NetworkIdentity.fromJson(Map<String, dynamic> json) =>
+      _$$_NetworkIdentityFromJson(json);
 
   @override
   @HiveField(0)
@@ -240,14 +238,14 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
 
   @override
   String toString() {
-    return 'NetworkServerIdentity(id: $id, hostname: $hostname, name: $name, serverPubkey: $serverPubkey, kind: $kind, username: $username, inviteCode: $inviteCode, inviteCount: $inviteCount)';
+    return 'NetworkIdentity(id: $id, hostname: $hostname, name: $name, serverPubkey: $serverPubkey, kind: $kind, username: $username, inviteCode: $inviteCode, inviteCount: $inviteCount)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NetworkServerIdentity &&
+            other is _$_NetworkIdentity &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.hostname, hostname) &&
             const DeepCollectionEquality().equals(other.name, name) &&
@@ -276,18 +274,17 @@ class _$_NetworkServerIdentity extends _NetworkServerIdentity {
 
   @JsonKey(ignore: true)
   @override
-  _$$_NetworkServerIdentityCopyWith<_$_NetworkServerIdentity> get copyWith =>
-      __$$_NetworkServerIdentityCopyWithImpl<_$_NetworkServerIdentity>(
-          this, _$identity);
+  _$$_NetworkIdentityCopyWith<_$_NetworkIdentity> get copyWith =>
+      __$$_NetworkIdentityCopyWithImpl<_$_NetworkIdentity>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NetworkServerIdentityToJson(this);
+    return _$$_NetworkIdentityToJson(this);
   }
 }
 
-abstract class _NetworkServerIdentity extends NetworkServerIdentity {
-  const factory _NetworkServerIdentity(
+abstract class _NetworkIdentity extends NetworkIdentity {
+  const factory _NetworkIdentity(
       {@HiveField(0) final int? id,
       @HiveField(1) required final String hostname,
       @HiveField(2) required final String name,
@@ -295,11 +292,11 @@ abstract class _NetworkServerIdentity extends NetworkServerIdentity {
       @HiveField(4) required final String kind,
       @HiveField(5) required final String username,
       @HiveField(6) required final String inviteCode,
-      @HiveField(7) required final int inviteCount}) = _$_NetworkServerIdentity;
-  const _NetworkServerIdentity._() : super._();
+      @HiveField(7) required final int inviteCount}) = _$_NetworkIdentity;
+  const _NetworkIdentity._() : super._();
 
-  factory _NetworkServerIdentity.fromJson(Map<String, dynamic> json) =
-      _$_NetworkServerIdentity.fromJson;
+  factory _NetworkIdentity.fromJson(Map<String, dynamic> json) =
+      _$_NetworkIdentity.fromJson;
 
   @override
   @HiveField(0)
@@ -327,6 +324,6 @@ abstract class _NetworkServerIdentity extends NetworkServerIdentity {
   int get inviteCount => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_NetworkServerIdentityCopyWith<_$_NetworkServerIdentity> get copyWith =>
+  _$$_NetworkIdentityCopyWith<_$_NetworkIdentity> get copyWith =>
       throw _privateConstructorUsedError;
 }

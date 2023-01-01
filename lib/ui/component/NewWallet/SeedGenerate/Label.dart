@@ -30,55 +30,63 @@ class SeedGenerateLabel extends StatelessWidget {
         buildWhen: (previous, current) =>
             previous.walletLabelError != current.walletLabelError,
         builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 24),
-              Text(
-                'Name your wallet',
-                style: c.fonts.headline4!.copyWith(
-                  color: c.colours.onPrimary,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Padding(
-                padding: EdgeInsets.zero,
-                child: TextField(
-                  onChanged: (text) {
-                    c.read<SeedGenerateWalletCubit>().labelChanged(text);
-                  },
-                  style: TextStyle(color: c.colours.onPrimary),
-                  decoration: InputDecoration(
-                    labelText: 'Wallet Name',
-                    labelStyle: TextStyle(
-                      color: context.colours.onPrimary,
+          return IgnorePointer(
+            ignoring: state.savingWallet,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 300),
+              opacity: state.savingWallet ? 0.5 : 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 24),
+                  Text(
+                    'Name your wallet',
+                    style: c.fonts.headline4!.copyWith(
+                      color: c.colours.onPrimary,
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 40),
-              const SizedBox(height: 24),
-              SizedBox(
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    onPrimary: c.colours.background,
-                    primary: c.colours.primary,
+                  const SizedBox(height: 24),
+                  Padding(
+                    padding: EdgeInsets.zero,
+                    child: TextField(
+                      onChanged: (text) {
+                        c.read<SeedGenerateWalletCubit>().labelChanged(text);
+                      },
+                      style: TextStyle(color: c.colours.onPrimary),
+                      decoration: InputDecoration(
+                        labelText: 'Wallet Name',
+                        labelStyle: TextStyle(
+                          color: context.colours.onPrimary,
+                        ),
+                      ),
+                    ),
                   ),
-                  onPressed: () async {
-                    final FocusScopeNode currentFocus = FocusScope.of(context);
+                  const SizedBox(height: 40),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        onPrimary: c.colours.background,
+                        primary: c.colours.primary,
+                      ),
+                      onPressed: () async {
+                        final FocusScopeNode currentFocus =
+                            FocusScope.of(context);
 
-                    if (!currentFocus.hasPrimaryFocus) {
-                      currentFocus.unfocus();
-                    }
+                        if (!currentFocus.hasPrimaryFocus) {
+                          currentFocus.unfocus();
+                        }
 
-                    await c.read<SeedGenerateCubit>().finalize();
-                    c.read<SeedGenerateWalletCubit>().nextClicked();
-                  },
-                  child: Text('Confirm'.toUpperCase()),
-                ),
+                        await c.read<SeedGenerateCubit>().finalize();
+                        c.read<SeedGenerateWalletCubit>().nextClicked();
+                      },
+                      child: Text('Confirm'.toUpperCase()),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           );
         },
       ),

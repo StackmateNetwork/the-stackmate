@@ -8,7 +8,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/fees.dart';
 import 'package:sats/model/master.dart';
-import 'package:sats/model/network-server-identity.dart';
+import 'package:sats/model/network-identity.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/model/pin.dart';
 import 'package:sats/model/preferences.dart';
@@ -60,7 +60,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(TorClassAdapter()); // typeId: 8
   Hive.registerAdapter(PinClassAdapter()); // typeId: 9
   Hive.registerAdapter(SocialRootClassAdapter()); // typeId: 10
-  Hive.registerAdapter(NetworkServerIdentityClassAdapter()); // typeId: 11
+  Hive.registerAdapter(NetworkIdentityClassAdapter()); // typeId: 11
 
   const secureStorage = FlutterSecureStorage();
   final encryprionKey = await secureStorage.read(key: 'key');
@@ -110,7 +110,7 @@ Future<void> initializeHive() async {
     StoreKeys.SocialRoot.name,
     encryptionCipher: HiveAesCipher(encryptionKey),
   );
-  await Hive.openBox<NetworkServerIdentity>(
+  await Hive.openBox<NetworkIdentity>(
     StoreKeys.Networks.name,
     encryptionCipher: HiveAesCipher(encryptionKey),
   );

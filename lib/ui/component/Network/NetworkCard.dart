@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/model/network-server-identity.dart';
+import 'package:sats/model/network-identity.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class NetworkCard extends StatelessWidget {
@@ -12,7 +12,7 @@ class NetworkCard extends StatelessWidget {
     required this.network,
   }) : super(key: key);
 
-  final NetworkServerIdentity network;
+  final NetworkIdentity network;
   final bool isSelection;
 
   @override

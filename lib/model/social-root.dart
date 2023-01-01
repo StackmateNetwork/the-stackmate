@@ -9,7 +9,8 @@ class SocialRoot with _$SocialRoot {
   @HiveType(typeId: 10, adapterName: 'SocialRootClassAdapter')
   const factory SocialRoot({
     @HiveField(0) required String mnemonic,
-    @HiveField(2) required String xprv,
+    @HiveField(1) required String xprv,
+    @HiveField(2) required String pubkey,
   }) = _SocialRoot;
   const SocialRoot._();
 }

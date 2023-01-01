@@ -55,10 +55,12 @@ class SocialRootCubit extends Cubit<SocialRootState> {
   Future<void> save(
     String xprv,
     String mnemonic,
+    String pubkey,
   ) async {
     final socialRoot = SocialRoot(
       xprv: xprv,
       mnemonic: mnemonic,
+      pubkey: pubkey,
     );
 
     final saved = await _storage.saveItemAt<SocialRoot>(
@@ -72,5 +74,4 @@ class SocialRootCubit extends Cubit<SocialRootState> {
     }
     await Future.delayed(const Duration(milliseconds: 200));
   }
-
 }

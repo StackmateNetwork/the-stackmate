@@ -1,23 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'network-server-identity.dart';
+part of 'network-identity.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NetworkServerIdentityClassAdapter
-    extends TypeAdapter<_$_NetworkServerIdentity> {
+class NetworkIdentityClassAdapter extends TypeAdapter<_$_NetworkIdentity> {
   @override
   final int typeId = 11;
 
   @override
-  _$_NetworkServerIdentity read(BinaryReader reader) {
+  _$_NetworkIdentity read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_NetworkServerIdentity(
+    return _$_NetworkIdentity(
       id: fields[0] as int?,
       hostname: fields[1] as String,
       name: fields[2] as String,
@@ -30,7 +29,7 @@ class NetworkServerIdentityClassAdapter
   }
 
   @override
-  void write(BinaryWriter writer, _$_NetworkServerIdentity obj) {
+  void write(BinaryWriter writer, _$_NetworkIdentity obj) {
     writer
       ..writeByte(8)
       ..writeByte(0)
@@ -57,7 +56,7 @@ class NetworkServerIdentityClassAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NetworkServerIdentityClassAdapter &&
+      other is NetworkIdentityClassAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -66,9 +65,8 @@ class NetworkServerIdentityClassAdapter
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_NetworkServerIdentity _$$_NetworkServerIdentityFromJson(
-        Map<String, dynamic> json) =>
-    _$_NetworkServerIdentity(
+_$_NetworkIdentity _$$_NetworkIdentityFromJson(Map<String, dynamic> json) =>
+    _$_NetworkIdentity(
       id: json['id'] as int?,
       hostname: json['hostname'] as String,
       name: json['name'] as String,
@@ -79,8 +77,7 @@ _$_NetworkServerIdentity _$$_NetworkServerIdentityFromJson(
       inviteCount: json['inviteCount'] as int,
     );
 
-Map<String, dynamic> _$$_NetworkServerIdentityToJson(
-        _$_NetworkServerIdentity instance) =>
+Map<String, dynamic> _$$_NetworkIdentityToJson(_$_NetworkIdentity instance) =>
     <String, dynamic>{
       'id': instance.id,
       'hostname': instance.hostname,

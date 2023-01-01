@@ -339,6 +339,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         await _socialRoot.save(
           socialRoot.result!.xprv,
           socialRoot.result!.mnemonic,
+          socialRoot.result!.pubkey,
         );
         await _socialRoot.init();
       }
