@@ -67,6 +67,7 @@ class OverviewCubit extends Cubit<OverviewState> {
     try {
       emit(
         state.copyWith(
+          error: '',
           loading: 'inviting',
         ),
       );
@@ -115,6 +116,45 @@ class OverviewCubit extends Cubit<OverviewState> {
     }
   }
 
+  Future<void> leaveNetwork() async {
+    try {
+      emit(
+        state.copyWith(
+          loading: 'leaving',
+          error: '',
+        ),
+      );
+      final socks5 = _torCubit.state.socks5Port;
+      final socialRoot = _socialRoot.state.key!.xprv;
+
+      final status = await compute(leave, {
+        'hostname': 'https://' + state.network.hostname,
+        'socks5': socks5.toString(),
+        'socialRoot': socialRoot,
+      });
+
+      if (status.hasError) {
+        emit(
+          state.copyWith(
+            error: status.error!,
+            loading: '',
+          ),
+        );
+        return;
+      }
+
+      purgeServerModels();
+
+      emit(
+        state.copyWith(
+          loading: '',
+        ),
+      );
+    } catch (e, s) {
+      _logger.logException(e, 'NetworkOverview.leave', s);
+    }
+  }
+
   Future<void> updateServerIdStorage(NetworkIdentity serverId) async {
     try {
       final status = await _storage.saveItemAt<NetworkIdentity>(
@@ -136,17 +176,23 @@ class OverviewCubit extends Cubit<OverviewState> {
     }
   }
 
-  Future<void> leaveNetwork() async {
+  void purgeServerModels() {
     try {
-      // api leave server
-      // delete all local models
-      emit(
-        state.copyWith(
-          pubkey: _socialRoot.state.key!.pubkey,
-        ),
+      final status = _storage.deleteItemAt<NetworkIdentity>(
+        StoreKeys.Networks.name,
+        state.network.id!,
       );
+      if (status.hasError) {
+        emit(
+          state.copyWith(
+            error: 'Could not delete Network Identity Model',
+            loading: '',
+          ),
+        );
+        return;
+      }
     } catch (e, s) {
-      _logger.logException(e, 'NetworkOverview.leave', s);
+      _logger.logException(e, 'OverviewCubit.purgeServerModels', s);
     }
   }
 

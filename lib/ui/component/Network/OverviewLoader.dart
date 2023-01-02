@@ -17,6 +17,10 @@ class OverviewLoader extends StatelessWidget {
         {
           return const Loading(text: 'Requesting invite code...');
         }
+      case 'leaving':
+        {
+          return const Loading(text: 'Leaving the network...');
+        }
       default:
         {
           return Container();
