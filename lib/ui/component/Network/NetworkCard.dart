@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sats/cubit/network/overview.dart';
 import 'package:sats/model/network-identity.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -19,7 +20,7 @@ class NetworkCard extends StatelessWidget {
   Widget build(BuildContext c) {
     return GestureDetector(
       onTap: () {
-        c.push('/network-overview');
+        c.push('/network-overview', extra: c.read<OverviewCubit>());
       },
       child: Material(
         elevation: 4,

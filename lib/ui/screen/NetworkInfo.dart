@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:sats/model/cypherpost-mock.dart';
+import 'package:sats/model/network-identity.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
-class UserInfoScreen extends StatelessWidget {
-  const UserInfoScreen({Key? key}) : super(key: key);
+class NetworkInfoScreen extends StatelessWidget {
+  const NetworkInfoScreen({Key? key, required this.network}) : super(key: key);
+
+  final NetworkIdentity network;
 
   @override
   Widget build(BuildContext c) {
@@ -17,7 +19,7 @@ class UserInfoScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 24),
               Header(
-                cornerTitle: 'User Details'.toUpperCase(),
+                cornerTitle: 'Network Info'.toUpperCase(),
                 children: [
                   Back(
                     onPressed: () {
@@ -33,20 +35,6 @@ class UserInfoScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 56),
                     Text(
-                      'PUBLIC KEY',
-                      style: c.fonts.overline!.copyWith(
-                        color: c.colours.onBackground,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      myId.pubkey,
-                      style: c.fonts.bodySmall!.copyWith(
-                        color: c.colours.onBackground,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Text(
                       'USERNAME',
                       style: c.fonts.overline!.copyWith(
                         color: c.colours.onBackground,
@@ -54,7 +42,7 @@ class UserInfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      myId.username,
+                      network.username,
                       style: c.fonts.headline6!.copyWith(
                         color: c.colours.onBackground,
                       ),
@@ -68,7 +56,7 @@ class UserInfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Privileged',
+                      network.kind,
                       style: c.fonts.headline6!.copyWith(
                         color: c.colours.onBackground,
                       ),
@@ -82,7 +70,7 @@ class UserInfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '7',
+                      network.inviteCount.toString(),
                       style: c.fonts.headline6!.copyWith(
                         color: c.colours.onBackground,
                       ),
@@ -96,7 +84,9 @@ class UserInfoScreen extends StatelessWidget {
                           ),
                           alignment: Alignment.bottomCenter,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          // overviewCubit.generateInvite()
+                        },
                         child: Text('Generate Invite Code'.toUpperCase()),
                       ),
                     ),

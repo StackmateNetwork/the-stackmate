@@ -195,27 +195,25 @@ class Verified {
 
 class CompletePost {
   CompletePost({
-    this.id,
-    this.genesis,
-    this.expiry,
-    this.owner,
-    this.post,
+    required this.id,
+    required this.genesis,
+    required this.expiry,
+    required this.owner,
+    required this.post,
   });
 
   CompletePost.fromJson(Map<String, dynamic> json) {
-    id = json['id'] as String?;
-    genesis = json['genesis'] as int?;
-    expiry = json['expiry'] as int?;
-    owner = json['owner'] as String?;
-    post = (json['post'] as Map<String, dynamic>?) != null
-        ? Post.fromJson(json['post'] as Map<String, dynamic>)
-        : null;
+    id = json['id'] as String;
+    genesis = json['genesis'] as int;
+    expiry = json['expiry'] as int;
+    owner = json['owner'] as String;
+    post = Post.fromJson(json['post'] as Map<String, dynamic>);
   }
-  String? id;
-  int? genesis;
-  int? expiry;
-  String? owner;
-  Post? post;
+  late String id;
+  late int genesis;
+  late int expiry;
+  late String owner;
+  late Post post;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
@@ -223,7 +221,7 @@ class CompletePost {
     json['genesis'] = genesis;
     json['expiry'] = expiry;
     json['owner'] = owner;
-    json['post'] = post?.toJson();
+    json['post'] = post.toJson();
     return json;
   }
 }
@@ -263,16 +261,16 @@ class Post {
 
 class To {
   To({
-    this.kind,
-    this.value,
+    required this.kind,
+    required this.value,
   });
 
   To.fromJson(Map<String, dynamic> json) {
-    kind = json['kind'] as String?;
-    value = json['value'] as String?;
+    kind = json['kind'] as String;
+    value = json['value'] as String;
   }
-  String? kind;
-  String? value;
+  late String kind;
+  late String value;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
@@ -284,16 +282,16 @@ class To {
 
 class Payload {
   Payload({
-    this.kind,
-    this.value,
+    required this.kind,
+    required this.value,
   });
 
   Payload.fromJson(Map<String, dynamic> json) {
-    kind = json['kind'] as String?;
-    value = json['value'] as String?;
+    kind = json['kind'] as String;
+    value = json['value'] as String;
   }
-  String? kind;
-  String? value;
+  late String kind;
+  late String value;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};

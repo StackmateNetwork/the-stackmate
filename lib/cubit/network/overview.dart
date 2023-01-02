@@ -16,6 +16,7 @@ part 'overview.freezed.dart';
 class OverviewState with _$OverviewState {
   const factory OverviewState({
     required NetworkIdentity network,
+    String? pubkey,
   }) = _OverviewState;
 
   const OverviewState._();
@@ -40,7 +41,11 @@ class OverviewCubit extends Cubit<OverviewState> {
   Future<void> load() async {
     try {
       // load from storage and update from network - all badges and posts
-
+      emit(
+        state.copyWith(
+          pubkey: _socialRoot.state.key!.pubkey,
+        ),
+      );
     } catch (e, s) {
       _logger.logException(e, 'NetworkOverview.load', s);
     }

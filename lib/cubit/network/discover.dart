@@ -8,7 +8,6 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/model/network-identity.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/pkg/storage.dart';
 
 part 'discover.freezed.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/fees.dart';
+import 'package:sats/cubit/network/overview.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/Home/Actions.dart';
 import 'package:sats/ui/component/Home/Loader.dart';
 import 'package:sats/ui/component/Network/ChatList.dart';
 import 'package:sats/ui/component/Network/ChatSearch.dart';
@@ -16,12 +16,9 @@ class _NetworkOverview extends StatelessWidget {
       body: SafeArea(
         child: RefreshIndicator(
           displacement: 10.0,
-          onRefresh: () async {
-            await c.read<TorCubit>().testConnection();
-            await c.read<FeesCubit>().update();
-          },
-          child: BlocBuilder<TorCubit, TorState>(
-            builder: (context, torState) {
+          onRefresh: () async {},
+          child: BlocBuilder<OverviewCubit, OverviewState>(
+            builder: (context, overviewState) {
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -70,11 +67,17 @@ class _NetworkOverview extends StatelessWidget {
   }
 }
 
-class NetworkOverview extends StatelessWidget {
-  const NetworkOverview({Key? key}) : super(key: key);
+class NetworkOverviewScreen extends StatelessWidget {
+  const NetworkOverviewScreen({Key? key, required this.overviewCubit})
+      : super(key: key);
+
+  final OverviewCubit overviewCubit;
 
   @override
-  Widget build(BuildContext context) {
-    return _NetworkOverview();
+  Widget build(BuildContext c) {
+    return BlocProvider.value(
+      value: overviewCubit,
+      child: _NetworkOverview(),
+    );
   }
 }

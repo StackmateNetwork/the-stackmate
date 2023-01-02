@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$OverviewState {
   NetworkIdentity get network => throw _privateConstructorUsedError;
+  String? get pubkey => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OverviewStateCopyWith<OverviewState> get copyWith =>
@@ -28,7 +29,7 @@ abstract class $OverviewStateCopyWith<$Res> {
   factory $OverviewStateCopyWith(
           OverviewState value, $Res Function(OverviewState) then) =
       _$OverviewStateCopyWithImpl<$Res>;
-  $Res call({NetworkIdentity network});
+  $Res call({NetworkIdentity network, String? pubkey});
 
   $NetworkIdentityCopyWith<$Res> get network;
 }
@@ -45,12 +46,17 @@ class _$OverviewStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? network = freezed,
+    Object? pubkey = freezed,
   }) {
     return _then(_value.copyWith(
       network: network == freezed
           ? _value.network
           : network // ignore: cast_nullable_to_non_nullable
               as NetworkIdentity,
+      pubkey: pubkey == freezed
+          ? _value.pubkey
+          : pubkey // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 
@@ -69,7 +75,7 @@ abstract class _$$_OverviewStateCopyWith<$Res>
           _$_OverviewState value, $Res Function(_$_OverviewState) then) =
       __$$_OverviewStateCopyWithImpl<$Res>;
   @override
-  $Res call({NetworkIdentity network});
+  $Res call({NetworkIdentity network, String? pubkey});
 
   @override
   $NetworkIdentityCopyWith<$Res> get network;
@@ -89,12 +95,17 @@ class __$$_OverviewStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? network = freezed,
+    Object? pubkey = freezed,
   }) {
     return _then(_$_OverviewState(
       network: network == freezed
           ? _value.network
           : network // ignore: cast_nullable_to_non_nullable
               as NetworkIdentity,
+      pubkey: pubkey == freezed
+          ? _value.pubkey
+          : pubkey // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -102,14 +113,16 @@ class __$$_OverviewStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_OverviewState extends _OverviewState {
-  const _$_OverviewState({required this.network}) : super._();
+  const _$_OverviewState({required this.network, this.pubkey}) : super._();
 
   @override
   final NetworkIdentity network;
+  @override
+  final String? pubkey;
 
   @override
   String toString() {
-    return 'OverviewState(network: $network)';
+    return 'OverviewState(network: $network, pubkey: $pubkey)';
   }
 
   @override
@@ -117,12 +130,15 @@ class _$_OverviewState extends _OverviewState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_OverviewState &&
-            const DeepCollectionEquality().equals(other.network, network));
+            const DeepCollectionEquality().equals(other.network, network) &&
+            const DeepCollectionEquality().equals(other.pubkey, pubkey));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(network));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(network),
+      const DeepCollectionEquality().hash(pubkey));
 
   @JsonKey(ignore: true)
   @override
@@ -131,12 +147,15 @@ class _$_OverviewState extends _OverviewState {
 }
 
 abstract class _OverviewState extends OverviewState {
-  const factory _OverviewState({required final NetworkIdentity network}) =
-      _$_OverviewState;
+  const factory _OverviewState(
+      {required final NetworkIdentity network,
+      final String? pubkey}) = _$_OverviewState;
   const _OverviewState._() : super._();
 
   @override
   NetworkIdentity get network => throw _privateConstructorUsedError;
+  @override
+  String? get pubkey => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_OverviewStateCopyWith<_$_OverviewState> get copyWith =>

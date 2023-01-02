@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sats/cubit/network/overview.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class NetworkTools extends StatelessWidget {
@@ -13,7 +14,10 @@ class NetworkTools extends StatelessWidget {
           children: <Widget>[
             IconButton(
               onPressed: () {
-                c.push('/user-info');
+                c.push(
+                  '/network-info',
+                  extra: c.read<OverviewCubit>().state.network,
+                );
               },
               icon: Icon(
                 Icons.info,

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:sats/cubit/network/overview.dart';
 import 'package:sats/cubit/wallet/info.dart';
+import 'package:sats/model/network-identity.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -16,9 +18,9 @@ import 'package:sats/ui/screen/BackupWallet.dart';
 import 'package:sats/ui/screen/Broadcast.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
-import 'package:sats/ui/screen/NetworkInfo.dart';
 import 'package:sats/ui/screen/NetworkChat.dart';
 import 'package:sats/ui/screen/NetworkDiscovery.dart';
+import 'package:sats/ui/screen/NetworkInfo.dart';
 import 'package:sats/ui/screen/NetworkJoin.dart';
 import 'package:sats/ui/screen/NetworkOverview.dart';
 import 'package:sats/ui/screen/NetworksHome.dart';
@@ -105,17 +107,18 @@ class Stackmate extends StatelessWidget {
       ),
       GoRoute(
         path: '/network-overview',
-        //  builder: (_, state) =>
-        //   NetworkOverview(networkOverviewCubit: state.extra! as NetworkOverviewCubit)
-        builder: (_, __) => const NetworkOverview(),
+        builder: (_, state) => NetworkOverviewScreen(
+          overviewCubit: state.extra! as OverviewCubit,
+        ),
       ),
       GoRoute(
         path: '/network-discover',
         builder: (_, __) => const DiscoveryScreen(),
       ),
       GoRoute(
-        path: '/user-info',
-        builder: (_, __) => const UserInfoScreen(),
+        path: '/network-info',
+        builder: (_, state) =>
+            NetworkInfoScreen(network: state.extra! as NetworkIdentity),
       ),
       GoRoute(
         path: '/peers',
