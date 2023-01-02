@@ -6,8 +6,10 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Loader.dart';
 import 'package:sats/ui/component/Network/ChatList.dart';
 import 'package:sats/ui/component/Network/ChatSearch.dart';
+import 'package:sats/ui/component/Network/NetworkInfo.dart';
 import 'package:sats/ui/component/Network/NetworkName.dart';
 import 'package:sats/ui/component/Network/NetworkTools.dart';
+import 'package:sats/ui/component/Network/OverviewLoader.dart';
 
 class _NetworkOverview extends StatelessWidget {
   @override
@@ -24,8 +26,8 @@ class _NetworkOverview extends StatelessWidget {
                   SliverAppBar(
                     stretch: true,
                     pinned: true,
-                    collapsedHeight: 256,
-                    expandedHeight: 256,
+                    collapsedHeight: 128,
+                    expandedHeight: 128,
                     automaticallyImplyLeading: false,
                     backgroundColor: c.colours.background,
                     flexibleSpace: FlexibleSpaceBar(
@@ -36,10 +38,10 @@ class _NetworkOverview extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          const OverviewLoader(),
                           const HomeLoader(),
                           NetworkName(),
                           NetworkTools(),
-                          const ChatSearch()
                         ],
                       ),
                     ),
@@ -51,7 +53,14 @@ class _NetworkOverview extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [ChatList()],
+                            children: [
+                              if (overviewState.showInfo)
+                                const NetworkInfo()
+                              else ...[
+                                const ChatSearch(),
+                                ChatList(),
+                              ]
+                            ],
                           ),
                         ),
                       ],

@@ -18,6 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$OverviewState {
   NetworkIdentity get network => throw _privateConstructorUsedError;
   String? get pubkey => throw _privateConstructorUsedError;
+  bool get showInfo => throw _privateConstructorUsedError;
+  String get error => throw _privateConstructorUsedError;
+  String get loading => throw _privateConstructorUsedError;
+  String get generatedInviteCode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OverviewStateCopyWith<OverviewState> get copyWith =>
@@ -29,7 +33,13 @@ abstract class $OverviewStateCopyWith<$Res> {
   factory $OverviewStateCopyWith(
           OverviewState value, $Res Function(OverviewState) then) =
       _$OverviewStateCopyWithImpl<$Res>;
-  $Res call({NetworkIdentity network, String? pubkey});
+  $Res call(
+      {NetworkIdentity network,
+      String? pubkey,
+      bool showInfo,
+      String error,
+      String loading,
+      String generatedInviteCode});
 
   $NetworkIdentityCopyWith<$Res> get network;
 }
@@ -47,6 +57,10 @@ class _$OverviewStateCopyWithImpl<$Res>
   $Res call({
     Object? network = freezed,
     Object? pubkey = freezed,
+    Object? showInfo = freezed,
+    Object? error = freezed,
+    Object? loading = freezed,
+    Object? generatedInviteCode = freezed,
   }) {
     return _then(_value.copyWith(
       network: network == freezed
@@ -57,6 +71,22 @@ class _$OverviewStateCopyWithImpl<$Res>
           ? _value.pubkey
           : pubkey // ignore: cast_nullable_to_non_nullable
               as String?,
+      showInfo: showInfo == freezed
+          ? _value.showInfo
+          : showInfo // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+      loading: loading == freezed
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as String,
+      generatedInviteCode: generatedInviteCode == freezed
+          ? _value.generatedInviteCode
+          : generatedInviteCode // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 
@@ -75,7 +105,13 @@ abstract class _$$_OverviewStateCopyWith<$Res>
           _$_OverviewState value, $Res Function(_$_OverviewState) then) =
       __$$_OverviewStateCopyWithImpl<$Res>;
   @override
-  $Res call({NetworkIdentity network, String? pubkey});
+  $Res call(
+      {NetworkIdentity network,
+      String? pubkey,
+      bool showInfo,
+      String error,
+      String loading,
+      String generatedInviteCode});
 
   @override
   $NetworkIdentityCopyWith<$Res> get network;
@@ -96,6 +132,10 @@ class __$$_OverviewStateCopyWithImpl<$Res>
   $Res call({
     Object? network = freezed,
     Object? pubkey = freezed,
+    Object? showInfo = freezed,
+    Object? error = freezed,
+    Object? loading = freezed,
+    Object? generatedInviteCode = freezed,
   }) {
     return _then(_$_OverviewState(
       network: network == freezed
@@ -106,23 +146,71 @@ class __$$_OverviewStateCopyWithImpl<$Res>
           ? _value.pubkey
           : pubkey // ignore: cast_nullable_to_non_nullable
               as String?,
+      showInfo: showInfo == freezed
+          ? _value.showInfo
+          : showInfo // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+      loading: loading == freezed
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as String,
+      generatedInviteCode: generatedInviteCode == freezed
+          ? _value.generatedInviteCode
+          : generatedInviteCode // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_OverviewState extends _OverviewState {
-  const _$_OverviewState({required this.network, this.pubkey}) : super._();
+class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
+  const _$_OverviewState(
+      {required this.network,
+      this.pubkey,
+      this.showInfo = false,
+      this.error = '',
+      this.loading = '',
+      this.generatedInviteCode = ''})
+      : super._();
 
   @override
   final NetworkIdentity network;
   @override
   final String? pubkey;
+  @override
+  @JsonKey()
+  final bool showInfo;
+  @override
+  @JsonKey()
+  final String error;
+  @override
+  @JsonKey()
+  final String loading;
+  @override
+  @JsonKey()
+  final String generatedInviteCode;
 
   @override
-  String toString() {
-    return 'OverviewState(network: $network, pubkey: $pubkey)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'OverviewState(network: $network, pubkey: $pubkey, showInfo: $showInfo, error: $error, loading: $loading, generatedInviteCode: $generatedInviteCode)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'OverviewState'))
+      ..add(DiagnosticsProperty('network', network))
+      ..add(DiagnosticsProperty('pubkey', pubkey))
+      ..add(DiagnosticsProperty('showInfo', showInfo))
+      ..add(DiagnosticsProperty('error', error))
+      ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('generatedInviteCode', generatedInviteCode));
   }
 
   @override
@@ -131,14 +219,23 @@ class _$_OverviewState extends _OverviewState {
         (other.runtimeType == runtimeType &&
             other is _$_OverviewState &&
             const DeepCollectionEquality().equals(other.network, network) &&
-            const DeepCollectionEquality().equals(other.pubkey, pubkey));
+            const DeepCollectionEquality().equals(other.pubkey, pubkey) &&
+            const DeepCollectionEquality().equals(other.showInfo, showInfo) &&
+            const DeepCollectionEquality().equals(other.error, error) &&
+            const DeepCollectionEquality().equals(other.loading, loading) &&
+            const DeepCollectionEquality()
+                .equals(other.generatedInviteCode, generatedInviteCode));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(network),
-      const DeepCollectionEquality().hash(pubkey));
+      const DeepCollectionEquality().hash(pubkey),
+      const DeepCollectionEquality().hash(showInfo),
+      const DeepCollectionEquality().hash(error),
+      const DeepCollectionEquality().hash(loading),
+      const DeepCollectionEquality().hash(generatedInviteCode));
 
   @JsonKey(ignore: true)
   @override
@@ -149,13 +246,25 @@ class _$_OverviewState extends _OverviewState {
 abstract class _OverviewState extends OverviewState {
   const factory _OverviewState(
       {required final NetworkIdentity network,
-      final String? pubkey}) = _$_OverviewState;
+      final String? pubkey,
+      final bool showInfo,
+      final String error,
+      final String loading,
+      final String generatedInviteCode}) = _$_OverviewState;
   const _OverviewState._() : super._();
 
   @override
   NetworkIdentity get network => throw _privateConstructorUsedError;
   @override
   String? get pubkey => throw _privateConstructorUsedError;
+  @override
+  bool get showInfo => throw _privateConstructorUsedError;
+  @override
+  String get error => throw _privateConstructorUsedError;
+  @override
+  String get loading => throw _privateConstructorUsedError;
+  @override
+  String get generatedInviteCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_OverviewStateCopyWith<_$_OverviewState> get copyWith =>

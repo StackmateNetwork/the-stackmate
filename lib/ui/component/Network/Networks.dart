@@ -8,6 +8,7 @@ import 'package:sats/cubit/social-root.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/ui/component/Network/NetworkCard.dart';
 
@@ -26,6 +27,7 @@ class Networks extends StatelessWidget {
               value: OverviewCubit(
                 locator<IStorage>(),
                 c.read<Logger>(),
+                locator<IClipBoard>(),
                 c.read<TorCubit>(),
                 c.read<SocialRootCubit>(),
                 n,

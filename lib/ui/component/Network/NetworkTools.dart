@@ -6,6 +6,8 @@ import 'package:sats/pkg/extensions.dart';
 class NetworkTools extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
+    final overviewCubit = c.select((OverviewCubit oc) => oc);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -14,10 +16,7 @@ class NetworkTools extends StatelessWidget {
           children: <Widget>[
             IconButton(
               onPressed: () {
-                c.push(
-                  '/network-info',
-                  extra: c.read<OverviewCubit>().state.network,
-                );
+                overviewCubit.toggleShowInfo();
               },
               icon: Icon(
                 Icons.info,
@@ -27,7 +26,7 @@ class NetworkTools extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                c.push('/discover-members');
+                // overviewCubit.toggleDiscoverMembers();
               },
               icon: Icon(
                 Icons.person_search_sharp,

@@ -20,7 +20,7 @@ import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
 import 'package:sats/ui/screen/NetworkChat.dart';
 import 'package:sats/ui/screen/NetworkDiscovery.dart';
-import 'package:sats/ui/screen/NetworkInfo.dart';
+import 'package:sats/ui/component/Network/NetworkInfo.dart';
 import 'package:sats/ui/screen/NetworkJoin.dart';
 import 'package:sats/ui/screen/NetworkOverview.dart';
 import 'package:sats/ui/screen/NetworksHome.dart';
@@ -114,11 +114,6 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/network-discover',
         builder: (_, __) => const DiscoveryScreen(),
-      ),
-      GoRoute(
-        path: '/network-info',
-        builder: (_, state) =>
-            NetworkInfoScreen(network: state.extra! as NetworkIdentity),
       ),
       GoRoute(
         path: '/peers',

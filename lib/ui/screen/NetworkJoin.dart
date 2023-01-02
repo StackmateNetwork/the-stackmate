@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/networks.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:sats/ui/component/Network/Loader.dart';
+import 'package:sats/ui/component/Network/JoinLoader.dart';
 import 'package:sats/ui/component/Network/NetworkJoinForm.dart';
 
 import 'package:sats/ui/component/common/BackButton.dart';
@@ -19,7 +19,7 @@ class _NetworkJoin extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const Loader(),
+              const JoinLoader(),
               const SizedBox(height: 24),
               Header(
                 cornerTitle: 'Join Network '.toUpperCase(),

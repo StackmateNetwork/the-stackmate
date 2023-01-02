@@ -3,8 +3,8 @@ import 'package:sats/cubit/networks.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/loading.dart';
 
-class Loader extends StatelessWidget {
-  const Loader({
+class JoinLoader extends StatelessWidget {
+  const JoinLoader({
     Key? key,
   }) : super(key: key);
 
@@ -21,6 +21,11 @@ class Loader extends StatelessWidget {
       case 'joining':
         {
           return const Loading(text: 'Attempting to register...');
+        }
+
+      case 'inviting':
+        {
+          return const Loading(text: 'Requesting invite code...');
         }
       default:
         {
