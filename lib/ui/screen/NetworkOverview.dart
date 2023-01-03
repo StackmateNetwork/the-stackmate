@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/network/overview.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Loader.dart';
 import 'package:sats/ui/component/Network/ChatList.dart';
@@ -26,8 +24,8 @@ class _NetworkOverview extends StatelessWidget {
                   SliverAppBar(
                     stretch: true,
                     pinned: true,
-                    collapsedHeight: 128,
-                    expandedHeight: 128,
+                    collapsedHeight: 164,
+                    expandedHeight: 164,
                     automaticallyImplyLeading: false,
                     backgroundColor: c.colours.background,
                     flexibleSpace: FlexibleSpaceBar(

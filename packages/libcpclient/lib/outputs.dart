@@ -100,19 +100,43 @@ class InvitationDetail {
   final int count;
 }
 
+class Identities {
+  Identities({
+    this.identities,
+  });
+
+  Identities.fromJson(Map<String, dynamic> json) {
+    identities = (json['identities'] as List?)
+        ?.map((dynamic e) => MemberIdentity.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+  List<MemberIdentity>? identities;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['identities'] = identities?.map((e) => e.toJson()).toList();
+    return json;
+  }
+}
+
 class MemberIdentity {
-  const MemberIdentity(
+  MemberIdentity({
     this.username,
     this.pubkey,
-  );
-  factory MemberIdentity.fromJson(Map<String, dynamic> json) {
-    return MemberIdentity(
-      json['username'] as String,
-      json['pubkey'] as String,
-    );
+  });
+  MemberIdentity.fromJson(Map<String, dynamic> json) {
+    username = json['username'] as String?;
+    pubkey = json['pubkey'] as String?;
   }
-  final String username;
-  final String pubkey;
+  String? username;
+  String? pubkey;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['username'] = username;
+    json['pubkey'] = pubkey;
+    return json;
+  }
 }
 
 class ServerStatus {

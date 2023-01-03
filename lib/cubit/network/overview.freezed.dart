@@ -21,7 +21,7 @@ mixin _$OverviewState {
   bool get showInfo => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   String get loading => throw _privateConstructorUsedError;
-  String get generatedInviteCode => throw _privateConstructorUsedError;
+  String get displayedInviteSecret => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OverviewStateCopyWith<OverviewState> get copyWith =>
@@ -39,7 +39,7 @@ abstract class $OverviewStateCopyWith<$Res> {
       bool showInfo,
       String error,
       String loading,
-      String generatedInviteCode});
+      String displayedInviteSecret});
 
   $NetworkIdentityCopyWith<$Res> get network;
 }
@@ -60,7 +60,7 @@ class _$OverviewStateCopyWithImpl<$Res>
     Object? showInfo = freezed,
     Object? error = freezed,
     Object? loading = freezed,
-    Object? generatedInviteCode = freezed,
+    Object? displayedInviteSecret = freezed,
   }) {
     return _then(_value.copyWith(
       network: network == freezed
@@ -83,9 +83,9 @@ class _$OverviewStateCopyWithImpl<$Res>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as String,
-      generatedInviteCode: generatedInviteCode == freezed
-          ? _value.generatedInviteCode
-          : generatedInviteCode // ignore: cast_nullable_to_non_nullable
+      displayedInviteSecret: displayedInviteSecret == freezed
+          ? _value.displayedInviteSecret
+          : displayedInviteSecret // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -111,7 +111,7 @@ abstract class _$$_OverviewStateCopyWith<$Res>
       bool showInfo,
       String error,
       String loading,
-      String generatedInviteCode});
+      String displayedInviteSecret});
 
   @override
   $NetworkIdentityCopyWith<$Res> get network;
@@ -135,7 +135,7 @@ class __$$_OverviewStateCopyWithImpl<$Res>
     Object? showInfo = freezed,
     Object? error = freezed,
     Object? loading = freezed,
-    Object? generatedInviteCode = freezed,
+    Object? displayedInviteSecret = freezed,
   }) {
     return _then(_$_OverviewState(
       network: network == freezed
@@ -158,9 +158,9 @@ class __$$_OverviewStateCopyWithImpl<$Res>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as String,
-      generatedInviteCode: generatedInviteCode == freezed
-          ? _value.generatedInviteCode
-          : generatedInviteCode // ignore: cast_nullable_to_non_nullable
+      displayedInviteSecret: displayedInviteSecret == freezed
+          ? _value.displayedInviteSecret
+          : displayedInviteSecret // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -175,7 +175,7 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
       this.showInfo = false,
       this.error = '',
       this.loading = '',
-      this.generatedInviteCode = ''})
+      this.displayedInviteSecret = ''})
       : super._();
 
   @override
@@ -193,11 +193,11 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
   final String loading;
   @override
   @JsonKey()
-  final String generatedInviteCode;
+  final String displayedInviteSecret;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OverviewState(network: $network, pubkey: $pubkey, showInfo: $showInfo, error: $error, loading: $loading, generatedInviteCode: $generatedInviteCode)';
+    return 'OverviewState(network: $network, pubkey: $pubkey, showInfo: $showInfo, error: $error, loading: $loading, displayedInviteSecret: $displayedInviteSecret)';
   }
 
   @override
@@ -210,7 +210,8 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('showInfo', showInfo))
       ..add(DiagnosticsProperty('error', error))
       ..add(DiagnosticsProperty('loading', loading))
-      ..add(DiagnosticsProperty('generatedInviteCode', generatedInviteCode));
+      ..add(
+          DiagnosticsProperty('displayedInviteSecret', displayedInviteSecret));
   }
 
   @override
@@ -224,7 +225,7 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.error, error) &&
             const DeepCollectionEquality().equals(other.loading, loading) &&
             const DeepCollectionEquality()
-                .equals(other.generatedInviteCode, generatedInviteCode));
+                .equals(other.displayedInviteSecret, displayedInviteSecret));
   }
 
   @override
@@ -235,7 +236,7 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(showInfo),
       const DeepCollectionEquality().hash(error),
       const DeepCollectionEquality().hash(loading),
-      const DeepCollectionEquality().hash(generatedInviteCode));
+      const DeepCollectionEquality().hash(displayedInviteSecret));
 
   @JsonKey(ignore: true)
   @override
@@ -250,7 +251,7 @@ abstract class _OverviewState extends OverviewState {
       final bool showInfo,
       final String error,
       final String loading,
-      final String generatedInviteCode}) = _$_OverviewState;
+      final String displayedInviteSecret}) = _$_OverviewState;
   const _OverviewState._() : super._();
 
   @override
@@ -264,7 +265,7 @@ abstract class _OverviewState extends OverviewState {
   @override
   String get loading => throw _privateConstructorUsedError;
   @override
-  String get generatedInviteCode => throw _privateConstructorUsedError;
+  String get displayedInviteSecret => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_OverviewStateCopyWith<_$_OverviewState> get copyWith =>

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sats/model/cypherpost.dart';
+import 'package:libcpclient/outputs.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class MemberCard extends StatelessWidget {
@@ -9,7 +9,7 @@ class MemberCard extends StatelessWidget {
     required this.member,
   }) : super(key: key);
 
-  final CypherPostIdentity member;
+  final MemberIdentity member;
   final bool isSelection;
 
   @override
@@ -54,7 +54,7 @@ class MemberCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '@' + member.username,
+                  '@' + member.username!,
                   style: context.fonts.subtitle1!.copyWith(
                     color: context.colours.onBackground,
                     fontSize: 16,
@@ -63,7 +63,7 @@ class MemberCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  member.pubkey,
+                  member.pubkey!,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 10,
                   style: context.fonts.caption!.copyWith(

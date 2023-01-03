@@ -25,13 +25,14 @@ class NetworkIdentityClassAdapter extends TypeAdapter<_$_NetworkIdentity> {
       username: fields[5] as String,
       inviteCode: fields[6] as String,
       inviteCount: fields[7] as int,
+      lastInviteSecret: fields[8] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_NetworkIdentity obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class NetworkIdentityClassAdapter extends TypeAdapter<_$_NetworkIdentity> {
       ..writeByte(6)
       ..write(obj.inviteCode)
       ..writeByte(7)
-      ..write(obj.inviteCount);
+      ..write(obj.inviteCount)
+      ..writeByte(8)
+      ..write(obj.lastInviteSecret);
   }
 
   @override
@@ -75,6 +78,7 @@ _$_NetworkIdentity _$$_NetworkIdentityFromJson(Map<String, dynamic> json) =>
       username: json['username'] as String,
       inviteCode: json['inviteCode'] as String,
       inviteCount: json['inviteCount'] as int,
+      lastInviteSecret: json['lastInviteSecret'] as String?,
     );
 
 Map<String, dynamic> _$$_NetworkIdentityToJson(_$_NetworkIdentity instance) =>
@@ -87,4 +91,5 @@ Map<String, dynamic> _$$_NetworkIdentityToJson(_$_NetworkIdentity instance) =>
       'username': instance.username,
       'inviteCode': instance.inviteCode,
       'inviteCount': instance.inviteCount,
+      'lastInviteSecret': instance.lastInviteSecret,
     };

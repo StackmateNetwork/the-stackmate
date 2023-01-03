@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
+import 'package:libcpclient/outputs.dart';
 
 part 'network-members.g.dart';
 part 'network-members.freezed.dart';
@@ -8,10 +9,8 @@ part 'network-members.freezed.dart';
 class NetworkMembers with _$NetworkMembers {
   @HiveType(typeId: 12, adapterName: 'NetworkMembersClassAdapter')
   const factory NetworkMembers({
-    @HiveField(0) required int hostname,
-    @HiveField(1) required int genesis,
-    @HiveField(2) required String pubkey,
-    @HiveField(3) required String username,
+    @HiveField(0) int? id,
+    @HiveField(1) required List<MemberIdentity> members,
   }) = _NetworkMembers;
   const NetworkMembers._();
 

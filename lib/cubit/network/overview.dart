@@ -6,7 +6,6 @@ import 'package:sats/api/libcp.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/social-root.dart';
 import 'package:sats/cubit/tor.dart';
-import 'package:sats/model/cypherpost-mock.dart';
 import 'package:sats/model/network-identity.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -25,7 +24,7 @@ class OverviewState with _$OverviewState {
     @Default(false) bool showInfo,
     @Default('') String error,
     @Default('') String loading,
-    @Default('') String generatedInviteCode,
+    @Default('') String displayedInviteSecret,
   }) = _OverviewState;
 
   const OverviewState._();
@@ -51,9 +50,12 @@ class OverviewCubit extends Cubit<OverviewState> {
 
   Future<void> load() async {
     try {
-      // load from storage and update from network - all badges and posts
+      // load from storage and update from network - all posts
       emit(
         state.copyWith(
+          displayedInviteSecret: (state.network.lastInviteSecret == null)
+              ? ''
+              : state.network.lastInviteSecret!,
           pubkey: _socialRoot.state.key!.pubkey,
           loading: '',
         ),
@@ -75,17 +77,17 @@ class OverviewCubit extends Cubit<OverviewState> {
       final socks5 = _torCubit.state.socks5Port;
       final socialRoot = _socialRoot.state.key!.xprv;
 
-      final inviteCode = await compute(getInvite, {
+      final inviteSecret = await compute(getInvite, {
         'hostname': 'https://' + state.network.hostname,
         'socks5': socks5.toString(),
         'socialRoot': socialRoot,
         'inviteCode': state.network.inviteCode,
       });
 
-      if (inviteCode.hasError) {
+      if (inviteSecret.hasError) {
         emit(
           state.copyWith(
-            error: inviteCode.error!,
+            error: inviteSecret.error!,
             loading: '',
           ),
         );
@@ -101,12 +103,14 @@ class OverviewCubit extends Cubit<OverviewState> {
         username: state.network.username,
         inviteCode: state.network.inviteCode,
         inviteCount: state.network.inviteCount - 1,
+        lastInviteSecret: inviteSecret.result!.inviteCode,
       );
+
       await updateServerIdStorage(networkServerId);
 
       emit(
         state.copyWith(
-          generatedInviteCode: inviteCode.result!.inviteCode,
+          displayedInviteSecret: inviteSecret.result!.inviteCode,
           network: networkServerId,
           loading: '',
         ),
@@ -205,7 +209,7 @@ class OverviewCubit extends Cubit<OverviewState> {
   }
 
   void copyInviteCode() {
-    _clipBoard.copyToClipBoard(state.generatedInviteCode);
+    _clipBoard.copyToClipBoard(state.displayedInviteSecret);
   }
 }
 

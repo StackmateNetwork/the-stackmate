@@ -20,7 +20,9 @@ mixin _$NetworksState {
   String? get hostname => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get inviteCode => throw _privateConstructorUsedError;
-  String get error => throw _privateConstructorUsedError;
+  String get error =>
+      throw _privateConstructorUsedError; // Single error variable because resetting all error states are a pain
+  bool get existingUser => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get kind => throw _privateConstructorUsedError;
   String? get serverPubkey => throw _privateConstructorUsedError;
@@ -44,6 +46,7 @@ abstract class $NetworksStateCopyWith<$Res> {
       String username,
       String inviteCode,
       String error,
+      bool existingUser,
       String? name,
       String? kind,
       String? serverPubkey,
@@ -68,6 +71,7 @@ class _$NetworksStateCopyWithImpl<$Res>
     Object? username = freezed,
     Object? inviteCode = freezed,
     Object? error = freezed,
+    Object? existingUser = freezed,
     Object? name = freezed,
     Object? kind = freezed,
     Object? serverPubkey = freezed,
@@ -96,6 +100,10 @@ class _$NetworksStateCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
+      existingUser: existingUser == freezed
+          ? _value.existingUser
+          : existingUser // ignore: cast_nullable_to_non_nullable
+              as bool,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -137,6 +145,7 @@ abstract class _$$_NetworksStateCopyWith<$Res>
       String username,
       String inviteCode,
       String error,
+      bool existingUser,
       String? name,
       String? kind,
       String? serverPubkey,
@@ -163,6 +172,7 @@ class __$$_NetworksStateCopyWithImpl<$Res>
     Object? username = freezed,
     Object? inviteCode = freezed,
     Object? error = freezed,
+    Object? existingUser = freezed,
     Object? name = freezed,
     Object? kind = freezed,
     Object? serverPubkey = freezed,
@@ -191,6 +201,10 @@ class __$$_NetworksStateCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
+      existingUser: existingUser == freezed
+          ? _value.existingUser
+          : existingUser // ignore: cast_nullable_to_non_nullable
+              as bool,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -228,6 +242,7 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
       this.username = '',
       this.inviteCode = '',
       this.error = '',
+      this.existingUser = false,
       this.name,
       this.kind,
       this.serverPubkey,
@@ -255,6 +270,10 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
   @override
   @JsonKey()
   final String error;
+// Single error variable because resetting all error states are a pain
+  @override
+  @JsonKey()
+  final bool existingUser;
   @override
   final String? name;
   @override
@@ -273,7 +292,7 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NetworksState(networks: $networks, hostname: $hostname, username: $username, inviteCode: $inviteCode, error: $error, name: $name, kind: $kind, serverPubkey: $serverPubkey, loading: $loading, isLoading: $isLoading, joined: $joined)';
+    return 'NetworksState(networks: $networks, hostname: $hostname, username: $username, inviteCode: $inviteCode, error: $error, existingUser: $existingUser, name: $name, kind: $kind, serverPubkey: $serverPubkey, loading: $loading, isLoading: $isLoading, joined: $joined)';
   }
 
   @override
@@ -286,6 +305,7 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
       ..add(DiagnosticsProperty('username', username))
       ..add(DiagnosticsProperty('inviteCode', inviteCode))
       ..add(DiagnosticsProperty('error', error))
+      ..add(DiagnosticsProperty('existingUser', existingUser))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('kind', kind))
       ..add(DiagnosticsProperty('serverPubkey', serverPubkey))
@@ -305,6 +325,8 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
             const DeepCollectionEquality()
                 .equals(other.inviteCode, inviteCode) &&
             const DeepCollectionEquality().equals(other.error, error) &&
+            const DeepCollectionEquality()
+                .equals(other.existingUser, existingUser) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.kind, kind) &&
             const DeepCollectionEquality()
@@ -322,6 +344,7 @@ class _$_NetworksState with DiagnosticableTreeMixin implements _NetworksState {
       const DeepCollectionEquality().hash(username),
       const DeepCollectionEquality().hash(inviteCode),
       const DeepCollectionEquality().hash(error),
+      const DeepCollectionEquality().hash(existingUser),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(kind),
       const DeepCollectionEquality().hash(serverPubkey),
@@ -342,6 +365,7 @@ abstract class _NetworksState implements NetworksState {
       final String username,
       final String inviteCode,
       final String error,
+      final bool existingUser,
       final String? name,
       final String? kind,
       final String? serverPubkey,
@@ -359,6 +383,8 @@ abstract class _NetworksState implements NetworksState {
   String get inviteCode => throw _privateConstructorUsedError;
   @override
   String get error => throw _privateConstructorUsedError;
+  @override // Single error variable because resetting all error states are a pain
+  bool get existingUser => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
   @override

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sats/cubit/network/overview.dart';
 import 'package:sats/cubit/networks.dart';
 import 'package:sats/cubit/social-root.dart';
-import 'package:sats/model/network-identity.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
@@ -83,7 +82,11 @@ class NetworkInfo extends StatelessWidget {
                         alignment: Alignment.bottomCenter,
                       ),
                       onPressed: () async {
-                        await overviewCubit.generateInvite();
+                        _newInviteSecret(
+                          c,
+                          overviewCubit,
+                          networksCubit,
+                        );
                       },
                       child: Text('Generate Invite Code'.toUpperCase()),
                     ),
@@ -95,7 +98,7 @@ class NetworkInfo extends StatelessWidget {
                         overviewCubit.copyInviteCode();
                       },
                       child: Text(
-                        overviewCubit.state.generatedInviteCode,
+                        overviewCubit.state.displayedInviteSecret,
                         style: c.fonts.bodySmall!.copyWith(
                           color: c.colours.secondary,
                         ),
@@ -183,8 +186,63 @@ void _leaveServer(
   );
 
   if (leave != null && leave) {
-    await overviewCubit.leaveNetwork();
+    await overviewCubit.generateInvite();
     await networksCubit.load();
-    Navigator.of(c).pop();
+  }
+}
+
+void _newInviteSecret(
+  BuildContext c,
+  OverviewCubit overviewCubit,
+  NetworksCubit networksCubit,
+) async {
+  final getNew = await showCupertinoModalPopup<bool>(
+    context: c,
+    builder: (BuildContext context) => CupertinoActionSheet(
+      title: Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: Text(
+          'NOTE:'.toUpperCase(),
+          style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+        ),
+      ),
+      message: Text(
+        'Your last invite secret will be lost. Continue?',
+        style: c.fonts.subtitle2!.copyWith(color: c.colours.onBackground),
+      ),
+      actions: [
+        Container(
+          color: c.colours.background,
+          child: CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            child: Text(
+              'Yes',
+              style: c.fonts.button!.copyWith(color: c.colours.primary),
+            ),
+          ),
+        ),
+        // const SizedBox(height: 24),
+        Container(
+          color: c.colours.background,
+          child: CupertinoActionSheetAction(
+            child: Text(
+              'CANCEL',
+              style: c.fonts.button!.copyWith(color: c.colours.error),
+            ),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+        )
+      ],
+    ),
+  );
+
+  if (getNew != null && getNew) {
+    await overviewCubit.generateInvite();
+    await networksCubit.load();
   }
 }

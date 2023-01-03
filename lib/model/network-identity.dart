@@ -16,6 +16,7 @@ class NetworkIdentity with _$NetworkIdentity {
     @HiveField(5) required String username,
     @HiveField(6) required String inviteCode,
     @HiveField(7) required int inviteCount,
+    @HiveField(8) String? lastInviteSecret,
   }) = _NetworkIdentity;
   const NetworkIdentity._();
 

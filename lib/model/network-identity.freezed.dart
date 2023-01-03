@@ -36,6 +36,8 @@ mixin _$NetworkIdentity {
   String get inviteCode => throw _privateConstructorUsedError;
   @HiveField(7)
   int get inviteCount => throw _privateConstructorUsedError;
+  @HiveField(8)
+  String? get lastInviteSecret => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,7 +58,8 @@ abstract class $NetworkIdentityCopyWith<$Res> {
       @HiveField(4) String kind,
       @HiveField(5) String username,
       @HiveField(6) String inviteCode,
-      @HiveField(7) int inviteCount});
+      @HiveField(7) int inviteCount,
+      @HiveField(8) String? lastInviteSecret});
 }
 
 /// @nodoc
@@ -78,6 +81,7 @@ class _$NetworkIdentityCopyWithImpl<$Res>
     Object? username = freezed,
     Object? inviteCode = freezed,
     Object? inviteCount = freezed,
+    Object? lastInviteSecret = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -112,6 +116,10 @@ class _$NetworkIdentityCopyWithImpl<$Res>
           ? _value.inviteCount
           : inviteCount // ignore: cast_nullable_to_non_nullable
               as int,
+      lastInviteSecret: lastInviteSecret == freezed
+          ? _value.lastInviteSecret
+          : lastInviteSecret // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -131,7 +139,8 @@ abstract class _$$_NetworkIdentityCopyWith<$Res>
       @HiveField(4) String kind,
       @HiveField(5) String username,
       @HiveField(6) String inviteCode,
-      @HiveField(7) int inviteCount});
+      @HiveField(7) int inviteCount,
+      @HiveField(8) String? lastInviteSecret});
 }
 
 /// @nodoc
@@ -155,6 +164,7 @@ class __$$_NetworkIdentityCopyWithImpl<$Res>
     Object? username = freezed,
     Object? inviteCode = freezed,
     Object? inviteCount = freezed,
+    Object? lastInviteSecret = freezed,
   }) {
     return _then(_$_NetworkIdentity(
       id: id == freezed
@@ -189,6 +199,10 @@ class __$$_NetworkIdentityCopyWithImpl<$Res>
           ? _value.inviteCount
           : inviteCount // ignore: cast_nullable_to_non_nullable
               as int,
+      lastInviteSecret: lastInviteSecret == freezed
+          ? _value.lastInviteSecret
+          : lastInviteSecret // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -205,7 +219,8 @@ class _$_NetworkIdentity extends _NetworkIdentity {
       @HiveField(4) required this.kind,
       @HiveField(5) required this.username,
       @HiveField(6) required this.inviteCode,
-      @HiveField(7) required this.inviteCount})
+      @HiveField(7) required this.inviteCount,
+      @HiveField(8) this.lastInviteSecret})
       : super._();
 
   factory _$_NetworkIdentity.fromJson(Map<String, dynamic> json) =>
@@ -235,10 +250,13 @@ class _$_NetworkIdentity extends _NetworkIdentity {
   @override
   @HiveField(7)
   final int inviteCount;
+  @override
+  @HiveField(8)
+  final String? lastInviteSecret;
 
   @override
   String toString() {
-    return 'NetworkIdentity(id: $id, hostname: $hostname, name: $name, serverPubkey: $serverPubkey, kind: $kind, username: $username, inviteCode: $inviteCode, inviteCount: $inviteCount)';
+    return 'NetworkIdentity(id: $id, hostname: $hostname, name: $name, serverPubkey: $serverPubkey, kind: $kind, username: $username, inviteCode: $inviteCode, inviteCount: $inviteCount, lastInviteSecret: $lastInviteSecret)';
   }
 
   @override
@@ -256,7 +274,9 @@ class _$_NetworkIdentity extends _NetworkIdentity {
             const DeepCollectionEquality()
                 .equals(other.inviteCode, inviteCode) &&
             const DeepCollectionEquality()
-                .equals(other.inviteCount, inviteCount));
+                .equals(other.inviteCount, inviteCount) &&
+            const DeepCollectionEquality()
+                .equals(other.lastInviteSecret, lastInviteSecret));
   }
 
   @JsonKey(ignore: true)
@@ -270,7 +290,8 @@ class _$_NetworkIdentity extends _NetworkIdentity {
       const DeepCollectionEquality().hash(kind),
       const DeepCollectionEquality().hash(username),
       const DeepCollectionEquality().hash(inviteCode),
-      const DeepCollectionEquality().hash(inviteCount));
+      const DeepCollectionEquality().hash(inviteCount),
+      const DeepCollectionEquality().hash(lastInviteSecret));
 
   @JsonKey(ignore: true)
   @override
@@ -292,7 +313,8 @@ abstract class _NetworkIdentity extends NetworkIdentity {
       @HiveField(4) required final String kind,
       @HiveField(5) required final String username,
       @HiveField(6) required final String inviteCode,
-      @HiveField(7) required final int inviteCount}) = _$_NetworkIdentity;
+      @HiveField(7) required final int inviteCount,
+      @HiveField(8) final String? lastInviteSecret}) = _$_NetworkIdentity;
   const _NetworkIdentity._() : super._();
 
   factory _NetworkIdentity.fromJson(Map<String, dynamic> json) =
@@ -322,6 +344,9 @@ abstract class _NetworkIdentity extends NetworkIdentity {
   @override
   @HiveField(7)
   int get inviteCount => throw _privateConstructorUsedError;
+  @override
+  @HiveField(8)
+  String? get lastInviteSecret => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_NetworkIdentityCopyWith<_$_NetworkIdentity> get copyWith =>

@@ -26,7 +26,20 @@ class NetworkTools extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                // overviewCubit.toggleDiscoverMembers();
+                // overviewCubit.createPost();
+              },
+              icon: Icon(
+                Icons.post_add,
+                size: 32,
+                color: c.colours.primary,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                c.push(
+                  '/network-discovery',
+                  extra: overviewCubit.state.network,
+                );
               },
               icon: Icon(
                 Icons.person_search_sharp,

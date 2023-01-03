@@ -17,25 +17,19 @@ class NetworkMembersClassAdapter extends TypeAdapter<_$_NetworkMembers> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return _$_NetworkMembers(
-      hostname: fields[0] as int,
-      genesis: fields[1] as int,
-      pubkey: fields[2] as String,
-      username: fields[3] as String,
+      id: fields[0] as int?,
+      members: (fields[1] as List).cast<MemberIdentity>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_NetworkMembers obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.hostname)
-      ..writeByte(1)
-      ..write(obj.genesis)
       ..writeByte(2)
-      ..write(obj.pubkey)
-      ..writeByte(3)
-      ..write(obj.username);
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.members);
   }
 
   @override
@@ -55,16 +49,14 @@ class NetworkMembersClassAdapter extends TypeAdapter<_$_NetworkMembers> {
 
 _$_NetworkMembers _$$_NetworkMembersFromJson(Map<String, dynamic> json) =>
     _$_NetworkMembers(
-      hostname: json['hostname'] as int,
-      genesis: json['genesis'] as int,
-      pubkey: json['pubkey'] as String,
-      username: json['username'] as String,
+      id: json['id'] as int?,
+      members: (json['members'] as List<dynamic>)
+          .map((e) => MemberIdentity.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_NetworkMembersToJson(_$_NetworkMembers instance) =>
     <String, dynamic>{
-      'hostname': instance.hostname,
-      'genesis': instance.genesis,
-      'pubkey': instance.pubkey,
-      'username': instance.username,
+      'id': instance.id,
+      'members': instance.members,
     };

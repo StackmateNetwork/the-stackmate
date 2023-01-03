@@ -23,7 +23,10 @@ class NetworksState with _$NetworksState {
     String? hostname,
     @Default('') String username,
     @Default('') String inviteCode,
-    @Default('') String error,
+    @Default('')
+        String
+            error, // Single error variable because resetting all error states are a pain
+    @Default(false) bool existingUser,
     String? name,
     String? kind,
     String? serverPubkey,
@@ -134,6 +137,15 @@ class NetworksCubit extends Cubit<NetworksState> {
     } catch (e, s) {
       _logger.logException(e, 'NetworksCubit.ping', s);
     }
+  }
+
+  void toggleExistingUser() {
+    emit(
+      state.copyWith(
+        existingUser: !state.existingUser,
+        error: '',
+      ),
+    );
   }
 
   void usernameChanged(String text) {
@@ -259,6 +271,7 @@ class NetworksCubit extends Cubit<NetworksState> {
     }
   }
 
+  Future<void> resyncExistingUser() async {}
   Future<void> updateServerIdStorage(NetworkIdentity serverId) async {
     try {
       final savedid = await _storage.saveItem<NetworkIdentity>(
