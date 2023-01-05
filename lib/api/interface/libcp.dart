@@ -43,6 +43,12 @@ abstract class ICypherpost {
     required String inviteCode,
   });
 
+  R<InvitationDetail> selfInviteCode({
+    required String hostname,
+    required int socks5,
+    required String socialRoot,
+  });
+
   R<ServerStatus> leaveServer({
     required String hostname,
     required int socks5,

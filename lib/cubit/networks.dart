@@ -7,6 +7,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/social-root.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/model/network-identity.dart';
+import 'package:sats/model/network-members.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -271,7 +272,101 @@ class NetworksCubit extends Cubit<NetworksState> {
     }
   }
 
-  Future<void> resyncExistingUser() async {}
+  Future<void> resyncExistingUser() async {
+    emit(
+      state.copyWith(
+        loading: 'ping',
+      ),
+    );
+
+    final socks5 = _torCubit.state.socks5Port;
+    final socialRoot = _socialRoot.state.key!.xprv;
+
+    late R<ServerIdentity> serverId;
+    if (state.name != '') {
+      serverId = await compute(serverIdentity, {
+        'hostname': 'https://' + state.hostname!,
+        'socks5': socks5.toString(),
+        'socialRoot': socialRoot,
+      });
+
+      if (serverId.hasError) {
+        emit(
+          state.copyWith(
+            error: 'Could not find host!',
+            loading: '',
+          ),
+        );
+        return;
+      }
+
+      emit(
+        state.copyWith(
+          loading: 'resync',
+        ),
+      );
+      final inviteDetail = await compute(selfInviteCode, {
+        'hostname': 'https://' + state.hostname!,
+        'socks5': socks5.toString(),
+        'socialRoot': socialRoot,
+      });
+
+      if (inviteDetail.hasError) {
+        emit(
+          state.copyWith(
+            error: inviteDetail.error!,
+            loading: '',
+          ),
+        );
+        return;
+      }
+
+      final members = await compute(getMembers, {
+        'hostname': 'https://' + state.hostname!,
+        'socks5': socks5.toString(),
+        'socialRoot': socialRoot,
+      });
+
+      if (members.hasError) {
+        emit(
+          state.copyWith(
+            error: members.error!,
+            loading: '',
+          ),
+        );
+        return;
+      }
+
+      final myIdentity = members.result!.firstWhere(
+        (m) => m.pubkey == _socialRoot.state.key!.pubkey,
+        orElse: () => MemberIdentity(
+          username: '*notfound*',
+          pubkey: _socialRoot.state.key!.pubkey,
+        ),
+      );
+
+      final networkServerId = NetworkIdentity(
+        hostname: state.hostname!,
+        name: (state.name == null) ? serverId.result!.name : state.name!,
+        kind: (state.kind == null) ? serverId.result!.kind : state.kind!,
+        serverPubkey: (state.serverPubkey == null)
+            ? serverId.result!.pubkey
+            : state.serverPubkey!,
+        username: myIdentity.username!,
+        inviteCode: inviteDetail.result!.inviteCode,
+        inviteCount: inviteDetail.result!.count,
+      );
+
+      await updateServerIdAndMembersStorage(networkServerId, members.result!);
+      await load();
+      emit(
+        state.copyWith(
+          joined: true,
+        ),
+      );
+    }
+  }
+
   Future<void> updateServerIdStorage(NetworkIdentity serverId) async {
     try {
       final savedid = await _storage.saveItem<NetworkIdentity>(
@@ -296,6 +391,56 @@ class NetworksCubit extends Cubit<NetworksState> {
       );
     } catch (e, s) {
       _logger.logException(e, 'NetworksCubit.updateServerIdStorage', s);
+    }
+  }
+
+  Future<void> updateServerIdAndMembersStorage(
+    NetworkIdentity serverId,
+    List<MemberIdentity> members,
+  ) async {
+    try {
+      final savedid = await _storage.saveItem<NetworkIdentity>(
+        StoreKeys.Networks.name,
+        serverId,
+      );
+      if (savedid.hasError) {
+        emit(
+          state.copyWith(
+            error: couldNotSaveError,
+            loading: '',
+          ),
+        );
+        return;
+      }
+      final id = savedid.result!;
+      final newId = serverId.copyWith(id: id);
+      await _storage.saveItemAt<NetworkIdentity>(
+        StoreKeys.Networks.name,
+        id,
+        newId,
+      );
+
+      final networkMembers = NetworkMembers(
+        id: id,
+        members: members,
+      );
+      final status = await _storage.saveItemAt<NetworkMembers>(
+        StoreKeys.Members.name,
+        id,
+        networkMembers,
+      );
+
+      if (status.hasError) {
+        emit(
+          state.copyWith(
+            error: couldNotSaveError,
+            loading: '',
+          ),
+        );
+        return;
+      }
+    } catch (e, s) {
+      _logger.logException(e, 'Discover.load', s);
     }
   }
 
@@ -326,6 +471,26 @@ R<InvitationDetail> joinHostServer(dynamic data) {
     socialRoot: obj['socialRoot']!,
     username: obj['username']!,
     inviteCode: obj['inviteCode']!,
+  );
+  return resp;
+}
+
+R<InvitationDetail> selfInviteCode(dynamic data) {
+  final obj = data as Map<String, String?>;
+  final resp = LibCypherpost().selfInviteCode(
+    hostname: obj['hostname']!,
+    socks5: int.parse(obj['socks5']!),
+    socialRoot: obj['socialRoot']!,
+  );
+  return resp;
+}
+
+R<List<MemberIdentity>> getMembers(dynamic data) {
+  final obj = data as Map<String, String?>;
+  final resp = LibCypherpost().getMembers(
+    hostname: obj['hostname']!,
+    socks5: int.parse(obj['socks5']!),
+    socialRoot: obj['socialRoot']!,
   );
   return resp;
 }

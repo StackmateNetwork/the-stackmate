@@ -12,11 +12,15 @@ import 'package:sats/ui/component/Network/OverviewLoader.dart';
 class _NetworkOverview extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
+    final overviewCubit = c.select((OverviewCubit oc) => oc);
+
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
           displacement: 10.0,
-          onRefresh: () async {},
+          onRefresh: () async {
+            await overviewCubit.fetchAllPosts();
+          },
           child: BlocBuilder<OverviewCubit, OverviewState>(
             builder: (context, overviewState) {
               return CustomScrollView(

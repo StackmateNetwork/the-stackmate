@@ -27,6 +27,10 @@ class JoinLoader extends StatelessWidget {
         {
           return const Loading(text: 'Requesting invite code...');
         }
+      case 'resync':
+        {
+          return const Loading(text: 'Resyncing with host...');
+        }
       default:
         {
           return Container();

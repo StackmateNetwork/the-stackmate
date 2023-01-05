@@ -9,6 +9,7 @@ import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/fees.dart';
 import 'package:sats/model/master.dart';
 import 'package:sats/model/member-identity.dart';
+import 'package:sats/model/network-chat-history.dart';
 import 'package:sats/model/network-identity.dart';
 import 'package:sats/model/network-members.dart';
 import 'package:sats/model/node.dart';
@@ -34,6 +35,7 @@ enum StoreKeys {
   SocialRoot,
   Networks,
   Members,
+  ChatHistory,
 }
 
 extension StoreKeysFunctions on StoreKeys {
@@ -49,6 +51,7 @@ extension StoreKeysFunctions on StoreKeys {
         StoreKeys.SocialRoot: 'socialRoot',
         StoreKeys.Networks: 'networks',
         StoreKeys.Members: 'members',
+        StoreKeys.ChatHistory: 'chatHistory',
       }[this]!;
 }
 
@@ -67,6 +70,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(NetworkIdentityClassAdapter()); // typeId: 11
   Hive.registerAdapter(MemberIdentityAdapter()); // typeId: 12
   Hive.registerAdapter(NetworkMembersClassAdapter()); // typeId: 12
+  Hive.registerAdapter(NetworkChatHistoryClassAdapter()); // typeId: 13
 
   const secureStorage = FlutterSecureStorage();
   final encryprionKey = await secureStorage.read(key: 'key');
@@ -122,6 +126,10 @@ Future<void> initializeHive() async {
   );
   await Hive.openBox<NetworkMembers>(
     StoreKeys.Members.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<NetworkChatHistory>(
+    StoreKeys.ChatHistory.name,
     encryptionCipher: HiveAesCipher(encryptionKey),
   );
   await Hive.openBox<String>(

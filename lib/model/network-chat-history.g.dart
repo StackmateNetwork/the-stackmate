@@ -18,22 +18,27 @@ class NetworkChatHistoryClassAdapter
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return _$_NetworkChatHistory(
-      hostname: fields[0] as String,
-      counterParty: fields[1] as String,
-      posts: (fields[2] as List).cast<PlainPost>(),
+      id: fields[0] as int?,
+      verifiedPosts: (fields[1] as List)
+          .map((dynamic e) => (e as Map).cast<String, dynamic>())
+          .toList(),
+      latestGenesis: fields[2] as int,
+      corruptedPostIds: (fields[3] as List).cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_NetworkChatHistory obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.hostname)
-      ..writeByte(1)
-      ..write(obj.counterParty)
+      ..write(obj.id)
       ..writeByte(2)
-      ..write(obj.posts);
+      ..write(obj.latestGenesis)
+      ..writeByte(1)
+      ..write(obj.verifiedPosts)
+      ..writeByte(3)
+      ..write(obj.corruptedPostIds);
   }
 
   @override

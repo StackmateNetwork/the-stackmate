@@ -103,6 +103,20 @@ class LibCPClientFFI {
     return resp;
   }
 
+  String selfInvitation({
+    required String hostname,
+    required int socks5,
+    required String socialRoot,
+  }) {
+    final func = binary.lookupFunction<IndexT, IndexT>('self_invite');
+    final resp = func(
+      hostname.toNativeUtf8(),
+      socks5.toString().toNativeUtf8(),
+      socialRoot.toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
+
   String leaveServer({
     required String hostname,
     required int socks5,

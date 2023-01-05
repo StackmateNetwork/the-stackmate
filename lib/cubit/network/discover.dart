@@ -92,7 +92,7 @@ class DiscoverCubit extends Cubit<DiscoverState> {
       }
 
       final networkMembers = NetworkMembers(
-        id: state.network.id!,
+        id: state.network.id,
         members: members.result!,
       );
       await saveToStorage(networkMembers);

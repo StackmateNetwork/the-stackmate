@@ -22,6 +22,10 @@ mixin _$OverviewState {
   String get error => throw _privateConstructorUsedError;
   String get loading => throw _privateConstructorUsedError;
   String get displayedInviteSecret => throw _privateConstructorUsedError;
+  int get latestGenesis => throw _privateConstructorUsedError;
+  List<Verified> get verifiedPosts => throw _privateConstructorUsedError;
+  List<String> get corruptedPostIds => throw _privateConstructorUsedError;
+  List<MemberIdentity> get members => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OverviewStateCopyWith<OverviewState> get copyWith =>
@@ -39,7 +43,11 @@ abstract class $OverviewStateCopyWith<$Res> {
       bool showInfo,
       String error,
       String loading,
-      String displayedInviteSecret});
+      String displayedInviteSecret,
+      int latestGenesis,
+      List<Verified> verifiedPosts,
+      List<String> corruptedPostIds,
+      List<MemberIdentity> members});
 
   $NetworkIdentityCopyWith<$Res> get network;
 }
@@ -61,6 +69,10 @@ class _$OverviewStateCopyWithImpl<$Res>
     Object? error = freezed,
     Object? loading = freezed,
     Object? displayedInviteSecret = freezed,
+    Object? latestGenesis = freezed,
+    Object? verifiedPosts = freezed,
+    Object? corruptedPostIds = freezed,
+    Object? members = freezed,
   }) {
     return _then(_value.copyWith(
       network: network == freezed
@@ -87,6 +99,22 @@ class _$OverviewStateCopyWithImpl<$Res>
           ? _value.displayedInviteSecret
           : displayedInviteSecret // ignore: cast_nullable_to_non_nullable
               as String,
+      latestGenesis: latestGenesis == freezed
+          ? _value.latestGenesis
+          : latestGenesis // ignore: cast_nullable_to_non_nullable
+              as int,
+      verifiedPosts: verifiedPosts == freezed
+          ? _value.verifiedPosts
+          : verifiedPosts // ignore: cast_nullable_to_non_nullable
+              as List<Verified>,
+      corruptedPostIds: corruptedPostIds == freezed
+          ? _value.corruptedPostIds
+          : corruptedPostIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      members: members == freezed
+          ? _value.members
+          : members // ignore: cast_nullable_to_non_nullable
+              as List<MemberIdentity>,
     ));
   }
 
@@ -111,7 +139,11 @@ abstract class _$$_OverviewStateCopyWith<$Res>
       bool showInfo,
       String error,
       String loading,
-      String displayedInviteSecret});
+      String displayedInviteSecret,
+      int latestGenesis,
+      List<Verified> verifiedPosts,
+      List<String> corruptedPostIds,
+      List<MemberIdentity> members});
 
   @override
   $NetworkIdentityCopyWith<$Res> get network;
@@ -136,6 +168,10 @@ class __$$_OverviewStateCopyWithImpl<$Res>
     Object? error = freezed,
     Object? loading = freezed,
     Object? displayedInviteSecret = freezed,
+    Object? latestGenesis = freezed,
+    Object? verifiedPosts = freezed,
+    Object? corruptedPostIds = freezed,
+    Object? members = freezed,
   }) {
     return _then(_$_OverviewState(
       network: network == freezed
@@ -162,6 +198,22 @@ class __$$_OverviewStateCopyWithImpl<$Res>
           ? _value.displayedInviteSecret
           : displayedInviteSecret // ignore: cast_nullable_to_non_nullable
               as String,
+      latestGenesis: latestGenesis == freezed
+          ? _value.latestGenesis
+          : latestGenesis // ignore: cast_nullable_to_non_nullable
+              as int,
+      verifiedPosts: verifiedPosts == freezed
+          ? _value._verifiedPosts
+          : verifiedPosts // ignore: cast_nullable_to_non_nullable
+              as List<Verified>,
+      corruptedPostIds: corruptedPostIds == freezed
+          ? _value._corruptedPostIds
+          : corruptedPostIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      members: members == freezed
+          ? _value._members
+          : members // ignore: cast_nullable_to_non_nullable
+              as List<MemberIdentity>,
     ));
   }
 }
@@ -175,8 +227,15 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
       this.showInfo = false,
       this.error = '',
       this.loading = '',
-      this.displayedInviteSecret = ''})
-      : super._();
+      this.displayedInviteSecret = '',
+      this.latestGenesis = 0,
+      final List<Verified> verifiedPosts = const [],
+      final List<String> corruptedPostIds = const [],
+      final List<MemberIdentity> members = const []})
+      : _verifiedPosts = verifiedPosts,
+        _corruptedPostIds = corruptedPostIds,
+        _members = members,
+        super._();
 
   @override
   final NetworkIdentity network;
@@ -194,10 +253,36 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final String displayedInviteSecret;
+  @override
+  @JsonKey()
+  final int latestGenesis;
+  final List<Verified> _verifiedPosts;
+  @override
+  @JsonKey()
+  List<Verified> get verifiedPosts {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_verifiedPosts);
+  }
+
+  final List<String> _corruptedPostIds;
+  @override
+  @JsonKey()
+  List<String> get corruptedPostIds {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_corruptedPostIds);
+  }
+
+  final List<MemberIdentity> _members;
+  @override
+  @JsonKey()
+  List<MemberIdentity> get members {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_members);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OverviewState(network: $network, pubkey: $pubkey, showInfo: $showInfo, error: $error, loading: $loading, displayedInviteSecret: $displayedInviteSecret)';
+    return 'OverviewState(network: $network, pubkey: $pubkey, showInfo: $showInfo, error: $error, loading: $loading, displayedInviteSecret: $displayedInviteSecret, latestGenesis: $latestGenesis, verifiedPosts: $verifiedPosts, corruptedPostIds: $corruptedPostIds, members: $members)';
   }
 
   @override
@@ -210,8 +295,11 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('showInfo', showInfo))
       ..add(DiagnosticsProperty('error', error))
       ..add(DiagnosticsProperty('loading', loading))
-      ..add(
-          DiagnosticsProperty('displayedInviteSecret', displayedInviteSecret));
+      ..add(DiagnosticsProperty('displayedInviteSecret', displayedInviteSecret))
+      ..add(DiagnosticsProperty('latestGenesis', latestGenesis))
+      ..add(DiagnosticsProperty('verifiedPosts', verifiedPosts))
+      ..add(DiagnosticsProperty('corruptedPostIds', corruptedPostIds))
+      ..add(DiagnosticsProperty('members', members));
   }
 
   @override
@@ -225,7 +313,14 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.error, error) &&
             const DeepCollectionEquality().equals(other.loading, loading) &&
             const DeepCollectionEquality()
-                .equals(other.displayedInviteSecret, displayedInviteSecret));
+                .equals(other.displayedInviteSecret, displayedInviteSecret) &&
+            const DeepCollectionEquality()
+                .equals(other.latestGenesis, latestGenesis) &&
+            const DeepCollectionEquality()
+                .equals(other._verifiedPosts, _verifiedPosts) &&
+            const DeepCollectionEquality()
+                .equals(other._corruptedPostIds, _corruptedPostIds) &&
+            const DeepCollectionEquality().equals(other._members, _members));
   }
 
   @override
@@ -236,7 +331,11 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(showInfo),
       const DeepCollectionEquality().hash(error),
       const DeepCollectionEquality().hash(loading),
-      const DeepCollectionEquality().hash(displayedInviteSecret));
+      const DeepCollectionEquality().hash(displayedInviteSecret),
+      const DeepCollectionEquality().hash(latestGenesis),
+      const DeepCollectionEquality().hash(_verifiedPosts),
+      const DeepCollectionEquality().hash(_corruptedPostIds),
+      const DeepCollectionEquality().hash(_members));
 
   @JsonKey(ignore: true)
   @override
@@ -251,7 +350,11 @@ abstract class _OverviewState extends OverviewState {
       final bool showInfo,
       final String error,
       final String loading,
-      final String displayedInviteSecret}) = _$_OverviewState;
+      final String displayedInviteSecret,
+      final int latestGenesis,
+      final List<Verified> verifiedPosts,
+      final List<String> corruptedPostIds,
+      final List<MemberIdentity> members}) = _$_OverviewState;
   const _OverviewState._() : super._();
 
   @override
@@ -266,6 +369,14 @@ abstract class _OverviewState extends OverviewState {
   String get loading => throw _privateConstructorUsedError;
   @override
   String get displayedInviteSecret => throw _privateConstructorUsedError;
+  @override
+  int get latestGenesis => throw _privateConstructorUsedError;
+  @override
+  List<Verified> get verifiedPosts => throw _privateConstructorUsedError;
+  @override
+  List<String> get corruptedPostIds => throw _privateConstructorUsedError;
+  @override
+  List<MemberIdentity> get members => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_OverviewStateCopyWith<_$_OverviewState> get copyWith =>

@@ -225,8 +225,7 @@ class _NetworkJoinFormState extends State<NetworkJoinForm> {
                               primary: c.colours.primary,
                             ),
                             onPressed: () async {
-                              networksCubit.resyncExistingUser();
-                              resyncWarning(c);
+                              await networksCubit.resyncExistingUser();
                             },
                             child: Text('RE-SYNC'.toUpperCase()),
                           ),
@@ -266,42 +265,6 @@ Future<void> inviteCodeHelp(BuildContext context) async {
             children: <Widget>[
               Text(
                 'To get an invite code you need to ask either:\n\n- AN ADMIN\n- A PRIVELAGED USER\n',
-                style: context.fonts.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.normal,
-                  color: context.colours.onPrimary,
-                ),
-              ),
-              const SizedBox(height: 12),
-            ],
-          ),
-        ),
-      );
-    },
-  );
-}
-
-Future<void> resyncWarning(BuildContext context) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: true,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        contentPadding: const EdgeInsets.all(24.0),
-        insetPadding: const EdgeInsets.all(24.0),
-        backgroundColor: context.colours.onPrimaryContainer,
-        elevation: 24.0,
-        title: Text(
-          'RESYNC  IDENTITY',
-          style: context.fonts.headline5!.copyWith(
-            fontWeight: FontWeight.bold,
-            color: context.colours.onPrimary,
-          ),
-        ),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(
-                'This feature is currently unavailable. It will be added in the next release.',
                 style: context.fonts.bodyMedium!.copyWith(
                   fontWeight: FontWeight.normal,
                   color: context.colours.onPrimary,

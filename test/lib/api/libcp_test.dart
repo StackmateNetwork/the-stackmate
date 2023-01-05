@@ -17,6 +17,8 @@ void main() {
   const username = 'ika0009';
   const recipient =
       '76015c9bbf0b6d45a953a3ff4dcf6142624481ad747b45e1f775db1e0463c02e';
+  const txprv =
+      'xprv9s21ZrQH143K43j1kVYWahN4T3aAJNspThDrQxsLoN5Wmu96U6cysT4dVwPpn3ZdK2MKp57axqAXzSDe57pudJjLDh59KzoszabQSFnsGMu';
 
   late LibCypherpost libcp;
 
@@ -110,8 +112,8 @@ void main() {
     final postsAsChat = libcp.getAllPosts(
       hostname: hostname,
       socks5: socks5,
-      socialRoot: expectedSocialRoot,
-      genesisFilter: 0,
+      socialRoot: txprv,
+      genesisFilter: 1672859711718 + 1,
     );
 
     inspect(postsAsChat.result);

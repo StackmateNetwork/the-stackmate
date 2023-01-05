@@ -152,6 +152,24 @@ class LibCypherpost implements ICypherpost {
   }
 
   @override
+  R<InvitationDetail> selfInviteCode({
+    required String hostname,
+    required int socks5,
+    required String socialRoot,
+  }) {
+    final resp = _libcp.selfInvitation(
+      hostname: hostname,
+      socks5: socks5,
+      socialRoot: socialRoot,
+    );
+
+    if (resp.contains('error')) {
+      return R(error: SMError.fromJson(resp).error);
+    } else
+      return R(result: InvitationDetail.fromJson(resp));
+  }
+
+  @override
   R<ServerStatus> leaveServer({
     required String hostname,
     required int socks5,

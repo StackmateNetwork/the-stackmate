@@ -6,7 +6,9 @@ import 'package:sats/api/libcp.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/social-root.dart';
 import 'package:sats/cubit/tor.dart';
+import 'package:sats/model/network-chat-history.dart';
 import 'package:sats/model/network-identity.dart';
+import 'package:sats/model/network-members.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -25,6 +27,10 @@ class OverviewState with _$OverviewState {
     @Default('') String error,
     @Default('') String loading,
     @Default('') String displayedInviteSecret,
+    @Default(0) int latestGenesis,
+    @Default([]) List<Verified> verifiedPosts,
+    @Default([]) List<String> corruptedPostIds,
+    @Default([]) List<MemberIdentity> members,
   }) = _OverviewState;
 
   const OverviewState._();
@@ -50,19 +56,48 @@ class OverviewCubit extends Cubit<OverviewState> {
 
   Future<void> load() async {
     try {
-      // load from storage and update from network - all posts
       emit(
         state.copyWith(
-          displayedInviteSecret: (state.network.lastInviteSecret == null)
-              ? ''
-              : state.network.lastInviteSecret!,
-          pubkey: _socialRoot.state.key!.pubkey,
+          loading: 'fromStorage',
+        ),
+      );
+      final storedHistory = _storage.getItem<NetworkChatHistory>(
+        StoreKeys.ChatHistory.name,
+        state.network.id!,
+      );
+      if (storedHistory.hasError) return;
+
+      final storedMembers = _storage.getItem<NetworkMembers>(
+        StoreKeys.Members.name,
+        state.network.id!,
+      );
+      if (storedMembers.hasError) return;
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      emit(
+        state.copyWith(
+          verifiedPosts: storedHistory.result!.verifiedPosts
+              .map((e) => Verified.fromJson(e))
+              .toList(),
+          corruptedPostIds: storedHistory.result!.corruptedPostIds,
+          latestGenesis: storedHistory.result!.latestGenesis,
+          members: storedMembers.result!.members,
           loading: '',
         ),
       );
     } catch (e, s) {
-      _logger.logException(e, 'NetworkOverview.load', s);
+      _logger.logException(e, 'OverviewCubit.load', s);
     }
+  }
+
+  MemberIdentity? usernameByPubkey(String pubkey) {
+    return state.members.firstWhere(
+      (m) => m.pubkey == pubkey,
+      orElse: () => MemberIdentity(
+        username: '*notfound*',
+        pubkey: pubkey,
+      ),
+    );
   }
 
   Future<void> generateInvite() async {
@@ -116,7 +151,7 @@ class OverviewCubit extends Cubit<OverviewState> {
         ),
       );
     } catch (e, s) {
-      _logger.logException(e, 'NetworkOverview.genInvite', s);
+      _logger.logException(e, 'OverviewCubit.genInvite', s);
     }
   }
 
@@ -155,7 +190,7 @@ class OverviewCubit extends Cubit<OverviewState> {
         ),
       );
     } catch (e, s) {
-      _logger.logException(e, 'NetworkOverview.leave', s);
+      _logger.logException(e, 'OverviewCubit.leave', s);
     }
   }
 
@@ -177,6 +212,73 @@ class OverviewCubit extends Cubit<OverviewState> {
       }
     } catch (e, s) {
       _logger.logException(e, 'OverviewCubit.updateServerIdStorage', s);
+    }
+  }
+
+  Future<void> fetchAllPosts() async {
+    emit(
+      state.copyWith(
+        loading: 'fetching',
+        error: '',
+      ),
+    );
+    final socks5 = _torCubit.state.socks5Port;
+    final socialRoot = _socialRoot.state.key!.xprv;
+
+    final sorted = await compute(getPosts, {
+      'hostname': 'https://' + state.network.hostname,
+      'socks5': socks5.toString(),
+      'socialRoot': socialRoot,
+      'genesisFilter': state.latestGenesis.toString(),
+    });
+
+    if (sorted.hasError) {
+      emit(
+        state.copyWith(
+          error: sorted.error!,
+          loading: '',
+        ),
+      );
+      return;
+    }
+
+    final allVerifiedPosts = state.verifiedPosts + sorted.result!.verified!;
+
+    final history = NetworkChatHistory(
+      verifiedPosts: allVerifiedPosts.map((e) => e.toJson()).toList(),
+      latestGenesis: sorted.result!.latestGenesis! + 1,
+      corruptedPostIds: state.corruptedPostIds + sorted.result!.corrupted!,
+    );
+
+    await updateNetworkPosts(history);
+    await load();
+    emit(
+      state.copyWith(
+        loading: '',
+      ),
+    );
+  }
+
+  void removeDuplicatePosts() {}
+
+  Future<void> updateNetworkPosts(NetworkChatHistory history) async {
+    try {
+      final status = await _storage.saveItemAt<NetworkChatHistory>(
+        StoreKeys.ChatHistory.name,
+        state.network.id!,
+        history,
+      );
+      if (status.hasError) {
+        emit(
+          state.copyWith(
+            error: couldNotSaveError,
+            loading: '',
+          ),
+        );
+        return;
+      }
+    } catch (e, s) {
+      _logger.logException(e, 'OverviewCubit.load', s);
     }
   }
 
@@ -230,6 +332,17 @@ R<ServerStatus> leave(dynamic data) {
     hostname: obj['hostname']!,
     socks5: int.parse(obj['socks5']!),
     socialRoot: obj['socialRoot']!,
+  );
+  return resp;
+}
+
+R<SortedPosts> getPosts(dynamic data) {
+  final obj = data as Map<String, String?>;
+  final resp = LibCypherpost().getAllPosts(
+    hostname: obj['hostname']!,
+    socks5: int.parse(obj['socks5']!),
+    socialRoot: obj['socialRoot']!,
+    genesisFilter: int.parse(obj['genesisFilter']!),
   );
   return resp;
 }
