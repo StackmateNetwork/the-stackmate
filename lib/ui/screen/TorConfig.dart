@@ -22,7 +22,7 @@ class TorConfigScreen extends StatelessWidget {
           displacement: 10.0,
           onRefresh: () async {
             c.read<TorCubit>().checkInternalStatus();
-            c.read<TorCubit>().testConnection();
+            // c.read<TorCubit>().testConnection();
           },
           child: SingleChildScrollView(
             child: Column(
@@ -98,7 +98,7 @@ class TorConfigScreen extends StatelessWidget {
                       onPrimary: c.colours.background,
                     ),
                     onPressed: () {
-                      c.read<TorCubit>().testConnection();
+                      // c.read<TorCubit>().testConnection();
                       c.read<TorCubit>().updateConfig();
                       Navigator.of(c).pop();
                     },

@@ -88,9 +88,7 @@ abstract class ICypherpost {
     required int genesisFilter,
   });
 
-  // R<DerivationIndex> lastIndex({
-  //   required String hostname,
-  //   required int socks5,
-  //   required String socialRoot,
-  // });
+  R<StreamHeaders> streamHeaders({
+    required String socialRoot,
+  });
 }

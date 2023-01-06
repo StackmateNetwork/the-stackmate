@@ -18,14 +18,20 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$OverviewState {
   NetworkIdentity get network => throw _privateConstructorUsedError;
   String? get pubkey => throw _privateConstructorUsedError;
+  bool get connectingSocket => throw _privateConstructorUsedError;
+  bool get socketConnected => throw _privateConstructorUsedError;
   bool get showInfo => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   String get loading => throw _privateConstructorUsedError;
   String get displayedInviteSecret => throw _privateConstructorUsedError;
   int get latestGenesis => throw _privateConstructorUsedError;
+  List<String> get corrupted => throw _privateConstructorUsedError;
+  String get counterParty => throw _privateConstructorUsedError;
   List<Verified> get verifiedPosts => throw _privateConstructorUsedError;
-  List<String> get corruptedPostIds => throw _privateConstructorUsedError;
   List<MemberIdentity> get members => throw _privateConstructorUsedError;
+  String get streamNonce => throw _privateConstructorUsedError;
+  String get streamPubkey => throw _privateConstructorUsedError;
+  String get streamSignature => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OverviewStateCopyWith<OverviewState> get copyWith =>
@@ -40,14 +46,20 @@ abstract class $OverviewStateCopyWith<$Res> {
   $Res call(
       {NetworkIdentity network,
       String? pubkey,
+      bool connectingSocket,
+      bool socketConnected,
       bool showInfo,
       String error,
       String loading,
       String displayedInviteSecret,
       int latestGenesis,
+      List<String> corrupted,
+      String counterParty,
       List<Verified> verifiedPosts,
-      List<String> corruptedPostIds,
-      List<MemberIdentity> members});
+      List<MemberIdentity> members,
+      String streamNonce,
+      String streamPubkey,
+      String streamSignature});
 
   $NetworkIdentityCopyWith<$Res> get network;
 }
@@ -65,14 +77,20 @@ class _$OverviewStateCopyWithImpl<$Res>
   $Res call({
     Object? network = freezed,
     Object? pubkey = freezed,
+    Object? connectingSocket = freezed,
+    Object? socketConnected = freezed,
     Object? showInfo = freezed,
     Object? error = freezed,
     Object? loading = freezed,
     Object? displayedInviteSecret = freezed,
     Object? latestGenesis = freezed,
+    Object? corrupted = freezed,
+    Object? counterParty = freezed,
     Object? verifiedPosts = freezed,
-    Object? corruptedPostIds = freezed,
     Object? members = freezed,
+    Object? streamNonce = freezed,
+    Object? streamPubkey = freezed,
+    Object? streamSignature = freezed,
   }) {
     return _then(_value.copyWith(
       network: network == freezed
@@ -83,6 +101,14 @@ class _$OverviewStateCopyWithImpl<$Res>
           ? _value.pubkey
           : pubkey // ignore: cast_nullable_to_non_nullable
               as String?,
+      connectingSocket: connectingSocket == freezed
+          ? _value.connectingSocket
+          : connectingSocket // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socketConnected: socketConnected == freezed
+          ? _value.socketConnected
+          : socketConnected // ignore: cast_nullable_to_non_nullable
+              as bool,
       showInfo: showInfo == freezed
           ? _value.showInfo
           : showInfo // ignore: cast_nullable_to_non_nullable
@@ -103,18 +129,34 @@ class _$OverviewStateCopyWithImpl<$Res>
           ? _value.latestGenesis
           : latestGenesis // ignore: cast_nullable_to_non_nullable
               as int,
+      corrupted: corrupted == freezed
+          ? _value.corrupted
+          : corrupted // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      counterParty: counterParty == freezed
+          ? _value.counterParty
+          : counterParty // ignore: cast_nullable_to_non_nullable
+              as String,
       verifiedPosts: verifiedPosts == freezed
           ? _value.verifiedPosts
           : verifiedPosts // ignore: cast_nullable_to_non_nullable
               as List<Verified>,
-      corruptedPostIds: corruptedPostIds == freezed
-          ? _value.corruptedPostIds
-          : corruptedPostIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       members: members == freezed
           ? _value.members
           : members // ignore: cast_nullable_to_non_nullable
               as List<MemberIdentity>,
+      streamNonce: streamNonce == freezed
+          ? _value.streamNonce
+          : streamNonce // ignore: cast_nullable_to_non_nullable
+              as String,
+      streamPubkey: streamPubkey == freezed
+          ? _value.streamPubkey
+          : streamPubkey // ignore: cast_nullable_to_non_nullable
+              as String,
+      streamSignature: streamSignature == freezed
+          ? _value.streamSignature
+          : streamSignature // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 
@@ -136,14 +178,20 @@ abstract class _$$_OverviewStateCopyWith<$Res>
   $Res call(
       {NetworkIdentity network,
       String? pubkey,
+      bool connectingSocket,
+      bool socketConnected,
       bool showInfo,
       String error,
       String loading,
       String displayedInviteSecret,
       int latestGenesis,
+      List<String> corrupted,
+      String counterParty,
       List<Verified> verifiedPosts,
-      List<String> corruptedPostIds,
-      List<MemberIdentity> members});
+      List<MemberIdentity> members,
+      String streamNonce,
+      String streamPubkey,
+      String streamSignature});
 
   @override
   $NetworkIdentityCopyWith<$Res> get network;
@@ -164,14 +212,20 @@ class __$$_OverviewStateCopyWithImpl<$Res>
   $Res call({
     Object? network = freezed,
     Object? pubkey = freezed,
+    Object? connectingSocket = freezed,
+    Object? socketConnected = freezed,
     Object? showInfo = freezed,
     Object? error = freezed,
     Object? loading = freezed,
     Object? displayedInviteSecret = freezed,
     Object? latestGenesis = freezed,
+    Object? corrupted = freezed,
+    Object? counterParty = freezed,
     Object? verifiedPosts = freezed,
-    Object? corruptedPostIds = freezed,
     Object? members = freezed,
+    Object? streamNonce = freezed,
+    Object? streamPubkey = freezed,
+    Object? streamSignature = freezed,
   }) {
     return _then(_$_OverviewState(
       network: network == freezed
@@ -182,6 +236,14 @@ class __$$_OverviewStateCopyWithImpl<$Res>
           ? _value.pubkey
           : pubkey // ignore: cast_nullable_to_non_nullable
               as String?,
+      connectingSocket: connectingSocket == freezed
+          ? _value.connectingSocket
+          : connectingSocket // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socketConnected: socketConnected == freezed
+          ? _value.socketConnected
+          : socketConnected // ignore: cast_nullable_to_non_nullable
+              as bool,
       showInfo: showInfo == freezed
           ? _value.showInfo
           : showInfo // ignore: cast_nullable_to_non_nullable
@@ -202,18 +264,34 @@ class __$$_OverviewStateCopyWithImpl<$Res>
           ? _value.latestGenesis
           : latestGenesis // ignore: cast_nullable_to_non_nullable
               as int,
+      corrupted: corrupted == freezed
+          ? _value._corrupted
+          : corrupted // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      counterParty: counterParty == freezed
+          ? _value.counterParty
+          : counterParty // ignore: cast_nullable_to_non_nullable
+              as String,
       verifiedPosts: verifiedPosts == freezed
           ? _value._verifiedPosts
           : verifiedPosts // ignore: cast_nullable_to_non_nullable
               as List<Verified>,
-      corruptedPostIds: corruptedPostIds == freezed
-          ? _value._corruptedPostIds
-          : corruptedPostIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       members: members == freezed
           ? _value._members
           : members // ignore: cast_nullable_to_non_nullable
               as List<MemberIdentity>,
+      streamNonce: streamNonce == freezed
+          ? _value.streamNonce
+          : streamNonce // ignore: cast_nullable_to_non_nullable
+              as String,
+      streamPubkey: streamPubkey == freezed
+          ? _value.streamPubkey
+          : streamPubkey // ignore: cast_nullable_to_non_nullable
+              as String,
+      streamSignature: streamSignature == freezed
+          ? _value.streamSignature
+          : streamSignature // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -224,16 +302,22 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
   const _$_OverviewState(
       {required this.network,
       this.pubkey,
+      this.connectingSocket = false,
+      this.socketConnected = false,
       this.showInfo = false,
       this.error = '',
       this.loading = '',
       this.displayedInviteSecret = '',
       this.latestGenesis = 0,
+      final List<String> corrupted = const [],
+      this.counterParty = '',
       final List<Verified> verifiedPosts = const [],
-      final List<String> corruptedPostIds = const [],
-      final List<MemberIdentity> members = const []})
-      : _verifiedPosts = verifiedPosts,
-        _corruptedPostIds = corruptedPostIds,
+      final List<MemberIdentity> members = const [],
+      this.streamNonce = '',
+      this.streamPubkey = '',
+      this.streamSignature = ''})
+      : _corrupted = corrupted,
+        _verifiedPosts = verifiedPosts,
         _members = members,
         super._();
 
@@ -241,6 +325,12 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
   final NetworkIdentity network;
   @override
   final String? pubkey;
+  @override
+  @JsonKey()
+  final bool connectingSocket;
+  @override
+  @JsonKey()
+  final bool socketConnected;
   @override
   @JsonKey()
   final bool showInfo;
@@ -256,20 +346,23 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final int latestGenesis;
+  final List<String> _corrupted;
+  @override
+  @JsonKey()
+  List<String> get corrupted {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_corrupted);
+  }
+
+  @override
+  @JsonKey()
+  final String counterParty;
   final List<Verified> _verifiedPosts;
   @override
   @JsonKey()
   List<Verified> get verifiedPosts {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_verifiedPosts);
-  }
-
-  final List<String> _corruptedPostIds;
-  @override
-  @JsonKey()
-  List<String> get corruptedPostIds {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_corruptedPostIds);
   }
 
   final List<MemberIdentity> _members;
@@ -281,8 +374,18 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
   }
 
   @override
+  @JsonKey()
+  final String streamNonce;
+  @override
+  @JsonKey()
+  final String streamPubkey;
+  @override
+  @JsonKey()
+  final String streamSignature;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OverviewState(network: $network, pubkey: $pubkey, showInfo: $showInfo, error: $error, loading: $loading, displayedInviteSecret: $displayedInviteSecret, latestGenesis: $latestGenesis, verifiedPosts: $verifiedPosts, corruptedPostIds: $corruptedPostIds, members: $members)';
+    return 'OverviewState(network: $network, pubkey: $pubkey, connectingSocket: $connectingSocket, socketConnected: $socketConnected, showInfo: $showInfo, error: $error, loading: $loading, displayedInviteSecret: $displayedInviteSecret, latestGenesis: $latestGenesis, corrupted: $corrupted, counterParty: $counterParty, verifiedPosts: $verifiedPosts, members: $members, streamNonce: $streamNonce, streamPubkey: $streamPubkey, streamSignature: $streamSignature)';
   }
 
   @override
@@ -292,14 +395,20 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'OverviewState'))
       ..add(DiagnosticsProperty('network', network))
       ..add(DiagnosticsProperty('pubkey', pubkey))
+      ..add(DiagnosticsProperty('connectingSocket', connectingSocket))
+      ..add(DiagnosticsProperty('socketConnected', socketConnected))
       ..add(DiagnosticsProperty('showInfo', showInfo))
       ..add(DiagnosticsProperty('error', error))
       ..add(DiagnosticsProperty('loading', loading))
       ..add(DiagnosticsProperty('displayedInviteSecret', displayedInviteSecret))
       ..add(DiagnosticsProperty('latestGenesis', latestGenesis))
+      ..add(DiagnosticsProperty('corrupted', corrupted))
+      ..add(DiagnosticsProperty('counterParty', counterParty))
       ..add(DiagnosticsProperty('verifiedPosts', verifiedPosts))
-      ..add(DiagnosticsProperty('corruptedPostIds', corruptedPostIds))
-      ..add(DiagnosticsProperty('members', members));
+      ..add(DiagnosticsProperty('members', members))
+      ..add(DiagnosticsProperty('streamNonce', streamNonce))
+      ..add(DiagnosticsProperty('streamPubkey', streamPubkey))
+      ..add(DiagnosticsProperty('streamSignature', streamSignature));
   }
 
   @override
@@ -309,6 +418,10 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
             other is _$_OverviewState &&
             const DeepCollectionEquality().equals(other.network, network) &&
             const DeepCollectionEquality().equals(other.pubkey, pubkey) &&
+            const DeepCollectionEquality()
+                .equals(other.connectingSocket, connectingSocket) &&
+            const DeepCollectionEquality()
+                .equals(other.socketConnected, socketConnected) &&
             const DeepCollectionEquality().equals(other.showInfo, showInfo) &&
             const DeepCollectionEquality().equals(other.error, error) &&
             const DeepCollectionEquality().equals(other.loading, loading) &&
@@ -317,10 +430,18 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.latestGenesis, latestGenesis) &&
             const DeepCollectionEquality()
-                .equals(other._verifiedPosts, _verifiedPosts) &&
+                .equals(other._corrupted, _corrupted) &&
             const DeepCollectionEquality()
-                .equals(other._corruptedPostIds, _corruptedPostIds) &&
-            const DeepCollectionEquality().equals(other._members, _members));
+                .equals(other.counterParty, counterParty) &&
+            const DeepCollectionEquality()
+                .equals(other._verifiedPosts, _verifiedPosts) &&
+            const DeepCollectionEquality().equals(other._members, _members) &&
+            const DeepCollectionEquality()
+                .equals(other.streamNonce, streamNonce) &&
+            const DeepCollectionEquality()
+                .equals(other.streamPubkey, streamPubkey) &&
+            const DeepCollectionEquality()
+                .equals(other.streamSignature, streamSignature));
   }
 
   @override
@@ -328,14 +449,20 @@ class _$_OverviewState extends _OverviewState with DiagnosticableTreeMixin {
       runtimeType,
       const DeepCollectionEquality().hash(network),
       const DeepCollectionEquality().hash(pubkey),
+      const DeepCollectionEquality().hash(connectingSocket),
+      const DeepCollectionEquality().hash(socketConnected),
       const DeepCollectionEquality().hash(showInfo),
       const DeepCollectionEquality().hash(error),
       const DeepCollectionEquality().hash(loading),
       const DeepCollectionEquality().hash(displayedInviteSecret),
       const DeepCollectionEquality().hash(latestGenesis),
+      const DeepCollectionEquality().hash(_corrupted),
+      const DeepCollectionEquality().hash(counterParty),
       const DeepCollectionEquality().hash(_verifiedPosts),
-      const DeepCollectionEquality().hash(_corruptedPostIds),
-      const DeepCollectionEquality().hash(_members));
+      const DeepCollectionEquality().hash(_members),
+      const DeepCollectionEquality().hash(streamNonce),
+      const DeepCollectionEquality().hash(streamPubkey),
+      const DeepCollectionEquality().hash(streamSignature));
 
   @JsonKey(ignore: true)
   @override
@@ -347,20 +474,30 @@ abstract class _OverviewState extends OverviewState {
   const factory _OverviewState(
       {required final NetworkIdentity network,
       final String? pubkey,
+      final bool connectingSocket,
+      final bool socketConnected,
       final bool showInfo,
       final String error,
       final String loading,
       final String displayedInviteSecret,
       final int latestGenesis,
+      final List<String> corrupted,
+      final String counterParty,
       final List<Verified> verifiedPosts,
-      final List<String> corruptedPostIds,
-      final List<MemberIdentity> members}) = _$_OverviewState;
+      final List<MemberIdentity> members,
+      final String streamNonce,
+      final String streamPubkey,
+      final String streamSignature}) = _$_OverviewState;
   const _OverviewState._() : super._();
 
   @override
   NetworkIdentity get network => throw _privateConstructorUsedError;
   @override
   String? get pubkey => throw _privateConstructorUsedError;
+  @override
+  bool get connectingSocket => throw _privateConstructorUsedError;
+  @override
+  bool get socketConnected => throw _privateConstructorUsedError;
   @override
   bool get showInfo => throw _privateConstructorUsedError;
   @override
@@ -372,11 +509,19 @@ abstract class _OverviewState extends OverviewState {
   @override
   int get latestGenesis => throw _privateConstructorUsedError;
   @override
+  List<String> get corrupted => throw _privateConstructorUsedError;
+  @override
+  String get counterParty => throw _privateConstructorUsedError;
+  @override
   List<Verified> get verifiedPosts => throw _privateConstructorUsedError;
   @override
-  List<String> get corruptedPostIds => throw _privateConstructorUsedError;
-  @override
   List<MemberIdentity> get members => throw _privateConstructorUsedError;
+  @override
+  String get streamNonce => throw _privateConstructorUsedError;
+  @override
+  String get streamPubkey => throw _privateConstructorUsedError;
+  @override
+  String get streamSignature => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_OverviewStateCopyWith<_$_OverviewState> get copyWith =>

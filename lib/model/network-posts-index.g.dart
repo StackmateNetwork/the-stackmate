@@ -1,35 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'network-posts-info.dart';
+part of 'network-posts-index.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NetworkPostsInfoClassAdapter extends TypeAdapter<_$_NetworkPostsInfo> {
+class NetworkPostsIndexClassAdapter extends TypeAdapter<_$_NetworkPostsIndex> {
   @override
   final int typeId = 14;
 
   @override
-  _$_NetworkPostsInfo read(BinaryReader reader) {
+  _$_NetworkPostsIndex read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_NetworkPostsInfo(
-      latestGenesis: fields[0] as int,
-      corruptedPostIds: (fields[1] as List).cast<String>(),
+    return _$_NetworkPostsIndex(
+      id: fields[0] as int?,
+      lastIndex: fields[1] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, _$_NetworkPostsInfo obj) {
+  void write(BinaryWriter writer, _$_NetworkPostsIndex obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.latestGenesis)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.corruptedPostIds);
+      ..write(obj.lastIndex);
   }
 
   @override
@@ -38,7 +38,7 @@ class NetworkPostsInfoClassAdapter extends TypeAdapter<_$_NetworkPostsInfo> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NetworkPostsInfoClassAdapter &&
+      other is NetworkPostsIndexClassAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -47,16 +47,15 @@ class NetworkPostsInfoClassAdapter extends TypeAdapter<_$_NetworkPostsInfo> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_NetworkPostsInfo _$$_NetworkPostsInfoFromJson(Map<String, dynamic> json) =>
-    _$_NetworkPostsInfo(
-      latestGenesis: json['latestGenesis'] as int,
-      corruptedPostIds: (json['corruptedPostIds'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+_$_NetworkPostsIndex _$$_NetworkPostsIndexFromJson(Map<String, dynamic> json) =>
+    _$_NetworkPostsIndex(
+      id: json['id'] as int?,
+      lastIndex: json['lastIndex'] as int,
     );
 
-Map<String, dynamic> _$$_NetworkPostsInfoToJson(_$_NetworkPostsInfo instance) =>
+Map<String, dynamic> _$$_NetworkPostsIndexToJson(
+        _$_NetworkPostsIndex instance) =>
     <String, dynamic>{
-      'latestGenesis': instance.latestGenesis,
-      'corruptedPostIds': instance.corruptedPostIds,
+      'id': instance.id,
+      'lastIndex': instance.lastIndex,
     };

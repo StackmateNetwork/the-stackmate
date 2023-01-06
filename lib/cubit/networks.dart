@@ -259,7 +259,23 @@ class NetworksCubit extends Cubit<NetworksState> {
         inviteCount: inviteDetail.result!.count,
       );
 
-      await updateServerIdStorage(networkServerId);
+      final members = await compute(getMembers, {
+        'hostname': 'https://' + state.hostname!,
+        'socks5': socks5.toString(),
+        'socialRoot': socialRoot,
+      });
+
+      if (members.hasError) {
+        emit(
+          state.copyWith(
+            error: members.error!,
+            loading: '',
+          ),
+        );
+        return;
+      }
+
+      await updateServerIdAndMembersStorage(networkServerId, members.result!);
       await load();
 
       emit(
@@ -364,33 +380,6 @@ class NetworksCubit extends Cubit<NetworksState> {
           joined: true,
         ),
       );
-    }
-  }
-
-  Future<void> updateServerIdStorage(NetworkIdentity serverId) async {
-    try {
-      final savedid = await _storage.saveItem<NetworkIdentity>(
-        StoreKeys.Networks.name,
-        serverId,
-      );
-      if (savedid.hasError) {
-        emit(
-          state.copyWith(
-            error: couldNotSaveError,
-            loading: '',
-          ),
-        );
-        return;
-      }
-      final id = savedid.result!;
-      final newId = serverId.copyWith(id: id);
-      await _storage.saveItemAt<NetworkIdentity>(
-        StoreKeys.Networks.name,
-        id,
-        newId,
-      );
-    } catch (e, s) {
-      _logger.logException(e, 'NetworksCubit.updateServerIdStorage', s);
     }
   }
 

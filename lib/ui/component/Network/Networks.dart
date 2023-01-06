@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sats/api/interface/cpsocket.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/network/overview.dart';
 import 'package:sats/cubit/networks.dart';
@@ -28,6 +29,7 @@ class Networks extends StatelessWidget {
                 locator<IStorage>(),
                 c.read<Logger>(),
                 locator<IClipBoard>(),
+                locator<ICPSocket>(),
                 c.read<TorCubit>(),
                 c.read<SocialRootCubit>(),
                 n,

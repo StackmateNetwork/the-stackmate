@@ -8,6 +8,8 @@ import 'package:sats/ui/component/Network/NetworkInfo.dart';
 import 'package:sats/ui/component/Network/NetworkName.dart';
 import 'package:sats/ui/component/Network/NetworkTools.dart';
 import 'package:sats/ui/component/Network/OverviewLoader.dart';
+import 'package:sats/ui/component/common/SuccessHandler.dart';
+import 'package:web_socket_channel/io.dart';
 
 class _NetworkOverview extends StatelessWidget {
   @override
@@ -19,6 +21,8 @@ class _NetworkOverview extends StatelessWidget {
         child: RefreshIndicator(
           displacement: 10.0,
           onRefresh: () async {
+            overviewCubit.load();
+            overviewCubit.loadSocket();
             await overviewCubit.fetchAllPosts();
           },
           child: BlocBuilder<OverviewCubit, OverviewState>(
@@ -86,6 +90,7 @@ class NetworkOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
+    // overviewCubit.initStream();
     return BlocProvider.value(
       value: overviewCubit,
       child: _NetworkOverview(),

@@ -335,3 +335,18 @@ class DerivationIndex {
   }
   final int lastUsed;
 }
+
+class StreamHeaders {
+  const StreamHeaders(this.nonce, this.pubkey, this.signature);
+  factory StreamHeaders.fromJson(String data) {
+    final json = jsonDecode(data);
+    return StreamHeaders(
+      json['nonce'] as String,
+      json['pubkey'] as String,
+      json['signature'] as String,
+    );
+  }
+  final String nonce;
+  final String pubkey;
+  final String signature;
+}

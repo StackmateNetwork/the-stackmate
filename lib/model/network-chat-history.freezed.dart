@@ -19,11 +19,8 @@ mixin _$NetworkChatHistory {
   @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
   @HiveField(1)
-  List<Map<String, dynamic>> get verifiedPosts =>
-      throw _privateConstructorUsedError;
-  @HiveField(2)
   int get latestGenesis => throw _privateConstructorUsedError;
-  @HiveField(3)
+  @HiveField(2)
   List<String> get corruptedPostIds => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -38,9 +35,8 @@ abstract class $NetworkChatHistoryCopyWith<$Res> {
       _$NetworkChatHistoryCopyWithImpl<$Res>;
   $Res call(
       {@HiveField(0) int? id,
-      @HiveField(1) List<Map<String, dynamic>> verifiedPosts,
-      @HiveField(2) int latestGenesis,
-      @HiveField(3) List<String> corruptedPostIds});
+      @HiveField(1) int latestGenesis,
+      @HiveField(2) List<String> corruptedPostIds});
 }
 
 /// @nodoc
@@ -55,7 +51,6 @@ class _$NetworkChatHistoryCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? verifiedPosts = freezed,
     Object? latestGenesis = freezed,
     Object? corruptedPostIds = freezed,
   }) {
@@ -64,10 +59,6 @@ class _$NetworkChatHistoryCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      verifiedPosts: verifiedPosts == freezed
-          ? _value.verifiedPosts
-          : verifiedPosts // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
       latestGenesis: latestGenesis == freezed
           ? _value.latestGenesis
           : latestGenesis // ignore: cast_nullable_to_non_nullable
@@ -89,9 +80,8 @@ abstract class _$$_NetworkChatHistoryCopyWith<$Res>
   @override
   $Res call(
       {@HiveField(0) int? id,
-      @HiveField(1) List<Map<String, dynamic>> verifiedPosts,
-      @HiveField(2) int latestGenesis,
-      @HiveField(3) List<String> corruptedPostIds});
+      @HiveField(1) int latestGenesis,
+      @HiveField(2) List<String> corruptedPostIds});
 }
 
 /// @nodoc
@@ -108,7 +98,6 @@ class __$$_NetworkChatHistoryCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? verifiedPosts = freezed,
     Object? latestGenesis = freezed,
     Object? corruptedPostIds = freezed,
   }) {
@@ -117,10 +106,6 @@ class __$$_NetworkChatHistoryCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      verifiedPosts: verifiedPosts == freezed
-          ? _value._verifiedPosts
-          : verifiedPosts // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
       latestGenesis: latestGenesis == freezed
           ? _value.latestGenesis
           : latestGenesis // ignore: cast_nullable_to_non_nullable
@@ -139,30 +124,20 @@ class __$$_NetworkChatHistoryCopyWithImpl<$Res>
 class _$_NetworkChatHistory extends _NetworkChatHistory {
   const _$_NetworkChatHistory(
       {@HiveField(0) this.id,
-      @HiveField(1) required final List<Map<String, dynamic>> verifiedPosts,
-      @HiveField(2) required this.latestGenesis,
-      @HiveField(3) required final List<String> corruptedPostIds})
-      : _verifiedPosts = verifiedPosts,
-        _corruptedPostIds = corruptedPostIds,
+      @HiveField(1) required this.latestGenesis,
+      @HiveField(2) required final List<String> corruptedPostIds})
+      : _corruptedPostIds = corruptedPostIds,
         super._();
 
   @override
   @HiveField(0)
   final int? id;
-  final List<Map<String, dynamic>> _verifiedPosts;
   @override
   @HiveField(1)
-  List<Map<String, dynamic>> get verifiedPosts {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_verifiedPosts);
-  }
-
-  @override
-  @HiveField(2)
   final int latestGenesis;
   final List<String> _corruptedPostIds;
   @override
-  @HiveField(3)
+  @HiveField(2)
   List<String> get corruptedPostIds {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_corruptedPostIds);
@@ -170,7 +145,7 @@ class _$_NetworkChatHistory extends _NetworkChatHistory {
 
   @override
   String toString() {
-    return 'NetworkChatHistory(id: $id, verifiedPosts: $verifiedPosts, latestGenesis: $latestGenesis, corruptedPostIds: $corruptedPostIds)';
+    return 'NetworkChatHistory(id: $id, latestGenesis: $latestGenesis, corruptedPostIds: $corruptedPostIds)';
   }
 
   @override
@@ -179,8 +154,6 @@ class _$_NetworkChatHistory extends _NetworkChatHistory {
         (other.runtimeType == runtimeType &&
             other is _$_NetworkChatHistory &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other._verifiedPosts, _verifiedPosts) &&
             const DeepCollectionEquality()
                 .equals(other.latestGenesis, latestGenesis) &&
             const DeepCollectionEquality()
@@ -191,7 +164,6 @@ class _$_NetworkChatHistory extends _NetworkChatHistory {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(_verifiedPosts),
       const DeepCollectionEquality().hash(latestGenesis),
       const DeepCollectionEquality().hash(_corruptedPostIds));
 
@@ -205,9 +177,8 @@ class _$_NetworkChatHistory extends _NetworkChatHistory {
 abstract class _NetworkChatHistory extends NetworkChatHistory {
   const factory _NetworkChatHistory(
           {@HiveField(0) final int? id,
-          @HiveField(1) required final List<Map<String, dynamic>> verifiedPosts,
-          @HiveField(2) required final int latestGenesis,
-          @HiveField(3) required final List<String> corruptedPostIds}) =
+          @HiveField(1) required final int latestGenesis,
+          @HiveField(2) required final List<String> corruptedPostIds}) =
       _$_NetworkChatHistory;
   const _NetworkChatHistory._() : super._();
 
@@ -216,13 +187,9 @@ abstract class _NetworkChatHistory extends NetworkChatHistory {
   int? get id => throw _privateConstructorUsedError;
   @override
   @HiveField(1)
-  List<Map<String, dynamic>> get verifiedPosts =>
-      throw _privateConstructorUsedError;
-  @override
-  @HiveField(2)
   int get latestGenesis => throw _privateConstructorUsedError;
   @override
-  @HiveField(3)
+  @HiveField(2)
   List<String> get corruptedPostIds => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

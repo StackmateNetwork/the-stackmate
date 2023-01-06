@@ -23,7 +23,7 @@ class _Home extends StatelessWidget {
             child: RefreshIndicator(
               displacement: 10.0,
               onRefresh: () async {
-                await c.read<TorCubit>().testConnection();
+                // await c.read<TorCubit>().testConnection();
                 await c.read<FeesCubit>().update();
                 return;
               },

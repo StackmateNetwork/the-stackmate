@@ -218,4 +218,14 @@ class LibCPClientFFI {
     ).toDartString();
     return resp;
   }
+
+  String streamHeaders({
+    required String socialRoot,
+  }) {
+    final func = binary.lookupFunction<RootT, RootT>('stream_headers');
+    final resp = func(
+      socialRoot.toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
 }

@@ -9,9 +9,8 @@ class NetworkChatHistory with _$NetworkChatHistory {
   @HiveType(typeId: 13, adapterName: 'NetworkChatHistoryClassAdapter')
   const factory NetworkChatHistory({
     @HiveField(0) int? id,
-    @HiveField(1) required List<Map<String, dynamic>> verifiedPosts,
-    @HiveField(2) required int latestGenesis,
-    @HiveField(3) required List<String> corruptedPostIds,
+    @HiveField(1) required int latestGenesis,
+    @HiveField(2) required List<String> corruptedPostIds,
   }) = _NetworkChatHistory;
   const NetworkChatHistory._();
 }

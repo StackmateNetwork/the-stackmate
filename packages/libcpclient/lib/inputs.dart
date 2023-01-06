@@ -87,3 +87,7 @@ typedef IndexT = Pointer<Utf8> Function(
   Pointer<Utf8> socks5,
   Pointer<Utf8> social_root,
 );
+
+typedef RootT = Pointer<Utf8> Function(
+  Pointer<Utf8> social_root,
+);

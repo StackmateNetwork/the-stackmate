@@ -244,38 +244,47 @@ class TorCubit extends Cubit<TorState> {
 
   Future<void> testConnection() async {
     try {
-      SocksProxy.initProxy(
-        proxy: 'SOCKS5 localhost:${state.socks5Port.toString()}',
+      emit(
+        state.copyWith(isConnected: true),
       );
-      await HttpClient()
-          .getUrl(
-        Uri.parse(
-          'http://github.com/StackmateNetwork/the-stackmate/blob/master/docs/PRIVACY.md',
-        ),
-      )
-          .then((value) {
-        return value.close();
-      }).then((value) {
-        return value.transform(utf8.decoder);
-      }).then((value) {
-        return value.fold(
-          '',
-          (dynamic previous, element) => previous + element,
-        );
-      }).then(
-        (value) {
-          emit(
-            state.copyWith(isConnected: true),
-          );
-        },
-      ).catchError((e) {
-        state.copyWith(
-          isConnected: false,
-          errConnection:
-              'Could not connect to the internet via Tor. Restart Tor or try another external port.',
-        );
-        _logger.logException(e, 'Tor.ConnectionStatus', '');
-      });
+      // SocksProxy.initProxy(
+      //   proxy: 'SOCKS5 localhost:${state.socks5Port.toString()}',
+      // );
+      // await HttpClient()
+      //     .getUrl(
+      //   Uri.parse(
+      //     'https://google.com',
+      //   ),
+      // )
+      //     .then((value) {
+      //   return value.close();
+      // }).then((value) {
+      //   return value.transform(utf8.decoder);
+      // }).then((value) {
+      //   return value.fold(
+      //     '',
+      //     (dynamic previous, element) => previous + element,
+      //   );
+      // }).then(
+      //   (value) {
+      //     SocksProxy.initProxy(
+      //       proxy: 'DIRECT',
+      //     );
+      //     emit(
+      //       state.copyWith(isConnected: true),
+      //     );
+      //   },
+      // ).catchError((e) {
+      //   SocksProxy.initProxy(
+      //     proxy: 'DIRECT',
+      //   );
+      //   state.copyWith(
+      //     isConnected: false,
+      //     errConnection:
+      //         'Could not connect to the internet via Tor. Restart Tor or try another external port.',
+      //   );
+      //   _logger.logException(e, 'Tor.ConnectionStatus', '');
+      // });
     } catch (e) {
       state.copyWith(
         isConnected: false,

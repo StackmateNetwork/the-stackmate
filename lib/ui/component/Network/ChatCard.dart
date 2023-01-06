@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:libcpclient/outputs.dart';
 import 'package:sats/cubit/network/overview.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -20,7 +21,8 @@ class ChatCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (!isSelection) {
-          // context.push('/network-chat');
+          overviewCubit.selectCounterParty(history.counterParty!);
+          context.push('/network-chat', extra: overviewCubit);
         }
       },
       child: Material(

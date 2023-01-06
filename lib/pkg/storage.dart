@@ -10,8 +10,10 @@ import 'package:sats/model/fees.dart';
 import 'package:sats/model/master.dart';
 import 'package:sats/model/member-identity.dart';
 import 'package:sats/model/network-chat-history.dart';
+import 'package:sats/model/network-chats.dart';
 import 'package:sats/model/network-identity.dart';
 import 'package:sats/model/network-members.dart';
+import 'package:sats/model/network-posts-index.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/model/pin.dart';
 import 'package:sats/model/preferences.dart';
@@ -36,6 +38,8 @@ enum StoreKeys {
   Networks,
   Members,
   ChatHistory,
+  PostsIndex,
+  NetworkChats,
 }
 
 extension StoreKeysFunctions on StoreKeys {
@@ -52,6 +56,8 @@ extension StoreKeysFunctions on StoreKeys {
         StoreKeys.Networks: 'networks',
         StoreKeys.Members: 'members',
         StoreKeys.ChatHistory: 'chatHistory',
+        StoreKeys.PostsIndex: 'postsIndex',
+        StoreKeys.NetworkChats: 'chats',
       }[this]!;
 }
 
@@ -71,6 +77,8 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(MemberIdentityAdapter()); // typeId: 12
   Hive.registerAdapter(NetworkMembersClassAdapter()); // typeId: 12
   Hive.registerAdapter(NetworkChatHistoryClassAdapter()); // typeId: 13
+  Hive.registerAdapter(NetworkPostsIndexClassAdapter()); // typeId: 14
+  Hive.registerAdapter(NetworkChatsClassAdapter()); // typeId: 15
 
   const secureStorage = FlutterSecureStorage();
   final encryprionKey = await secureStorage.read(key: 'key');
@@ -130,6 +138,14 @@ Future<void> initializeHive() async {
   );
   await Hive.openBox<NetworkChatHistory>(
     StoreKeys.ChatHistory.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<NetworkPostsIndex>(
+    StoreKeys.PostsIndex.name,
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
+  await Hive.openBox<NetworkChats>(
+    StoreKeys.NetworkChats.name,
     encryptionCipher: HiveAesCipher(encryptionKey),
   );
   await Hive.openBox<String>(
@@ -193,7 +209,29 @@ class HiveStore implements IStorage {
   }
 
   @override
+  Future<R<bool>> saveItemAtIndex<T>(
+      String dbName, String index, T item) async {
+    try {
+      await Hive.box<T>(dbName).put(index, item);
+      return const R(result: true);
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
   R<T> getItem<T>(String dbName, int index) {
+    try {
+      return R(result: Hive.box<T>(dbName).get(index));
+    } catch (e, s) {
+      locator<Logger>().logException(e, '', s);
+      return R(error: e.toString());
+    }
+  }
+
+  @override
+  R<T> getItemAtIndex<T>(String dbName, String index) {
     try {
       return R(result: Hive.box<T>(dbName).get(index));
     } catch (e, s) {

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sats/api/libcp.dart';
+import 'package:web_socket_channel/io.dart';
 
 void main() {
   const masterRoot =
@@ -126,5 +127,27 @@ void main() {
     );
 
     assert(leaveResult.result!.status);
+  });
+  test('Notification Stream', () async {
+    final headerValues = libcp.streamHeaders(
+      socialRoot: expectedSocialRoot,
+    );
+
+    final Map<String, String> headers = {
+      'x-nonce': headerValues.result!.nonce,
+      'x-client-pubkey': headerValues.result!.pubkey,
+      'x-client-signature': headerValues.result!.signature,
+    };
+
+    final channel = IOWebSocketChannel.connect(
+      Uri.parse('wss://lotr.toma.tech/api/v3/notifications'),
+      headers: headers,
+    );
+
+    channel.stream.listen((message) {
+      print(message);
+    });
+
+    await Future.delayed(const Duration(seconds: 3));
   });
 }

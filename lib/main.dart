@@ -121,7 +121,9 @@ class Stackmate extends StatelessWidget {
       ),
       GoRoute(
         path: '/network-chat',
-        builder: (_, __) => const NetworkChat(),
+        builder: (_, state) => NetworkChatScreen(
+          overviewCubit: state.extra! as OverviewCubit,
+        ),
       ),
       GoRoute(
         path: '/add-wallet',

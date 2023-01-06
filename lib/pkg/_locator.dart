@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:sats/api/cpsocket.dart';
+import 'package:sats/api/interface/cpsocket.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/interface/logger.dart';
 import 'package:sats/api/libbitcoin.dart';
@@ -26,6 +28,7 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
     locator.registerLazySingleton<IStackMateBitcoin>(() => LibBitcoin());
     locator.registerLazySingleton<ILogAPI>(() => DummyLogAPI());
+    locator.registerLazySingleton<ICPSocket>(() => CypherpostStream());
   } else {
     locator.registerLazySingleton<IShare>(() => Sharer());
     locator.registerLazySingleton<ILauncher>(() => Launcher());
@@ -34,6 +37,7 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<IStackMateBitcoin>(() => LibBitcoin());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
     locator.registerLazySingleton<ILogAPI>(() => SentryLogger());
+    locator.registerLazySingleton<ICPSocket>(() => CypherpostStream());
   }
 
   final loggerCubit = Logger(

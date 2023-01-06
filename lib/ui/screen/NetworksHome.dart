@@ -20,7 +20,7 @@ class _NetworkHome extends StatelessWidget {
           displacement: 10.0,
           onRefresh: () async {
             c.read<WalletsCubit>().refresh();
-            c.read<TorCubit>().testConnection();
+            // c.read<TorCubit>().testConnection();
             c.read<NetworksCubit>().load();
             // if (c.select((TorCubit t) => t.state).isRunning
             return;
@@ -100,11 +100,11 @@ class _NetworkHome extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              if (torState.isConnected) ...[
-                                Networks(),
-                              ] else ...[
-                                Container()
-                              ]
+                              // if (torState.isConnected) ...[
+                              Networks(),
+                              // ] else ...[
+                              // Container()
+                              // ]
                             ],
                           ),
                         ),

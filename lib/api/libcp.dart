@@ -284,22 +284,18 @@ class LibCypherpost implements ICypherpost {
     return R(result: SortedPosts.fromJson(json as Map<String, dynamic>));
   }
 
-  // @override
-  // R<DerivationIndex> lastIndex({
-  //   required String hostname,
-  //   required int socks5,
-  //   required String socialRoot,
-  // }) {
-  //   final resp = _libcp.lastIndex(
-  //     hostname: hostname,
-  //     socks5: socks5,
-  //     socialRoot: socialRoot,
-  //   );
+  @override
+  R<StreamHeaders> streamHeaders({
+    required String socialRoot,
+  }) {
+    final resp = _libcp.streamHeaders(
+      socialRoot: socialRoot,
+    );
 
-  //   if (resp.contains('error')) {
-  //     return R(error: SMError.fromJson(resp).error);
-  //   }
+    if (resp.contains('error')) {
+      return R(error: SMError.fromJson(resp).error);
+    }
 
-  //   return R(result: DerivationIndex.fromJson(resp));
-  // }
+    return R(result: StreamHeaders.fromJson(resp));
+  }
 }
