@@ -23,8 +23,6 @@ Our software is free from VC, fiat or shitcoin influences and we actively work t
 
 All our software is FOSS. Feel free to do as you please with it.
 
-Before forking, we urge you to start a conversation with us and contribute, no matter how blunt your message, express it freely.
-
 ## Goals
 
 We aim to achieve:
