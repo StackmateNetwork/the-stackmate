@@ -8,12 +8,6 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/fees.dart';
 import 'package:sats/model/master.dart';
-import 'package:sats/model/member-identity.dart';
-import 'package:sats/model/network-chat-history.dart';
-import 'package:sats/model/network-chats.dart';
-import 'package:sats/model/network-identity.dart';
-import 'package:sats/model/network-members.dart';
-import 'package:sats/model/network-posts-index.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/model/pin.dart';
 import 'package:sats/model/preferences.dart';
@@ -73,12 +67,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(TorClassAdapter()); // typeId: 8
   Hive.registerAdapter(PinClassAdapter()); // typeId: 9
   Hive.registerAdapter(SocialRootClassAdapter()); // typeId: 10
-  Hive.registerAdapter(NetworkIdentityClassAdapter()); // typeId: 11
-  Hive.registerAdapter(MemberIdentityAdapter()); // typeId: 12
-  Hive.registerAdapter(NetworkMembersClassAdapter()); // typeId: 12
-  Hive.registerAdapter(NetworkChatHistoryClassAdapter()); // typeId: 13
-  Hive.registerAdapter(NetworkPostsIndexClassAdapter()); // typeId: 14
-  Hive.registerAdapter(NetworkChatsClassAdapter()); // typeId: 15
+  // typeId: 15
 
   const secureStorage = FlutterSecureStorage();
   final encryprionKey = await secureStorage.read(key: 'key');
@@ -124,30 +113,7 @@ Future<void> initializeHive() async {
     StoreKeys.Pin.name,
     encryptionCipher: HiveAesCipher(encryptionKey),
   );
-  await Hive.openBox<SocialRoot>(
-    StoreKeys.SocialRoot.name,
-    encryptionCipher: HiveAesCipher(encryptionKey),
-  );
-  await Hive.openBox<NetworkIdentity>(
-    StoreKeys.Networks.name,
-    encryptionCipher: HiveAesCipher(encryptionKey),
-  );
-  await Hive.openBox<NetworkMembers>(
-    StoreKeys.Members.name,
-    encryptionCipher: HiveAesCipher(encryptionKey),
-  );
-  await Hive.openBox<NetworkChatHistory>(
-    StoreKeys.ChatHistory.name,
-    encryptionCipher: HiveAesCipher(encryptionKey),
-  );
-  await Hive.openBox<NetworkPostsIndex>(
-    StoreKeys.PostsIndex.name,
-    encryptionCipher: HiveAesCipher(encryptionKey),
-  );
-  await Hive.openBox<NetworkChats>(
-    StoreKeys.NetworkChats.name,
-    encryptionCipher: HiveAesCipher(encryptionKey),
-  );
+
   await Hive.openBox<String>(
     'storage',
     encryptionCipher: HiveAesCipher(encryptionKey),

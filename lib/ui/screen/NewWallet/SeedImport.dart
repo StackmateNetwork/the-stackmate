@@ -8,7 +8,6 @@ import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/social-root.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -122,7 +121,6 @@ class SeedImportScreen extends StatelessWidget {
     final nodeSelect = context.select((NodeAddressCubit c) => c);
     final tor = context.select((TorCubit c) => c);
     final masterKey = context.select((MasterKeyCubit c) => c);
-    final socialRoot = context.select((SocialRootCubit c) => c);
 
     final importCubit = SeedImportCubit(
       logger,
@@ -141,7 +139,6 @@ class SeedImportScreen extends StatelessWidget {
       tor,
       importCubit,
       masterKey,
-      socialRoot,
     );
 
     return MultiBlocProvider(

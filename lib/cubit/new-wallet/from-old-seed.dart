@@ -9,13 +9,11 @@ import 'package:libstackmate/outputs.dart';
 import 'package:path/path.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
-import 'package:sats/api/libcp.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/social-root.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
@@ -92,8 +90,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     this._nodeAddressCubit,
     this._torCubit,
     this._importCubit,
-    this._masterKeyCubit,
-    this._socialRoot, {
+    this._masterKeyCubit, {
     String walletLabel = '',
   }) : super(
           SeedImportWalletState(
@@ -122,7 +119,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   final NodeAddressCubit _nodeAddressCubit;
   final TorCubit _torCubit;
   final MasterKeyCubit _masterKeyCubit;
-  final SocialRootCubit _socialRoot;
 
   static const invalidLabelError = 'Invalid Label (must be 3-20 chars).';
   static const couldNotSaveError = 'Error Saving Wallet!';
@@ -330,18 +326,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
           _importCubit.state.seed,
         );
         await _masterKeyCubit.init();
-
-        final libcp = LibCypherpost();
-        final socialRoot = libcp.createSocialRoot(
-          masterRoot: root,
-          account: 0,
-        );
-        await _socialRoot.save(
-          socialRoot.result!.xprv,
-          socialRoot.result!.mnemonic,
-          socialRoot.result!.pubkey,
-        );
-        await _socialRoot.init();
       }
       // Future.delayed(Duration(seconds: 3));
       // public descriptor

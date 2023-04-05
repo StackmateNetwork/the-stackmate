@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:sats/cubit/network/overview.dart';
 import 'package:sats/cubit/wallet/info.dart';
-import 'package:sats/model/network-identity.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -18,17 +16,11 @@ import 'package:sats/ui/screen/BackupWallet.dart';
 import 'package:sats/ui/screen/Broadcast.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
-import 'package:sats/ui/screen/NetworkChat.dart';
-import 'package:sats/ui/screen/NetworkDiscovery.dart';
-import 'package:sats/ui/screen/NetworkJoin.dart';
-import 'package:sats/ui/screen/NetworkOverview.dart';
-import 'package:sats/ui/screen/NetworksHome.dart';
 import 'package:sats/ui/screen/NewWallet/Derive.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
 import 'package:sats/ui/screen/NewWallet/XpubColdcard.dart';
 import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
-import 'package:sats/ui/screen/Peers.dart';
 import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
@@ -95,35 +87,6 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/settings',
         builder: (_, __) => const SettingsScreen(),
-      ),
-      GoRoute(
-        path: '/network',
-        builder: (_, __) => const NetworkHomeScreen(),
-      ),
-      GoRoute(
-        path: '/network-join',
-        builder: (_, __) => const NetworkJoinScreen(),
-      ),
-      GoRoute(
-        path: '/network-overview',
-        builder: (_, state) => NetworkOverviewScreen(
-          overviewCubit: state.extra! as OverviewCubit,
-        ),
-      ),
-      GoRoute(
-        path: '/network-discovery',
-        builder: (_, state) =>
-            DiscoveryScreen(network: state.extra! as NetworkIdentity),
-      ),
-      GoRoute(
-        path: '/peers',
-        builder: (_, __) => const PeersScreen(),
-      ),
-      GoRoute(
-        path: '/network-chat',
-        builder: (_, state) => NetworkChatScreen(
-          overviewCubit: state.extra! as OverviewCubit,
-        ),
       ),
       GoRoute(
         path: '/add-wallet',
