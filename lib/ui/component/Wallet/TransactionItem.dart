@@ -212,6 +212,18 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
     showCupertinoModalPopup(
       context: c,
       builder: (BuildContext context) => CupertinoActionSheet(
+        cancelButton: Container(
+          color: c.colours.background,
+          child: CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            child: Text(
+              'BACK',
+              style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+            ),
+          ),
+        ),
         title: Text(
           'Transaction Details'.toUpperCase(),
           style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),

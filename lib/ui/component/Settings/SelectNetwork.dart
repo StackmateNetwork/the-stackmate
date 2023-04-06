@@ -17,7 +17,7 @@ class SelectNetwork extends StatelessWidget {
           handleHelp(c, 'Modify full node uri or click on reset to default');
         } else {
           c.read<ChainSelectCubit>().changeBlockchain(Blockchain.main);
-          handleHelp(c, 'Modify full node uri');
+          handleHelp(c, 'Modify full node uri or click on reset to default');
         }
       },
       style: ElevatedButton.styleFrom(

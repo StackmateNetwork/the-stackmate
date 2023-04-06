@@ -29,7 +29,7 @@ void handleHelp(BuildContext context, String message) {
   }
   showTopSnackBar(
     context,
-    CustomSnackBar.success(
+    CustomSnackBar.info(
       textStyle: context.fonts.bodyLarge!.copyWith(
         color: context.colours.onPrimaryContainer,
       ),

@@ -12,7 +12,6 @@ import 'package:sats/model/node.dart';
 import 'package:sats/model/pin.dart';
 import 'package:sats/model/preferences.dart';
 import 'package:sats/model/result.dart';
-import 'package:sats/model/social-root.dart';
 import 'package:sats/model/tor.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
@@ -66,7 +65,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(MasterKeyClassAdapter()); // typeId: 7
   Hive.registerAdapter(TorClassAdapter()); // typeId: 8
   Hive.registerAdapter(PinClassAdapter()); // typeId: 9
-  Hive.registerAdapter(SocialRootClassAdapter()); // typeId: 10
+  // typeId: 10
   // typeId: 15
 
   const secureStorage = FlutterSecureStorage();
