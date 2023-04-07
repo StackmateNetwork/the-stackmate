@@ -28,6 +28,14 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
   }
 
   @override
+  void dispose() {
+    _xpubController.dispose();
+    _fingerPrintController.dispose();
+    _pathController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext c) {
     return BlocBuilder<XpubImportCubit, XpubImportState>(
       builder: (context, state) {

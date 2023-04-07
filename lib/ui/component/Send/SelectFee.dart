@@ -20,6 +20,12 @@ class _SelectFeeState extends State<SelectFee> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final state = context.select((SendCubit sc) => sc.state);
     // return BlocBuilder<SendCubit, SendState>(

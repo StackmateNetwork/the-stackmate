@@ -21,6 +21,13 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
   }
 
   @override
+  void dispose() {
+    _textController.dispose();
+    _textControllerP.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext c) {
     return BlocBuilder<DeriveWalletCubit, DeriveWalletState>(
       builder: (context, state) {

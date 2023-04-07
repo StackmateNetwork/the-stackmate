@@ -21,6 +21,12 @@ class _AmountRowState extends State<AmountRow> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext c) {
     final amount = c.select((SendCubit sc) => sc.state.amount);
     final isSweep = c.select((SendCubit sc) => sc.state.sweepWallet);

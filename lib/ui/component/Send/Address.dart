@@ -20,6 +20,12 @@ class _SendAddressState extends State<SendAddress> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final address = context.select((SendCubit sc) => sc.state.address);
     final loading = context.select((SendCubit sc) => sc.state.loadingStart);
