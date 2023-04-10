@@ -62,7 +62,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(FeesClassAdapter()); // typeId: 4
   Hive.registerAdapter(PreferencesClassAdapter()); // typeId: 5
   Hive.registerAdapter(TransactionClassAdapter()); // typeId: 6
-  Hive.registerAdapter(MasterKeyClassAdapter()); // typeId: 7
+  //Hive.registerAdapter(MasterKeyClassAdapter()); // typeId: 7
   Hive.registerAdapter(TorClassAdapter()); // typeId: 8
   Hive.registerAdapter(PinClassAdapter()); // typeId: 9
   // typeId: 10
@@ -100,10 +100,10 @@ Future<void> initializeHive() async {
     StoreKeys.Preferences.name,
     encryptionCipher: HiveAesCipher(encryptionKey),
   );
-  await Hive.openBox<MasterKey>(
-    StoreKeys.MasterKey.name,
-    encryptionCipher: HiveAesCipher(encryptionKey),
-  );
+  // await Hive.openBox<MasterKey>(
+  //   StoreKeys.MasterKey.name,
+  //   encryptionCipher: HiveAesCipher(encryptionKey),
+  // );
   await Hive.openBox<Tor>(
     StoreKeys.Tor.name,
     encryptionCipher: HiveAesCipher(encryptionKey),

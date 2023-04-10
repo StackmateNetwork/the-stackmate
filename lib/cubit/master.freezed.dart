@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MasterKeyState {
-  MasterKey? get key => throw _privateConstructorUsedError;
+  Master? get key => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   String? get network => throw _privateConstructorUsedError;
 
@@ -30,9 +30,7 @@ abstract class $MasterKeyStateCopyWith<$Res> {
   factory $MasterKeyStateCopyWith(
           MasterKeyState value, $Res Function(MasterKeyState) then) =
       _$MasterKeyStateCopyWithImpl<$Res>;
-  $Res call({MasterKey? key, String? error, String? network});
-
-  $MasterKeyCopyWith<$Res>? get key;
+  $Res call({Master? key, String? error, String? network});
 }
 
 /// @nodoc
@@ -54,7 +52,7 @@ class _$MasterKeyStateCopyWithImpl<$Res>
       key: key == freezed
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
-              as MasterKey?,
+              as Master?,
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -65,17 +63,6 @@ class _$MasterKeyStateCopyWithImpl<$Res>
               as String?,
     ));
   }
-
-  @override
-  $MasterKeyCopyWith<$Res>? get key {
-    if (_value.key == null) {
-      return null;
-    }
-
-    return $MasterKeyCopyWith<$Res>(_value.key!, (value) {
-      return _then(_value.copyWith(key: value));
-    });
-  }
 }
 
 /// @nodoc
@@ -85,10 +72,7 @@ abstract class _$$_MasterKeyStateCopyWith<$Res>
           _$_MasterKeyState value, $Res Function(_$_MasterKeyState) then) =
       __$$_MasterKeyStateCopyWithImpl<$Res>;
   @override
-  $Res call({MasterKey? key, String? error, String? network});
-
-  @override
-  $MasterKeyCopyWith<$Res>? get key;
+  $Res call({Master? key, String? error, String? network});
 }
 
 /// @nodoc
@@ -112,7 +96,7 @@ class __$$_MasterKeyStateCopyWithImpl<$Res>
       key: key == freezed
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
-              as MasterKey?,
+              as Master?,
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -131,7 +115,7 @@ class _$_MasterKeyState extends _MasterKeyState {
   const _$_MasterKeyState({this.key, this.error, this.network}) : super._();
 
   @override
-  final MasterKey? key;
+  final Master? key;
   @override
   final String? error;
   @override
@@ -167,13 +151,13 @@ class _$_MasterKeyState extends _MasterKeyState {
 
 abstract class _MasterKeyState extends MasterKeyState {
   const factory _MasterKeyState(
-      {final MasterKey? key,
+      {final Master? key,
       final String? error,
       final String? network}) = _$_MasterKeyState;
   const _MasterKeyState._() : super._();
 
   @override
-  MasterKey? get key => throw _privateConstructorUsedError;
+  Master? get key => throw _privateConstructorUsedError;
   @override
   String? get error => throw _privateConstructorUsedError;
   @override

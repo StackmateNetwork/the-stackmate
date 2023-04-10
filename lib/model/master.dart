@@ -1,18 +1,26 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hive/hive.dart';
+class Master {
+  Master({this.seed, this.root, this.fingerprint, this.network, this.isbackup});
 
-part 'master.g.dart';
-part 'master.freezed.dart';
+  Master.fromJson(Map<String, dynamic> json) {
+    seed = json['seed'] as String;
+    root = json['root'] as String;
+    fingerprint = json['fingerprint'] as String;
+    network = json['network'] as String;
+    isbackup = json['isbackup'] as bool;
+  }
+  String? seed;
+  String? root;
+  String? fingerprint;
+  String? network;
+  bool? isbackup;
 
-@freezed
-class MasterKey with _$MasterKey {
-  @HiveType(typeId: 7, adapterName: 'MasterKeyClassAdapter')
-  const factory MasterKey({
-    @HiveField(0) String? seed,
-    @HiveField(2) String? root,
-    @HiveField(3) String? fingerprint,
-    @HiveField(4) String? network,
-    @HiveField(6) bool? backedUp,
-  }) = _MasterKey;
-  const MasterKey._();
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['seed'] = seed;
+    data['root'] = root;
+    data['fingerprint'] = fingerprint;
+    data['network'] = network;
+    data['isbackup'] = isbackup;
+    return data;
+  }
 }
