@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/outputs.dart';
 import 'package:path/path.dart';
@@ -11,7 +12,6 @@ import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -57,7 +57,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
     this._blockchainCubit,
     this._nodeAddressCubit,
     this._torCubit,
-    this._masterKeyCubit,
   ) : super(const DeriveWalletState());
 
   final Logger _logger;
@@ -67,7 +66,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
   final ChainSelectCubit _blockchainCubit;
   final NodeAddressCubit _nodeAddressCubit;
   final TorCubit _torCubit;
-  final MasterKeyCubit _masterKeyCubit;
 
   static const invalidLabelError = 'Invalid Label (must be 3-20 chars)';
   static const internalError = 'Internal Error';
@@ -78,6 +76,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
   static const segwitPurpose = '84';
   static const emptyString = '';
   static const couldNotSaveError = 'Error Saving Wallet!';
+  final storage = const FlutterSecureStorage();
 
   void passPhrasedChanged(String text) => emit(
         state.copyWith(
@@ -161,9 +160,9 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
           walletLabelError: emptyString,
         ),
       );
-
+      final seed = await storage.read(key: 'seed');
       final parent = _core.importMaster(
-        mnemonic: _masterKeyCubit.state.key!.seed!,
+        mnemonic: seed!,
         passphrase: state.passPhrase,
         network: _blockchainCubit.state.blockchain.name,
       );
@@ -320,9 +319,9 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
           errSavingWallet: emptyString,
         ),
       );
-
+      final seed = await storage.read(key: 'seed');
       final parent = _core.importMaster(
-        mnemonic: _masterKeyCubit.state.key!.seed!,
+        mnemonic: seed!,
         passphrase: state.passPhrase,
         network: _blockchainCubit.state.blockchain.name,
       );

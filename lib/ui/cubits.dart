@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/pin.dart';
 import 'package:sats/cubit/preferences.dart';
@@ -30,8 +28,7 @@ class _CubitsState extends State<Cubits> {
   Widget build(BuildContext context) {
     final logger = locator<Logger>();
     final storage = locator<IStorage>();
-    // ignore: prefer_const_declarations
-    final sstorage = const FlutterSecureStorage();
+
     final networkSelectCubit = ChainSelectCubit(
       storage,
       logger,
@@ -39,9 +36,6 @@ class _CubitsState extends State<Cubits> {
     networkSelectCubit.init();
     final torCubit = TorCubit(storage, logger);
     torCubit.start();
-
-    final masterKeyCubit = MasterKeyCubit(sstorage, networkSelectCubit);
-    //masterKeyCubit.init();
 
     final preferencesCubit = PreferencesCubit(storage);
     preferencesCubit.init();
@@ -87,7 +81,6 @@ class _CubitsState extends State<Cubits> {
         BlocProvider.value(value: nodeAddressCubit),
         BlocProvider.value(value: preferencesCubit),
         BlocProvider.value(value: torCubit),
-        BlocProvider.value(value: masterKeyCubit),
         BlocProvider.value(value: broadcastHex),
         BlocProvider.value(value: pinCubit),
       ],

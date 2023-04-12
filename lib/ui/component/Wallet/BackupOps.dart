@@ -153,7 +153,7 @@ class _BackupOpsState extends State<BackupOps> {
   }
 }
 
-Future<void> peekSeed(BuildContext context, MasterKey key) async {
+Future<void> peekSeed(BuildContext context, Master key) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,

@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sats/cubit/master.dart';
+import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/launcher.dart';
 
@@ -39,26 +41,29 @@ class SeedBackupState with _$SeedBackupState {
 
 class SeedBackupCubit extends Cubit<SeedBackupState> {
   SeedBackupCubit(
-    this._masterKey,
     this._launcher,
+    this._blockchainCubit,
   ) : super(const SeedBackupState());
 
-  final MasterKeyCubit _masterKey;
   final ILauncher _launcher;
-
+  final ChainSelectCubit _blockchainCubit;
   static const accountZero = '0';
   static const segwitNativePurpose = '84';
   static const incorerctWordError = 'Incorrect Word Selected.';
   static const emptyString = '';
-  void init() async {
-    await _masterKey.init();
+  final _storage = const FlutterSecureStorage();
 
+  void init() async {
+    // await _masterKey.init();
+    final root = await _storage.read(key: 'root');
+    final seed = await _storage.read(key: 'seed');
+    final fingerprint = await _storage.read(key: 'root');
     emit(
       state.copyWith(
         backupComplete: false,
-        seed: _masterKey.state.key!.seed?.split(' '),
-        rootXprv: _masterKey.state.key!.root,
-        fingerPrint: _masterKey.state.key!.fingerprint,
+        seed: seed?.split(' '),
+        rootXprv: root,
+        fingerPrint: fingerprint,
       ),
     );
   }
@@ -102,12 +107,6 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
 
   Future<void> _completeBackup() async {
     try {
-      await _masterKey.save(
-        state.rootXprv!,
-        state.fingerPrint!,
-        state.seed!.join(' '),
-      );
-      await _masterKey.init();
       emit(
         state.copyWith(
           backupComplete: true,

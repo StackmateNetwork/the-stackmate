@@ -7,7 +7,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/fees.dart';
-import 'package:sats/model/master.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/model/pin.dart';
 import 'package:sats/model/preferences.dart';
@@ -24,7 +23,6 @@ enum StoreKeys {
   Node,
   Fees,
   Preferences,
-  MasterKey,
   Tor,
   Pin,
   SocialRoot,
@@ -42,7 +40,6 @@ extension StoreKeysFunctions on StoreKeys {
         StoreKeys.Node: 'node',
         StoreKeys.Fees: 'fees',
         StoreKeys.Preferences: 'preferences',
-        StoreKeys.MasterKey: 'master',
         StoreKeys.Tor: 'tor',
         StoreKeys.Pin: 'pin',
         StoreKeys.SocialRoot: 'socialRoot',

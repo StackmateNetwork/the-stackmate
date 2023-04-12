@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/outputs.dart';
 import 'package:path/path.dart';
@@ -11,7 +12,6 @@ import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
@@ -89,8 +89,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     this._blockchainCubit,
     this._nodeAddressCubit,
     this._torCubit,
-    this._importCubit,
-    this._masterKeyCubit, {
+    this._importCubit, {
     String walletLabel = '',
   }) : super(
           SeedImportWalletState(
@@ -118,7 +117,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   late StreamSubscription _importSub;
   final NodeAddressCubit _nodeAddressCubit;
   final TorCubit _torCubit;
-  final MasterKeyCubit _masterKeyCubit;
 
   static const invalidLabelError = 'Invalid Label (must be 3-20 chars).';
   static const couldNotSaveError = 'Error Saving Wallet!';
@@ -128,8 +126,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   static const wpkhScript = 'wpkh';
   static const wshScript = 'wsh';
   static const emptyString = '';
-
+  final storage = const FlutterSecureStorage();
   void nextClicked() async {
+    final root = await storage.read(key: 'root');
     switch (state.currentStep) {
       case SeedImportWalletSteps.warning:
         emit(
@@ -140,7 +139,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         break;
 
       case SeedImportWalletSteps.import:
-        if (_masterKeyCubit.state.key != null)
+        if (root != null)
           emit(
             const SeedImportWalletState(
               currentStep: SeedImportWalletSteps.label,
@@ -317,23 +316,16 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       } else {
         lastIndex = int.parse(lastUnused.result!.index);
       }
-      final needsMasterKey = _masterKeyCubit.state.key == null;
+      final needsMasterKey = await storage.read(key: 'root');
 
-      if (needsMasterKey) {
-        await _masterKeyCubit.save(
-          root,
-          wallet.fingerPrint,
-          _importCubit.state.seed,
-        );
-        await _masterKeyCubit.init();
-      }
       // Future.delayed(Duration(seconds: 3));
       // public descriptor
       // Check history and whether this wallet needs to update its address index
 
       final newWallet = Wallet(
         label: state.walletLabel,
-        walletType: needsMasterKey ? signerWalletType : importWalletType,
+        walletType:
+            needsMasterKey!.isNotEmpty ? signerWalletType : importWalletType,
         descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,

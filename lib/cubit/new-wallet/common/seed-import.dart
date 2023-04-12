@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/libstackmate.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/cubit/master.dart';
 
 part 'seed-import.freezed.dart';
 
@@ -35,20 +35,18 @@ class SeedImportState with _$SeedImportState {
 class SeedImportCubit extends Cubit<SeedImportState> {
   SeedImportCubit(
     this.logger,
-    this._masterKey,
     this._blockchainCubit,
     this._core,
   ) : super(const SeedImportState());
 
   final IStackMateBitcoin _core;
-  final MasterKeyCubit _masterKey;
   final Logger logger;
   final ChainSelectCubit _blockchainCubit;
 
   static const segwitNativePurpose = '84';
   static const invalidSeedError = 'Invalid Seed Words.';
   static const emptyString = '';
-
+  final _storage = const FlutterSecureStorage();
   void backOnPassphaseClicked() {
     emit(
       state.copyWith(
@@ -100,8 +98,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
         return;
       }
       // we cannot import a primary key with passphrase - pp wallets can be derived later
-      final pp =
-          (_masterKey.state.key != null) ? emptyString : state.passPhrase;
+      final pp = state.passPhrase;
       final root = _core.importMaster(
         mnemonic: state.seed,
         passphrase: pp,
@@ -110,6 +107,18 @@ class SeedImportCubit extends Cubit<SeedImportState> {
       if (root.hasError) {
         throw SMError.fromJson(root.error!).message;
       }
+      final flutter_secure_root = await _storage.write(
+        key: 'root',
+        value: root.toString(),
+      );
+      final flutter_secure_seed = await _storage.write(
+        key: 'seed',
+        value: root.result!.neuList.toString(),
+      );
+      final flutter_secure_fingerprint = await _storage.write(
+        key: 'fingerprint',
+        value: root.result!.fingerprint,
+      );
 
       final wallet = _core.deriveHardened(
         masterXPriv: root.result!.xprv,

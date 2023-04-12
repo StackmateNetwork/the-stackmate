@@ -1,11 +1,12 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/libstackmate.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/cubit/master.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/launcher.dart';
@@ -43,14 +44,12 @@ class SeedGenerateState with _$SeedGenerateState {
 class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   SeedGenerateCubit(
     this._bitcoin,
-    this._masterKey,
     this._blockchainCubit,
     this._logger,
     this._launcher,
   ) : super(const SeedGenerateState());
 
   final IStackMateBitcoin _bitcoin;
-  final MasterKeyCubit _masterKey;
   final ChainSelectCubit _blockchainCubit;
   final Logger _logger;
   final ILauncher _launcher;
@@ -61,6 +60,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
   static const unableToDeriveError =
       'Unable to derive child keys from this seed.';
   static const emptyString = '';
+  final _storage = const FlutterSecureStorage();
 
   Future<void> finalize() async {
     final root = _bitcoin.importMaster(
@@ -77,20 +77,6 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
         ),
       );
     }
-    if (state.backupLater) {
-      await _masterKey.saveBackupPending(
-        root.result!.mnemonic,
-        root.result!.xprv,
-        root.result!.fingerprint,
-      );
-    } else {
-      await _masterKey.save(
-        root.result!.xprv,
-        root.result!.fingerprint,
-        root.result!.mnemonic,
-      );
-    }
-    await _masterKey.init();
 
     clear();
 
@@ -148,6 +134,18 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       );
       return;
     }
+    final flutter_secure_root = await _storage.write(
+      key: 'root',
+      value: root.toString(),
+    );
+    final flutter_secure_seed = await _storage.write(
+      key: 'seed',
+      value: root.result!.neuList.toString(),
+    );
+    final flutter_secure_fingerprint = await _storage.write(
+      key: 'fingerprint',
+      value: root.result!.fingerprint,
+    );
     emit(
       state.copyWith(
         generatingSeed: false,
