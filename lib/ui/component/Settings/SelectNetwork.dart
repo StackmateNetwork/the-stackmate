@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/chain-select.dart';
+import 'package:sats/cubit/node.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/SuccessHandler.dart';
@@ -10,14 +11,21 @@ class SelectNetwork extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final blockchain = c.select((ChainSelectCubit b) => b.state.blockchain);
+    final nodeState = c.select((NodeAddressCubit nac) => nac.state);
     return ElevatedButton(
       onPressed: () {
         if (blockchain == Blockchain.main) {
           c.read<ChainSelectCubit>().changeBlockchain(Blockchain.test);
           handleHelp(c, 'Modify full node uri or click on reset to default');
+          if (nodeState.name == 'Blockstream') {
+            c.read<NodeAddressCubit>().revertToDefault();
+          }
         } else {
           c.read<ChainSelectCubit>().changeBlockchain(Blockchain.main);
           handleHelp(c, 'Modify full node uri or click on reset to default');
+          if (nodeState.name == 'Blockstream') {
+            c.read<NodeAddressCubit>().revertToDefault();
+          }
         }
       },
       style: ElevatedButton.styleFrom(
