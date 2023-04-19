@@ -1,3 +1,4 @@
+import 'package:bip39/bip39.dart' as bip39;
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/libstackmate.dart';
@@ -29,7 +30,9 @@ class SeedImportState with _$SeedImportState {
   const SeedImportState._();
 
   bool showSeedCompleteButton() =>
-      seed.split(' ').length >= 12 && seed.split(' ').length <= 24;
+      seed.split(' ').length >= 12 &&
+      seed.split(' ').length <= 24 &&
+      bip39.validateMnemonic(seed);
 }
 
 class SeedImportCubit extends Cubit<SeedImportState> {
@@ -94,8 +97,10 @@ class SeedImportCubit extends Cubit<SeedImportState> {
   Future<void> checkSeed() async {
     try {
       final seed = state.seed;
+      print(seed);
 
-      if (seed.split(' ').length < 12 || seed.split(' ').length > 24) {
+      if (seed.split(' ').length < 12 ||
+          seed.split(' ').length > 24 && bip39.validateMnemonic(seed)) {
         emit(state.copyWith(seedError: invalidSeedError));
         return;
       }

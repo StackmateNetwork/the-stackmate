@@ -63,25 +63,28 @@ class SeedImportPhrase extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            AnimatedOpacity(
-              opacity: state.showSeedCompleteButton() ? 1 : 0.3,
-              duration: const Duration(milliseconds: 300),
-              child: SizedBox(
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    onPrimary: c.colours.background,
-                    primary: c.colours.primary,
+            IgnorePointer(
+              ignoring: !state.showSeedCompleteButton(),
+              child: AnimatedOpacity(
+                opacity: state.showSeedCompleteButton() ? 1 : 0.3,
+                duration: const Duration(milliseconds: 300),
+                child: SizedBox(
+                  height: 52,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      onPrimary: c.colours.background,
+                      primary: c.colours.primary,
+                    ),
+                    onPressed: () async {
+                      // if (state.showSeedCompleteButton())
+                      if (!hasMaster) {
+                        await c.read<SeedImportCubit>().checkSeed();
+                        context.read<SeedImportWalletCubit>().nextClicked();
+                      } else
+                        c.read<SeedImportCubit>().gotoPassPhrase();
+                    },
+                    child: const Text('Next'),
                   ),
-                  onPressed: () async {
-                    // if (state.showSeedCompleteButton())
-                    if (!hasMaster) {
-                      await c.read<SeedImportCubit>().checkSeed();
-                      context.read<SeedImportWalletCubit>().nextClicked();
-                    } else
-                      c.read<SeedImportCubit>().gotoPassPhrase();
-                  },
-                  child: const Text('Next'),
                 ),
               ),
             ),

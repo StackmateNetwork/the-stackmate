@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class XpubFieldsImport extends StatefulWidget {
   const XpubFieldsImport({
@@ -131,12 +130,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
                 onPressed: () async {
                   c.read<XpubImportCubit>().checkDetails();
                   if (state.errXpub != '') {
-                    showTopSnackBar(
-                      context,
-                      const CustomSnackBar.error(
-                        message: '',
-                      ),
-                    );
+                    handleError(context, 'Invalid pub key');
                   }
                 },
                 child: const Text('CONFIRM'),

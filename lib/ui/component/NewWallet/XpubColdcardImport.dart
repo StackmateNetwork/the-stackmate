@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/pkg/extensions.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:sats/ui/component/common/ErrorHandler.dart';
+import 'package:sats/ui/component/common/SuccessHandler.dart';
 
 class XpubColdcardImport extends StatelessWidget {
   const XpubColdcardImport({
@@ -85,18 +85,8 @@ class XpubColdcardImport extends StatelessWidget {
                   onPressed: () async {
                     c.read<XpubImportCubit>().clearCachedFiles();
                     result
-                        ? showTopSnackBar(
-                            context,
-                            const CustomSnackBar.success(
-                              message: 'Success file deleted',
-                            ),
-                          )
-                        : showTopSnackBar(
-                            context,
-                            const CustomSnackBar.error(
-                              message: 'Error deleting file',
-                            ),
-                          );
+                        ? handleSuccess(context, 'Success cleared')
+                        : handleError(context, 'Error delete file');
                   },
                   child: Text(
                     'Clear Json',
@@ -118,8 +108,10 @@ class XpubColdcardImport extends StatelessWidget {
                   onPrimary: c.colours.background,
                   primary: c.colours.primary,
                 ),
-                onPressed: () async {
+                onPressed: () {
                   c.read<XpubImportCubit>().importColdCardSegwit();
+                  if (state.errFileImport != '')
+                    handleError(context, 'Error reading file');
                 },
                 child: const Text('CONFIRM'),
               ),
