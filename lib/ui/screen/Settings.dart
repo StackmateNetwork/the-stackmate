@@ -11,7 +11,7 @@ import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -50,8 +50,7 @@ class SettingsScreen extends StatelessWidget {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    onPrimary: c.colours.background,
-                    primary: c.colours.primary,
+                    foregroundColor: c.colours.background, backgroundColor: c.colours.primary,
                   ),
                   onPressed: () {
                     c.read<MasterKeyCubit>().init();

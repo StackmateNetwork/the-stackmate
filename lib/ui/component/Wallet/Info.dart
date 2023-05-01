@@ -5,7 +5,7 @@ import 'package:sats/ui/component/Wallet/BackupOps.dart';
 import 'package:sats/ui/component/Wallet/KeyInfo.dart';
 
 class WalletInfo extends StatelessWidget {
-  const WalletInfo({Key? key}) : super(key: key);
+  const WalletInfo({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -30,7 +30,7 @@ class WalletInfo extends StatelessWidget {
                     Tab(
                       child: Text(
                         'INFO',
-                        style: c.fonts.headline6!.copyWith(
+                        style: c.fonts.titleLarge!.copyWith(
                           color: c.colours.onBackground,
                         ),
                       ),
@@ -38,7 +38,7 @@ class WalletInfo extends StatelessWidget {
                     Tab(
                       child: Text(
                         'BACKUP',
-                        style: c.fonts.headline6!.copyWith(
+                        style: c.fonts.titleLarge!.copyWith(
                           color: c.colours.onBackground,
                           fontWeight: FontWeight.normal,
                         ),

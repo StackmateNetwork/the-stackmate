@@ -26,7 +26,7 @@ class Accounts extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: Text(
               'No\nwallets\nadded',
-              style: c.fonts.caption!.copyWith(
+              style: c.fonts.bodySmall!.copyWith(
                 color: c.colours.onBackground,
               ),
             ),

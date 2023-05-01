@@ -60,12 +60,12 @@ class XpubImportCubit extends Cubit<XpubImportState> {
     );
 
     if (result != null) {
-      final PlatformFile _coldcardJson = result.files.single;
+      final PlatformFile coldcardJson = result.files.single;
 
       emit(
         state.copyWith(
-          importedJSONPath: _coldcardJson.path,
-          importedJSONfileName: _coldcardJson.name,
+          importedJSONPath: coldcardJson.path,
+          importedJSONfileName: coldcardJson.name,
         ),
       );
     } else {

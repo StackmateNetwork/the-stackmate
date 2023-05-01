@@ -28,7 +28,8 @@ class _XpubColdcard extends StatelessWidget {
           previous.newWalletSaved != current.newWalletSaved,
       listener: (context, state) {
         if (state.newWalletSaved) {
-          context.go('/home');
+          context.pop();
+          context.push('/home');
         }
       },
       buildWhen: (previous, current) =>
@@ -104,7 +105,7 @@ class _XpubColdcard extends StatelessWidget {
 }
 
 class XPubColdcardScreen extends StatelessWidget {
-  const XPubColdcardScreen({Key? key}) : super(key: key);
+  const XPubColdcardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

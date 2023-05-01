@@ -7,8 +7,8 @@ import 'package:sats/ui/component/common/BitcoinDisplayLarge.dart';
 
 class Balance extends StatelessWidget {
   const Balance({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext c) {
@@ -24,7 +24,7 @@ class Balance extends StatelessWidget {
             if (preferences.incognito) ...[
               Text(
                 wallet.label,
-                style: c.fonts.headline4!.copyWith(
+                style: c.fonts.headlineMedium!.copyWith(
                   color: c.colours.onPrimary,
                 ),
               ),

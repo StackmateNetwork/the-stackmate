@@ -114,7 +114,7 @@ class _BackupWalletState extends State<_BackupWallet> {
 }
 
 class BackupWalletScreen extends StatelessWidget {
-  const BackupWalletScreen({Key? key}) : super(key: key);
+  const BackupWalletScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

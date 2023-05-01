@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class Loading extends StatelessWidget {
-  const Loading({Key? key, required this.text}) : super(key: key);
+  const Loading({super.key, required this.text});
 
   final String text;
 
@@ -17,7 +17,7 @@ class Loading extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           text,
-          style: c.fonts.caption!.copyWith(
+          style: c.fonts.bodySmall!.copyWith(
             color: c.colours.onBackground,
           ),
           textAlign: TextAlign.center,

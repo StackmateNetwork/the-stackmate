@@ -5,7 +5,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/validation.dart';
 
 class KeyInfo extends StatelessWidget {
-  const KeyInfo({Key? key}) : super(key: key);
+  const KeyInfo({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -22,7 +22,7 @@ class KeyInfo extends StatelessWidget {
         children: [
           Text(
             'WALLET INFORMATION',
-            style: c.fonts.overline!.copyWith(
+            style: c.fonts.labelSmall!.copyWith(
               color: c.colours.onBackground,
               fontWeight: FontWeight.bold,
             ),
@@ -30,7 +30,7 @@ class KeyInfo extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             'Fingerprint',
-            style: c.fonts.overline!.copyWith(
+            style: c.fonts.labelSmall!.copyWith(
               color: c.colours.onBackground,
             ),
           ),
@@ -39,49 +39,49 @@ class KeyInfo extends StatelessWidget {
             Validation.fingerPrintFromXKey(
               wallet.policyElements[0].split(':')[1],
             ),
-            style: c.fonts.headline5!.copyWith(
+            style: c.fonts.headlineSmall!.copyWith(
               color: c.colours.primary,
             ),
           ),
           const SizedBox(height: 24),
           Text(
             'Kind',
-            style: c.fonts.overline!.copyWith(
+            style: c.fonts.labelSmall!.copyWith(
               color: c.colours.onBackground,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             wallet.walletType,
-            style: c.fonts.caption!.copyWith(
+            style: c.fonts.bodySmall!.copyWith(
               color: walletTypeColor,
             ),
           ),
           const SizedBox(height: 24),
           Text(
             'Script Type',
-            style: c.fonts.overline!.copyWith(
+            style: c.fonts.labelSmall!.copyWith(
               color: c.colours.onBackground,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             wallet.descriptor.startsWith('w') ? 'SEGWIT' : 'TAPROOT',
-            style: c.fonts.caption!.copyWith(
+            style: c.fonts.bodySmall!.copyWith(
               color: c.colours.onBackground,
             ),
           ),
           const SizedBox(height: 24),
           Text(
             'Extended Public Key',
-            style: c.fonts.overline!.copyWith(
+            style: c.fonts.labelSmall!.copyWith(
               color: c.colours.onBackground,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             wallet.policyElements[0].split(':')[1],
-            style: c.fonts.caption!.copyWith(
+            style: c.fonts.bodySmall!.copyWith(
               color: c.colours.onBackground,
             ),
           ),

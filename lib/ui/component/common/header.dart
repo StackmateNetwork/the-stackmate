@@ -5,8 +5,7 @@ import 'package:sats/ui/component/common/CornerTitle.dart';
 import 'package:sats/ui/component/common/LogButton.dart';
 
 class Header extends StatelessWidget {
-  const Header({Key? key, required this.cornerTitle, required this.children})
-      : super(key: key);
+  const Header({super.key, required this.cornerTitle, required this.children});
 
   final String cornerTitle;
   final List<Widget> children;

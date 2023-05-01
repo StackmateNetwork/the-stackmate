@@ -3,9 +3,9 @@ import 'package:go_router/go_router.dart';
 
 class LogButton extends StatelessWidget {
   const LogButton({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget child;
 

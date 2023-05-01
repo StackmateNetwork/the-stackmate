@@ -75,12 +75,12 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       );
 
       if (result != null) {
-        final PlatformFile _psbtFile = result.files.single;
+        final PlatformFile psbtFile = result.files.single;
 
         emit(
           state.copyWith(
-            importedPsbtPath: _psbtFile.path,
-            importedPsbtfileName: _psbtFile.name,
+            importedPsbtPath: psbtFile.path,
+            importedPsbtfileName: psbtFile.name,
           ),
         );
       } else {
@@ -102,12 +102,12 @@ class BroadcastCubit extends Cubit<BroadcastState> {
         allowedExtensions: [],
       );
       if (result != null) {
-        final _hexFile = result.files.first;
+        final hexFile = result.files.first;
 
         emit(
           state.copyWith(
-            importedHexPath: _hexFile.path,
-            importedHexfileName: _hexFile.name,
+            importedHexPath: hexFile.path,
+            importedHexfileName: hexFile.name,
           ),
         );
       } else {

@@ -31,7 +31,7 @@ class SeedWordCell extends StatelessWidget {
           child: Text(
             text,
             textAlign: TextAlign.left,
-            style: c.fonts.subtitle2!.copyWith(
+            style: c.fonts.titleSmall!.copyWith(
               color: onTap == null ? c.colours.primary : c.colours.onPrimary,
             ),
           ),
@@ -42,7 +42,7 @@ class SeedWordCell extends StatelessWidget {
 }
 
 class SeedBackupStepSelect extends StatelessWidget {
-  const SeedBackupStepSelect({Key? key}) : super(key: key);
+  const SeedBackupStepSelect({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -71,7 +71,7 @@ class SeedBackup extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             'Write down your\nseed phrase'.toUpperCase(),
-            style: c.fonts.headline5!.copyWith(
+            style: c.fonts.headlineSmall!.copyWith(
               color: c.colours.onPrimary,
               fontWeight: FontWeight.bold,
             ),
@@ -79,7 +79,7 @@ class SeedBackup extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             'Store it somewhere reliable and safe.'.notLocalised(),
-            style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
+            style: c.fonts.bodySmall!.copyWith(color: c.colours.onPrimary),
           ),
           const SizedBox(height: 8),
           Container(
@@ -115,8 +115,7 @@ class SeedBackup extends StatelessWidget {
             height: 52,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                onPrimary: c.colours.background,
-                primary: c.colours.primary,
+                foregroundColor: c.colours.background, backgroundColor: c.colours.primary,
               ),
               onPressed: () {
                 c.read<SeedBackupCubit>().startQuiz();
@@ -133,11 +132,11 @@ class SeedBackup extends StatelessWidget {
 
 class ConfirmStepCell extends StatelessWidget {
   const ConfirmStepCell({
-    Key? key,
+    super.key,
     required this.isOn,
     required this.isSelected,
     required this.text,
-  }) : super(key: key);
+  });
 
   final bool isOn;
   final bool isSelected;
@@ -160,7 +159,7 @@ class ConfirmStepCell extends StatelessWidget {
         Center(
           child: Text(
             text,
-            style: c.fonts.caption!.copyWith(
+            style: c.fonts.bodySmall!.copyWith(
               color: isSelected ? c.colours.primary : c.colours.secondary,
             ),
           ),
@@ -191,7 +190,7 @@ class SeedConfirm extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Text(
             'Confirm seed\nphrase',
-            style: c.fonts.headline4!.copyWith(
+            style: c.fonts.headlineMedium!.copyWith(
               color: c.colours.onPrimary,
               // fontWeight: FontWeight.bold,
             ),
@@ -212,7 +211,7 @@ class SeedConfirm extends StatelessWidget {
             child: Center(
               child: Text(
                 answerIdx + '.',
-                style: c.fonts.headline5!.copyWith(
+                style: c.fonts.headlineSmall!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: c.colours.onPrimary,
                 ),
@@ -224,14 +223,14 @@ class SeedConfirm extends StatelessWidget {
           Center(
             child: Text(
               error,
-              style: c.fonts.caption!.copyWith(color: c.colours.error),
+              style: c.fonts.bodySmall!.copyWith(color: c.colours.error),
             ),
           ),
         const SizedBox(height: 8),
         Center(
           child: Text(
             'Select the correct answer',
-            style: c.fonts.subtitle1!.copyWith(color: c.colours.onPrimary),
+            style: c.fonts.titleMedium!.copyWith(color: c.colours.onPrimary),
           ),
         ),
         const SizedBox(height: 16),

@@ -3,7 +3,7 @@ import 'package:sats/cubit/pin.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class PinPrompt extends StatelessWidget {
-  const PinPrompt({Key? key}) : super(key: key);
+  const PinPrompt({super.key});
 
   @override
   Widget build(BuildContext context) {

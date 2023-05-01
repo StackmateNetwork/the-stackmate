@@ -5,7 +5,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/loading.dart';
 
 class HomeLoader extends StatelessWidget {
-  const HomeLoader({Key? key}) : super(key: key);
+  const HomeLoader({super.key});
 
   @override
   Widget build(BuildContext context) {

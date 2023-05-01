@@ -95,7 +95,7 @@ class _Derive extends StatelessWidget {
 }
 
 class DeriveScreen extends StatelessWidget {
-  const DeriveScreen({Key? key}) : super(key: key);
+  const DeriveScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

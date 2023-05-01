@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class TorSettings extends StatelessWidget {
-  const TorSettings({Key? key}) : super(key: key);
+  const TorSettings({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -12,8 +12,7 @@ class TorSettings extends StatelessWidget {
         c.push('/tor-config');
       },
       style: ElevatedButton.styleFrom(
-        elevation: 0,
-        primary: c.colours.surface,
+        elevation: 0, backgroundColor: c.colours.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       ),
       child: Container(
@@ -29,7 +28,7 @@ class TorSettings extends StatelessWidget {
               children: [
                 Text(
                   'Tor'.toUpperCase(),
-                  style: c.fonts.button!.copyWith(
+                  style: c.fonts.labelLarge!.copyWith(
                     color: c.colours.onPrimary,
                     fontSize: 16,
                   ),
@@ -38,7 +37,7 @@ class TorSettings extends StatelessWidget {
                 Text(
                   'Customize Tor Settings.',
                   maxLines: 3,
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.primary,
                   ),
                 ),

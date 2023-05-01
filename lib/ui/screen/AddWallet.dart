@@ -11,7 +11,7 @@ const primaryWallet = 'PRIMARY';
 const importWallet = 'IMPORT';
 
 class AddWalletScreen extends StatelessWidget {
-  const AddWalletScreen({Key? key}) : super(key: key);
+  const AddWalletScreen({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -95,7 +95,7 @@ class AddWalletScreen extends StatelessWidget {
                 child: Text(
                   'WATCHER'.toUpperCase(),
                   textAlign: TextAlign.left,
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.secondary,
                     fontWeight: FontWeight.bold,
                   ),
@@ -146,7 +146,7 @@ class AddWalletScreen extends StatelessWidget {
                 child: Text(
                   'SIGNER'.toUpperCase(),
                   textAlign: TextAlign.left,
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.tertiary,
                     fontWeight: FontWeight.bold,
                   ),

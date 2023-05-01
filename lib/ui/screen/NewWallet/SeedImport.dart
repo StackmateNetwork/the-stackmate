@@ -31,7 +31,8 @@ class _SeedImport extends StatelessWidget {
           previous.newWalletSaved != current.newWalletSaved,
       listener: (context, state) {
         if (state.newWalletSaved) {
-          context.go('/home');
+          context.pop();
+          context.push('/home');
         }
       },
       buildWhen: (previous, current) =>
@@ -111,7 +112,7 @@ class _SeedImport extends StatelessWidget {
 }
 
 class SeedImportScreen extends StatelessWidget {
-  const SeedImportScreen({Key? key}) : super(key: key);
+  const SeedImportScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

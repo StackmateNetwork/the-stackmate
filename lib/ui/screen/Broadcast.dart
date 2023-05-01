@@ -6,7 +6,7 @@ import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class _Broadcast extends StatelessWidget {
-  const _Broadcast({Key? key}) : super(key: key);
+  const _Broadcast();
 
   @override
   Widget build(BuildContext c) {
@@ -44,7 +44,7 @@ class _Broadcast extends StatelessWidget {
 }
 
 class BroadcastScreen extends StatelessWidget {
-  const BroadcastScreen({Key? key}) : super(key: key);
+  const BroadcastScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

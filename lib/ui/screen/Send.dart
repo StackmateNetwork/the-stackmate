@@ -25,7 +25,7 @@ import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class _WalletSend extends StatelessWidget {
-  const _WalletSend({Key? key}) : super(key: key);
+  const _WalletSend();
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,7 @@ class _WalletSend extends StatelessWidget {
                       Align(
                         child: Text(
                           walletLabel.toUpperCase(),
-                          style: context.fonts.caption!.copyWith(
+                          style: context.fonts.bodySmall!.copyWith(
                             color: context.colours.onPrimary,
                           ),
                         ),
@@ -114,7 +114,7 @@ class _WalletSend extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
                           'Select Network Fee'.toUpperCase(),
-                          style: context.fonts.overline!.copyWith(
+                          style: context.fonts.labelSmall!.copyWith(
                             color: context.colours.onBackground,
                           ),
                         ),
@@ -150,8 +150,7 @@ class _WalletSend extends StatelessWidget {
 }
 
 class WalletSendScreen extends StatelessWidget {
-  const WalletSendScreen({Key? key, required this.fromQr, required this.wallet})
-      : super(key: key);
+  const WalletSendScreen({super.key, required this.fromQr, required this.wallet});
 
   final bool fromQr;
   final Wallet wallet;

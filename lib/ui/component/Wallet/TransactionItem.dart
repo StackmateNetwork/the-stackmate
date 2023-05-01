@@ -8,8 +8,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/BitcoinDisplayMedium.dart';
 
 class TransactionItem extends StatelessWidget {
-  const TransactionItem({Key? key, required this.transaction})
-      : super(key: key);
+  const TransactionItem({super.key, required this.transaction});
 
   final Transaction transaction;
 
@@ -40,7 +39,7 @@ class TransactionItem extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 9.0),
                     child: Text(
                       'RECEIVE'.notLocalised(),
-                      style: c.fonts.subtitle2!.copyWith(
+                      style: c.fonts.titleSmall!.copyWith(
                         fontWeight: FontWeight.bold,
                         color: c.colours.onBackground,
                       ),
@@ -53,7 +52,7 @@ class TransactionItem extends StatelessWidget {
                         if (preferences.incognito) ...[
                           Text(
                             transaction.timeStr(),
-                            style: c.fonts.caption!.copyWith(
+                            style: c.fonts.bodySmall!.copyWith(
                               color: c.colours.onBackground,
                             ),
                           ),
@@ -72,7 +71,7 @@ class TransactionItem extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 'TRANSACTION ID'.notLocalised(),
-                style: c.fonts.overline!.copyWith(
+                style: c.fonts.labelSmall!.copyWith(
                   color: c.colours.onBackground,
                 ),
               ),
@@ -85,7 +84,7 @@ class TransactionItem extends StatelessWidget {
                   child: Text(
                     transaction.txIdBlur(),
                     // transaction.txid,
-                    style: c.fonts.caption!.copyWith(
+                    style: c.fonts.bodySmall!.copyWith(
                       color: c.colours.primary,
                     ),
                   ),
@@ -94,7 +93,7 @@ class TransactionItem extends StatelessWidget {
               if (transaction.height == 0)
                 Text(
                   'UNCONFIRMED',
-                  style: c.fonts.overline!.copyWith(
+                  style: c.fonts.labelSmall!.copyWith(
                     color: c.colours.error,
                   ),
                 )
@@ -102,7 +101,7 @@ class TransactionItem extends StatelessWidget {
                   (confirmations <= 6 && confirmations >= 1))
                 Text(
                   '$confirmations' + ' Confirmations',
-                  style: c.fonts.overline!.copyWith(
+                  style: c.fonts.labelSmall!.copyWith(
                     color: c.colours.secondary,
                   ),
                 ),
@@ -132,7 +131,7 @@ class TransactionItem extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 9.0),
                   child: Text(
                     'SEND'.notLocalised(),
-                    style: c.fonts.subtitle2!.copyWith(
+                    style: c.fonts.titleSmall!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: c.colours.onBackground,
                     ),
@@ -145,7 +144,7 @@ class TransactionItem extends StatelessWidget {
                       if (preferences.incognito) ...[
                         Text(
                           transaction.timeStr(),
-                          style: c.fonts.caption!.copyWith(
+                          style: c.fonts.bodySmall!.copyWith(
                             color: c.colours.onBackground,
                           ),
                         ),
@@ -164,7 +163,7 @@ class TransactionItem extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               'TRANSACTION ID'.notLocalised(),
-              style: c.fonts.overline!.copyWith(
+              style: c.fonts.labelSmall!.copyWith(
                 color: c.colours.onBackground,
               ),
             ),
@@ -177,7 +176,7 @@ class TransactionItem extends StatelessWidget {
                 child: Text(
                   transaction.txIdBlur(),
                   // transaction.txid,
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.primary,
                   ),
                 ),
@@ -186,7 +185,7 @@ class TransactionItem extends StatelessWidget {
             if (transaction.height == 0)
               Text(
                 'UNCONFIRMED',
-                style: c.fonts.overline!.copyWith(
+                style: c.fonts.labelSmall!.copyWith(
                   color: c.colours.error,
                 ),
               )
@@ -194,7 +193,7 @@ class TransactionItem extends StatelessWidget {
                 (confirmations <= 6 && confirmations >= 1))
               Text(
                 '$confirmations' + ' Confirmations',
-                style: c.fonts.overline!.copyWith(
+                style: c.fonts.labelSmall!.copyWith(
                   color: c.colours.secondary,
                 ),
               ),
@@ -220,13 +219,13 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
             },
             child: Text(
               'BACK',
-              style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+              style: c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
             ),
           ),
         ),
         title: Text(
           'Transaction Details'.toUpperCase(),
-          style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+          style: c.fonts.titleLarge!.copyWith(color: c.colours.onPrimary),
         ),
         message: Container(
           margin: const EdgeInsets.symmetric(vertical: 4),
@@ -242,7 +241,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 children: [
                   Text(
                     'RECEIVE'.notLocalised(),
-                    style: c.fonts.subtitle2!.copyWith(
+                    style: c.fonts.titleSmall!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: c.colours.onBackground,
                     ),
@@ -259,7 +258,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                         if (transaction.height == 0)
                           Text(
                             'UNCONFIRMED',
-                            style: c.fonts.overline!.copyWith(
+                            style: c.fonts.labelSmall!.copyWith(
                               color: c.colours.onBackground,
                             ),
                           )
@@ -271,7 +270,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               const SizedBox(height: 8),
               Text(
                 'TRANSACTION ID'.notLocalised(),
-                style: c.fonts.overline!.copyWith(
+                style: c.fonts.labelSmall!.copyWith(
                   color: c.colours.onBackground,
                 ),
               ),
@@ -284,7 +283,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                   child: Text(
                     // transaction.txIdBlur(),
                     transaction.txid,
-                    style: c.fonts.caption!.copyWith(
+                    style: c.fonts.bodySmall!.copyWith(
                       color: c.colours.primary,
                     ),
                   ),
@@ -294,13 +293,13 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 const SizedBox(height: 16),
                 Text(
                   'TIME'.notLocalised(),
-                  style: c.fonts.overline!.copyWith(
+                  style: c.fonts.labelSmall!.copyWith(
                     color: c.colours.onBackground,
                   ),
                 ),
                 Text(
                   transaction.timeStr(),
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.onBackground,
                   ),
                 ),
@@ -329,7 +328,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               child: CupertinoActionSheetAction(
                 child: Text(
                   'Bump fee',
-                  style: c.fonts.button!.copyWith(color: c.colours.primary),
+                  style: c.fonts.labelLarge!.copyWith(color: c.colours.primary),
                 ),
                 onPressed: () async {
                   // c.read<InfoCubit>().openLink(transaction);
@@ -346,7 +345,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 child: Text(
                   'Success',
                   style:
-                      c.fonts.button!.copyWith(color: c.colours.onBackground),
+                      c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
                 ),
               ),
             ),
@@ -358,7 +357,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               },
               child: Text(
                 'BACK',
-                style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+                style: c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
               ),
             ),
           ),
@@ -371,7 +370,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
       builder: (BuildContext context) => CupertinoActionSheet(
         title: Text(
           'Transaction Details'.toUpperCase(),
-          style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+          style: c.fonts.titleLarge!.copyWith(color: c.colours.onPrimary),
         ),
         message: Container(
           margin: const EdgeInsets.symmetric(vertical: 4),
@@ -387,7 +386,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 children: [
                   Text(
                     'SEND'.notLocalised(),
-                    style: c.fonts.subtitle2!.copyWith(
+                    style: c.fonts.titleSmall!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: c.colours.onBackground,
                     ),
@@ -404,7 +403,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                         if (transaction.height == 0)
                           Text(
                             'UNCONFIRMED',
-                            style: c.fonts.overline!.copyWith(
+                            style: c.fonts.labelSmall!.copyWith(
                               color: c.colours.onBackground,
                             ),
                           )
@@ -416,7 +415,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               const SizedBox(height: 8),
               Text(
                 'TRANSACTION ID'.notLocalised(),
-                style: c.fonts.overline!.copyWith(
+                style: c.fonts.labelSmall!.copyWith(
                   color: c.colours.onBackground,
                 ),
               ),
@@ -429,7 +428,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                   child: Text(
                     // transaction.txIdBlur()
                     transaction.txid,
-                    style: c.fonts.caption!.copyWith(
+                    style: c.fonts.bodySmall!.copyWith(
                       color: c.colours.primary,
                     ),
                   ),
@@ -441,13 +440,13 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                   const SizedBox(height: 16),
                   Text(
                     'TIME'.notLocalised(),
-                    style: c.fonts.overline!.copyWith(
+                    style: c.fonts.labelSmall!.copyWith(
                       color: c.colours.onBackground,
                     ),
                   ),
                   Text(
                     transaction.timeStr(),
-                    style: c.fonts.caption!.copyWith(
+                    style: c.fonts.bodySmall!.copyWith(
                       color: c.colours.onBackground,
                     ),
                   ),
@@ -456,7 +455,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 const SizedBox(height: 16),
                 Text(
                   'AMOUNT'.notLocalised(),
-                  style: c.fonts.overline!.copyWith(
+                  style: c.fonts.labelSmall!.copyWith(
                     color: c.colours.onBackground,
                   ),
                 ),
@@ -464,14 +463,14 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                   NumberFormat('###,000')
                           .format(double.parse(transaction.sent.toString())) +
                       ' sats',
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.onBackground,
                   ),
                 ),
                 const SizedBox(height: 16),
                 Text(
                   'Fees'.notLocalised(),
-                  style: c.fonts.overline!.copyWith(
+                  style: c.fonts.labelSmall!.copyWith(
                     color: c.colours.onBackground,
                   ),
                 ),
@@ -479,7 +478,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                   NumberFormat('###,000')
                           .format(double.parse(transaction.fee.toString())) +
                       ' sats',
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.onBackground,
                   ),
                 ),
@@ -507,7 +506,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               child: CupertinoActionSheetAction(
                 child: Text(
                   'Bump fee',
-                  style: c.fonts.button!.copyWith(color: c.colours.primary),
+                  style: c.fonts.labelLarge!.copyWith(color: c.colours.primary),
                 ),
                 onPressed: () async {
                   // c.read<InfoCubit>().openLink(transaction);
@@ -524,7 +523,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 child: Text(
                   'Success',
                   style:
-                      c.fonts.button!.copyWith(color: c.colours.onBackground),
+                      c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
                 ),
               ),
             ),
@@ -536,7 +535,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               },
               child: Text(
                 'BACK',
-                style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+                style: c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
               ),
             ),
           ),

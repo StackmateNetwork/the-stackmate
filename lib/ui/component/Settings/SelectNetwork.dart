@@ -6,7 +6,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/SuccessHandler.dart';
 
 class SelectNetwork extends StatelessWidget {
-  const SelectNetwork({Key? key}) : super(key: key);
+  const SelectNetwork({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -29,8 +29,7 @@ class SelectNetwork extends StatelessWidget {
         }
       },
       style: ElevatedButton.styleFrom(
-        elevation: 0,
-        primary: c.colours.surface,
+        elevation: 0, backgroundColor: c.colours.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       ),
       child: Container(
@@ -46,7 +45,7 @@ class SelectNetwork extends StatelessWidget {
               children: [
                 Text(
                   'Network'.toUpperCase(),
-                  style: c.fonts.button!.copyWith(
+                  style: c.fonts.labelLarge!.copyWith(
                     color: c.colours.onPrimary,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -56,7 +55,7 @@ class SelectNetwork extends StatelessWidget {
                 Text(
                   blockchain.displayName,
                   maxLines: 3,
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.primary,
                   ),
                 ),

@@ -5,8 +5,8 @@ import 'package:sats/pkg/extensions.dart';
 
 class WalletName extends StatelessWidget {
   const WalletName({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class WalletName extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Text(
           '' + wallet.label.toUpperCase(),
-          style: context.fonts.headline6!.copyWith(
+          style: context.fonts.titleLarge!.copyWith(
             color: context.colours.primary,
           ),
         ),

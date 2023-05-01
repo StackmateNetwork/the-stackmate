@@ -6,8 +6,8 @@ import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
 
 class WalletDetails extends StatelessWidget {
   const WalletDetails({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +19,14 @@ class WalletDetails extends StatelessWidget {
         if (preferences.incognito) ...[
           Text(
             'Do you have what it takes?'.toUpperCase(),
-            style: context.fonts.overline!.copyWith(
+            style: context.fonts.labelSmall!.copyWith(
               color: context.colours.onBackground,
             ),
           ),
         ] else ...[
           Text(
             'Balance'.toUpperCase(),
-            style: context.fonts.overline!.copyWith(
+            style: context.fonts.labelSmall!.copyWith(
               color: context.colours.onBackground,
             ),
           ),

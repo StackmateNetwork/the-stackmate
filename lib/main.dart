@@ -55,7 +55,7 @@ class Stackmate extends StatelessWidget {
       child: OKToast(
         duration: const Duration(milliseconds: 2000),
         position: ToastPosition.bottom,
-        textStyle: c.fonts.caption!.copyWith(color: c.colours.onBackground),
+        textStyle: c.fonts.bodySmall!.copyWith(color: c.colours.onBackground),
         child: MaterialApp.router(
           routeInformationParser: _router.routeInformationParser,
           routerDelegate: _router.routerDelegate,

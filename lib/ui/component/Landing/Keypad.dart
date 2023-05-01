@@ -4,7 +4,7 @@ import 'package:sats/cubit/pin.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class PinKeypad extends StatelessWidget {
-  const PinKeypad({Key? key}) : super(key: key);
+  const PinKeypad({super.key});
 
   @override
   Widget build(BuildContext context) {

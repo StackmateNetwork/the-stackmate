@@ -3,7 +3,7 @@ import 'package:sats/cubit/preferences.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class SetIncognito extends StatelessWidget {
-  const SetIncognito({Key? key}) : super(key: key);
+  const SetIncognito({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -14,8 +14,7 @@ class SetIncognito extends StatelessWidget {
         c.read<PreferencesCubit>().saveClicked();
       },
       style: ElevatedButton.styleFrom(
-        elevation: 0,
-        primary: c.colours.surface,
+        elevation: 0, backgroundColor: c.colours.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       ),
       child: Container(
@@ -31,7 +30,7 @@ class SetIncognito extends StatelessWidget {
               children: [
                 Text(
                   'Incognito'.toUpperCase(),
-                  style: c.fonts.button!.copyWith(
+                  style: c.fonts.labelLarge!.copyWith(
                     color: c.colours.onPrimary,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -41,7 +40,7 @@ class SetIncognito extends StatelessWidget {
                 Text(
                   incognito ? 'On' : 'Off',
                   maxLines: 3,
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.primary,
                   ),
                 ),

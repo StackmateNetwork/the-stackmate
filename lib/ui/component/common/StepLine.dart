@@ -3,10 +3,10 @@ import 'package:sats/pkg/extensions.dart';
 
 class StepLine extends StatelessWidget {
   const StepLine({
-    Key? key,
+    super.key,
     required this.length,
     required this.idx,
-  }) : super(key: key);
+  });
 
   final int idx;
   final int length;

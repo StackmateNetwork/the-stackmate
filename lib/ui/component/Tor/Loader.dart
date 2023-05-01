@@ -4,7 +4,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/loading.dart';
 
 class TorLoader extends StatelessWidget {
-  const TorLoader({Key? key}) : super(key: key);
+  const TorLoader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class TorLoader extends StatelessWidget {
         padding: const EdgeInsets.only(top: 5),
         child: Text(
           tor.errConnection,
-          style: context.fonts.caption!.copyWith(
+          style: context.fonts.bodySmall!.copyWith(
             color: context.colours.error,
           ),
           textAlign: TextAlign.center,

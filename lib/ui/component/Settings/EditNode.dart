@@ -3,7 +3,7 @@ import 'package:sats/cubit/node.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class EditNode extends StatefulWidget {
-  const EditNode({Key? key}) : super(key: key);
+  const EditNode({super.key});
 
   @override
   _EditNodeState createState() => _EditNodeState();
@@ -47,7 +47,7 @@ class _EditNodeState extends State<EditNode> {
           children: [
             Text(
               'Change Electrum Node'.toUpperCase(),
-              style: c.fonts.button!.copyWith(
+              style: c.fonts.labelLarge!.copyWith(
                 color: c.colours.onBackground,
                 fontSize: 16,
               ),
@@ -56,7 +56,7 @@ class _EditNodeState extends State<EditNode> {
             Text(
               'Provide Full Address (URL:PORT) and give it a name.',
               maxLines: 3,
-              style: c.fonts.caption!.copyWith(
+              style: c.fonts.bodySmall!.copyWith(
                 color: c.colours.onSurface.withOpacity(0.7),
               ),
             ),
@@ -100,7 +100,7 @@ class _EditNodeState extends State<EditNode> {
               },
               child: Text(
                 'RESET TO DEFAULT',
-                style: c.fonts.button!.copyWith(color: c.colours.error),
+                style: c.fonts.labelLarge!.copyWith(color: c.colours.error),
               ),
             ),
             const SizedBox(height: 24),

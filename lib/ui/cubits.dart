@@ -17,7 +17,7 @@ import 'package:sats/pkg/interface/storage.dart';
 // import 'package:sats/pkg/vibrate.dart';
 
 class Cubits extends StatefulWidget {
-  const Cubits({Key? key, required this.child}) : super(key: key);
+  const Cubits({super.key, required this.child});
   final Widget child;
 
   @override

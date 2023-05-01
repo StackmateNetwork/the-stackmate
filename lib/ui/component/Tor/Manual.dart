@@ -3,7 +3,7 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class ManualTor extends StatelessWidget {
-  const ManualTor({Key? key}) : super(key: key);
+  const ManualTor({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,7 @@ class ManualTor extends StatelessWidget {
             await context.read<TorCubit>().toggleEnforce();
           },
           style: ElevatedButton.styleFrom(
-            elevation: 0,
-            primary: context.colours.surface,
+            elevation: 0, backgroundColor: context.colours.surface,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           ),
@@ -34,7 +33,7 @@ class ManualTor extends StatelessWidget {
                   children: [
                     Text(
                       'DEFAULT',
-                      style: context.fonts.button!.copyWith(
+                      style: context.fonts.labelLarge!.copyWith(
                         color: context.colours.primary,
                         fontSize: 16,
                       ),
@@ -43,7 +42,7 @@ class ManualTor extends StatelessWidget {
                     Text(
                       'Privacy lost once, is lost forever.',
                       maxLines: 3,
-                      style: context.fonts.caption!.copyWith(
+                      style: context.fonts.bodySmall!.copyWith(
                         color: context.colours.onSurface.withOpacity(0.7),
                       ),
                     ),
@@ -74,8 +73,7 @@ class ManualTor extends StatelessWidget {
             context.read<TorCubit>().toggleInternal();
           },
           style: ElevatedButton.styleFrom(
-            elevation: 0,
-            primary: context.colours.surface,
+            elevation: 0, backgroundColor: context.colours.surface,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           ),
@@ -92,7 +90,7 @@ class ManualTor extends StatelessWidget {
                   children: [
                     Text(
                       'Use External Tor',
-                      style: context.fonts.button!.copyWith(
+                      style: context.fonts.labelLarge!.copyWith(
                         color: context.colours.primary,
                         fontSize: 16,
                       ),
@@ -135,7 +133,7 @@ class ManualTor extends StatelessWidget {
 }
 
 class ExternalTor extends StatefulWidget {
-  const ExternalTor({Key? key}) : super(key: key);
+  const ExternalTor({super.key});
 
   @override
   _ExternalTorState createState() => _ExternalTorState();
@@ -173,7 +171,7 @@ class _ExternalTorState extends State<ExternalTor> {
         children: [
           Text(
             'External SockS5 Proxy'.toUpperCase(),
-            style: c.fonts.button!.copyWith(
+            style: c.fonts.labelLarge!.copyWith(
               color: c.colours.onBackground,
               fontSize: 16,
             ),
@@ -182,7 +180,7 @@ class _ExternalTorState extends State<ExternalTor> {
           Text(
             'Check your external Tor app.',
             maxLines: 3,
-            style: c.fonts.caption!.copyWith(
+            style: c.fonts.bodySmall!.copyWith(
               color: c.colours.onSurface.withOpacity(0.7),
             ),
           ),
@@ -206,12 +204,12 @@ class _ExternalTorState extends State<ExternalTor> {
             },
             child: Text(
               'RESET TO DEFAULT',
-              style: c.fonts.button!.copyWith(color: c.colours.error),
+              style: c.fonts.labelLarge!.copyWith(color: c.colours.error),
             ),
           ),
           Text(
             'CHANGING BETWEEN INTERNAL AND EXTERNAL TOR REQUIRES RESTARTING THE APP.',
-            style: c.fonts.caption!.copyWith(color: c.colours.onPrimary),
+            style: c.fonts.bodySmall!.copyWith(color: c.colours.onPrimary),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),

@@ -3,7 +3,7 @@ import 'package:sats/cubit/pin.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class PinValue extends StatelessWidget {
-  const PinValue({Key? key}) : super(key: key);
+  const PinValue({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class PinValue extends StatelessWidget {
           children: [
             Text(
               state.hiddenValue,
-              style: context.fonts.headline3!.copyWith(
+              style: context.fonts.displaySmall!.copyWith(
                 color: context.colours.onPrimary,
               ),
             ),

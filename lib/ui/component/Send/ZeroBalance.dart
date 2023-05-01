@@ -3,7 +3,7 @@ import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class ZeroBalance extends StatelessWidget {
-  const ZeroBalance({Key? key}) : super(key: key);
+  const ZeroBalance({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class ZeroBalance extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Text(
           'You have\nZero\nBalance.',
-          style: context.fonts.headline6!.copyWith(
+          style: context.fonts.titleLarge!.copyWith(
             color: context.colours.onBackground,
           ),
         ),

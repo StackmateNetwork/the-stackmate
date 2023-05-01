@@ -4,9 +4,9 @@ import 'package:sats/pkg/extensions.dart';
 
 class Back extends StatelessWidget {
   const Back({
-    Key? key,
+    super.key,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final Function? onPressed;
 
@@ -38,7 +38,7 @@ class Back extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 child: Text(
                   'Back',
-                  style: c.fonts.button!.copyWith(
+                  style: c.fonts.labelLarge!.copyWith(
                     color: c.colours.primary,
                   ),
                 ),

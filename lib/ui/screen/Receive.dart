@@ -20,7 +20,7 @@ import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class _Receive extends StatelessWidget {
-  const _Receive({Key? key}) : super(key: key);
+  const _Receive();
   @override
   Widget build(BuildContext c) {
     final state = c.select((ReceiveCubit h) => h.state);
@@ -42,7 +42,7 @@ class _Receive extends StatelessWidget {
                   Align(
                     child: Text(
                       state.wallet.label.toUpperCase(),
-                      style: c.fonts.caption!.copyWith(
+                      style: c.fonts.bodySmall!.copyWith(
                         color: c.colours.primary,
                       ),
                     ),
@@ -70,9 +70,9 @@ class _Receive extends StatelessWidget {
 
 class ReceiveScreen extends StatelessWidget {
   const ReceiveScreen({
-    Key? key,
+    super.key,
     required this.wallet,
-  }) : super(key: key);
+  });
 
   final Wallet wallet;
 

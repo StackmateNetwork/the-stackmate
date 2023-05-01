@@ -20,7 +20,7 @@ class TransactionsList extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16, top: 32, bottom: 24),
             child: Text(
               'HISTORY',
-              style: c.fonts.overline!.copyWith(
+              style: c.fonts.labelSmall!.copyWith(
                 color: c.colours.onBackground,
               ),
             ),

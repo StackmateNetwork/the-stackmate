@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LandingLogo extends StatelessWidget {
-  const LandingLogo({Key? key}) : super(key: key);
+  const LandingLogo({super.key});
 
   @override
   Widget build(BuildContext context) {

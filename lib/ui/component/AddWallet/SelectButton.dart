@@ -3,12 +3,12 @@ import 'package:sats/pkg/extensions.dart';
 
 class SelectButton extends StatelessWidget {
   const SelectButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.description,
     required this.colour,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final String text;
   final String description;
@@ -59,7 +59,7 @@ class SelectButton extends StatelessWidget {
                     maxLines: 4,
                     // softWrap: true,
                     // overflow: TextOverflow.fade,
-                    style: context.fonts.caption!.copyWith(
+                    style: context.fonts.bodySmall!.copyWith(
                       color: context.colours.primary,
                       // fontWeight: FontWeight.w100,
                     ),

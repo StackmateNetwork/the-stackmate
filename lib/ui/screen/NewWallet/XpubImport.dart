@@ -28,7 +28,8 @@ class _XpubImport extends StatelessWidget {
           previous.newWalletSaved != current.newWalletSaved,
       listener: (context, state) {
         if (state.newWalletSaved) {
-          context.go('/home');
+          context.pop();
+          context.push('/home');
         }
       },
       buildWhen: (previous, current) =>
@@ -104,7 +105,7 @@ class _XpubImport extends StatelessWidget {
 }
 
 class XPubImportScreen extends StatelessWidget {
-  const XPubImportScreen({Key? key}) : super(key: key);
+  const XPubImportScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

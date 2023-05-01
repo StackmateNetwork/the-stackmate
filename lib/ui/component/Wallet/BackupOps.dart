@@ -8,7 +8,7 @@ import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class BackupOps extends StatefulWidget {
-  const BackupOps({Key? key}) : super(key: key);
+  const BackupOps({super.key});
 
   @override
   State<BackupOps> createState() => _BackupOpsState();
@@ -42,7 +42,7 @@ class _BackupOpsState extends State<BackupOps> {
         children: [
           Text(
             'BACKUP OPERATIONS',
-            style: c.fonts.overline!.copyWith(
+            style: c.fonts.labelSmall!.copyWith(
               color: c.colours.onBackground,
               fontWeight: FontWeight.bold,
             ),
@@ -54,8 +54,7 @@ class _BackupOpsState extends State<BackupOps> {
               width: c.width,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: c.colours.error,
-                  onSurface: c.colours.background.withOpacity(0.38),
+                  foregroundColor: c.colours.error, disabledForegroundColor: c.colours.background.withOpacity(0.38).withOpacity(0.38),
                 ),
                 onPressed: () {
                   c.push('/backup-master');
@@ -91,7 +90,7 @@ class _BackupOpsState extends State<BackupOps> {
               width: c.width,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: c.colours.secondary,
+                  foregroundColor: c.colours.secondary,
                 ),
                 onPressed: () async {
                   c.read<InfoCubit>().testPassPhrase(masterKey.seed!);
@@ -108,8 +107,7 @@ class _BackupOpsState extends State<BackupOps> {
               width: c.width,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: c.colours.tertiary,
-                  onSurface: c.colours.background.withOpacity(0.38),
+                  foregroundColor: c.colours.tertiary, disabledForegroundColor: c.colours.background.withOpacity(0.38).withOpacity(0.38),
                 ),
                 onPressed: () {
                   peekSeed(c, masterKey);
@@ -137,8 +135,7 @@ class _BackupOpsState extends State<BackupOps> {
               width: c.width,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: c.colours.error,
-                  onSurface: c.colours.background.withOpacity(0.38),
+                  foregroundColor: c.colours.error, disabledForegroundColor: c.colours.background.withOpacity(0.38).withOpacity(0.38),
                 ),
                 onPressed: () {
                   _deleteWalletClicked(c, zeroBal, wallet);
@@ -156,7 +153,6 @@ class _BackupOpsState extends State<BackupOps> {
 Future<void> peekSeed(BuildContext context, MasterKey key) async {
   return showDialog<void>(
     context: context,
-    barrierDismissible: true,
     builder: (BuildContext context) {
       return AlertDialog(
         contentPadding: const EdgeInsets.all(24.0),
@@ -165,7 +161,7 @@ Future<void> peekSeed(BuildContext context, MasterKey key) async {
         elevation: 2.0,
         title: Text(
           'MNEMONIC\nSEED',
-          style: context.fonts.headline5!.copyWith(
+          style: context.fonts.headlineSmall!.copyWith(
             fontWeight: FontWeight.bold,
             color: context.colours.onPrimary,
           ),
@@ -214,11 +210,11 @@ void _deleteWalletClicked(
       builder: (BuildContext context) => CupertinoActionSheet(
         title: Text(
           'Wallet is not empty'.toUpperCase(),
-          style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+          style: c.fonts.titleLarge!.copyWith(color: c.colours.onPrimary),
         ),
         message: Text(
           'Please send transfer all funds before deleting wallet.',
-          style: c.fonts.subtitle2!.copyWith(color: c.colours.onBackground),
+          style: c.fonts.titleSmall!.copyWith(color: c.colours.onBackground),
         ),
         actions: [
           Container(
@@ -226,7 +222,7 @@ void _deleteWalletClicked(
             child: CupertinoActionSheetAction(
               child: Text(
                 'Please sweep your funds'.toUpperCase(),
-                style: c.fonts.button!.copyWith(color: c.colours.error),
+                style: c.fonts.labelLarge!.copyWith(color: c.colours.error),
               ),
               onPressed: () async {
                 Navigator.pop(context, true);
@@ -243,7 +239,7 @@ void _deleteWalletClicked(
               },
               child: Text(
                 'BACK',
-                style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+                style: c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
               ),
             ),
           ),
@@ -260,12 +256,12 @@ void _deleteWalletClicked(
         padding: const EdgeInsets.only(top: 16),
         child: Text(
           'Delete Wallet ?'.toUpperCase(),
-          style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+          style: c.fonts.titleLarge!.copyWith(color: c.colours.onPrimary),
         ),
       ),
       message: Text(
         'All wallet information will be deleted.',
-        style: c.fonts.subtitle2!.copyWith(color: c.colours.onBackground),
+        style: c.fonts.titleSmall!.copyWith(color: c.colours.onBackground),
       ),
       actions: [
         Container(
@@ -277,7 +273,7 @@ void _deleteWalletClicked(
             },
             child: Text(
               'DELETE IT!',
-              style: c.fonts.button!.copyWith(color: c.colours.error),
+              style: c.fonts.labelLarge!.copyWith(color: c.colours.error),
             ),
           ),
         ),
@@ -287,7 +283,7 @@ void _deleteWalletClicked(
           child: CupertinoActionSheetAction(
             child: Text(
               'CANCEL',
-              style: c.fonts.button!.copyWith(color: c.colours.onBackground),
+              style: c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
             ),
             onPressed: () {
               Navigator.pop(context, false);

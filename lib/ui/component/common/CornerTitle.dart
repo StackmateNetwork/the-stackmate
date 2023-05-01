@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class CornerTitle extends StatelessWidget {
-  const CornerTitle({Key? key, required this.text}) : super(key: key);
+  const CornerTitle({super.key, required this.text});
 
   final String text;
 
@@ -11,7 +11,7 @@ class CornerTitle extends StatelessWidget {
     return Text(
       text,
       textAlign: TextAlign.end,
-      style: c.fonts.headline6!.copyWith(
+      style: c.fonts.titleLarge!.copyWith(
         color: c.colours.onPrimary,
         // fontWeight: FontWeight.bold,
       ),

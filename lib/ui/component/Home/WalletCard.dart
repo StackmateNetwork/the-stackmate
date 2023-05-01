@@ -10,10 +10,10 @@ import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
 
 class WalletCard extends StatelessWidget {
   const WalletCard({
-    Key? key,
+    super.key,
     required this.wallet,
     this.isSelection = false,
-  }) : super(key: key);
+  });
 
   final Wallet wallet;
   final bool isSelection;
@@ -67,7 +67,7 @@ class WalletCard extends StatelessWidget {
                   children: [
                     Text(
                       wallet.label,
-                      style: context.fonts.subtitle1!.copyWith(
+                      style: context.fonts.titleMedium!.copyWith(
                         color: context.colours.onPrimary,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -78,7 +78,7 @@ class WalletCard extends StatelessWidget {
                       wallet.walletType,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 10,
-                      style: context.fonts.caption!.copyWith(
+                      style: context.fonts.bodySmall!.copyWith(
                         color: wallet.walletType == 'WATCHER'
                             ? context.colours.secondary
                             : context.colours.tertiary,
@@ -93,7 +93,7 @@ class WalletCard extends StatelessWidget {
                               : 'LEGACY',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 10,
-                      style: context.fonts.caption!.copyWith(
+                      style: context.fonts.bodySmall!.copyWith(
                         color: context.colours.primary,
                         fontSize: 10,
                       ),

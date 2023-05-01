@@ -3,7 +3,7 @@ import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class BroadcastPSBT extends StatelessWidget {
-  const BroadcastPSBT({Key? key}) : super(key: key);
+  const BroadcastPSBT({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -15,7 +15,7 @@ class BroadcastPSBT extends StatelessWidget {
             Text(
               'Broadcast PSBT'.toUpperCase(),
               textAlign: TextAlign.center,
-              style: context.fonts.overline!.copyWith(
+              style: context.fonts.labelSmall!.copyWith(
                 color: context.colours.onBackground,
               ),
             ),
@@ -34,9 +34,7 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: c.colours.primary,
-                  side: BorderSide(color: c.colours.onPrimary),
-                  onSurface: c.colours.background.withOpacity(0.38),
+                  foregroundColor: c.colours.primary, side: BorderSide(color: c.colours.onPrimary), disabledForegroundColor: c.colours.background.withOpacity(0.38).withOpacity(0.38),
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().pastePSBT();
@@ -49,9 +47,7 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: c.colours.primary,
-                  side: BorderSide(color: c.colours.onPrimary),
-                  onSurface: c.colours.background.withOpacity(0.38),
+                  foregroundColor: c.colours.primary, side: BorderSide(color: c.colours.onPrimary), disabledForegroundColor: c.colours.background.withOpacity(0.38).withOpacity(0.38),
                 ),
                 onPressed: () {
                   c.read<BroadcastCubit>().updatePSBTFile();
@@ -64,9 +60,7 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: c.colours.primary,
-                  side: BorderSide(color: c.colours.onPrimary),
-                  onSurface: c.colours.background.withOpacity(0.38),
+                  foregroundColor: c.colours.primary, side: BorderSide(color: c.colours.onPrimary), disabledForegroundColor: c.colours.background.withOpacity(0.38).withOpacity(0.38),
                 ),
                 onPressed: () {
                   c.read<BroadcastCubit>().verifyImportPSBT();
@@ -79,8 +73,7 @@ class BroadcastPSBT extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  onPrimary: c.colours.background,
-                  primary: c.colours.primary,
+                  foregroundColor: c.colours.background, backgroundColor: c.colours.primary,
                 ),
                 onPressed: () {
                   context.read<BroadcastCubit>().broadcastConfirmed();
@@ -93,7 +86,7 @@ class BroadcastPSBT extends StatelessWidget {
               Text(
                 psbtState.txId,
                 textAlign: TextAlign.center,
-                style: context.fonts.headline6!.copyWith(
+                style: context.fonts.titleLarge!.copyWith(
                   color: context.colours.onBackground,
                 ),
               )
@@ -103,7 +96,7 @@ class BroadcastPSBT extends StatelessWidget {
               Text(
                 psbtState.errBroadcasting,
                 textAlign: TextAlign.center,
-                style: context.fonts.caption!.copyWith(
+                style: context.fonts.bodySmall!.copyWith(
                   color: context.colours.error,
                 ),
               )

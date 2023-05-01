@@ -47,7 +47,7 @@ class Networth extends StatelessWidget {
           ),
           Text(
             networkTraffic + ' NETWORK TRAFFIC',
-            style: c.fonts.caption!.copyWith(
+            style: c.fonts.bodySmall!.copyWith(
               color: c.colours.onPrimary,
             ),
             textAlign: TextAlign.center,

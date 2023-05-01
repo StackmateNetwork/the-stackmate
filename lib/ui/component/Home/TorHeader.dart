@@ -39,7 +39,7 @@ class TorHeader extends StatelessWidget {
                   Text(
                     'Not routed via Tor.\n',
                     textAlign: TextAlign.center,
-                    style: context.fonts.caption!.copyWith(
+                    style: context.fonts.bodySmall!.copyWith(
                       color: context.colours.error,
                     ),
                   ),

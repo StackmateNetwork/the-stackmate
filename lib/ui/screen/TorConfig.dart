@@ -8,7 +8,7 @@ import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/header.dart';
 
 class TorConfigScreen extends StatelessWidget {
-  const TorConfigScreen({Key? key}) : super(key: key);
+  const TorConfigScreen({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -54,7 +54,7 @@ class TorConfigScreen extends StatelessWidget {
                       message: (tor.isRunning)
                           ? 'Torified Natively.'
                           : 'Torified via External.',
-                      textStyle: c.fonts.caption!.copyWith(
+                      textStyle: c.fonts.bodySmall!.copyWith(
                         color: c.colours.primary,
                       ),
                       decoration: BoxDecoration(
@@ -80,7 +80,7 @@ class TorConfigScreen extends StatelessWidget {
                         ? tor.errMessage
                         : 'Not routed via Tor.',
                     textAlign: TextAlign.center,
-                    style: c.fonts.caption!.copyWith(
+                    style: c.fonts.bodySmall!.copyWith(
                       color: c.colours.error,
                     ),
                   ),
@@ -94,8 +94,7 @@ class TorConfigScreen extends StatelessWidget {
                   height: 52,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: c.colours.primary,
-                      onPrimary: c.colours.background,
+                      foregroundColor: c.colours.background, backgroundColor: c.colours.primary,
                     ),
                     onPressed: () {
                       // c.read<TorCubit>().testConnection();
@@ -114,9 +113,7 @@ class TorConfigScreen extends StatelessWidget {
                     width: c.width,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        primary: c.colours.primary,
-                        side: BorderSide(color: c.colours.onPrimary),
-                        onSurface: c.colours.background.withOpacity(0.38),
+                        foregroundColor: c.colours.primary, side: BorderSide(color: c.colours.onPrimary), disabledForegroundColor: c.colours.background.withOpacity(0.38).withOpacity(0.38),
                       ),
                       onPressed: () {
                         c.read<TorCubit>().start();

@@ -13,7 +13,7 @@ import 'package:sats/ui/component/common/ErrorHandler.dart';
 import 'package:sats/ui/component/common/SuccessHandler.dart';
 
 class _Wallet extends StatelessWidget {
-  const _Wallet({Key? key}) : super(key: key);
+  const _Wallet();
 
   @override
   Widget build(BuildContext c) {
@@ -159,7 +159,7 @@ class _Wallet extends StatelessWidget {
 }
 
 class WalletScreen extends StatelessWidget {
-  const WalletScreen({Key? key, required this.infoCubit}) : super(key: key);
+  const WalletScreen({super.key, required this.infoCubit});
 
   final InfoCubit infoCubit;
 

@@ -37,7 +37,7 @@ class _Logs extends StatelessWidget {
 }
 
 class LogsScreen extends StatelessWidget {
-  const LogsScreen({Key? key}) : super(key: key);
+  const LogsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:sats/cubit/pin.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class PinButton extends StatelessWidget {
-  const PinButton({Key? key}) : super(key: key);
+  const PinButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class PinButton extends StatelessWidget {
             height: 72,
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
-                primary: context.colours.primary,
+                foregroundColor: context.colours.primary,
               ),
               onPressed: () async {
                 // CHECK IF PIN IS VERIFIED
@@ -32,8 +32,7 @@ class PinButton extends StatelessWidget {
             height: 72,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                onPrimary: context.colours.background,
-                primary: context.colours.primary,
+                foregroundColor: context.colours.background, backgroundColor: context.colours.primary,
               ),
               onPressed: () async {
                 // CHECK IF PIN IS VERIFIED
@@ -48,8 +47,7 @@ class PinButton extends StatelessWidget {
             height: 72,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                onPrimary: context.colours.background,
-                primary: context.colours.primary,
+                foregroundColor: context.colours.background, backgroundColor: context.colours.primary,
               ),
               onPressed: () async {
                 // CHECK IF PIN IS VERIFIED

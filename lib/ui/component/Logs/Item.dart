@@ -35,14 +35,14 @@ class LogItem extends StatelessWidget {
             children: <Widget>[
               Text(
                 log.path!,
-                style: context.fonts.caption!.copyWith(
+                style: context.fonts.bodySmall!.copyWith(
                   color: context.colours.onBackground,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 'STATUS: ' + log.statusCode!,
-                style: context.fonts.bodyText1!.copyWith(
+                style: context.fonts.bodyLarge!.copyWith(
                   color: context.colours.primary,
                 ),
               )
@@ -58,7 +58,7 @@ class LogItem extends StatelessWidget {
               },
               child: Text(
                 log.response!,
-                style: context.fonts.caption!.copyWith(
+                style: context.fonts.bodySmall!.copyWith(
                   color: context.colours.onBackground,
                 ),
               ),
@@ -78,14 +78,14 @@ class LogItem extends StatelessWidget {
             children: <Widget>[
               Text(
                 log.exceptionSource!,
-                style: context.fonts.caption!.copyWith(
+                style: context.fonts.bodySmall!.copyWith(
                   color: context.colours.onBackground,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 'EXCEPTION: ' + log.exceptionType!,
-                style: context.fonts.caption!.copyWith(
+                style: context.fonts.bodySmall!.copyWith(
                   color: context.colours.onBackground,
                 ),
               )

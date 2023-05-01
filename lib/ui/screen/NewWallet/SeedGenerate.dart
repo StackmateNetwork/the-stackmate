@@ -125,7 +125,7 @@ class _SeedGenerateState extends State<_SeedGenerate> {
 }
 
 class SeedGenerateScreen extends StatelessWidget {
-  const SeedGenerateScreen({Key? key}) : super(key: key);
+  const SeedGenerateScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

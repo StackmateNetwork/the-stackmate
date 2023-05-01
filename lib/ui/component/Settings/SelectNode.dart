@@ -18,8 +18,7 @@ class SelectNode extends StatelessWidget {
         c.read<NodeAddressCubit>().toggleIsEditting();
       },
       style: ElevatedButton.styleFrom(
-        elevation: 0,
-        primary: c.colours.surface,
+        elevation: 0, backgroundColor: c.colours.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       ),
       child: Container(
@@ -35,7 +34,7 @@ class SelectNode extends StatelessWidget {
               children: [
                 Text(
                   'Full Node'.toUpperCase(),
-                  style: c.fonts.button!.copyWith(
+                  style: c.fonts.labelLarge!.copyWith(
                     color: c.colours.onPrimary,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -47,7 +46,7 @@ class SelectNode extends StatelessWidget {
                     nodeString,
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
-                    style: c.fonts.caption!.copyWith(
+                    style: c.fonts.bodySmall!.copyWith(
                       color: c.colours.primary,
                     ),
                   ),

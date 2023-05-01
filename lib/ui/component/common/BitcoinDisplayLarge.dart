@@ -4,10 +4,10 @@ import 'package:sats/pkg/validation.dart';
 
 class BitcoinDisplayLarge extends StatelessWidget {
   const BitcoinDisplayLarge({
-    Key? key,
+    super.key,
     required this.satsAmount,
     required this.bitcoinUnit,
-  }) : super(key: key);
+  });
 
   final String satsAmount;
   final String bitcoinUnit;
@@ -21,7 +21,7 @@ class BitcoinDisplayLarge extends StatelessWidget {
         children: [
           Text(
             Validation.formatSatsString(satsAmount),
-            style: c.fonts.headline4!.copyWith(
+            style: c.fonts.headlineMedium!.copyWith(
               color: c.colours.onPrimary,
               letterSpacing: 1,
             ),
@@ -29,14 +29,14 @@ class BitcoinDisplayLarge extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             'sats',
-            style: c.fonts.headline6!.copyWith(
+            style: c.fonts.titleLarge!.copyWith(
               color: c.colours.onPrimary,
             ),
           ),
           const SizedBox(height: 6),
           Text(
             satsAmount.toBtc() + ' BTC',
-            style: c.fonts.caption!.copyWith(
+            style: c.fonts.bodySmall!.copyWith(
               color: c.colours.onPrimary,
             ),
           ),
@@ -47,7 +47,7 @@ class BitcoinDisplayLarge extends StatelessWidget {
         children: [
           Text(
             satsAmount.toBtc(),
-            style: c.fonts.headline4!.copyWith(
+            style: c.fonts.headlineMedium!.copyWith(
               color: c.colours.onPrimary,
               letterSpacing: 1,
             ),
@@ -55,14 +55,14 @@ class BitcoinDisplayLarge extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             'BTC',
-            style: c.fonts.headline6!.copyWith(
+            style: c.fonts.titleLarge!.copyWith(
               color: c.colours.onPrimary,
             ),
           ),
           const SizedBox(height: 6),
           Text(
             Validation.formatSatsString(satsAmount) + ' sats',
-            style: c.fonts.caption!.copyWith(
+            style: c.fonts.bodySmall!.copyWith(
               color: c.colours.onPrimary,
             ),
           ),

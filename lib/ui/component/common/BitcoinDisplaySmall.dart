@@ -4,10 +4,10 @@ import 'package:sats/pkg/validation.dart';
 
 class BitcoinDisplaySmall extends StatelessWidget {
   const BitcoinDisplaySmall({
-    Key? key,
+    super.key,
     required this.satsAmount,
     required this.bitcoinUnit,
-  }) : super(key: key);
+  });
 
   final String satsAmount;
   final String bitcoinUnit;

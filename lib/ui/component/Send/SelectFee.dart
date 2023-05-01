@@ -4,7 +4,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class SelectFee extends StatefulWidget {
-  const SelectFee({Key? key}) : super(key: key);
+  const SelectFee({super.key});
 
   @override
   State<SelectFee> createState() => _SelectFeeState();
@@ -89,7 +89,7 @@ class _SelectFeeState extends State<SelectFee> {
                           Text(
                             '~ 2 - 3 hours\n($slow sats)',
                             textAlign: TextAlign.center,
-                            style: context.fonts.caption!.copyWith(
+                            style: context.fonts.bodySmall!.copyWith(
                               fontSize: 10,
                               color:
                                   context.colours.onBackground.withOpacity(0.7),
@@ -111,7 +111,7 @@ class _SelectFeeState extends State<SelectFee> {
                           Text(
                             '~ 60 - 90 minutes \n($medium sats)',
                             textAlign: TextAlign.center,
-                            style: context.fonts.caption!.copyWith(
+                            style: context.fonts.bodySmall!.copyWith(
                               fontSize: 10,
                               color:
                                   context.colours.onBackground.withOpacity(0.7),
@@ -133,7 +133,7 @@ class _SelectFeeState extends State<SelectFee> {
                           Text(
                             '~ 20 minutes\n($fast sats)',
                             textAlign: TextAlign.center,
-                            style: context.fonts.caption!.copyWith(
+                            style: context.fonts.bodySmall!.copyWith(
                               fontSize: 10,
                               color:
                                   context.colours.onBackground.withOpacity(0.7),
@@ -178,21 +178,21 @@ class _SelectFeeState extends State<SelectFee> {
                   if (state.finalFee != null) ...[
                     Text(
                       'FINAL FEES',
-                      style: context.fonts.overline!.copyWith(
+                      style: context.fonts.labelSmall!.copyWith(
                         color: context.colours.onBackground,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '${state.finalFee} sats',
-                      style: context.fonts.subtitle1!.copyWith(
+                      style: context.fonts.titleMedium!.copyWith(
                         color: context.colours.onBackground,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '${state.finalFee!.toBtc()} BTC',
-                      style: context.fonts.caption!.copyWith(
+                      style: context.fonts.bodySmall!.copyWith(
                         color: context.colours.onBackground,
                       ),
                     ),
@@ -202,8 +202,7 @@ class _SelectFeeState extends State<SelectFee> {
                     height: 52,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        onPrimary: context.colours.background,
-                        primary: context.colours.primary,
+                        foregroundColor: context.colours.background, backgroundColor: context.colours.primary,
                       ),
                       onPressed: () {
                         context.read<SendCubit>().feeConfirmedClicked();

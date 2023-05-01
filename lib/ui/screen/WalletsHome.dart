@@ -126,7 +126,7 @@ class _Home extends StatelessWidget {
                                       ),
                                       child: Text(
                                         'Click on + icon to Create wallet',
-                                        style: c.fonts.caption!.copyWith(
+                                        style: c.fonts.bodySmall!.copyWith(
                                           color: c.colours.onBackground,
                                         ),
                                       ),
@@ -151,7 +151,7 @@ class _Home extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

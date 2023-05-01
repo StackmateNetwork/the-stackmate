@@ -4,8 +4,8 @@ import 'package:sats/pkg/extensions.dart';
 class HeaderText extends StatelessWidget {
   const HeaderText({
     required this.text,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String text;
 
@@ -15,7 +15,7 @@ class HeaderText extends StatelessWidget {
       padding: const EdgeInsets.only(left: 8.0),
       child: Text(
         text,
-        style: c.fonts.headline4!.copyWith(
+        style: c.fonts.headlineMedium!.copyWith(
           color: c.colours.surface,
           fontWeight: FontWeight.bold,
         ),

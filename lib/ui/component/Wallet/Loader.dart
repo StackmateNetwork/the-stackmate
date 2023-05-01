@@ -5,7 +5,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/loading.dart';
 
 class WalletLoader extends StatelessWidget {
-  const WalletLoader({Key? key}) : super(key: key);
+  const WalletLoader({super.key});
 
   @override
   Widget build(BuildContext context) {

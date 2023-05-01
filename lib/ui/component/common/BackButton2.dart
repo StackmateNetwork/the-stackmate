@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class BckButton extends StatelessWidget {
-  const BckButton({Key? key, required this.text, required this.onTapped})
-      : super(key: key);
+  const BckButton({super.key, required this.text, required this.onTapped});
 
   final String text;
   final Function onTapped;
@@ -26,7 +25,7 @@ class BckButton extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 2, left: 4),
             child: Text(
               text,
-              style: c.fonts.button!.copyWith(color: c.colours.onSurface),
+              style: c.fonts.labelLarge!.copyWith(color: c.colours.onSurface),
             ),
           )
         ],
