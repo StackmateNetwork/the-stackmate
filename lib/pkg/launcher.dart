@@ -1,4 +1,3 @@
-import 'package:open_mail_app/open_mail_app.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -54,17 +53,17 @@ class Launcher implements ILauncher {
     }
   }
 
-  @override
-  Future<R<bool>> openEmailInbox() async {
-    try {
-      final result = await OpenMailApp.openMailApp();
-      if (!result.didOpen && !result.canOpen) {
-        throw 'didnt open';
-      }
-      return const R(result: true);
-    } catch (e, s) {
-      locator<Logger>().logException(e, '', s);
-      return R(error: e.toString());
-    }
-  }
+  // @override
+  // Future<R<bool>> openEmailInbox() async {
+  //   try {
+  //     final result = await OpenMailApp.openMailApp();
+  //     if (!result.didOpen && !result.canOpen) {
+  //       throw 'didnt open';
+  //     }
+  //     return const R(result: true);
+  //   } catch (e, s) {
+  //     locator<Logger>().logException(e, '', s);
+  //     return R(error: e.toString());
+  //   }
+  // }
 }

@@ -325,10 +325,10 @@ packages:
     dependency: transitive
     description:
       name: ffi
-      sha256: "13a6ccf6a459a125b3fcdb6ec73bd5ff90822e071207c663bfd1f70062d51d18"
+      sha256: a38574032c5f1dd06c4aee541789906c12ccaab8ba01446e800d9c5b79c4a978
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "2.0.1"
   file:
     dependency: transitive
     description:
@@ -349,10 +349,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: "704259669b5e9cb24e15c11cfcf02caf5f20d30901b3916d60b6d1c2d647035f"
+      sha256: e6c7ad8e572379df86ea64ef0a5395889fba3954411d47ca021b888d79f8e798
       url: "https://pub.dev"
     source: hosted
-    version: "4.6.1"
+    version: "5.2.11"
   fixnum:
     dependency: transitive
     description:
@@ -829,22 +829,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
-  open_filex:
-    dependency: "direct main"
-    description:
-      name: open_filex
-      sha256: "568ad5e58d450e49701052e4331887a21f12dea869a002b125ba6f1fbcca9a9b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.4.0"
-  open_mail_app:
-    dependency: "direct main"
-    description:
-      name: open_mail_app
-      sha256: ffc93edc0590ef4586136f505187b25014a336fe0374ad3cc528e727b3f2e726
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.5"
   package_config:
     dependency: transitive
     description:
@@ -905,10 +889,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_windows
-      sha256: a34ecd7fb548f8e57321fd8e50d865d266941b54e6c3b7758cf8f37c24116905
+      sha256: d3f80b32e83ec208ac95253e0cd4d298e104fbc63cb29c5c69edaed43b0c69d6
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.7"
+    version: "2.1.6"
   pattern_formatter:
     dependency: "direct main"
     description:
@@ -1362,14 +1346,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.4.0"
-  wasm:
-    dependency: "direct main"
-    description:
-      name: wasm
-      sha256: "8be0f7a57573552cd6e24bc8826f9e2d01e332abdb1f254834e40cc30cc0ee96"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.0+1"
   watcher:
     dependency: transitive
     description:
@@ -1398,10 +1374,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: c0e3a4f7be7dae51d8f152230b86627e3397c1ba8c3fa58e63d44a9f3edc9cef
+      sha256: dd8f9344bc305ae2923e3d11a2a911d9a4e2c7dd6fe0ed10626d63211a69676e
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.1"
+    version: "4.1.3"
   xdg_directories:
     dependency: transitive
     description:

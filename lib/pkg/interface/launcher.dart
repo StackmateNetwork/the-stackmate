@@ -5,5 +5,5 @@ abstract class ILauncher {
   Future<R<bool>> launchApp(String link);
   Future<R<bool>> openInAppStore(String link);
   Future<R<bool>> sentSupportEmail(String loggedInEmail, String name);
-  Future<R<bool>> openEmailInbox();
+  // Future<R<bool>> openEmailInbox();
 }
