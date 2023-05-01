@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'seed-import.dart';
 
@@ -35,7 +35,8 @@ mixin _$SeedImportState {
 abstract class $SeedImportStateCopyWith<$Res> {
   factory $SeedImportStateCopyWith(
           SeedImportState value, $Res Function(SeedImportState) then) =
-      _$SeedImportStateCopyWithImpl<$Res>;
+      _$SeedImportStateCopyWithImpl<$Res, SeedImportState>;
+  @useResult
   $Res call(
       {SeedImportStep currentStep,
       String seed,
@@ -49,64 +50,66 @@ abstract class $SeedImportStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SeedImportStateCopyWithImpl<$Res>
+class _$SeedImportStateCopyWithImpl<$Res, $Val extends SeedImportState>
     implements $SeedImportStateCopyWith<$Res> {
   _$SeedImportStateCopyWithImpl(this._value, this._then);
 
-  final SeedImportState _value;
   // ignore: unused_field
-  final $Res Function(SeedImportState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentStep = freezed,
-    Object? seed = freezed,
-    Object? seedError = freezed,
-    Object? passPhrase = freezed,
-    Object? accountNumber = freezed,
-    Object? errPassPhrase = freezed,
-    Object? seedReady = freezed,
+    Object? currentStep = null,
+    Object? seed = null,
+    Object? seedError = null,
+    Object? passPhrase = null,
+    Object? accountNumber = null,
+    Object? errPassPhrase = null,
+    Object? seedReady = null,
     Object? masterXpriv = freezed,
     Object? wallet = freezed,
   }) {
     return _then(_value.copyWith(
-      currentStep: currentStep == freezed
+      currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as SeedImportStep,
-      seed: seed == freezed
+      seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
-      seedError: seedError == freezed
+      seedError: null == seedError
           ? _value.seedError
           : seedError // ignore: cast_nullable_to_non_nullable
               as String,
-      passPhrase: passPhrase == freezed
+      passPhrase: null == passPhrase
           ? _value.passPhrase
           : passPhrase // ignore: cast_nullable_to_non_nullable
               as String,
-      accountNumber: accountNumber == freezed
+      accountNumber: null == accountNumber
           ? _value.accountNumber
           : accountNumber // ignore: cast_nullable_to_non_nullable
               as int,
-      errPassPhrase: errPassPhrase == freezed
+      errPassPhrase: null == errPassPhrase
           ? _value.errPassPhrase
           : errPassPhrase // ignore: cast_nullable_to_non_nullable
               as String,
-      seedReady: seedReady == freezed
+      seedReady: null == seedReady
           ? _value.seedReady
           : seedReady // ignore: cast_nullable_to_non_nullable
               as bool,
-      masterXpriv: masterXpriv == freezed
+      masterXpriv: freezed == masterXpriv
           ? _value.masterXpriv
           : masterXpriv // ignore: cast_nullable_to_non_nullable
               as String?,
-      wallet: wallet == freezed
+      wallet: freezed == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as DerivedKeys?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -117,6 +120,7 @@ abstract class _$$_SeedImportStateCopyWith<$Res>
           _$_SeedImportState value, $Res Function(_$_SeedImportState) then) =
       __$$_SeedImportStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {SeedImportStep currentStep,
       String seed,
@@ -131,61 +135,59 @@ abstract class _$$_SeedImportStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_SeedImportStateCopyWithImpl<$Res>
-    extends _$SeedImportStateCopyWithImpl<$Res>
+    extends _$SeedImportStateCopyWithImpl<$Res, _$_SeedImportState>
     implements _$$_SeedImportStateCopyWith<$Res> {
   __$$_SeedImportStateCopyWithImpl(
       _$_SeedImportState _value, $Res Function(_$_SeedImportState) _then)
-      : super(_value, (v) => _then(v as _$_SeedImportState));
+      : super(_value, _then);
 
-  @override
-  _$_SeedImportState get _value => super._value as _$_SeedImportState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentStep = freezed,
-    Object? seed = freezed,
-    Object? seedError = freezed,
-    Object? passPhrase = freezed,
-    Object? accountNumber = freezed,
-    Object? errPassPhrase = freezed,
-    Object? seedReady = freezed,
+    Object? currentStep = null,
+    Object? seed = null,
+    Object? seedError = null,
+    Object? passPhrase = null,
+    Object? accountNumber = null,
+    Object? errPassPhrase = null,
+    Object? seedReady = null,
     Object? masterXpriv = freezed,
     Object? wallet = freezed,
   }) {
     return _then(_$_SeedImportState(
-      currentStep: currentStep == freezed
+      currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as SeedImportStep,
-      seed: seed == freezed
+      seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
-      seedError: seedError == freezed
+      seedError: null == seedError
           ? _value.seedError
           : seedError // ignore: cast_nullable_to_non_nullable
               as String,
-      passPhrase: passPhrase == freezed
+      passPhrase: null == passPhrase
           ? _value.passPhrase
           : passPhrase // ignore: cast_nullable_to_non_nullable
               as String,
-      accountNumber: accountNumber == freezed
+      accountNumber: null == accountNumber
           ? _value.accountNumber
           : accountNumber // ignore: cast_nullable_to_non_nullable
               as int,
-      errPassPhrase: errPassPhrase == freezed
+      errPassPhrase: null == errPassPhrase
           ? _value.errPassPhrase
           : errPassPhrase // ignore: cast_nullable_to_non_nullable
               as String,
-      seedReady: seedReady == freezed
+      seedReady: null == seedReady
           ? _value.seedReady
           : seedReady // ignore: cast_nullable_to_non_nullable
               as bool,
-      masterXpriv: masterXpriv == freezed
+      masterXpriv: freezed == masterXpriv
           ? _value.masterXpriv
           : masterXpriv // ignore: cast_nullable_to_non_nullable
               as String?,
-      wallet: wallet == freezed
+      wallet: freezed == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as DerivedKeys?,
@@ -244,37 +246,31 @@ class _$_SeedImportState extends _SeedImportState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SeedImportState &&
-            const DeepCollectionEquality()
-                .equals(other.currentStep, currentStep) &&
-            const DeepCollectionEquality().equals(other.seed, seed) &&
-            const DeepCollectionEquality().equals(other.seedError, seedError) &&
-            const DeepCollectionEquality()
-                .equals(other.passPhrase, passPhrase) &&
-            const DeepCollectionEquality()
-                .equals(other.accountNumber, accountNumber) &&
-            const DeepCollectionEquality()
-                .equals(other.errPassPhrase, errPassPhrase) &&
-            const DeepCollectionEquality().equals(other.seedReady, seedReady) &&
-            const DeepCollectionEquality()
-                .equals(other.masterXpriv, masterXpriv) &&
-            const DeepCollectionEquality().equals(other.wallet, wallet));
+            (identical(other.currentStep, currentStep) ||
+                other.currentStep == currentStep) &&
+            (identical(other.seed, seed) || other.seed == seed) &&
+            (identical(other.seedError, seedError) ||
+                other.seedError == seedError) &&
+            (identical(other.passPhrase, passPhrase) ||
+                other.passPhrase == passPhrase) &&
+            (identical(other.accountNumber, accountNumber) ||
+                other.accountNumber == accountNumber) &&
+            (identical(other.errPassPhrase, errPassPhrase) ||
+                other.errPassPhrase == errPassPhrase) &&
+            (identical(other.seedReady, seedReady) ||
+                other.seedReady == seedReady) &&
+            (identical(other.masterXpriv, masterXpriv) ||
+                other.masterXpriv == masterXpriv) &&
+            (identical(other.wallet, wallet) || other.wallet == wallet));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(currentStep),
-      const DeepCollectionEquality().hash(seed),
-      const DeepCollectionEquality().hash(seedError),
-      const DeepCollectionEquality().hash(passPhrase),
-      const DeepCollectionEquality().hash(accountNumber),
-      const DeepCollectionEquality().hash(errPassPhrase),
-      const DeepCollectionEquality().hash(seedReady),
-      const DeepCollectionEquality().hash(masterXpriv),
-      const DeepCollectionEquality().hash(wallet));
+  int get hashCode => Object.hash(runtimeType, currentStep, seed, seedError,
+      passPhrase, accountNumber, errPassPhrase, seedReady, masterXpriv, wallet);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SeedImportStateCopyWith<_$_SeedImportState> get copyWith =>
       __$$_SeedImportStateCopyWithImpl<_$_SeedImportState>(this, _$identity);
 }
@@ -293,23 +289,23 @@ abstract class _SeedImportState extends SeedImportState {
   const _SeedImportState._() : super._();
 
   @override
-  SeedImportStep get currentStep => throw _privateConstructorUsedError;
+  SeedImportStep get currentStep;
   @override
-  String get seed => throw _privateConstructorUsedError;
+  String get seed;
   @override
-  String get seedError => throw _privateConstructorUsedError;
+  String get seedError;
   @override
-  String get passPhrase => throw _privateConstructorUsedError;
+  String get passPhrase;
   @override
-  int get accountNumber => throw _privateConstructorUsedError;
+  int get accountNumber;
   @override
-  String get errPassPhrase => throw _privateConstructorUsedError;
+  String get errPassPhrase;
   @override
-  bool get seedReady => throw _privateConstructorUsedError;
+  bool get seedReady;
   @override
-  String? get masterXpriv => throw _privateConstructorUsedError;
+  String? get masterXpriv;
   @override
-  DerivedKeys? get wallet => throw _privateConstructorUsedError;
+  DerivedKeys? get wallet;
   @override
   @JsonKey(ignore: true)
   _$$_SeedImportStateCopyWith<_$_SeedImportState> get copyWith =>

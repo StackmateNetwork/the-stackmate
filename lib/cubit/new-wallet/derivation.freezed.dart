@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'derivation.dart';
 
@@ -37,7 +37,8 @@ mixin _$DeriveWalletState {
 abstract class $DeriveWalletStateCopyWith<$Res> {
   factory $DeriveWalletStateCopyWith(
           DeriveWalletState value, $Res Function(DeriveWalletState) then) =
-      _$DeriveWalletStateCopyWithImpl<$Res>;
+      _$DeriveWalletStateCopyWithImpl<$Res, DeriveWalletState>;
+  @useResult
   $Res call(
       {DeriveWalletStep currentStep,
       DerivationPurpose purpose,
@@ -53,74 +54,76 @@ abstract class $DeriveWalletStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DeriveWalletStateCopyWithImpl<$Res>
+class _$DeriveWalletStateCopyWithImpl<$Res, $Val extends DeriveWalletState>
     implements $DeriveWalletStateCopyWith<$Res> {
   _$DeriveWalletStateCopyWithImpl(this._value, this._then);
 
-  final DeriveWalletState _value;
   // ignore: unused_field
-  final $Res Function(DeriveWalletState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentStep = freezed,
-    Object? purpose = freezed,
-    Object? index = freezed,
-    Object? rawPath = freezed,
-    Object? passPhrase = freezed,
-    Object? errPassphrase = freezed,
-    Object? label = freezed,
-    Object? walletLabelError = freezed,
-    Object? savingWallet = freezed,
-    Object? errSavingWallet = freezed,
-    Object? newWalletSaved = freezed,
+    Object? currentStep = null,
+    Object? purpose = null,
+    Object? index = null,
+    Object? rawPath = null,
+    Object? passPhrase = null,
+    Object? errPassphrase = null,
+    Object? label = null,
+    Object? walletLabelError = null,
+    Object? savingWallet = null,
+    Object? errSavingWallet = null,
+    Object? newWalletSaved = null,
   }) {
     return _then(_value.copyWith(
-      currentStep: currentStep == freezed
+      currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as DeriveWalletStep,
-      purpose: purpose == freezed
+      purpose: null == purpose
           ? _value.purpose
           : purpose // ignore: cast_nullable_to_non_nullable
               as DerivationPurpose,
-      index: index == freezed
+      index: null == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
-      rawPath: rawPath == freezed
+      rawPath: null == rawPath
           ? _value.rawPath
           : rawPath // ignore: cast_nullable_to_non_nullable
               as String,
-      passPhrase: passPhrase == freezed
+      passPhrase: null == passPhrase
           ? _value.passPhrase
           : passPhrase // ignore: cast_nullable_to_non_nullable
               as String,
-      errPassphrase: errPassphrase == freezed
+      errPassphrase: null == errPassphrase
           ? _value.errPassphrase
           : errPassphrase // ignore: cast_nullable_to_non_nullable
               as String,
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      walletLabelError: walletLabelError == freezed
+      walletLabelError: null == walletLabelError
           ? _value.walletLabelError
           : walletLabelError // ignore: cast_nullable_to_non_nullable
               as String,
-      savingWallet: savingWallet == freezed
+      savingWallet: null == savingWallet
           ? _value.savingWallet
           : savingWallet // ignore: cast_nullable_to_non_nullable
               as bool,
-      errSavingWallet: errSavingWallet == freezed
+      errSavingWallet: null == errSavingWallet
           ? _value.errSavingWallet
           : errSavingWallet // ignore: cast_nullable_to_non_nullable
               as String,
-      newWalletSaved: newWalletSaved == freezed
+      newWalletSaved: null == newWalletSaved
           ? _value.newWalletSaved
           : newWalletSaved // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -131,6 +134,7 @@ abstract class _$$_DeriveWalletStateCopyWith<$Res>
           $Res Function(_$_DeriveWalletState) then) =
       __$$_DeriveWalletStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {DeriveWalletStep currentStep,
       DerivationPurpose purpose,
@@ -147,71 +151,69 @@ abstract class _$$_DeriveWalletStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_DeriveWalletStateCopyWithImpl<$Res>
-    extends _$DeriveWalletStateCopyWithImpl<$Res>
+    extends _$DeriveWalletStateCopyWithImpl<$Res, _$_DeriveWalletState>
     implements _$$_DeriveWalletStateCopyWith<$Res> {
   __$$_DeriveWalletStateCopyWithImpl(
       _$_DeriveWalletState _value, $Res Function(_$_DeriveWalletState) _then)
-      : super(_value, (v) => _then(v as _$_DeriveWalletState));
+      : super(_value, _then);
 
-  @override
-  _$_DeriveWalletState get _value => super._value as _$_DeriveWalletState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentStep = freezed,
-    Object? purpose = freezed,
-    Object? index = freezed,
-    Object? rawPath = freezed,
-    Object? passPhrase = freezed,
-    Object? errPassphrase = freezed,
-    Object? label = freezed,
-    Object? walletLabelError = freezed,
-    Object? savingWallet = freezed,
-    Object? errSavingWallet = freezed,
-    Object? newWalletSaved = freezed,
+    Object? currentStep = null,
+    Object? purpose = null,
+    Object? index = null,
+    Object? rawPath = null,
+    Object? passPhrase = null,
+    Object? errPassphrase = null,
+    Object? label = null,
+    Object? walletLabelError = null,
+    Object? savingWallet = null,
+    Object? errSavingWallet = null,
+    Object? newWalletSaved = null,
   }) {
     return _then(_$_DeriveWalletState(
-      currentStep: currentStep == freezed
+      currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as DeriveWalletStep,
-      purpose: purpose == freezed
+      purpose: null == purpose
           ? _value.purpose
           : purpose // ignore: cast_nullable_to_non_nullable
               as DerivationPurpose,
-      index: index == freezed
+      index: null == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
-      rawPath: rawPath == freezed
+      rawPath: null == rawPath
           ? _value.rawPath
           : rawPath // ignore: cast_nullable_to_non_nullable
               as String,
-      passPhrase: passPhrase == freezed
+      passPhrase: null == passPhrase
           ? _value.passPhrase
           : passPhrase // ignore: cast_nullable_to_non_nullable
               as String,
-      errPassphrase: errPassphrase == freezed
+      errPassphrase: null == errPassphrase
           ? _value.errPassphrase
           : errPassphrase // ignore: cast_nullable_to_non_nullable
               as String,
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      walletLabelError: walletLabelError == freezed
+      walletLabelError: null == walletLabelError
           ? _value.walletLabelError
           : walletLabelError // ignore: cast_nullable_to_non_nullable
               as String,
-      savingWallet: savingWallet == freezed
+      savingWallet: null == savingWallet
           ? _value.savingWallet
           : savingWallet // ignore: cast_nullable_to_non_nullable
               as bool,
-      errSavingWallet: errSavingWallet == freezed
+      errSavingWallet: null == errSavingWallet
           ? _value.errSavingWallet
           : errSavingWallet // ignore: cast_nullable_to_non_nullable
               as String,
-      newWalletSaved: newWalletSaved == freezed
+      newWalletSaved: null == newWalletSaved
           ? _value.newWalletSaved
           : newWalletSaved // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -299,43 +301,44 @@ class _$_DeriveWalletState
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DeriveWalletState &&
-            const DeepCollectionEquality()
-                .equals(other.currentStep, currentStep) &&
-            const DeepCollectionEquality().equals(other.purpose, purpose) &&
-            const DeepCollectionEquality().equals(other.index, index) &&
-            const DeepCollectionEquality().equals(other.rawPath, rawPath) &&
-            const DeepCollectionEquality()
-                .equals(other.passPhrase, passPhrase) &&
-            const DeepCollectionEquality()
-                .equals(other.errPassphrase, errPassphrase) &&
-            const DeepCollectionEquality().equals(other.label, label) &&
-            const DeepCollectionEquality()
-                .equals(other.walletLabelError, walletLabelError) &&
-            const DeepCollectionEquality()
-                .equals(other.savingWallet, savingWallet) &&
-            const DeepCollectionEquality()
-                .equals(other.errSavingWallet, errSavingWallet) &&
-            const DeepCollectionEquality()
-                .equals(other.newWalletSaved, newWalletSaved));
+            (identical(other.currentStep, currentStep) ||
+                other.currentStep == currentStep) &&
+            (identical(other.purpose, purpose) || other.purpose == purpose) &&
+            (identical(other.index, index) || other.index == index) &&
+            (identical(other.rawPath, rawPath) || other.rawPath == rawPath) &&
+            (identical(other.passPhrase, passPhrase) ||
+                other.passPhrase == passPhrase) &&
+            (identical(other.errPassphrase, errPassphrase) ||
+                other.errPassphrase == errPassphrase) &&
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.walletLabelError, walletLabelError) ||
+                other.walletLabelError == walletLabelError) &&
+            (identical(other.savingWallet, savingWallet) ||
+                other.savingWallet == savingWallet) &&
+            (identical(other.errSavingWallet, errSavingWallet) ||
+                other.errSavingWallet == errSavingWallet) &&
+            (identical(other.newWalletSaved, newWalletSaved) ||
+                other.newWalletSaved == newWalletSaved));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(currentStep),
-      const DeepCollectionEquality().hash(purpose),
-      const DeepCollectionEquality().hash(index),
-      const DeepCollectionEquality().hash(rawPath),
-      const DeepCollectionEquality().hash(passPhrase),
-      const DeepCollectionEquality().hash(errPassphrase),
-      const DeepCollectionEquality().hash(label),
-      const DeepCollectionEquality().hash(walletLabelError),
-      const DeepCollectionEquality().hash(savingWallet),
-      const DeepCollectionEquality().hash(errSavingWallet),
-      const DeepCollectionEquality().hash(newWalletSaved));
+      currentStep,
+      purpose,
+      index,
+      rawPath,
+      passPhrase,
+      errPassphrase,
+      label,
+      walletLabelError,
+      savingWallet,
+      errSavingWallet,
+      newWalletSaved);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DeriveWalletStateCopyWith<_$_DeriveWalletState> get copyWith =>
       __$$_DeriveWalletStateCopyWithImpl<_$_DeriveWalletState>(
           this, _$identity);
@@ -356,27 +359,27 @@ abstract class _DeriveWalletState implements DeriveWalletState {
       final bool newWalletSaved}) = _$_DeriveWalletState;
 
   @override
-  DeriveWalletStep get currentStep => throw _privateConstructorUsedError;
+  DeriveWalletStep get currentStep;
   @override
-  DerivationPurpose get purpose => throw _privateConstructorUsedError;
+  DerivationPurpose get purpose;
   @override
-  int get index => throw _privateConstructorUsedError;
+  int get index;
   @override
-  String get rawPath => throw _privateConstructorUsedError;
+  String get rawPath;
   @override
-  String get passPhrase => throw _privateConstructorUsedError;
+  String get passPhrase;
   @override
-  String get errPassphrase => throw _privateConstructorUsedError;
+  String get errPassphrase;
   @override
-  String get label => throw _privateConstructorUsedError;
+  String get label;
   @override
-  String get walletLabelError => throw _privateConstructorUsedError;
+  String get walletLabelError;
   @override
-  bool get savingWallet => throw _privateConstructorUsedError;
+  bool get savingWallet;
   @override
-  String get errSavingWallet => throw _privateConstructorUsedError;
+  String get errSavingWallet;
   @override
-  bool get newWalletSaved => throw _privateConstructorUsedError;
+  bool get newWalletSaved;
   @override
   @JsonKey(ignore: true)
   _$$_DeriveWalletStateCopyWith<_$_DeriveWalletState> get copyWith =>

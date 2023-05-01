@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'node.dart';
 
@@ -30,44 +30,47 @@ mixin _$NodeAddressState {
 abstract class $NodeAddressStateCopyWith<$Res> {
   factory $NodeAddressStateCopyWith(
           NodeAddressState value, $Res Function(NodeAddressState) then) =
-      _$NodeAddressStateCopyWithImpl<$Res>;
+      _$NodeAddressStateCopyWithImpl<$Res, NodeAddressState>;
+  @useResult
   $Res call({String address, String errNodeState, String name, bool isEditing});
 }
 
 /// @nodoc
-class _$NodeAddressStateCopyWithImpl<$Res>
+class _$NodeAddressStateCopyWithImpl<$Res, $Val extends NodeAddressState>
     implements $NodeAddressStateCopyWith<$Res> {
   _$NodeAddressStateCopyWithImpl(this._value, this._then);
 
-  final NodeAddressState _value;
   // ignore: unused_field
-  final $Res Function(NodeAddressState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = freezed,
-    Object? errNodeState = freezed,
-    Object? name = freezed,
-    Object? isEditing = freezed,
+    Object? address = null,
+    Object? errNodeState = null,
+    Object? name = null,
+    Object? isEditing = null,
   }) {
     return _then(_value.copyWith(
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      errNodeState: errNodeState == freezed
+      errNodeState: null == errNodeState
           ? _value.errNodeState
           : errNodeState // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      isEditing: isEditing == freezed
+      isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -78,41 +81,40 @@ abstract class _$$_NodeAddressStateCopyWith<$Res>
           _$_NodeAddressState value, $Res Function(_$_NodeAddressState) then) =
       __$$_NodeAddressStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String address, String errNodeState, String name, bool isEditing});
 }
 
 /// @nodoc
 class __$$_NodeAddressStateCopyWithImpl<$Res>
-    extends _$NodeAddressStateCopyWithImpl<$Res>
+    extends _$NodeAddressStateCopyWithImpl<$Res, _$_NodeAddressState>
     implements _$$_NodeAddressStateCopyWith<$Res> {
   __$$_NodeAddressStateCopyWithImpl(
       _$_NodeAddressState _value, $Res Function(_$_NodeAddressState) _then)
-      : super(_value, (v) => _then(v as _$_NodeAddressState));
+      : super(_value, _then);
 
-  @override
-  _$_NodeAddressState get _value => super._value as _$_NodeAddressState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = freezed,
-    Object? errNodeState = freezed,
-    Object? name = freezed,
-    Object? isEditing = freezed,
+    Object? address = null,
+    Object? errNodeState = null,
+    Object? name = null,
+    Object? isEditing = null,
   }) {
     return _then(_$_NodeAddressState(
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      errNodeState: errNodeState == freezed
+      errNodeState: null == errNodeState
           ? _value.errNodeState
           : errNodeState // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      isEditing: isEditing == freezed
+      isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -153,23 +155,21 @@ class _$_NodeAddressState extends _NodeAddressState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NodeAddressState &&
-            const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality()
-                .equals(other.errNodeState, errNodeState) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.isEditing, isEditing));
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.errNodeState, errNodeState) ||
+                other.errNodeState == errNodeState) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.isEditing, isEditing) ||
+                other.isEditing == isEditing));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(address),
-      const DeepCollectionEquality().hash(errNodeState),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(isEditing));
+  int get hashCode =>
+      Object.hash(runtimeType, address, errNodeState, name, isEditing);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NodeAddressStateCopyWith<_$_NodeAddressState> get copyWith =>
       __$$_NodeAddressStateCopyWithImpl<_$_NodeAddressState>(this, _$identity);
 }
@@ -183,13 +183,13 @@ abstract class _NodeAddressState extends NodeAddressState {
   const _NodeAddressState._() : super._();
 
   @override
-  String get address => throw _privateConstructorUsedError;
+  String get address;
   @override
-  String get errNodeState => throw _privateConstructorUsedError;
+  String get errNodeState;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  bool get isEditing => throw _privateConstructorUsedError;
+  bool get isEditing;
   @override
   @JsonKey(ignore: true)
   _$$_NodeAddressStateCopyWith<_$_NodeAddressState> get copyWith =>

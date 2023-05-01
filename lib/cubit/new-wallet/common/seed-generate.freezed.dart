@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'seed-generate.dart';
 
@@ -43,7 +43,8 @@ mixin _$SeedGenerateState {
 abstract class $SeedGenerateStateCopyWith<$Res> {
   factory $SeedGenerateStateCopyWith(
           SeedGenerateState value, $Res Function(SeedGenerateState) then) =
-      _$SeedGenerateStateCopyWithImpl<$Res>;
+      _$SeedGenerateStateCopyWithImpl<$Res, SeedGenerateState>;
+  @useResult
   $Res call(
       {dynamic currentStep,
       List<String>? seed,
@@ -64,14 +65,16 @@ abstract class $SeedGenerateStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SeedGenerateStateCopyWithImpl<$Res>
+class _$SeedGenerateStateCopyWithImpl<$Res, $Val extends SeedGenerateState>
     implements $SeedGenerateStateCopyWith<$Res> {
   _$SeedGenerateStateCopyWithImpl(this._value, this._then);
 
-  final SeedGenerateState _value;
   // ignore: unused_field
-  final $Res Function(SeedGenerateState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? currentStep = freezed,
@@ -80,83 +83,83 @@ class _$SeedGenerateStateCopyWithImpl<$Res>
     Object? xpriv = freezed,
     Object? fingerPrint = freezed,
     Object? wallet = freezed,
-    Object? generatingSeed = freezed,
-    Object? seedLength = freezed,
-    Object? seedError = freezed,
-    Object? quizSeedCompleted = freezed,
-    Object? quizSeedAnswer = freezed,
-    Object? quizSeedAnswerIdx = freezed,
-    Object? quizSeedList = freezed,
-    Object? quizSeedCompletedAnswers = freezed,
-    Object? quizSeedError = freezed,
-    Object? backupLater = freezed,
+    Object? generatingSeed = null,
+    Object? seedLength = null,
+    Object? seedError = null,
+    Object? quizSeedCompleted = null,
+    Object? quizSeedAnswer = null,
+    Object? quizSeedAnswerIdx = null,
+    Object? quizSeedList = null,
+    Object? quizSeedCompletedAnswers = null,
+    Object? quizSeedError = null,
+    Object? backupLater = null,
   }) {
     return _then(_value.copyWith(
-      currentStep: currentStep == freezed
+      currentStep: freezed == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      seed: seed == freezed
+      seed: freezed == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      masterXpriv: masterXpriv == freezed
+      masterXpriv: freezed == masterXpriv
           ? _value.masterXpriv
           : masterXpriv // ignore: cast_nullable_to_non_nullable
               as String?,
-      xpriv: xpriv == freezed
+      xpriv: freezed == xpriv
           ? _value.xpriv
           : xpriv // ignore: cast_nullable_to_non_nullable
               as String?,
-      fingerPrint: fingerPrint == freezed
+      fingerPrint: freezed == fingerPrint
           ? _value.fingerPrint
           : fingerPrint // ignore: cast_nullable_to_non_nullable
               as String?,
-      wallet: wallet == freezed
+      wallet: freezed == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as DerivedKeys?,
-      generatingSeed: generatingSeed == freezed
+      generatingSeed: null == generatingSeed
           ? _value.generatingSeed
           : generatingSeed // ignore: cast_nullable_to_non_nullable
               as bool,
-      seedLength: seedLength == freezed
+      seedLength: null == seedLength
           ? _value.seedLength
           : seedLength // ignore: cast_nullable_to_non_nullable
               as int,
-      seedError: seedError == freezed
+      seedError: null == seedError
           ? _value.seedError
           : seedError // ignore: cast_nullable_to_non_nullable
               as String,
-      quizSeedCompleted: quizSeedCompleted == freezed
+      quizSeedCompleted: null == quizSeedCompleted
           ? _value.quizSeedCompleted
           : quizSeedCompleted // ignore: cast_nullable_to_non_nullable
               as int,
-      quizSeedAnswer: quizSeedAnswer == freezed
+      quizSeedAnswer: null == quizSeedAnswer
           ? _value.quizSeedAnswer
           : quizSeedAnswer // ignore: cast_nullable_to_non_nullable
               as String,
-      quizSeedAnswerIdx: quizSeedAnswerIdx == freezed
+      quizSeedAnswerIdx: null == quizSeedAnswerIdx
           ? _value.quizSeedAnswerIdx
           : quizSeedAnswerIdx // ignore: cast_nullable_to_non_nullable
               as int,
-      quizSeedList: quizSeedList == freezed
+      quizSeedList: null == quizSeedList
           ? _value.quizSeedList
           : quizSeedList // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      quizSeedCompletedAnswers: quizSeedCompletedAnswers == freezed
+      quizSeedCompletedAnswers: null == quizSeedCompletedAnswers
           ? _value.quizSeedCompletedAnswers
           : quizSeedCompletedAnswers // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      quizSeedError: quizSeedError == freezed
+      quizSeedError: null == quizSeedError
           ? _value.quizSeedError
           : quizSeedError // ignore: cast_nullable_to_non_nullable
               as String,
-      backupLater: backupLater == freezed
+      backupLater: null == backupLater
           ? _value.backupLater
           : backupLater // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -167,6 +170,7 @@ abstract class _$$_SeedGenerateStateCopyWith<$Res>
           $Res Function(_$_SeedGenerateState) then) =
       __$$_SeedGenerateStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {dynamic currentStep,
       List<String>? seed,
@@ -188,15 +192,13 @@ abstract class _$$_SeedGenerateStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_SeedGenerateStateCopyWithImpl<$Res>
-    extends _$SeedGenerateStateCopyWithImpl<$Res>
+    extends _$SeedGenerateStateCopyWithImpl<$Res, _$_SeedGenerateState>
     implements _$$_SeedGenerateStateCopyWith<$Res> {
   __$$_SeedGenerateStateCopyWithImpl(
       _$_SeedGenerateState _value, $Res Function(_$_SeedGenerateState) _then)
-      : super(_value, (v) => _then(v as _$_SeedGenerateState));
+      : super(_value, _then);
 
-  @override
-  _$_SeedGenerateState get _value => super._value as _$_SeedGenerateState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? currentStep = freezed,
@@ -205,76 +207,76 @@ class __$$_SeedGenerateStateCopyWithImpl<$Res>
     Object? xpriv = freezed,
     Object? fingerPrint = freezed,
     Object? wallet = freezed,
-    Object? generatingSeed = freezed,
-    Object? seedLength = freezed,
-    Object? seedError = freezed,
-    Object? quizSeedCompleted = freezed,
-    Object? quizSeedAnswer = freezed,
-    Object? quizSeedAnswerIdx = freezed,
-    Object? quizSeedList = freezed,
-    Object? quizSeedCompletedAnswers = freezed,
-    Object? quizSeedError = freezed,
-    Object? backupLater = freezed,
+    Object? generatingSeed = null,
+    Object? seedLength = null,
+    Object? seedError = null,
+    Object? quizSeedCompleted = null,
+    Object? quizSeedAnswer = null,
+    Object? quizSeedAnswerIdx = null,
+    Object? quizSeedList = null,
+    Object? quizSeedCompletedAnswers = null,
+    Object? quizSeedError = null,
+    Object? backupLater = null,
   }) {
     return _then(_$_SeedGenerateState(
-      currentStep: currentStep == freezed ? _value.currentStep : currentStep,
-      seed: seed == freezed
+      currentStep: freezed == currentStep ? _value.currentStep! : currentStep,
+      seed: freezed == seed
           ? _value._seed
           : seed // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      masterXpriv: masterXpriv == freezed
+      masterXpriv: freezed == masterXpriv
           ? _value.masterXpriv
           : masterXpriv // ignore: cast_nullable_to_non_nullable
               as String?,
-      xpriv: xpriv == freezed
+      xpriv: freezed == xpriv
           ? _value.xpriv
           : xpriv // ignore: cast_nullable_to_non_nullable
               as String?,
-      fingerPrint: fingerPrint == freezed
+      fingerPrint: freezed == fingerPrint
           ? _value.fingerPrint
           : fingerPrint // ignore: cast_nullable_to_non_nullable
               as String?,
-      wallet: wallet == freezed
+      wallet: freezed == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as DerivedKeys?,
-      generatingSeed: generatingSeed == freezed
+      generatingSeed: null == generatingSeed
           ? _value.generatingSeed
           : generatingSeed // ignore: cast_nullable_to_non_nullable
               as bool,
-      seedLength: seedLength == freezed
+      seedLength: null == seedLength
           ? _value.seedLength
           : seedLength // ignore: cast_nullable_to_non_nullable
               as int,
-      seedError: seedError == freezed
+      seedError: null == seedError
           ? _value.seedError
           : seedError // ignore: cast_nullable_to_non_nullable
               as String,
-      quizSeedCompleted: quizSeedCompleted == freezed
+      quizSeedCompleted: null == quizSeedCompleted
           ? _value.quizSeedCompleted
           : quizSeedCompleted // ignore: cast_nullable_to_non_nullable
               as int,
-      quizSeedAnswer: quizSeedAnswer == freezed
+      quizSeedAnswer: null == quizSeedAnswer
           ? _value.quizSeedAnswer
           : quizSeedAnswer // ignore: cast_nullable_to_non_nullable
               as String,
-      quizSeedAnswerIdx: quizSeedAnswerIdx == freezed
+      quizSeedAnswerIdx: null == quizSeedAnswerIdx
           ? _value.quizSeedAnswerIdx
           : quizSeedAnswerIdx // ignore: cast_nullable_to_non_nullable
               as int,
-      quizSeedList: quizSeedList == freezed
+      quizSeedList: null == quizSeedList
           ? _value._quizSeedList
           : quizSeedList // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      quizSeedCompletedAnswers: quizSeedCompletedAnswers == freezed
+      quizSeedCompletedAnswers: null == quizSeedCompletedAnswers
           ? _value._quizSeedCompletedAnswers
           : quizSeedCompletedAnswers // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      quizSeedError: quizSeedError == freezed
+      quizSeedError: null == quizSeedError
           ? _value.quizSeedError
           : quizSeedError // ignore: cast_nullable_to_non_nullable
               as String,
-      backupLater: backupLater == freezed
+      backupLater: null == backupLater
           ? _value.backupLater
           : backupLater // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -315,6 +317,7 @@ class _$_SeedGenerateState extends _SeedGenerateState {
   List<String>? get seed {
     final value = _seed;
     if (value == null) return null;
+    if (_seed is EqualUnmodifiableListView) return _seed;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -349,6 +352,7 @@ class _$_SeedGenerateState extends _SeedGenerateState {
   @override
   @JsonKey()
   List<String> get quizSeedList {
+    if (_quizSeedList is EqualUnmodifiableListView) return _quizSeedList;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_quizSeedList);
   }
@@ -357,6 +361,8 @@ class _$_SeedGenerateState extends _SeedGenerateState {
   @override
   @JsonKey()
   List<String> get quizSeedCompletedAnswers {
+    if (_quizSeedCompletedAnswers is EqualUnmodifiableListView)
+      return _quizSeedCompletedAnswers;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_quizSeedCompletedAnswers);
   }
@@ -381,31 +387,32 @@ class _$_SeedGenerateState extends _SeedGenerateState {
             const DeepCollectionEquality()
                 .equals(other.currentStep, currentStep) &&
             const DeepCollectionEquality().equals(other._seed, _seed) &&
-            const DeepCollectionEquality()
-                .equals(other.masterXpriv, masterXpriv) &&
-            const DeepCollectionEquality().equals(other.xpriv, xpriv) &&
-            const DeepCollectionEquality()
-                .equals(other.fingerPrint, fingerPrint) &&
-            const DeepCollectionEquality().equals(other.wallet, wallet) &&
-            const DeepCollectionEquality()
-                .equals(other.generatingSeed, generatingSeed) &&
-            const DeepCollectionEquality()
-                .equals(other.seedLength, seedLength) &&
-            const DeepCollectionEquality().equals(other.seedError, seedError) &&
-            const DeepCollectionEquality()
-                .equals(other.quizSeedCompleted, quizSeedCompleted) &&
-            const DeepCollectionEquality()
-                .equals(other.quizSeedAnswer, quizSeedAnswer) &&
-            const DeepCollectionEquality()
-                .equals(other.quizSeedAnswerIdx, quizSeedAnswerIdx) &&
+            (identical(other.masterXpriv, masterXpriv) ||
+                other.masterXpriv == masterXpriv) &&
+            (identical(other.xpriv, xpriv) || other.xpriv == xpriv) &&
+            (identical(other.fingerPrint, fingerPrint) ||
+                other.fingerPrint == fingerPrint) &&
+            (identical(other.wallet, wallet) || other.wallet == wallet) &&
+            (identical(other.generatingSeed, generatingSeed) ||
+                other.generatingSeed == generatingSeed) &&
+            (identical(other.seedLength, seedLength) ||
+                other.seedLength == seedLength) &&
+            (identical(other.seedError, seedError) ||
+                other.seedError == seedError) &&
+            (identical(other.quizSeedCompleted, quizSeedCompleted) ||
+                other.quizSeedCompleted == quizSeedCompleted) &&
+            (identical(other.quizSeedAnswer, quizSeedAnswer) ||
+                other.quizSeedAnswer == quizSeedAnswer) &&
+            (identical(other.quizSeedAnswerIdx, quizSeedAnswerIdx) ||
+                other.quizSeedAnswerIdx == quizSeedAnswerIdx) &&
             const DeepCollectionEquality()
                 .equals(other._quizSeedList, _quizSeedList) &&
             const DeepCollectionEquality().equals(
                 other._quizSeedCompletedAnswers, _quizSeedCompletedAnswers) &&
-            const DeepCollectionEquality()
-                .equals(other.quizSeedError, quizSeedError) &&
-            const DeepCollectionEquality()
-                .equals(other.backupLater, backupLater));
+            (identical(other.quizSeedError, quizSeedError) ||
+                other.quizSeedError == quizSeedError) &&
+            (identical(other.backupLater, backupLater) ||
+                other.backupLater == backupLater));
   }
 
   @override
@@ -413,23 +420,24 @@ class _$_SeedGenerateState extends _SeedGenerateState {
       runtimeType,
       const DeepCollectionEquality().hash(currentStep),
       const DeepCollectionEquality().hash(_seed),
-      const DeepCollectionEquality().hash(masterXpriv),
-      const DeepCollectionEquality().hash(xpriv),
-      const DeepCollectionEquality().hash(fingerPrint),
-      const DeepCollectionEquality().hash(wallet),
-      const DeepCollectionEquality().hash(generatingSeed),
-      const DeepCollectionEquality().hash(seedLength),
-      const DeepCollectionEquality().hash(seedError),
-      const DeepCollectionEquality().hash(quizSeedCompleted),
-      const DeepCollectionEquality().hash(quizSeedAnswer),
-      const DeepCollectionEquality().hash(quizSeedAnswerIdx),
+      masterXpriv,
+      xpriv,
+      fingerPrint,
+      wallet,
+      generatingSeed,
+      seedLength,
+      seedError,
+      quizSeedCompleted,
+      quizSeedAnswer,
+      quizSeedAnswerIdx,
       const DeepCollectionEquality().hash(_quizSeedList),
       const DeepCollectionEquality().hash(_quizSeedCompletedAnswers),
-      const DeepCollectionEquality().hash(quizSeedError),
-      const DeepCollectionEquality().hash(backupLater));
+      quizSeedError,
+      backupLater);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SeedGenerateStateCopyWith<_$_SeedGenerateState> get copyWith =>
       __$$_SeedGenerateStateCopyWithImpl<_$_SeedGenerateState>(
           this, _$identity);
@@ -456,38 +464,37 @@ abstract class _SeedGenerateState extends SeedGenerateState {
   const _SeedGenerateState._() : super._();
 
   @override
-  dynamic get currentStep => throw _privateConstructorUsedError;
+  dynamic get currentStep;
   @override
-  List<String>? get seed => throw _privateConstructorUsedError;
+  List<String>? get seed;
   @override
-  String? get masterXpriv => throw _privateConstructorUsedError;
+  String? get masterXpriv;
   @override
-  String? get xpriv => throw _privateConstructorUsedError;
+  String? get xpriv;
   @override
-  String? get fingerPrint => throw _privateConstructorUsedError;
+  String? get fingerPrint;
   @override
-  DerivedKeys? get wallet => throw _privateConstructorUsedError;
+  DerivedKeys? get wallet;
   @override
-  bool get generatingSeed => throw _privateConstructorUsedError;
+  bool get generatingSeed;
   @override
-  int get seedLength => throw _privateConstructorUsedError;
+  int get seedLength;
   @override
-  String get seedError => throw _privateConstructorUsedError;
+  String get seedError;
   @override
-  int get quizSeedCompleted => throw _privateConstructorUsedError;
+  int get quizSeedCompleted;
   @override
-  String get quizSeedAnswer => throw _privateConstructorUsedError;
+  String get quizSeedAnswer;
   @override
-  int get quizSeedAnswerIdx => throw _privateConstructorUsedError;
+  int get quizSeedAnswerIdx;
   @override
-  List<String> get quizSeedList => throw _privateConstructorUsedError;
+  List<String> get quizSeedList;
   @override
-  List<String> get quizSeedCompletedAnswers =>
-      throw _privateConstructorUsedError;
+  List<String> get quizSeedCompletedAnswers;
   @override
-  String get quizSeedError => throw _privateConstructorUsedError;
+  String get quizSeedError;
   @override
-  bool get backupLater => throw _privateConstructorUsedError;
+  bool get backupLater;
   @override
   @JsonKey(ignore: true)
   _$$_SeedGenerateStateCopyWith<_$_SeedGenerateState> get copyWith =>

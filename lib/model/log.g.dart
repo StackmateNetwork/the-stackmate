@@ -19,7 +19,7 @@ _$_Log _$$_LogFromJson(Map<String, dynamic> json) => _$_Log(
     );
 
 Map<String, dynamic> _$$_LogToJson(_$_Log instance) => <String, dynamic>{
-      'type': _$LogTypeEnumMap[instance.type],
+      'type': _$LogTypeEnumMap[instance.type]!,
       'path': instance.path,
       'response': instance.response,
       'statusCode': instance.statusCode,

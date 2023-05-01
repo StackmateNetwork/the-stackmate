@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'tor.dart';
 
@@ -38,7 +38,8 @@ mixin _$TorState {
 /// @nodoc
 abstract class $TorStateCopyWith<$Res> {
   factory $TorStateCopyWith(TorState value, $Res Function(TorState) then) =
-      _$TorStateCopyWithImpl<$Res>;
+      _$TorStateCopyWithImpl<$Res, TorState>;
+  @useResult
   $Res call(
       {String workingDir,
       bool enforced,
@@ -56,83 +57,86 @@ abstract class $TorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TorStateCopyWithImpl<$Res> implements $TorStateCopyWith<$Res> {
+class _$TorStateCopyWithImpl<$Res, $Val extends TorState>
+    implements $TorStateCopyWith<$Res> {
   _$TorStateCopyWithImpl(this._value, this._then);
 
-  final TorState _value;
   // ignore: unused_field
-  final $Res Function(TorState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? workingDir = freezed,
-    Object? enforced = freezed,
-    Object? internal = freezed,
-    Object? socks5Port = freezed,
-    Object? httpProxy = freezed,
-    Object? bootstapProgress = freezed,
-    Object? isRunning = freezed,
-    Object? isEdittingExternal = freezed,
-    Object? isConnected = freezed,
-    Object? controlKey = freezed,
-    Object? errConnection = freezed,
-    Object? errStorage = freezed,
-    Object? errMessage = freezed,
+    Object? workingDir = null,
+    Object? enforced = null,
+    Object? internal = null,
+    Object? socks5Port = null,
+    Object? httpProxy = null,
+    Object? bootstapProgress = null,
+    Object? isRunning = null,
+    Object? isEdittingExternal = null,
+    Object? isConnected = null,
+    Object? controlKey = null,
+    Object? errConnection = null,
+    Object? errStorage = null,
+    Object? errMessage = null,
   }) {
     return _then(_value.copyWith(
-      workingDir: workingDir == freezed
+      workingDir: null == workingDir
           ? _value.workingDir
           : workingDir // ignore: cast_nullable_to_non_nullable
               as String,
-      enforced: enforced == freezed
+      enforced: null == enforced
           ? _value.enforced
           : enforced // ignore: cast_nullable_to_non_nullable
               as bool,
-      internal: internal == freezed
+      internal: null == internal
           ? _value.internal
           : internal // ignore: cast_nullable_to_non_nullable
               as bool,
-      socks5Port: socks5Port == freezed
+      socks5Port: null == socks5Port
           ? _value.socks5Port
           : socks5Port // ignore: cast_nullable_to_non_nullable
               as int,
-      httpProxy: httpProxy == freezed
+      httpProxy: null == httpProxy
           ? _value.httpProxy
           : httpProxy // ignore: cast_nullable_to_non_nullable
               as String,
-      bootstapProgress: bootstapProgress == freezed
+      bootstapProgress: null == bootstapProgress
           ? _value.bootstapProgress
           : bootstapProgress // ignore: cast_nullable_to_non_nullable
               as String,
-      isRunning: isRunning == freezed
+      isRunning: null == isRunning
           ? _value.isRunning
           : isRunning // ignore: cast_nullable_to_non_nullable
               as bool,
-      isEdittingExternal: isEdittingExternal == freezed
+      isEdittingExternal: null == isEdittingExternal
           ? _value.isEdittingExternal
           : isEdittingExternal // ignore: cast_nullable_to_non_nullable
               as bool,
-      isConnected: isConnected == freezed
+      isConnected: null == isConnected
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
               as bool,
-      controlKey: controlKey == freezed
+      controlKey: null == controlKey
           ? _value.controlKey
           : controlKey // ignore: cast_nullable_to_non_nullable
               as String,
-      errConnection: errConnection == freezed
+      errConnection: null == errConnection
           ? _value.errConnection
           : errConnection // ignore: cast_nullable_to_non_nullable
               as String,
-      errStorage: errStorage == freezed
+      errStorage: null == errStorage
           ? _value.errStorage
           : errStorage // ignore: cast_nullable_to_non_nullable
               as String,
-      errMessage: errMessage == freezed
+      errMessage: null == errMessage
           ? _value.errMessage
           : errMessage // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -142,6 +146,7 @@ abstract class _$$_TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
           _$_TorState value, $Res Function(_$_TorState) then) =
       __$$_TorStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String workingDir,
       bool enforced,
@@ -159,81 +164,80 @@ abstract class _$$_TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TorStateCopyWithImpl<$Res> extends _$TorStateCopyWithImpl<$Res>
+class __$$_TorStateCopyWithImpl<$Res>
+    extends _$TorStateCopyWithImpl<$Res, _$_TorState>
     implements _$$_TorStateCopyWith<$Res> {
   __$$_TorStateCopyWithImpl(
       _$_TorState _value, $Res Function(_$_TorState) _then)
-      : super(_value, (v) => _then(v as _$_TorState));
+      : super(_value, _then);
 
-  @override
-  _$_TorState get _value => super._value as _$_TorState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? workingDir = freezed,
-    Object? enforced = freezed,
-    Object? internal = freezed,
-    Object? socks5Port = freezed,
-    Object? httpProxy = freezed,
-    Object? bootstapProgress = freezed,
-    Object? isRunning = freezed,
-    Object? isEdittingExternal = freezed,
-    Object? isConnected = freezed,
-    Object? controlKey = freezed,
-    Object? errConnection = freezed,
-    Object? errStorage = freezed,
-    Object? errMessage = freezed,
+    Object? workingDir = null,
+    Object? enforced = null,
+    Object? internal = null,
+    Object? socks5Port = null,
+    Object? httpProxy = null,
+    Object? bootstapProgress = null,
+    Object? isRunning = null,
+    Object? isEdittingExternal = null,
+    Object? isConnected = null,
+    Object? controlKey = null,
+    Object? errConnection = null,
+    Object? errStorage = null,
+    Object? errMessage = null,
   }) {
     return _then(_$_TorState(
-      workingDir: workingDir == freezed
+      workingDir: null == workingDir
           ? _value.workingDir
           : workingDir // ignore: cast_nullable_to_non_nullable
               as String,
-      enforced: enforced == freezed
+      enforced: null == enforced
           ? _value.enforced
           : enforced // ignore: cast_nullable_to_non_nullable
               as bool,
-      internal: internal == freezed
+      internal: null == internal
           ? _value.internal
           : internal // ignore: cast_nullable_to_non_nullable
               as bool,
-      socks5Port: socks5Port == freezed
+      socks5Port: null == socks5Port
           ? _value.socks5Port
           : socks5Port // ignore: cast_nullable_to_non_nullable
               as int,
-      httpProxy: httpProxy == freezed
+      httpProxy: null == httpProxy
           ? _value.httpProxy
           : httpProxy // ignore: cast_nullable_to_non_nullable
               as String,
-      bootstapProgress: bootstapProgress == freezed
+      bootstapProgress: null == bootstapProgress
           ? _value.bootstapProgress
           : bootstapProgress // ignore: cast_nullable_to_non_nullable
               as String,
-      isRunning: isRunning == freezed
+      isRunning: null == isRunning
           ? _value.isRunning
           : isRunning // ignore: cast_nullable_to_non_nullable
               as bool,
-      isEdittingExternal: isEdittingExternal == freezed
+      isEdittingExternal: null == isEdittingExternal
           ? _value.isEdittingExternal
           : isEdittingExternal // ignore: cast_nullable_to_non_nullable
               as bool,
-      isConnected: isConnected == freezed
+      isConnected: null == isConnected
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
               as bool,
-      controlKey: controlKey == freezed
+      controlKey: null == controlKey
           ? _value.controlKey
           : controlKey // ignore: cast_nullable_to_non_nullable
               as String,
-      errConnection: errConnection == freezed
+      errConnection: null == errConnection
           ? _value.errConnection
           : errConnection // ignore: cast_nullable_to_non_nullable
               as String,
-      errStorage: errStorage == freezed
+      errStorage: null == errStorage
           ? _value.errStorage
           : errStorage // ignore: cast_nullable_to_non_nullable
               as String,
-      errMessage: errMessage == freezed
+      errMessage: null == errMessage
           ? _value.errMessage
           : errMessage // ignore: cast_nullable_to_non_nullable
               as String,
@@ -310,49 +314,54 @@ class _$_TorState extends _TorState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TorState &&
-            const DeepCollectionEquality()
-                .equals(other.workingDir, workingDir) &&
-            const DeepCollectionEquality().equals(other.enforced, enforced) &&
-            const DeepCollectionEquality().equals(other.internal, internal) &&
-            const DeepCollectionEquality()
-                .equals(other.socks5Port, socks5Port) &&
-            const DeepCollectionEquality().equals(other.httpProxy, httpProxy) &&
-            const DeepCollectionEquality()
-                .equals(other.bootstapProgress, bootstapProgress) &&
-            const DeepCollectionEquality().equals(other.isRunning, isRunning) &&
-            const DeepCollectionEquality()
-                .equals(other.isEdittingExternal, isEdittingExternal) &&
-            const DeepCollectionEquality()
-                .equals(other.isConnected, isConnected) &&
-            const DeepCollectionEquality()
-                .equals(other.controlKey, controlKey) &&
-            const DeepCollectionEquality()
-                .equals(other.errConnection, errConnection) &&
-            const DeepCollectionEquality()
-                .equals(other.errStorage, errStorage) &&
-            const DeepCollectionEquality()
-                .equals(other.errMessage, errMessage));
+            (identical(other.workingDir, workingDir) ||
+                other.workingDir == workingDir) &&
+            (identical(other.enforced, enforced) ||
+                other.enforced == enforced) &&
+            (identical(other.internal, internal) ||
+                other.internal == internal) &&
+            (identical(other.socks5Port, socks5Port) ||
+                other.socks5Port == socks5Port) &&
+            (identical(other.httpProxy, httpProxy) ||
+                other.httpProxy == httpProxy) &&
+            (identical(other.bootstapProgress, bootstapProgress) ||
+                other.bootstapProgress == bootstapProgress) &&
+            (identical(other.isRunning, isRunning) ||
+                other.isRunning == isRunning) &&
+            (identical(other.isEdittingExternal, isEdittingExternal) ||
+                other.isEdittingExternal == isEdittingExternal) &&
+            (identical(other.isConnected, isConnected) ||
+                other.isConnected == isConnected) &&
+            (identical(other.controlKey, controlKey) ||
+                other.controlKey == controlKey) &&
+            (identical(other.errConnection, errConnection) ||
+                other.errConnection == errConnection) &&
+            (identical(other.errStorage, errStorage) ||
+                other.errStorage == errStorage) &&
+            (identical(other.errMessage, errMessage) ||
+                other.errMessage == errMessage));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(workingDir),
-      const DeepCollectionEquality().hash(enforced),
-      const DeepCollectionEquality().hash(internal),
-      const DeepCollectionEquality().hash(socks5Port),
-      const DeepCollectionEquality().hash(httpProxy),
-      const DeepCollectionEquality().hash(bootstapProgress),
-      const DeepCollectionEquality().hash(isRunning),
-      const DeepCollectionEquality().hash(isEdittingExternal),
-      const DeepCollectionEquality().hash(isConnected),
-      const DeepCollectionEquality().hash(controlKey),
-      const DeepCollectionEquality().hash(errConnection),
-      const DeepCollectionEquality().hash(errStorage),
-      const DeepCollectionEquality().hash(errMessage));
+      workingDir,
+      enforced,
+      internal,
+      socks5Port,
+      httpProxy,
+      bootstapProgress,
+      isRunning,
+      isEdittingExternal,
+      isConnected,
+      controlKey,
+      errConnection,
+      errStorage,
+      errMessage);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TorStateCopyWith<_$_TorState> get copyWith =>
       __$$_TorStateCopyWithImpl<_$_TorState>(this, _$identity);
 }
@@ -375,31 +384,31 @@ abstract class _TorState extends TorState {
   const _TorState._() : super._();
 
   @override
-  String get workingDir => throw _privateConstructorUsedError;
+  String get workingDir;
   @override
-  bool get enforced => throw _privateConstructorUsedError;
+  bool get enforced;
   @override
-  bool get internal => throw _privateConstructorUsedError;
+  bool get internal;
   @override
-  int get socks5Port => throw _privateConstructorUsedError;
+  int get socks5Port;
   @override
-  String get httpProxy => throw _privateConstructorUsedError;
+  String get httpProxy;
   @override
-  String get bootstapProgress => throw _privateConstructorUsedError;
+  String get bootstapProgress;
   @override
-  bool get isRunning => throw _privateConstructorUsedError;
+  bool get isRunning;
   @override
-  bool get isEdittingExternal => throw _privateConstructorUsedError;
+  bool get isEdittingExternal;
   @override
-  bool get isConnected => throw _privateConstructorUsedError;
+  bool get isConnected;
   @override
-  String get controlKey => throw _privateConstructorUsedError;
+  String get controlKey;
   @override
-  String get errConnection => throw _privateConstructorUsedError;
+  String get errConnection;
   @override
-  String get errStorage => throw _privateConstructorUsedError;
+  String get errStorage;
   @override
-  String get errMessage => throw _privateConstructorUsedError;
+  String get errMessage;
   @override
   @JsonKey(ignore: true)
   _$$_TorStateCopyWith<_$_TorState> get copyWith =>

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'transaction.dart';
 
@@ -43,7 +43,8 @@ mixin _$Transaction {
 abstract class $TransactionCopyWith<$Res> {
   factory $TransactionCopyWith(
           Transaction value, $Res Function(Transaction) then) =
-      _$TransactionCopyWithImpl<$Res>;
+      _$TransactionCopyWithImpl<$Res, Transaction>;
+  @useResult
   $Res call(
       {@HiveField(0) int timestamp,
       @HiveField(1) int height,
@@ -54,48 +55,51 @@ abstract class $TransactionCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
+class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
+    implements $TransactionCopyWith<$Res> {
   _$TransactionCopyWithImpl(this._value, this._then);
 
-  final Transaction _value;
   // ignore: unused_field
-  final $Res Function(Transaction) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timestamp = freezed,
-    Object? height = freezed,
-    Object? txid = freezed,
-    Object? received = freezed,
-    Object? sent = freezed,
-    Object? fee = freezed,
+    Object? timestamp = null,
+    Object? height = null,
+    Object? txid = null,
+    Object? received = null,
+    Object? sent = null,
+    Object? fee = null,
   }) {
     return _then(_value.copyWith(
-      timestamp: timestamp == freezed
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as int,
-      height: height == freezed
+      height: null == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as int,
-      txid: txid == freezed
+      txid: null == txid
           ? _value.txid
           : txid // ignore: cast_nullable_to_non_nullable
               as String,
-      received: received == freezed
+      received: null == received
           ? _value.received
           : received // ignore: cast_nullable_to_non_nullable
               as int,
-      sent: sent == freezed
+      sent: null == sent
           ? _value.sent
           : sent // ignore: cast_nullable_to_non_nullable
               as int,
-      fee: fee == freezed
+      fee: null == fee
           ? _value.fee
           : fee // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -106,6 +110,7 @@ abstract class _$$_TransactionCopyWith<$Res>
           _$_Transaction value, $Res Function(_$_Transaction) then) =
       __$$_TransactionCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@HiveField(0) int timestamp,
       @HiveField(1) int height,
@@ -116,46 +121,45 @@ abstract class _$$_TransactionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TransactionCopyWithImpl<$Res> extends _$TransactionCopyWithImpl<$Res>
+class __$$_TransactionCopyWithImpl<$Res>
+    extends _$TransactionCopyWithImpl<$Res, _$_Transaction>
     implements _$$_TransactionCopyWith<$Res> {
   __$$_TransactionCopyWithImpl(
       _$_Transaction _value, $Res Function(_$_Transaction) _then)
-      : super(_value, (v) => _then(v as _$_Transaction));
+      : super(_value, _then);
 
-  @override
-  _$_Transaction get _value => super._value as _$_Transaction;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timestamp = freezed,
-    Object? height = freezed,
-    Object? txid = freezed,
-    Object? received = freezed,
-    Object? sent = freezed,
-    Object? fee = freezed,
+    Object? timestamp = null,
+    Object? height = null,
+    Object? txid = null,
+    Object? received = null,
+    Object? sent = null,
+    Object? fee = null,
   }) {
     return _then(_$_Transaction(
-      timestamp: timestamp == freezed
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as int,
-      height: height == freezed
+      height: null == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as int,
-      txid: txid == freezed
+      txid: null == txid
           ? _value.txid
           : txid // ignore: cast_nullable_to_non_nullable
               as String,
-      received: received == freezed
+      received: null == received
           ? _value.received
           : received // ignore: cast_nullable_to_non_nullable
               as int,
-      sent: sent == freezed
+      sent: null == sent
           ? _value.sent
           : sent // ignore: cast_nullable_to_non_nullable
               as int,
-      fee: fee == freezed
+      fee: null == fee
           ? _value.fee
           : fee // ignore: cast_nullable_to_non_nullable
               as int,
@@ -208,33 +212,32 @@ class _$_Transaction extends _Transaction {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Transaction &&
-            const DeepCollectionEquality().equals(other.timestamp, timestamp) &&
-            const DeepCollectionEquality().equals(other.height, height) &&
-            const DeepCollectionEquality().equals(other.txid, txid) &&
-            const DeepCollectionEquality().equals(other.received, received) &&
-            const DeepCollectionEquality().equals(other.sent, sent) &&
-            const DeepCollectionEquality().equals(other.fee, fee));
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp) &&
+            (identical(other.height, height) || other.height == height) &&
+            (identical(other.txid, txid) || other.txid == txid) &&
+            (identical(other.received, received) ||
+                other.received == received) &&
+            (identical(other.sent, sent) || other.sent == sent) &&
+            (identical(other.fee, fee) || other.fee == fee));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(timestamp),
-      const DeepCollectionEquality().hash(height),
-      const DeepCollectionEquality().hash(txid),
-      const DeepCollectionEquality().hash(received),
-      const DeepCollectionEquality().hash(sent),
-      const DeepCollectionEquality().hash(fee));
+  int get hashCode =>
+      Object.hash(runtimeType, timestamp, height, txid, received, sent, fee);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransactionCopyWith<_$_Transaction> get copyWith =>
       __$$_TransactionCopyWithImpl<_$_Transaction>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TransactionToJson(this);
+    return _$$_TransactionToJson(
+      this,
+    );
   }
 }
 
@@ -253,22 +256,22 @@ abstract class _Transaction extends Transaction {
 
   @override
   @HiveField(0)
-  int get timestamp => throw _privateConstructorUsedError;
+  int get timestamp;
   @override
   @HiveField(1)
-  int get height => throw _privateConstructorUsedError;
+  int get height;
   @override
   @HiveField(2)
-  String get txid => throw _privateConstructorUsedError;
+  String get txid;
   @override
   @HiveField(3)
-  int get received => throw _privateConstructorUsedError;
+  int get received;
   @override
   @HiveField(4)
-  int get sent => throw _privateConstructorUsedError;
+  int get sent;
   @override
   @HiveField(5)
-  int get fee => throw _privateConstructorUsedError;
+  int get fee;
   @override
   @JsonKey(ignore: true)
   _$$_TransactionCopyWith<_$_Transaction> get copyWith =>

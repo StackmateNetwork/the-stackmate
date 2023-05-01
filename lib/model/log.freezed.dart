@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'log.dart';
 
@@ -38,7 +38,8 @@ mixin _$Log {
 /// @nodoc
 abstract class $LogCopyWith<$Res> {
   factory $LogCopyWith(Log value, $Res Function(Log) then) =
-      _$LogCopyWithImpl<$Res>;
+      _$LogCopyWithImpl<$Res, Log>;
+  @useResult
   $Res call(
       {LogType type,
       String? path,
@@ -52,16 +53,18 @@ abstract class $LogCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LogCopyWithImpl<$Res> implements $LogCopyWith<$Res> {
+class _$LogCopyWithImpl<$Res, $Val extends Log> implements $LogCopyWith<$Res> {
   _$LogCopyWithImpl(this._value, this._then);
 
-  final Log _value;
   // ignore: unused_field
-  final $Res Function(Log) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = freezed,
+    Object? type = null,
     Object? path = freezed,
     Object? response = freezed,
     Object? statusCode = freezed,
@@ -72,43 +75,43 @@ class _$LogCopyWithImpl<$Res> implements $LogCopyWith<$Res> {
     Object? stackTrace = freezed,
   }) {
     return _then(_value.copyWith(
-      type: type == freezed
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as LogType,
-      path: path == freezed
+      path: freezed == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
               as String?,
-      response: response == freezed
+      response: freezed == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as String?,
-      statusCode: statusCode == freezed
+      statusCode: freezed == statusCode
           ? _value.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      bloc: bloc == freezed
+      bloc: freezed == bloc
           ? _value.bloc
           : bloc // ignore: cast_nullable_to_non_nullable
               as String?,
-      event: event == freezed
+      event: freezed == event
           ? _value.event
           : event // ignore: cast_nullable_to_non_nullable
               as String?,
-      exceptionType: exceptionType == freezed
+      exceptionType: freezed == exceptionType
           ? _value.exceptionType
           : exceptionType // ignore: cast_nullable_to_non_nullable
               as String?,
-      exceptionSource: exceptionSource == freezed
+      exceptionSource: freezed == exceptionSource
           ? _value.exceptionSource
           : exceptionSource // ignore: cast_nullable_to_non_nullable
               as String?,
-      stackTrace: stackTrace == freezed
+      stackTrace: freezed == stackTrace
           ? _value.stackTrace
           : stackTrace // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -117,6 +120,7 @@ abstract class _$$_LogCopyWith<$Res> implements $LogCopyWith<$Res> {
   factory _$$_LogCopyWith(_$_Log value, $Res Function(_$_Log) then) =
       __$$_LogCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {LogType type,
       String? path,
@@ -130,17 +134,15 @@ abstract class _$$_LogCopyWith<$Res> implements $LogCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_LogCopyWithImpl<$Res> extends _$LogCopyWithImpl<$Res>
+class __$$_LogCopyWithImpl<$Res> extends _$LogCopyWithImpl<$Res, _$_Log>
     implements _$$_LogCopyWith<$Res> {
   __$$_LogCopyWithImpl(_$_Log _value, $Res Function(_$_Log) _then)
-      : super(_value, (v) => _then(v as _$_Log));
+      : super(_value, _then);
 
-  @override
-  _$_Log get _value => super._value as _$_Log;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = freezed,
+    Object? type = null,
     Object? path = freezed,
     Object? response = freezed,
     Object? statusCode = freezed,
@@ -151,39 +153,39 @@ class __$$_LogCopyWithImpl<$Res> extends _$LogCopyWithImpl<$Res>
     Object? stackTrace = freezed,
   }) {
     return _then(_$_Log(
-      type: type == freezed
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as LogType,
-      path: path == freezed
+      path: freezed == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
               as String?,
-      response: response == freezed
+      response: freezed == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as String?,
-      statusCode: statusCode == freezed
+      statusCode: freezed == statusCode
           ? _value.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      bloc: bloc == freezed
+      bloc: freezed == bloc
           ? _value.bloc
           : bloc // ignore: cast_nullable_to_non_nullable
               as String?,
-      event: event == freezed
+      event: freezed == event
           ? _value.event
           : event // ignore: cast_nullable_to_non_nullable
               as String?,
-      exceptionType: exceptionType == freezed
+      exceptionType: freezed == exceptionType
           ? _value.exceptionType
           : exceptionType // ignore: cast_nullable_to_non_nullable
               as String?,
-      exceptionSource: exceptionSource == freezed
+      exceptionSource: freezed == exceptionSource
           ? _value.exceptionSource
           : exceptionSource // ignore: cast_nullable_to_non_nullable
               as String?,
-      stackTrace: stackTrace == freezed
+      stackTrace: freezed == stackTrace
           ? _value.stackTrace
           : stackTrace // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -252,43 +254,38 @@ class _$_Log with DiagnosticableTreeMixin implements _Log {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Log &&
-            const DeepCollectionEquality().equals(other.type, type) &&
-            const DeepCollectionEquality().equals(other.path, path) &&
-            const DeepCollectionEquality().equals(other.response, response) &&
-            const DeepCollectionEquality()
-                .equals(other.statusCode, statusCode) &&
-            const DeepCollectionEquality().equals(other.bloc, bloc) &&
-            const DeepCollectionEquality().equals(other.event, event) &&
-            const DeepCollectionEquality()
-                .equals(other.exceptionType, exceptionType) &&
-            const DeepCollectionEquality()
-                .equals(other.exceptionSource, exceptionSource) &&
-            const DeepCollectionEquality()
-                .equals(other.stackTrace, stackTrace));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.path, path) || other.path == path) &&
+            (identical(other.response, response) ||
+                other.response == response) &&
+            (identical(other.statusCode, statusCode) ||
+                other.statusCode == statusCode) &&
+            (identical(other.bloc, bloc) || other.bloc == bloc) &&
+            (identical(other.event, event) || other.event == event) &&
+            (identical(other.exceptionType, exceptionType) ||
+                other.exceptionType == exceptionType) &&
+            (identical(other.exceptionSource, exceptionSource) ||
+                other.exceptionSource == exceptionSource) &&
+            (identical(other.stackTrace, stackTrace) ||
+                other.stackTrace == stackTrace));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(type),
-      const DeepCollectionEquality().hash(path),
-      const DeepCollectionEquality().hash(response),
-      const DeepCollectionEquality().hash(statusCode),
-      const DeepCollectionEquality().hash(bloc),
-      const DeepCollectionEquality().hash(event),
-      const DeepCollectionEquality().hash(exceptionType),
-      const DeepCollectionEquality().hash(exceptionSource),
-      const DeepCollectionEquality().hash(stackTrace));
+  int get hashCode => Object.hash(runtimeType, type, path, response, statusCode,
+      bloc, event, exceptionType, exceptionSource, stackTrace);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LogCopyWith<_$_Log> get copyWith =>
       __$$_LogCopyWithImpl<_$_Log>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LogToJson(this);
+    return _$$_LogToJson(
+      this,
+    );
   }
 }
 
@@ -307,23 +304,23 @@ abstract class _Log implements Log {
   factory _Log.fromJson(Map<String, dynamic> json) = _$_Log.fromJson;
 
   @override
-  LogType get type => throw _privateConstructorUsedError;
+  LogType get type;
   @override
-  String? get path => throw _privateConstructorUsedError;
+  String? get path;
   @override
-  String? get response => throw _privateConstructorUsedError;
+  String? get response;
   @override
-  String? get statusCode => throw _privateConstructorUsedError;
+  String? get statusCode;
   @override
-  String? get bloc => throw _privateConstructorUsedError;
+  String? get bloc;
   @override
-  String? get event => throw _privateConstructorUsedError;
+  String? get event;
   @override
-  String? get exceptionType => throw _privateConstructorUsedError;
+  String? get exceptionType;
   @override
-  String? get exceptionSource => throw _privateConstructorUsedError;
+  String? get exceptionSource;
   @override
-  String? get stackTrace => throw _privateConstructorUsedError;
+  String? get stackTrace;
   @override
   @JsonKey(ignore: true)
   _$$_LogCopyWith<_$_Log> get copyWith => throw _privateConstructorUsedError;

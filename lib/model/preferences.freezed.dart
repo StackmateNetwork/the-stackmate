@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'preferences.dart';
 
@@ -41,7 +41,8 @@ mixin _$Preferences {
 abstract class $PreferencesCopyWith<$Res> {
   factory $PreferencesCopyWith(
           Preferences value, $Res Function(Preferences) then) =
-      _$PreferencesCopyWithImpl<$Res>;
+      _$PreferencesCopyWithImpl<$Res, Preferences>;
+  @useResult
   $Res call(
       {@HiveField(0) bool incognito,
       @HiveField(1) bool bitcoinStandard,
@@ -51,43 +52,46 @@ abstract class $PreferencesCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PreferencesCopyWithImpl<$Res> implements $PreferencesCopyWith<$Res> {
+class _$PreferencesCopyWithImpl<$Res, $Val extends Preferences>
+    implements $PreferencesCopyWith<$Res> {
   _$PreferencesCopyWithImpl(this._value, this._then);
 
-  final Preferences _value;
   // ignore: unused_field
-  final $Res Function(Preferences) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? incognito = freezed,
-    Object? bitcoinStandard = freezed,
-    Object? preferredBitcoinUnit = freezed,
-    Object? preferredExchange = freezed,
-    Object? preferredFiatUnit = freezed,
+    Object? incognito = null,
+    Object? bitcoinStandard = null,
+    Object? preferredBitcoinUnit = null,
+    Object? preferredExchange = null,
+    Object? preferredFiatUnit = null,
   }) {
     return _then(_value.copyWith(
-      incognito: incognito == freezed
+      incognito: null == incognito
           ? _value.incognito
           : incognito // ignore: cast_nullable_to_non_nullable
               as bool,
-      bitcoinStandard: bitcoinStandard == freezed
+      bitcoinStandard: null == bitcoinStandard
           ? _value.bitcoinStandard
           : bitcoinStandard // ignore: cast_nullable_to_non_nullable
               as bool,
-      preferredBitcoinUnit: preferredBitcoinUnit == freezed
+      preferredBitcoinUnit: null == preferredBitcoinUnit
           ? _value.preferredBitcoinUnit
           : preferredBitcoinUnit // ignore: cast_nullable_to_non_nullable
               as String,
-      preferredExchange: preferredExchange == freezed
+      preferredExchange: null == preferredExchange
           ? _value.preferredExchange
           : preferredExchange // ignore: cast_nullable_to_non_nullable
               as String,
-      preferredFiatUnit: preferredFiatUnit == freezed
+      preferredFiatUnit: null == preferredFiatUnit
           ? _value.preferredFiatUnit
           : preferredFiatUnit // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -98,6 +102,7 @@ abstract class _$$_PreferencesCopyWith<$Res>
           _$_Preferences value, $Res Function(_$_Preferences) then) =
       __$$_PreferencesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@HiveField(0) bool incognito,
       @HiveField(1) bool bitcoinStandard,
@@ -107,41 +112,40 @@ abstract class _$$_PreferencesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PreferencesCopyWithImpl<$Res> extends _$PreferencesCopyWithImpl<$Res>
+class __$$_PreferencesCopyWithImpl<$Res>
+    extends _$PreferencesCopyWithImpl<$Res, _$_Preferences>
     implements _$$_PreferencesCopyWith<$Res> {
   __$$_PreferencesCopyWithImpl(
       _$_Preferences _value, $Res Function(_$_Preferences) _then)
-      : super(_value, (v) => _then(v as _$_Preferences));
+      : super(_value, _then);
 
-  @override
-  _$_Preferences get _value => super._value as _$_Preferences;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? incognito = freezed,
-    Object? bitcoinStandard = freezed,
-    Object? preferredBitcoinUnit = freezed,
-    Object? preferredExchange = freezed,
-    Object? preferredFiatUnit = freezed,
+    Object? incognito = null,
+    Object? bitcoinStandard = null,
+    Object? preferredBitcoinUnit = null,
+    Object? preferredExchange = null,
+    Object? preferredFiatUnit = null,
   }) {
     return _then(_$_Preferences(
-      incognito: incognito == freezed
+      incognito: null == incognito
           ? _value.incognito
           : incognito // ignore: cast_nullable_to_non_nullable
               as bool,
-      bitcoinStandard: bitcoinStandard == freezed
+      bitcoinStandard: null == bitcoinStandard
           ? _value.bitcoinStandard
           : bitcoinStandard // ignore: cast_nullable_to_non_nullable
               as bool,
-      preferredBitcoinUnit: preferredBitcoinUnit == freezed
+      preferredBitcoinUnit: null == preferredBitcoinUnit
           ? _value.preferredBitcoinUnit
           : preferredBitcoinUnit // ignore: cast_nullable_to_non_nullable
               as String,
-      preferredExchange: preferredExchange == freezed
+      preferredExchange: null == preferredExchange
           ? _value.preferredExchange
           : preferredExchange // ignore: cast_nullable_to_non_nullable
               as String,
-      preferredFiatUnit: preferredFiatUnit == freezed
+      preferredFiatUnit: null == preferredFiatUnit
           ? _value.preferredFiatUnit
           : preferredFiatUnit // ignore: cast_nullable_to_non_nullable
               as String,
@@ -190,35 +194,34 @@ class _$_Preferences extends _Preferences {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Preferences &&
-            const DeepCollectionEquality().equals(other.incognito, incognito) &&
-            const DeepCollectionEquality()
-                .equals(other.bitcoinStandard, bitcoinStandard) &&
-            const DeepCollectionEquality()
-                .equals(other.preferredBitcoinUnit, preferredBitcoinUnit) &&
-            const DeepCollectionEquality()
-                .equals(other.preferredExchange, preferredExchange) &&
-            const DeepCollectionEquality()
-                .equals(other.preferredFiatUnit, preferredFiatUnit));
+            (identical(other.incognito, incognito) ||
+                other.incognito == incognito) &&
+            (identical(other.bitcoinStandard, bitcoinStandard) ||
+                other.bitcoinStandard == bitcoinStandard) &&
+            (identical(other.preferredBitcoinUnit, preferredBitcoinUnit) ||
+                other.preferredBitcoinUnit == preferredBitcoinUnit) &&
+            (identical(other.preferredExchange, preferredExchange) ||
+                other.preferredExchange == preferredExchange) &&
+            (identical(other.preferredFiatUnit, preferredFiatUnit) ||
+                other.preferredFiatUnit == preferredFiatUnit));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(incognito),
-      const DeepCollectionEquality().hash(bitcoinStandard),
-      const DeepCollectionEquality().hash(preferredBitcoinUnit),
-      const DeepCollectionEquality().hash(preferredExchange),
-      const DeepCollectionEquality().hash(preferredFiatUnit));
+  int get hashCode => Object.hash(runtimeType, incognito, bitcoinStandard,
+      preferredBitcoinUnit, preferredExchange, preferredFiatUnit);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PreferencesCopyWith<_$_Preferences> get copyWith =>
       __$$_PreferencesCopyWithImpl<_$_Preferences>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PreferencesToJson(this);
+    return _$$_PreferencesToJson(
+      this,
+    );
   }
 }
 
@@ -236,19 +239,19 @@ abstract class _Preferences extends Preferences {
 
   @override
   @HiveField(0)
-  bool get incognito => throw _privateConstructorUsedError;
+  bool get incognito;
   @override
   @HiveField(1)
-  bool get bitcoinStandard => throw _privateConstructorUsedError;
+  bool get bitcoinStandard;
   @override
   @HiveField(2)
-  String get preferredBitcoinUnit => throw _privateConstructorUsedError;
+  String get preferredBitcoinUnit;
   @override
   @HiveField(3)
-  String get preferredExchange => throw _privateConstructorUsedError;
+  String get preferredExchange;
   @override
   @HiveField(4)
-  String get preferredFiatUnit => throw _privateConstructorUsedError;
+  String get preferredFiatUnit;
   @override
   @JsonKey(ignore: true)
   _$$_PreferencesCopyWith<_$_Preferences> get copyWith =>

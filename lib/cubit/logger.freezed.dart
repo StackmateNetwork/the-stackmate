@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'logger.dart';
 
@@ -27,28 +27,32 @@ mixin _$LoggerState {
 abstract class $LoggerStateCopyWith<$Res> {
   factory $LoggerStateCopyWith(
           LoggerState value, $Res Function(LoggerState) then) =
-      _$LoggerStateCopyWithImpl<$Res>;
+      _$LoggerStateCopyWithImpl<$Res, LoggerState>;
+  @useResult
   $Res call({List<Log> logs});
 }
 
 /// @nodoc
-class _$LoggerStateCopyWithImpl<$Res> implements $LoggerStateCopyWith<$Res> {
+class _$LoggerStateCopyWithImpl<$Res, $Val extends LoggerState>
+    implements $LoggerStateCopyWith<$Res> {
   _$LoggerStateCopyWithImpl(this._value, this._then);
 
-  final LoggerState _value;
   // ignore: unused_field
-  final $Res Function(LoggerState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? logs = freezed,
+    Object? logs = null,
   }) {
     return _then(_value.copyWith(
-      logs: logs == freezed
+      logs: null == logs
           ? _value.logs
           : logs // ignore: cast_nullable_to_non_nullable
               as List<Log>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -59,25 +63,25 @@ abstract class _$$_LoggerStateCopyWith<$Res>
           _$_LoggerState value, $Res Function(_$_LoggerState) then) =
       __$$_LoggerStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<Log> logs});
 }
 
 /// @nodoc
-class __$$_LoggerStateCopyWithImpl<$Res> extends _$LoggerStateCopyWithImpl<$Res>
+class __$$_LoggerStateCopyWithImpl<$Res>
+    extends _$LoggerStateCopyWithImpl<$Res, _$_LoggerState>
     implements _$$_LoggerStateCopyWith<$Res> {
   __$$_LoggerStateCopyWithImpl(
       _$_LoggerState _value, $Res Function(_$_LoggerState) _then)
-      : super(_value, (v) => _then(v as _$_LoggerState));
+      : super(_value, _then);
 
-  @override
-  _$_LoggerState get _value => super._value as _$_LoggerState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? logs = freezed,
+    Object? logs = null,
   }) {
     return _then(_$_LoggerState(
-      logs: logs == freezed
+      logs: null == logs
           ? _value._logs
           : logs // ignore: cast_nullable_to_non_nullable
               as List<Log>,
@@ -94,6 +98,7 @@ class _$_LoggerState with DiagnosticableTreeMixin implements _LoggerState {
   @override
   @JsonKey()
   List<Log> get logs {
+    if (_logs is EqualUnmodifiableListView) return _logs;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_logs);
   }
@@ -125,6 +130,7 @@ class _$_LoggerState with DiagnosticableTreeMixin implements _LoggerState {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoggerStateCopyWith<_$_LoggerState> get copyWith =>
       __$$_LoggerStateCopyWithImpl<_$_LoggerState>(this, _$identity);
 }
@@ -133,7 +139,7 @@ abstract class _LoggerState implements LoggerState {
   const factory _LoggerState({final List<Log> logs}) = _$_LoggerState;
 
   @override
-  List<Log> get logs => throw _privateConstructorUsedError;
+  List<Log> get logs;
   @override
   @JsonKey(ignore: true)
   _$$_LoggerStateCopyWith<_$_LoggerState> get copyWith =>

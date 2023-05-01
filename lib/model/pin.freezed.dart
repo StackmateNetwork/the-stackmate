@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'pin.dart';
 
@@ -32,7 +32,8 @@ mixin _$Pin {
 /// @nodoc
 abstract class $PinCopyWith<$Res> {
   factory $PinCopyWith(Pin value, $Res Function(Pin) then) =
-      _$PinCopyWithImpl<$Res>;
+      _$PinCopyWithImpl<$Res, Pin>;
+  @useResult
   $Res call(
       {@HiveField(0) String value,
       @HiveField(1) int attemptsLeft,
@@ -41,38 +42,40 @@ abstract class $PinCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PinCopyWithImpl<$Res> implements $PinCopyWith<$Res> {
+class _$PinCopyWithImpl<$Res, $Val extends Pin> implements $PinCopyWith<$Res> {
   _$PinCopyWithImpl(this._value, this._then);
 
-  final Pin _value;
   // ignore: unused_field
-  final $Res Function(Pin) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? value = freezed,
-    Object? attemptsLeft = freezed,
-    Object? lastFailure = freezed,
-    Object? isLocked = freezed,
+    Object? value = null,
+    Object? attemptsLeft = null,
+    Object? lastFailure = null,
+    Object? isLocked = null,
   }) {
     return _then(_value.copyWith(
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      attemptsLeft: attemptsLeft == freezed
+      attemptsLeft: null == attemptsLeft
           ? _value.attemptsLeft
           : attemptsLeft // ignore: cast_nullable_to_non_nullable
               as int,
-      lastFailure: lastFailure == freezed
+      lastFailure: null == lastFailure
           ? _value.lastFailure
           : lastFailure // ignore: cast_nullable_to_non_nullable
               as int,
-      isLocked: isLocked == freezed
+      isLocked: null == isLocked
           ? _value.isLocked
           : isLocked // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -81,6 +84,7 @@ abstract class _$$_PinCopyWith<$Res> implements $PinCopyWith<$Res> {
   factory _$$_PinCopyWith(_$_Pin value, $Res Function(_$_Pin) then) =
       __$$_PinCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@HiveField(0) String value,
       @HiveField(1) int attemptsLeft,
@@ -89,35 +93,33 @@ abstract class _$$_PinCopyWith<$Res> implements $PinCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_PinCopyWithImpl<$Res> extends _$PinCopyWithImpl<$Res>
+class __$$_PinCopyWithImpl<$Res> extends _$PinCopyWithImpl<$Res, _$_Pin>
     implements _$$_PinCopyWith<$Res> {
   __$$_PinCopyWithImpl(_$_Pin _value, $Res Function(_$_Pin) _then)
-      : super(_value, (v) => _then(v as _$_Pin));
+      : super(_value, _then);
 
-  @override
-  _$_Pin get _value => super._value as _$_Pin;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? value = freezed,
-    Object? attemptsLeft = freezed,
-    Object? lastFailure = freezed,
-    Object? isLocked = freezed,
+    Object? value = null,
+    Object? attemptsLeft = null,
+    Object? lastFailure = null,
+    Object? isLocked = null,
   }) {
     return _then(_$_Pin(
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      attemptsLeft: attemptsLeft == freezed
+      attemptsLeft: null == attemptsLeft
           ? _value.attemptsLeft
           : attemptsLeft // ignore: cast_nullable_to_non_nullable
               as int,
-      lastFailure: lastFailure == freezed
+      lastFailure: null == lastFailure
           ? _value.lastFailure
           : lastFailure // ignore: cast_nullable_to_non_nullable
               as int,
-      isLocked: isLocked == freezed
+      isLocked: null == isLocked
           ? _value.isLocked
           : isLocked // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -159,24 +161,22 @@ class _$_Pin extends _Pin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Pin &&
-            const DeepCollectionEquality().equals(other.value, value) &&
-            const DeepCollectionEquality()
-                .equals(other.attemptsLeft, attemptsLeft) &&
-            const DeepCollectionEquality()
-                .equals(other.lastFailure, lastFailure) &&
-            const DeepCollectionEquality().equals(other.isLocked, isLocked));
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.attemptsLeft, attemptsLeft) ||
+                other.attemptsLeft == attemptsLeft) &&
+            (identical(other.lastFailure, lastFailure) ||
+                other.lastFailure == lastFailure) &&
+            (identical(other.isLocked, isLocked) ||
+                other.isLocked == isLocked));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(value),
-      const DeepCollectionEquality().hash(attemptsLeft),
-      const DeepCollectionEquality().hash(lastFailure),
-      const DeepCollectionEquality().hash(isLocked));
+  int get hashCode =>
+      Object.hash(runtimeType, value, attemptsLeft, lastFailure, isLocked);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PinCopyWith<_$_Pin> get copyWith =>
       __$$_PinCopyWithImpl<_$_Pin>(this, _$identity);
 }
@@ -191,16 +191,16 @@ abstract class _Pin extends Pin {
 
   @override
   @HiveField(0)
-  String get value => throw _privateConstructorUsedError;
+  String get value;
   @override
   @HiveField(1)
-  int get attemptsLeft => throw _privateConstructorUsedError;
+  int get attemptsLeft;
   @override
   @HiveField(2)
-  int get lastFailure => throw _privateConstructorUsedError;
+  int get lastFailure;
   @override
   @HiveField(3)
-  bool get isLocked => throw _privateConstructorUsedError;
+  bool get isLocked;
   @override
   @JsonKey(ignore: true)
   _$$_PinCopyWith<_$_Pin> get copyWith => throw _privateConstructorUsedError;

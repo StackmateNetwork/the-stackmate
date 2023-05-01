@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'fees.dart';
 
@@ -37,7 +37,8 @@ mixin _$Fees {
 /// @nodoc
 abstract class $FeesCopyWith<$Res> {
   factory $FeesCopyWith(Fees value, $Res Function(Fees) then) =
-      _$FeesCopyWithImpl<$Res>;
+      _$FeesCopyWithImpl<$Res, Fees>;
+  @useResult
   $Res call(
       {@HiveField(0) int timestamp,
       @HiveField(1) double slow,
@@ -46,38 +47,41 @@ abstract class $FeesCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$FeesCopyWithImpl<$Res> implements $FeesCopyWith<$Res> {
+class _$FeesCopyWithImpl<$Res, $Val extends Fees>
+    implements $FeesCopyWith<$Res> {
   _$FeesCopyWithImpl(this._value, this._then);
 
-  final Fees _value;
   // ignore: unused_field
-  final $Res Function(Fees) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timestamp = freezed,
-    Object? slow = freezed,
-    Object? medium = freezed,
-    Object? fast = freezed,
+    Object? timestamp = null,
+    Object? slow = null,
+    Object? medium = null,
+    Object? fast = null,
   }) {
     return _then(_value.copyWith(
-      timestamp: timestamp == freezed
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as int,
-      slow: slow == freezed
+      slow: null == slow
           ? _value.slow
           : slow // ignore: cast_nullable_to_non_nullable
               as double,
-      medium: medium == freezed
+      medium: null == medium
           ? _value.medium
           : medium // ignore: cast_nullable_to_non_nullable
               as double,
-      fast: fast == freezed
+      fast: null == fast
           ? _value.fast
           : fast // ignore: cast_nullable_to_non_nullable
               as double,
-    ));
+    ) as $Val);
   }
 }
 
@@ -86,6 +90,7 @@ abstract class _$$_FeesCopyWith<$Res> implements $FeesCopyWith<$Res> {
   factory _$$_FeesCopyWith(_$_Fees value, $Res Function(_$_Fees) then) =
       __$$_FeesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@HiveField(0) int timestamp,
       @HiveField(1) double slow,
@@ -94,35 +99,33 @@ abstract class _$$_FeesCopyWith<$Res> implements $FeesCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_FeesCopyWithImpl<$Res> extends _$FeesCopyWithImpl<$Res>
+class __$$_FeesCopyWithImpl<$Res> extends _$FeesCopyWithImpl<$Res, _$_Fees>
     implements _$$_FeesCopyWith<$Res> {
   __$$_FeesCopyWithImpl(_$_Fees _value, $Res Function(_$_Fees) _then)
-      : super(_value, (v) => _then(v as _$_Fees));
+      : super(_value, _then);
 
-  @override
-  _$_Fees get _value => super._value as _$_Fees;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timestamp = freezed,
-    Object? slow = freezed,
-    Object? medium = freezed,
-    Object? fast = freezed,
+    Object? timestamp = null,
+    Object? slow = null,
+    Object? medium = null,
+    Object? fast = null,
   }) {
     return _then(_$_Fees(
-      timestamp: timestamp == freezed
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as int,
-      slow: slow == freezed
+      slow: null == slow
           ? _value.slow
           : slow // ignore: cast_nullable_to_non_nullable
               as double,
-      medium: medium == freezed
+      medium: null == medium
           ? _value.medium
           : medium // ignore: cast_nullable_to_non_nullable
               as double,
-      fast: fast == freezed
+      fast: null == fast
           ? _value.fast
           : fast // ignore: cast_nullable_to_non_nullable
               as double,
@@ -166,29 +169,28 @@ class _$_Fees extends _Fees {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Fees &&
-            const DeepCollectionEquality().equals(other.timestamp, timestamp) &&
-            const DeepCollectionEquality().equals(other.slow, slow) &&
-            const DeepCollectionEquality().equals(other.medium, medium) &&
-            const DeepCollectionEquality().equals(other.fast, fast));
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp) &&
+            (identical(other.slow, slow) || other.slow == slow) &&
+            (identical(other.medium, medium) || other.medium == medium) &&
+            (identical(other.fast, fast) || other.fast == fast));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(timestamp),
-      const DeepCollectionEquality().hash(slow),
-      const DeepCollectionEquality().hash(medium),
-      const DeepCollectionEquality().hash(fast));
+  int get hashCode => Object.hash(runtimeType, timestamp, slow, medium, fast);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_FeesCopyWith<_$_Fees> get copyWith =>
       __$$_FeesCopyWithImpl<_$_Fees>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FeesToJson(this);
+    return _$$_FeesToJson(
+      this,
+    );
   }
 }
 
@@ -204,16 +206,16 @@ abstract class _Fees extends Fees {
 
   @override
   @HiveField(0)
-  int get timestamp => throw _privateConstructorUsedError;
+  int get timestamp;
   @override
   @HiveField(1)
-  double get slow => throw _privateConstructorUsedError;
+  double get slow;
   @override
   @HiveField(2)
-  double get medium => throw _privateConstructorUsedError;
+  double get medium;
   @override
   @HiveField(3)
-  double get fast => throw _privateConstructorUsedError;
+  double get fast;
   @override
   @JsonKey(ignore: true)
   _$$_FeesCopyWith<_$_Fees> get copyWith => throw _privateConstructorUsedError;

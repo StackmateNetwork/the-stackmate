@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'from-new-seed.dart';
 
@@ -32,7 +32,8 @@ mixin _$SeedGenerateWalletState {
 abstract class $SeedGenerateWalletStateCopyWith<$Res> {
   factory $SeedGenerateWalletStateCopyWith(SeedGenerateWalletState value,
           $Res Function(SeedGenerateWalletState) then) =
-      _$SeedGenerateWalletStateCopyWithImpl<$Res>;
+      _$SeedGenerateWalletStateCopyWithImpl<$Res, SeedGenerateWalletState>;
+  @useResult
   $Res call(
       {SeedGenerateWalletSteps currentStep,
       String walletLabel,
@@ -43,49 +44,52 @@ abstract class $SeedGenerateWalletStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SeedGenerateWalletStateCopyWithImpl<$Res>
+class _$SeedGenerateWalletStateCopyWithImpl<$Res,
+        $Val extends SeedGenerateWalletState>
     implements $SeedGenerateWalletStateCopyWith<$Res> {
   _$SeedGenerateWalletStateCopyWithImpl(this._value, this._then);
 
-  final SeedGenerateWalletState _value;
   // ignore: unused_field
-  final $Res Function(SeedGenerateWalletState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentStep = freezed,
-    Object? walletLabel = freezed,
-    Object? walletLabelError = freezed,
-    Object? savingWallet = freezed,
-    Object? savingWalletError = freezed,
-    Object? newWalletSaved = freezed,
+    Object? currentStep = null,
+    Object? walletLabel = null,
+    Object? walletLabelError = null,
+    Object? savingWallet = null,
+    Object? savingWalletError = null,
+    Object? newWalletSaved = null,
   }) {
     return _then(_value.copyWith(
-      currentStep: currentStep == freezed
+      currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as SeedGenerateWalletSteps,
-      walletLabel: walletLabel == freezed
+      walletLabel: null == walletLabel
           ? _value.walletLabel
           : walletLabel // ignore: cast_nullable_to_non_nullable
               as String,
-      walletLabelError: walletLabelError == freezed
+      walletLabelError: null == walletLabelError
           ? _value.walletLabelError
           : walletLabelError // ignore: cast_nullable_to_non_nullable
               as String,
-      savingWallet: savingWallet == freezed
+      savingWallet: null == savingWallet
           ? _value.savingWallet
           : savingWallet // ignore: cast_nullable_to_non_nullable
               as bool,
-      savingWalletError: savingWalletError == freezed
+      savingWalletError: null == savingWalletError
           ? _value.savingWalletError
           : savingWalletError // ignore: cast_nullable_to_non_nullable
               as String,
-      newWalletSaved: newWalletSaved == freezed
+      newWalletSaved: null == newWalletSaved
           ? _value.newWalletSaved
           : newWalletSaved // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -96,6 +100,7 @@ abstract class _$$_SeedGenerateWalletStateCopyWith<$Res>
           $Res Function(_$_SeedGenerateWalletState) then) =
       __$$_SeedGenerateWalletStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {SeedGenerateWalletSteps currentStep,
       String walletLabel,
@@ -107,47 +112,45 @@ abstract class _$$_SeedGenerateWalletStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_SeedGenerateWalletStateCopyWithImpl<$Res>
-    extends _$SeedGenerateWalletStateCopyWithImpl<$Res>
+    extends _$SeedGenerateWalletStateCopyWithImpl<$Res,
+        _$_SeedGenerateWalletState>
     implements _$$_SeedGenerateWalletStateCopyWith<$Res> {
   __$$_SeedGenerateWalletStateCopyWithImpl(_$_SeedGenerateWalletState _value,
       $Res Function(_$_SeedGenerateWalletState) _then)
-      : super(_value, (v) => _then(v as _$_SeedGenerateWalletState));
+      : super(_value, _then);
 
-  @override
-  _$_SeedGenerateWalletState get _value =>
-      super._value as _$_SeedGenerateWalletState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentStep = freezed,
-    Object? walletLabel = freezed,
-    Object? walletLabelError = freezed,
-    Object? savingWallet = freezed,
-    Object? savingWalletError = freezed,
-    Object? newWalletSaved = freezed,
+    Object? currentStep = null,
+    Object? walletLabel = null,
+    Object? walletLabelError = null,
+    Object? savingWallet = null,
+    Object? savingWalletError = null,
+    Object? newWalletSaved = null,
   }) {
     return _then(_$_SeedGenerateWalletState(
-      currentStep: currentStep == freezed
+      currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as SeedGenerateWalletSteps,
-      walletLabel: walletLabel == freezed
+      walletLabel: null == walletLabel
           ? _value.walletLabel
           : walletLabel // ignore: cast_nullable_to_non_nullable
               as String,
-      walletLabelError: walletLabelError == freezed
+      walletLabelError: null == walletLabelError
           ? _value.walletLabelError
           : walletLabelError // ignore: cast_nullable_to_non_nullable
               as String,
-      savingWallet: savingWallet == freezed
+      savingWallet: null == savingWallet
           ? _value.savingWallet
           : savingWallet // ignore: cast_nullable_to_non_nullable
               as bool,
-      savingWalletError: savingWalletError == freezed
+      savingWalletError: null == savingWalletError
           ? _value.savingWalletError
           : savingWalletError // ignore: cast_nullable_to_non_nullable
               as String,
-      newWalletSaved: newWalletSaved == freezed
+      newWalletSaved: null == newWalletSaved
           ? _value.newWalletSaved
           : newWalletSaved // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -210,32 +213,27 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SeedGenerateWalletState &&
-            const DeepCollectionEquality()
-                .equals(other.currentStep, currentStep) &&
-            const DeepCollectionEquality()
-                .equals(other.walletLabel, walletLabel) &&
-            const DeepCollectionEquality()
-                .equals(other.walletLabelError, walletLabelError) &&
-            const DeepCollectionEquality()
-                .equals(other.savingWallet, savingWallet) &&
-            const DeepCollectionEquality()
-                .equals(other.savingWalletError, savingWalletError) &&
-            const DeepCollectionEquality()
-                .equals(other.newWalletSaved, newWalletSaved));
+            (identical(other.currentStep, currentStep) ||
+                other.currentStep == currentStep) &&
+            (identical(other.walletLabel, walletLabel) ||
+                other.walletLabel == walletLabel) &&
+            (identical(other.walletLabelError, walletLabelError) ||
+                other.walletLabelError == walletLabelError) &&
+            (identical(other.savingWallet, savingWallet) ||
+                other.savingWallet == savingWallet) &&
+            (identical(other.savingWalletError, savingWalletError) ||
+                other.savingWalletError == savingWalletError) &&
+            (identical(other.newWalletSaved, newWalletSaved) ||
+                other.newWalletSaved == newWalletSaved));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(currentStep),
-      const DeepCollectionEquality().hash(walletLabel),
-      const DeepCollectionEquality().hash(walletLabelError),
-      const DeepCollectionEquality().hash(savingWallet),
-      const DeepCollectionEquality().hash(savingWalletError),
-      const DeepCollectionEquality().hash(newWalletSaved));
+  int get hashCode => Object.hash(runtimeType, currentStep, walletLabel,
+      walletLabelError, savingWallet, savingWalletError, newWalletSaved);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SeedGenerateWalletStateCopyWith<_$_SeedGenerateWalletState>
       get copyWith =>
           __$$_SeedGenerateWalletStateCopyWithImpl<_$_SeedGenerateWalletState>(
@@ -253,17 +251,17 @@ abstract class _SeedGenerateWalletState extends SeedGenerateWalletState {
   const _SeedGenerateWalletState._() : super._();
 
   @override
-  SeedGenerateWalletSteps get currentStep => throw _privateConstructorUsedError;
+  SeedGenerateWalletSteps get currentStep;
   @override
-  String get walletLabel => throw _privateConstructorUsedError;
+  String get walletLabel;
   @override
-  String get walletLabelError => throw _privateConstructorUsedError;
+  String get walletLabelError;
   @override
-  bool get savingWallet => throw _privateConstructorUsedError;
+  bool get savingWallet;
   @override
-  String get savingWalletError => throw _privateConstructorUsedError;
+  String get savingWalletError;
   @override
-  bool get newWalletSaved => throw _privateConstructorUsedError;
+  bool get newWalletSaved;
   @override
   @JsonKey(ignore: true)
   _$$_SeedGenerateWalletStateCopyWith<_$_SeedGenerateWalletState>

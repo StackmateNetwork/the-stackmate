@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'fees.dart';
 
@@ -28,46 +28,51 @@ mixin _$FeesState {
 /// @nodoc
 abstract class $FeesStateCopyWith<$Res> {
   factory $FeesStateCopyWith(FeesState value, $Res Function(FeesState) then) =
-      _$FeesStateCopyWithImpl<$Res>;
+      _$FeesStateCopyWithImpl<$Res, FeesState>;
+  @useResult
   $Res call({Fees fees, bool updating, String errUpdating});
 
   $FeesCopyWith<$Res> get fees;
 }
 
 /// @nodoc
-class _$FeesStateCopyWithImpl<$Res> implements $FeesStateCopyWith<$Res> {
+class _$FeesStateCopyWithImpl<$Res, $Val extends FeesState>
+    implements $FeesStateCopyWith<$Res> {
   _$FeesStateCopyWithImpl(this._value, this._then);
 
-  final FeesState _value;
   // ignore: unused_field
-  final $Res Function(FeesState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? fees = freezed,
-    Object? updating = freezed,
-    Object? errUpdating = freezed,
+    Object? fees = null,
+    Object? updating = null,
+    Object? errUpdating = null,
   }) {
     return _then(_value.copyWith(
-      fees: fees == freezed
+      fees: null == fees
           ? _value.fees
           : fees // ignore: cast_nullable_to_non_nullable
               as Fees,
-      updating: updating == freezed
+      updating: null == updating
           ? _value.updating
           : updating // ignore: cast_nullable_to_non_nullable
               as bool,
-      errUpdating: errUpdating == freezed
+      errUpdating: null == errUpdating
           ? _value.errUpdating
           : errUpdating // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $FeesCopyWith<$Res> get fees {
     return $FeesCopyWith<$Res>(_value.fees, (value) {
-      return _then(_value.copyWith(fees: value));
+      return _then(_value.copyWith(fees: value) as $Val);
     });
   }
 }
@@ -78,6 +83,7 @@ abstract class _$$_FeesStateCopyWith<$Res> implements $FeesStateCopyWith<$Res> {
           _$_FeesState value, $Res Function(_$_FeesState) then) =
       __$$_FeesStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({Fees fees, bool updating, String errUpdating});
 
   @override
@@ -85,31 +91,30 @@ abstract class _$$_FeesStateCopyWith<$Res> implements $FeesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_FeesStateCopyWithImpl<$Res> extends _$FeesStateCopyWithImpl<$Res>
+class __$$_FeesStateCopyWithImpl<$Res>
+    extends _$FeesStateCopyWithImpl<$Res, _$_FeesState>
     implements _$$_FeesStateCopyWith<$Res> {
   __$$_FeesStateCopyWithImpl(
       _$_FeesState _value, $Res Function(_$_FeesState) _then)
-      : super(_value, (v) => _then(v as _$_FeesState));
+      : super(_value, _then);
 
-  @override
-  _$_FeesState get _value => super._value as _$_FeesState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? fees = freezed,
-    Object? updating = freezed,
-    Object? errUpdating = freezed,
+    Object? fees = null,
+    Object? updating = null,
+    Object? errUpdating = null,
   }) {
     return _then(_$_FeesState(
-      fees: fees == freezed
+      fees: null == fees
           ? _value.fees
           : fees // ignore: cast_nullable_to_non_nullable
               as Fees,
-      updating: updating == freezed
+      updating: null == updating
           ? _value.updating
           : updating // ignore: cast_nullable_to_non_nullable
               as bool,
-      errUpdating: errUpdating == freezed
+      errUpdating: null == errUpdating
           ? _value.errUpdating
           : errUpdating // ignore: cast_nullable_to_non_nullable
               as String,
@@ -155,21 +160,19 @@ class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_FeesState &&
-            const DeepCollectionEquality().equals(other.fees, fees) &&
-            const DeepCollectionEquality().equals(other.updating, updating) &&
-            const DeepCollectionEquality()
-                .equals(other.errUpdating, errUpdating));
+            (identical(other.fees, fees) || other.fees == fees) &&
+            (identical(other.updating, updating) ||
+                other.updating == updating) &&
+            (identical(other.errUpdating, errUpdating) ||
+                other.errUpdating == errUpdating));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(fees),
-      const DeepCollectionEquality().hash(updating),
-      const DeepCollectionEquality().hash(errUpdating));
+  int get hashCode => Object.hash(runtimeType, fees, updating, errUpdating);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_FeesStateCopyWith<_$_FeesState> get copyWith =>
       __$$_FeesStateCopyWithImpl<_$_FeesState>(this, _$identity);
 }
@@ -181,11 +184,11 @@ abstract class _FeesState implements FeesState {
       final String errUpdating}) = _$_FeesState;
 
   @override
-  Fees get fees => throw _privateConstructorUsedError;
+  Fees get fees;
   @override
-  bool get updating => throw _privateConstructorUsedError;
+  bool get updating;
   @override
-  String get errUpdating => throw _privateConstructorUsedError;
+  String get errUpdating;
   @override
   @JsonKey(ignore: true)
   _$$_FeesStateCopyWith<_$_FeesState> get copyWith =>

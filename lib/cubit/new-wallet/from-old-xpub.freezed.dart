@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'from-old-xpub.dart';
 
@@ -31,7 +31,8 @@ mixin _$XpubImportWalletState {
 abstract class $XpubImportWalletStateCopyWith<$Res> {
   factory $XpubImportWalletStateCopyWith(XpubImportWalletState value,
           $Res Function(XpubImportWalletState) then) =
-      _$XpubImportWalletStateCopyWithImpl<$Res>;
+      _$XpubImportWalletStateCopyWithImpl<$Res, XpubImportWalletState>;
+  @useResult
   $Res call(
       {XpubImportWalletStep currentStep,
       String label,
@@ -41,44 +42,47 @@ abstract class $XpubImportWalletStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$XpubImportWalletStateCopyWithImpl<$Res>
+class _$XpubImportWalletStateCopyWithImpl<$Res,
+        $Val extends XpubImportWalletState>
     implements $XpubImportWalletStateCopyWith<$Res> {
   _$XpubImportWalletStateCopyWithImpl(this._value, this._then);
 
-  final XpubImportWalletState _value;
   // ignore: unused_field
-  final $Res Function(XpubImportWalletState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentStep = freezed,
-    Object? label = freezed,
-    Object? savingWallet = freezed,
-    Object? errSavingWallet = freezed,
-    Object? newWalletSaved = freezed,
+    Object? currentStep = null,
+    Object? label = null,
+    Object? savingWallet = null,
+    Object? errSavingWallet = null,
+    Object? newWalletSaved = null,
   }) {
     return _then(_value.copyWith(
-      currentStep: currentStep == freezed
+      currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as XpubImportWalletStep,
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      savingWallet: savingWallet == freezed
+      savingWallet: null == savingWallet
           ? _value.savingWallet
           : savingWallet // ignore: cast_nullable_to_non_nullable
               as bool,
-      errSavingWallet: errSavingWallet == freezed
+      errSavingWallet: null == errSavingWallet
           ? _value.errSavingWallet
           : errSavingWallet // ignore: cast_nullable_to_non_nullable
               as String,
-      newWalletSaved: newWalletSaved == freezed
+      newWalletSaved: null == newWalletSaved
           ? _value.newWalletSaved
           : newWalletSaved // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -89,6 +93,7 @@ abstract class _$$_SeedImportXpubStateCopyWith<$Res>
           $Res Function(_$_SeedImportXpubState) then) =
       __$$_SeedImportXpubStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {XpubImportWalletStep currentStep,
       String label,
@@ -99,41 +104,39 @@ abstract class _$$_SeedImportXpubStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_SeedImportXpubStateCopyWithImpl<$Res>
-    extends _$XpubImportWalletStateCopyWithImpl<$Res>
+    extends _$XpubImportWalletStateCopyWithImpl<$Res, _$_SeedImportXpubState>
     implements _$$_SeedImportXpubStateCopyWith<$Res> {
   __$$_SeedImportXpubStateCopyWithImpl(_$_SeedImportXpubState _value,
       $Res Function(_$_SeedImportXpubState) _then)
-      : super(_value, (v) => _then(v as _$_SeedImportXpubState));
+      : super(_value, _then);
 
-  @override
-  _$_SeedImportXpubState get _value => super._value as _$_SeedImportXpubState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentStep = freezed,
-    Object? label = freezed,
-    Object? savingWallet = freezed,
-    Object? errSavingWallet = freezed,
-    Object? newWalletSaved = freezed,
+    Object? currentStep = null,
+    Object? label = null,
+    Object? savingWallet = null,
+    Object? errSavingWallet = null,
+    Object? newWalletSaved = null,
   }) {
     return _then(_$_SeedImportXpubState(
-      currentStep: currentStep == freezed
+      currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as XpubImportWalletStep,
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      savingWallet: savingWallet == freezed
+      savingWallet: null == savingWallet
           ? _value.savingWallet
           : savingWallet // ignore: cast_nullable_to_non_nullable
               as bool,
-      errSavingWallet: errSavingWallet == freezed
+      errSavingWallet: null == errSavingWallet
           ? _value.errSavingWallet
           : errSavingWallet // ignore: cast_nullable_to_non_nullable
               as String,
-      newWalletSaved: newWalletSaved == freezed
+      newWalletSaved: null == newWalletSaved
           ? _value.newWalletSaved
           : newWalletSaved // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -191,28 +194,24 @@ class _$_SeedImportXpubState extends _SeedImportXpubState
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SeedImportXpubState &&
-            const DeepCollectionEquality()
-                .equals(other.currentStep, currentStep) &&
-            const DeepCollectionEquality().equals(other.label, label) &&
-            const DeepCollectionEquality()
-                .equals(other.savingWallet, savingWallet) &&
-            const DeepCollectionEquality()
-                .equals(other.errSavingWallet, errSavingWallet) &&
-            const DeepCollectionEquality()
-                .equals(other.newWalletSaved, newWalletSaved));
+            (identical(other.currentStep, currentStep) ||
+                other.currentStep == currentStep) &&
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.savingWallet, savingWallet) ||
+                other.savingWallet == savingWallet) &&
+            (identical(other.errSavingWallet, errSavingWallet) ||
+                other.errSavingWallet == errSavingWallet) &&
+            (identical(other.newWalletSaved, newWalletSaved) ||
+                other.newWalletSaved == newWalletSaved));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(currentStep),
-      const DeepCollectionEquality().hash(label),
-      const DeepCollectionEquality().hash(savingWallet),
-      const DeepCollectionEquality().hash(errSavingWallet),
-      const DeepCollectionEquality().hash(newWalletSaved));
+  int get hashCode => Object.hash(runtimeType, currentStep, label, savingWallet,
+      errSavingWallet, newWalletSaved);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SeedImportXpubStateCopyWith<_$_SeedImportXpubState> get copyWith =>
       __$$_SeedImportXpubStateCopyWithImpl<_$_SeedImportXpubState>(
           this, _$identity);
@@ -228,15 +227,15 @@ abstract class _SeedImportXpubState extends XpubImportWalletState {
   const _SeedImportXpubState._() : super._();
 
   @override
-  XpubImportWalletStep get currentStep => throw _privateConstructorUsedError;
+  XpubImportWalletStep get currentStep;
   @override
-  String get label => throw _privateConstructorUsedError;
+  String get label;
   @override
-  bool get savingWallet => throw _privateConstructorUsedError;
+  bool get savingWallet;
   @override
-  String get errSavingWallet => throw _privateConstructorUsedError;
+  String get errSavingWallet;
   @override
-  bool get newWalletSaved => throw _privateConstructorUsedError;
+  bool get newWalletSaved;
   @override
   @JsonKey(ignore: true)
   _$$_SeedImportXpubStateCopyWith<_$_SeedImportXpubState> get copyWith =>

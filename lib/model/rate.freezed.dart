@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'rate.dart';
 
@@ -32,38 +32,42 @@ mixin _$Rate {
 /// @nodoc
 abstract class $RateCopyWith<$Res> {
   factory $RateCopyWith(Rate value, $Res Function(Rate) then) =
-      _$RateCopyWithImpl<$Res>;
+      _$RateCopyWithImpl<$Res, Rate>;
+  @useResult
   $Res call({String symbol, String name, double rate});
 }
 
 /// @nodoc
-class _$RateCopyWithImpl<$Res> implements $RateCopyWith<$Res> {
+class _$RateCopyWithImpl<$Res, $Val extends Rate>
+    implements $RateCopyWith<$Res> {
   _$RateCopyWithImpl(this._value, this._then);
 
-  final Rate _value;
   // ignore: unused_field
-  final $Res Function(Rate) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? symbol = freezed,
-    Object? name = freezed,
-    Object? rate = freezed,
+    Object? symbol = null,
+    Object? name = null,
+    Object? rate = null,
   }) {
     return _then(_value.copyWith(
-      symbol: symbol == freezed
+      symbol: null == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      rate: rate == freezed
+      rate: null == rate
           ? _value.rate
           : rate // ignore: cast_nullable_to_non_nullable
               as double,
-    ));
+    ) as $Val);
   }
 }
 
@@ -72,34 +76,33 @@ abstract class _$$_RateCopyWith<$Res> implements $RateCopyWith<$Res> {
   factory _$$_RateCopyWith(_$_Rate value, $Res Function(_$_Rate) then) =
       __$$_RateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String symbol, String name, double rate});
 }
 
 /// @nodoc
-class __$$_RateCopyWithImpl<$Res> extends _$RateCopyWithImpl<$Res>
+class __$$_RateCopyWithImpl<$Res> extends _$RateCopyWithImpl<$Res, _$_Rate>
     implements _$$_RateCopyWith<$Res> {
   __$$_RateCopyWithImpl(_$_Rate _value, $Res Function(_$_Rate) _then)
-      : super(_value, (v) => _then(v as _$_Rate));
+      : super(_value, _then);
 
-  @override
-  _$_Rate get _value => super._value as _$_Rate;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? symbol = freezed,
-    Object? name = freezed,
-    Object? rate = freezed,
+    Object? symbol = null,
+    Object? name = null,
+    Object? rate = null,
   }) {
     return _then(_$_Rate(
-      symbol: symbol == freezed
+      symbol: null == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      rate: rate == freezed
+      rate: null == rate
           ? _value.rate
           : rate // ignore: cast_nullable_to_non_nullable
               as double,
@@ -131,27 +134,26 @@ class _$_Rate implements _Rate {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Rate &&
-            const DeepCollectionEquality().equals(other.symbol, symbol) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.rate, rate));
+            (identical(other.symbol, symbol) || other.symbol == symbol) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.rate, rate) || other.rate == rate));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(symbol),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(rate));
+  int get hashCode => Object.hash(runtimeType, symbol, name, rate);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RateCopyWith<_$_Rate> get copyWith =>
       __$$_RateCopyWithImpl<_$_Rate>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RateToJson(this);
+    return _$$_RateToJson(
+      this,
+    );
   }
 }
 
@@ -164,11 +166,11 @@ abstract class _Rate implements Rate {
   factory _Rate.fromJson(Map<String, dynamic> json) = _$_Rate.fromJson;
 
   @override
-  String get symbol => throw _privateConstructorUsedError;
+  String get symbol;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  double get rate => throw _privateConstructorUsedError;
+  double get rate;
   @override
   @JsonKey(ignore: true)
   _$$_RateCopyWith<_$_Rate> get copyWith => throw _privateConstructorUsedError;

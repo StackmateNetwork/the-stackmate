@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'master.dart';
 
@@ -29,21 +29,24 @@ mixin _$MasterKeyState {
 abstract class $MasterKeyStateCopyWith<$Res> {
   factory $MasterKeyStateCopyWith(
           MasterKeyState value, $Res Function(MasterKeyState) then) =
-      _$MasterKeyStateCopyWithImpl<$Res>;
+      _$MasterKeyStateCopyWithImpl<$Res, MasterKeyState>;
+  @useResult
   $Res call({MasterKey? key, String? error, String? network});
 
   $MasterKeyCopyWith<$Res>? get key;
 }
 
 /// @nodoc
-class _$MasterKeyStateCopyWithImpl<$Res>
+class _$MasterKeyStateCopyWithImpl<$Res, $Val extends MasterKeyState>
     implements $MasterKeyStateCopyWith<$Res> {
   _$MasterKeyStateCopyWithImpl(this._value, this._then);
 
-  final MasterKeyState _value;
   // ignore: unused_field
-  final $Res Function(MasterKeyState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? key = freezed,
@@ -51,29 +54,30 @@ class _$MasterKeyStateCopyWithImpl<$Res>
     Object? network = freezed,
   }) {
     return _then(_value.copyWith(
-      key: key == freezed
+      key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as MasterKey?,
-      error: error == freezed
+      error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
-      network: network == freezed
+      network: freezed == network
           ? _value.network
           : network // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MasterKeyCopyWith<$Res>? get key {
     if (_value.key == null) {
       return null;
     }
 
     return $MasterKeyCopyWith<$Res>(_value.key!, (value) {
-      return _then(_value.copyWith(key: value));
+      return _then(_value.copyWith(key: value) as $Val);
     });
   }
 }
@@ -85,6 +89,7 @@ abstract class _$$_MasterKeyStateCopyWith<$Res>
           _$_MasterKeyState value, $Res Function(_$_MasterKeyState) then) =
       __$$_MasterKeyStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({MasterKey? key, String? error, String? network});
 
   @override
@@ -93,15 +98,13 @@ abstract class _$$_MasterKeyStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_MasterKeyStateCopyWithImpl<$Res>
-    extends _$MasterKeyStateCopyWithImpl<$Res>
+    extends _$MasterKeyStateCopyWithImpl<$Res, _$_MasterKeyState>
     implements _$$_MasterKeyStateCopyWith<$Res> {
   __$$_MasterKeyStateCopyWithImpl(
       _$_MasterKeyState _value, $Res Function(_$_MasterKeyState) _then)
-      : super(_value, (v) => _then(v as _$_MasterKeyState));
+      : super(_value, _then);
 
-  @override
-  _$_MasterKeyState get _value => super._value as _$_MasterKeyState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? key = freezed,
@@ -109,15 +112,15 @@ class __$$_MasterKeyStateCopyWithImpl<$Res>
     Object? network = freezed,
   }) {
     return _then(_$_MasterKeyState(
-      key: key == freezed
+      key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as MasterKey?,
-      error: error == freezed
+      error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
-      network: network == freezed
+      network: freezed == network
           ? _value.network
           : network // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -147,20 +150,17 @@ class _$_MasterKeyState extends _MasterKeyState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MasterKeyState &&
-            const DeepCollectionEquality().equals(other.key, key) &&
-            const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality().equals(other.network, network));
+            (identical(other.key, key) || other.key == key) &&
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.network, network) || other.network == network));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(key),
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(network));
+  int get hashCode => Object.hash(runtimeType, key, error, network);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MasterKeyStateCopyWith<_$_MasterKeyState> get copyWith =>
       __$$_MasterKeyStateCopyWithImpl<_$_MasterKeyState>(this, _$identity);
 }
@@ -173,11 +173,11 @@ abstract class _MasterKeyState extends MasterKeyState {
   const _MasterKeyState._() : super._();
 
   @override
-  MasterKey? get key => throw _privateConstructorUsedError;
+  MasterKey? get key;
   @override
-  String? get error => throw _privateConstructorUsedError;
+  String? get error;
   @override
-  String? get network => throw _privateConstructorUsedError;
+  String? get network;
   @override
   @JsonKey(ignore: true)
   _$$_MasterKeyStateCopyWith<_$_MasterKeyState> get copyWith =>

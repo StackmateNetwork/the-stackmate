@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'xpub-import.dart';
 
@@ -36,7 +36,8 @@ mixin _$XpubImportState {
 abstract class $XpubImportStateCopyWith<$Res> {
   factory $XpubImportStateCopyWith(
           XpubImportState value, $Res Function(XpubImportState) then) =
-      _$XpubImportStateCopyWithImpl<$Res>;
+      _$XpubImportStateCopyWithImpl<$Res, XpubImportState>;
+  @useResult
   $Res call(
       {String xpub,
       String fingerPrint,
@@ -51,69 +52,71 @@ abstract class $XpubImportStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$XpubImportStateCopyWithImpl<$Res>
+class _$XpubImportStateCopyWithImpl<$Res, $Val extends XpubImportState>
     implements $XpubImportStateCopyWith<$Res> {
   _$XpubImportStateCopyWithImpl(this._value, this._then);
 
-  final XpubImportState _value;
   // ignore: unused_field
-  final $Res Function(XpubImportState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? xpub = freezed,
-    Object? fingerPrint = freezed,
-    Object? path = freezed,
-    Object? errXpub = freezed,
-    Object? errFileImport = freezed,
-    Object? cameraOpened = freezed,
-    Object? detailsReady = freezed,
-    Object? clearJson = freezed,
+    Object? xpub = null,
+    Object? fingerPrint = null,
+    Object? path = null,
+    Object? errXpub = null,
+    Object? errFileImport = null,
+    Object? cameraOpened = null,
+    Object? detailsReady = null,
+    Object? clearJson = null,
     Object? importedJSONPath = freezed,
     Object? importedJSONfileName = freezed,
   }) {
     return _then(_value.copyWith(
-      xpub: xpub == freezed
+      xpub: null == xpub
           ? _value.xpub
           : xpub // ignore: cast_nullable_to_non_nullable
               as String,
-      fingerPrint: fingerPrint == freezed
+      fingerPrint: null == fingerPrint
           ? _value.fingerPrint
           : fingerPrint // ignore: cast_nullable_to_non_nullable
               as String,
-      path: path == freezed
+      path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
               as String,
-      errXpub: errXpub == freezed
+      errXpub: null == errXpub
           ? _value.errXpub
           : errXpub // ignore: cast_nullable_to_non_nullable
               as String,
-      errFileImport: errFileImport == freezed
+      errFileImport: null == errFileImport
           ? _value.errFileImport
           : errFileImport // ignore: cast_nullable_to_non_nullable
               as String,
-      cameraOpened: cameraOpened == freezed
+      cameraOpened: null == cameraOpened
           ? _value.cameraOpened
           : cameraOpened // ignore: cast_nullable_to_non_nullable
               as bool,
-      detailsReady: detailsReady == freezed
+      detailsReady: null == detailsReady
           ? _value.detailsReady
           : detailsReady // ignore: cast_nullable_to_non_nullable
               as bool,
-      clearJson: clearJson == freezed
+      clearJson: null == clearJson
           ? _value.clearJson
           : clearJson // ignore: cast_nullable_to_non_nullable
               as bool,
-      importedJSONPath: importedJSONPath == freezed
+      importedJSONPath: freezed == importedJSONPath
           ? _value.importedJSONPath
           : importedJSONPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      importedJSONfileName: importedJSONfileName == freezed
+      importedJSONfileName: freezed == importedJSONfileName
           ? _value.importedJSONfileName
           : importedJSONfileName // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -124,6 +127,7 @@ abstract class _$$_SeedImportXpubStateCopyWith<$Res>
           $Res Function(_$_SeedImportXpubState) then) =
       __$$_SeedImportXpubStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String xpub,
       String fingerPrint,
@@ -139,66 +143,64 @@ abstract class _$$_SeedImportXpubStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_SeedImportXpubStateCopyWithImpl<$Res>
-    extends _$XpubImportStateCopyWithImpl<$Res>
+    extends _$XpubImportStateCopyWithImpl<$Res, _$_SeedImportXpubState>
     implements _$$_SeedImportXpubStateCopyWith<$Res> {
   __$$_SeedImportXpubStateCopyWithImpl(_$_SeedImportXpubState _value,
       $Res Function(_$_SeedImportXpubState) _then)
-      : super(_value, (v) => _then(v as _$_SeedImportXpubState));
+      : super(_value, _then);
 
-  @override
-  _$_SeedImportXpubState get _value => super._value as _$_SeedImportXpubState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? xpub = freezed,
-    Object? fingerPrint = freezed,
-    Object? path = freezed,
-    Object? errXpub = freezed,
-    Object? errFileImport = freezed,
-    Object? cameraOpened = freezed,
-    Object? detailsReady = freezed,
-    Object? clearJson = freezed,
+    Object? xpub = null,
+    Object? fingerPrint = null,
+    Object? path = null,
+    Object? errXpub = null,
+    Object? errFileImport = null,
+    Object? cameraOpened = null,
+    Object? detailsReady = null,
+    Object? clearJson = null,
     Object? importedJSONPath = freezed,
     Object? importedJSONfileName = freezed,
   }) {
     return _then(_$_SeedImportXpubState(
-      xpub: xpub == freezed
+      xpub: null == xpub
           ? _value.xpub
           : xpub // ignore: cast_nullable_to_non_nullable
               as String,
-      fingerPrint: fingerPrint == freezed
+      fingerPrint: null == fingerPrint
           ? _value.fingerPrint
           : fingerPrint // ignore: cast_nullable_to_non_nullable
               as String,
-      path: path == freezed
+      path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
               as String,
-      errXpub: errXpub == freezed
+      errXpub: null == errXpub
           ? _value.errXpub
           : errXpub // ignore: cast_nullable_to_non_nullable
               as String,
-      errFileImport: errFileImport == freezed
+      errFileImport: null == errFileImport
           ? _value.errFileImport
           : errFileImport // ignore: cast_nullable_to_non_nullable
               as String,
-      cameraOpened: cameraOpened == freezed
+      cameraOpened: null == cameraOpened
           ? _value.cameraOpened
           : cameraOpened // ignore: cast_nullable_to_non_nullable
               as bool,
-      detailsReady: detailsReady == freezed
+      detailsReady: null == detailsReady
           ? _value.detailsReady
           : detailsReady // ignore: cast_nullable_to_non_nullable
               as bool,
-      clearJson: clearJson == freezed
+      clearJson: null == clearJson
           ? _value.clearJson
           : clearJson // ignore: cast_nullable_to_non_nullable
               as bool,
-      importedJSONPath: importedJSONPath == freezed
+      importedJSONPath: freezed == importedJSONPath
           ? _value.importedJSONPath
           : importedJSONPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      importedJSONfileName: importedJSONfileName == freezed
+      importedJSONfileName: freezed == importedJSONfileName
           ? _value.importedJSONfileName
           : importedJSONfileName // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -261,40 +263,42 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SeedImportXpubState &&
-            const DeepCollectionEquality().equals(other.xpub, xpub) &&
-            const DeepCollectionEquality()
-                .equals(other.fingerPrint, fingerPrint) &&
-            const DeepCollectionEquality().equals(other.path, path) &&
-            const DeepCollectionEquality().equals(other.errXpub, errXpub) &&
-            const DeepCollectionEquality()
-                .equals(other.errFileImport, errFileImport) &&
-            const DeepCollectionEquality()
-                .equals(other.cameraOpened, cameraOpened) &&
-            const DeepCollectionEquality()
-                .equals(other.detailsReady, detailsReady) &&
-            const DeepCollectionEquality().equals(other.clearJson, clearJson) &&
-            const DeepCollectionEquality()
-                .equals(other.importedJSONPath, importedJSONPath) &&
-            const DeepCollectionEquality()
-                .equals(other.importedJSONfileName, importedJSONfileName));
+            (identical(other.xpub, xpub) || other.xpub == xpub) &&
+            (identical(other.fingerPrint, fingerPrint) ||
+                other.fingerPrint == fingerPrint) &&
+            (identical(other.path, path) || other.path == path) &&
+            (identical(other.errXpub, errXpub) || other.errXpub == errXpub) &&
+            (identical(other.errFileImport, errFileImport) ||
+                other.errFileImport == errFileImport) &&
+            (identical(other.cameraOpened, cameraOpened) ||
+                other.cameraOpened == cameraOpened) &&
+            (identical(other.detailsReady, detailsReady) ||
+                other.detailsReady == detailsReady) &&
+            (identical(other.clearJson, clearJson) ||
+                other.clearJson == clearJson) &&
+            (identical(other.importedJSONPath, importedJSONPath) ||
+                other.importedJSONPath == importedJSONPath) &&
+            (identical(other.importedJSONfileName, importedJSONfileName) ||
+                other.importedJSONfileName == importedJSONfileName));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(xpub),
-      const DeepCollectionEquality().hash(fingerPrint),
-      const DeepCollectionEquality().hash(path),
-      const DeepCollectionEquality().hash(errXpub),
-      const DeepCollectionEquality().hash(errFileImport),
-      const DeepCollectionEquality().hash(cameraOpened),
-      const DeepCollectionEquality().hash(detailsReady),
-      const DeepCollectionEquality().hash(clearJson),
-      const DeepCollectionEquality().hash(importedJSONPath),
-      const DeepCollectionEquality().hash(importedJSONfileName));
+      xpub,
+      fingerPrint,
+      path,
+      errXpub,
+      errFileImport,
+      cameraOpened,
+      detailsReady,
+      clearJson,
+      importedJSONPath,
+      importedJSONfileName);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SeedImportXpubStateCopyWith<_$_SeedImportXpubState> get copyWith =>
       __$$_SeedImportXpubStateCopyWithImpl<_$_SeedImportXpubState>(
           this, _$identity);
@@ -315,25 +319,25 @@ abstract class _SeedImportXpubState extends XpubImportState {
   const _SeedImportXpubState._() : super._();
 
   @override
-  String get xpub => throw _privateConstructorUsedError;
+  String get xpub;
   @override
-  String get fingerPrint => throw _privateConstructorUsedError;
+  String get fingerPrint;
   @override
-  String get path => throw _privateConstructorUsedError;
+  String get path;
   @override
-  String get errXpub => throw _privateConstructorUsedError;
+  String get errXpub;
   @override
-  String get errFileImport => throw _privateConstructorUsedError;
+  String get errFileImport;
   @override
-  bool get cameraOpened => throw _privateConstructorUsedError;
+  bool get cameraOpened;
   @override
-  bool get detailsReady => throw _privateConstructorUsedError;
+  bool get detailsReady;
   @override
-  bool get clearJson => throw _privateConstructorUsedError;
+  bool get clearJson;
   @override
-  String? get importedJSONPath => throw _privateConstructorUsedError;
+  String? get importedJSONPath;
   @override
-  String? get importedJSONfileName => throw _privateConstructorUsedError;
+  String? get importedJSONfileName;
   @override
   @JsonKey(ignore: true)
   _$$_SeedImportXpubStateCopyWith<_$_SeedImportXpubState> get copyWith =>

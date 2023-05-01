@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'receive.dart';
 
@@ -31,7 +31,8 @@ mixin _$ReceiveState {
 abstract class $ReceiveStateCopyWith<$Res> {
   factory $ReceiveStateCopyWith(
           ReceiveState value, $Res Function(ReceiveState) then) =
-      _$ReceiveStateCopyWithImpl<$Res>;
+      _$ReceiveStateCopyWithImpl<$Res, ReceiveState>;
+  @useResult
   $Res call(
       {Wallet wallet,
       bool loadingAddress,
@@ -43,49 +44,53 @@ abstract class $ReceiveStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReceiveStateCopyWithImpl<$Res> implements $ReceiveStateCopyWith<$Res> {
+class _$ReceiveStateCopyWithImpl<$Res, $Val extends ReceiveState>
+    implements $ReceiveStateCopyWith<$Res> {
   _$ReceiveStateCopyWithImpl(this._value, this._then);
 
-  final ReceiveState _value;
   // ignore: unused_field
-  final $Res Function(ReceiveState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wallet = freezed,
-    Object? loadingAddress = freezed,
-    Object? errLoadingAddress = freezed,
-    Object? address = freezed,
-    Object? index = freezed,
+    Object? wallet = null,
+    Object? loadingAddress = null,
+    Object? errLoadingAddress = null,
+    Object? address = null,
+    Object? index = null,
   }) {
     return _then(_value.copyWith(
-      wallet: wallet == freezed
+      wallet: null == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as Wallet,
-      loadingAddress: loadingAddress == freezed
+      loadingAddress: null == loadingAddress
           ? _value.loadingAddress
           : loadingAddress // ignore: cast_nullable_to_non_nullable
               as bool,
-      errLoadingAddress: errLoadingAddress == freezed
+      errLoadingAddress: null == errLoadingAddress
           ? _value.errLoadingAddress
           : errLoadingAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      index: index == freezed
+      index: null == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $WalletCopyWith<$Res> get wallet {
     return $WalletCopyWith<$Res>(_value.wallet, (value) {
-      return _then(_value.copyWith(wallet: value));
+      return _then(_value.copyWith(wallet: value) as $Val);
     });
   }
 }
@@ -97,6 +102,7 @@ abstract class _$$_ReceiveStateCopyWith<$Res>
           _$_ReceiveState value, $Res Function(_$_ReceiveState) then) =
       __$$_ReceiveStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Wallet wallet,
       bool loadingAddress,
@@ -110,41 +116,39 @@ abstract class _$$_ReceiveStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_ReceiveStateCopyWithImpl<$Res>
-    extends _$ReceiveStateCopyWithImpl<$Res>
+    extends _$ReceiveStateCopyWithImpl<$Res, _$_ReceiveState>
     implements _$$_ReceiveStateCopyWith<$Res> {
   __$$_ReceiveStateCopyWithImpl(
       _$_ReceiveState _value, $Res Function(_$_ReceiveState) _then)
-      : super(_value, (v) => _then(v as _$_ReceiveState));
+      : super(_value, _then);
 
-  @override
-  _$_ReceiveState get _value => super._value as _$_ReceiveState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wallet = freezed,
-    Object? loadingAddress = freezed,
-    Object? errLoadingAddress = freezed,
-    Object? address = freezed,
-    Object? index = freezed,
+    Object? wallet = null,
+    Object? loadingAddress = null,
+    Object? errLoadingAddress = null,
+    Object? address = null,
+    Object? index = null,
   }) {
     return _then(_$_ReceiveState(
-      wallet: wallet == freezed
+      wallet: null == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as Wallet,
-      loadingAddress: loadingAddress == freezed
+      loadingAddress: null == loadingAddress
           ? _value.loadingAddress
           : loadingAddress // ignore: cast_nullable_to_non_nullable
               as bool,
-      errLoadingAddress: errLoadingAddress == freezed
+      errLoadingAddress: null == errLoadingAddress
           ? _value.errLoadingAddress
           : errLoadingAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      index: index == freezed
+      index: null == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
@@ -200,26 +204,22 @@ class _$_ReceiveState extends _ReceiveState with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ReceiveState &&
-            const DeepCollectionEquality().equals(other.wallet, wallet) &&
-            const DeepCollectionEquality()
-                .equals(other.loadingAddress, loadingAddress) &&
-            const DeepCollectionEquality()
-                .equals(other.errLoadingAddress, errLoadingAddress) &&
-            const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality().equals(other.index, index));
+            (identical(other.wallet, wallet) || other.wallet == wallet) &&
+            (identical(other.loadingAddress, loadingAddress) ||
+                other.loadingAddress == loadingAddress) &&
+            (identical(other.errLoadingAddress, errLoadingAddress) ||
+                other.errLoadingAddress == errLoadingAddress) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.index, index) || other.index == index));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(wallet),
-      const DeepCollectionEquality().hash(loadingAddress),
-      const DeepCollectionEquality().hash(errLoadingAddress),
-      const DeepCollectionEquality().hash(address),
-      const DeepCollectionEquality().hash(index));
+      runtimeType, wallet, loadingAddress, errLoadingAddress, address, index);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ReceiveStateCopyWith<_$_ReceiveState> get copyWith =>
       __$$_ReceiveStateCopyWithImpl<_$_ReceiveState>(this, _$identity);
 }
@@ -234,15 +234,15 @@ abstract class _ReceiveState extends ReceiveState {
   const _ReceiveState._() : super._();
 
   @override
-  Wallet get wallet => throw _privateConstructorUsedError;
+  Wallet get wallet;
   @override
-  bool get loadingAddress => throw _privateConstructorUsedError;
+  bool get loadingAddress;
   @override
-  String get errLoadingAddress => throw _privateConstructorUsedError;
+  String get errLoadingAddress;
   @override
-  String get address => throw _privateConstructorUsedError;
+  String get address;
   @override
-  int get index => throw _privateConstructorUsedError;
+  int get index;
   @override
   @JsonKey(ignore: true)
   _$$_ReceiveStateCopyWith<_$_ReceiveState> get copyWith =>

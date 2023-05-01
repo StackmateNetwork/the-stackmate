@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'wallets.dart';
 
@@ -30,7 +30,8 @@ mixin _$WalletsState {
 abstract class $WalletsStateCopyWith<$Res> {
   factory $WalletsStateCopyWith(
           WalletsState value, $Res Function(WalletsState) then) =
-      _$WalletsStateCopyWithImpl<$Res>;
+      _$WalletsStateCopyWithImpl<$Res, WalletsState>;
+  @useResult
   $Res call(
       {List<Wallet> wallets,
       Wallet? selectedWallet,
@@ -41,48 +42,52 @@ abstract class $WalletsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$WalletsStateCopyWithImpl<$Res> implements $WalletsStateCopyWith<$Res> {
+class _$WalletsStateCopyWithImpl<$Res, $Val extends WalletsState>
+    implements $WalletsStateCopyWith<$Res> {
   _$WalletsStateCopyWithImpl(this._value, this._then);
 
-  final WalletsState _value;
   // ignore: unused_field
-  final $Res Function(WalletsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wallets = freezed,
+    Object? wallets = null,
     Object? selectedWallet = freezed,
-    Object? toggler = freezed,
-    Object? errDeleting = freezed,
+    Object? toggler = null,
+    Object? errDeleting = null,
   }) {
     return _then(_value.copyWith(
-      wallets: wallets == freezed
+      wallets: null == wallets
           ? _value.wallets
           : wallets // ignore: cast_nullable_to_non_nullable
               as List<Wallet>,
-      selectedWallet: selectedWallet == freezed
+      selectedWallet: freezed == selectedWallet
           ? _value.selectedWallet
           : selectedWallet // ignore: cast_nullable_to_non_nullable
               as Wallet?,
-      toggler: toggler == freezed
+      toggler: null == toggler
           ? _value.toggler
           : toggler // ignore: cast_nullable_to_non_nullable
               as bool,
-      errDeleting: errDeleting == freezed
+      errDeleting: null == errDeleting
           ? _value.errDeleting
           : errDeleting // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $WalletCopyWith<$Res>? get selectedWallet {
     if (_value.selectedWallet == null) {
       return null;
     }
 
     return $WalletCopyWith<$Res>(_value.selectedWallet!, (value) {
-      return _then(_value.copyWith(selectedWallet: value));
+      return _then(_value.copyWith(selectedWallet: value) as $Val);
     });
   }
 }
@@ -94,6 +99,7 @@ abstract class _$$_WalletsStateCopyWith<$Res>
           _$_WalletsState value, $Res Function(_$_WalletsState) then) =
       __$$_WalletsStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<Wallet> wallets,
       Wallet? selectedWallet,
@@ -106,36 +112,34 @@ abstract class _$$_WalletsStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_WalletsStateCopyWithImpl<$Res>
-    extends _$WalletsStateCopyWithImpl<$Res>
+    extends _$WalletsStateCopyWithImpl<$Res, _$_WalletsState>
     implements _$$_WalletsStateCopyWith<$Res> {
   __$$_WalletsStateCopyWithImpl(
       _$_WalletsState _value, $Res Function(_$_WalletsState) _then)
-      : super(_value, (v) => _then(v as _$_WalletsState));
+      : super(_value, _then);
 
-  @override
-  _$_WalletsState get _value => super._value as _$_WalletsState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wallets = freezed,
+    Object? wallets = null,
     Object? selectedWallet = freezed,
-    Object? toggler = freezed,
-    Object? errDeleting = freezed,
+    Object? toggler = null,
+    Object? errDeleting = null,
   }) {
     return _then(_$_WalletsState(
-      wallets: wallets == freezed
+      wallets: null == wallets
           ? _value._wallets
           : wallets // ignore: cast_nullable_to_non_nullable
               as List<Wallet>,
-      selectedWallet: selectedWallet == freezed
+      selectedWallet: freezed == selectedWallet
           ? _value.selectedWallet
           : selectedWallet // ignore: cast_nullable_to_non_nullable
               as Wallet?,
-      toggler: toggler == freezed
+      toggler: null == toggler
           ? _value.toggler
           : toggler // ignore: cast_nullable_to_non_nullable
               as bool,
-      errDeleting: errDeleting == freezed
+      errDeleting: null == errDeleting
           ? _value.errDeleting
           : errDeleting // ignore: cast_nullable_to_non_nullable
               as String,
@@ -157,6 +161,7 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
   @override
   @JsonKey()
   List<Wallet> get wallets {
+    if (_wallets is EqualUnmodifiableListView) return _wallets;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_wallets);
   }
@@ -192,23 +197,24 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
         (other.runtimeType == runtimeType &&
             other is _$_WalletsState &&
             const DeepCollectionEquality().equals(other._wallets, _wallets) &&
-            const DeepCollectionEquality()
-                .equals(other.selectedWallet, selectedWallet) &&
-            const DeepCollectionEquality().equals(other.toggler, toggler) &&
-            const DeepCollectionEquality()
-                .equals(other.errDeleting, errDeleting));
+            (identical(other.selectedWallet, selectedWallet) ||
+                other.selectedWallet == selectedWallet) &&
+            (identical(other.toggler, toggler) || other.toggler == toggler) &&
+            (identical(other.errDeleting, errDeleting) ||
+                other.errDeleting == errDeleting));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_wallets),
-      const DeepCollectionEquality().hash(selectedWallet),
-      const DeepCollectionEquality().hash(toggler),
-      const DeepCollectionEquality().hash(errDeleting));
+      selectedWallet,
+      toggler,
+      errDeleting);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_WalletsStateCopyWith<_$_WalletsState> get copyWith =>
       __$$_WalletsStateCopyWithImpl<_$_WalletsState>(this, _$identity);
 }
@@ -221,13 +227,13 @@ abstract class _WalletsState implements WalletsState {
       final String errDeleting}) = _$_WalletsState;
 
   @override
-  List<Wallet> get wallets => throw _privateConstructorUsedError;
+  List<Wallet> get wallets;
   @override
-  Wallet? get selectedWallet => throw _privateConstructorUsedError;
+  Wallet? get selectedWallet;
   @override
-  bool get toggler => throw _privateConstructorUsedError;
+  bool get toggler;
   @override
-  String get errDeleting => throw _privateConstructorUsedError;
+  String get errDeleting;
   @override
   @JsonKey(ignore: true)
   _$$_WalletsStateCopyWith<_$_WalletsState> get copyWith =>

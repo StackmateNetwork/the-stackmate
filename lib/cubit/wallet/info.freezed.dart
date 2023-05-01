@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'info.dart';
 
@@ -40,7 +40,8 @@ mixin _$InfoState {
 /// @nodoc
 abstract class $InfoStateCopyWith<$Res> {
   factory $InfoStateCopyWith(InfoState value, $Res Function(InfoState) then) =
-      _$InfoStateCopyWithImpl<$Res>;
+      _$InfoStateCopyWithImpl<$Res, InfoState>;
+  @useResult
   $Res call(
       {Wallet wallet,
       bool loadingTransactions,
@@ -62,99 +63,103 @@ abstract class $InfoStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$InfoStateCopyWithImpl<$Res> implements $InfoStateCopyWith<$Res> {
+class _$InfoStateCopyWithImpl<$Res, $Val extends InfoState>
+    implements $InfoStateCopyWith<$Res> {
   _$InfoStateCopyWithImpl(this._value, this._then);
 
-  final InfoState _value;
   // ignore: unused_field
-  final $Res Function(InfoState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wallet = freezed,
-    Object? loadingTransactions = freezed,
-    Object? errLoadingTransactions = freezed,
-    Object? loadingBalance = freezed,
-    Object? errLoadingBalance = freezed,
-    Object? balance = freezed,
-    Object? uconfBalance = freezed,
-    Object? transactions = freezed,
-    Object? errDeleting = freezed,
-    Object? deleted = freezed,
-    Object? showInfo = freezed,
-    Object? currentHeight = freezed,
-    Object? passPhraseTest = freezed,
-    Object? ppTestPassed = freezed,
-    Object? errorPPTest = freezed,
+    Object? wallet = null,
+    Object? loadingTransactions = null,
+    Object? errLoadingTransactions = null,
+    Object? loadingBalance = null,
+    Object? errLoadingBalance = null,
+    Object? balance = null,
+    Object? uconfBalance = null,
+    Object? transactions = null,
+    Object? errDeleting = null,
+    Object? deleted = null,
+    Object? showInfo = null,
+    Object? currentHeight = null,
+    Object? passPhraseTest = null,
+    Object? ppTestPassed = null,
+    Object? errorPPTest = null,
   }) {
     return _then(_value.copyWith(
-      wallet: wallet == freezed
+      wallet: null == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as Wallet,
-      loadingTransactions: loadingTransactions == freezed
+      loadingTransactions: null == loadingTransactions
           ? _value.loadingTransactions
           : loadingTransactions // ignore: cast_nullable_to_non_nullable
               as bool,
-      errLoadingTransactions: errLoadingTransactions == freezed
+      errLoadingTransactions: null == errLoadingTransactions
           ? _value.errLoadingTransactions
           : errLoadingTransactions // ignore: cast_nullable_to_non_nullable
               as String,
-      loadingBalance: loadingBalance == freezed
+      loadingBalance: null == loadingBalance
           ? _value.loadingBalance
           : loadingBalance // ignore: cast_nullable_to_non_nullable
               as bool,
-      errLoadingBalance: errLoadingBalance == freezed
+      errLoadingBalance: null == errLoadingBalance
           ? _value.errLoadingBalance
           : errLoadingBalance // ignore: cast_nullable_to_non_nullable
               as String,
-      balance: balance == freezed
+      balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int,
-      uconfBalance: uconfBalance == freezed
+      uconfBalance: null == uconfBalance
           ? _value.uconfBalance
           : uconfBalance // ignore: cast_nullable_to_non_nullable
               as int,
-      transactions: transactions == freezed
+      transactions: null == transactions
           ? _value.transactions
           : transactions // ignore: cast_nullable_to_non_nullable
               as List<Transaction>,
-      errDeleting: errDeleting == freezed
+      errDeleting: null == errDeleting
           ? _value.errDeleting
           : errDeleting // ignore: cast_nullable_to_non_nullable
               as String,
-      deleted: deleted == freezed
+      deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool,
-      showInfo: showInfo == freezed
+      showInfo: null == showInfo
           ? _value.showInfo
           : showInfo // ignore: cast_nullable_to_non_nullable
               as bool,
-      currentHeight: currentHeight == freezed
+      currentHeight: null == currentHeight
           ? _value.currentHeight
           : currentHeight // ignore: cast_nullable_to_non_nullable
               as int,
-      passPhraseTest: passPhraseTest == freezed
+      passPhraseTest: null == passPhraseTest
           ? _value.passPhraseTest
           : passPhraseTest // ignore: cast_nullable_to_non_nullable
               as String,
-      ppTestPassed: ppTestPassed == freezed
+      ppTestPassed: null == ppTestPassed
           ? _value.ppTestPassed
           : ppTestPassed // ignore: cast_nullable_to_non_nullable
               as bool,
-      errorPPTest: errorPPTest == freezed
+      errorPPTest: null == errorPPTest
           ? _value.errorPPTest
           : errorPPTest // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $WalletCopyWith<$Res> get wallet {
     return $WalletCopyWith<$Res>(_value.wallet, (value) {
-      return _then(_value.copyWith(wallet: value));
+      return _then(_value.copyWith(wallet: value) as $Val);
     });
   }
 }
@@ -165,6 +170,7 @@ abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
           _$_InfoState value, $Res Function(_$_InfoState) then) =
       __$$_InfoStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Wallet wallet,
       bool loadingTransactions,
@@ -187,91 +193,90 @@ abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_InfoStateCopyWithImpl<$Res> extends _$InfoStateCopyWithImpl<$Res>
+class __$$_InfoStateCopyWithImpl<$Res>
+    extends _$InfoStateCopyWithImpl<$Res, _$_InfoState>
     implements _$$_InfoStateCopyWith<$Res> {
   __$$_InfoStateCopyWithImpl(
       _$_InfoState _value, $Res Function(_$_InfoState) _then)
-      : super(_value, (v) => _then(v as _$_InfoState));
+      : super(_value, _then);
 
-  @override
-  _$_InfoState get _value => super._value as _$_InfoState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wallet = freezed,
-    Object? loadingTransactions = freezed,
-    Object? errLoadingTransactions = freezed,
-    Object? loadingBalance = freezed,
-    Object? errLoadingBalance = freezed,
-    Object? balance = freezed,
-    Object? uconfBalance = freezed,
-    Object? transactions = freezed,
-    Object? errDeleting = freezed,
-    Object? deleted = freezed,
-    Object? showInfo = freezed,
-    Object? currentHeight = freezed,
-    Object? passPhraseTest = freezed,
-    Object? ppTestPassed = freezed,
-    Object? errorPPTest = freezed,
+    Object? wallet = null,
+    Object? loadingTransactions = null,
+    Object? errLoadingTransactions = null,
+    Object? loadingBalance = null,
+    Object? errLoadingBalance = null,
+    Object? balance = null,
+    Object? uconfBalance = null,
+    Object? transactions = null,
+    Object? errDeleting = null,
+    Object? deleted = null,
+    Object? showInfo = null,
+    Object? currentHeight = null,
+    Object? passPhraseTest = null,
+    Object? ppTestPassed = null,
+    Object? errorPPTest = null,
   }) {
     return _then(_$_InfoState(
-      wallet: wallet == freezed
+      wallet: null == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as Wallet,
-      loadingTransactions: loadingTransactions == freezed
+      loadingTransactions: null == loadingTransactions
           ? _value.loadingTransactions
           : loadingTransactions // ignore: cast_nullable_to_non_nullable
               as bool,
-      errLoadingTransactions: errLoadingTransactions == freezed
+      errLoadingTransactions: null == errLoadingTransactions
           ? _value.errLoadingTransactions
           : errLoadingTransactions // ignore: cast_nullable_to_non_nullable
               as String,
-      loadingBalance: loadingBalance == freezed
+      loadingBalance: null == loadingBalance
           ? _value.loadingBalance
           : loadingBalance // ignore: cast_nullable_to_non_nullable
               as bool,
-      errLoadingBalance: errLoadingBalance == freezed
+      errLoadingBalance: null == errLoadingBalance
           ? _value.errLoadingBalance
           : errLoadingBalance // ignore: cast_nullable_to_non_nullable
               as String,
-      balance: balance == freezed
+      balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int,
-      uconfBalance: uconfBalance == freezed
+      uconfBalance: null == uconfBalance
           ? _value.uconfBalance
           : uconfBalance // ignore: cast_nullable_to_non_nullable
               as int,
-      transactions: transactions == freezed
+      transactions: null == transactions
           ? _value._transactions
           : transactions // ignore: cast_nullable_to_non_nullable
               as List<Transaction>,
-      errDeleting: errDeleting == freezed
+      errDeleting: null == errDeleting
           ? _value.errDeleting
           : errDeleting // ignore: cast_nullable_to_non_nullable
               as String,
-      deleted: deleted == freezed
+      deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool,
-      showInfo: showInfo == freezed
+      showInfo: null == showInfo
           ? _value.showInfo
           : showInfo // ignore: cast_nullable_to_non_nullable
               as bool,
-      currentHeight: currentHeight == freezed
+      currentHeight: null == currentHeight
           ? _value.currentHeight
           : currentHeight // ignore: cast_nullable_to_non_nullable
               as int,
-      passPhraseTest: passPhraseTest == freezed
+      passPhraseTest: null == passPhraseTest
           ? _value.passPhraseTest
           : passPhraseTest // ignore: cast_nullable_to_non_nullable
               as String,
-      ppTestPassed: ppTestPassed == freezed
+      ppTestPassed: null == ppTestPassed
           ? _value.ppTestPassed
           : ppTestPassed // ignore: cast_nullable_to_non_nullable
               as bool,
-      errorPPTest: errorPPTest == freezed
+      errorPPTest: null == errorPPTest
           ? _value.errorPPTest
           : errorPPTest // ignore: cast_nullable_to_non_nullable
               as String,
@@ -325,6 +330,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   List<Transaction> get transactions {
+    if (_transactions is EqualUnmodifiableListView) return _transactions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_transactions);
   }
@@ -384,55 +390,57 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_InfoState &&
-            const DeepCollectionEquality().equals(other.wallet, wallet) &&
-            const DeepCollectionEquality()
-                .equals(other.loadingTransactions, loadingTransactions) &&
-            const DeepCollectionEquality()
-                .equals(other.errLoadingTransactions, errLoadingTransactions) &&
-            const DeepCollectionEquality()
-                .equals(other.loadingBalance, loadingBalance) &&
-            const DeepCollectionEquality()
-                .equals(other.errLoadingBalance, errLoadingBalance) &&
-            const DeepCollectionEquality().equals(other.balance, balance) &&
-            const DeepCollectionEquality()
-                .equals(other.uconfBalance, uconfBalance) &&
+            (identical(other.wallet, wallet) || other.wallet == wallet) &&
+            (identical(other.loadingTransactions, loadingTransactions) ||
+                other.loadingTransactions == loadingTransactions) &&
+            (identical(other.errLoadingTransactions, errLoadingTransactions) ||
+                other.errLoadingTransactions == errLoadingTransactions) &&
+            (identical(other.loadingBalance, loadingBalance) ||
+                other.loadingBalance == loadingBalance) &&
+            (identical(other.errLoadingBalance, errLoadingBalance) ||
+                other.errLoadingBalance == errLoadingBalance) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.uconfBalance, uconfBalance) ||
+                other.uconfBalance == uconfBalance) &&
             const DeepCollectionEquality()
                 .equals(other._transactions, _transactions) &&
-            const DeepCollectionEquality()
-                .equals(other.errDeleting, errDeleting) &&
-            const DeepCollectionEquality().equals(other.deleted, deleted) &&
-            const DeepCollectionEquality().equals(other.showInfo, showInfo) &&
-            const DeepCollectionEquality()
-                .equals(other.currentHeight, currentHeight) &&
-            const DeepCollectionEquality()
-                .equals(other.passPhraseTest, passPhraseTest) &&
-            const DeepCollectionEquality()
-                .equals(other.ppTestPassed, ppTestPassed) &&
-            const DeepCollectionEquality()
-                .equals(other.errorPPTest, errorPPTest));
+            (identical(other.errDeleting, errDeleting) ||
+                other.errDeleting == errDeleting) &&
+            (identical(other.deleted, deleted) || other.deleted == deleted) &&
+            (identical(other.showInfo, showInfo) ||
+                other.showInfo == showInfo) &&
+            (identical(other.currentHeight, currentHeight) ||
+                other.currentHeight == currentHeight) &&
+            (identical(other.passPhraseTest, passPhraseTest) ||
+                other.passPhraseTest == passPhraseTest) &&
+            (identical(other.ppTestPassed, ppTestPassed) ||
+                other.ppTestPassed == ppTestPassed) &&
+            (identical(other.errorPPTest, errorPPTest) ||
+                other.errorPPTest == errorPPTest));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(wallet),
-      const DeepCollectionEquality().hash(loadingTransactions),
-      const DeepCollectionEquality().hash(errLoadingTransactions),
-      const DeepCollectionEquality().hash(loadingBalance),
-      const DeepCollectionEquality().hash(errLoadingBalance),
-      const DeepCollectionEquality().hash(balance),
-      const DeepCollectionEquality().hash(uconfBalance),
+      wallet,
+      loadingTransactions,
+      errLoadingTransactions,
+      loadingBalance,
+      errLoadingBalance,
+      balance,
+      uconfBalance,
       const DeepCollectionEquality().hash(_transactions),
-      const DeepCollectionEquality().hash(errDeleting),
-      const DeepCollectionEquality().hash(deleted),
-      const DeepCollectionEquality().hash(showInfo),
-      const DeepCollectionEquality().hash(currentHeight),
-      const DeepCollectionEquality().hash(passPhraseTest),
-      const DeepCollectionEquality().hash(ppTestPassed),
-      const DeepCollectionEquality().hash(errorPPTest));
+      errDeleting,
+      deleted,
+      showInfo,
+      currentHeight,
+      passPhraseTest,
+      ppTestPassed,
+      errorPPTest);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InfoStateCopyWith<_$_InfoState> get copyWith =>
       __$$_InfoStateCopyWithImpl<_$_InfoState>(this, _$identity);
 }
@@ -457,35 +465,35 @@ abstract class _InfoState extends InfoState {
   const _InfoState._() : super._();
 
   @override
-  Wallet get wallet => throw _privateConstructorUsedError;
+  Wallet get wallet;
   @override
-  bool get loadingTransactions => throw _privateConstructorUsedError;
+  bool get loadingTransactions;
   @override
-  String get errLoadingTransactions => throw _privateConstructorUsedError;
+  String get errLoadingTransactions;
   @override
-  bool get loadingBalance => throw _privateConstructorUsedError;
+  bool get loadingBalance;
   @override
-  String get errLoadingBalance => throw _privateConstructorUsedError;
+  String get errLoadingBalance;
   @override
-  int get balance => throw _privateConstructorUsedError;
+  int get balance;
   @override
-  int get uconfBalance => throw _privateConstructorUsedError;
+  int get uconfBalance;
   @override
-  List<Transaction> get transactions => throw _privateConstructorUsedError;
+  List<Transaction> get transactions;
   @override
-  String get errDeleting => throw _privateConstructorUsedError;
+  String get errDeleting;
   @override
-  bool get deleted => throw _privateConstructorUsedError;
+  bool get deleted;
   @override
-  bool get showInfo => throw _privateConstructorUsedError;
+  bool get showInfo;
   @override
-  int get currentHeight => throw _privateConstructorUsedError;
+  int get currentHeight;
   @override
-  String get passPhraseTest => throw _privateConstructorUsedError;
+  String get passPhraseTest;
   @override
-  bool get ppTestPassed => throw _privateConstructorUsedError;
+  bool get ppTestPassed;
   @override
-  String get errorPPTest => throw _privateConstructorUsedError;
+  String get errorPPTest;
   @override
   @JsonKey(ignore: true)
   _$$_InfoStateCopyWith<_$_InfoState> get copyWith =>

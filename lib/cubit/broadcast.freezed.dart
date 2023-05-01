@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'broadcast.dart';
 
@@ -37,7 +37,8 @@ mixin _$BroadcastState {
 abstract class $BroadcastStateCopyWith<$Res> {
   factory $BroadcastStateCopyWith(
           BroadcastState value, $Res Function(BroadcastState) then) =
-      _$BroadcastStateCopyWithImpl<$Res>;
+      _$BroadcastStateCopyWithImpl<$Res, BroadcastState>;
+  @useResult
   $Res call(
       {bool broadcasting,
       String errBroadcasting,
@@ -53,74 +54,76 @@ abstract class $BroadcastStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BroadcastStateCopyWithImpl<$Res>
+class _$BroadcastStateCopyWithImpl<$Res, $Val extends BroadcastState>
     implements $BroadcastStateCopyWith<$Res> {
   _$BroadcastStateCopyWithImpl(this._value, this._then);
 
-  final BroadcastState _value;
   // ignore: unused_field
-  final $Res Function(BroadcastState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? broadcasting = freezed,
-    Object? errBroadcasting = freezed,
-    Object? psbt = freezed,
-    Object? hex = freezed,
-    Object? txId = freezed,
-    Object? errFileImport = freezed,
-    Object? clearData = freezed,
+    Object? broadcasting = null,
+    Object? errBroadcasting = null,
+    Object? psbt = null,
+    Object? hex = null,
+    Object? txId = null,
+    Object? errFileImport = null,
+    Object? clearData = null,
     Object? importedPsbtPath = freezed,
     Object? importedPsbtfileName = freezed,
     Object? importedHexPath = freezed,
     Object? importedHexfileName = freezed,
   }) {
     return _then(_value.copyWith(
-      broadcasting: broadcasting == freezed
+      broadcasting: null == broadcasting
           ? _value.broadcasting
           : broadcasting // ignore: cast_nullable_to_non_nullable
               as bool,
-      errBroadcasting: errBroadcasting == freezed
+      errBroadcasting: null == errBroadcasting
           ? _value.errBroadcasting
           : errBroadcasting // ignore: cast_nullable_to_non_nullable
               as String,
-      psbt: psbt == freezed
+      psbt: null == psbt
           ? _value.psbt
           : psbt // ignore: cast_nullable_to_non_nullable
               as String,
-      hex: hex == freezed
+      hex: null == hex
           ? _value.hex
           : hex // ignore: cast_nullable_to_non_nullable
               as String,
-      txId: txId == freezed
+      txId: null == txId
           ? _value.txId
           : txId // ignore: cast_nullable_to_non_nullable
               as String,
-      errFileImport: errFileImport == freezed
+      errFileImport: null == errFileImport
           ? _value.errFileImport
           : errFileImport // ignore: cast_nullable_to_non_nullable
               as String,
-      clearData: clearData == freezed
+      clearData: null == clearData
           ? _value.clearData
           : clearData // ignore: cast_nullable_to_non_nullable
               as bool,
-      importedPsbtPath: importedPsbtPath == freezed
+      importedPsbtPath: freezed == importedPsbtPath
           ? _value.importedPsbtPath
           : importedPsbtPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      importedPsbtfileName: importedPsbtfileName == freezed
+      importedPsbtfileName: freezed == importedPsbtfileName
           ? _value.importedPsbtfileName
           : importedPsbtfileName // ignore: cast_nullable_to_non_nullable
               as String?,
-      importedHexPath: importedHexPath == freezed
+      importedHexPath: freezed == importedHexPath
           ? _value.importedHexPath
           : importedHexPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      importedHexfileName: importedHexfileName == freezed
+      importedHexfileName: freezed == importedHexfileName
           ? _value.importedHexfileName
           : importedHexfileName // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -131,6 +134,7 @@ abstract class _$$_BroadcastStateCopyWith<$Res>
           _$_BroadcastState value, $Res Function(_$_BroadcastState) then) =
       __$$_BroadcastStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {bool broadcasting,
       String errBroadcasting,
@@ -147,71 +151,69 @@ abstract class _$$_BroadcastStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_BroadcastStateCopyWithImpl<$Res>
-    extends _$BroadcastStateCopyWithImpl<$Res>
+    extends _$BroadcastStateCopyWithImpl<$Res, _$_BroadcastState>
     implements _$$_BroadcastStateCopyWith<$Res> {
   __$$_BroadcastStateCopyWithImpl(
       _$_BroadcastState _value, $Res Function(_$_BroadcastState) _then)
-      : super(_value, (v) => _then(v as _$_BroadcastState));
+      : super(_value, _then);
 
-  @override
-  _$_BroadcastState get _value => super._value as _$_BroadcastState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? broadcasting = freezed,
-    Object? errBroadcasting = freezed,
-    Object? psbt = freezed,
-    Object? hex = freezed,
-    Object? txId = freezed,
-    Object? errFileImport = freezed,
-    Object? clearData = freezed,
+    Object? broadcasting = null,
+    Object? errBroadcasting = null,
+    Object? psbt = null,
+    Object? hex = null,
+    Object? txId = null,
+    Object? errFileImport = null,
+    Object? clearData = null,
     Object? importedPsbtPath = freezed,
     Object? importedPsbtfileName = freezed,
     Object? importedHexPath = freezed,
     Object? importedHexfileName = freezed,
   }) {
     return _then(_$_BroadcastState(
-      broadcasting: broadcasting == freezed
+      broadcasting: null == broadcasting
           ? _value.broadcasting
           : broadcasting // ignore: cast_nullable_to_non_nullable
               as bool,
-      errBroadcasting: errBroadcasting == freezed
+      errBroadcasting: null == errBroadcasting
           ? _value.errBroadcasting
           : errBroadcasting // ignore: cast_nullable_to_non_nullable
               as String,
-      psbt: psbt == freezed
+      psbt: null == psbt
           ? _value.psbt
           : psbt // ignore: cast_nullable_to_non_nullable
               as String,
-      hex: hex == freezed
+      hex: null == hex
           ? _value.hex
           : hex // ignore: cast_nullable_to_non_nullable
               as String,
-      txId: txId == freezed
+      txId: null == txId
           ? _value.txId
           : txId // ignore: cast_nullable_to_non_nullable
               as String,
-      errFileImport: errFileImport == freezed
+      errFileImport: null == errFileImport
           ? _value.errFileImport
           : errFileImport // ignore: cast_nullable_to_non_nullable
               as String,
-      clearData: clearData == freezed
+      clearData: null == clearData
           ? _value.clearData
           : clearData // ignore: cast_nullable_to_non_nullable
               as bool,
-      importedPsbtPath: importedPsbtPath == freezed
+      importedPsbtPath: freezed == importedPsbtPath
           ? _value.importedPsbtPath
           : importedPsbtPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      importedPsbtfileName: importedPsbtfileName == freezed
+      importedPsbtfileName: freezed == importedPsbtfileName
           ? _value.importedPsbtfileName
           : importedPsbtfileName // ignore: cast_nullable_to_non_nullable
               as String?,
-      importedHexPath: importedHexPath == freezed
+      importedHexPath: freezed == importedHexPath
           ? _value.importedHexPath
           : importedHexPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      importedHexfileName: importedHexfileName == freezed
+      importedHexfileName: freezed == importedHexfileName
           ? _value.importedHexfileName
           : importedHexfileName // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -294,43 +296,45 @@ class _$_BroadcastState extends _BroadcastState with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BroadcastState &&
-            const DeepCollectionEquality()
-                .equals(other.broadcasting, broadcasting) &&
-            const DeepCollectionEquality()
-                .equals(other.errBroadcasting, errBroadcasting) &&
-            const DeepCollectionEquality().equals(other.psbt, psbt) &&
-            const DeepCollectionEquality().equals(other.hex, hex) &&
-            const DeepCollectionEquality().equals(other.txId, txId) &&
-            const DeepCollectionEquality()
-                .equals(other.errFileImport, errFileImport) &&
-            const DeepCollectionEquality().equals(other.clearData, clearData) &&
-            const DeepCollectionEquality()
-                .equals(other.importedPsbtPath, importedPsbtPath) &&
-            const DeepCollectionEquality()
-                .equals(other.importedPsbtfileName, importedPsbtfileName) &&
-            const DeepCollectionEquality()
-                .equals(other.importedHexPath, importedHexPath) &&
-            const DeepCollectionEquality()
-                .equals(other.importedHexfileName, importedHexfileName));
+            (identical(other.broadcasting, broadcasting) ||
+                other.broadcasting == broadcasting) &&
+            (identical(other.errBroadcasting, errBroadcasting) ||
+                other.errBroadcasting == errBroadcasting) &&
+            (identical(other.psbt, psbt) || other.psbt == psbt) &&
+            (identical(other.hex, hex) || other.hex == hex) &&
+            (identical(other.txId, txId) || other.txId == txId) &&
+            (identical(other.errFileImport, errFileImport) ||
+                other.errFileImport == errFileImport) &&
+            (identical(other.clearData, clearData) ||
+                other.clearData == clearData) &&
+            (identical(other.importedPsbtPath, importedPsbtPath) ||
+                other.importedPsbtPath == importedPsbtPath) &&
+            (identical(other.importedPsbtfileName, importedPsbtfileName) ||
+                other.importedPsbtfileName == importedPsbtfileName) &&
+            (identical(other.importedHexPath, importedHexPath) ||
+                other.importedHexPath == importedHexPath) &&
+            (identical(other.importedHexfileName, importedHexfileName) ||
+                other.importedHexfileName == importedHexfileName));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(broadcasting),
-      const DeepCollectionEquality().hash(errBroadcasting),
-      const DeepCollectionEquality().hash(psbt),
-      const DeepCollectionEquality().hash(hex),
-      const DeepCollectionEquality().hash(txId),
-      const DeepCollectionEquality().hash(errFileImport),
-      const DeepCollectionEquality().hash(clearData),
-      const DeepCollectionEquality().hash(importedPsbtPath),
-      const DeepCollectionEquality().hash(importedPsbtfileName),
-      const DeepCollectionEquality().hash(importedHexPath),
-      const DeepCollectionEquality().hash(importedHexfileName));
+      broadcasting,
+      errBroadcasting,
+      psbt,
+      hex,
+      txId,
+      errFileImport,
+      clearData,
+      importedPsbtPath,
+      importedPsbtfileName,
+      importedHexPath,
+      importedHexfileName);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BroadcastStateCopyWith<_$_BroadcastState> get copyWith =>
       __$$_BroadcastStateCopyWithImpl<_$_BroadcastState>(this, _$identity);
 }
@@ -351,27 +355,27 @@ abstract class _BroadcastState extends BroadcastState {
   const _BroadcastState._() : super._();
 
   @override
-  bool get broadcasting => throw _privateConstructorUsedError;
+  bool get broadcasting;
   @override
-  String get errBroadcasting => throw _privateConstructorUsedError;
+  String get errBroadcasting;
   @override
-  String get psbt => throw _privateConstructorUsedError;
+  String get psbt;
   @override
-  String get hex => throw _privateConstructorUsedError;
+  String get hex;
   @override
-  String get txId => throw _privateConstructorUsedError;
+  String get txId;
   @override
-  String get errFileImport => throw _privateConstructorUsedError;
+  String get errFileImport;
   @override
-  bool get clearData => throw _privateConstructorUsedError;
+  bool get clearData;
   @override
-  String? get importedPsbtPath => throw _privateConstructorUsedError;
+  String? get importedPsbtPath;
   @override
-  String? get importedPsbtfileName => throw _privateConstructorUsedError;
+  String? get importedPsbtfileName;
   @override
-  String? get importedHexPath => throw _privateConstructorUsedError;
+  String? get importedHexPath;
   @override
-  String? get importedHexfileName => throw _privateConstructorUsedError;
+  String? get importedHexfileName;
   @override
   @JsonKey(ignore: true)
   _$$_BroadcastStateCopyWith<_$_BroadcastState> get copyWith =>

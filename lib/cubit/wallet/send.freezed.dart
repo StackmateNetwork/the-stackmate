@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'send.dart';
 
@@ -53,7 +53,8 @@ mixin _$SendState {
 /// @nodoc
 abstract class $SendStateCopyWith<$Res> {
   factory $SendStateCopyWith(SendState value, $Res Function(SendState) then) =
-      _$SendStateCopyWithImpl<$Res>;
+      _$SendStateCopyWithImpl<$Res, SendState>;
+  @useResult
   $Res call(
       {Wallet wallet,
       SendSteps currentStep,
@@ -88,164 +89,168 @@ abstract class $SendStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SendStateCopyWithImpl<$Res> implements $SendStateCopyWith<$Res> {
+class _$SendStateCopyWithImpl<$Res, $Val extends SendState>
+    implements $SendStateCopyWith<$Res> {
   _$SendStateCopyWithImpl(this._value, this._then);
 
-  final SendState _value;
   // ignore: unused_field
-  final $Res Function(SendState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wallet = freezed,
-    Object? currentStep = freezed,
-    Object? loadingStart = freezed,
-    Object? calculatingFees = freezed,
-    Object? buildingTx = freezed,
-    Object? sendingTx = freezed,
+    Object? wallet = null,
+    Object? currentStep = null,
+    Object? loadingStart = null,
+    Object? calculatingFees = null,
+    Object? buildingTx = null,
+    Object? sendingTx = null,
     Object? permissionGranted = freezed,
-    Object? errLoading = freezed,
-    Object? errAddress = freezed,
-    Object? errSending = freezed,
-    Object? errAmount = freezed,
-    Object? errFees = freezed,
-    Object? policyPath = freezed,
-    Object? txOutputs = freezed,
-    Object? address = freezed,
-    Object? amount = freezed,
-    Object? weight = freezed,
-    Object? fees = freezed,
+    Object? errLoading = null,
+    Object? errAddress = null,
+    Object? errSending = null,
+    Object? errAmount = null,
+    Object? errFees = null,
+    Object? policyPath = null,
+    Object? txOutputs = null,
+    Object? address = null,
+    Object? amount = null,
+    Object? weight = null,
+    Object? fees = null,
     Object? feeSlow = freezed,
     Object? feeMedium = freezed,
     Object? feeFast = freezed,
     Object? balance = freezed,
-    Object? feesOption = freezed,
-    Object? psbt = freezed,
-    Object? txId = freezed,
+    Object? feesOption = null,
+    Object? psbt = null,
+    Object? txId = null,
     Object? finalFee = freezed,
     Object? finalAmount = freezed,
-    Object? sweepWallet = freezed,
+    Object? sweepWallet = null,
   }) {
     return _then(_value.copyWith(
-      wallet: wallet == freezed
+      wallet: null == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as Wallet,
-      currentStep: currentStep == freezed
+      currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as SendSteps,
-      loadingStart: loadingStart == freezed
+      loadingStart: null == loadingStart
           ? _value.loadingStart
           : loadingStart // ignore: cast_nullable_to_non_nullable
               as bool,
-      calculatingFees: calculatingFees == freezed
+      calculatingFees: null == calculatingFees
           ? _value.calculatingFees
           : calculatingFees // ignore: cast_nullable_to_non_nullable
               as bool,
-      buildingTx: buildingTx == freezed
+      buildingTx: null == buildingTx
           ? _value.buildingTx
           : buildingTx // ignore: cast_nullable_to_non_nullable
               as bool,
-      sendingTx: sendingTx == freezed
+      sendingTx: null == sendingTx
           ? _value.sendingTx
           : sendingTx // ignore: cast_nullable_to_non_nullable
               as bool,
-      permissionGranted: permissionGranted == freezed
+      permissionGranted: freezed == permissionGranted
           ? _value.permissionGranted
           : permissionGranted // ignore: cast_nullable_to_non_nullable
               as bool?,
-      errLoading: errLoading == freezed
+      errLoading: null == errLoading
           ? _value.errLoading
           : errLoading // ignore: cast_nullable_to_non_nullable
               as String,
-      errAddress: errAddress == freezed
+      errAddress: null == errAddress
           ? _value.errAddress
           : errAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      errSending: errSending == freezed
+      errSending: null == errSending
           ? _value.errSending
           : errSending // ignore: cast_nullable_to_non_nullable
               as String,
-      errAmount: errAmount == freezed
+      errAmount: null == errAmount
           ? _value.errAmount
           : errAmount // ignore: cast_nullable_to_non_nullable
               as String,
-      errFees: errFees == freezed
+      errFees: null == errFees
           ? _value.errFees
           : errFees // ignore: cast_nullable_to_non_nullable
               as String,
-      policyPath: policyPath == freezed
+      policyPath: null == policyPath
           ? _value.policyPath
           : policyPath // ignore: cast_nullable_to_non_nullable
               as String,
-      txOutputs: txOutputs == freezed
+      txOutputs: null == txOutputs
           ? _value.txOutputs
           : txOutputs // ignore: cast_nullable_to_non_nullable
               as String,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String,
-      weight: weight == freezed
+      weight: null == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as int,
-      fees: fees == freezed
+      fees: null == fees
           ? _value.fees
           : fees // ignore: cast_nullable_to_non_nullable
               as String,
-      feeSlow: feeSlow == freezed
+      feeSlow: freezed == feeSlow
           ? _value.feeSlow
           : feeSlow // ignore: cast_nullable_to_non_nullable
               as int?,
-      feeMedium: feeMedium == freezed
+      feeMedium: freezed == feeMedium
           ? _value.feeMedium
           : feeMedium // ignore: cast_nullable_to_non_nullable
               as int?,
-      feeFast: feeFast == freezed
+      feeFast: freezed == feeFast
           ? _value.feeFast
           : feeFast // ignore: cast_nullable_to_non_nullable
               as int?,
-      balance: balance == freezed
+      balance: freezed == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int?,
-      feesOption: feesOption == freezed
+      feesOption: null == feesOption
           ? _value.feesOption
           : feesOption // ignore: cast_nullable_to_non_nullable
               as int,
-      psbt: psbt == freezed
+      psbt: null == psbt
           ? _value.psbt
           : psbt // ignore: cast_nullable_to_non_nullable
               as String,
-      txId: txId == freezed
+      txId: null == txId
           ? _value.txId
           : txId // ignore: cast_nullable_to_non_nullable
               as String,
-      finalFee: finalFee == freezed
+      finalFee: freezed == finalFee
           ? _value.finalFee
           : finalFee // ignore: cast_nullable_to_non_nullable
               as int?,
-      finalAmount: finalAmount == freezed
+      finalAmount: freezed == finalAmount
           ? _value.finalAmount
           : finalAmount // ignore: cast_nullable_to_non_nullable
               as int?,
-      sweepWallet: sweepWallet == freezed
+      sweepWallet: null == sweepWallet
           ? _value.sweepWallet
           : sweepWallet // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $WalletCopyWith<$Res> get wallet {
     return $WalletCopyWith<$Res>(_value.wallet, (value) {
-      return _then(_value.copyWith(wallet: value));
+      return _then(_value.copyWith(wallet: value) as $Val);
     });
   }
 }
@@ -256,6 +261,7 @@ abstract class _$$_SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
           _$_SendState value, $Res Function(_$_SendState) then) =
       __$$_SendStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Wallet wallet,
       SendSteps currentStep,
@@ -291,156 +297,155 @@ abstract class _$$_SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SendStateCopyWithImpl<$Res> extends _$SendStateCopyWithImpl<$Res>
+class __$$_SendStateCopyWithImpl<$Res>
+    extends _$SendStateCopyWithImpl<$Res, _$_SendState>
     implements _$$_SendStateCopyWith<$Res> {
   __$$_SendStateCopyWithImpl(
       _$_SendState _value, $Res Function(_$_SendState) _then)
-      : super(_value, (v) => _then(v as _$_SendState));
+      : super(_value, _then);
 
-  @override
-  _$_SendState get _value => super._value as _$_SendState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wallet = freezed,
-    Object? currentStep = freezed,
-    Object? loadingStart = freezed,
-    Object? calculatingFees = freezed,
-    Object? buildingTx = freezed,
-    Object? sendingTx = freezed,
+    Object? wallet = null,
+    Object? currentStep = null,
+    Object? loadingStart = null,
+    Object? calculatingFees = null,
+    Object? buildingTx = null,
+    Object? sendingTx = null,
     Object? permissionGranted = freezed,
-    Object? errLoading = freezed,
-    Object? errAddress = freezed,
-    Object? errSending = freezed,
-    Object? errAmount = freezed,
-    Object? errFees = freezed,
-    Object? policyPath = freezed,
-    Object? txOutputs = freezed,
-    Object? address = freezed,
-    Object? amount = freezed,
-    Object? weight = freezed,
-    Object? fees = freezed,
+    Object? errLoading = null,
+    Object? errAddress = null,
+    Object? errSending = null,
+    Object? errAmount = null,
+    Object? errFees = null,
+    Object? policyPath = null,
+    Object? txOutputs = null,
+    Object? address = null,
+    Object? amount = null,
+    Object? weight = null,
+    Object? fees = null,
     Object? feeSlow = freezed,
     Object? feeMedium = freezed,
     Object? feeFast = freezed,
     Object? balance = freezed,
-    Object? feesOption = freezed,
-    Object? psbt = freezed,
-    Object? txId = freezed,
+    Object? feesOption = null,
+    Object? psbt = null,
+    Object? txId = null,
     Object? finalFee = freezed,
     Object? finalAmount = freezed,
-    Object? sweepWallet = freezed,
+    Object? sweepWallet = null,
   }) {
     return _then(_$_SendState(
-      wallet: wallet == freezed
+      wallet: null == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as Wallet,
-      currentStep: currentStep == freezed
+      currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as SendSteps,
-      loadingStart: loadingStart == freezed
+      loadingStart: null == loadingStart
           ? _value.loadingStart
           : loadingStart // ignore: cast_nullable_to_non_nullable
               as bool,
-      calculatingFees: calculatingFees == freezed
+      calculatingFees: null == calculatingFees
           ? _value.calculatingFees
           : calculatingFees // ignore: cast_nullable_to_non_nullable
               as bool,
-      buildingTx: buildingTx == freezed
+      buildingTx: null == buildingTx
           ? _value.buildingTx
           : buildingTx // ignore: cast_nullable_to_non_nullable
               as bool,
-      sendingTx: sendingTx == freezed
+      sendingTx: null == sendingTx
           ? _value.sendingTx
           : sendingTx // ignore: cast_nullable_to_non_nullable
               as bool,
-      permissionGranted: permissionGranted == freezed
+      permissionGranted: freezed == permissionGranted
           ? _value.permissionGranted
           : permissionGranted // ignore: cast_nullable_to_non_nullable
               as bool?,
-      errLoading: errLoading == freezed
+      errLoading: null == errLoading
           ? _value.errLoading
           : errLoading // ignore: cast_nullable_to_non_nullable
               as String,
-      errAddress: errAddress == freezed
+      errAddress: null == errAddress
           ? _value.errAddress
           : errAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      errSending: errSending == freezed
+      errSending: null == errSending
           ? _value.errSending
           : errSending // ignore: cast_nullable_to_non_nullable
               as String,
-      errAmount: errAmount == freezed
+      errAmount: null == errAmount
           ? _value.errAmount
           : errAmount // ignore: cast_nullable_to_non_nullable
               as String,
-      errFees: errFees == freezed
+      errFees: null == errFees
           ? _value.errFees
           : errFees // ignore: cast_nullable_to_non_nullable
               as String,
-      policyPath: policyPath == freezed
+      policyPath: null == policyPath
           ? _value.policyPath
           : policyPath // ignore: cast_nullable_to_non_nullable
               as String,
-      txOutputs: txOutputs == freezed
+      txOutputs: null == txOutputs
           ? _value.txOutputs
           : txOutputs // ignore: cast_nullable_to_non_nullable
               as String,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String,
-      weight: weight == freezed
+      weight: null == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as int,
-      fees: fees == freezed
+      fees: null == fees
           ? _value.fees
           : fees // ignore: cast_nullable_to_non_nullable
               as String,
-      feeSlow: feeSlow == freezed
+      feeSlow: freezed == feeSlow
           ? _value.feeSlow
           : feeSlow // ignore: cast_nullable_to_non_nullable
               as int?,
-      feeMedium: feeMedium == freezed
+      feeMedium: freezed == feeMedium
           ? _value.feeMedium
           : feeMedium // ignore: cast_nullable_to_non_nullable
               as int?,
-      feeFast: feeFast == freezed
+      feeFast: freezed == feeFast
           ? _value.feeFast
           : feeFast // ignore: cast_nullable_to_non_nullable
               as int?,
-      balance: balance == freezed
+      balance: freezed == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int?,
-      feesOption: feesOption == freezed
+      feesOption: null == feesOption
           ? _value.feesOption
           : feesOption // ignore: cast_nullable_to_non_nullable
               as int,
-      psbt: psbt == freezed
+      psbt: null == psbt
           ? _value.psbt
           : psbt // ignore: cast_nullable_to_non_nullable
               as String,
-      txId: txId == freezed
+      txId: null == txId
           ? _value.txId
           : txId // ignore: cast_nullable_to_non_nullable
               as String,
-      finalFee: finalFee == freezed
+      finalFee: freezed == finalFee
           ? _value.finalFee
           : finalFee // ignore: cast_nullable_to_non_nullable
               as int?,
-      finalAmount: finalAmount == freezed
+      finalAmount: freezed == finalAmount
           ? _value.finalAmount
           : finalAmount // ignore: cast_nullable_to_non_nullable
               as int?,
-      sweepWallet: sweepWallet == freezed
+      sweepWallet: null == sweepWallet
           ? _value.sweepWallet
           : sweepWallet // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -604,83 +609,89 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SendState &&
-            const DeepCollectionEquality().equals(other.wallet, wallet) &&
-            const DeepCollectionEquality()
-                .equals(other.currentStep, currentStep) &&
-            const DeepCollectionEquality()
-                .equals(other.loadingStart, loadingStart) &&
-            const DeepCollectionEquality()
-                .equals(other.calculatingFees, calculatingFees) &&
-            const DeepCollectionEquality()
-                .equals(other.buildingTx, buildingTx) &&
-            const DeepCollectionEquality().equals(other.sendingTx, sendingTx) &&
-            const DeepCollectionEquality()
-                .equals(other.permissionGranted, permissionGranted) &&
-            const DeepCollectionEquality()
-                .equals(other.errLoading, errLoading) &&
-            const DeepCollectionEquality()
-                .equals(other.errAddress, errAddress) &&
-            const DeepCollectionEquality()
-                .equals(other.errSending, errSending) &&
-            const DeepCollectionEquality().equals(other.errAmount, errAmount) &&
-            const DeepCollectionEquality().equals(other.errFees, errFees) &&
-            const DeepCollectionEquality()
-                .equals(other.policyPath, policyPath) &&
-            const DeepCollectionEquality().equals(other.txOutputs, txOutputs) &&
-            const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality().equals(other.amount, amount) &&
-            const DeepCollectionEquality().equals(other.weight, weight) &&
-            const DeepCollectionEquality().equals(other.fees, fees) &&
-            const DeepCollectionEquality().equals(other.feeSlow, feeSlow) &&
-            const DeepCollectionEquality().equals(other.feeMedium, feeMedium) &&
-            const DeepCollectionEquality().equals(other.feeFast, feeFast) &&
-            const DeepCollectionEquality().equals(other.balance, balance) &&
-            const DeepCollectionEquality()
-                .equals(other.feesOption, feesOption) &&
-            const DeepCollectionEquality().equals(other.psbt, psbt) &&
-            const DeepCollectionEquality().equals(other.txId, txId) &&
-            const DeepCollectionEquality().equals(other.finalFee, finalFee) &&
-            const DeepCollectionEquality()
-                .equals(other.finalAmount, finalAmount) &&
-            const DeepCollectionEquality()
-                .equals(other.sweepWallet, sweepWallet));
+            (identical(other.wallet, wallet) || other.wallet == wallet) &&
+            (identical(other.currentStep, currentStep) ||
+                other.currentStep == currentStep) &&
+            (identical(other.loadingStart, loadingStart) ||
+                other.loadingStart == loadingStart) &&
+            (identical(other.calculatingFees, calculatingFees) ||
+                other.calculatingFees == calculatingFees) &&
+            (identical(other.buildingTx, buildingTx) ||
+                other.buildingTx == buildingTx) &&
+            (identical(other.sendingTx, sendingTx) ||
+                other.sendingTx == sendingTx) &&
+            (identical(other.permissionGranted, permissionGranted) ||
+                other.permissionGranted == permissionGranted) &&
+            (identical(other.errLoading, errLoading) ||
+                other.errLoading == errLoading) &&
+            (identical(other.errAddress, errAddress) ||
+                other.errAddress == errAddress) &&
+            (identical(other.errSending, errSending) ||
+                other.errSending == errSending) &&
+            (identical(other.errAmount, errAmount) ||
+                other.errAmount == errAmount) &&
+            (identical(other.errFees, errFees) || other.errFees == errFees) &&
+            (identical(other.policyPath, policyPath) ||
+                other.policyPath == policyPath) &&
+            (identical(other.txOutputs, txOutputs) ||
+                other.txOutputs == txOutputs) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.weight, weight) || other.weight == weight) &&
+            (identical(other.fees, fees) || other.fees == fees) &&
+            (identical(other.feeSlow, feeSlow) || other.feeSlow == feeSlow) &&
+            (identical(other.feeMedium, feeMedium) ||
+                other.feeMedium == feeMedium) &&
+            (identical(other.feeFast, feeFast) || other.feeFast == feeFast) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.feesOption, feesOption) ||
+                other.feesOption == feesOption) &&
+            (identical(other.psbt, psbt) || other.psbt == psbt) &&
+            (identical(other.txId, txId) || other.txId == txId) &&
+            (identical(other.finalFee, finalFee) ||
+                other.finalFee == finalFee) &&
+            (identical(other.finalAmount, finalAmount) ||
+                other.finalAmount == finalAmount) &&
+            (identical(other.sweepWallet, sweepWallet) ||
+                other.sweepWallet == sweepWallet));
   }
 
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        const DeepCollectionEquality().hash(wallet),
-        const DeepCollectionEquality().hash(currentStep),
-        const DeepCollectionEquality().hash(loadingStart),
-        const DeepCollectionEquality().hash(calculatingFees),
-        const DeepCollectionEquality().hash(buildingTx),
-        const DeepCollectionEquality().hash(sendingTx),
-        const DeepCollectionEquality().hash(permissionGranted),
-        const DeepCollectionEquality().hash(errLoading),
-        const DeepCollectionEquality().hash(errAddress),
-        const DeepCollectionEquality().hash(errSending),
-        const DeepCollectionEquality().hash(errAmount),
-        const DeepCollectionEquality().hash(errFees),
-        const DeepCollectionEquality().hash(policyPath),
-        const DeepCollectionEquality().hash(txOutputs),
-        const DeepCollectionEquality().hash(address),
-        const DeepCollectionEquality().hash(amount),
-        const DeepCollectionEquality().hash(weight),
-        const DeepCollectionEquality().hash(fees),
-        const DeepCollectionEquality().hash(feeSlow),
-        const DeepCollectionEquality().hash(feeMedium),
-        const DeepCollectionEquality().hash(feeFast),
-        const DeepCollectionEquality().hash(balance),
-        const DeepCollectionEquality().hash(feesOption),
-        const DeepCollectionEquality().hash(psbt),
-        const DeepCollectionEquality().hash(txId),
-        const DeepCollectionEquality().hash(finalFee),
-        const DeepCollectionEquality().hash(finalAmount),
-        const DeepCollectionEquality().hash(sweepWallet)
+        wallet,
+        currentStep,
+        loadingStart,
+        calculatingFees,
+        buildingTx,
+        sendingTx,
+        permissionGranted,
+        errLoading,
+        errAddress,
+        errSending,
+        errAmount,
+        errFees,
+        policyPath,
+        txOutputs,
+        address,
+        amount,
+        weight,
+        fees,
+        feeSlow,
+        feeMedium,
+        feeFast,
+        balance,
+        feesOption,
+        psbt,
+        txId,
+        finalFee,
+        finalAmount,
+        sweepWallet
       ]);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SendStateCopyWith<_$_SendState> get copyWith =>
       __$$_SendStateCopyWithImpl<_$_SendState>(this, _$identity);
 }
@@ -718,61 +729,61 @@ abstract class _SendState extends SendState {
   const _SendState._() : super._();
 
   @override
-  Wallet get wallet => throw _privateConstructorUsedError;
+  Wallet get wallet;
   @override
-  SendSteps get currentStep => throw _privateConstructorUsedError;
+  SendSteps get currentStep;
   @override
-  bool get loadingStart => throw _privateConstructorUsedError;
+  bool get loadingStart;
   @override
-  bool get calculatingFees => throw _privateConstructorUsedError;
+  bool get calculatingFees;
   @override
-  bool get buildingTx => throw _privateConstructorUsedError;
+  bool get buildingTx;
   @override
-  bool get sendingTx => throw _privateConstructorUsedError;
+  bool get sendingTx;
   @override
-  bool? get permissionGranted => throw _privateConstructorUsedError;
+  bool? get permissionGranted;
   @override
-  String get errLoading => throw _privateConstructorUsedError;
+  String get errLoading;
   @override
-  String get errAddress => throw _privateConstructorUsedError;
+  String get errAddress;
   @override
-  String get errSending => throw _privateConstructorUsedError;
+  String get errSending;
   @override
-  String get errAmount => throw _privateConstructorUsedError;
+  String get errAmount;
   @override
-  String get errFees => throw _privateConstructorUsedError;
+  String get errFees;
   @override
-  String get policyPath => throw _privateConstructorUsedError;
+  String get policyPath;
   @override
-  String get txOutputs => throw _privateConstructorUsedError;
+  String get txOutputs;
   @override
-  String get address => throw _privateConstructorUsedError;
+  String get address;
   @override
-  String get amount => throw _privateConstructorUsedError;
+  String get amount;
   @override
-  int get weight => throw _privateConstructorUsedError;
+  int get weight;
   @override
-  String get fees => throw _privateConstructorUsedError;
+  String get fees;
   @override
-  int? get feeSlow => throw _privateConstructorUsedError;
+  int? get feeSlow;
   @override
-  int? get feeMedium => throw _privateConstructorUsedError;
+  int? get feeMedium;
   @override
-  int? get feeFast => throw _privateConstructorUsedError;
+  int? get feeFast;
   @override
-  int? get balance => throw _privateConstructorUsedError;
+  int? get balance;
   @override
-  int get feesOption => throw _privateConstructorUsedError;
+  int get feesOption;
   @override
-  String get psbt => throw _privateConstructorUsedError;
+  String get psbt;
   @override
-  String get txId => throw _privateConstructorUsedError;
+  String get txId;
   @override
-  int? get finalFee => throw _privateConstructorUsedError;
+  int? get finalFee;
   @override
-  int? get finalAmount => throw _privateConstructorUsedError;
+  int? get finalAmount;
   @override
-  bool get sweepWallet => throw _privateConstructorUsedError;
+  bool get sweepWallet;
   @override
   @JsonKey(ignore: true)
   _$$_SendStateCopyWith<_$_SendState> get copyWith =>

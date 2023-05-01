@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'wallet.dart';
 
@@ -53,7 +53,8 @@ mixin _$Wallet {
 /// @nodoc
 abstract class $WalletCopyWith<$Res> {
   factory $WalletCopyWith(Wallet value, $Res Function(Wallet) then) =
-      _$WalletCopyWithImpl<$Res>;
+      _$WalletCopyWithImpl<$Res, Wallet>;
+  @useResult
   $Res call(
       {@HiveField(0) int? id,
       @HiveField(1) String uid,
@@ -70,78 +71,81 @@ abstract class $WalletCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$WalletCopyWithImpl<$Res> implements $WalletCopyWith<$Res> {
+class _$WalletCopyWithImpl<$Res, $Val extends Wallet>
+    implements $WalletCopyWith<$Res> {
   _$WalletCopyWithImpl(this._value, this._then);
 
-  final Wallet _value;
   // ignore: unused_field
-  final $Res Function(Wallet) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
-    Object? uid = freezed,
-    Object? label = freezed,
-    Object? descriptor = freezed,
-    Object? policy = freezed,
-    Object? requiredPolicyElements = freezed,
-    Object? policyElements = freezed,
-    Object? blockchain = freezed,
-    Object? transactions = freezed,
-    Object? balance = freezed,
-    Object? lastAddressIndex = freezed,
-    Object? walletType = freezed,
+    Object? uid = null,
+    Object? label = null,
+    Object? descriptor = null,
+    Object? policy = null,
+    Object? requiredPolicyElements = null,
+    Object? policyElements = null,
+    Object? blockchain = null,
+    Object? transactions = null,
+    Object? balance = null,
+    Object? lastAddressIndex = null,
+    Object? walletType = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      uid: uid == freezed
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      descriptor: descriptor == freezed
+      descriptor: null == descriptor
           ? _value.descriptor
           : descriptor // ignore: cast_nullable_to_non_nullable
               as String,
-      policy: policy == freezed
+      policy: null == policy
           ? _value.policy
           : policy // ignore: cast_nullable_to_non_nullable
               as String,
-      requiredPolicyElements: requiredPolicyElements == freezed
+      requiredPolicyElements: null == requiredPolicyElements
           ? _value.requiredPolicyElements
           : requiredPolicyElements // ignore: cast_nullable_to_non_nullable
               as int,
-      policyElements: policyElements == freezed
+      policyElements: null == policyElements
           ? _value.policyElements
           : policyElements // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      blockchain: blockchain == freezed
+      blockchain: null == blockchain
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
               as String,
-      transactions: transactions == freezed
+      transactions: null == transactions
           ? _value.transactions
           : transactions // ignore: cast_nullable_to_non_nullable
               as List<Transaction>,
-      balance: balance == freezed
+      balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int,
-      lastAddressIndex: lastAddressIndex == freezed
+      lastAddressIndex: null == lastAddressIndex
           ? _value.lastAddressIndex
           : lastAddressIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      walletType: walletType == freezed
+      walletType: null == walletType
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -150,6 +154,7 @@ abstract class _$$_WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
   factory _$$_WalletCopyWith(_$_Wallet value, $Res Function(_$_Wallet) then) =
       __$$_WalletCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@HiveField(0) int? id,
       @HiveField(1) String uid,
@@ -166,75 +171,74 @@ abstract class _$$_WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
+class __$$_WalletCopyWithImpl<$Res>
+    extends _$WalletCopyWithImpl<$Res, _$_Wallet>
     implements _$$_WalletCopyWith<$Res> {
   __$$_WalletCopyWithImpl(_$_Wallet _value, $Res Function(_$_Wallet) _then)
-      : super(_value, (v) => _then(v as _$_Wallet));
+      : super(_value, _then);
 
-  @override
-  _$_Wallet get _value => super._value as _$_Wallet;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
-    Object? uid = freezed,
-    Object? label = freezed,
-    Object? descriptor = freezed,
-    Object? policy = freezed,
-    Object? requiredPolicyElements = freezed,
-    Object? policyElements = freezed,
-    Object? blockchain = freezed,
-    Object? transactions = freezed,
-    Object? balance = freezed,
-    Object? lastAddressIndex = freezed,
-    Object? walletType = freezed,
+    Object? uid = null,
+    Object? label = null,
+    Object? descriptor = null,
+    Object? policy = null,
+    Object? requiredPolicyElements = null,
+    Object? policyElements = null,
+    Object? blockchain = null,
+    Object? transactions = null,
+    Object? balance = null,
+    Object? lastAddressIndex = null,
+    Object? walletType = null,
   }) {
     return _then(_$_Wallet(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      uid: uid == freezed
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      descriptor: descriptor == freezed
+      descriptor: null == descriptor
           ? _value.descriptor
           : descriptor // ignore: cast_nullable_to_non_nullable
               as String,
-      policy: policy == freezed
+      policy: null == policy
           ? _value.policy
           : policy // ignore: cast_nullable_to_non_nullable
               as String,
-      requiredPolicyElements: requiredPolicyElements == freezed
+      requiredPolicyElements: null == requiredPolicyElements
           ? _value.requiredPolicyElements
           : requiredPolicyElements // ignore: cast_nullable_to_non_nullable
               as int,
-      policyElements: policyElements == freezed
+      policyElements: null == policyElements
           ? _value._policyElements
           : policyElements // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      blockchain: blockchain == freezed
+      blockchain: null == blockchain
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
               as String,
-      transactions: transactions == freezed
+      transactions: null == transactions
           ? _value._transactions
           : transactions // ignore: cast_nullable_to_non_nullable
               as List<Transaction>,
-      balance: balance == freezed
+      balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int,
-      lastAddressIndex: lastAddressIndex == freezed
+      lastAddressIndex: null == lastAddressIndex
           ? _value.lastAddressIndex
           : lastAddressIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      walletType: walletType == freezed
+      walletType: null == walletType
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
               as String,
@@ -288,6 +292,7 @@ class _$_Wallet extends _Wallet {
   @override
   @HiveField(6)
   List<String> get policyElements {
+    if (_policyElements is EqualUnmodifiableListView) return _policyElements;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_policyElements);
   }
@@ -299,6 +304,7 @@ class _$_Wallet extends _Wallet {
   @override
   @HiveField(8)
   List<Transaction> get transactions {
+    if (_transactions is EqualUnmodifiableListView) return _transactions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_transactions);
   }
@@ -323,52 +329,55 @@ class _$_Wallet extends _Wallet {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Wallet &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.uid, uid) &&
-            const DeepCollectionEquality().equals(other.label, label) &&
-            const DeepCollectionEquality()
-                .equals(other.descriptor, descriptor) &&
-            const DeepCollectionEquality().equals(other.policy, policy) &&
-            const DeepCollectionEquality()
-                .equals(other.requiredPolicyElements, requiredPolicyElements) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.descriptor, descriptor) ||
+                other.descriptor == descriptor) &&
+            (identical(other.policy, policy) || other.policy == policy) &&
+            (identical(other.requiredPolicyElements, requiredPolicyElements) ||
+                other.requiredPolicyElements == requiredPolicyElements) &&
             const DeepCollectionEquality()
                 .equals(other._policyElements, _policyElements) &&
-            const DeepCollectionEquality()
-                .equals(other.blockchain, blockchain) &&
+            (identical(other.blockchain, blockchain) ||
+                other.blockchain == blockchain) &&
             const DeepCollectionEquality()
                 .equals(other._transactions, _transactions) &&
-            const DeepCollectionEquality().equals(other.balance, balance) &&
-            const DeepCollectionEquality()
-                .equals(other.lastAddressIndex, lastAddressIndex) &&
-            const DeepCollectionEquality()
-                .equals(other.walletType, walletType));
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.lastAddressIndex, lastAddressIndex) ||
+                other.lastAddressIndex == lastAddressIndex) &&
+            (identical(other.walletType, walletType) ||
+                other.walletType == walletType));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(uid),
-      const DeepCollectionEquality().hash(label),
-      const DeepCollectionEquality().hash(descriptor),
-      const DeepCollectionEquality().hash(policy),
-      const DeepCollectionEquality().hash(requiredPolicyElements),
+      id,
+      uid,
+      label,
+      descriptor,
+      policy,
+      requiredPolicyElements,
       const DeepCollectionEquality().hash(_policyElements),
-      const DeepCollectionEquality().hash(blockchain),
+      blockchain,
       const DeepCollectionEquality().hash(_transactions),
-      const DeepCollectionEquality().hash(balance),
-      const DeepCollectionEquality().hash(lastAddressIndex),
-      const DeepCollectionEquality().hash(walletType));
+      balance,
+      lastAddressIndex,
+      walletType);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_WalletCopyWith<_$_Wallet> get copyWith =>
       __$$_WalletCopyWithImpl<_$_Wallet>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WalletToJson(this);
+    return _$$_WalletToJson(
+      this,
+    );
   }
 }
 
@@ -392,40 +401,40 @@ abstract class _Wallet extends Wallet {
 
   @override
   @HiveField(0)
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
   @HiveField(1)
-  String get uid => throw _privateConstructorUsedError;
+  String get uid;
   @override
   @HiveField(2)
-  String get label => throw _privateConstructorUsedError;
+  String get label;
   @override
   @HiveField(3)
-  String get descriptor => throw _privateConstructorUsedError;
+  String get descriptor;
   @override
   @HiveField(4)
-  String get policy => throw _privateConstructorUsedError;
+  String get policy;
   @override
   @HiveField(5)
-  int get requiredPolicyElements => throw _privateConstructorUsedError;
+  int get requiredPolicyElements;
   @override
   @HiveField(6)
-  List<String> get policyElements => throw _privateConstructorUsedError;
+  List<String> get policyElements;
   @override
   @HiveField(7)
-  String get blockchain => throw _privateConstructorUsedError;
+  String get blockchain;
   @override
   @HiveField(8)
-  List<Transaction> get transactions => throw _privateConstructorUsedError;
+  List<Transaction> get transactions;
   @override
   @HiveField(9)
-  int get balance => throw _privateConstructorUsedError;
+  int get balance;
   @override
   @HiveField(10)
-  int get lastAddressIndex => throw _privateConstructorUsedError;
+  int get lastAddressIndex;
   @override
   @HiveField(11)
-  String get walletType => throw _privateConstructorUsedError;
+  String get walletType;
   @override
   @JsonKey(ignore: true)
   _$$_WalletCopyWith<_$_Wallet> get copyWith =>
