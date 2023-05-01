@@ -4,10 +4,10 @@ import 'package:sats/pkg/extensions.dart';
 
 class TextAddress extends StatelessWidget {
   const TextAddress({
-    Key? key,
+    super.key,
     required this.address,
     required this.index,
-  }) : super(key: key);
+  });
 
   final String address;
   final int index;
@@ -19,7 +19,7 @@ class TextAddress extends StatelessWidget {
           width: c.width / 1.2,
           child: Text(
             address,
-            style: c.fonts.caption!.copyWith(
+            style: c.fonts.bodySmall!.copyWith(
               color: c.colours.onPrimary,
               fontSize: 12,
             ),
@@ -32,7 +32,7 @@ class TextAddress extends StatelessWidget {
           },
           child: Text(
             'COPY',
-            style: c.fonts.caption!.copyWith(
+            style: c.fonts.bodySmall!.copyWith(
               color: c.colours.primary,
               fontSize: 18,
             ),
@@ -69,7 +69,7 @@ class TextAddress extends StatelessWidget {
               width: c.width / 4,
               child: Text(
                 'INDEX: ' + index.toString(),
-                style: c.fonts.caption!.copyWith(
+                style: c.fonts.bodySmall!.copyWith(
                   color: c.colours.onPrimary,
                   fontSize: 18,
                 ),

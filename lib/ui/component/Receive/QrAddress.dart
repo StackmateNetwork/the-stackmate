@@ -4,9 +4,9 @@ import 'package:sats/pkg/extensions.dart';
 
 class QRAddress extends StatelessWidget {
   const QRAddress({
-    Key? key,
+    super.key,
     required this.address,
-  }) : super(key: key);
+  });
 
   final String address;
 

@@ -4,7 +4,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/StepLine.dart';
 
 class DeriveStepper extends StatelessWidget {
-  const DeriveStepper({Key? key}) : super(key: key);
+  const DeriveStepper({super.key});
 
   @override
   Widget build(BuildContext c) {

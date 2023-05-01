@@ -5,8 +5,8 @@ import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class XpubFieldsImport extends StatefulWidget {
   const XpubFieldsImport({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _XpubImportFieldsState createState() => _XpubImportFieldsState();
@@ -53,7 +53,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
             const SizedBox(height: 24),
             Text(
               'Public Key Details',
-              style: c.fonts.headline4!.copyWith(
+              style: c.fonts.headlineMedium!.copyWith(
                 color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,
               ),
@@ -65,7 +65,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
               ),
               child: Text(
                 'Extended Public Key'.toUpperCase().notLocalised(),
-                style: c.fonts.overline!.copyWith(
+                style: c.fonts.labelSmall!.copyWith(
                   color: c.colours.onPrimary,
                   fontWeight: FontWeight.bold,
                 ),
@@ -76,7 +76,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
               child: TextField(
                 controller: _xpubController,
                 maxLines: 4,
-                style: c.fonts.bodyText1!.copyWith(
+                style: c.fonts.bodyLarge!.copyWith(
                   color: c.colours.onBackground,
                 ),
                 onChanged: (text) {
@@ -95,7 +95,8 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
                   },
                   child: Text(
                     'PASTE'.notLocalised(),
-                    style: c.fonts.button!.copyWith(color: c.colours.primary),
+                    style:
+                        c.fonts.labelLarge!.copyWith(color: c.colours.primary),
                   ),
                 ),
               ),
@@ -105,8 +106,9 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
               height: 52,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: c.colours.primary,
-                  onSurface: c.colours.background.withOpacity(0.38),
+                  foregroundColor: c.colours.primary,
+                  disabledForegroundColor:
+                      c.colours.background.withOpacity(0.38).withOpacity(0.38),
                 ),
                 onPressed: () {
                   c.read<XpubImportCubit>().toggleCamera();
@@ -118,14 +120,14 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
             if (state.errXpub != '')
               Text(
                 state.errXpub,
-                style: c.fonts.caption!.copyWith(color: c.colours.error),
+                style: c.fonts.bodySmall!.copyWith(color: c.colours.error),
               ),
             SizedBox(
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  onPrimary: c.colours.background,
-                  primary: c.colours.primary,
+                  foregroundColor: c.colours.background,
+                  backgroundColor: c.colours.primary,
                 ),
                 onPressed: () async {
                   c.read<XpubImportCubit>().checkDetails();

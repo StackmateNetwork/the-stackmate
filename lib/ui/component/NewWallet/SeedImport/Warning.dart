@@ -11,7 +11,7 @@ class SeedImportWarning extends StatelessWidget {
       children: [
         Text(
           'Security\nInformation'.toUpperCase(),
-          style: c.fonts.headline5!.copyWith(
+          style: c.fonts.headlineSmall!.copyWith(
             color: c.colours.onPrimary,
           ),
         ),
@@ -20,7 +20,7 @@ class SeedImportWarning extends StatelessWidget {
           '''
 Incognito mode is enforced on your keyboard.
 ''',
-          style: c.fonts.caption!.copyWith(
+          style: c.fonts.bodySmall!.copyWith(
             color: c.colours.onPrimary,
           ),
         ),
@@ -29,8 +29,8 @@ Incognito mode is enforced on your keyboard.
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              onPrimary: c.colours.background,
-              primary: c.colours.primary,
+              foregroundColor: c.colours.background,
+              backgroundColor: c.colours.primary,
             ),
             onPressed: () => c.read<SeedImportWalletCubit>().nextClicked(),
             child: Text(

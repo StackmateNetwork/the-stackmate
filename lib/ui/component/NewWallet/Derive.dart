@@ -41,7 +41,7 @@ class DerivePurpose extends StatelessWidget {
           children: [
             Text(
               'Choose Purpose:',
-              style: c.fonts.headline5!.copyWith(
+              style: c.fonts.headlineSmall!.copyWith(
                 color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,
               ),
@@ -94,8 +94,8 @@ class DerivePurpose extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  onPrimary: c.colours.background,
-                  primary: c.colours.primary,
+                  foregroundColor: c.colours.background,
+                  backgroundColor: c.colours.primary,
                 ),
                 onPressed: () {
                   c.read<DeriveWalletCubit>().nextClicked();

@@ -16,7 +16,7 @@ class SeedGenerateWarning extends StatelessWidget {
         const SizedBox(height: 16),
         Text(
           'KEY\nSECURITY'.toUpperCase(),
-          style: c.fonts.headline5!.copyWith(
+          style: c.fonts.headlineSmall!.copyWith(
             color: c.colours.onPrimary,
             // fontWeight: FontWeight.bold,
           ),
@@ -89,8 +89,8 @@ The following steps are critical to ensure safety of your funds.
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              onPrimary: c.colours.background,
-              primary: c.colours.primary,
+              foregroundColor: c.colours.background,
+              backgroundColor: c.colours.primary,
             ),
             onPressed: () {
               c.read<SeedGenerateWalletCubit>().nextClicked();

@@ -5,7 +5,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class AmountRow extends StatefulWidget {
-  const AmountRow({Key? key}) : super(key: key);
+  const AmountRow({super.key});
 
   @override
   State<AmountRow> createState() => _AmountRowState();
@@ -104,7 +104,7 @@ class _AmountRowState extends State<AmountRow> {
                     isSweep
                         ? '    BTC: ' + balance.toBtc()
                         : '    BTC: ' + amount.toBtc(),
-                    style: c.fonts.caption!.copyWith(
+                    style: c.fonts.bodySmall!.copyWith(
                       color: c.colours.onBackground.withOpacity(0.7),
                     ),
                   ),
@@ -125,8 +125,8 @@ class _AmountRowState extends State<AmountRow> {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    onPrimary: c.colours.background,
-                    primary: c.colours.primary,
+                    foregroundColor: c.colours.background,
+                    backgroundColor: c.colours.primary,
                   ),
                   onPressed: () {
                     if (amount != '') {

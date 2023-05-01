@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/new-wallet/derivation.dart';
-import 'package:sats/cubit/new-wallet/from-new-seed.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class DeriveLabel extends StatelessWidget {
-  const DeriveLabel({Key? key}) : super(key: key);
+  const DeriveLabel({super.key});
   @override
   Widget build(BuildContext c) {
     final savingWallet =
@@ -38,7 +37,7 @@ class DeriveLabel extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 'Label your wallet',
-                style: c.fonts.headline4!.copyWith(
+                style: c.fonts.headlineMedium!.copyWith(
                   color: c.colours.onPrimary,
                 ),
               ),

@@ -6,7 +6,7 @@ import 'package:sats/ui/component/common/BitcoinDisplayMedium.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class ConfirmTransaction extends StatelessWidget {
-  const ConfirmTransaction({Key? key}) : super(key: key);
+  const ConfirmTransaction({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,21 +47,21 @@ class ConfirmTransaction extends StatelessWidget {
                     const SizedBox(height: 12),
                     Text(
                       'Transaction\nDetails',
-                      style: context.fonts.headline5!.copyWith(
+                      style: context.fonts.headlineSmall!.copyWith(
                         color: context.colours.onBackground,
                       ),
                     ),
                     const SizedBox(height: 40),
                     Text(
                       'Address'.toUpperCase(),
-                      style: context.fonts.overline!.copyWith(
+                      style: context.fonts.labelSmall!.copyWith(
                         color: context.colours.onBackground,
                       ),
                     ),
                     const SizedBox(height: 16),
                     Text(
                       state.address,
-                      style: context.fonts.caption!.copyWith(
+                      style: context.fonts.bodySmall!.copyWith(
                         color: context.colours.onBackground,
                       ),
                     ),
@@ -72,7 +72,7 @@ class ConfirmTransaction extends StatelessWidget {
                           padding: const EdgeInsets.only(bottom: 17.0),
                           child: Text(
                             'Amount'.toUpperCase(),
-                            style: context.fonts.overline!.copyWith(
+                            style: context.fonts.labelSmall!.copyWith(
                               color: context.colours.onBackground,
                             ),
                           ),
@@ -91,7 +91,7 @@ class ConfirmTransaction extends StatelessWidget {
                           padding: const EdgeInsets.only(bottom: 17.0),
                           child: Text(
                             'Network Fee'.toUpperCase(),
-                            style: context.fonts.overline!.copyWith(
+                            style: context.fonts.labelSmall!.copyWith(
                               color: context.colours.onBackground,
                             ),
                           ),
@@ -110,7 +110,7 @@ class ConfirmTransaction extends StatelessWidget {
                           padding: const EdgeInsets.only(bottom: 17.0),
                           child: Text(
                             'Total'.toUpperCase(),
-                            style: context.fonts.overline!.copyWith(
+                            style: context.fonts.labelSmall!.copyWith(
                               color: context.colours.onBackground,
                             ),
                           ),
@@ -128,8 +128,8 @@ class ConfirmTransaction extends StatelessWidget {
                         height: 52,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            onPrimary: context.colours.background,
-                            primary: context.colours.primary,
+                            foregroundColor: context.colours.background,
+                            backgroundColor: context.colours.primary,
                           ),
                           onPressed: () {
                             context.read<SendCubit>().sendClicked();
@@ -158,7 +158,7 @@ class ConfirmTransaction extends StatelessWidget {
                     if (state.errSending != '')
                       Text(
                         state.errSending,
-                        style: context.fonts.caption!.copyWith(
+                        style: context.fonts.bodySmall!.copyWith(
                           color: context.colours.error.withOpacity(0.7),
                         ),
                         textAlign: TextAlign.center,

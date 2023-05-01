@@ -4,7 +4,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class SendAddress extends StatefulWidget {
-  const SendAddress({Key? key}) : super(key: key);
+  const SendAddress({super.key});
 
   @override
   State<SendAddress> createState() => _SendAddressState();
@@ -61,7 +61,7 @@ class _SendAddressState extends State<SendAddress> {
                 children: [
                   Text(
                     'To Address'.toUpperCase(),
-                    style: context.fonts.overline!.copyWith(
+                    style: context.fonts.labelSmall!.copyWith(
                       color: context.colours.onBackground,
                     ),
                   ),
@@ -103,8 +103,8 @@ class _SendAddressState extends State<SendAddress> {
                     height: 52,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        onPrimary: context.colours.background,
-                        primary: context.colours.primary,
+                        foregroundColor: context.colours.background,
+                        backgroundColor: context.colours.primary,
                       ),
                       onPressed: () {
                         context.read<SendCubit>().addressConfirmedClicked();

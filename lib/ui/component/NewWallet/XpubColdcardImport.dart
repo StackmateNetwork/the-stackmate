@@ -6,8 +6,8 @@ import 'package:sats/ui/component/common/SuccessHandler.dart';
 
 class XpubColdcardImport extends StatelessWidget {
   const XpubColdcardImport({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   Widget build(BuildContext c) {
     final result = c.select((XpubImportCubit sc) => sc.state.clearJson);
@@ -21,7 +21,7 @@ class XpubColdcardImport extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               'Generic.json'.toUpperCase(),
-              style: context.fonts.headline6!.copyWith(
+              style: context.fonts.titleLarge!.copyWith(
                 color: context.colours.secondary,
               ),
               textAlign: TextAlign.center,
@@ -44,9 +44,11 @@ class XpubColdcardImport extends StatelessWidget {
                   height: 52,
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      primary: c.colours.primary,
+                      foregroundColor: c.colours.primary,
                       side: BorderSide(color: c.colours.onPrimary),
-                      onSurface: c.colours.background.withOpacity(0.38),
+                      disabledForegroundColor: c.colours.background
+                          .withOpacity(0.38)
+                          .withOpacity(0.38),
                     ),
                     onPressed: () {
                       c.read<XpubImportCubit>().updateFile();
@@ -67,7 +69,8 @@ class XpubColdcardImport extends StatelessWidget {
                         ((name.toString() == '')
                             ? 'None Selected'
                             : name.toString()),
-                    style: c.fonts.button!.copyWith(color: c.colours.secondary),
+                    style: c.fonts.labelLarge!
+                        .copyWith(color: c.colours.secondary),
                   ),
                 ),
               ),
@@ -78,9 +81,11 @@ class XpubColdcardImport extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    primary: c.colours.primary,
+                    foregroundColor: c.colours.primary,
                     side: BorderSide(color: c.colours.onPrimary),
-                    onSurface: c.colours.background.withOpacity(0.38),
+                    disabledForegroundColor: c.colours.background
+                        .withOpacity(0.38)
+                        .withOpacity(0.38),
                   ),
                   onPressed: () async {
                     c.read<XpubImportCubit>().clearCachedFiles();
@@ -90,7 +95,8 @@ class XpubColdcardImport extends StatelessWidget {
                   },
                   child: Text(
                     'Clear Json',
-                    style: c.fonts.button!.copyWith(color: c.colours.primary),
+                    style:
+                        c.fonts.labelLarge!.copyWith(color: c.colours.primary),
                   ),
                 ),
               ),
@@ -99,14 +105,14 @@ class XpubColdcardImport extends StatelessWidget {
             if (state.errFileImport != '')
               Text(
                 state.errFileImport,
-                style: c.fonts.caption!.copyWith(color: c.colours.error),
+                style: c.fonts.bodySmall!.copyWith(color: c.colours.error),
               ),
             SizedBox(
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  onPrimary: c.colours.background,
-                  primary: c.colours.primary,
+                  foregroundColor: c.colours.background,
+                  backgroundColor: c.colours.primary,
                 ),
                 onPressed: () {
                   c.read<XpubImportCubit>().importColdCardSegwit();

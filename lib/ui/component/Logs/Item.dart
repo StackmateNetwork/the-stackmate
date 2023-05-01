@@ -99,7 +99,7 @@ class LogItem extends StatelessWidget {
               onLongPress: () {},
               child: Text(
                 log.stackTrace!,
-                style: context.fonts.caption!.copyWith(
+                style: context.fonts.bodySmall!.copyWith(
                   color: context.colours.onBackground,
                 ),
               ),

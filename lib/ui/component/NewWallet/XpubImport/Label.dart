@@ -4,7 +4,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class XpubLabel extends StatelessWidget {
-  const XpubLabel({Key? key}) : super(key: key);
+  const XpubLabel({super.key});
 
   @override
   Widget build(BuildContext c) {

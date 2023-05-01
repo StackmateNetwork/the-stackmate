@@ -5,8 +5,8 @@ import 'package:sats/ui/component/common/loading.dart';
 
 class DeriveLoader extends StatelessWidget {
   const DeriveLoader({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext c) {

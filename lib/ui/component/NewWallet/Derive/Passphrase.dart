@@ -41,7 +41,7 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
               const SizedBox(height: 24),
               Text(
                 'optional\npassphrase'.toUpperCase(),
-                style: c.fonts.headline5!.copyWith(
+                style: c.fonts.headlineSmall!.copyWith(
                   color: c.colours.onPrimary,
                   // fontWeight: FontWeight.bold,
                 ),
@@ -95,7 +95,7 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
               if (state.errPassphrase != '')
                 Text(
                   state.errPassphrase,
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.error,
                   ),
                 ),
@@ -104,8 +104,8 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    onPrimary: c.colours.background,
-                    primary: c.colours.primary,
+                    foregroundColor: c.colours.background,
+                    backgroundColor: c.colours.primary,
                   ),
                   onPressed: () {
                     if (_form.currentState!.validate()) {

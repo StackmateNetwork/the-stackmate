@@ -3,7 +3,7 @@ import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class TransactionComplete extends StatelessWidget {
-  const TransactionComplete({Key? key}) : super(key: key);
+  const TransactionComplete({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +16,14 @@ class TransactionComplete extends StatelessWidget {
           children: [
             Text(
               'Transaction\nSuccessful.',
-              style: context.fonts.headline5!.copyWith(
+              style: context.fonts.headlineSmall!.copyWith(
                 color: context.colours.onBackground,
               ),
             ),
             const SizedBox(height: 16),
             Text(
               'Open your wallet to update your balance and history.',
-              style: context.fonts.caption!.copyWith(
+              style: context.fonts.bodySmall!.copyWith(
                 color: context.colours.onBackground,
                 fontSize: 16,
               ),
@@ -35,8 +35,8 @@ class TransactionComplete extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  onPrimary: context.colours.background,
-                  primary: context.colours.primary,
+                  foregroundColor: context.colours.background,
+                  backgroundColor: context.colours.primary,
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -55,14 +55,14 @@ class TransactionComplete extends StatelessWidget {
           children: [
             Text(
               'PSBT\nBuild Complete.',
-              style: context.fonts.headline5!.copyWith(
+              style: context.fonts.headlineSmall!.copyWith(
                 color: context.colours.onBackground,
               ),
             ),
             const SizedBox(height: 16),
             Text(
               'Pass it to a signing device.',
-              style: context.fonts.caption!.copyWith(
+              style: context.fonts.bodySmall!.copyWith(
                 color: context.colours.onBackground,
                 fontSize: 16,
               ),

@@ -5,7 +5,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class SeedGenerateLabel extends StatelessWidget {
-  const SeedGenerateLabel({Key? key}) : super(key: key);
+  const SeedGenerateLabel({super.key});
 
   @override
   Widget build(BuildContext c) {
@@ -39,7 +39,7 @@ class SeedGenerateLabel extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 'Name your wallet',
-                style: c.fonts.headline4!.copyWith(
+                style: c.fonts.headlineMedium!.copyWith(
                   color: c.colours.onPrimary,
                 ),
               ),
@@ -65,8 +65,8 @@ class SeedGenerateLabel extends StatelessWidget {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    onPrimary: c.colours.background,
-                    primary: c.colours.primary,
+                    foregroundColor: c.colours.background,
+                    backgroundColor: c.colours.primary,
                   ),
                   onPressed: () async {
                     final FocusScopeNode currentFocus = FocusScope.of(c);

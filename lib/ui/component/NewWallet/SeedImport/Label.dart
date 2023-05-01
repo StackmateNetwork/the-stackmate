@@ -4,7 +4,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class SeedImportLabel extends StatelessWidget {
-  const SeedImportLabel({Key? key}) : super(key: key);
+  const SeedImportLabel({super.key});
   @override
   Widget build(BuildContext c) {
     final savingWallet =

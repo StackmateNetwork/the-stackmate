@@ -7,8 +7,8 @@ import 'package:sats/ui/component/NewWallet/SeedImport/Passphrase.dart';
 
 class SeedImportSteps extends StatelessWidget {
   const SeedImportSteps({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class SeedImportPhrase extends StatelessWidget {
           children: [
             Text(
               'Import your seed phrase',
-              style: c.fonts.headline5!.copyWith(
+              style: c.fonts.headlineSmall!.copyWith(
                 color: c.colours.onPrimary,
                 // fontWeight: FontWeight.bold,
               ),
@@ -47,7 +47,7 @@ class SeedImportPhrase extends StatelessWidget {
               padding: EdgeInsets.zero,
               child: TextField(
                 enableIMEPersonalizedLearning: false,
-                style: c.fonts.headline6!.copyWith(color: c.colours.onPrimary),
+                style: c.fonts.titleLarge!.copyWith(color: c.colours.onPrimary),
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 autocorrect: false,
@@ -72,8 +72,8 @@ class SeedImportPhrase extends StatelessWidget {
                   height: 52,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      onPrimary: c.colours.background,
-                      primary: c.colours.primary,
+                      foregroundColor: c.colours.background,
+                      backgroundColor: c.colours.primary,
                     ),
                     onPressed: () async {
                       // if (state.showSeedCompleteButton())

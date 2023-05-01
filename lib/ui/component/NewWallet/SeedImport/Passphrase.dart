@@ -43,7 +43,7 @@ class _SeedImportPassphraseState extends State<SeedImportPassphrase> {
               const SizedBox(height: 24),
               Text(
                 'optional\npassphrase'.toUpperCase(),
-                style: c.fonts.headline5!.copyWith(
+                style: c.fonts.headlineSmall!.copyWith(
                   color: c.colours.onPrimary,
                   // fontWeight: FontWeight.bold,
                 ),
@@ -96,7 +96,7 @@ class _SeedImportPassphraseState extends State<SeedImportPassphrase> {
               if (state.errPassPhrase != '')
                 Text(
                   state.errPassPhrase,
-                  style: c.fonts.caption!.copyWith(
+                  style: c.fonts.bodySmall!.copyWith(
                     color: c.colours.error,
                   ),
                 ),
@@ -105,8 +105,8 @@ class _SeedImportPassphraseState extends State<SeedImportPassphrase> {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    onPrimary: c.colours.background,
-                    primary: c.colours.primary,
+                    foregroundColor: c.colours.background,
+                    backgroundColor: c.colours.primary,
                   ),
                   onPressed: () async {
                     if (_form.currentState!.validate()) {

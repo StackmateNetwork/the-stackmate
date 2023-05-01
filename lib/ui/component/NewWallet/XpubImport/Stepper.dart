@@ -4,7 +4,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/StepLine.dart';
 
 class XPubImportStepper extends StatelessWidget {
-  const XPubImportStepper({Key? key}) : super(key: key);
+  const XPubImportStepper({super.key});
 
   @override
   Widget build(BuildContext c) {
