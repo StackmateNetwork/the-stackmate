@@ -10,7 +10,7 @@ void handleError(BuildContext context, String message) {
     currentFocus.unfocus();
   }
   showTopSnackBar(
-    context,
+    context as OverlayState,
     CustomSnackBar.error(
       textStyle: context.fonts.bodyLarge!.copyWith(
         color: context.colours.onBackground,

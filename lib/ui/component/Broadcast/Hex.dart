@@ -123,7 +123,7 @@ class BroadcastHex extends StatelessWidget {
                   context.read<BroadcastCubit>().broadcastHexConfirmed();
                   if (broadcastState.errBroadcasting != '') {
                     showTopSnackBar(
-                      context,
+                      context as OverlayState,
                       const CustomSnackBar.error(
                         message: 'Error detecting valid hex',
                       ),
