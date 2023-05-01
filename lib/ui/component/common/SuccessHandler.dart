@@ -10,7 +10,7 @@ void handleSuccess(BuildContext context, String message) {
     currentFocus.unfocus();
   }
   showTopSnackBar(
-    context as OverlayState,
+    Overlay.of(context),
     CustomSnackBar.success(
       textStyle: context.fonts.bodyLarge!.copyWith(
         color: context.colours.onPrimaryContainer,
@@ -28,7 +28,7 @@ void handleHelp(BuildContext context, String message) {
     currentFocus.unfocus();
   }
   showTopSnackBar(
-    context as OverlayState,
+    Overlay.of(context),
     CustomSnackBar.info(
       textStyle: context.fonts.bodyLarge!.copyWith(
         color: context.colours.onPrimaryContainer,
