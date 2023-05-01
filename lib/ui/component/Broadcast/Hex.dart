@@ -3,8 +3,6 @@ import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 import 'package:sats/ui/component/common/SuccessHandler.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class BroadcastHex extends StatelessWidget {
   const BroadcastHex({super.key});
@@ -57,7 +55,8 @@ class BroadcastHex extends StatelessWidget {
                         ((name.toString() == '')
                             ? 'None Selected'
                             : name.toString()),
-                    style: c.fonts.labelLarge!.copyWith(color: c.colours.secondary),
+                    style: c.fonts.labelLarge!
+                        .copyWith(color: c.colours.secondary),
                   ),
                 ),
               ),
@@ -116,18 +115,14 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: context.colours.background, backgroundColor: context.colours.primary,
+                  foregroundColor: context.colours.background,
+                  backgroundColor: context.colours.primary,
                 ),
                 onPressed: () async {
-                  context.read<BroadcastCubit>().broadcastHexConfirmed();
                   if (broadcastState.errBroadcasting != '') {
-                    showTopSnackBar(
-                      context as OverlayState,
-                      const CustomSnackBar.error(
-                        message: 'Error detecting valid hex',
-                      ),
-                    );
+                    handleError(context, 'Error validating hex');
                   }
+                  context.read<BroadcastCubit>().broadcastHexConfirmed();
                 },
                 child: Text('Broadcast'.toUpperCase()),
               ),

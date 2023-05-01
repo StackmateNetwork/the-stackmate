@@ -40,7 +40,8 @@ class _BackupWalletState extends State<_BackupWallet> {
         );
 
         if (state.backupComplete) {
-          context.go('/home');
+          context.pop();
+          context.push('/home');
         }
       },
       buildWhen: (previous, current) =>

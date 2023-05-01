@@ -9,7 +9,16 @@ class TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final transactions = c.select((InfoCubit w) => w.state.transactions);
-    if (transactions.isEmpty) return Container();
+    if (transactions.isEmpty)
+      return Padding(
+        padding: const EdgeInsets.only(left: 32, top: 32, bottom: 24),
+        child: Text(
+          'No transactions',
+          style: c.fonts.labelSmall!.copyWith(
+            color: c.colours.onBackground,
+          ),
+        ),
+      );
 
     return FadeIn(
       delay: const Duration(milliseconds: 300),

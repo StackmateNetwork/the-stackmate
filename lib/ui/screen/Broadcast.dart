@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Broadcast/Hex.dart';
@@ -11,7 +12,7 @@ class _Broadcast extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     return BlocBuilder<BroadcastCubit, BroadcastState>(
-      builder: (context, broadcastState) {
+      builder: (context, state) {
         return Scaffold(
           body: SafeArea(
             bottom: false,
@@ -22,9 +23,9 @@ class _Broadcast extends StatelessWidget {
                   cornerTitle: 'Broadcaster'.toUpperCase(),
                   children: [
                     Back(
-                      onPressed: () {
-                        Navigator.of(c).pop();
+                      onPressed: () async {
                         c.read<BroadcastCubit>().reset();
+                        c.pop();
                       },
                     ),
                   ],

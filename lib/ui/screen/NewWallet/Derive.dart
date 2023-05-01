@@ -28,7 +28,8 @@ class _Derive extends StatelessWidget {
           previous.newWalletSaved != current.newWalletSaved,
       listener: (context, state) {
         if (state.newWalletSaved) {
-          context.go('/home');
+          context.pop();
+          context.push('/home');
         }
       },
       buildWhen: (previous, current) =>

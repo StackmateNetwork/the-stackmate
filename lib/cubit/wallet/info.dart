@@ -151,14 +151,13 @@ class InfoCubit extends Cubit<InfoState> {
       // THIS PART NEEDS TO BE REVIEWS
       // compute is used and errors are not properly handled
 
-      // ignore: unused_local_variable
       final syncStat = await compute(sqliteSync, {
         'dbPath': dbPath,
         'descriptor': state.wallet.descriptor,
         'nodeAddress': node,
         'socks5': socks5,
       });
-
+      if (syncStat.hasError) throw SMError.fromJson(syncStat.error!).message;
       final balance = await compute(sqliteBalance, {
         'descriptor': state.wallet.descriptor,
         'dbPath': dbPath,
