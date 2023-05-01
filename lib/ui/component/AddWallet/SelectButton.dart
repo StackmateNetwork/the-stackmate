@@ -22,13 +22,12 @@ class SelectButton extends StatelessWidget {
         onPressed();
       },
       style: ElevatedButton.styleFrom(
-        elevation: 0,
+        elevation: 0, backgroundColor: colour,
         // borderRadius: BorderRadius.circular(8),
         // shadowColor: Colors.,
         // color: colour,
 
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-        primary: colour,
       ),
       child: Container(
         // height: 100,
@@ -45,7 +44,7 @@ class SelectButton extends StatelessWidget {
               children: [
                 Text(
                   text.toUpperCase(),
-                  style: context.fonts.button!.copyWith(
+                  style: context.fonts.labelLarge!.copyWith(
                     color: context.colours.onPrimary,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

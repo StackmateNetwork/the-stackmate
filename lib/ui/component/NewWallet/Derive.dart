@@ -7,8 +7,8 @@ import 'package:sats/ui/component/NewWallet/Derive/Passphrase.dart';
 
 class DeriveSteps extends StatelessWidget {
   const DeriveSteps({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

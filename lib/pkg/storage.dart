@@ -175,7 +175,10 @@ class HiveStore implements IStorage {
 
   @override
   Future<R<bool>> saveItemAtIndex<T>(
-      String dbName, String index, T item) async {
+    String dbName,
+    String index,
+    T item,
+  ) async {
     try {
       await Hive.box<T>(dbName).put(index, item);
       return const R(result: true);

@@ -5,10 +5,10 @@ import 'package:sats/ui/component/BackupWallet/Warning.dart';
 
 class SeedWordCell extends StatelessWidget {
   const SeedWordCell({
-    Key? key,
+    super.key,
     required this.text,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final String text;
   final Function? onTap;
