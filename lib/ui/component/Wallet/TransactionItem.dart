@@ -211,7 +211,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
     showCupertinoModalPopup(
       context: c,
       builder: (BuildContext context) => CupertinoActionSheet(
-        cancelButton: Container(
+        cancelButton: ColoredBox(
           color: c.colours.background,
           child: CupertinoActionSheetAction(
             onPressed: () {
@@ -219,7 +219,8 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
             },
             child: Text(
               'BACK',
-              style: c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
+              style:
+                  c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
             ),
           ),
         ),
@@ -323,7 +324,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
         ),
         actions: [
           if (transaction.height == 0)
-            Container(
+            ColoredBox(
               color: c.colours.background,
               child: CupertinoActionSheetAction(
                 child: Text(
@@ -336,7 +337,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               ),
             )
           else
-            Container(
+            ColoredBox(
               color: c.colours.background,
               child: CupertinoActionSheetAction(
                 onPressed: () {
@@ -344,12 +345,12 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 },
                 child: Text(
                   'Success',
-                  style:
-                      c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
+                  style: c.fonts.labelLarge!
+                      .copyWith(color: c.colours.onBackground),
                 ),
               ),
             ),
-          Container(
+          ColoredBox(
             color: c.colours.background,
             child: CupertinoActionSheetAction(
               onPressed: () {
@@ -357,7 +358,8 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               },
               child: Text(
                 'BACK',
-                style: c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
+                style:
+                    c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
               ),
             ),
           ),
@@ -501,7 +503,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
         ),
         actions: [
           if (transaction.height == 0)
-            Container(
+            ColoredBox(
               color: c.colours.background,
               child: CupertinoActionSheetAction(
                 child: Text(
@@ -514,7 +516,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               ),
             )
           else
-            Container(
+            ColoredBox(
               color: c.colours.background,
               child: CupertinoActionSheetAction(
                 onPressed: () {
@@ -522,12 +524,12 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 },
                 child: Text(
                   'Success',
-                  style:
-                      c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
+                  style: c.fonts.labelLarge!
+                      .copyWith(color: c.colours.onBackground),
                 ),
               ),
             ),
-          Container(
+          ColoredBox(
             color: c.colours.background,
             child: CupertinoActionSheetAction(
               onPressed: () {
@@ -535,7 +537,8 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               },
               child: Text(
                 'BACK',
-                style: c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
+                style:
+                    c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
               ),
             ),
           ),
