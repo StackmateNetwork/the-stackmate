@@ -20,46 +20,65 @@ class MasterKeyState with _$MasterKeyState {
   const MasterKeyState._();
 }
 
-enum StorageKeys {
-  securityKey('securityKey');
-
-  const StorageKeys(this.name);
-  final String name;
-}
-
 class MasterKeyCubit extends Cubit<MasterKeyState> {
   MasterKeyCubit(
-    this.storage,
     this._chainSelect,
   ) : super(const MasterKeyState());
   FlutterSecureStorage storage = const FlutterSecureStorage();
   final ChainSelectCubit _chainSelect;
 
   Future<void> init() async {
-    final value = await storage.read(
-      key: 'key',
-    );
-    final jsonD = jsonDecode(value!);
-    final seed = MasterKey.fromJson(jsonD as Map<String, dynamic>);
-    if (seed.root == '') {
-      if (seed.seed == 'empty')
+    if (_chainSelect.state.blockchain.name == 'main') {
+      final value = await storage.read(
+        key: 'Masterkey',
+      );
+      final jsonD = jsonDecode(value!);
+      final seed = MasterKey.fromJson(jsonD as Map<String, dynamic>);
+      if (seed.root == '') {
+        if (seed.seed == 'empty')
+          emit(
+            state.copyWith(
+              key: null,
+              error: null,
+            ),
+          );
+        else
+          emit(state.copyWith(error: state.error, key: null));
+      } else {
         emit(
           state.copyWith(
-            key: null,
+            key: seed,
             error: null,
           ),
         );
-      else
-        emit(state.copyWith(error: state.error, key: null));
+      }
+      return;
     } else {
-      emit(
-        state.copyWith(
-          key: seed,
-          error: null,
-        ),
+      final value = await storage.read(
+        key: 'Testkey',
       );
+      final jsonD = jsonDecode(value!);
+      final seed = MasterKey.fromJson(jsonD as Map<String, dynamic>);
+      if (seed.root == '') {
+        if (seed.seed == 'empty')
+          emit(
+            state.copyWith(
+              key: null,
+              error: null,
+            ),
+          );
+        else
+          emit(state.copyWith(error: state.error, key: null));
+      } else {
+        emit(
+          state.copyWith(
+            key: seed,
+            error: null,
+          ),
+        );
+      }
+      return;
     }
-    return;
   }
 
   Future<void> save(
@@ -75,11 +94,16 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       backedUp: true,
     );
     final masterData = masterKey.toJson();
-    final saved = await storage.write(
-      key: 'key',
-      value: jsonEncode(masterData),
-    );
-
+    if (_chainSelect.state.blockchain.name == 'main')
+      final saved = await storage.write(
+        key: 'Masterkey',
+        value: jsonEncode(masterData),
+      );
+    else
+      final saved = await storage.write(
+        key: 'Testkey',
+        value: jsonEncode(masterData),
+      );
     await Future.delayed(const Duration(milliseconds: 200));
   }
 
@@ -96,10 +120,16 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       backedUp: false,
     );
     final masterData = masterKey.toJson();
-    final saved = await storage.write(
-      key: 'key',
-      value: jsonEncode(masterData),
-    );
+    if (_chainSelect.state.blockchain.name == 'main')
+      final saved = await storage.write(
+        key: 'Masterkey',
+        value: jsonEncode(masterData),
+      );
+    else
+      final saved = await storage.write(
+        key: 'Testkey',
+        value: jsonEncode(masterData),
+      );
 
     await Future.delayed(const Duration(milliseconds: 200));
   }

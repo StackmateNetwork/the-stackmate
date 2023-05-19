@@ -75,7 +75,7 @@ class _Home extends StatelessWidget {
                               children: [
                                 const HomeLoader(),
                                 TorHeader(),
-                                WalletTools()
+                                // WalletTools()
                               ],
                             ),
                           ),
@@ -125,8 +125,8 @@ class _Home extends StatelessWidget {
                                         vertical: 24,
                                       ),
                                       child: Text(
-                                        'Click on + icon to Create wallet',
-                                        style: c.fonts.bodySmall!.copyWith(
+                                        'Please restart the app',
+                                        style: c.fonts.bodyMedium!.copyWith(
                                           color: c.colours.onBackground,
                                         ),
                                       ),
