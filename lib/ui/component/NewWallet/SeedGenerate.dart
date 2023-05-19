@@ -63,7 +63,6 @@ class SeedGenerate extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final words = c.select((SeedGenerateCubit c) => c.state.seed);
-
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
