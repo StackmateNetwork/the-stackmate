@@ -54,7 +54,7 @@ class SettingsScreen extends StatelessWidget {
                     backgroundColor: c.colours.primary,
                   ),
                   onPressed: () {
-                    c.read<MasterKeyCubit>().init('keyroot' as StorageKeys);
+                    c.read<MasterKeyCubit>().init();
                     c.read<WalletsCubit>().refresh();
                     Navigator.of(c).pop();
                   },

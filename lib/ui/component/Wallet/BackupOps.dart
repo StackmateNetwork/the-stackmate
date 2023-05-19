@@ -29,8 +29,8 @@ class _BackupOpsState extends State<BackupOps> {
     // const recoveredWallet = 'RECOVERED';
     final wallet = c.select((InfoCubit wc) => wc.state.wallet);
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key!);
-    //final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
-    final isBackedUp = false;
+    final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
+    final isBackedUp = masterKeyState.key!.backedUp!;
     final walletType = wallet.walletType;
     final isLoading = c.select((InfoCubit wc) => wc.state.loadingTransactions);
     final zeroBal = c.select((InfoCubit wc) => wc.state.zeroBalance());
@@ -95,7 +95,7 @@ class _BackupOpsState extends State<BackupOps> {
                   foregroundColor: c.colours.secondary,
                 ),
                 onPressed: () async {
-                  // c.read<InfoCubit>().testPassPhrase(masterKey.seed!);
+                  c.read<InfoCubit>().testPassPhrase(masterKey.seed!);
                   _controller.clear();
                 },
                 child: const Text('TEST PASSPHRASE'),
@@ -103,7 +103,6 @@ class _BackupOpsState extends State<BackupOps> {
             ),
             const SizedBox(height: 24),
           ],
-          // ignore: dead_code
           if (isBackedUp && wallet.walletType == primaryWallet) ...[
             SizedBox(
               height: 52,
@@ -115,7 +114,7 @@ class _BackupOpsState extends State<BackupOps> {
                       c.colours.background.withOpacity(0.38).withOpacity(0.38),
                 ),
                 onPressed: () {
-                  // peekSeed(c, masterKey);
+                  peekSeed(c, masterKey);
                 },
                 child: Text('PEEK SEED'.toUpperCase()),
               ),

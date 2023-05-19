@@ -13,7 +13,7 @@ const defaultNodeAddress = 'default';
 @freezed
 class MasterKeyState with _$MasterKeyState {
   const factory MasterKeyState({
-    String? key,
+    MasterKey? key,
     String? error,
     String? network,
   }) = _MasterKeyState;
@@ -35,16 +35,14 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
   FlutterSecureStorage storage = const FlutterSecureStorage();
   final ChainSelectCubit _chainSelect;
 
-  Future<String?> init(
-    StorageKeys key,
-  ) async {
+  Future<void> init() async {
     final value = await storage.read(
-      key: key.name,
+      key: 'key',
     );
-    final seed = jsonDecode(value.toString());
-
-    if (seed['seed'] == null) {
-      if (seed.error! == 'empty')
+    final jsonD = jsonDecode(value!);
+    final seed = MasterKey.fromJson(jsonD as Map<String, dynamic>);
+    if (seed.root == '') {
+      if (seed.seed == 'empty')
         emit(
           state.copyWith(
             key: null,
@@ -52,23 +50,22 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
           ),
         );
       else
-        emit(state.copyWith(error: seed.error.toString(), key: null));
+        emit(state.copyWith(error: state.error, key: null));
     } else {
       emit(
         state.copyWith(
-          key: seed.toString(),
+          key: seed,
           error: null,
         ),
       );
     }
-    return null;
+    return;
   }
 
   Future<void> save(
     String root,
     String fingerPrint,
     String seed,
-    StorageKeys key,
   ) async {
     final masterKey = MasterKey(
       seed: seed,
@@ -77,10 +74,10 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       network: _chainSelect.state.blockchain.name,
       backedUp: true,
     );
-    final masterDataEncoded = jsonEncode(masterKey);
+    final masterData = masterKey.toJson();
     final saved = await storage.write(
-      key: key.name,
-      value: masterDataEncoded,
+      key: 'key',
+      value: jsonEncode(masterData),
     );
 
     await Future.delayed(const Duration(milliseconds: 200));
@@ -90,7 +87,6 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
     String seed,
     String root,
     String fingerPrint,
-    StorageKeys key,
   ) async {
     final masterKey = MasterKey(
       seed: seed,
@@ -99,10 +95,10 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       network: _chainSelect.state.blockchain.name,
       backedUp: false,
     );
-    final masterDataEncoded = jsonEncode(masterKey);
+    final masterData = masterKey.toJson();
     final saved = await storage.write(
-      key: key.name,
-      value: masterDataEncoded,
+      key: 'key',
+      value: jsonEncode(masterData),
     );
 
     await Future.delayed(const Duration(milliseconds: 200));

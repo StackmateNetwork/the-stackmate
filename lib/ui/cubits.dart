@@ -30,7 +30,7 @@ class _CubitsState extends State<Cubits> {
   Widget build(BuildContext context) {
     final logger = locator<Logger>();
     final storage = locator<IStorage>();
-    const storage0 = FlutterSecureStorage;
+    FlutterSecureStorage storage0 = const FlutterSecureStorage();
     final networkSelectCubit = ChainSelectCubit(
       storage,
       logger,
@@ -39,9 +39,8 @@ class _CubitsState extends State<Cubits> {
     final torCubit = TorCubit(storage, logger);
     torCubit.start();
 
-    final masterKeyCubit =
-        MasterKeyCubit(storage0 as FlutterSecureStorage, networkSelectCubit);
-    masterKeyCubit.init('keyroot' as StorageKeys);
+    final masterKeyCubit = MasterKeyCubit(storage0, networkSelectCubit);
+    masterKeyCubit.init();
 
     final preferencesCubit = PreferencesCubit(storage);
     preferencesCubit.init();
