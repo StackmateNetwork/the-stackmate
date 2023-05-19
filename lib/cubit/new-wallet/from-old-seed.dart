@@ -324,8 +324,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
           root,
           wallet.fingerPrint,
           _importCubit.state.seed,
+          'key' as StorageKeys,
         );
-        await _masterKeyCubit.init();
+        await _masterKeyCubit.init('key' as StorageKeys);
       }
       // Future.delayed(Duration(seconds: 3));
       // public descriptor

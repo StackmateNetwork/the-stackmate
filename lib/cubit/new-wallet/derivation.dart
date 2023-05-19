@@ -161,9 +161,9 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
           walletLabelError: emptyString,
         ),
       );
-
+      final seed = await _masterKeyCubit.init('key' as StorageKeys);
       final parent = _core.importMaster(
-        mnemonic: _masterKeyCubit.state.key!.seed!,
+        mnemonic: seed!,
         passphrase: state.passPhrase,
         network: _blockchainCubit.state.blockchain.name,
       );
@@ -320,9 +320,9 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
           errSavingWallet: emptyString,
         ),
       );
-
+      final seed = await _masterKeyCubit.init('key' as StorageKeys);
       final parent = _core.importMaster(
-        mnemonic: _masterKeyCubit.state.key!.seed!,
+        mnemonic: seed!,
         passphrase: state.passPhrase,
         network: _blockchainCubit.state.blockchain.name,
       );

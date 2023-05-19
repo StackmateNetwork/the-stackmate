@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -29,7 +30,7 @@ class _CubitsState extends State<Cubits> {
   Widget build(BuildContext context) {
     final logger = locator<Logger>();
     final storage = locator<IStorage>();
-
+    const storage0 = FlutterSecureStorage;
     final networkSelectCubit = ChainSelectCubit(
       storage,
       logger,
@@ -38,8 +39,9 @@ class _CubitsState extends State<Cubits> {
     final torCubit = TorCubit(storage, logger);
     torCubit.start();
 
-    final masterKeyCubit = MasterKeyCubit(storage, networkSelectCubit);
-    masterKeyCubit.init();
+    final masterKeyCubit =
+        MasterKeyCubit(storage0 as FlutterSecureStorage, networkSelectCubit);
+    masterKeyCubit.init('keyroot' as StorageKeys);
 
     final preferencesCubit = PreferencesCubit(storage);
     preferencesCubit.init();

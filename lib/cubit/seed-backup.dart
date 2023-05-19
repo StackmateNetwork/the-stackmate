@@ -51,16 +51,16 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
   static const incorerctWordError = 'Incorrect Word Selected.';
   static const emptyString = '';
   void init() async {
-    await _masterKey.init();
+    await _masterKey.init('key' as StorageKeys);
 
-    emit(
-      state.copyWith(
-        backupComplete: false,
-        seed: _masterKey.state.key!.seed?.split(' '),
-        rootXprv: _masterKey.state.key!.root,
-        fingerPrint: _masterKey.state.key!.fingerprint,
-      ),
-    );
+    // emit(
+    //   state.copyWith(
+    //     backupComplete: false,
+    //     seed: _masterKey.state.key!.seed?.split(' '),
+    //     rootXprv: _masterKey.state.key!.root,
+    //     fingerPrint: _masterKey.state.key!.fingerprint,
+    //   ),
+    // );
   }
 
   void backClicked() {
@@ -102,12 +102,9 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
 
   Future<void> _completeBackup() async {
     try {
-      await _masterKey.save(
-        state.rootXprv!,
-        state.fingerPrint!,
-        state.seed!.join(' '),
-      );
-      await _masterKey.init();
+      await _masterKey.save(state.rootXprv!, state.fingerPrint!,
+          state.seed!.join(' '), 'key' as StorageKeys);
+      await _masterKey.init('key' as StorageKeys);
       emit(
         state.copyWith(
           backupComplete: true,

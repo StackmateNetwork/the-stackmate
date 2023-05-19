@@ -14,19 +14,19 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+MasterKey _$MasterKeyFromJson(Map<String, dynamic> json) {
+  return _MasterKey.fromJson(json);
+}
+
 /// @nodoc
 mixin _$MasterKey {
-  @HiveField(0)
   String? get seed => throw _privateConstructorUsedError;
-  @HiveField(2)
   String? get root => throw _privateConstructorUsedError;
-  @HiveField(3)
   String? get fingerprint => throw _privateConstructorUsedError;
-  @HiveField(4)
   String? get network => throw _privateConstructorUsedError;
-  @HiveField(6)
   bool? get backedUp => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $MasterKeyCopyWith<MasterKey> get copyWith =>
       throw _privateConstructorUsedError;
@@ -38,11 +38,11 @@ abstract class $MasterKeyCopyWith<$Res> {
       _$MasterKeyCopyWithImpl<$Res, MasterKey>;
   @useResult
   $Res call(
-      {@HiveField(0) String? seed,
-      @HiveField(2) String? root,
-      @HiveField(3) String? fingerprint,
-      @HiveField(4) String? network,
-      @HiveField(6) bool? backedUp});
+      {String? seed,
+      String? root,
+      String? fingerprint,
+      String? network,
+      bool? backedUp});
 }
 
 /// @nodoc
@@ -97,11 +97,11 @@ abstract class _$$_MasterKeyCopyWith<$Res> implements $MasterKeyCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@HiveField(0) String? seed,
-      @HiveField(2) String? root,
-      @HiveField(3) String? fingerprint,
-      @HiveField(4) String? network,
-      @HiveField(6) bool? backedUp});
+      {String? seed,
+      String? root,
+      String? fingerprint,
+      String? network,
+      bool? backedUp});
 }
 
 /// @nodoc
@@ -147,31 +147,23 @@ class __$$_MasterKeyCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-@HiveType(typeId: 7, adapterName: 'MasterKeyClassAdapter')
-class _$_MasterKey extends _MasterKey {
+@JsonSerializable()
+class _$_MasterKey implements _MasterKey {
   const _$_MasterKey(
-      {@HiveField(0) this.seed,
-      @HiveField(2) this.root,
-      @HiveField(3) this.fingerprint,
-      @HiveField(4) this.network,
-      @HiveField(6) this.backedUp})
-      : super._();
+      {this.seed, this.root, this.fingerprint, this.network, this.backedUp});
+
+  factory _$_MasterKey.fromJson(Map<String, dynamic> json) =>
+      _$$_MasterKeyFromJson(json);
 
   @override
-  @HiveField(0)
   final String? seed;
   @override
-  @HiveField(2)
   final String? root;
   @override
-  @HiveField(3)
   final String? fingerprint;
   @override
-  @HiveField(4)
   final String? network;
   @override
-  @HiveField(6)
   final bool? backedUp;
 
   @override
@@ -193,6 +185,7 @@ class _$_MasterKey extends _MasterKey {
                 other.backedUp == backedUp));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, seed, root, fingerprint, network, backedUp);
@@ -202,31 +195,35 @@ class _$_MasterKey extends _MasterKey {
   @pragma('vm:prefer-inline')
   _$$_MasterKeyCopyWith<_$_MasterKey> get copyWith =>
       __$$_MasterKeyCopyWithImpl<_$_MasterKey>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_MasterKeyToJson(
+      this,
+    );
+  }
 }
 
-abstract class _MasterKey extends MasterKey {
+abstract class _MasterKey implements MasterKey {
   const factory _MasterKey(
-      {@HiveField(0) final String? seed,
-      @HiveField(2) final String? root,
-      @HiveField(3) final String? fingerprint,
-      @HiveField(4) final String? network,
-      @HiveField(6) final bool? backedUp}) = _$_MasterKey;
-  const _MasterKey._() : super._();
+      {final String? seed,
+      final String? root,
+      final String? fingerprint,
+      final String? network,
+      final bool? backedUp}) = _$_MasterKey;
+
+  factory _MasterKey.fromJson(Map<String, dynamic> json) =
+      _$_MasterKey.fromJson;
 
   @override
-  @HiveField(0)
   String? get seed;
   @override
-  @HiveField(2)
   String? get root;
   @override
-  @HiveField(3)
   String? get fingerprint;
   @override
-  @HiveField(4)
   String? get network;
   @override
-  @HiveField(6)
   bool? get backedUp;
   @override
   @JsonKey(ignore: true)

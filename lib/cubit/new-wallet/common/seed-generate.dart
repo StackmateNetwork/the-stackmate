@@ -82,15 +82,17 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
         root.result!.mnemonic,
         root.result!.xprv,
         root.result!.fingerprint,
+        'key' as StorageKeys,
       );
     } else {
       await _masterKey.save(
         root.result!.xprv,
         root.result!.fingerprint,
         root.result!.mnemonic,
+        'key' as StorageKeys,
       );
     }
-    await _masterKey.init();
+    await _masterKey.init('key' as StorageKeys);
 
     clear();
 

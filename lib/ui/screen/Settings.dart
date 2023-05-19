@@ -50,10 +50,11 @@ class SettingsScreen extends StatelessWidget {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: c.colours.background, backgroundColor: c.colours.primary,
+                    foregroundColor: c.colours.background,
+                    backgroundColor: c.colours.primary,
                   ),
                   onPressed: () {
-                    c.read<MasterKeyCubit>().init();
+                    c.read<MasterKeyCubit>().init('keyroot' as StorageKeys);
                     c.read<WalletsCubit>().refresh();
                     Navigator.of(c).pop();
                   },
