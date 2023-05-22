@@ -15,56 +15,60 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 24),
-              Header(
-                cornerTitle: 'Settings'.toUpperCase(),
+    return BlocBuilder<MasterKeyCubit, MasterKeyState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            bottom: false,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Back(
-                    onPressed: () {
-                      Navigator.of(c).pop();
-                    },
+                  const SizedBox(height: 24),
+                  Header(
+                    cornerTitle: 'Settings'.toUpperCase(),
+                    children: [
+                      Back(
+                        onPressed: () {
+                          Navigator.of(c).pop();
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  const SelectNode(),
+                  const SizedBox(height: 8),
+                  const SelectNetwork(),
+                  const SizedBox(height: 8),
+                  const SetBitcoinUnit(),
+                  const SizedBox(height: 8),
+                  const SetIncognito(),
+                  const SizedBox(height: 8),
+                  const TorSettings(),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: c.colours.background,
+                        backgroundColor: c.colours.primary,
+                      ),
+                      onPressed: () {
+                        c.read<MasterKeyCubit>().init();
+                        c.read<WalletsCubit>().refresh();
+                        Navigator.of(c).pop();
+                      },
+                      child: const Text('SAVE'),
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 24,
-              ),
-              const SelectNode(),
-              const SizedBox(height: 8),
-              const SelectNetwork(),
-              const SizedBox(height: 8),
-              const SetBitcoinUnit(),
-              const SizedBox(height: 8),
-              const SetIncognito(),
-              const SizedBox(height: 8),
-              const TorSettings(),
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: c.colours.background,
-                    backgroundColor: c.colours.primary,
-                  ),
-                  onPressed: () {
-                    c.read<MasterKeyCubit>().init();
-                    c.read<WalletsCubit>().refresh();
-                    Navigator.of(c).pop();
-                  },
-                  child: const Text('SAVE'),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

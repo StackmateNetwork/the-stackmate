@@ -28,22 +28,25 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
   final ChainSelectCubit _chainSelect;
 
   Future<void> init() async {
+    emit(
+      state.copyWith(
+        key: null,
+      ),
+    );
     if (_chainSelect.state.blockchain.name == 'main') {
       final value = await storage.read(
         key: 'Masterkey',
       );
-      final jsonD = jsonDecode(value!);
+
+      final jsonD = await jsonDecode(value!);
       final seed = MasterKey.fromJson(jsonD as Map<String, dynamic>);
       if (seed.root == '') {
-        if (seed.seed == 'empty')
-          emit(
-            state.copyWith(
-              key: null,
-              error: null,
-            ),
-          );
-        else
-          emit(state.copyWith(error: state.error, key: null));
+        emit(
+          state.copyWith(
+            key: null,
+            error: state.error,
+          ),
+        );
       } else {
         emit(
           state.copyWith(
@@ -57,18 +60,16 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       final value = await storage.read(
         key: 'Testkey',
       );
+
       final jsonD = jsonDecode(value!);
       final seed = MasterKey.fromJson(jsonD as Map<String, dynamic>);
       if (seed.root == '') {
-        if (seed.seed == 'empty')
-          emit(
-            state.copyWith(
-              key: null,
-              error: null,
-            ),
-          );
-        else
-          emit(state.copyWith(error: state.error, key: null));
+        emit(
+          state.copyWith(
+            key: null,
+            error: state.error,
+          ),
+        );
       } else {
         emit(
           state.copyWith(
