@@ -54,12 +54,12 @@ class WalletInfo extends StatelessWidget {
                 maxWidth: c.width,
                 maxHeight: c.height / 1.2,
               ),
-              child: TabBarView(
+              child: const TabBarView(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16),
                     child: Column(
-                      children: const [
+                      children: [
                         SizedBox(
                           height: 32,
                         ),
@@ -68,9 +68,9 @@ class WalletInfo extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16),
                     child: Column(
-                      children: const [
+                      children: [
                         SizedBox(
                           height: 32,
                         ),

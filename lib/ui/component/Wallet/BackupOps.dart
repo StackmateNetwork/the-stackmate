@@ -84,7 +84,7 @@ class _BackupOpsState extends State<BackupOps> {
                 style: TextStyle(color: c.colours.onBackground),
                 decoration: const InputDecoration(
                     helperText: 'Input Passphrase',
-                    labelText: 'Enter passphrase'),
+                    labelText: 'Enter passphrase',),
               ),
             ),
             SizedBox(
