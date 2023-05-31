@@ -67,12 +67,12 @@ class _Wallet extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 6),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Column(
-                            children: const [
+                            children: [
                               Balance(),
                             ],
                           ),

@@ -40,7 +40,7 @@ class Logger extends Cubit<LoggerState> {
 
       _addToLog(log);
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
   }
 
@@ -57,7 +57,7 @@ class Logger extends Cubit<LoggerState> {
 
       _addToLog(log);
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
   }
 
@@ -75,7 +75,7 @@ class Logger extends Cubit<LoggerState> {
       );
       _addToLog(log);
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
   }
 

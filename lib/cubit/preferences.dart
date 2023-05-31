@@ -24,12 +24,7 @@ class PreferencesCubit extends Cubit<PreferencesState> {
     this._storage,
   ) : super(
           const PreferencesState(
-            incognito: false,
-            bitcoinStandard: false,
-            preferredBitcoinUnit: 'sats',
-            preferredExchange: 'CoinCap',
-            preferredFiatUnit: 'USD',
-            errorPreferencesState: '',
+            
           ),
         );
 

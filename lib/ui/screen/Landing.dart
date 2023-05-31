@@ -46,13 +46,13 @@ class _Landing extends StatelessWidget {
                 expandedHeight: c.height / 1.2,
                 automaticallyImplyLeading: false,
                 backgroundColor: c.colours.background,
-                flexibleSpace: FlexibleSpaceBar(
-                  stretchModes: const [
+                flexibleSpace: const FlexibleSpaceBar(
+                  stretchModes: [
                     StretchMode.fadeTitle,
                   ],
                   background: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: const [
+                    children: [
                       SizedBox(height: 36),
                       LandingLogo(),
                       SizedBox(height: 12),
