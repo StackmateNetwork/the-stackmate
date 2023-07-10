@@ -14,6 +14,7 @@ import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -95,6 +96,7 @@ class SendCubit extends Cubit<SendState> {
     this._core,
     this._fees,
     this._storage,
+    this._masterKeyCubit,
     Wallet wallet,
 
     // this._file,
@@ -113,6 +115,8 @@ class SendCubit extends Cubit<SendState> {
   final TorCubit _torCubit;
   final IStackMateBitcoin _core;
   final FeesCubit _fees;
+  final MasterKeyCubit _masterKeyCubit;
+
   // final FileManager _file;
 
   static const emailShareTxidSubject = 'Transaction ID';
@@ -813,6 +817,36 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
+  Future<String> descRiptor() async {
+    final masteRoot = _core.importMaster(
+      mnemonic: _masterKeyCubit.state.key!.seed!,
+      passphrase: '',
+      network: _blockchain.state.blockchain.name,
+    );
+    if (masteRoot.hasError) {
+      throw SMError.fromJson(masteRoot.error!).message;
+    }
+    final segwitDerived = _core.deriveHardened(
+      masterXPriv: masteRoot.result!.xprv,
+      account: '0',
+      purpose: '84',
+    );
+    if (segwitDerived.hasError) {
+      throw SMError.fromJson(segwitDerived.error!).message;
+    }
+    // final tapDerived = _core.deriveHardened(
+    //   masterXPriv: masteRoot.result!.xprv,
+    //   account: '0',
+    //   purpose: '86',
+    // );
+    // if (tapDerived.hasError) {
+    //   throw SMError.fromJson(tapDerived.error!).message;
+    // }
+    final segPrivateDesc = 'wpkh(${segwitDerived.result!.fullXPrv}/*)';
+    // final tapPrivateDesc = 'tr(${tapDerived.result!.fullXPrv}/*)';
+    return segPrivateDesc;
+  }
+
   void sendClicked() async {
     try {
       if (state.sendingTx) return;
@@ -828,7 +862,7 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final descriptor = state.wallet.descriptor;
+      final descriptor = descRiptor();
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 

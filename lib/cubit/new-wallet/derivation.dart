@@ -181,13 +181,13 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       }
       final fingerprint = child.result!.fingerPrint;
       final path = child.result!.hardenedPath;
-      final xprv = child.result!.xprv;
-      final fullXPrv =
-          '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
+      // final xprv = child.result!.xprv;
+      // final fullXPrv =
+      //     '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
       final xpub = child.result!.xpub;
       final fullXPub =
           '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
-      final policy = 'pk($fullXPrv/*)';
+      final policy = 'pk($fullXPub/*)';
 
       const readable = 'pk(__primary__)';
       final uid = sha1.convert(utf8.encode(xpub)).toString().substring(0, 21);
@@ -339,13 +339,13 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       }
       final fingerprint = child.result!.fingerPrint;
       final path = child.result!.hardenedPath;
-      final xprv = child.result!.xprv;
-      final fullXPrv =
-          '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
+      // final xprv = child.result!.xprv;
+      // final fullXPrv =
+      //     '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
       final xpub = child.result!.xpub;
       final fullXPub =
           '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
-      final policy = 'pk($fullXPrv/*)';
+      final policy = 'pk($fullXPub/*)';
 
       const readable = 'pk(__primary__)';
       final bytes = utf8.encode(xpub);
