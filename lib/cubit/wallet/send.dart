@@ -131,7 +131,10 @@ class SendCubit extends Cubit<SendState> {
   static const minerOutput = 'miner';
   static const emptyString = '';
   static const sweepMessage = 'WALLET WILL BE EMPTIED.';
-
+  static const trScript = 'tr';
+  static const taprootPurpose = '86';
+  static const segwitScript = 'wpkh';
+  static const segwitPurpose = '84';
   void _init(bool withQR) async {
     if (withQR) {
       await Future.delayed(const Duration(milliseconds: 500));
@@ -817,7 +820,7 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
-  Future<String> descRiptor() async {
+  String descriptor() {
     final masteRoot = _core.importMaster(
       mnemonic: _masterKeyCubit.state.key!.seed!,
       passphrase: '',
@@ -826,13 +829,13 @@ class SendCubit extends Cubit<SendState> {
     if (masteRoot.hasError) {
       throw SMError.fromJson(masteRoot.error!).message;
     }
-    final segwitDerived = _core.deriveHardened(
+    final child = _core.deriveHardened(
       masterXPriv: masteRoot.result!.xprv,
       account: '0',
       purpose: '84',
     );
-    if (segwitDerived.hasError) {
-      throw SMError.fromJson(segwitDerived.error!).message;
+    if (child.hasError) {
+      throw SMError.fromJson(child.error!).message;
     }
     // final tapDerived = _core.deriveHardened(
     //   masterXPriv: masteRoot.result!.xprv,
@@ -842,9 +845,15 @@ class SendCubit extends Cubit<SendState> {
     // if (tapDerived.hasError) {
     //   throw SMError.fromJson(tapDerived.error!).message;
     // }
-    final segPrivateDesc = 'wpkh(${segwitDerived.result!.fullXPrv}/*)';
-    // final tapPrivateDesc = 'tr(${tapDerived.result!.fullXPrv}/*)';
-    return segPrivateDesc;
+    final fullXPrv = child.result!.fullXPrv;
+    final policy = 'pk($fullXPrv/*)';
+
+    final desc = _core.compile(
+      policy: policy,
+      scriptType: segwitScript,
+    );
+
+    return desc.result!;
   }
 
   void sendClicked() async {
@@ -862,12 +871,12 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final descriptor = descRiptor();
+      final des = descriptor();
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
       final signed = await compute(signTx, {
-        'descriptor': descriptor,
+        'descriptor': des,
         'unsignedPSBT': state.psbt,
       });
 
@@ -885,7 +894,7 @@ class SendCubit extends Cubit<SendState> {
       }
 
       final txid = await compute(broadcastTx, {
-        'descriptor': descriptor,
+        'descriptor': des,
         'nodeAddress': nodeAddress,
         'socks5': socks5,
         'signedPSBT': signed.result!.psbt,

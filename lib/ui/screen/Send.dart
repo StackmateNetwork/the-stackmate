@@ -152,7 +152,7 @@ class _WalletSend extends StatelessWidget {
 
 class WalletSendScreen extends StatelessWidget {
   const WalletSendScreen(
-      {super.key, required this.fromQr, required this.wallet});
+      {super.key, required this.fromQr, required this.wallet,});
 
   final bool fromQr;
   final Wallet wallet;

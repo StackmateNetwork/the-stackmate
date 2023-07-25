@@ -28,57 +28,46 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
   final ChainSelectCubit _chainSelect;
 
   Future<void> init() async {
-    emit(
-      state.copyWith(
-        key: null,
-      ),
-    );
     if (_chainSelect.state.blockchain.name == 'main') {
       final value = await storage.read(
         key: 'Masterkey',
       );
-
-      final jsonD = await jsonDecode(value!);
-      final seed = MasterKey.fromJson(jsonD as Map<String, dynamic>);
-      if (seed.root == '') {
-        emit(
-          state.copyWith(
-            key: null,
-            error: state.error,
-          ),
-        );
+      if (value == null) {
+        emit(state.copyWith(key: null));
+        return;
       } else {
-        emit(
-          state.copyWith(
-            key: seed,
-            error: null,
-          ),
-        );
+        final jsonD = jsonDecode(value);
+        final seed = MasterKey.fromJson(jsonD as Map<String, dynamic>);
+        if (seed.seed != null) {
+          emit(
+            state.copyWith(
+              key: seed,
+              error: null,
+            ),
+          );
+        }
+        return;
       }
-      return;
     } else {
       final value = await storage.read(
         key: 'Testkey',
       );
-
-      final jsonD = jsonDecode(value!);
-      final seed = MasterKey.fromJson(jsonD as Map<String, dynamic>);
-      if (seed.root == '') {
-        emit(
-          state.copyWith(
-            key: null,
-            error: state.error,
-          ),
-        );
+      if (value == null) {
+        emit(state.copyWith(key: null));
+        return;
       } else {
-        emit(
-          state.copyWith(
-            key: seed,
-            error: null,
-          ),
-        );
+        final jsonD = jsonDecode(value);
+        final seed = MasterKey.fromJson(jsonD as Map<String, dynamic>);
+        if (seed.seed != null) {
+          emit(
+            state.copyWith(
+              key: seed,
+              error: null,
+            ),
+          );
+        }
+        return;
       }
-      return;
     }
   }
 
@@ -100,6 +89,7 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
         key: 'Masterkey',
         value: jsonEncode(masterData),
       );
+    //final save =  saveValue();
     else
       final saved = await storage.write(
         key: 'Testkey',

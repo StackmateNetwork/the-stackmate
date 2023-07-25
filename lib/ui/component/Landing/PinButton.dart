@@ -32,7 +32,8 @@ class PinButton extends StatelessWidget {
             height: 72,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                foregroundColor: context.colours.background, backgroundColor: context.colours.primary,
+                foregroundColor: context.colours.background,
+                backgroundColor: context.colours.primary,
               ),
               onPressed: () async {
                 // CHECK IF PIN IS VERIFIED
@@ -47,7 +48,8 @@ class PinButton extends StatelessWidget {
             height: 72,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                foregroundColor: context.colours.background, backgroundColor: context.colours.primary,
+                foregroundColor: context.colours.background,
+                backgroundColor: context.colours.primary,
               ),
               onPressed: () async {
                 // CHECK IF PIN IS VERIFIED
