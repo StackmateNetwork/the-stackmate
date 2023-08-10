@@ -31,7 +31,7 @@ class _BackupOpsState extends State<BackupOps> {
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key!);
     final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
     final isBackedUp = masterKeyState.key!.backedUp!;
-    final walletType = wallet.walletType;
+    final walletType = wallet!.walletType;
     final isLoading = c.select((InfoCubit wc) => wc.state.loadingTransactions);
     final zeroBal = c.select((InfoCubit wc) => wc.state.zeroBalance());
 

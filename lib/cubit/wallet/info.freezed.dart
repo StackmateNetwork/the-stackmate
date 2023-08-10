@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$InfoState {
-  Wallet get wallet => throw _privateConstructorUsedError;
+  Wallet? get wallet => throw _privateConstructorUsedError;
   bool get loadingTransactions => throw _privateConstructorUsedError;
   String get errLoadingTransactions => throw _privateConstructorUsedError;
   bool get loadingBalance => throw _privateConstructorUsedError;
@@ -43,7 +43,7 @@ abstract class $InfoStateCopyWith<$Res> {
       _$InfoStateCopyWithImpl<$Res, InfoState>;
   @useResult
   $Res call(
-      {Wallet wallet,
+      {Wallet? wallet,
       bool loadingTransactions,
       String errLoadingTransactions,
       bool loadingBalance,
@@ -59,7 +59,7 @@ abstract class $InfoStateCopyWith<$Res> {
       bool ppTestPassed,
       String errorPPTest});
 
-  $WalletCopyWith<$Res> get wallet;
+  $WalletCopyWith<$Res>? get wallet;
 }
 
 /// @nodoc
@@ -75,7 +75,7 @@ class _$InfoStateCopyWithImpl<$Res, $Val extends InfoState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wallet = null,
+    Object? wallet = freezed,
     Object? loadingTransactions = null,
     Object? errLoadingTransactions = null,
     Object? loadingBalance = null,
@@ -92,10 +92,10 @@ class _$InfoStateCopyWithImpl<$Res, $Val extends InfoState>
     Object? errorPPTest = null,
   }) {
     return _then(_value.copyWith(
-      wallet: null == wallet
+      wallet: freezed == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
-              as Wallet,
+              as Wallet?,
       loadingTransactions: null == loadingTransactions
           ? _value.loadingTransactions
           : loadingTransactions // ignore: cast_nullable_to_non_nullable
@@ -157,8 +157,12 @@ class _$InfoStateCopyWithImpl<$Res, $Val extends InfoState>
 
   @override
   @pragma('vm:prefer-inline')
-  $WalletCopyWith<$Res> get wallet {
-    return $WalletCopyWith<$Res>(_value.wallet, (value) {
+  $WalletCopyWith<$Res>? get wallet {
+    if (_value.wallet == null) {
+      return null;
+    }
+
+    return $WalletCopyWith<$Res>(_value.wallet!, (value) {
       return _then(_value.copyWith(wallet: value) as $Val);
     });
   }
@@ -172,7 +176,7 @@ abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {Wallet wallet,
+      {Wallet? wallet,
       bool loadingTransactions,
       String errLoadingTransactions,
       bool loadingBalance,
@@ -189,7 +193,7 @@ abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
       String errorPPTest});
 
   @override
-  $WalletCopyWith<$Res> get wallet;
+  $WalletCopyWith<$Res>? get wallet;
 }
 
 /// @nodoc
@@ -203,7 +207,7 @@ class __$$_InfoStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wallet = null,
+    Object? wallet = freezed,
     Object? loadingTransactions = null,
     Object? errLoadingTransactions = null,
     Object? loadingBalance = null,
@@ -220,10 +224,10 @@ class __$$_InfoStateCopyWithImpl<$Res>
     Object? errorPPTest = null,
   }) {
     return _then(_$_InfoState(
-      wallet: null == wallet
+      wallet: freezed == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
-              as Wallet,
+              as Wallet?,
       loadingTransactions: null == loadingTransactions
           ? _value.loadingTransactions
           : loadingTransactions // ignore: cast_nullable_to_non_nullable
@@ -307,7 +311,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
         super._();
 
   @override
-  final Wallet wallet;
+  final Wallet? wallet;
   @override
   @JsonKey()
   final bool loadingTransactions;
@@ -447,7 +451,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
 
 abstract class _InfoState extends InfoState {
   const factory _InfoState(
-      {required final Wallet wallet,
+      {required final Wallet? wallet,
       final bool loadingTransactions,
       final String errLoadingTransactions,
       final bool loadingBalance,
@@ -465,7 +469,7 @@ abstract class _InfoState extends InfoState {
   const _InfoState._() : super._();
 
   @override
-  Wallet get wallet;
+  Wallet? get wallet;
   @override
   bool get loadingTransactions;
   @override
