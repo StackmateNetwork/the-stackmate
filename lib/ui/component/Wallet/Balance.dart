@@ -23,7 +23,7 @@ class Balance extends StatelessWidget {
           children: [
             if (preferences.incognito) ...[
               Text(
-                wallet.label,
+                wallet!.label,
                 style: c.fonts.headlineMedium!.copyWith(
                   color: c.colours.onPrimary,
                 ),

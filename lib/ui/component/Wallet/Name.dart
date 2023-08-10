@@ -16,7 +16,7 @@ class WalletName extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
-          '' + wallet.label.toUpperCase(),
+          '' + wallet!.label.toUpperCase(),
           style: context.fonts.titleLarge!.copyWith(
             color: context.colours.primary,
           ),

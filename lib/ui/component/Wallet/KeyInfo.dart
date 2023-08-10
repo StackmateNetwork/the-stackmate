@@ -10,7 +10,7 @@ class KeyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final wallet = c.select((InfoCubit wc) => wc.state.wallet);
-    final walletTypeColor = (wallet.walletType == 'PRIMARY')
+    final walletTypeColor = (wallet!.walletType == 'PRIMARY')
         ? c.colours.tertiary
         : (wallet.walletType == 'WATCHER')
             ? c.colours.secondary

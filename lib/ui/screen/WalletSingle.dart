@@ -132,7 +132,7 @@ class _Wallet extends StatelessWidget {
                                         c.push('/send', extra: wallet);
                                     },
                                     icon: Icon(
-                                      wallet.walletType == 'WATCHER'
+                                      wallet!.walletType == 'WATCHER'
                                           ? Icons.build
                                           : Icons.send,
                                       color: c.colours.tertiary,
