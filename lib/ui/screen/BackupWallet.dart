@@ -9,8 +9,6 @@ import 'package:sats/pkg/interface/launcher.dart';
 import 'package:sats/ui/component/BackupWallet/Complete.dart';
 import 'package:sats/ui/component/BackupWallet/Stepper.dart';
 import 'package:sats/ui/component/BackupWallet/Warning.dart';
-import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/header.dart';
 
 class _BackupWallet extends StatefulWidget {
   @override
@@ -58,21 +56,17 @@ class _BackupWalletState extends State<_BackupWallet> {
                 child: Column(
                   children: [
                     const SizedBox(height: 24),
-                    Header(
-                      cornerTitle: 'BACKUP',
-                      children: [
-                        Back(
-                          onPressed: () {
-                            if (state.canGoBack()) {
-                              c.read<SeedBackupCubit>().backClicked();
-                              return;
-                            }
-
-                            Navigator.pop(c);
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                      ],
+                    AppBar(
+                      title: const Text('Backup wallet'),
+                      leading: Builder(
+                        builder: (BuildContext context) {
+                          return BackButton(
+                            onPressed: () {
+                              context.pop();
+                            },
+                          );
+                        },
+                      ),
                     ),
                     const SizedBox(height: 24),
                     Padding(

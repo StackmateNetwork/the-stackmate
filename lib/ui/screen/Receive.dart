@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
@@ -16,8 +17,6 @@ import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/ui/component/Receive/Loader.dart';
 import 'package:sats/ui/component/Receive/QrAddress.dart';
 import 'package:sats/ui/component/Receive/TextAddress.dart';
-import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/header.dart';
 
 class _Receive extends StatelessWidget {
   const _Receive();
@@ -26,6 +25,18 @@ class _Receive extends StatelessWidget {
     final state = c.select((ReceiveCubit h) => h.state);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Receive'),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return BackButton(
+              onPressed: () {
+                context.pop();
+              },
+            );
+          },
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -34,22 +45,15 @@ class _Receive extends StatelessWidget {
             children: [
               const Loader(),
               const SizedBox(height: 24),
-              Header(
-                cornerTitle: 'RECEIVE',
-                children: [
-                  const Back(),
-                  const SizedBox(height: 24),
-                  Align(
-                    child: Text(
-                      state.wallet.label.toUpperCase(),
-                      style: c.fonts.bodySmall!.copyWith(
-                        color: c.colours.primary,
-                      ),
-                    ),
+              Align(
+                child: Text(
+                  state.wallet.label.toUpperCase(),
+                  style: c.fonts.bodySmall!.copyWith(
+                    color: c.colours.primary,
                   ),
-                  const SizedBox(height: 24),
-                ],
+                ),
               ),
+              const SizedBox(height: 24),
               FadeIn(
                 // delay: const Duration(milliseconds: 400),
                 child: QRAddress(address: state.address),

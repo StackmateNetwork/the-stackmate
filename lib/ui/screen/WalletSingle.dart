@@ -8,7 +8,6 @@ import 'package:sats/ui/component/Wallet/Balance.dart';
 import 'package:sats/ui/component/Wallet/Info.dart';
 import 'package:sats/ui/component/Wallet/Loader.dart';
 import 'package:sats/ui/component/Wallet/TransactionList.dart';
-import 'package:sats/ui/component/common/BackButton.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
 import 'package:sats/ui/component/common/SuccessHandler.dart';
 
@@ -38,6 +37,18 @@ class _Wallet extends StatelessWidget {
           return true;
         },
         child: Scaffold(
+          appBar: AppBar(
+            leading: Builder(
+              builder: (BuildContext context) {
+                return BackButton(
+                  onPressed: () {
+                    c.read<WalletsCubit>().clearSelectedWallet();
+                    context.pop();
+                  },
+                );
+              },
+            ),
+          ),
           body: SafeArea(
             child: RefreshIndicator(
               onRefresh: () async {
@@ -53,20 +64,6 @@ class _Wallet extends StatelessWidget {
                   children: [
                     const WalletLoader(),
                     const SizedBox(height: 24),
-                    Row(
-                      children: [
-                        const SizedBox(width: 16),
-                        Back(
-                          onPressed: () {
-                            c.read<WalletsCubit>().clearSelectedWallet();
-                            Navigator.of(c).pop();
-                          },
-                        ),
-                        const Spacer(),
-                        const SizedBox(width: 8),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

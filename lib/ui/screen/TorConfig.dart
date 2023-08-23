@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Tor/Loader.dart';
 import 'package:sats/ui/component/Tor/Manual.dart';
-
-import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/header.dart';
 
 class TorConfigScreen extends StatelessWidget {
   const TorConfigScreen({super.key});
@@ -30,22 +28,22 @@ class TorConfigScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 const TorLoader(),
-                const SizedBox(
-                  height: 12,
+                AppBar(
+                  title: const Text('Tor setting'),
+                  leading: Builder(
+                    builder: (BuildContext context) {
+                      return BackButton(
+                        onPressed: () {
+                          context.pop();
+                        },
+                      );
+                    },
+                  ),
                 ),
-                Header(
-                  cornerTitle: 'TOR',
-                  children: [
-                    const SizedBox(width: 16),
-                    Back(
-                      onPressed: () {
-                        Navigator.of(c).pop();
-                      },
-                    ),
-                    const SizedBox(width: 8),
-                  ],
-                ),
-                if (tor.isConnected)
+                if (tor.isConnected) ...[
+                  const SizedBox(
+                    height: 16,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Tooltip(
@@ -67,7 +65,7 @@ class TorConfigScreen extends StatelessWidget {
                       ),
                     ),
                   )
-                else ...[
+                ] else ...[
                   Icon(
                     Icons.security_sharp,
                     color: c.colours.error,
@@ -94,7 +92,8 @@ class TorConfigScreen extends StatelessWidget {
                   height: 52,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: c.colours.background, backgroundColor: c.colours.primary,
+                      foregroundColor: c.colours.background,
+                      backgroundColor: c.colours.primary,
                     ),
                     onPressed: () {
                       // c.read<TorCubit>().testConnection();
@@ -113,7 +112,11 @@ class TorConfigScreen extends StatelessWidget {
                     width: c.width,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: c.colours.primary, side: BorderSide(color: c.colours.onPrimary), disabledForegroundColor: c.colours.background.withOpacity(0.38).withOpacity(0.38),
+                        foregroundColor: c.colours.primary,
+                        side: BorderSide(color: c.colours.onPrimary),
+                        disabledForegroundColor: c.colours.background
+                            .withOpacity(0.38)
+                            .withOpacity(0.38),
                       ),
                       onPressed: () {
                         c.read<TorCubit>().start();
