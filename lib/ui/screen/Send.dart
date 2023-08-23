@@ -21,8 +21,6 @@ import 'package:sats/ui/component/Send/Loader.dart';
 import 'package:sats/ui/component/Send/SelectFee.dart';
 import 'package:sats/ui/component/Send/WalletDetails.dart';
 import 'package:sats/ui/component/Send/ZeroBalance.dart';
-import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/header.dart';
 
 class _WalletSend extends StatelessWidget {
   const _WalletSend();
@@ -45,6 +43,25 @@ class _WalletSend extends StatelessWidget {
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
+          appBar: AppBar(
+            title: Text((walletType == 'WATCHER') ? 'BUILD' : 'SEND'),
+            leading: Builder(
+              builder: (BuildContext context) {
+                return BackButton(
+                  onPressed: () {
+                    if (step == SendSteps.address || step == SendSteps.sent) {
+                      Navigator.pop(context);
+                      return;
+                    }
+                    if (step != SendSteps.fees) {
+                      context.read<SendCubit>().backClicked();
+                      return;
+                    }
+                  },
+                );
+              },
+            ),
+          ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: BlocListener<SendCubit, SendState>(
@@ -60,25 +77,6 @@ class _WalletSend extends StatelessWidget {
                   children: [
                     const Loader(),
                     const SizedBox(height: 24),
-                    Header(
-                      cornerTitle: (walletType == 'WATCHER') ? 'BUILD' : 'SEND',
-                      children: [
-                        Back(
-                          onPressed: () {
-                            if (step == SendSteps.address ||
-                                step == SendSteps.sent) {
-                              Navigator.pop(context);
-                              return;
-                            }
-                            if (step != SendSteps.fees) {
-                              context.read<SendCubit>().backClicked();
-                              return;
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                      ],
-                    ),
                     const ZeroBalance(),
                     if (step == SendSteps.address) ...[
                       const SizedBox(height: 0),
@@ -150,7 +148,8 @@ class _WalletSend extends StatelessWidget {
 }
 
 class WalletSendScreen extends StatelessWidget {
-  const WalletSendScreen({super.key, required this.fromQr, required this.wallet});
+  const WalletSendScreen(
+      {super.key, required this.fromQr, required this.wallet});
 
   final bool fromQr;
   final Wallet wallet;

@@ -67,26 +67,6 @@ class _BackupOpsState extends State<BackupOps> {
             const SizedBox(height: 24),
           ],
           if (walletType == primaryWallet) ...[
-            Padding(
-              padding: EdgeInsets.zero,
-              child: TextFormField(
-                enableIMEPersonalizedLearning: false,
-                autocorrect: false,
-                obscureText: true,
-                obscuringCharacter: '*',
-                controller: _controller,
-                validator: (val) {
-                  return null;
-                },
-                onChanged: (text) {
-                  c.read<InfoCubit>().passPhraseChanged(text);
-                },
-                style: TextStyle(color: c.colours.onBackground),
-                decoration: const InputDecoration(
-                  labelText: 'Passphrase',
-                ),
-              ),
-            ),
             SizedBox(
               height: 52,
               width: c.width,
@@ -94,10 +74,50 @@ class _BackupOpsState extends State<BackupOps> {
                 style: OutlinedButton.styleFrom(
                   foregroundColor: c.colours.secondary,
                 ),
-                onPressed: () async {
-                  c.read<InfoCubit>().testPassPhrase(masterKey.seed!);
-                  _controller.clear();
-                },
+                onPressed: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text('Test Passphrase'),
+                    content: Padding(
+                      padding: EdgeInsets.zero,
+                      child: TextFormField(
+                        enableIMEPersonalizedLearning: false,
+                        autocorrect: false,
+                        obscureText: true,
+                        obscuringCharacter: '*',
+                        controller: _controller,
+                        validator: (val) {
+                          return null;
+                        },
+                        onChanged: (text) {
+                          c.read<InfoCubit>().passPhraseChanged(text);
+                        },
+                        style: TextStyle(color: c.colours.onBackground),
+                        decoration: const InputDecoration(
+                          labelText: 'Passphrase',
+                        ),
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child: const Text('Back'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          c.read<InfoCubit>().testPassPhrase(masterKey.seed!);
+                          _controller.clear();
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                ),
+
+                //  () async {
+                //   c.read<InfoCubit>().testPassPhrase(masterKey.seed!);
+                //
+                // },
                 child: const Text('TEST PASSPHRASE'),
               ),
             ),
