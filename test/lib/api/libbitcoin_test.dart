@@ -74,7 +74,9 @@ void main() {
         libstackmate.compile(policy: watcherPolicy, scriptType: 'wpkh');
     assert(!publicDescriptor.hasError);
     assert(publicDescriptor.result == expPublicDesc);
-
+    final policyid =
+        libstackmate.policyId(descriptor: privateDescriptor.result.toString());
+    print(policyid.result);
     final ffiAddress0 = libstackmate.getAddress(
       descriptor: publicDescriptor.result!,
       index: '0',

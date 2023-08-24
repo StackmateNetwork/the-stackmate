@@ -25,6 +25,9 @@ typedef CompileT = Pointer<Utf8> Function(
   Pointer<Utf8> policy,
   Pointer<Utf8> script_type,
 );
+typedef PolicyIdT = Pointer<Utf8> Function(
+  Pointer<Utf8> descriptor,
+);
 
 typedef SyncT = Pointer<Utf8> Function(
   Pointer<Utf8> descriptor,

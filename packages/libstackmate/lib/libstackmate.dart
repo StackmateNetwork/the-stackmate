@@ -67,6 +67,16 @@ class LibStackmateFFI {
     return resp;
   }
 
+  String policyId({
+    required String descriptor,
+  }) {
+    final func = binary.lookupFunction<PolicyIdT, PolicyIdT>('policy_id');
+    final resp = func(
+      descriptor.toNativeUtf8(),
+    ).toDartString();
+    return resp;
+  }
+
   String sqliteSync({
     required String dbPath,
     required String descriptor,
