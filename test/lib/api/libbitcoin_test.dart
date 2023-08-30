@@ -1,8 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sats/api/libbitcoin.dart';
+import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 
 void main() {
   // THE FOLLOWING WALLET NEEDS SYNC TO SUPPORT HIGHER MAX ADDRESS VALUE
+  const seed0 =
+      'famous frown october famous satisfy gasp bottle laptop leave close garage tuna';
+
+  const seed1 =
+      'tongue ring torch unhappy moral course sugar crucial tribe brush amount sheriff';
+
+  const seed2 =
+      'damage enter pony canvas dad matrix rug engine paper warfare orange quote';
   const myImportedWords =
       'burger arrest eight spin embrace outer green fine couch entry drastic kiwi';
   var expPublicDesc =
@@ -24,7 +33,7 @@ void main() {
     final root = libstackmate.importMaster(
       mnemonic: myImportedWords,
       passphrase: '',
-      network: 'testnet',
+      network: network,
     );
     final derived = libstackmate.deriveHardened(
       masterXPriv: root.result!.xprv,
@@ -241,5 +250,85 @@ void main() {
     errorMessage = response.error!;
     print(errorMessage);
     return;
+  });
+  test('2 of 3 multisig flow', () async {
+    //step 1 generate xprv of 3 wallets
+
+    final m0 = libstackmate.importMaster(
+      mnemonic: myImportedWords,
+      passphrase: '',
+      network: network,
+    );
+    final m1 = libstackmate.importMaster(
+      mnemonic: seed1,
+      passphrase: '',
+      network: network,
+    );
+    final m2 = libstackmate.importMaster(
+      mnemonic: seed2,
+      passphrase: '',
+      network: network,
+    );
+    // print(m0.result!.xprv);
+    // print(m1.result!.xprv);
+    // print(m2.result!.xprv);
+    //step 2 derive xpubs and xprvs from root xprvs of 3 wallets
+    final xpub0 = libstackmate.deriveHardened(
+      masterXPriv: m0.result!.xprv,
+      account: '0',
+      purpose: '84',
+    );
+    final xpub1 = libstackmate.deriveHardened(
+      masterXPriv: m1.result!.xprv,
+      account: '0',
+      purpose: '84',
+    );
+
+    final xpub2 = libstackmate.deriveHardened(
+      masterXPriv: m2.result!.xprv,
+      account: '0',
+      purpose: '84',
+    );
+
+    final Xpub0 =
+        '[${xpub0.result!.fingerPrint}/${xpub0.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub0.result!.xpub}';
+
+    final Xpub1 =
+        '[${xpub1.result!.fingerPrint}/${xpub1.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub1.result!.xpub}';
+
+    final Xpub2 =
+        '[${xpub2.result!.fingerPrint}/${xpub2.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub2.result!.xpub}';
+
+    // print(Xpub0);
+    // print(Xpub1);
+    // print(Xpub2);
+
+    final Xprv0 =
+        '[${xpub0.result!.fingerPrint}/${xpub0.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub0.result!.xprv}';
+    final Xprv1 =
+        '[${xpub1.result!.fingerPrint}/${xpub1.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub1.result!.xprv}';
+    final Xprv2 =
+        '[${xpub2.result!.fingerPrint}/${xpub2.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub2.result!.xprv}';
+    print(Xprv0);
+
+    print('pk($Xprv0/*)');
+
+    //step 3 create multisig descriptor wallets
+    //final policy = 'thresh(2, pk($xprv0), pk($xpub1), pk($xpub2))';
+    final multid0 = libstackmate.compile(
+      policy: 'thresh(2,pk($Xprv0/*),pk($Xpub1/*),pk($Xpub2/*))',
+      scriptType: 'wsh',
+    );
+    final multid1 = libstackmate.compile(
+      policy: 'thresh(2,pk($Xpub0/*),pk($Xprv1/*),pk($Xpub2/*))',
+      scriptType: 'wsh',
+    );
+    final multid2 = libstackmate.compile(
+      policy: 'thresh(2,pk($Xpub0/*),pk($Xpub1/*),pk($Xprv2/*))',
+      scriptType: 'wsh',
+    );
+    print(multid0.result);
+    print(multid1.result);
+    print(multid2.result);
   });
 }
