@@ -330,5 +330,31 @@ void main() {
     print(multid0.result);
     print(multid1.result);
     print(multid2.result);
+    final multiAddress = libstackmate.getAddress(
+      descriptor: multid0.result!,
+      index: '0',
+    );
+    print(multiAddress.result);
+    // final multiAddress1 = libstackmate.getAddress(
+    //   descriptor: multid1.result!,
+    //   index: '0',
+    // );
+    // print(multiAddress1.result);
+
+    final balance = libstackmate.syncBalance(
+      descriptor: multid0.result!,
+      nodeAddress: nodeAddress,
+      socks5: 'none',
+    );
+    print(balance.result);
+    final history = libstackmate.getHistory(
+      descriptor: multid0.result!,
+      nodeAddress: nodeAddress,
+      socks5: 'none',
+    );
+    print(history.result);
+    final policyid =
+        libstackmate.policyId(descriptor: multid0.result.toString());
+    print(policyid.result);
   });
 }
