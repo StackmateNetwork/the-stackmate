@@ -21,7 +21,7 @@ void main() {
   const nodeAddress = 'default';
   const network = 'test';
   // const _readableSoloPolicy = 'wpkh(___primary___)';
-  const faucetReturnAddress = 'mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt';
+  const faucetReturnAddress = 'tb1qw2c3lxufxqe2x9s4rdzh65tpf4d7fssjgh8nv6';
   const returnAmount = 1000;
   const minerTxOutput = 'miner';
   const finalizedPsbt =
@@ -353,8 +353,80 @@ void main() {
       socks5: 'none',
     );
     print(history.result);
-    final policyid =
-        libstackmate.policyId(descriptor: multid0.result.toString());
+    final policyid = libstackmate.policyId(descriptor: multid0.result!);
     print(policyid.result);
+
+    //policy id/path - hcm2tqnh
+    final fees = libstackmate.estimateNetworkFee(
+      network: network,
+      nodeAddress: nodeAddress,
+      socks5: 'none',
+      targetSize: '6',
+    );
+    assert(!fees.hasError);
+//bitcoin:tb1qw2c3lxufxqe2x9s4rdzh65tpf4d7fssjgh8nv6
+    const txOutputs = '$faucetReturnAddress:$returnAmount';
+
+    final dummyBuildPsbt = libstackmate.buildTransaction(
+      descriptor: multid0.result!,
+      nodeAddress: nodeAddress,
+      socks5: 'none',
+      txOutputs: txOutputs,
+      feeAbsolute: '1000',
+      policyPath: 'hcm2tqnh',
+      sweep: 'false',
+    );
+    final weight = libstackmate.getWeight(
+      descriptor: multid0.result!,
+      psbt: dummyBuildPsbt.result!.psbt,
+    );
+    assert(!weight.hasError);
+
+    final absoluteFees = libstackmate.feeRateToAbsolute(
+      feeRate: fees.result!.toString(),
+      weight: weight.result!.toString(),
+    );
+    assert(!absoluteFees.hasError);
+
+    final feeRate = libstackmate.feeAbsoluteToRate(
+      feeAbsolute: absoluteFees.result!.absolute.toString(),
+      weight: weight.result!.toString(),
+    );
+    assert(!feeRate.hasError);
+
+    final createBuildPsbt = libstackmate.buildTransaction(
+      descriptor: multid0.result!,
+      nodeAddress: nodeAddress,
+      socks5: 'none',
+      txOutputs: txOutputs,
+      feeAbsolute: absoluteFees.result!.absolute.toString(),
+      policyPath: 'hcm2tqnh',
+      sweep: 'false',
+    );
+    assert(!createBuildPsbt.hasError);
+    assert(!createBuildPsbt.result!.isFinalized);
+
+    final decodedPsbt = libstackmate.decodePsbt(
+      network: network,
+      psbt: createBuildPsbt.result!.psbt,
+    );
+    print(decodedPsbt.result);
+    final firstsignPsbt = libstackmate.signTransaction(
+      descriptor: multid0.result!,
+      unsignedPSBT: createBuildPsbt.result!.psbt,
+    );
+    print(firstsignPsbt.result);
+    final secondsignPsbt = libstackmate.signTransaction(
+      descriptor: multid1.result!,
+      unsignedPSBT: firstsignPsbt.result!.psbt,
+    );
+    print(secondsignPsbt.result!.psbt);
+    final txid = await libstackmate.broadcastTransaction(
+      descriptor: multid2.result!,
+      nodeAddress: nodeAddress,
+      socks5: 'none',
+      signedPSBT: secondsignPsbt.result!.psbt,
+    );
+    print(txid.result);
   });
 }
