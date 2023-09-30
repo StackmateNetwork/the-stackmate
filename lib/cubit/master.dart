@@ -28,11 +28,14 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
   ) : super(const MasterKeyState());
   FlutterSecureStorage storage = const FlutterSecureStorage();
   final ChainSelectCubit _chainSelect;
+  static const mainkey = 'Masterkey';
+  static const testkey = 'Testkey';
+  static const recoverkey = 'Recoverkey';
 
   Future<void> init() async {
     if (_chainSelect.state.blockchain.name == 'main') {
       final value = await storage.read(
-        key: 'Masterkey',
+        key: mainkey,
       );
       if (value == null) {
         emit(state.copyWith(key: null));
@@ -52,7 +55,7 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       }
     } else {
       final value = await storage.read(
-        key: 'Testkey',
+        key: testkey,
       );
       if (value == null) {
         emit(state.copyWith(key: null));
@@ -88,13 +91,13 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
     final masterData = masterKey.toJson();
     if (_chainSelect.state.blockchain.name == 'main')
       final saved = await storage.write(
-        key: 'Masterkey',
+        key: mainkey,
         value: jsonEncode(masterData),
       );
     //final save =  saveValue();
     else
       final saved = await storage.write(
-        key: 'Testkey',
+        key: testkey,
         value: jsonEncode(masterData),
       );
     await Future.delayed(const Duration(milliseconds: 200));
@@ -105,10 +108,10 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
   ) async {
     if (_chainSelect.state.blockchain.name == 'main') {
       final value = await storage.read(
-        key: 'recoverkey' + fingerPrint,
+        key: recoverkey + fingerPrint,
       );
       if (value == null) {
-        emit(state.copyWith(key: null));
+        emit(state.copyWith(rkey: null));
         return;
       } else {
         final jsonD = jsonDecode(value);
@@ -125,10 +128,10 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       }
     } else {
       final value = await storage.read(
-        key: 'recovertestkey' + fingerPrint,
+        key: recoverkey + fingerPrint,
       );
       if (value == null) {
-        emit(state.copyWith(key: null));
+        emit(state.copyWith(rkey: null));
         return;
       } else {
         final jsonD = jsonDecode(value);
@@ -160,12 +163,12 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
     final recoverData = recoverKey.toJson();
     if (_chainSelect.state.blockchain.name == 'main')
       final saved = await storage.write(
-        key: 'recoverkey' + fingerPrint,
+        key: recoverkey + fingerPrint,
         value: jsonEncode(recoverData),
       );
     else
       final saved = await storage.write(
-        key: 'recovertestkey' + fingerPrint,
+        key: recoverkey + fingerPrint,
         value: jsonEncode(recoverData),
       );
     await Future.delayed(const Duration(milliseconds: 200));
@@ -186,12 +189,12 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
     final masterData = masterKey.toJson();
     if (_chainSelect.state.blockchain.name == 'main')
       final saved = await storage.write(
-        key: 'Masterkey',
+        key: mainkey,
         value: jsonEncode(masterData),
       );
     else
       final saved = await storage.write(
-        key: 'Testkey',
+        key: testkey,
         value: jsonEncode(masterData),
       );
 
