@@ -46,16 +46,6 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 8),
               const TorSettings(),
               const SizedBox(height: 8),
-              const SelectNode(),
-              const SizedBox(height: 8),
-              const SelectNetwork(),
-              const SizedBox(height: 8),
-              const SetBitcoinUnit(),
-              const SizedBox(height: 8),
-              const SetIncognito(),
-              const SizedBox(height: 8),
-              const TorSettings(),
-              const SizedBox(height: 8),
               SizedBox(
                 height: 52,
                 child: ElevatedButton(
