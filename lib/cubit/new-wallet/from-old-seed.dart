@@ -318,12 +318,20 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
           _importCubit.state.seed,
         );
         await _masterKeyCubit.init();
+      } else {
+        await _masterKeyCubit.saveRecover(
+          root,
+          wallet.fingerPrint,
+          _importCubit.state.seed,
+        );
+        await _masterKeyCubit.getRecoverkey();
       }
       // Future.delayed(Duration(seconds: 3));
       // public descriptor
       // Check history and whether this wallet needs to update its address index
 
       final newWallet = Wallet(
+        passPhrase: istate.passPhrase,
         label: state.walletLabel,
         walletType: needsMasterKey ? signerWalletType : importWalletType,
         descriptor: descriptor.result!,

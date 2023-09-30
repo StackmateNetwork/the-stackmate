@@ -820,37 +820,90 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
-  String descriptor() {
+  String segwitDescriptor() {
     final masteRoot = _core.importMaster(
       mnemonic: _masterKeyCubit.state.key!.seed!,
-      passphrase: '',
+      passphrase: state.wallet.passPhrase,
       network: _blockchain.state.blockchain.name,
     );
     if (masteRoot.hasError) {
       throw SMError.fromJson(masteRoot.error!).message;
     }
-    final child = _core.deriveHardened(
+    final segwitChild = _core.deriveHardened(
       masterXPriv: masteRoot.result!.xprv,
       account: '0',
       purpose: '84',
     );
-    if (child.hasError) {
-      throw SMError.fromJson(child.error!).message;
+    if (segwitChild.hasError) {
+      throw SMError.fromJson(segwitChild.error!).message;
     }
-    // final tapDerived = _core.deriveHardened(
-    //   masterXPriv: masteRoot.result!.xprv,
-    //   account: '0',
-    //   purpose: '86',
-    // );
-    // if (tapDerived.hasError) {
-    //   throw SMError.fromJson(tapDerived.error!).message;
-    // }
-    final fullXPrv = child.result!.fullXPrv;
+
+    final fullXPrv = segwitChild.result!.fullXPrv;
     final policy = 'pk($fullXPrv/*)';
 
     final desc = _core.compile(
       policy: policy,
       scriptType: segwitScript,
+    );
+
+    return desc.result!;
+  }
+
+  String segwitrecoveredDescriptor() {
+    _masterKeyCubit.getRecoverkey();
+
+    final masteRoot = _core.importMaster(
+      mnemonic: _masterKeyCubit.state.rkey!.seed!,
+      passphrase: state.wallet.passPhrase,
+      network: _blockchain.state.blockchain.name,
+    );
+    if (masteRoot.hasError) {
+      throw SMError.fromJson(masteRoot.error!).message;
+    }
+    final segwitChild = _core.deriveHardened(
+      masterXPriv: masteRoot.result!.xprv,
+      account: '0',
+      purpose: '84',
+    );
+    if (segwitChild.hasError) {
+      throw SMError.fromJson(segwitChild.error!).message;
+    }
+
+    final fullXPrv = segwitChild.result!.fullXPrv;
+    final policy = 'pk($fullXPrv/*)';
+
+    final desc = _core.compile(
+      policy: policy,
+      scriptType: segwitScript,
+    );
+
+    return desc.result!;
+  }
+
+  String taprootDescriptor() {
+    final masteRoot = _core.importMaster(
+      mnemonic: _masterKeyCubit.state.key!.seed!,
+      passphrase: state.wallet.passPhrase,
+      network: _blockchain.state.blockchain.name,
+    );
+    if (masteRoot.hasError) {
+      throw SMError.fromJson(masteRoot.error!).message;
+    }
+
+    final tapChild = _core.deriveHardened(
+      masterXPriv: masteRoot.result!.xprv,
+      account: '0',
+      purpose: '86',
+    );
+    if (tapChild.hasError) {
+      throw SMError.fromJson(tapChild.error!).message;
+    }
+    final fullXPrv = tapChild.result!.fullXPrv;
+    final policy = 'pk($fullXPrv/*)';
+
+    final desc = _core.compile(
+      policy: policy,
+      scriptType: trScript,
     );
 
     return desc.result!;
@@ -871,12 +924,20 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final des = descriptor();
+      final masterDescriptor = state.wallet.descriptor.startsWith('w')
+          ? (state.wallet.walletType == 'PRIMARY'
+              ? segwitDescriptor()
+              : segwitrecoveredDescriptor())
+          : taprootDescriptor();
+      final xpubDescr = state.wallet.descriptor;
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
       final signed = await compute(signTx, {
-        'descriptor': des,
+        'descriptor': state.wallet.walletType == 'PRIMARY' ||
+                state.wallet.walletType == 'RECOVERED'
+            ? masterDescriptor
+            : xpubDescr,
         'unsignedPSBT': state.psbt,
       });
 
@@ -894,7 +955,10 @@ class SendCubit extends Cubit<SendState> {
       }
 
       final txid = await compute(broadcastTx, {
-        'descriptor': des,
+        'descriptor': state.wallet.walletType == 'PRIMARY' ||
+                state.wallet.walletType == 'RECOVERED'
+            ? masterDescriptor
+            : xpubDescr,
         'nodeAddress': nodeAddress,
         'socks5': socks5,
         'signedPSBT': signed.result!.psbt,

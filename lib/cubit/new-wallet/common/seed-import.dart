@@ -97,7 +97,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
   Future<void> checkSeed() async {
     try {
       final seed = state.seed;
-      print(seed);
+      //print(seed);
 
       if (seed.split(' ').length < 12 ||
           seed.split(' ').length > 24 && bip39.validateMnemonic(seed)) {

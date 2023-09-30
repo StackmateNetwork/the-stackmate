@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MasterKeyState {
   MasterKey? get key => throw _privateConstructorUsedError;
+  RecoveredKey? get rkey => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   String? get network => throw _privateConstructorUsedError;
 
@@ -31,9 +32,11 @@ abstract class $MasterKeyStateCopyWith<$Res> {
           MasterKeyState value, $Res Function(MasterKeyState) then) =
       _$MasterKeyStateCopyWithImpl<$Res, MasterKeyState>;
   @useResult
-  $Res call({MasterKey? key, String? error, String? network});
+  $Res call(
+      {MasterKey? key, RecoveredKey? rkey, String? error, String? network});
 
   $MasterKeyCopyWith<$Res>? get key;
+  $RecoveredKeyCopyWith<$Res>? get rkey;
 }
 
 /// @nodoc
@@ -50,6 +53,7 @@ class _$MasterKeyStateCopyWithImpl<$Res, $Val extends MasterKeyState>
   @override
   $Res call({
     Object? key = freezed,
+    Object? rkey = freezed,
     Object? error = freezed,
     Object? network = freezed,
   }) {
@@ -58,6 +62,10 @@ class _$MasterKeyStateCopyWithImpl<$Res, $Val extends MasterKeyState>
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as MasterKey?,
+      rkey: freezed == rkey
+          ? _value.rkey
+          : rkey // ignore: cast_nullable_to_non_nullable
+              as RecoveredKey?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -80,6 +88,18 @@ class _$MasterKeyStateCopyWithImpl<$Res, $Val extends MasterKeyState>
       return _then(_value.copyWith(key: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RecoveredKeyCopyWith<$Res>? get rkey {
+    if (_value.rkey == null) {
+      return null;
+    }
+
+    return $RecoveredKeyCopyWith<$Res>(_value.rkey!, (value) {
+      return _then(_value.copyWith(rkey: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -90,10 +110,13 @@ abstract class _$$_MasterKeyStateCopyWith<$Res>
       __$$_MasterKeyStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({MasterKey? key, String? error, String? network});
+  $Res call(
+      {MasterKey? key, RecoveredKey? rkey, String? error, String? network});
 
   @override
   $MasterKeyCopyWith<$Res>? get key;
+  @override
+  $RecoveredKeyCopyWith<$Res>? get rkey;
 }
 
 /// @nodoc
@@ -108,6 +131,7 @@ class __$$_MasterKeyStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? key = freezed,
+    Object? rkey = freezed,
     Object? error = freezed,
     Object? network = freezed,
   }) {
@@ -116,6 +140,10 @@ class __$$_MasterKeyStateCopyWithImpl<$Res>
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as MasterKey?,
+      rkey: freezed == rkey
+          ? _value.rkey
+          : rkey // ignore: cast_nullable_to_non_nullable
+              as RecoveredKey?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -131,10 +159,13 @@ class __$$_MasterKeyStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_MasterKeyState extends _MasterKeyState {
-  const _$_MasterKeyState({this.key, this.error, this.network}) : super._();
+  const _$_MasterKeyState({this.key, this.rkey, this.error, this.network})
+      : super._();
 
   @override
   final MasterKey? key;
+  @override
+  final RecoveredKey? rkey;
   @override
   final String? error;
   @override
@@ -142,7 +173,7 @@ class _$_MasterKeyState extends _MasterKeyState {
 
   @override
   String toString() {
-    return 'MasterKeyState(key: $key, error: $error, network: $network)';
+    return 'MasterKeyState(key: $key, rkey: $rkey, error: $error, network: $network)';
   }
 
   @override
@@ -151,12 +182,13 @@ class _$_MasterKeyState extends _MasterKeyState {
         (other.runtimeType == runtimeType &&
             other is _$_MasterKeyState &&
             (identical(other.key, key) || other.key == key) &&
+            (identical(other.rkey, rkey) || other.rkey == rkey) &&
             (identical(other.error, error) || other.error == error) &&
             (identical(other.network, network) || other.network == network));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, key, error, network);
+  int get hashCode => Object.hash(runtimeType, key, rkey, error, network);
 
   @JsonKey(ignore: true)
   @override
@@ -168,12 +200,15 @@ class _$_MasterKeyState extends _MasterKeyState {
 abstract class _MasterKeyState extends MasterKeyState {
   const factory _MasterKeyState(
       {final MasterKey? key,
+      final RecoveredKey? rkey,
       final String? error,
       final String? network}) = _$_MasterKeyState;
   const _MasterKeyState._() : super._();
 
   @override
   MasterKey? get key;
+  @override
+  RecoveredKey? get rkey;
   @override
   String? get error;
   @override

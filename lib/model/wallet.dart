@@ -23,6 +23,7 @@ class Wallet with _$Wallet {
     @HiveField(9) required int balance,
     @HiveField(10) required int lastAddressIndex,
     @HiveField(11) required String walletType,
+    @HiveField(12) required String passPhrase,
   }) = _Wallet;
   const Wallet._();
 

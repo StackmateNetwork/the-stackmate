@@ -174,6 +174,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       }
 
       final newWallet = Wallet(
+        passPhrase: emptyString,
         label: state.walletLabel,
         walletType: primaryWalletType,
         descriptor: descriptor.result!,
