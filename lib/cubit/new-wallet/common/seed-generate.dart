@@ -15,6 +15,7 @@ part 'seed-generate.freezed.dart';
 enum SeedGenerateSteps {
   generate,
   quiz,
+  label,
 }
 
 @freezed

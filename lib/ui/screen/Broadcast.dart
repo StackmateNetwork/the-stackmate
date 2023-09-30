@@ -3,8 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Broadcast/Hex.dart';
-import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/header.dart';
 
 class _Broadcast extends StatelessWidget {
   const _Broadcast();
@@ -14,24 +12,31 @@ class _Broadcast extends StatelessWidget {
     return BlocBuilder<BroadcastCubit, BroadcastState>(
       builder: (context, state) {
         return Scaffold(
-          body: SafeArea(
+          appBar: AppBar(
+            // actions: <Widget>[
+            //   TextButton(
+            //     onPressed: () {},
+            //     child: const Text('Action 1'),
+            //   ),
+            // ],
+            title: const Text('Broadcast'),
+            leading: Builder(
+              builder: (BuildContext context) {
+                return BackButton(
+                  onPressed: () {
+                    c.read<BroadcastCubit>().reset();
+                    c.pop();
+                  },
+                );
+              },
+            ),
+          ),
+          body: const SafeArea(
             bottom: false,
             child: Column(
               children: [
-                const SizedBox(height: 24),
-                Header(
-                  cornerTitle: 'Broadcaster'.toUpperCase(),
-                  children: [
-                    Back(
-                      onPressed: () async {
-                        c.read<BroadcastCubit>().reset();
-                        c.pop();
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 64),
-                const Padding(
+                SizedBox(height: 64),
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: BroadcastHex(),
                 ),

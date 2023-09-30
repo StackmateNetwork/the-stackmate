@@ -7,6 +7,7 @@ import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
+import 'package:sats/ui/screen/WalletSingle.dart';
 
 class WalletCard extends StatelessWidget {
   const WalletCard({
@@ -29,7 +30,14 @@ class WalletCard extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            context.push('/wallet', extra: context.read<InfoCubit>());
+            final state = context.read<InfoCubit>();
+            Navigator.push<void>(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) =>
+                    WalletScreen(infoCubit: state),
+              ),
+            );
           },
           child: Material(
             elevation: 4,

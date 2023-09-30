@@ -16,8 +16,6 @@ import 'package:sats/ui/component/NewWallet/Derive/Label.dart';
 import 'package:sats/ui/component/NewWallet/Derive/Loader.dart';
 import 'package:sats/ui/component/NewWallet/Derive/Passphrase.dart';
 import 'package:sats/ui/component/NewWallet/Derive/Stepper.dart';
-import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/header.dart';
 
 class _Derive extends StatelessWidget {
   @override
@@ -40,24 +38,24 @@ class _Derive extends StatelessWidget {
             return true;
           },
           child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Derive wallet'),
+              leading: Builder(
+                builder: (BuildContext context) {
+                  return BackButton(
+                    onPressed: () {
+                      context.pop();
+                    },
+                  );
+                },
+              ),
+            ),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const DeriveLoader(),
-                    const SizedBox(height: 24),
-                    Header(
-                      cornerTitle: 'DERIVE',
-                      children: [
-                        Back(
-                          onPressed: () {
-                            Navigator.pop(c);
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                      ],
-                    ),
                     const SizedBox(height: 24),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 24.0),

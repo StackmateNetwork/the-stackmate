@@ -162,7 +162,11 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         switch (importStep) {
           case SeedImportStep.import:
             emit(
-              const SeedImportWalletState(),
+              const SeedImportWalletState(
+                currentStep: SeedImportWalletSteps.warning,
+                walletLabelError: emptyString,
+                savingWalletError: emptyString,
+              ),
             );
             _importCubit.backOnPassphaseClicked();
             break;

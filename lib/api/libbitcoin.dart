@@ -94,6 +94,19 @@ class LibBitcoin implements IStackMateBitcoin {
   }
 
   @override
+  R<String> policyId({
+    required String descriptor,
+  }) {
+    final resp = _libstackmate.policyId(
+      descriptor: descriptor,
+    );
+    if (resp.contains('Error')) {
+      return R(error: SMError.fromJson(resp).message);
+    }
+    return R(result: resp);
+  }
+
+  @override
   R<String> sqliteSync({
     required String dbPath,
     required String descriptor,

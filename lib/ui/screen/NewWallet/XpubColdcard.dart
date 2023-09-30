@@ -16,8 +16,6 @@ import 'package:sats/ui/component/NewWallet/XpubColdcardImport.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Loader.dart';
 import 'package:sats/ui/component/NewWallet/XpubImport/Stepper.dart';
-import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/header.dart';
 
 class _XpubColdcard extends StatelessWidget {
   @override
@@ -45,29 +43,28 @@ class _XpubColdcard extends StatelessWidget {
             return true;
           },
           child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Coldcard '),
+              leading: Builder(
+                builder: (BuildContext context) {
+                  return BackButton(
+                    onPressed: () {
+                      if (!state.canGoBack()) {
+                        c.read<XpubImportWalletCubit>().backClicked();
+                        return;
+                      }
+                      context.pop();
+                    },
+                  );
+                },
+              ),
+            ),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Loader(),
-                    const SizedBox(height: 24),
-                    Header(
-                      cornerTitle: 'WATCHER',
-                      children: [
-                        Back(
-                          onPressed: () {
-                            if (!state.canGoBack()) {
-                              c.read<XpubImportWalletCubit>().backClicked();
-                              return;
-                            }
-
-                            Navigator.pop(c);
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                      ],
-                    ),
                     const SizedBox(height: 24),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 24.0),

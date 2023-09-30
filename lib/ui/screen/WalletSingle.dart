@@ -38,6 +38,18 @@ class _Wallet extends StatelessWidget {
           return true;
         },
         child: Scaffold(
+          appBar: AppBar(
+            leading: Builder(
+              builder: (BuildContext context) {
+                return BackButton(
+                  onPressed: () {
+                    c.read<WalletsCubit>().clearSelectedWallet();
+                    context.pop();
+                  },
+                );
+              },
+            ),
+          ),
           body: SafeArea(
             child: RefreshIndicator(
               onRefresh: () async {
@@ -132,7 +144,7 @@ class _Wallet extends StatelessWidget {
                                         c.push('/send', extra: wallet);
                                     },
                                     icon: Icon(
-                                      wallet.walletType == 'WATCHER'
+                                      wallet!.walletType == 'WATCHER'
                                           ? Icons.build
                                           : Icons.send,
                                       color: c.colours.tertiary,

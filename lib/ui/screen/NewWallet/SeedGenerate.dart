@@ -16,8 +16,6 @@ import 'package:sats/ui/component/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Label.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Stepper.dart';
 import 'package:sats/ui/component/NewWallet/SeedGenerate/Warning.dart';
-import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/header.dart';
 
 class _SeedGenerate extends StatefulWidget {
   @override
@@ -63,28 +61,27 @@ class _SeedGenerateState extends State<_SeedGenerate> {
             return true;
           },
           child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Keygen'),
+              leading: Builder(
+                builder: (BuildContext context) {
+                  return BackButton(
+                    onPressed: () {
+                      if (!state.canGoBack()) {
+                        c.read<SeedGenerateWalletCubit>().backClicked();
+                        return;
+                      }
+                      context.pop();
+                    },
+                  );
+                },
+              ),
+            ),
             body: SafeArea(
               child: SingleChildScrollView(
                 controller: _scrollController,
                 child: Column(
                   children: [
-                    const SizedBox(height: 24),
-                    Header(
-                      cornerTitle: 'KEYGEN',
-                      children: [
-                        Back(
-                          onPressed: () {
-                            if (!state.canGoBack()) {
-                              c.read<SeedGenerateWalletCubit>().backClicked();
-                              return;
-                            }
-
-                            Navigator.pop(c);
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                      ],
-                    ),
                     const SizedBox(height: 24),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),

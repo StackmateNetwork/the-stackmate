@@ -4,8 +4,6 @@ import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/AddWallet/SelectButton.dart';
-import 'package:sats/ui/component/common/BackButton.dart';
-import 'package:sats/ui/component/common/header.dart';
 
 const primaryWallet = 'PRIMARY';
 const importWallet = 'IMPORT';
@@ -29,28 +27,31 @@ class AddWalletScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 24),
             if (masterKey == null)
-              Header(
-                cornerTitle: 'Master Key'.toUpperCase(),
-                children: [
-                  Back(
-                    onPressed: () {
-                      Navigator.pop(c);
-                    },
-                  ),
-                ],
+              AppBar(
+                title: const Text('Master key'),
+                leading: Builder(
+                  builder: (BuildContext context) {
+                    return BackButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                    );
+                  },
+                ),
               )
             else
-              Header(
-                cornerTitle: 'Add Account'.toUpperCase(),
-                children: [
-                  Back(
-                    onPressed: () {
-                      Navigator.pop(c);
-                    },
-                  ),
-                ],
+              AppBar(
+                title: const Text('Add Account'),
+                leading: Builder(
+                  builder: (BuildContext context) {
+                    return BackButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                    );
+                  },
+                ),
               ),
             const SizedBox(height: 24),
             if (masterKey == null) ...[
