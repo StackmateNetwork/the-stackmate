@@ -850,7 +850,7 @@ class SendCubit extends Cubit<SendState> {
   }
 
   String segwitrecoveredDescriptor() {
-    _masterKeyCubit.getRecoverkey();
+    _masterKeyCubit.getRecoverkey(state.wallet.fingerprint);
 
     final masteRoot = _core.importMaster(
       mnemonic: _masterKeyCubit.state.rkey!.seed!,

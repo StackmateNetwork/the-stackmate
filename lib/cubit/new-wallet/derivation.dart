@@ -276,6 +276,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       }
       // check balance and see if last address index needs update
       final newWallet = Wallet(
+        fingerprint: fingerprint,
         passPhrase: state.passPhrase,
         label: state.label,
         descriptor: descriptor.result!,
@@ -422,6 +423,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       }
       // check balance and see if last address index needs update
       final newWallet = Wallet(
+        fingerprint: fingerprint,
         passPhrase: state.passPhrase,
         label: state.label,
         descriptor: descriptor.result!,

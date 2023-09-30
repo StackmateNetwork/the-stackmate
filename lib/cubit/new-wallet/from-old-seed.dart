@@ -162,11 +162,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         switch (importStep) {
           case SeedImportStep.import:
             emit(
-              const SeedImportWalletState(
-                currentStep: SeedImportWalletSteps.warning,
-                walletLabelError: emptyString,
-                savingWalletError: emptyString,
-              ),
+              const SeedImportWalletState(),
             );
             _importCubit.backOnPassphaseClicked();
             break;
@@ -328,13 +324,14 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
           wallet.fingerPrint,
           _importCubit.state.seed,
         );
-        await _masterKeyCubit.getRecoverkey();
+        await _masterKeyCubit.getRecoverkey(wallet.fingerPrint);
       }
       // Future.delayed(Duration(seconds: 3));
       // public descriptor
       // Check history and whether this wallet needs to update its address index
 
       final newWallet = Wallet(
+        fingerprint: wallet.fingerPrint,
         passPhrase: istate.passPhrase,
         label: state.walletLabel,
         walletType: needsMasterKey ? signerWalletType : importWalletType,

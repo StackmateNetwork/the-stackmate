@@ -154,7 +154,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
 
       // final fullXPrv =
       //     '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
-
+      final fingerprint = wallet.fingerPrint;
       final fullXPub =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
               .replaceFirst('/m', emptyString);
@@ -174,6 +174,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       }
 
       final newWallet = Wallet(
+        fingerprint: fingerprint,
         passPhrase: emptyString,
         label: state.walletLabel,
         walletType: primaryWalletType,

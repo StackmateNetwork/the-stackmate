@@ -24,6 +24,7 @@ class Wallet with _$Wallet {
     @HiveField(10) required int lastAddressIndex,
     @HiveField(11) required String walletType,
     @HiveField(12) required String passPhrase,
+    @HiveField(13) required String fingerprint,
   }) = _Wallet;
   const Wallet._();
 
