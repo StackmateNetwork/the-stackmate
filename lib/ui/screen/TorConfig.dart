@@ -85,10 +85,10 @@ class TorConfigScreen extends StatelessWidget {
                   ),
                 ],
                 const SizedBox(
-                  height: 28,
+                  height: 38,
                 ),
                 const ManualTor(),
-                const SizedBox(height: 8),
+                const SizedBox(height: 28),
                 SizedBox(
                   height: 52,
                   child: ElevatedButton(

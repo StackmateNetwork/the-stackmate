@@ -13,6 +13,8 @@ class TextAddress extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext c) {
+    final loading = c.select((ReceiveCubit h) => h.state.loadingAddress);
+
     return Column(
       children: [
         Container(
@@ -26,30 +28,32 @@ class TextAddress extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        TextButton(
-          onPressed: () {
-            c.read<ReceiveCubit>().copyAddress();
-          },
-          child: Text(
-            'COPY',
-            style: c.fonts.bodySmall!.copyWith(
-              color: c.colours.primary,
-              fontSize: 18,
-            ),
-          ),
-        ),
-        const SizedBox(height: 24),
-        SizedBox(
-          width: c.width / 4,
-          child: TextButton(
+        if (!loading)
+          TextButton(
             onPressed: () {
-              c.read<ReceiveCubit>().shareAddress();
+              c.read<ReceiveCubit>().copyAddress();
             },
             child: Text(
-              'SHARE'.notLocalised(),
+              'COPY',
+              style: c.fonts.bodySmall!.copyWith(
+                color: c.colours.primary,
+                fontSize: 18,
+              ),
             ),
           ),
-        ),
+        const SizedBox(height: 24),
+        if (!loading)
+          SizedBox(
+            width: c.width / 4,
+            child: TextButton(
+              onPressed: () {
+                c.read<ReceiveCubit>().shareAddress();
+              },
+              child: Text(
+                'SHARE'.notLocalised(),
+              ),
+            ),
+          ),
         const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

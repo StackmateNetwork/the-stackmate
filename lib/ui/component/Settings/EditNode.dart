@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -107,6 +108,6 @@ class _EditNodeState extends State<EditNode> {
           ],
         ),
       ),
-    );
+    ).animate(delay: 200.ms).fadeIn();
   }
 }

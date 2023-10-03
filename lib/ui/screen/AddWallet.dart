@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -18,20 +19,26 @@ class AddWalletScreen extends StatelessWidget {
           children: [
             if (masterKey == null)
               AppBar(
-                title: const Text('Master key'),
+                title: const Text('Master key')
+                    .animate(delay: 200.ms)
+                    .fadeIn()
+                    .slideX(),
                 leading: Builder(
                   builder: (BuildContext context) {
                     return BackButton(
                       onPressed: () {
                         context.pop();
                       },
-                    );
+                    ).animate(delay: 200.ms).fadeIn().slideX();
                   },
                 ),
               )
             else
               AppBar(
-                title: const Text('Add Account'),
+                title: const Text('Add Account')
+                    .animate(delay: 200.ms)
+                    .fadeIn()
+                    .slideX(),
                 leading: Builder(
                   builder: (BuildContext context) {
                     return BackButton(
@@ -89,7 +96,7 @@ class AddWalletScreen extends StatelessWidget {
                     color: c.colours.secondary,
                     fontWeight: FontWeight.bold,
                   ),
-                ),
+                ).animate(delay: 200.ms).fadeIn().slideY(),
               ),
               const SizedBox(height: 8),
               SelectButton(
@@ -140,7 +147,7 @@ class AddWalletScreen extends StatelessWidget {
                     color: c.colours.tertiary,
                     fontWeight: FontWeight.bold,
                   ),
-                ),
+                ).animate(delay: 200.ms).fadeIn().slideY(),
               ),
               const SizedBox(height: 8),
               SelectButton(

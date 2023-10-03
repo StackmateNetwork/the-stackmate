@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/preferences.dart';
@@ -138,7 +139,7 @@ class _Home extends StatelessWidget {
                           ),
                         ),
                     ],
-                  );
+                  ).animate(delay: 200.ms).fadeIn();
                 },
               ),
             ),

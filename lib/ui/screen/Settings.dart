@@ -17,14 +17,14 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext c) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text('Settings').animate(delay: 200.ms).fadeIn().slideX(),
         leading: Builder(
           builder: (BuildContext context) {
             return BackButton(
               onPressed: () {
                 context.pop();
               },
-            );
+            ).animate(delay: 200.ms).fadeIn().slideX();
           },
         ),
       ),
@@ -46,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
               const SetIncognito(),
               const SizedBox(height: 8),
               const TorSettings(),
-              const SizedBox(height: 8),
+              const SizedBox(height: 18),
               SizedBox(
                 height: 52,
                 child: ElevatedButton(
