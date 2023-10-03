@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -128,7 +129,7 @@ class TorConfigScreen extends StatelessWidget {
                 ],
               ],
             ),
-          ),
+          ).animate(delay: 200.ms).fadeIn(),
         ),
       ),
     );

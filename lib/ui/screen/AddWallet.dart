@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/AddWallet/SelectButton.dart';
-
-const primaryWallet = 'PRIMARY';
-const importWallet = 'IMPORT';
 
 class AddWalletScreen extends StatelessWidget {
   const AddWalletScreen({super.key});
@@ -14,13 +10,6 @@ class AddWalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
-    final wallets = c.select((WalletsCubit wc) => wc.state);
-    var signerExists = false;
-
-    for (final wallet in wallets.wallets) {
-      if (wallet.walletType == primaryWallet ||
-          wallet.walletType == importWallet) signerExists = true;
-    }
 
     return Scaffold(
       body: SafeArea(

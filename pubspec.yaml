@@ -21,6 +21,7 @@ dependencies:
   file_picker: ^5.2.11
   flutter:
     sdk: flutter
+  flutter_animate: ^4.2.0+1
   flutter_barcode_scanner: ^2.0.0
   flutter_bloc: ^8.0.1
   flutter_chat_ui: ^1.6.4

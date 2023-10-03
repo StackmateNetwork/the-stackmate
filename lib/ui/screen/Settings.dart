@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -63,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        ).animate(delay: 200.ms).fadeIn(),
       ),
     );
   }

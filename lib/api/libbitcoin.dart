@@ -93,7 +93,6 @@ class LibBitcoin implements IStackMateBitcoin {
     return R(result: resp);
   }
 
-  @override
   R<String> policyId({
     required String descriptor,
   }) {

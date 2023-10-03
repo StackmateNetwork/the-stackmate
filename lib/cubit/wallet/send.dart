@@ -233,6 +233,9 @@ class SendCubit extends Cubit<SendState> {
       'nodeAddress': node,
       'socks5': socks5,
     });
+    if (syncStat.hasError) {
+      throw SMError.fromJson(syncStat.error!).message;
+    }
 
     final balance = await compute(sqliteBalance, {
       'descriptor': state.wallet.descriptor,
