@@ -248,6 +248,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       // check balance and see if last address index needs update
       final newWallet = Wallet(
+        fingerprint: fingerprint,
+        passPhrase: emptyString,
         label: state.label,
         descriptor: descriptor.result!,
         policy: readable,

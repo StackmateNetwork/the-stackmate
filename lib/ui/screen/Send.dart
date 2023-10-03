@@ -3,6 +3,7 @@ import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/send.dart';
@@ -148,8 +149,11 @@ class _WalletSend extends StatelessWidget {
 }
 
 class WalletSendScreen extends StatelessWidget {
-  const WalletSendScreen(
-      {super.key, required this.fromQr, required this.wallet});
+  const WalletSendScreen({
+    super.key,
+    required this.fromQr,
+    required this.wallet,
+  });
 
   final bool fromQr;
   final Wallet wallet;
@@ -168,6 +172,7 @@ class WalletSendScreen extends StatelessWidget {
       locator<IStackMateBitcoin>(),
       context.read<FeesCubit>(),
       locator<IStorage>(),
+      context.read<MasterKeyCubit>(),
       wallet,
       // locator<FileManager>(),
     );

@@ -44,6 +44,10 @@ mixin _$Wallet {
   int get lastAddressIndex => throw _privateConstructorUsedError;
   @HiveField(11)
   String get walletType => throw _privateConstructorUsedError;
+  @HiveField(12)
+  String get passPhrase => throw _privateConstructorUsedError;
+  @HiveField(13)
+  String get fingerprint => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -67,7 +71,9 @@ abstract class $WalletCopyWith<$Res> {
       @HiveField(8) List<Transaction> transactions,
       @HiveField(9) int balance,
       @HiveField(10) int lastAddressIndex,
-      @HiveField(11) String walletType});
+      @HiveField(11) String walletType,
+      @HiveField(12) String passPhrase,
+      @HiveField(13) String fingerprint});
 }
 
 /// @nodoc
@@ -95,6 +101,8 @@ class _$WalletCopyWithImpl<$Res, $Val extends Wallet>
     Object? balance = null,
     Object? lastAddressIndex = null,
     Object? walletType = null,
+    Object? passPhrase = null,
+    Object? fingerprint = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -145,6 +153,14 @@ class _$WalletCopyWithImpl<$Res, $Val extends Wallet>
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
               as String,
+      passPhrase: null == passPhrase
+          ? _value.passPhrase
+          : passPhrase // ignore: cast_nullable_to_non_nullable
+              as String,
+      fingerprint: null == fingerprint
+          ? _value.fingerprint
+          : fingerprint // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -167,7 +183,9 @@ abstract class _$$_WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
       @HiveField(8) List<Transaction> transactions,
       @HiveField(9) int balance,
       @HiveField(10) int lastAddressIndex,
-      @HiveField(11) String walletType});
+      @HiveField(11) String walletType,
+      @HiveField(12) String passPhrase,
+      @HiveField(13) String fingerprint});
 }
 
 /// @nodoc
@@ -192,6 +210,8 @@ class __$$_WalletCopyWithImpl<$Res>
     Object? balance = null,
     Object? lastAddressIndex = null,
     Object? walletType = null,
+    Object? passPhrase = null,
+    Object? fingerprint = null,
   }) {
     return _then(_$_Wallet(
       id: freezed == id
@@ -242,6 +262,14 @@ class __$$_WalletCopyWithImpl<$Res>
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
               as String,
+      passPhrase: null == passPhrase
+          ? _value.passPhrase
+          : passPhrase // ignore: cast_nullable_to_non_nullable
+              as String,
+      fingerprint: null == fingerprint
+          ? _value.fingerprint
+          : fingerprint // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -262,7 +290,9 @@ class _$_Wallet extends _Wallet {
       @HiveField(8) required final List<Transaction> transactions,
       @HiveField(9) required this.balance,
       @HiveField(10) required this.lastAddressIndex,
-      @HiveField(11) required this.walletType})
+      @HiveField(11) required this.walletType,
+      @HiveField(12) required this.passPhrase,
+      @HiveField(13) required this.fingerprint})
       : _policyElements = policyElements,
         _transactions = transactions,
         super._();
@@ -318,10 +348,16 @@ class _$_Wallet extends _Wallet {
   @override
   @HiveField(11)
   final String walletType;
+  @override
+  @HiveField(12)
+  final String passPhrase;
+  @override
+  @HiveField(13)
+  final String fingerprint;
 
   @override
   String toString() {
-    return 'Wallet(id: $id, uid: $uid, label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, balance: $balance, lastAddressIndex: $lastAddressIndex, walletType: $walletType)';
+    return 'Wallet(id: $id, uid: $uid, label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, balance: $balance, lastAddressIndex: $lastAddressIndex, walletType: $walletType, passPhrase: $passPhrase, fingerprint: $fingerprint)';
   }
 
   @override
@@ -347,7 +383,11 @@ class _$_Wallet extends _Wallet {
             (identical(other.lastAddressIndex, lastAddressIndex) ||
                 other.lastAddressIndex == lastAddressIndex) &&
             (identical(other.walletType, walletType) ||
-                other.walletType == walletType));
+                other.walletType == walletType) &&
+            (identical(other.passPhrase, passPhrase) ||
+                other.passPhrase == passPhrase) &&
+            (identical(other.fingerprint, fingerprint) ||
+                other.fingerprint == fingerprint));
   }
 
   @JsonKey(ignore: true)
@@ -365,7 +405,9 @@ class _$_Wallet extends _Wallet {
       const DeepCollectionEquality().hash(_transactions),
       balance,
       lastAddressIndex,
-      walletType);
+      walletType,
+      passPhrase,
+      fingerprint);
 
   @JsonKey(ignore: true)
   @override
@@ -394,7 +436,9 @@ abstract class _Wallet extends Wallet {
       @HiveField(8) required final List<Transaction> transactions,
       @HiveField(9) required final int balance,
       @HiveField(10) required final int lastAddressIndex,
-      @HiveField(11) required final String walletType}) = _$_Wallet;
+      @HiveField(11) required final String walletType,
+      @HiveField(12) required final String passPhrase,
+      @HiveField(13) required final String fingerprint}) = _$_Wallet;
   const _Wallet._() : super._();
 
   factory _Wallet.fromJson(Map<String, dynamic> json) = _$_Wallet.fromJson;
@@ -435,6 +479,12 @@ abstract class _Wallet extends Wallet {
   @override
   @HiveField(11)
   String get walletType;
+  @override
+  @HiveField(12)
+  String get passPhrase;
+  @override
+  @HiveField(13)
+  String get fingerprint;
   @override
   @JsonKey(ignore: true)
   _$$_WalletCopyWith<_$_Wallet> get copyWith =>

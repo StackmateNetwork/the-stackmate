@@ -161,7 +161,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
           walletLabelError: emptyString,
         ),
       );
-
       final parent = _core.importMaster(
         mnemonic: _masterKeyCubit.state.key!.seed!,
         passphrase: state.passPhrase,
@@ -182,13 +181,13 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       }
       final fingerprint = child.result!.fingerPrint;
       final path = child.result!.hardenedPath;
-      final xprv = child.result!.xprv;
-      final fullXPrv =
-          '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
+      // final xprv = child.result!.xprv;
+      // final fullXPrv =
+      //     '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
       final xpub = child.result!.xpub;
       final fullXPub =
           '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
-      final policy = 'pk($fullXPrv/*)';
+      final policy = 'pk($fullXPub/*)';
 
       const readable = 'pk(__primary__)';
       final uid = sha1.convert(utf8.encode(xpub)).toString().substring(0, 21);
@@ -277,6 +276,8 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       }
       // check balance and see if last address index needs update
       final newWallet = Wallet(
+        fingerprint: fingerprint,
+        passPhrase: state.passPhrase,
         label: state.label,
         descriptor: descriptor.result!,
         policy: readable,
@@ -320,7 +321,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
           errSavingWallet: emptyString,
         ),
       );
-
       final parent = _core.importMaster(
         mnemonic: _masterKeyCubit.state.key!.seed!,
         passphrase: state.passPhrase,
@@ -341,13 +341,13 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       }
       final fingerprint = child.result!.fingerPrint;
       final path = child.result!.hardenedPath;
-      final xprv = child.result!.xprv;
-      final fullXPrv =
-          '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
+      // final xprv = child.result!.xprv;
+      // final fullXPrv =
+      //     '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
       final xpub = child.result!.xpub;
       final fullXPub =
           '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
-      final policy = 'pk($fullXPrv/*)';
+      final policy = 'pk($fullXPub/*)';
 
       const readable = 'pk(__primary__)';
       final bytes = utf8.encode(xpub);
@@ -423,6 +423,8 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       }
       // check balance and see if last address index needs update
       final newWallet = Wallet(
+        fingerprint: fingerprint,
+        passPhrase: state.passPhrase,
         label: state.label,
         descriptor: descriptor.result!,
         policy: readable,

@@ -162,9 +162,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         switch (importStep) {
           case SeedImportStep.import:
             emit(
-              const SeedImportWalletState(
-                
-              ),
+              const SeedImportWalletState(),
             );
             _importCubit.backOnPassphaseClicked();
             break;
@@ -221,15 +219,15 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
       final root = _importCubit.state.masterXpriv!;
 
-      final fullXPrv =
-          '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
-              .replaceFirst('/m', emptyString);
+      // final fullXPrv =
+      //     '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
+      //         .replaceFirst('/m', emptyString);
 
       final fullXPub =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
               .replaceFirst('/m', emptyString);
 
-      final policy = 'pk($fullXPrv/*)';
+      final policy = 'pk($fullXPub/*)';
 
       const readable = 'pk(___primary___)';
       final uid =
@@ -320,12 +318,21 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
           _importCubit.state.seed,
         );
         await _masterKeyCubit.init();
+      } else {
+        await _masterKeyCubit.saveRecover(
+          root,
+          wallet.fingerPrint,
+          _importCubit.state.seed,
+        );
+        await _masterKeyCubit.getRecoverkey(wallet.fingerPrint);
       }
       // Future.delayed(Duration(seconds: 3));
       // public descriptor
       // Check history and whether this wallet needs to update its address index
 
       final newWallet = Wallet(
+        fingerprint: wallet.fingerPrint,
+        passPhrase: istate.passPhrase,
         label: state.walletLabel,
         walletType: needsMasterKey ? signerWalletType : importWalletType,
         descriptor: descriptor.result!,

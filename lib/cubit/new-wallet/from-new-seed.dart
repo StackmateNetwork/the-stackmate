@@ -35,7 +35,7 @@ const emptyString = '';
 class SeedGenerateWalletState with _$SeedGenerateWalletState {
   const factory SeedGenerateWalletState({
     @Default(SeedGenerateWalletSteps.warning)
-        SeedGenerateWalletSteps currentStep,
+    SeedGenerateWalletSteps currentStep,
     @Default('') String walletLabel,
     @Default('') String walletLabelError,
     @Default(false) bool savingWallet,
@@ -152,14 +152,14 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       final wallet = _generateCubit.state.wallet;
       if (wallet == null) throw 'No wallet in state. Contact support.';
 
-      final fullXPrv =
-          '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
-
+      // final fullXPrv =
+      //     '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}';
+      final fingerprint = wallet.fingerPrint;
       final fullXPub =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
               .replaceFirst('/m', emptyString);
 
-      final policy = 'pk($fullXPrv/*)'.replaceFirst('/m', emptyString);
+      final policy = 'pk($fullXPub/*)'.replaceFirst('/m', emptyString);
 
       const readable = 'pk(___primary___)';
       final uid =
@@ -174,6 +174,8 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       }
 
       final newWallet = Wallet(
+        fingerprint: fingerprint,
+        passPhrase: emptyString,
         label: state.walletLabel,
         walletType: primaryWalletType,
         descriptor: descriptor.result!,

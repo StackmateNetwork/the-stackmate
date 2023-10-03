@@ -14,6 +14,7 @@ import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
+import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
@@ -95,6 +96,7 @@ class SendCubit extends Cubit<SendState> {
     this._core,
     this._fees,
     this._storage,
+    this._masterKeyCubit,
     Wallet wallet,
 
     // this._file,
@@ -113,6 +115,8 @@ class SendCubit extends Cubit<SendState> {
   final TorCubit _torCubit;
   final IStackMateBitcoin _core;
   final FeesCubit _fees;
+  final MasterKeyCubit _masterKeyCubit;
+
   // final FileManager _file;
 
   static const emailShareTxidSubject = 'Transaction ID';
@@ -127,7 +131,10 @@ class SendCubit extends Cubit<SendState> {
   static const minerOutput = 'miner';
   static const emptyString = '';
   static const sweepMessage = 'WALLET WILL BE EMPTIED.';
-
+  static const trScript = 'tr';
+  static const taprootPurpose = '86';
+  static const segwitScript = 'wpkh';
+  static const segwitPurpose = '84';
   void _init(bool withQR) async {
     if (withQR) {
       await Future.delayed(const Duration(milliseconds: 500));
@@ -813,6 +820,95 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
+  String segwitDescriptor() {
+    final masteRoot = _core.importMaster(
+      mnemonic: _masterKeyCubit.state.key!.seed!,
+      passphrase: state.wallet.passPhrase,
+      network: _blockchain.state.blockchain.name,
+    );
+    if (masteRoot.hasError) {
+      throw SMError.fromJson(masteRoot.error!).message;
+    }
+    final segwitChild = _core.deriveHardened(
+      masterXPriv: masteRoot.result!.xprv,
+      account: '0',
+      purpose: '84',
+    );
+    if (segwitChild.hasError) {
+      throw SMError.fromJson(segwitChild.error!).message;
+    }
+
+    final fullXPrv = segwitChild.result!.fullXPrv;
+    final policy = 'pk($fullXPrv/*)';
+
+    final desc = _core.compile(
+      policy: policy,
+      scriptType: segwitScript,
+    );
+
+    return desc.result!;
+  }
+
+  String segwitrecoveredDescriptor() {
+    _masterKeyCubit.getRecoverkey(state.wallet.fingerprint);
+
+    final masteRoot = _core.importMaster(
+      mnemonic: _masterKeyCubit.state.rkey!.seed!,
+      passphrase: state.wallet.passPhrase,
+      network: _blockchain.state.blockchain.name,
+    );
+    if (masteRoot.hasError) {
+      throw SMError.fromJson(masteRoot.error!).message;
+    }
+    final segwitChild = _core.deriveHardened(
+      masterXPriv: masteRoot.result!.xprv,
+      account: '0',
+      purpose: '84',
+    );
+    if (segwitChild.hasError) {
+      throw SMError.fromJson(segwitChild.error!).message;
+    }
+
+    final fullXPrv = segwitChild.result!.fullXPrv;
+    final policy = 'pk($fullXPrv/*)';
+
+    final desc = _core.compile(
+      policy: policy,
+      scriptType: segwitScript,
+    );
+
+    return desc.result!;
+  }
+
+  String taprootDescriptor() {
+    final masteRoot = _core.importMaster(
+      mnemonic: _masterKeyCubit.state.key!.seed!,
+      passphrase: state.wallet.passPhrase,
+      network: _blockchain.state.blockchain.name,
+    );
+    if (masteRoot.hasError) {
+      throw SMError.fromJson(masteRoot.error!).message;
+    }
+
+    final tapChild = _core.deriveHardened(
+      masterXPriv: masteRoot.result!.xprv,
+      account: '0',
+      purpose: '86',
+    );
+    if (tapChild.hasError) {
+      throw SMError.fromJson(tapChild.error!).message;
+    }
+    final fullXPrv = tapChild.result!.fullXPrv;
+    final policy = 'pk($fullXPrv/*)';
+
+    final desc = _core.compile(
+      policy: policy,
+      scriptType: trScript,
+    );
+
+    return desc.result!;
+  }
+
   void sendClicked() async {
     try {
       if (state.sendingTx) return;
@@ -828,12 +924,20 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final descriptor = state.wallet.descriptor;
+      final masterDescriptor = state.wallet.descriptor.startsWith('w')
+          ? (state.wallet.walletType == 'PRIMARY'
+              ? segwitDescriptor()
+              : segwitrecoveredDescriptor())
+          : taprootDescriptor();
+      final xpubDescr = state.wallet.descriptor;
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
       final signed = await compute(signTx, {
-        'descriptor': descriptor,
+        'descriptor': state.wallet.walletType == 'PRIMARY' ||
+                state.wallet.walletType == 'RECOVERED'
+            ? masterDescriptor
+            : xpubDescr,
         'unsignedPSBT': state.psbt,
       });
 
@@ -851,7 +955,10 @@ class SendCubit extends Cubit<SendState> {
       }
 
       final txid = await compute(broadcastTx, {
-        'descriptor': descriptor,
+        'descriptor': state.wallet.walletType == 'PRIMARY' ||
+                state.wallet.walletType == 'RECOVERED'
+            ? masterDescriptor
+            : xpubDescr,
         'nodeAddress': nodeAddress,
         'socks5': socks5,
         'signedPSBT': signed.result!.psbt,

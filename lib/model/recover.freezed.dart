@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'master.dart';
+part of 'recover.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,41 +14,36 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-MasterKey _$MasterKeyFromJson(Map<String, dynamic> json) {
-  return _MasterKey.fromJson(json);
+RecoveredKey _$RecoveredKeyFromJson(Map<String, dynamic> json) {
+  return _RecoveredKey.fromJson(json);
 }
 
 /// @nodoc
-mixin _$MasterKey {
+mixin _$RecoveredKey {
   String? get seed => throw _privateConstructorUsedError;
   String? get root => throw _privateConstructorUsedError;
   String? get fingerprint => throw _privateConstructorUsedError;
   String? get network => throw _privateConstructorUsedError;
-  bool? get backedUp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $MasterKeyCopyWith<MasterKey> get copyWith =>
+  $RecoveredKeyCopyWith<RecoveredKey> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MasterKeyCopyWith<$Res> {
-  factory $MasterKeyCopyWith(MasterKey value, $Res Function(MasterKey) then) =
-      _$MasterKeyCopyWithImpl<$Res, MasterKey>;
+abstract class $RecoveredKeyCopyWith<$Res> {
+  factory $RecoveredKeyCopyWith(
+          RecoveredKey value, $Res Function(RecoveredKey) then) =
+      _$RecoveredKeyCopyWithImpl<$Res, RecoveredKey>;
   @useResult
-  $Res call(
-      {String? seed,
-      String? root,
-      String? fingerprint,
-      String? network,
-      bool? backedUp});
+  $Res call({String? seed, String? root, String? fingerprint, String? network});
 }
 
 /// @nodoc
-class _$MasterKeyCopyWithImpl<$Res, $Val extends MasterKey>
-    implements $MasterKeyCopyWith<$Res> {
-  _$MasterKeyCopyWithImpl(this._value, this._then);
+class _$RecoveredKeyCopyWithImpl<$Res, $Val extends RecoveredKey>
+    implements $RecoveredKeyCopyWith<$Res> {
+  _$RecoveredKeyCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -62,7 +57,6 @@ class _$MasterKeyCopyWithImpl<$Res, $Val extends MasterKey>
     Object? root = freezed,
     Object? fingerprint = freezed,
     Object? network = freezed,
-    Object? backedUp = freezed,
   }) {
     return _then(_value.copyWith(
       seed: freezed == seed
@@ -81,35 +75,27 @@ class _$MasterKeyCopyWithImpl<$Res, $Val extends MasterKey>
           ? _value.network
           : network // ignore: cast_nullable_to_non_nullable
               as String?,
-      backedUp: freezed == backedUp
-          ? _value.backedUp
-          : backedUp // ignore: cast_nullable_to_non_nullable
-              as bool?,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_MasterKeyCopyWith<$Res> implements $MasterKeyCopyWith<$Res> {
-  factory _$$_MasterKeyCopyWith(
-          _$_MasterKey value, $Res Function(_$_MasterKey) then) =
-      __$$_MasterKeyCopyWithImpl<$Res>;
+abstract class _$$_RecoveredKeyCopyWith<$Res>
+    implements $RecoveredKeyCopyWith<$Res> {
+  factory _$$_RecoveredKeyCopyWith(
+          _$_RecoveredKey value, $Res Function(_$_RecoveredKey) then) =
+      __$$_RecoveredKeyCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String? seed,
-      String? root,
-      String? fingerprint,
-      String? network,
-      bool? backedUp});
+  $Res call({String? seed, String? root, String? fingerprint, String? network});
 }
 
 /// @nodoc
-class __$$_MasterKeyCopyWithImpl<$Res>
-    extends _$MasterKeyCopyWithImpl<$Res, _$_MasterKey>
-    implements _$$_MasterKeyCopyWith<$Res> {
-  __$$_MasterKeyCopyWithImpl(
-      _$_MasterKey _value, $Res Function(_$_MasterKey) _then)
+class __$$_RecoveredKeyCopyWithImpl<$Res>
+    extends _$RecoveredKeyCopyWithImpl<$Res, _$_RecoveredKey>
+    implements _$$_RecoveredKeyCopyWith<$Res> {
+  __$$_RecoveredKeyCopyWithImpl(
+      _$_RecoveredKey _value, $Res Function(_$_RecoveredKey) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -119,9 +105,8 @@ class __$$_MasterKeyCopyWithImpl<$Res>
     Object? root = freezed,
     Object? fingerprint = freezed,
     Object? network = freezed,
-    Object? backedUp = freezed,
   }) {
-    return _then(_$_MasterKey(
+    return _then(_$_RecoveredKey(
       seed: freezed == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -138,22 +123,17 @@ class __$$_MasterKeyCopyWithImpl<$Res>
           ? _value.network
           : network // ignore: cast_nullable_to_non_nullable
               as String?,
-      backedUp: freezed == backedUp
-          ? _value.backedUp
-          : backedUp // ignore: cast_nullable_to_non_nullable
-              as bool?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_MasterKey implements _MasterKey {
-  const _$_MasterKey(
-      {this.seed, this.root, this.fingerprint, this.network, this.backedUp});
+class _$_RecoveredKey implements _RecoveredKey {
+  const _$_RecoveredKey({this.seed, this.root, this.fingerprint, this.network});
 
-  factory _$_MasterKey.fromJson(Map<String, dynamic> json) =>
-      _$$_MasterKeyFromJson(json);
+  factory _$_RecoveredKey.fromJson(Map<String, dynamic> json) =>
+      _$$_RecoveredKeyFromJson(json);
 
   @override
   final String? seed;
@@ -163,57 +143,52 @@ class _$_MasterKey implements _MasterKey {
   final String? fingerprint;
   @override
   final String? network;
-  @override
-  final bool? backedUp;
 
   @override
   String toString() {
-    return 'MasterKey(seed: $seed, root: $root, fingerprint: $fingerprint, network: $network, backedUp: $backedUp)';
+    return 'RecoveredKey(seed: $seed, root: $root, fingerprint: $fingerprint, network: $network)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MasterKey &&
+            other is _$_RecoveredKey &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.root, root) || other.root == root) &&
             (identical(other.fingerprint, fingerprint) ||
                 other.fingerprint == fingerprint) &&
-            (identical(other.network, network) || other.network == network) &&
-            (identical(other.backedUp, backedUp) ||
-                other.backedUp == backedUp));
+            (identical(other.network, network) || other.network == network));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, seed, root, fingerprint, network, backedUp);
+      Object.hash(runtimeType, seed, root, fingerprint, network);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MasterKeyCopyWith<_$_MasterKey> get copyWith =>
-      __$$_MasterKeyCopyWithImpl<_$_MasterKey>(this, _$identity);
+  _$$_RecoveredKeyCopyWith<_$_RecoveredKey> get copyWith =>
+      __$$_RecoveredKeyCopyWithImpl<_$_RecoveredKey>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MasterKeyToJson(
+    return _$$_RecoveredKeyToJson(
       this,
     );
   }
 }
 
-abstract class _MasterKey implements MasterKey {
-  const factory _MasterKey(
+abstract class _RecoveredKey implements RecoveredKey {
+  const factory _RecoveredKey(
       {final String? seed,
       final String? root,
       final String? fingerprint,
-      final String? network,
-      final bool? backedUp}) = _$_MasterKey;
+      final String? network}) = _$_RecoveredKey;
 
-  factory _MasterKey.fromJson(Map<String, dynamic> json) =
-      _$_MasterKey.fromJson;
+  factory _RecoveredKey.fromJson(Map<String, dynamic> json) =
+      _$_RecoveredKey.fromJson;
 
   @override
   String? get seed;
@@ -224,9 +199,7 @@ abstract class _MasterKey implements MasterKey {
   @override
   String? get network;
   @override
-  bool? get backedUp;
-  @override
   @JsonKey(ignore: true)
-  _$$_MasterKeyCopyWith<_$_MasterKey> get copyWith =>
+  _$$_RecoveredKeyCopyWith<_$_RecoveredKey> get copyWith =>
       throw _privateConstructorUsedError;
 }
