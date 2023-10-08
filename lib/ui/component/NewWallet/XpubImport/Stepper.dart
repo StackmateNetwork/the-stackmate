@@ -8,19 +8,17 @@ class XPubImportStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    return BlocBuilder<XpubImportWalletCubit, XpubImportWalletState>(
-      builder: (context, state) {
-        final steps = XpubImportWalletStep.values.length;
-        final idx = state.currentStep.index;
+    final state = c.select((XpubImportWalletCubit _) => _.state);
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            StepLine(length: steps, idx: idx),
-            const SizedBox(height: 24),
-          ],
-        );
-      },
+    final steps = XpubImportWalletStep.values.length;
+    final idx = state.currentStep.index;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        StepLine(length: steps, idx: idx),
+        const SizedBox(height: 24),
+      ],
     );
   }
 }

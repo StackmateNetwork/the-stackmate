@@ -36,111 +36,106 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
 
   @override
   Widget build(BuildContext c) {
-    return BlocBuilder<XpubImportCubit, XpubImportState>(
-      builder: (context, state) {
-        if (_xpubController.text != state.xpub)
-          _xpubController.text = state.xpub;
+    final state = c.select((XpubImportCubit _) => _.state);
 
-        if (_fingerPrintController.text != state.fingerPrint)
-          _fingerPrintController.text = state.fingerPrint;
+    if (_xpubController.text != state.xpub) _xpubController.text = state.xpub;
 
-        if (_pathController.text != state.path)
-          _pathController.text = state.path;
+    if (_fingerPrintController.text != state.fingerPrint)
+      _fingerPrintController.text = state.fingerPrint;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 24),
-            Text(
-              'Public Key Details',
-              style: c.fonts.headlineMedium!.copyWith(
-                color: c.colours.onPrimary,
-                // fontWeight: FontWeight.bold,
-              ),
+    if (_pathController.text != state.path) _pathController.text = state.path;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 24),
+        Text(
+          'Public Key Details',
+          style: c.fonts.headlineMedium!.copyWith(
+            color: c.colours.onPrimary,
+            // fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 24),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8,
+          ),
+          child: Text(
+            'Extended Public Key'.toUpperCase().notLocalised(),
+            style: c.fonts.labelSmall!.copyWith(
+              color: c.colours.onPrimary,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(height: 24),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8,
-              ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.zero,
+          child: TextField(
+            controller: _xpubController,
+            maxLines: 4,
+            style: c.fonts.bodyLarge!.copyWith(
+              color: c.colours.onBackground,
+            ),
+            onChanged: (text) {
+              c.read<XpubImportCubit>().xpubChanged(text);
+            },
+          ),
+        ),
+        const SizedBox(height: 8),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                c.read<XpubImportCubit>().xpubPasteClicked();
+              },
               child: Text(
-                'Extended Public Key'.toUpperCase().notLocalised(),
-                style: c.fonts.labelSmall!.copyWith(
-                  color: c.colours.onPrimary,
-                  fontWeight: FontWeight.bold,
-                ),
+                'PASTE'.notLocalised(),
+                style: c.fonts.labelLarge!.copyWith(color: c.colours.primary),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.zero,
-              child: TextField(
-                controller: _xpubController,
-                maxLines: 4,
-                style: c.fonts.bodyLarge!.copyWith(
-                  color: c.colours.onBackground,
-                ),
-                onChanged: (text) {
-                  c.read<XpubImportCubit>().xpubChanged(text);
-                },
-              ),
+          ),
+        ),
+        const SizedBox(height: 36),
+        SizedBox(
+          height: 52,
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              foregroundColor: c.colours.primary,
+              disabledForegroundColor:
+                  c.colours.background.withOpacity(0.38).withOpacity(0.38),
             ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {
-                    c.read<XpubImportCubit>().xpubPasteClicked();
-                  },
-                  child: Text(
-                    'PASTE'.notLocalised(),
-                    style:
-                        c.fonts.labelLarge!.copyWith(color: c.colours.primary),
-                  ),
-                ),
-              ),
+            onPressed: () {
+              c.read<XpubImportCubit>().toggleCamera();
+            },
+            child: Text('SCAN'.toUpperCase()),
+          ),
+        ),
+        const SizedBox(height: 36),
+        if (state.errXpub != '')
+          Text(
+            state.errXpub,
+            style: c.fonts.bodySmall!.copyWith(color: c.colours.error),
+          ),
+        SizedBox(
+          height: 52,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: c.colours.background,
+              backgroundColor: c.colours.primary,
             ),
-            const SizedBox(height: 36),
-            SizedBox(
-              height: 52,
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: c.colours.primary,
-                  disabledForegroundColor:
-                      c.colours.background.withOpacity(0.38).withOpacity(0.38),
-                ),
-                onPressed: () {
-                  c.read<XpubImportCubit>().toggleCamera();
-                },
-                child: Text('SCAN'.toUpperCase()),
-              ),
-            ),
-            const SizedBox(height: 36),
-            if (state.errXpub != '')
-              Text(
-                state.errXpub,
-                style: c.fonts.bodySmall!.copyWith(color: c.colours.error),
-              ),
-            SizedBox(
-              height: 52,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: c.colours.background,
-                  backgroundColor: c.colours.primary,
-                ),
-                onPressed: () async {
-                  c.read<XpubImportCubit>().checkDetails();
-                  if (state.errXpub != '') {
-                    handleError(context, 'Invalid pub key');
-                  }
-                },
-                child: const Text('CONFIRM'),
-              ),
-            ),
-          ],
-        );
-      },
+            onPressed: () async {
+              c.read<XpubImportCubit>().checkDetails();
+              if (state.errXpub != '') {
+                handleError(context, 'Invalid pub key');
+              }
+            },
+            child: const Text('CONFIRM'),
+          ),
+        ),
+      ],
     );
   }
 }
