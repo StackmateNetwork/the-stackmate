@@ -18,6 +18,7 @@ class WalletsState with _$WalletsState {
     Wallet? selectedWallet,
     @Default(true) bool toggler,
     @Default('') String errDeleting,
+    @Default(0) int networth,
   }) = _WalletsState;
 }
 
@@ -78,6 +79,20 @@ class WalletsCubit extends Cubit<WalletsState> {
     emit(state.copyWith(selectedWallet: wallet));
   }
 
+  void networth() {
+    var net = 0;
+
+    // THIS WILL ONLY WORK FOR SINGLE SIGS
+    // SCRIPTS NEED TO CHECK PUBLIC DESCRIPTOR
+    final existingPubkeys = [];
+    for (final wallet in state.wallets) {
+      if (!existingPubkeys.contains(wallet.policyElements[0])) {
+        existingPubkeys.add(wallet.policyElements[0]);
+        net += wallet.balance;
+        emit(state.copyWith(networth: net));
+      }
+    }
+  }
   // void addTransactionsToSelectedWallet(List<Transaction> transactions) {
   //   final wallet = state.selectedWallet!.copyWith(
   //     transactions: transactions,

@@ -19,6 +19,7 @@ mixin _$FeesState {
   Fees get fees => throw _privateConstructorUsedError;
   bool get updating => throw _privateConstructorUsedError;
   String get errUpdating => throw _privateConstructorUsedError;
+  String get networkStrength => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FeesStateCopyWith<FeesState> get copyWith =>
@@ -30,7 +31,8 @@ abstract class $FeesStateCopyWith<$Res> {
   factory $FeesStateCopyWith(FeesState value, $Res Function(FeesState) then) =
       _$FeesStateCopyWithImpl<$Res, FeesState>;
   @useResult
-  $Res call({Fees fees, bool updating, String errUpdating});
+  $Res call(
+      {Fees fees, bool updating, String errUpdating, String networkStrength});
 
   $FeesCopyWith<$Res> get fees;
 }
@@ -51,6 +53,7 @@ class _$FeesStateCopyWithImpl<$Res, $Val extends FeesState>
     Object? fees = null,
     Object? updating = null,
     Object? errUpdating = null,
+    Object? networkStrength = null,
   }) {
     return _then(_value.copyWith(
       fees: null == fees
@@ -64,6 +67,10 @@ class _$FeesStateCopyWithImpl<$Res, $Val extends FeesState>
       errUpdating: null == errUpdating
           ? _value.errUpdating
           : errUpdating // ignore: cast_nullable_to_non_nullable
+              as String,
+      networkStrength: null == networkStrength
+          ? _value.networkStrength
+          : networkStrength // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -84,7 +91,8 @@ abstract class _$$_FeesStateCopyWith<$Res> implements $FeesStateCopyWith<$Res> {
       __$$_FeesStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Fees fees, bool updating, String errUpdating});
+  $Res call(
+      {Fees fees, bool updating, String errUpdating, String networkStrength});
 
   @override
   $FeesCopyWith<$Res> get fees;
@@ -104,6 +112,7 @@ class __$$_FeesStateCopyWithImpl<$Res>
     Object? fees = null,
     Object? updating = null,
     Object? errUpdating = null,
+    Object? networkStrength = null,
   }) {
     return _then(_$_FeesState(
       fees: null == fees
@@ -118,6 +127,10 @@ class __$$_FeesStateCopyWithImpl<$Res>
           ? _value.errUpdating
           : errUpdating // ignore: cast_nullable_to_non_nullable
               as String,
+      networkStrength: null == networkStrength
+          ? _value.networkStrength
+          : networkStrength // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -128,7 +141,8 @@ class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
   const _$_FeesState(
       {this.fees = const Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0),
       this.updating = false,
-      this.errUpdating = ''});
+      this.errUpdating = '',
+      this.networkStrength = ''});
 
   @override
   @JsonKey()
@@ -139,10 +153,13 @@ class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
   @override
   @JsonKey()
   final String errUpdating;
+  @override
+  @JsonKey()
+  final String networkStrength;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FeesState(fees: $fees, updating: $updating, errUpdating: $errUpdating)';
+    return 'FeesState(fees: $fees, updating: $updating, errUpdating: $errUpdating, networkStrength: $networkStrength)';
   }
 
   @override
@@ -152,7 +169,8 @@ class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
       ..add(DiagnosticsProperty('type', 'FeesState'))
       ..add(DiagnosticsProperty('fees', fees))
       ..add(DiagnosticsProperty('updating', updating))
-      ..add(DiagnosticsProperty('errUpdating', errUpdating));
+      ..add(DiagnosticsProperty('errUpdating', errUpdating))
+      ..add(DiagnosticsProperty('networkStrength', networkStrength));
   }
 
   @override
@@ -164,11 +182,14 @@ class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
             (identical(other.updating, updating) ||
                 other.updating == updating) &&
             (identical(other.errUpdating, errUpdating) ||
-                other.errUpdating == errUpdating));
+                other.errUpdating == errUpdating) &&
+            (identical(other.networkStrength, networkStrength) ||
+                other.networkStrength == networkStrength));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, fees, updating, errUpdating);
+  int get hashCode =>
+      Object.hash(runtimeType, fees, updating, errUpdating, networkStrength);
 
   @JsonKey(ignore: true)
   @override
@@ -181,7 +202,8 @@ abstract class _FeesState implements FeesState {
   const factory _FeesState(
       {final Fees fees,
       final bool updating,
-      final String errUpdating}) = _$_FeesState;
+      final String errUpdating,
+      final String networkStrength}) = _$_FeesState;
 
   @override
   Fees get fees;
@@ -189,6 +211,8 @@ abstract class _FeesState implements FeesState {
   bool get updating;
   @override
   String get errUpdating;
+  @override
+  String get networkStrength;
   @override
   @JsonKey(ignore: true)
   _$$_FeesStateCopyWith<_$_FeesState> get copyWith =>

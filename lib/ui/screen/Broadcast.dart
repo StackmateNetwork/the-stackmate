@@ -9,42 +9,32 @@ class _Broadcast extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    return BlocBuilder<BroadcastCubit, BroadcastState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            // actions: <Widget>[
-            //   TextButton(
-            //     onPressed: () {},
-            //     child: const Text('Action 1'),
-            //   ),
-            // ],
-            title: const Text('Broadcast'),
-            leading: Builder(
-              builder: (BuildContext context) {
-                return BackButton(
-                  onPressed: () {
-                    c.read<BroadcastCubit>().reset();
-                    c.pop();
-                  },
-                );
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Broadcast'),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return BackButton(
+              onPressed: () {
+                c.read<BroadcastCubit>().reset();
+                c.pop();
               },
+            );
+          },
+        ),
+      ),
+      body: const SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            SizedBox(height: 64),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              child: BroadcastHex(),
             ),
-          ),
-          body: const SafeArea(
-            bottom: false,
-            child: Column(
-              children: [
-                SizedBox(height: 64),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.0),
-                  child: BroadcastHex(),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 }

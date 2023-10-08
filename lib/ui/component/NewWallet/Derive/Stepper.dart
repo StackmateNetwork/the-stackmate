@@ -8,19 +8,17 @@ class DeriveStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    return BlocBuilder<DeriveWalletCubit, DeriveWalletState>(
-      builder: (context, state) {
-        final steps = DeriveWalletStep.values.length;
-        final idx = state.currentStep.index;
+    final state = c.select((DeriveWalletCubit _) => _.state);
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            StepLine(length: steps, idx: idx),
-            const SizedBox(height: 24),
-          ],
-        );
-      },
+    final steps = DeriveWalletStep.values.length;
+    final idx = state.currentStep.index;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        StepLine(length: steps, idx: idx),
+        const SizedBox(height: 24),
+      ],
     );
   }
 }

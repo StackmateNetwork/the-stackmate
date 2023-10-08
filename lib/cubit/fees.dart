@@ -20,6 +20,7 @@ class FeesState with _$FeesState {
     @Default(Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0)) Fees fees,
     @Default(false) bool updating,
     @Default('') String errUpdating,
+    @Default('') String networkStrength,
   }) = _FeesState;
 }
 
@@ -93,7 +94,7 @@ class FeesCubit extends Cubit<FeesState> {
       final feesUpdated = Fees(
         timestamp: timestamp,
         slow: slowRate,
-        medium: fastRate.result! / 2,
+        medium: (fastRate.result == slowRate) ? 1.0 : fastRate.result! / 2,
         fast: fastRate.result!,
       );
 
@@ -128,6 +129,15 @@ class FeesCubit extends Cubit<FeesState> {
     return state.fees;
   }
 
+  void networkStrength() {
+    if (state.fees.fast < 5)
+      emit(state.copyWith(networkStrength: 'LOW'));
+    else if (state.fees.fast > 5 && state.fees.fast < 25)
+      emit(state.copyWith(networkStrength: 'MEDIUM'));
+    else
+      emit(state.copyWith(networkStrength: 'HIGH'));
+  }
+
   Future update() async {
     try {
       emit(state.copyWith(updating: true, errUpdating: ''));
@@ -152,7 +162,7 @@ class FeesCubit extends Cubit<FeesState> {
       final feesUpdated = Fees(
         timestamp: timestamp,
         slow: slowRate,
-        medium: fastRate.result! / 2,
+        medium: (fastRate.result == slowRate) ? 1.0 : fastRate.result! / 2,
         fast: fastRate.result!,
       );
 

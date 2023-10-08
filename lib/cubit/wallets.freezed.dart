@@ -20,6 +20,7 @@ mixin _$WalletsState {
   Wallet? get selectedWallet => throw _privateConstructorUsedError;
   bool get toggler => throw _privateConstructorUsedError;
   String get errDeleting => throw _privateConstructorUsedError;
+  int get networth => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WalletsStateCopyWith<WalletsState> get copyWith =>
@@ -36,7 +37,8 @@ abstract class $WalletsStateCopyWith<$Res> {
       {List<Wallet> wallets,
       Wallet? selectedWallet,
       bool toggler,
-      String errDeleting});
+      String errDeleting,
+      int networth});
 
   $WalletCopyWith<$Res>? get selectedWallet;
 }
@@ -58,6 +60,7 @@ class _$WalletsStateCopyWithImpl<$Res, $Val extends WalletsState>
     Object? selectedWallet = freezed,
     Object? toggler = null,
     Object? errDeleting = null,
+    Object? networth = null,
   }) {
     return _then(_value.copyWith(
       wallets: null == wallets
@@ -76,6 +79,10 @@ class _$WalletsStateCopyWithImpl<$Res, $Val extends WalletsState>
           ? _value.errDeleting
           : errDeleting // ignore: cast_nullable_to_non_nullable
               as String,
+      networth: null == networth
+          ? _value.networth
+          : networth // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -104,7 +111,8 @@ abstract class _$$_WalletsStateCopyWith<$Res>
       {List<Wallet> wallets,
       Wallet? selectedWallet,
       bool toggler,
-      String errDeleting});
+      String errDeleting,
+      int networth});
 
   @override
   $WalletCopyWith<$Res>? get selectedWallet;
@@ -125,6 +133,7 @@ class __$$_WalletsStateCopyWithImpl<$Res>
     Object? selectedWallet = freezed,
     Object? toggler = null,
     Object? errDeleting = null,
+    Object? networth = null,
   }) {
     return _then(_$_WalletsState(
       wallets: null == wallets
@@ -143,6 +152,10 @@ class __$$_WalletsStateCopyWithImpl<$Res>
           ? _value.errDeleting
           : errDeleting // ignore: cast_nullable_to_non_nullable
               as String,
+      networth: null == networth
+          ? _value.networth
+          : networth // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -154,7 +167,8 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
       {final List<Wallet> wallets = const [],
       this.selectedWallet,
       this.toggler = true,
-      this.errDeleting = ''})
+      this.errDeleting = '',
+      this.networth = 0})
       : _wallets = wallets;
 
   final List<Wallet> _wallets;
@@ -174,10 +188,13 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
   @override
   @JsonKey()
   final String errDeleting;
+  @override
+  @JsonKey()
+  final int networth;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletsState(wallets: $wallets, selectedWallet: $selectedWallet, toggler: $toggler, errDeleting: $errDeleting)';
+    return 'WalletsState(wallets: $wallets, selectedWallet: $selectedWallet, toggler: $toggler, errDeleting: $errDeleting, networth: $networth)';
   }
 
   @override
@@ -188,7 +205,8 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
       ..add(DiagnosticsProperty('wallets', wallets))
       ..add(DiagnosticsProperty('selectedWallet', selectedWallet))
       ..add(DiagnosticsProperty('toggler', toggler))
-      ..add(DiagnosticsProperty('errDeleting', errDeleting));
+      ..add(DiagnosticsProperty('errDeleting', errDeleting))
+      ..add(DiagnosticsProperty('networth', networth));
   }
 
   @override
@@ -201,7 +219,9 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
                 other.selectedWallet == selectedWallet) &&
             (identical(other.toggler, toggler) || other.toggler == toggler) &&
             (identical(other.errDeleting, errDeleting) ||
-                other.errDeleting == errDeleting));
+                other.errDeleting == errDeleting) &&
+            (identical(other.networth, networth) ||
+                other.networth == networth));
   }
 
   @override
@@ -210,7 +230,8 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
       const DeepCollectionEquality().hash(_wallets),
       selectedWallet,
       toggler,
-      errDeleting);
+      errDeleting,
+      networth);
 
   @JsonKey(ignore: true)
   @override
@@ -224,7 +245,8 @@ abstract class _WalletsState implements WalletsState {
       {final List<Wallet> wallets,
       final Wallet? selectedWallet,
       final bool toggler,
-      final String errDeleting}) = _$_WalletsState;
+      final String errDeleting,
+      final int networth}) = _$_WalletsState;
 
   @override
   List<Wallet> get wallets;
@@ -234,6 +256,8 @@ abstract class _WalletsState implements WalletsState {
   bool get toggler;
   @override
   String get errDeleting;
+  @override
+  int get networth;
   @override
   @JsonKey(ignore: true)
   _$$_WalletsStateCopyWith<_$_WalletsState> get copyWith =>

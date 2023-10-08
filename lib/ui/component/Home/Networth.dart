@@ -9,33 +9,14 @@ class Networth extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     // c.select((FeesCubit wc) => wc.update());
-    final wallets = c.select((WalletsCubit w) => w.state.wallets);
-    final fees = c.select((FeesCubit f) => f.state);
-    final preferences = c.select((PreferencesCubit p) => p);
-
-    late String networkTraffic;
-    if (fees.fees.fast < 5)
-      networkTraffic = 'LOW';
-    else if (fees.fees.fast > 5 && fees.fees.fast < 25)
-      networkTraffic = 'MEDIUM';
-    else
-      networkTraffic = 'HIGH';
-
-    int networth = 0;
-    // THIS WILL ONLY WORK FOR SINGLE SIGS
-    // SCRIPTS NEED TO CHECK PUBLIC DESCRIPTOR
-    final existingPubkeys = [];
-    for (final wallet in wallets) {
-      if (!existingPubkeys.contains(wallet.policyElements[0])) {
-        existingPubkeys.add(wallet.policyElements[0]);
-        networth += wallet.balance;
-      }
-    }
+    final networth = c.select((WalletsCubit w) => w.state.networth);
+    final networkTraffic = c.select((FeesCubit f) => f.state.networkStrength);
+    final preferences = c.select((PreferencesCubit p) => p.state);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (preferences.state.incognito) ...[
+        if (preferences.incognito) ...[
           Icon(
             Icons.network_ping,
             size: 32,
@@ -59,7 +40,7 @@ class Networth extends StatelessWidget {
             },
             child: BitcoinDisplayLarge(
               satsAmount: networth.toString(),
-              bitcoinUnit: preferences.state.preferredBitcoinUnit,
+              bitcoinUnit: preferences.preferredBitcoinUnit,
             ),
           ),
         ],
