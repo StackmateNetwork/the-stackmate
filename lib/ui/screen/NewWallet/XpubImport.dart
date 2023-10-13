@@ -20,6 +20,7 @@ import 'package:sats/ui/component/NewWallet/XpubImport/Stepper.dart';
 class _XpubImport extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
+    final tor = c.select((TorCubit _) => _.state);
     return BlocConsumer<XpubImportWalletCubit, XpubImportWalletState>(
       listenWhen: (previous, current) =>
           previous.currentStep != current.currentStep ||
@@ -44,6 +45,42 @@ class _XpubImport extends StatelessWidget {
           },
           child: Scaffold(
             appBar: AppBar(
+              actions: [
+                if (tor.isConnected) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Tooltip(
+                      preferBelow: false,
+                      triggerMode: TooltipTriggerMode.tap,
+                      message: (tor.isRunning)
+                          ? 'Torified Natively.'
+                          : 'Torified via External.',
+                      textStyle: c.fonts.bodySmall!.copyWith(
+                        color: c.colours.primary,
+                      ),
+                      decoration: BoxDecoration(
+                        color: c.colours.surface,
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: Icon(
+                        Icons.security_sharp,
+                        color: c.colours.tertiaryContainer,
+                      ),
+                    ),
+                  )
+                ] else ...[
+                  IconButton(
+                    color: c.colours.error,
+                    onPressed: () {
+                      c.push('/tor-config');
+                    },
+                    icon: Icon(
+                      Icons.security_sharp,
+                      color: c.colours.error,
+                    ),
+                  ),
+                ],
+              ],
               title: const Text('Watcher wallet'),
               leading: Builder(
                 builder: (BuildContext context) {

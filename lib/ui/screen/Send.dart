@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
@@ -32,7 +33,7 @@ class _WalletSend extends StatelessWidget {
     final walletLabel = context.select((SendCubit c) => c.state.wallet.label);
     final walletType =
         context.select((SendCubit c) => c.state.wallet.walletType);
-
+    final tor = context.select((TorCubit t) => t.state);
     return WillPopScope(
       onWillPop: () async {
         if (step == SendSteps.address || step == SendSteps.sent) {
@@ -45,6 +46,42 @@ class _WalletSend extends StatelessWidget {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           appBar: AppBar(
+            actions: [
+              if (tor.isConnected) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Tooltip(
+                    preferBelow: false,
+                    triggerMode: TooltipTriggerMode.tap,
+                    message: (tor.isRunning)
+                        ? 'Torified Natively.'
+                        : 'Torified via External.',
+                    textStyle: context.fonts.bodySmall!.copyWith(
+                      color: context.colours.primary,
+                    ),
+                    decoration: BoxDecoration(
+                      color: context.colours.surface,
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: Icon(
+                      Icons.security_sharp,
+                      color: context.colours.tertiaryContainer,
+                    ),
+                  ),
+                )
+              ] else ...[
+                IconButton(
+                  color: context.colours.error,
+                  onPressed: () {
+                    context.push('/tor-config');
+                  },
+                  icon: Icon(
+                    Icons.security_sharp,
+                    color: context.colours.error,
+                  ),
+                ),
+              ],
+            ],
             title: Text((walletType == 'WATCHER') ? 'BUILD' : 'SEND'),
             leading: Builder(
               builder: (BuildContext context) {

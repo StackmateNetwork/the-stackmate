@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/pin.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Landing/Keypad.dart';
 import 'package:sats/ui/component/Landing/Logo.dart';
@@ -21,6 +22,7 @@ class _Landing extends StatelessWidget {
           {
             if (masterKey != null)
               {
+                c.read<TorCubit>().start(),
                 c.push('/home'),
               }
             else

@@ -20,6 +20,7 @@ import 'package:sats/ui/component/NewWallet/Derive/Stepper.dart';
 class _Derive extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
+    final tor = c.select((TorCubit _) => _.state);
     return BlocConsumer<DeriveWalletCubit, DeriveWalletState>(
       listenWhen: (previous, current) =>
           previous.currentStep != current.currentStep ||
@@ -39,6 +40,42 @@ class _Derive extends StatelessWidget {
           },
           child: Scaffold(
             appBar: AppBar(
+              actions: [
+                if (tor.isConnected) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Tooltip(
+                      preferBelow: false,
+                      triggerMode: TooltipTriggerMode.tap,
+                      message: (tor.isRunning)
+                          ? 'Torified Natively.'
+                          : 'Torified via External.',
+                      textStyle: c.fonts.bodySmall!.copyWith(
+                        color: c.colours.primary,
+                      ),
+                      decoration: BoxDecoration(
+                        color: c.colours.surface,
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: Icon(
+                        Icons.security_sharp,
+                        color: c.colours.tertiaryContainer,
+                      ),
+                    ),
+                  )
+                ] else ...[
+                  IconButton(
+                    color: c.colours.error,
+                    onPressed: () {
+                      c.push('/tor-config');
+                    },
+                    icon: Icon(
+                      Icons.security_sharp,
+                      color: c.colours.error,
+                    ),
+                  ),
+                ],
+              ],
               title: const Text('Derive wallet'),
               leading: Builder(
                 builder: (BuildContext context) {

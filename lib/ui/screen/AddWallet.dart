@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sats/cubit/master.dart';
+import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/AddWallet/SelectButton.dart';
 
@@ -11,6 +12,7 @@ class AddWalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
+    final tor = c.select((TorCubit t) => t.state);
 
     return Scaffold(
       body: SafeArea(
@@ -19,6 +21,42 @@ class AddWalletScreen extends StatelessWidget {
           children: [
             if (masterKey == null)
               AppBar(
+                actions: [
+                  if (tor.isConnected) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Tooltip(
+                        preferBelow: false,
+                        triggerMode: TooltipTriggerMode.tap,
+                        message: (tor.isRunning)
+                            ? 'Torified Natively.'
+                            : 'Torified via External.',
+                        textStyle: c.fonts.bodySmall!.copyWith(
+                          color: c.colours.primary,
+                        ),
+                        decoration: BoxDecoration(
+                          color: c.colours.surface,
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: Icon(
+                          Icons.security_sharp,
+                          color: c.colours.tertiaryContainer,
+                        ),
+                      ),
+                    )
+                  ] else ...[
+                    IconButton(
+                      color: c.colours.error,
+                      onPressed: () {
+                        c.push('/tor-config');
+                      },
+                      icon: Icon(
+                        Icons.security_sharp,
+                        color: c.colours.error,
+                      ),
+                    ),
+                  ],
+                ],
                 title: const Text('Master key')
                     .animate(delay: 200.ms)
                     .fadeIn()
@@ -35,6 +73,42 @@ class AddWalletScreen extends StatelessWidget {
               )
             else
               AppBar(
+                actions: [
+                  if (tor.isConnected) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Tooltip(
+                        preferBelow: false,
+                        triggerMode: TooltipTriggerMode.tap,
+                        message: (tor.isRunning)
+                            ? 'Torified Natively.'
+                            : 'Torified via External.',
+                        textStyle: c.fonts.bodySmall!.copyWith(
+                          color: c.colours.primary,
+                        ),
+                        decoration: BoxDecoration(
+                          color: c.colours.surface,
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: Icon(
+                          Icons.security_sharp,
+                          color: c.colours.tertiaryContainer,
+                        ),
+                      ),
+                    )
+                  ] else ...[
+                    IconButton(
+                      color: c.colours.error,
+                      onPressed: () {
+                        c.push('/tor-config');
+                      },
+                      icon: Icon(
+                        Icons.security_sharp,
+                        color: c.colours.error,
+                      ),
+                    ),
+                  ],
+                ],
                 title: const Text('Add Account')
                     .animate(delay: 200.ms)
                     .fadeIn()
