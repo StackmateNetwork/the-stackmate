@@ -30,9 +30,8 @@ class SeedImportState with _$SeedImportState {
   const SeedImportState._();
 
   bool showSeedCompleteButton() =>
-      seed.split(' ').length >= 12 &&
-      seed.split(' ').length <= 24 &&
-      bip39.validateMnemonic(seed);
+      seed.split(' ').length == 12 ||
+      seed.split(' ').length == 24 && bip39.validateMnemonic(seed);
 }
 
 class SeedImportCubit extends Cubit<SeedImportState> {
@@ -85,10 +84,10 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     );
   }
 
-  void seedTextChanged(String seed) {
+  void seedTextChanged(String text) {
     emit(
       state.copyWith(
-        seed: seed,
+        seed: text,
         seedError: emptyString,
       ),
     );
@@ -96,12 +95,16 @@ class SeedImportCubit extends Cubit<SeedImportState> {
 
   Future<void> checkSeed() async {
     try {
-      final seed = state.seed;
+      final tseed = state.seed;
       //print(seed);
 
-      if (seed.split(' ').length < 12 ||
-          seed.split(' ').length > 24 && bip39.validateMnemonic(seed)) {
-        emit(state.copyWith(seedError: invalidSeedError));
+      if (tseed.split(' ').length == 12 ||
+          tseed.split(' ').length == 24 && bip39.validateMnemonic(tseed)) {
+        emit(
+          state.copyWith(
+            seedError: invalidSeedError,
+          ),
+        );
         return;
       }
       // we cannot import a primary key with passphrase - pp wallets can be derived later

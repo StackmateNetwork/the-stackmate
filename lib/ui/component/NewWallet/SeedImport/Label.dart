@@ -65,6 +65,11 @@ class SeedImportLabel extends StatelessWidget {
                     backgroundColor: c.colours.primary,
                   ),
                   onPressed: () async {
+                    final FocusScopeNode currentFocus = FocusScope.of(c);
+
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
                     c.read<SeedImportWalletCubit>().nextClicked();
                   },
                   child: const Text('Confirm'),

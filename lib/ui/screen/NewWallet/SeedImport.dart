@@ -99,44 +99,42 @@ class _SeedImport extends StatelessWidget {
               ),
             ),
             body: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Loader(),
-                    const SizedBox(height: 24),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24.0),
-                      child: NewImportStepper(),
-                    ),
-                    FadeInLeft(
-                      key: Key(state.currentStepLabel()),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 32,
-                          vertical: 24,
-                        ),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: c.colours.surface,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: () {
-                          switch (state.currentStep) {
-                            case SeedImportWalletSteps.warning:
-                              return const SeedImportWarning();
-
-                            case SeedImportWalletSteps.import:
-                              return const SeedImportSteps();
-
-                            case SeedImportWalletSteps.label:
-                              return const SeedImportLabel();
-                          }
-                        }(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Loader(),
+                  const SizedBox(height: 24),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.0),
+                    child: NewImportStepper(),
+                  ),
+                  FadeInLeft(
+                    key: Key(state.currentStepLabel()),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 24,
                       ),
-                    )
-                  ],
-                ),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: c.colours.surface,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: () {
+                        switch (state.currentStep) {
+                          case SeedImportWalletSteps.warning:
+                            return const SeedImportWarning();
+
+                          case SeedImportWalletSteps.import:
+                            return const SeedImportSteps();
+
+                          case SeedImportWalletSteps.label:
+                            return const SeedImportLabel();
+                        }
+                      }(),
+                    ),
+                  )
+                ],
               ),
             ),
           ),

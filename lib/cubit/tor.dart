@@ -22,7 +22,7 @@ class TorState with _$TorState {
     @Default(9050) int socks5Port,
     @Default('') String httpProxy,
     @Default('Starting Tor.\nThis may take a while ...')
-        String bootstapProgress,
+    String bootstapProgress,
     @Default(false) bool isRunning,
     @Default(false) bool isEdittingExternal,
     @Default(false) bool isConnected,
@@ -58,7 +58,7 @@ class TorCubit extends Cubit<TorState> {
     if (saved.hasError) {
       emit(state.copyWith(errStorage: saved.error.toString()));
     }
-    if (!state.enforced)
+    if (!settings.enforced)
       await stop();
     else
       await start();

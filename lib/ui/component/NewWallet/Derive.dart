@@ -32,7 +32,6 @@ class DerivePurpose extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     // final wallets = c.select((WalletsCubit wc) => wc.state.wallets);
-    final state = c.select((DeriveWalletCubit _) => _.state);
 
     final selectedPurpose =
         c.select((DeriveWalletCubit mdw) => mdw.state.purpose);

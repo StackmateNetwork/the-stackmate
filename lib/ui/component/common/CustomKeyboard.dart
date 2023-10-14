@@ -1,2215 +1,413 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class CKController extends ChangeNotifier {
-  String initialValue = '';
-
-  void reset() {
-    initialValue = '';
-    notifyListeners();
-  }
+enum Language {
+  EN,
+  FR,
+  DE,
+  AR,
 }
 
-class CustomKeyboard extends StatefulWidget {
-  const CustomKeyboard({
+enum Layout {
+  QWERTY,
+  QWERTZ,
+  AZERTY,
+  ARABIC,
+}
+
+var languageConfig = {
+  Language.EN: englishConfig,
+  Language.FR: frenchConfig,
+  Language.DE: germanConfig,
+  Language.AR: arabicConfig,
+};
+
+// Languages Configurations
+
+var englishConfig = {
+  Layout.QWERTY: <String, String>{
+    'layout': 'qwertyuiopasdfghjklzxcvbnm',
+    'horizontalSpacing': '6.0',
+    'topLength': '10',
+    'middleLength': '9',
+  },
+  Layout.QWERTZ: <String, String>{
+    'layout': 'qwertzuiopasdfghjklyxcvbnm',
+    'horizontalSpacing': '6.0',
+    'topLength': '10',
+    'middleLength': '9',
+  },
+};
+
+var frenchConfig = {
+  Layout.QWERTY: <String, String>{
+    'layout': 'qwertyuiopasdfghjklzxcvbnm',
+    'horizontalSpacing': '6.0',
+    'topLength': '10',
+    'middleLength': '9',
+  },
+  Layout.AZERTY: <String, String>{
+    'layout': 'azertyuiopqsdfghjklmwxcvbn',
+    'horizontalSpacing': '6.0',
+    'topLength': '10',
+    'middleLength': '9',
+  },
+};
+
+var germanConfig = {
+  Layout.QWERTY: <String, String>{
+    'layout': 'qwertyuiopüasdfghjklöäzxcvbnmß',
+    'horizontalSpacing': '2.5',
+    'topLength': '11',
+    'middleLength': '11',
+  },
+  Layout.QWERTZ: <String, String>{
+    'layout': 'qwertzuiopüasdfghjklöäyxcvbnmß',
+    'horizontalSpacing': '2.5',
+    'topLength': '11',
+    'middleLength': '11',
+  },
+};
+
+var arabicConfig = {
+  Layout.ARABIC: <String, String>{
+    'layout': 'ثةورزدذطظكمنتالبيسشجحخهعغفقصض',
+    'horizontalSpacing': '2.8',
+    'topLength': '11',
+    'middleLength': '10',
+  },
+};
+
+class BuiltInKeyboard extends StatefulWidget {
+  const BuiltInKeyboard({
     super.key,
-    required this.backgroundColor,
-    required this.bottomPaddingColor,
-    required this.bottomPaddingHeight,
-    required this.keyboardHeight,
-    required this.keyboardWidth,
-    required this.onChange,
-    required this.onTapColor,
-    required this.textColor,
-    required this.keybordButtonColor,
-    required this.elevation,
     required this.controller,
+    this.language = Language.EN,
+    this.layout = Layout.QWERTY,
+    this.height,
+    this.width,
+    this.spacing = 8.0,
+    this.borderRadius,
+    this.color = Colors.deepOrange,
+    this.letterStyle = const TextStyle(fontSize: 25, color: Colors.black),
+    this.enableSpaceBar = false,
+    this.enableBackSpace = true,
+    this.enableCapsLock = false,
+    this.enableAllUppercase = false,
+    this.enableLongPressUppercase = false,
+    this.highlightColor,
+    this.splashColor,
   });
-  final double keyboardHeight;
-  final double keyboardWidth;
-  final Function(String) onChange;
-  final Color backgroundColor;
-  final Color onTapColor;
-  final Color textColor;
-  final Color bottomPaddingColor;
-  final double bottomPaddingHeight;
-  final Color keybordButtonColor;
-  final MaterialStateProperty<double> elevation;
-  final CKController controller;
+  // Language of the keyboard
+  final Language language;
 
+  // layout of the keyboard
+  final Layout layout;
+
+  // The controller connected to the InputField
+  final TextEditingController? controller;
+
+  // Vertical spacing between key rows
+  final double spacing;
+
+  // Border radius of the keys
+  final BorderRadius? borderRadius;
+
+  // Color of the keys
+  final Color color;
+
+  // TextStyle of the letters in the keys (fontsize, fontface)
+  final TextStyle letterStyle;
+
+  // the additional key that can be added to the keyboard
+  final bool enableSpaceBar;
+  final bool enableBackSpace;
+  final bool enableCapsLock;
+
+  // height and width of each key
+  final double? height;
+  final double? width;
+
+  // Additional functionality for the keys //
+
+  // Makes the keyboard uppercase
+  final bool enableAllUppercase;
+
+  // Long press to write uppercase letters
+  final bool enableLongPressUppercase;
+
+  // The color displayed when the key is pressed
+  final Color? highlightColor;
+  final Color? splashColor;
   @override
-  State<CustomKeyboard> createState() => _CustomKeyboardState();
+  State<BuiltInKeyboard> createState() => _BuiltInKeyboardState();
 }
 
-class _CustomKeyboardState extends State<CustomKeyboard> {
-  // * current value of the keyboard
-  late String inputValue = '';
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(() {
-      print('listening to stuff.');
-      setState(() {
-        inputValue = widget.controller.initialValue;
-      });
-    });
-  }
-
-  // * this if shift is pressed
-  bool isShiftPressed = false;
-
-  // * this if caps is pressed
-  bool isCapsPressed = false;
-
-  // * if special character button is pressed
-  bool isSpecialPressed = false;
-
-  // * numbers which will be displayed on the top
-  List<int> listOfNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-
+class _BuiltInKeyboardState extends State<BuiltInKeyboard> {
+  double? height;
+  double? width;
+  bool capsLockUppercase = false;
   @override
   Widget build(BuildContext context) {
-    // if (inputValue.isNotEmpty) {
-    //   widget.controller.initialValue = inputValue;
-    // }
-    // inputValue = widget.controller.initialValue;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    height = screenHeight > 800 ? screenHeight * 0.059 : screenHeight * 0.07;
+    width = screenWidth > 350 ? screenWidth * 0.084 : screenWidth * 0.082;
+    final keyboardLayout = layout();
+    double hspacing;
+    int topLen;
+    int midLen;
+    try {
+      hspacing = double.parse(
+        languageConfig[widget.language]![widget.layout]!['horizontalSpacing']!,
+      );
+      topLen = int.parse(
+        languageConfig[widget.language]![widget.layout]!['topLength']!,
+      );
+      midLen = int.parse(
+        languageConfig[widget.language]![widget.layout]!['middleLength']!,
+      );
+    } catch (e) {
+      printError(
+        'Uknown language or layout was used, or Incorrect combination of language-layout',
+      );
+      exit(0);
+    }
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          // * this is keyboard height
-          height: widget.keyboardHeight,
-
-          width: widget.keyboardWidth,
-          // * keboard background color
-          color: widget.backgroundColor,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        Wrap(
+          alignment: WrapAlignment.center,
+          spacing: hspacing,
+          runSpacing: 5,
+          children: keyboardLayout.sublist(0, topLen),
+        ),
+        SizedBox(
+          height: widget.spacing,
+        ),
+        Wrap(
+          alignment: WrapAlignment.center,
+          spacing: hspacing,
+          runSpacing: 5,
+          children: keyboardLayout.sublist(topLen, topLen + midLen),
+        ),
+        SizedBox(
+          height: widget.spacing,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            if (widget.enableCapsLock)
+              capsLock()
+            else
+              SizedBox(
+                width: widget.width ?? width!,
+              ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: hspacing,
+              runSpacing: 5,
+              children: keyboardLayout.sublist(topLen + midLen),
+            ),
+            if (widget.enableBackSpace)
+              backSpace()
+            else
+              SizedBox(
+                width: (widget.width ?? width)! + 10,
+              ),
+          ],
+        ),
+        if (widget.enableSpaceBar)
+          Column(
             children: [
-              // * number row
               SizedBox(
-                height: widget.keyboardHeight * .13,
-                width: widget.keyboardWidth,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: listOfNumbers.map((e) {
-                    return SizedBox(
-                      width: widget.keyboardWidth * .08,
-                      height: widget.keyboardHeight * .13,
-                      child: TextButton(
-                        onPressed: () {
-                          inputValue += e.toString();
-                          widget.onChange(inputValue);
-                        },
-                        style: ButtonStyle(
-                          elevation: widget.elevation,
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            widget.keybordButtonColor,
-                          ),
-                          overlayColor: MaterialStateProperty.all<Color>(
-                            widget.onTapColor,
-                          ),
-                        ),
-                        child: Text(
-                          e.toString(),
-                          style: TextStyle(
-                            color: widget.textColor,
-                            fontSize: widget.keyboardHeight * .06,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
+                height: widget.spacing,
               ),
-
-              if (isSpecialPressed)
-                // * first special character row
-                SizedBox(
-                  height: widget.keyboardHeight * .17,
-                  width: widget.keyboardWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // * +
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '+';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '+',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * X
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += 'X';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            'X',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * ÷
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '÷';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '÷',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * =
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '=';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '=',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * /
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '/';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '/',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * _
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '_';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '_',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * €
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '€';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '€',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * £
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '£';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '£',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * ¥
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '¥';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '¥',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * ₩
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '₩';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '₩',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-              if (!isSpecialPressed)
-                // * first character row
-                SizedBox(
-                  height: widget.keyboardHeight * .17,
-                  width: widget.keyboardWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // * q
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'Q';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'q';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'Q' : 'q',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * w
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'W';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'w';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'W' : 'w',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * e
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'E';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'e';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'E' : 'e',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * r
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'R';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'r';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'R' : 'r',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * t
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'T';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 't';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'T' : 't',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * y
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'Y';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'y';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'Y' : 'y',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * u
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'U';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'u';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'U' : 'u',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * i
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'I';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'i';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'I' : 'i',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * o
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'O';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'o';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'O' : 'o',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * p
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'P';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'p';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'P' : 'p',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-              if (isSpecialPressed)
-                // * first special character row
-                SizedBox(
-                  height: widget.keyboardHeight * .17,
-                  width: widget.keyboardWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // * !
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '!';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '!',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * @
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '@';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '@',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * #
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '#';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '#',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * $
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '\$';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '\$',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * %
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '%';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '%',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * ^
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '^';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '^',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * &
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '&';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '&',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * *
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '*';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '*',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * (
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '(';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '(',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * )
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += ')';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            ')',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-              if (!isSpecialPressed)
-                // * second character row
-                SizedBox(
-                  height: widget.keyboardHeight * .17,
-                  width: widget.keyboardWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // * left space
-                      SizedBox(
-                        width: widget.keyboardWidth * .02,
-                      ),
-                      // * a
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'A';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'a';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'A' : 'a',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * s
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'S';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 's';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'S' : 's',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * d
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'D';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'd';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'D' : 'd',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * f
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'F';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'f';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'F' : 'f',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * g
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'G';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'g';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'G' : 'g',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * h
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'H';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'h';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'H' : 'h',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * j
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'J';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'j';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'J' : 'j',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * k
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'K';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'k';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'K' : 'k',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * l
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'L';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'l';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'L' : 'l',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * right space
-                      SizedBox(
-                        width: widget.keyboardWidth * .02,
-                      ),
-                    ],
-                  ),
-                ),
-
-              if (isSpecialPressed)
-                // * first special character row
-                SizedBox(
-                  height: widget.keyboardHeight * .17,
-                  width: widget.keyboardWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // * spacer
-                      const SizedBox(),
-                      // * -
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '-';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '-',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * '
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += "'";
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            "'",
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * "
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '"';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '"',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * :
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += ':';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            ':',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * ;
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += ';';
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            ';',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * ?
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '?';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '?',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * &
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '&';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '&',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * *
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            inputValue += '*';
-
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            '*',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * spacer
-                      const SizedBox(),
-                    ],
-                  ),
-                ),
-
-              if (!isSpecialPressed)
-                // * third character row
-                SizedBox(
-                  height: widget.keyboardHeight * .17,
-                  width: widget.keyboardWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // * shift
-                      InkWell(
-                        onDoubleTap: () {
-                          setState(() {
-                            isCapsPressed = true;
-                          });
-                        },
-                        splashColor: widget.onTapColor,
-                        onTap: () {
-                          if (isCapsPressed) {
-                            setState(() {
-                              isCapsPressed = false;
-                            });
-                          } else {
-                            setState(() {
-                              isShiftPressed = !isShiftPressed;
-                            });
-                          }
-                        },
-                        child: Container(
-                          width: widget.keyboardWidth * .11,
-                          height: widget.keyboardHeight * .17,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: widget.keybordButtonColor,
-                          ),
-                          child: (isShiftPressed || isCapsPressed)
-                              ? Icon(
-                                  Icons.arrow_circle_up_rounded,
-                                  color: widget.onTapColor,
-                                )
-                              : Icon(
-                                  Icons.arrow_circle_up_rounded,
-                                  color: widget.textColor,
-                                ),
-                        ),
-                      ),
-                      // * z
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'Z';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'z';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'Z' : 'z',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * x
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'X';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'x';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'X' : 'x',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * c
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'C';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'c';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'C' : 'c',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * v
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'V';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'v';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'V' : 'v',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * b
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'B';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'b';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'B' : 'b',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * n
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'N';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'n';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'N' : 'n',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * m
-                      SizedBox(
-                        width: widget.keyboardWidth * .08,
-                        height: widget.keyboardHeight * .17,
-                        child: TextButton(
-                          onPressed: () {
-                            if (isShiftPressed || isCapsPressed) {
-                              inputValue += 'M';
-                              if (isShiftPressed) {
-                                setState(() {
-                                  isShiftPressed = false;
-                                });
-                              }
-                            } else {
-                              inputValue += 'm';
-                            }
-                            widget.onChange(inputValue);
-                          },
-                          style: ButtonStyle(
-                            elevation: widget.elevation,
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              widget.keybordButtonColor,
-                            ),
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              widget.onTapColor,
-                            ),
-                          ),
-                          child: Text(
-                            (isShiftPressed || isCapsPressed) ? 'M' : 'm',
-                            style: TextStyle(
-                              color: widget.textColor,
-                              fontSize: widget.keyboardHeight * .08,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // * delete
-                      InkWell(
-                        onTap: () {
-                          if (inputValue.isNotEmpty) {
-                            inputValue =
-                                inputValue.substring(0, inputValue.length - 1);
-                            widget.onChange(inputValue);
-                          }
-                        },
-                        splashColor: widget.onTapColor,
-                        child: Container(
-                          width: widget.keyboardWidth * .11,
-                          height: widget.keyboardHeight * .17,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: widget.keybordButtonColor,
-                          ),
-                          child: Icon(
-                            Icons.backspace_rounded,
-                            color: widget.textColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-              // * last row
-              SizedBox(
-                height: widget.keyboardHeight * .17,
-                width: widget.keyboardWidth,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // * show special
-                    InkWell(
-                      splashColor: widget.onTapColor,
-                      onTap: () {
-                        setState(() {
-                          isSpecialPressed = !isSpecialPressed;
-                        });
-                      },
-                      child: Container(
-                        width: widget.keyboardWidth * .15,
-                        height: widget.keyboardHeight * .17,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: widget.keybordButtonColor,
-                        ),
-                        child: isSpecialPressed
-                            ? Icon(
-                                Icons.language_rounded,
-                                color: widget.onTapColor,
-                              )
-                            : Icon(
-                                Icons.language_rounded,
-                                color: widget.textColor,
-                              ),
-                      ),
-                    ),
-                    // * ,
-                    SizedBox(
-                      width: widget.keyboardWidth * .08,
-                      height: widget.keyboardHeight * .17,
-                      child: TextButton(
-                        onPressed: () {
-                          if (isShiftPressed || isCapsPressed) {
-                            inputValue += ',';
-                            if (isShiftPressed) {
-                              setState(() {
-                                isShiftPressed = false;
-                              });
-                            }
-                          } else {
-                            inputValue += ',';
-                          }
-                          widget.onChange(inputValue);
-                        },
-                        style: ButtonStyle(
-                          elevation: widget.elevation,
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            widget.keybordButtonColor,
-                          ),
-                          overlayColor: MaterialStateProperty.all<Color>(
-                            widget.onTapColor,
-                          ),
-                        ),
-                        child: Text(
-                          ',',
-                          style: TextStyle(
-                            color: widget.textColor,
-                            fontSize: widget.keyboardHeight * .08,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                    // * space
-                    SizedBox(
-                      width: widget.keyboardWidth * .4,
-                      height: widget.keyboardHeight * .17,
-                      child: TextButton(
-                        onPressed: () {
-                          if (isShiftPressed || isCapsPressed) {
-                            inputValue += ' ';
-                            if (isShiftPressed) {
-                              setState(() {
-                                isShiftPressed = false;
-                              });
-                            }
-                          } else {
-                            inputValue += ' ';
-                          }
-                          widget.onChange(inputValue);
-                        },
-                        style: ButtonStyle(
-                          elevation: widget.elevation,
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            widget.keybordButtonColor,
-                          ),
-                          overlayColor: MaterialStateProperty.all<Color>(
-                            widget.onTapColor,
-                          ),
-                        ),
-                        child: Text(
-                          'space',
-                          style: TextStyle(
-                            color: widget.textColor,
-                            fontSize: widget.keyboardHeight * .08,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    // * .
-                    SizedBox(
-                      width: widget.keyboardWidth * .08,
-                      height: widget.keyboardHeight * .17,
-                      child: TextButton(
-                        onPressed: () {
-                          if (isShiftPressed || isCapsPressed) {
-                            inputValue += '.';
-                            if (isShiftPressed) {
-                              setState(() {
-                                isShiftPressed = false;
-                              });
-                            }
-                          } else {
-                            inputValue += '.';
-                          }
-                          widget.onChange(inputValue);
-                        },
-                        style: ButtonStyle(
-                          elevation: widget.elevation,
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            widget.keybordButtonColor,
-                          ),
-                          overlayColor: MaterialStateProperty.all<Color>(
-                            widget.onTapColor,
-                          ),
-                        ),
-                        child: Text(
-                          '.',
-                          style: TextStyle(
-                            color: widget.textColor,
-                            fontSize: widget.keyboardHeight * .08,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                    // * enter
-                    SizedBox(
-                      width: widget.keyboardWidth * .15,
-                      height: widget.keyboardHeight * .17,
-                      child: TextButton(
-                        onPressed: () {
-                          inputValue += '\n';
-                          widget.onChange(inputValue);
-                        },
-                        style: ButtonStyle(
-                          elevation: widget.elevation,
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            widget.keybordButtonColor,
-                          ),
-                          overlayColor: MaterialStateProperty.all<Color>(
-                            widget.onTapColor,
-                          ),
-                        ),
-                        child: RotationTransition(
-                          turns: const AlwaysStoppedAnimation(180 / 360),
-                          child: Icon(
-                            Icons.shortcut_rounded,
-                            color: widget.textColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              spaceBar(),
             ],
-          ),
-        ),
-        // * bottom padding
-        Container(
-          height: widget.bottomPaddingHeight,
-          width: widget.keyboardWidth,
-          // * bottom padding color
-          color: widget.bottomPaddingColor,
-        ),
+          )
+        else
+          const SizedBox(),
       ],
     );
   }
+
+  // Letter button widget
+  Widget buttonLetter(String letter) {
+    return ClipRRect(
+      borderRadius: widget.borderRadius ?? BorderRadius.circular(0),
+      child: Container(
+        height: widget.height ?? height,
+        width: widget.width ?? width,
+        child: Material(
+          type: MaterialType.button,
+          color: widget.color,
+          child: InkWell(
+            highlightColor: widget.highlightColor,
+            splashColor: widget.splashColor,
+            onTap: () {
+              HapticFeedback.heavyImpact();
+              widget.controller?.text += letter;
+              widget.controller?.selection = TextSelection.fromPosition(
+                TextPosition(offset: widget.controller!.text.length),
+              );
+            },
+            onLongPress: () {
+              if (widget.enableLongPressUppercase &&
+                  !widget.enableAllUppercase) {
+                widget.controller?.text += letter.toUpperCase();
+                widget.controller?.selection = TextSelection.fromPosition(
+                  TextPosition(offset: widget.controller!.text.length),
+                );
+              }
+            },
+            child: Center(
+              child: Text(
+                letter,
+                style: widget.letterStyle,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Spacebar button widget
+  Widget spaceBar() {
+    return ClipRRect(
+      borderRadius: widget.borderRadius ?? BorderRadius.circular(0),
+      child: Container(
+        height: widget.height ?? height,
+        width: (widget.width ?? width)! + 150,
+        child: Material(
+          type: MaterialType.button,
+          color: widget.color,
+          child: InkWell(
+            highlightColor: widget.highlightColor,
+            splashColor: widget.splashColor,
+            onTap: () {
+              HapticFeedback.heavyImpact();
+              widget.controller?.text += ' ';
+              widget.controller?.selection = TextSelection.fromPosition(
+                TextPosition(offset: widget.controller!.text.length),
+              );
+            },
+            child: Center(
+              child: Text(
+                '',
+                style: TextStyle(
+                  fontSize: widget.letterStyle.fontSize,
+                  color: widget.letterStyle.color,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Backspace button widget
+  Widget backSpace() {
+    return ClipRRect(
+      borderRadius: widget.borderRadius ?? BorderRadius.circular(0),
+      child: Container(
+        height: widget.height ?? height,
+        width: (widget.width ?? width)! + 20,
+        child: Material(
+          type: MaterialType.button,
+          color: widget.color,
+          child: InkWell(
+            highlightColor: widget.highlightColor,
+            splashColor: widget.splashColor,
+            onTap: () {
+              HapticFeedback.heavyImpact();
+              if (widget.controller!.text.isNotEmpty) {
+                widget.controller?.text = widget.controller!.text
+                    .substring(0, widget.controller!.text.length - 1);
+                widget.controller?.selection = TextSelection.fromPosition(
+                  TextPosition(offset: widget.controller!.text.length),
+                );
+              }
+            },
+            onLongPress: () {
+              if (widget.controller!.text.isNotEmpty) {
+                widget.controller?.text = '';
+                widget.controller?.selection = TextSelection.fromPosition(
+                  TextPosition(offset: widget.controller!.text.length),
+                );
+              }
+            },
+            child: Center(
+              child: Icon(
+                Icons.backspace,
+                size: widget.letterStyle.fontSize,
+                color: widget.letterStyle.color,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Capslock button widget
+  Widget capsLock() {
+    return ClipRRect(
+      borderRadius: widget.borderRadius ?? BorderRadius.circular(0),
+      child: Container(
+        height: widget.height ?? height,
+        width: (widget.width ?? width)! + 20,
+        child: Material(
+          type: MaterialType.button,
+          color: widget.color,
+          child: InkWell(
+            highlightColor: widget.highlightColor,
+            splashColor: widget.splashColor,
+            onTap: () {
+              HapticFeedback.heavyImpact();
+              setState(() {
+                capsLockUppercase = !capsLockUppercase;
+              });
+            },
+            child: Center(
+              child: Icon(
+                Icons.keyboard_capslock,
+                size: widget.letterStyle.fontSize,
+                color: widget.letterStyle.color,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Keyboard layout list
+  List<Widget> layout() {
+    List<String> letters = [];
+    try {
+      letters =
+          languageConfig[widget.language]![widget.layout]!['layout']!.split('');
+    } catch (e) {
+      printError(
+        'Uknown language or layout was used, or Incorrect combination of language-layout',
+      );
+      exit(0);
+    }
+
+    final List<Widget> keyboard = [];
+    for (final letter in letters) {
+      keyboard.add(
+        buttonLetter(letter),
+      );
+    }
+    return keyboard;
+  }
+}
+
+void printError(String text) {
+  print('\x1B[31m$text\x1B[0m');
 }
