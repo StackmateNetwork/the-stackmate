@@ -1,47 +1,51 @@
 {
-    "editor.tokenColorCustomizations": {
-        "comments": "#229977"
-    },
-    "files.exclude": {
-        "**/.metadata": true,
-        ".gitignore": false,
-        "**/.packages": true,
-        "**/pubspec.lock": true,
-        "**/.flutter-plugins": true,
-        "**/.dart_tool": true,
-        "**/.flutter-plugins-dependencies": true,
-        "**/generated_plugin_registrant.dart": true,
-        "**/CHANGELOG.md": true,
-        "l10n.yaml": true,
-        "LICENSE": true,
-        "demo.png": true,
-        //
-        //
-        // 
-        "**/build": false,
-        //
-        //
-        "assets": false,
-        "integration_test": true,
-        ".gitlab-ci.yml": true,
-        //
-        "**/assets": false,
-        //
-        //
-        "**/**.g.dart": true,
-        "**/**.freezed.dart": true,
-        "android": false,
-        "ios": true,
-        "**/android": false,
-        "**/ios": true,
-        //
-        //
-        "**/analysis_options.yaml": true,
-        "**/packages": false,
-        "**/pubspec.yaml": false,
-        "README.md": false,
-        //
-        //
-        //
-    },
+  "editor.tokenColorCustomizations": {
+    "comments": "#229977"
+  },
+  "explorer.fileNesting.patterns": {
+    "pubspec.yaml": "pubspec.lock,pubspec_overrides.yaml,.packages,.flutter-plugins,.flutter-plugins-dependencies,.metadata",
+    "*.dart": "${capture}.g.dart, ${capture}.freezed.dart"
+  },
+  "files.exclude": {
+    "**/.metadata": true,
+    ".gitignore": false,
+    "**/.packages": true,
+    "**/pubspec.lock": true,
+    "**/.flutter-plugins": true,
+    "**/.dart_tool": true,
+    "**/.flutter-plugins-dependencies": true,
+    "**/generated_plugin_registrant.dart": true,
+    "**/CHANGELOG.md": true,
+    "l10n.yaml": true,
+    "LICENSE": true,
+    "demo.png": true,
+    //
+    //
+    //
+    "**/build": false,
+    //
+    //
+    "assets": false,
+    "integration_test": true,
+    ".gitlab-ci.yml": true,
+    //
+    "**/assets": false,
+    //
+    //
+    "**/**.g.dart": true,
+    "**/**.freezed.dart": true,
+    "android": false,
+    "ios": true,
+    "**/android": false,
+    "**/ios": true,
+    //
+    //
+    "**/analysis_options.yaml": true,
+    "**/packages": false,
+    "**/pubspec.yaml": false,
+    "README.md": false
+    //
+    //
+    //
+  }
 }

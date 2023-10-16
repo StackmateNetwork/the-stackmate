@@ -329,7 +329,7 @@ class LibBitcoin implements IStackMateBitcoin {
     }
     final json = jsonDecode(resp)['outputs'];
     final List<DecodedTxOutput> decoded = [];
-    for (final out in json)
+    for (final out in json as Iterable)
       decoded.add(DecodedTxOutput.fromJson(out as Map<String, dynamic>));
     return R(result: decoded);
   }

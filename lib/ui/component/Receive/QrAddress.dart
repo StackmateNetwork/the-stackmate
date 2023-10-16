@@ -17,7 +17,7 @@ class QRAddress extends StatelessWidget {
         width: c.width * 0.7,
         height: c.width * 0.7,
         color: c.colours.onBackground,
-        child: QrImage(
+        child: QrImageView(
           data: address,
           // version: QrVersions.auto,
         ),

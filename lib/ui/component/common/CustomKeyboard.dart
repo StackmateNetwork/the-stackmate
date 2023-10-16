@@ -3,6 +3,58 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+class KeyboardSuggestionsView<T> extends StatelessWidget {
+  const KeyboardSuggestionsView({
+    required this.controller,
+    required this.suggestions,
+    required this.onTap,
+    this.backgroundColor,
+    this.textStyle,
+    this.numberResultsPerScreen = 4,
+  });
+  final TextEditingController? controller;
+  final List<String> suggestions;
+  final Function onTap;
+  final Color? backgroundColor;
+  final TextStyle? textStyle;
+  final int numberResultsPerScreen;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      color: backgroundColor,
+      width: MediaQuery.of(context).size.width,
+      child: ListView.separated(
+        shrinkWrap: false,
+        scrollDirection: Axis.horizontal,
+        itemCount: suggestions.length,
+        separatorBuilder: (c, i) => const VerticalDivider(),
+        itemBuilder: (c, i) {
+          return Container(
+            width: suggestions.length > numberResultsPerScreen
+                ? (MediaQuery.of(context).size.width - 100) /
+                    numberResultsPerScreen
+                : (MediaQuery.of(context).size.width - 30) /
+                    numberResultsPerScreen,
+            child: TextButton(
+              onPressed: () {
+                onTap(suggestions[i]);
+              },
+              child: Center(
+                child: Text(
+                  suggestions[i],
+                  style: textStyle,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
 enum Language {
   EN,
   FR,
