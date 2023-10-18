@@ -7,10 +7,6 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Passphrase.dart';
 import 'package:sats/ui/component/common/CustomKeyboard.dart';
 
-// late final MnemonicWords mnemonicWords;
-// final words = mnemonicWords.loadWordList();
-// Future<List<String>?> suggestions = words;
-
 class SeedImportSteps extends StatelessWidget {
   const SeedImportSteps({
     super.key,
@@ -37,6 +33,7 @@ class SeedImportPhrase extends StatelessWidget {
     final hasMaster = c.select((MasterKeyCubit mk) => mk.state.key != null);
     final state = c.select((SeedImportCubit _) => _.state);
     final textController = TextEditingController();
+    final words = c.select((SeedImportCubit _) => _.state.words);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -109,25 +106,16 @@ class SeedImportPhrase extends StatelessWidget {
         ),
         const SizedBox(height: 40),
         Padding(
-          padding: const EdgeInsets.only(top: 50),
+          padding: const EdgeInsets.only(top: 60),
           child: Column(
             children: [
-              KeyboardSuggestionsView(
+              BuiltInKeyboard(
                 textStyle: TextStyle(fontSize: 14, color: c.colours.background),
                 backgroundColor: c.colours.primary,
-                suggestions: const [
-                  'hello',
-                  'mix',
-                  'daughter',
-                  'cruel',
-                ],
+                suggestions: words!,
                 onTap: (v) {
                   print(v);
                 },
-                controller: textController,
-              ),
-              const SizedBox(height: 5),
-              BuiltInKeyboard(
                 color: c.colours.primary,
                 width: 26,
                 height: 45,

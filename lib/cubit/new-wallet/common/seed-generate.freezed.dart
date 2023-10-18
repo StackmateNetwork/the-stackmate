@@ -164,11 +164,11 @@ class _$SeedGenerateStateCopyWithImpl<$Res, $Val extends SeedGenerateState>
 }
 
 /// @nodoc
-abstract class _$$_SeedGenerateStateCopyWith<$Res>
+abstract class _$$SeedGenerateStateImplCopyWith<$Res>
     implements $SeedGenerateStateCopyWith<$Res> {
-  factory _$$_SeedGenerateStateCopyWith(_$_SeedGenerateState value,
-          $Res Function(_$_SeedGenerateState) then) =
-      __$$_SeedGenerateStateCopyWithImpl<$Res>;
+  factory _$$SeedGenerateStateImplCopyWith(_$SeedGenerateStateImpl value,
+          $Res Function(_$SeedGenerateStateImpl) then) =
+      __$$SeedGenerateStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -191,11 +191,11 @@ abstract class _$$_SeedGenerateStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SeedGenerateStateCopyWithImpl<$Res>
-    extends _$SeedGenerateStateCopyWithImpl<$Res, _$_SeedGenerateState>
-    implements _$$_SeedGenerateStateCopyWith<$Res> {
-  __$$_SeedGenerateStateCopyWithImpl(
-      _$_SeedGenerateState _value, $Res Function(_$_SeedGenerateState) _then)
+class __$$SeedGenerateStateImplCopyWithImpl<$Res>
+    extends _$SeedGenerateStateCopyWithImpl<$Res, _$SeedGenerateStateImpl>
+    implements _$$SeedGenerateStateImplCopyWith<$Res> {
+  __$$SeedGenerateStateImplCopyWithImpl(_$SeedGenerateStateImpl _value,
+      $Res Function(_$SeedGenerateStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -218,7 +218,7 @@ class __$$_SeedGenerateStateCopyWithImpl<$Res>
     Object? quizSeedError = null,
     Object? backupLater = null,
   }) {
-    return _then(_$_SeedGenerateState(
+    return _then(_$SeedGenerateStateImpl(
       currentStep: freezed == currentStep ? _value.currentStep! : currentStep,
       seed: freezed == seed
           ? _value._seed
@@ -286,8 +286,8 @@ class __$$_SeedGenerateStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SeedGenerateState extends _SeedGenerateState {
-  const _$_SeedGenerateState(
+class _$SeedGenerateStateImpl extends _SeedGenerateState {
+  const _$SeedGenerateStateImpl(
       {this.currentStep = SeedGenerateSteps.generate,
       final List<String>? seed,
       this.masterXpriv,
@@ -383,7 +383,7 @@ class _$_SeedGenerateState extends _SeedGenerateState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SeedGenerateState &&
+            other is _$SeedGenerateStateImpl &&
             const DeepCollectionEquality()
                 .equals(other.currentStep, currentStep) &&
             const DeepCollectionEquality().equals(other._seed, _seed) &&
@@ -438,8 +438,8 @@ class _$_SeedGenerateState extends _SeedGenerateState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SeedGenerateStateCopyWith<_$_SeedGenerateState> get copyWith =>
-      __$$_SeedGenerateStateCopyWithImpl<_$_SeedGenerateState>(
+  _$$SeedGenerateStateImplCopyWith<_$SeedGenerateStateImpl> get copyWith =>
+      __$$SeedGenerateStateImplCopyWithImpl<_$SeedGenerateStateImpl>(
           this, _$identity);
 }
 
@@ -460,7 +460,7 @@ abstract class _SeedGenerateState extends SeedGenerateState {
       final List<String> quizSeedList,
       final List<String> quizSeedCompletedAnswers,
       final String quizSeedError,
-      final bool backupLater}) = _$_SeedGenerateState;
+      final bool backupLater}) = _$SeedGenerateStateImpl;
   const _SeedGenerateState._() : super._();
 
   @override
@@ -497,6 +497,6 @@ abstract class _SeedGenerateState extends SeedGenerateState {
   bool get backupLater;
   @override
   @JsonKey(ignore: true)
-  _$$_SeedGenerateStateCopyWith<_$_SeedGenerateState> get copyWith =>
+  _$$SeedGenerateStateImplCopyWith<_$SeedGenerateStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

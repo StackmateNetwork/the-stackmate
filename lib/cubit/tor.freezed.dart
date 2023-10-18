@@ -141,10 +141,11 @@ class _$TorStateCopyWithImpl<$Res, $Val extends TorState>
 }
 
 /// @nodoc
-abstract class _$$_TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
-  factory _$$_TorStateCopyWith(
-          _$_TorState value, $Res Function(_$_TorState) then) =
-      __$$_TorStateCopyWithImpl<$Res>;
+abstract class _$$TorStateImplCopyWith<$Res>
+    implements $TorStateCopyWith<$Res> {
+  factory _$$TorStateImplCopyWith(
+          _$TorStateImpl value, $Res Function(_$TorStateImpl) then) =
+      __$$TorStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -164,11 +165,11 @@ abstract class _$$_TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TorStateCopyWithImpl<$Res>
-    extends _$TorStateCopyWithImpl<$Res, _$_TorState>
-    implements _$$_TorStateCopyWith<$Res> {
-  __$$_TorStateCopyWithImpl(
-      _$_TorState _value, $Res Function(_$_TorState) _then)
+class __$$TorStateImplCopyWithImpl<$Res>
+    extends _$TorStateCopyWithImpl<$Res, _$TorStateImpl>
+    implements _$$TorStateImplCopyWith<$Res> {
+  __$$TorStateImplCopyWithImpl(
+      _$TorStateImpl _value, $Res Function(_$TorStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -188,7 +189,7 @@ class __$$_TorStateCopyWithImpl<$Res>
     Object? errStorage = null,
     Object? errMessage = null,
   }) {
-    return _then(_$_TorState(
+    return _then(_$TorStateImpl(
       workingDir: null == workingDir
           ? _value.workingDir
           : workingDir // ignore: cast_nullable_to_non_nullable
@@ -247,8 +248,8 @@ class __$$_TorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TorState extends _TorState {
-  const _$_TorState(
+class _$TorStateImpl extends _TorState {
+  const _$TorStateImpl(
       {this.workingDir = '/tmp',
       this.enforced = true,
       this.internal = true,
@@ -313,7 +314,7 @@ class _$_TorState extends _TorState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TorState &&
+            other is _$TorStateImpl &&
             (identical(other.workingDir, workingDir) ||
                 other.workingDir == workingDir) &&
             (identical(other.enforced, enforced) ||
@@ -362,8 +363,8 @@ class _$_TorState extends _TorState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TorStateCopyWith<_$_TorState> get copyWith =>
-      __$$_TorStateCopyWithImpl<_$_TorState>(this, _$identity);
+  _$$TorStateImplCopyWith<_$TorStateImpl> get copyWith =>
+      __$$TorStateImplCopyWithImpl<_$TorStateImpl>(this, _$identity);
 }
 
 abstract class _TorState extends TorState {
@@ -380,7 +381,7 @@ abstract class _TorState extends TorState {
       final String controlKey,
       final String errConnection,
       final String errStorage,
-      final String errMessage}) = _$_TorState;
+      final String errMessage}) = _$TorStateImpl;
   const _TorState._() : super._();
 
   @override
@@ -411,6 +412,6 @@ abstract class _TorState extends TorState {
   String get errMessage;
   @override
   @JsonKey(ignore: true)
-  _$$_TorStateCopyWith<_$_TorState> get copyWith =>
+  _$$TorStateImplCopyWith<_$TorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

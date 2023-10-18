@@ -169,10 +169,11 @@ class _$InfoStateCopyWithImpl<$Res, $Val extends InfoState>
 }
 
 /// @nodoc
-abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
-  factory _$$_InfoStateCopyWith(
-          _$_InfoState value, $Res Function(_$_InfoState) then) =
-      __$$_InfoStateCopyWithImpl<$Res>;
+abstract class _$$InfoStateImplCopyWith<$Res>
+    implements $InfoStateCopyWith<$Res> {
+  factory _$$InfoStateImplCopyWith(
+          _$InfoStateImpl value, $Res Function(_$InfoStateImpl) then) =
+      __$$InfoStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -197,11 +198,11 @@ abstract class _$$_InfoStateCopyWith<$Res> implements $InfoStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_InfoStateCopyWithImpl<$Res>
-    extends _$InfoStateCopyWithImpl<$Res, _$_InfoState>
-    implements _$$_InfoStateCopyWith<$Res> {
-  __$$_InfoStateCopyWithImpl(
-      _$_InfoState _value, $Res Function(_$_InfoState) _then)
+class __$$InfoStateImplCopyWithImpl<$Res>
+    extends _$InfoStateCopyWithImpl<$Res, _$InfoStateImpl>
+    implements _$$InfoStateImplCopyWith<$Res> {
+  __$$InfoStateImplCopyWithImpl(
+      _$InfoStateImpl _value, $Res Function(_$InfoStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -223,7 +224,7 @@ class __$$_InfoStateCopyWithImpl<$Res>
     Object? ppTestPassed = null,
     Object? errorPPTest = null,
   }) {
-    return _then(_$_InfoState(
+    return _then(_$InfoStateImpl(
       wallet: freezed == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
@@ -290,8 +291,8 @@ class __$$_InfoStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
-  const _$_InfoState(
+class _$InfoStateImpl extends _InfoState with DiagnosticableTreeMixin {
+  const _$InfoStateImpl(
       {required this.wallet,
       this.loadingTransactions = false,
       this.errLoadingTransactions = '',
@@ -393,7 +394,7 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InfoState &&
+            other is _$InfoStateImpl &&
             (identical(other.wallet, wallet) || other.wallet == wallet) &&
             (identical(other.loadingTransactions, loadingTransactions) ||
                 other.loadingTransactions == loadingTransactions) &&
@@ -445,8 +446,8 @@ class _$_InfoState extends _InfoState with DiagnosticableTreeMixin {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InfoStateCopyWith<_$_InfoState> get copyWith =>
-      __$$_InfoStateCopyWithImpl<_$_InfoState>(this, _$identity);
+  _$$InfoStateImplCopyWith<_$InfoStateImpl> get copyWith =>
+      __$$InfoStateImplCopyWithImpl<_$InfoStateImpl>(this, _$identity);
 }
 
 abstract class _InfoState extends InfoState {
@@ -465,7 +466,7 @@ abstract class _InfoState extends InfoState {
       final int currentHeight,
       final String passPhraseTest,
       final bool ppTestPassed,
-      final String errorPPTest}) = _$_InfoState;
+      final String errorPPTest}) = _$InfoStateImpl;
   const _InfoState._() : super._();
 
   @override
@@ -500,6 +501,6 @@ abstract class _InfoState extends InfoState {
   String get errorPPTest;
   @override
   @JsonKey(ignore: true)
-  _$$_InfoStateCopyWith<_$_InfoState> get copyWith =>
+  _$$InfoStateImplCopyWith<_$InfoStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

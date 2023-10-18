@@ -6,17 +6,17 @@ part of 'fees.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class FeesClassAdapter extends TypeAdapter<_$_Fees> {
+class FeesClassAdapter extends TypeAdapter<_$FeesImpl> {
   @override
   final int typeId = 5;
 
   @override
-  _$_Fees read(BinaryReader reader) {
+  _$FeesImpl read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_Fees(
+    return _$FeesImpl(
       timestamp: fields[0] as int,
       slow: fields[1] as double,
       medium: fields[2] as double,
@@ -25,7 +25,7 @@ class FeesClassAdapter extends TypeAdapter<_$_Fees> {
   }
 
   @override
-  void write(BinaryWriter writer, _$_Fees obj) {
+  void write(BinaryWriter writer, _$FeesImpl obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -53,14 +53,15 @@ class FeesClassAdapter extends TypeAdapter<_$_Fees> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Fees _$$_FeesFromJson(Map<String, dynamic> json) => _$_Fees(
+_$FeesImpl _$$FeesImplFromJson(Map<String, dynamic> json) => _$FeesImpl(
       timestamp: json['timestamp'] as int,
       slow: (json['slow'] as num).toDouble(),
       medium: (json['medium'] as num).toDouble(),
       fast: (json['fast'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$$_FeesToJson(_$_Fees instance) => <String, dynamic>{
+Map<String, dynamic> _$$FeesImplToJson(_$FeesImpl instance) =>
+    <String, dynamic>{
       'timestamp': instance.timestamp,
       'slow': instance.slow,
       'medium': instance.medium,

@@ -121,11 +121,11 @@ class _$XpubImportStateCopyWithImpl<$Res, $Val extends XpubImportState>
 }
 
 /// @nodoc
-abstract class _$$_SeedImportXpubStateCopyWith<$Res>
+abstract class _$$SeedImportXpubStateImplCopyWith<$Res>
     implements $XpubImportStateCopyWith<$Res> {
-  factory _$$_SeedImportXpubStateCopyWith(_$_SeedImportXpubState value,
-          $Res Function(_$_SeedImportXpubState) then) =
-      __$$_SeedImportXpubStateCopyWithImpl<$Res>;
+  factory _$$SeedImportXpubStateImplCopyWith(_$SeedImportXpubStateImpl value,
+          $Res Function(_$SeedImportXpubStateImpl) then) =
+      __$$SeedImportXpubStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -142,11 +142,11 @@ abstract class _$$_SeedImportXpubStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SeedImportXpubStateCopyWithImpl<$Res>
-    extends _$XpubImportStateCopyWithImpl<$Res, _$_SeedImportXpubState>
-    implements _$$_SeedImportXpubStateCopyWith<$Res> {
-  __$$_SeedImportXpubStateCopyWithImpl(_$_SeedImportXpubState _value,
-      $Res Function(_$_SeedImportXpubState) _then)
+class __$$SeedImportXpubStateImplCopyWithImpl<$Res>
+    extends _$XpubImportStateCopyWithImpl<$Res, _$SeedImportXpubStateImpl>
+    implements _$$SeedImportXpubStateImplCopyWith<$Res> {
+  __$$SeedImportXpubStateImplCopyWithImpl(_$SeedImportXpubStateImpl _value,
+      $Res Function(_$SeedImportXpubStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -163,7 +163,7 @@ class __$$_SeedImportXpubStateCopyWithImpl<$Res>
     Object? importedJSONPath = freezed,
     Object? importedJSONfileName = freezed,
   }) {
-    return _then(_$_SeedImportXpubState(
+    return _then(_$SeedImportXpubStateImpl(
       xpub: null == xpub
           ? _value.xpub
           : xpub // ignore: cast_nullable_to_non_nullable
@@ -210,8 +210,8 @@ class __$$_SeedImportXpubStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SeedImportXpubState extends _SeedImportXpubState {
-  const _$_SeedImportXpubState(
+class _$SeedImportXpubStateImpl extends _SeedImportXpubState {
+  const _$SeedImportXpubStateImpl(
       {this.xpub = '',
       this.fingerPrint = '',
       this.path = '',
@@ -262,7 +262,7 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SeedImportXpubState &&
+            other is _$SeedImportXpubStateImpl &&
             (identical(other.xpub, xpub) || other.xpub == xpub) &&
             (identical(other.fingerPrint, fingerPrint) ||
                 other.fingerPrint == fingerPrint) &&
@@ -299,8 +299,8 @@ class _$_SeedImportXpubState extends _SeedImportXpubState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SeedImportXpubStateCopyWith<_$_SeedImportXpubState> get copyWith =>
-      __$$_SeedImportXpubStateCopyWithImpl<_$_SeedImportXpubState>(
+  _$$SeedImportXpubStateImplCopyWith<_$SeedImportXpubStateImpl> get copyWith =>
+      __$$SeedImportXpubStateImplCopyWithImpl<_$SeedImportXpubStateImpl>(
           this, _$identity);
 }
 
@@ -315,7 +315,7 @@ abstract class _SeedImportXpubState extends XpubImportState {
       final bool detailsReady,
       final bool clearJson,
       final String? importedJSONPath,
-      final String? importedJSONfileName}) = _$_SeedImportXpubState;
+      final String? importedJSONfileName}) = _$SeedImportXpubStateImpl;
   const _SeedImportXpubState._() : super._();
 
   @override
@@ -340,6 +340,6 @@ abstract class _SeedImportXpubState extends XpubImportState {
   String? get importedJSONfileName;
   @override
   @JsonKey(ignore: true)
-  _$$_SeedImportXpubStateCopyWith<_$_SeedImportXpubState> get copyWith =>
+  _$$SeedImportXpubStateImplCopyWith<_$SeedImportXpubStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

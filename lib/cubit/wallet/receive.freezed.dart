@@ -96,11 +96,11 @@ class _$ReceiveStateCopyWithImpl<$Res, $Val extends ReceiveState>
 }
 
 /// @nodoc
-abstract class _$$_ReceiveStateCopyWith<$Res>
+abstract class _$$ReceiveStateImplCopyWith<$Res>
     implements $ReceiveStateCopyWith<$Res> {
-  factory _$$_ReceiveStateCopyWith(
-          _$_ReceiveState value, $Res Function(_$_ReceiveState) then) =
-      __$$_ReceiveStateCopyWithImpl<$Res>;
+  factory _$$ReceiveStateImplCopyWith(
+          _$ReceiveStateImpl value, $Res Function(_$ReceiveStateImpl) then) =
+      __$$ReceiveStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -115,11 +115,11 @@ abstract class _$$_ReceiveStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ReceiveStateCopyWithImpl<$Res>
-    extends _$ReceiveStateCopyWithImpl<$Res, _$_ReceiveState>
-    implements _$$_ReceiveStateCopyWith<$Res> {
-  __$$_ReceiveStateCopyWithImpl(
-      _$_ReceiveState _value, $Res Function(_$_ReceiveState) _then)
+class __$$ReceiveStateImplCopyWithImpl<$Res>
+    extends _$ReceiveStateCopyWithImpl<$Res, _$ReceiveStateImpl>
+    implements _$$ReceiveStateImplCopyWith<$Res> {
+  __$$ReceiveStateImplCopyWithImpl(
+      _$ReceiveStateImpl _value, $Res Function(_$ReceiveStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -131,7 +131,7 @@ class __$$_ReceiveStateCopyWithImpl<$Res>
     Object? address = null,
     Object? index = null,
   }) {
-    return _then(_$_ReceiveState(
+    return _then(_$ReceiveStateImpl(
       wallet: null == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
@@ -158,8 +158,8 @@ class __$$_ReceiveStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ReceiveState extends _ReceiveState with DiagnosticableTreeMixin {
-  const _$_ReceiveState(
+class _$ReceiveStateImpl extends _ReceiveState with DiagnosticableTreeMixin {
+  const _$ReceiveStateImpl(
       {required this.wallet,
       this.loadingAddress = true,
       this.errLoadingAddress = '',
@@ -203,7 +203,7 @@ class _$_ReceiveState extends _ReceiveState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ReceiveState &&
+            other is _$ReceiveStateImpl &&
             (identical(other.wallet, wallet) || other.wallet == wallet) &&
             (identical(other.loadingAddress, loadingAddress) ||
                 other.loadingAddress == loadingAddress) &&
@@ -220,8 +220,8 @@ class _$_ReceiveState extends _ReceiveState with DiagnosticableTreeMixin {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ReceiveStateCopyWith<_$_ReceiveState> get copyWith =>
-      __$$_ReceiveStateCopyWithImpl<_$_ReceiveState>(this, _$identity);
+  _$$ReceiveStateImplCopyWith<_$ReceiveStateImpl> get copyWith =>
+      __$$ReceiveStateImplCopyWithImpl<_$ReceiveStateImpl>(this, _$identity);
 }
 
 abstract class _ReceiveState extends ReceiveState {
@@ -230,7 +230,7 @@ abstract class _ReceiveState extends ReceiveState {
       final bool loadingAddress,
       final String errLoadingAddress,
       final String address,
-      final int index}) = _$_ReceiveState;
+      final int index}) = _$ReceiveStateImpl;
   const _ReceiveState._() : super._();
 
   @override
@@ -245,6 +245,6 @@ abstract class _ReceiveState extends ReceiveState {
   int get index;
   @override
   @JsonKey(ignore: true)
-  _$$_ReceiveStateCopyWith<_$_ReceiveState> get copyWith =>
+  _$$ReceiveStateImplCopyWith<_$ReceiveStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

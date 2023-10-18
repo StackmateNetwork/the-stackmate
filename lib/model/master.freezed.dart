@@ -90,10 +90,11 @@ class _$MasterKeyCopyWithImpl<$Res, $Val extends MasterKey>
 }
 
 /// @nodoc
-abstract class _$$_MasterKeyCopyWith<$Res> implements $MasterKeyCopyWith<$Res> {
-  factory _$$_MasterKeyCopyWith(
-          _$_MasterKey value, $Res Function(_$_MasterKey) then) =
-      __$$_MasterKeyCopyWithImpl<$Res>;
+abstract class _$$MasterKeyImplCopyWith<$Res>
+    implements $MasterKeyCopyWith<$Res> {
+  factory _$$MasterKeyImplCopyWith(
+          _$MasterKeyImpl value, $Res Function(_$MasterKeyImpl) then) =
+      __$$MasterKeyImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -105,11 +106,11 @@ abstract class _$$_MasterKeyCopyWith<$Res> implements $MasterKeyCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MasterKeyCopyWithImpl<$Res>
-    extends _$MasterKeyCopyWithImpl<$Res, _$_MasterKey>
-    implements _$$_MasterKeyCopyWith<$Res> {
-  __$$_MasterKeyCopyWithImpl(
-      _$_MasterKey _value, $Res Function(_$_MasterKey) _then)
+class __$$MasterKeyImplCopyWithImpl<$Res>
+    extends _$MasterKeyCopyWithImpl<$Res, _$MasterKeyImpl>
+    implements _$$MasterKeyImplCopyWith<$Res> {
+  __$$MasterKeyImplCopyWithImpl(
+      _$MasterKeyImpl _value, $Res Function(_$MasterKeyImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -121,7 +122,7 @@ class __$$_MasterKeyCopyWithImpl<$Res>
     Object? network = freezed,
     Object? backedUp = freezed,
   }) {
-    return _then(_$_MasterKey(
+    return _then(_$MasterKeyImpl(
       seed: freezed == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -148,12 +149,12 @@ class __$$_MasterKeyCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MasterKey implements _MasterKey {
-  const _$_MasterKey(
+class _$MasterKeyImpl implements _MasterKey {
+  const _$MasterKeyImpl(
       {this.seed, this.root, this.fingerprint, this.network, this.backedUp});
 
-  factory _$_MasterKey.fromJson(Map<String, dynamic> json) =>
-      _$$_MasterKeyFromJson(json);
+  factory _$MasterKeyImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MasterKeyImplFromJson(json);
 
   @override
   final String? seed;
@@ -175,7 +176,7 @@ class _$_MasterKey implements _MasterKey {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MasterKey &&
+            other is _$MasterKeyImpl &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.root, root) || other.root == root) &&
             (identical(other.fingerprint, fingerprint) ||
@@ -193,12 +194,12 @@ class _$_MasterKey implements _MasterKey {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MasterKeyCopyWith<_$_MasterKey> get copyWith =>
-      __$$_MasterKeyCopyWithImpl<_$_MasterKey>(this, _$identity);
+  _$$MasterKeyImplCopyWith<_$MasterKeyImpl> get copyWith =>
+      __$$MasterKeyImplCopyWithImpl<_$MasterKeyImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MasterKeyToJson(
+    return _$$MasterKeyImplToJson(
       this,
     );
   }
@@ -210,10 +211,10 @@ abstract class _MasterKey implements MasterKey {
       final String? root,
       final String? fingerprint,
       final String? network,
-      final bool? backedUp}) = _$_MasterKey;
+      final bool? backedUp}) = _$MasterKeyImpl;
 
   factory _MasterKey.fromJson(Map<String, dynamic> json) =
-      _$_MasterKey.fromJson;
+      _$MasterKeyImpl.fromJson;
 
   @override
   String? get seed;
@@ -227,6 +228,6 @@ abstract class _MasterKey implements MasterKey {
   bool? get backedUp;
   @override
   @JsonKey(ignore: true)
-  _$$_MasterKeyCopyWith<_$_MasterKey> get copyWith =>
+  _$$MasterKeyImplCopyWith<_$MasterKeyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -128,11 +128,11 @@ class _$BroadcastStateCopyWithImpl<$Res, $Val extends BroadcastState>
 }
 
 /// @nodoc
-abstract class _$$_BroadcastStateCopyWith<$Res>
+abstract class _$$BroadcastStateImplCopyWith<$Res>
     implements $BroadcastStateCopyWith<$Res> {
-  factory _$$_BroadcastStateCopyWith(
-          _$_BroadcastState value, $Res Function(_$_BroadcastState) then) =
-      __$$_BroadcastStateCopyWithImpl<$Res>;
+  factory _$$BroadcastStateImplCopyWith(_$BroadcastStateImpl value,
+          $Res Function(_$BroadcastStateImpl) then) =
+      __$$BroadcastStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -150,11 +150,11 @@ abstract class _$$_BroadcastStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BroadcastStateCopyWithImpl<$Res>
-    extends _$BroadcastStateCopyWithImpl<$Res, _$_BroadcastState>
-    implements _$$_BroadcastStateCopyWith<$Res> {
-  __$$_BroadcastStateCopyWithImpl(
-      _$_BroadcastState _value, $Res Function(_$_BroadcastState) _then)
+class __$$BroadcastStateImplCopyWithImpl<$Res>
+    extends _$BroadcastStateCopyWithImpl<$Res, _$BroadcastStateImpl>
+    implements _$$BroadcastStateImplCopyWith<$Res> {
+  __$$BroadcastStateImplCopyWithImpl(
+      _$BroadcastStateImpl _value, $Res Function(_$BroadcastStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -172,7 +172,7 @@ class __$$_BroadcastStateCopyWithImpl<$Res>
     Object? importedHexPath = freezed,
     Object? importedHexfileName = freezed,
   }) {
-    return _then(_$_BroadcastState(
+    return _then(_$BroadcastStateImpl(
       broadcasting: null == broadcasting
           ? _value.broadcasting
           : broadcasting // ignore: cast_nullable_to_non_nullable
@@ -223,8 +223,9 @@ class __$$_BroadcastStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BroadcastState extends _BroadcastState with DiagnosticableTreeMixin {
-  const _$_BroadcastState(
+class _$BroadcastStateImpl extends _BroadcastState
+    with DiagnosticableTreeMixin {
+  const _$BroadcastStateImpl(
       {this.broadcasting = false,
       this.errBroadcasting = '',
       this.psbt = '',
@@ -295,7 +296,7 @@ class _$_BroadcastState extends _BroadcastState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BroadcastState &&
+            other is _$BroadcastStateImpl &&
             (identical(other.broadcasting, broadcasting) ||
                 other.broadcasting == broadcasting) &&
             (identical(other.errBroadcasting, errBroadcasting) ||
@@ -335,8 +336,9 @@ class _$_BroadcastState extends _BroadcastState with DiagnosticableTreeMixin {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BroadcastStateCopyWith<_$_BroadcastState> get copyWith =>
-      __$$_BroadcastStateCopyWithImpl<_$_BroadcastState>(this, _$identity);
+  _$$BroadcastStateImplCopyWith<_$BroadcastStateImpl> get copyWith =>
+      __$$BroadcastStateImplCopyWithImpl<_$BroadcastStateImpl>(
+          this, _$identity);
 }
 
 abstract class _BroadcastState extends BroadcastState {
@@ -351,7 +353,7 @@ abstract class _BroadcastState extends BroadcastState {
       final String? importedPsbtPath,
       final String? importedPsbtfileName,
       final String? importedHexPath,
-      final String? importedHexfileName}) = _$_BroadcastState;
+      final String? importedHexfileName}) = _$BroadcastStateImpl;
   const _BroadcastState._() : super._();
 
   @override
@@ -378,6 +380,6 @@ abstract class _BroadcastState extends BroadcastState {
   String? get importedHexfileName;
   @override
   @JsonKey(ignore: true)
-  _$$_BroadcastStateCopyWith<_$_BroadcastState> get copyWith =>
+  _$$BroadcastStateImplCopyWith<_$BroadcastStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

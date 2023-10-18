@@ -13,6 +13,7 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
+import 'package:sats/pkg/mnemonic_word.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Loader.dart';
@@ -69,7 +70,7 @@ class _SeedImport extends StatelessWidget {
                         color: c.colours.tertiaryContainer,
                       ),
                     ),
-                  )
+                  ),
                 ] else ...[
                   IconButton(
                     color: c.colours.error,
@@ -133,7 +134,7 @@ class _SeedImport extends StatelessWidget {
                         }
                       }(),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -155,12 +156,13 @@ class SeedImportScreen extends StatelessWidget {
     final nodeSelect = context.select((NodeAddressCubit c) => c);
     final tor = context.select((TorCubit c) => c);
     final masterKey = context.select((MasterKeyCubit c) => c);
-
+    final words = MnemonicWords();
     final importCubit = SeedImportCubit(
       logger,
       masterKey,
       networkSelect,
       locator<IStackMateBitcoin>(),
+      words,
     );
 
     final seedImportCubit = SeedImportWalletCubit(

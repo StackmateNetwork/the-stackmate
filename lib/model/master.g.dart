@@ -6,7 +6,8 @@ part of 'master.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MasterKey _$$_MasterKeyFromJson(Map<String, dynamic> json) => _$_MasterKey(
+_$MasterKeyImpl _$$MasterKeyImplFromJson(Map<String, dynamic> json) =>
+    _$MasterKeyImpl(
       seed: json['seed'] as String?,
       root: json['root'] as String?,
       fingerprint: json['fingerprint'] as String?,
@@ -14,7 +15,7 @@ _$_MasterKey _$$_MasterKeyFromJson(Map<String, dynamic> json) => _$_MasterKey(
       backedUp: json['backedUp'] as bool?,
     );
 
-Map<String, dynamic> _$$_MasterKeyToJson(_$_MasterKey instance) =>
+Map<String, dynamic> _$$MasterKeyImplToJson(_$MasterKeyImpl instance) =>
     <String, dynamic>{
       'seed': instance.seed,
       'root': instance.root,

@@ -96,11 +96,11 @@ class _$PreferencesCopyWithImpl<$Res, $Val extends Preferences>
 }
 
 /// @nodoc
-abstract class _$$_PreferencesCopyWith<$Res>
+abstract class _$$PreferencesImplCopyWith<$Res>
     implements $PreferencesCopyWith<$Res> {
-  factory _$$_PreferencesCopyWith(
-          _$_Preferences value, $Res Function(_$_Preferences) then) =
-      __$$_PreferencesCopyWithImpl<$Res>;
+  factory _$$PreferencesImplCopyWith(
+          _$PreferencesImpl value, $Res Function(_$PreferencesImpl) then) =
+      __$$PreferencesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -112,11 +112,11 @@ abstract class _$$_PreferencesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PreferencesCopyWithImpl<$Res>
-    extends _$PreferencesCopyWithImpl<$Res, _$_Preferences>
-    implements _$$_PreferencesCopyWith<$Res> {
-  __$$_PreferencesCopyWithImpl(
-      _$_Preferences _value, $Res Function(_$_Preferences) _then)
+class __$$PreferencesImplCopyWithImpl<$Res>
+    extends _$PreferencesCopyWithImpl<$Res, _$PreferencesImpl>
+    implements _$$PreferencesImplCopyWith<$Res> {
+  __$$PreferencesImplCopyWithImpl(
+      _$PreferencesImpl _value, $Res Function(_$PreferencesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -128,7 +128,7 @@ class __$$_PreferencesCopyWithImpl<$Res>
     Object? preferredExchange = null,
     Object? preferredFiatUnit = null,
   }) {
-    return _then(_$_Preferences(
+    return _then(_$PreferencesImpl(
       incognito: null == incognito
           ? _value.incognito
           : incognito // ignore: cast_nullable_to_non_nullable
@@ -156,8 +156,8 @@ class __$$_PreferencesCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 @HiveType(typeId: 2, adapterName: 'PreferencesClassAdapter')
-class _$_Preferences extends _Preferences {
-  const _$_Preferences(
+class _$PreferencesImpl extends _Preferences {
+  const _$PreferencesImpl(
       {@HiveField(0) required this.incognito,
       @HiveField(1) required this.bitcoinStandard,
       @HiveField(2) required this.preferredBitcoinUnit,
@@ -165,8 +165,8 @@ class _$_Preferences extends _Preferences {
       @HiveField(4) required this.preferredFiatUnit})
       : super._();
 
-  factory _$_Preferences.fromJson(Map<String, dynamic> json) =>
-      _$$_PreferencesFromJson(json);
+  factory _$PreferencesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PreferencesImplFromJson(json);
 
   @override
   @HiveField(0)
@@ -193,7 +193,7 @@ class _$_Preferences extends _Preferences {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Preferences &&
+            other is _$PreferencesImpl &&
             (identical(other.incognito, incognito) ||
                 other.incognito == incognito) &&
             (identical(other.bitcoinStandard, bitcoinStandard) ||
@@ -214,12 +214,12 @@ class _$_Preferences extends _Preferences {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PreferencesCopyWith<_$_Preferences> get copyWith =>
-      __$$_PreferencesCopyWithImpl<_$_Preferences>(this, _$identity);
+  _$$PreferencesImplCopyWith<_$PreferencesImpl> get copyWith =>
+      __$$PreferencesImplCopyWithImpl<_$PreferencesImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PreferencesToJson(
+    return _$$PreferencesImplToJson(
       this,
     );
   }
@@ -227,15 +227,16 @@ class _$_Preferences extends _Preferences {
 
 abstract class _Preferences extends Preferences {
   const factory _Preferences(
-      {@HiveField(0) required final bool incognito,
-      @HiveField(1) required final bool bitcoinStandard,
-      @HiveField(2) required final String preferredBitcoinUnit,
-      @HiveField(3) required final String preferredExchange,
-      @HiveField(4) required final String preferredFiatUnit}) = _$_Preferences;
+          {@HiveField(0) required final bool incognito,
+          @HiveField(1) required final bool bitcoinStandard,
+          @HiveField(2) required final String preferredBitcoinUnit,
+          @HiveField(3) required final String preferredExchange,
+          @HiveField(4) required final String preferredFiatUnit}) =
+      _$PreferencesImpl;
   const _Preferences._() : super._();
 
   factory _Preferences.fromJson(Map<String, dynamic> json) =
-      _$_Preferences.fromJson;
+      _$PreferencesImpl.fromJson;
 
   @override
   @HiveField(0)
@@ -254,6 +255,6 @@ abstract class _Preferences extends Preferences {
   String get preferredFiatUnit;
   @override
   @JsonKey(ignore: true)
-  _$$_PreferencesCopyWith<_$_Preferences> get copyWith =>
+  _$$PreferencesImplCopyWith<_$PreferencesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

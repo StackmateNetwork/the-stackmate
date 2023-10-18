@@ -80,9 +80,9 @@ class _$PinCopyWithImpl<$Res, $Val extends Pin> implements $PinCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_PinCopyWith<$Res> implements $PinCopyWith<$Res> {
-  factory _$$_PinCopyWith(_$_Pin value, $Res Function(_$_Pin) then) =
-      __$$_PinCopyWithImpl<$Res>;
+abstract class _$$PinImplCopyWith<$Res> implements $PinCopyWith<$Res> {
+  factory _$$PinImplCopyWith(_$PinImpl value, $Res Function(_$PinImpl) then) =
+      __$$PinImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -93,9 +93,9 @@ abstract class _$$_PinCopyWith<$Res> implements $PinCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_PinCopyWithImpl<$Res> extends _$PinCopyWithImpl<$Res, _$_Pin>
-    implements _$$_PinCopyWith<$Res> {
-  __$$_PinCopyWithImpl(_$_Pin _value, $Res Function(_$_Pin) _then)
+class __$$PinImplCopyWithImpl<$Res> extends _$PinCopyWithImpl<$Res, _$PinImpl>
+    implements _$$PinImplCopyWith<$Res> {
+  __$$PinImplCopyWithImpl(_$PinImpl _value, $Res Function(_$PinImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_PinCopyWithImpl<$Res> extends _$PinCopyWithImpl<$Res, _$_Pin>
     Object? lastFailure = null,
     Object? isLocked = null,
   }) {
-    return _then(_$_Pin(
+    return _then(_$PinImpl(
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -130,8 +130,8 @@ class __$$_PinCopyWithImpl<$Res> extends _$PinCopyWithImpl<$Res, _$_Pin>
 /// @nodoc
 
 @HiveType(typeId: 9, adapterName: 'PinClassAdapter')
-class _$_Pin extends _Pin {
-  const _$_Pin(
+class _$PinImpl extends _Pin {
+  const _$PinImpl(
       {@HiveField(0) required this.value,
       @HiveField(1) required this.attemptsLeft,
       @HiveField(2) required this.lastFailure,
@@ -160,7 +160,7 @@ class _$_Pin extends _Pin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Pin &&
+            other is _$PinImpl &&
             (identical(other.value, value) || other.value == value) &&
             (identical(other.attemptsLeft, attemptsLeft) ||
                 other.attemptsLeft == attemptsLeft) &&
@@ -177,8 +177,8 @@ class _$_Pin extends _Pin {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PinCopyWith<_$_Pin> get copyWith =>
-      __$$_PinCopyWithImpl<_$_Pin>(this, _$identity);
+  _$$PinImplCopyWith<_$PinImpl> get copyWith =>
+      __$$PinImplCopyWithImpl<_$PinImpl>(this, _$identity);
 }
 
 abstract class _Pin extends Pin {
@@ -186,7 +186,7 @@ abstract class _Pin extends Pin {
       {@HiveField(0) required final String value,
       @HiveField(1) required final int attemptsLeft,
       @HiveField(2) required final int lastFailure,
-      @HiveField(3) required final bool isLocked}) = _$_Pin;
+      @HiveField(3) required final bool isLocked}) = _$PinImpl;
   const _Pin._() : super._();
 
   @override
@@ -203,5 +203,6 @@ abstract class _Pin extends Pin {
   bool get isLocked;
   @override
   @JsonKey(ignore: true)
-  _$$_PinCopyWith<_$_Pin> get copyWith => throw _privateConstructorUsedError;
+  _$$PinImplCopyWith<_$PinImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

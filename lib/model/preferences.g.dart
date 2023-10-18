@@ -6,17 +6,17 @@ part of 'preferences.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PreferencesClassAdapter extends TypeAdapter<_$_Preferences> {
+class PreferencesClassAdapter extends TypeAdapter<_$PreferencesImpl> {
   @override
   final int typeId = 2;
 
   @override
-  _$_Preferences read(BinaryReader reader) {
+  _$PreferencesImpl read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_Preferences(
+    return _$PreferencesImpl(
       incognito: fields[0] as bool,
       bitcoinStandard: fields[1] as bool,
       preferredBitcoinUnit: fields[2] as String,
@@ -26,7 +26,7 @@ class PreferencesClassAdapter extends TypeAdapter<_$_Preferences> {
   }
 
   @override
-  void write(BinaryWriter writer, _$_Preferences obj) {
+  void write(BinaryWriter writer, _$PreferencesImpl obj) {
     writer
       ..writeByte(5)
       ..writeByte(0)
@@ -56,8 +56,8 @@ class PreferencesClassAdapter extends TypeAdapter<_$_Preferences> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Preferences _$$_PreferencesFromJson(Map<String, dynamic> json) =>
-    _$_Preferences(
+_$PreferencesImpl _$$PreferencesImplFromJson(Map<String, dynamic> json) =>
+    _$PreferencesImpl(
       incognito: json['incognito'] as bool,
       bitcoinStandard: json['bitcoinStandard'] as bool,
       preferredBitcoinUnit: json['preferredBitcoinUnit'] as String,
@@ -65,7 +65,7 @@ _$_Preferences _$$_PreferencesFromJson(Map<String, dynamic> json) =>
       preferredFiatUnit: json['preferredFiatUnit'] as String,
     );
 
-Map<String, dynamic> _$$_PreferencesToJson(_$_Preferences instance) =>
+Map<String, dynamic> _$$PreferencesImplToJson(_$PreferencesImpl instance) =>
     <String, dynamic>{
       'incognito': instance.incognito,
       'bitcoinStandard': instance.bitcoinStandard,

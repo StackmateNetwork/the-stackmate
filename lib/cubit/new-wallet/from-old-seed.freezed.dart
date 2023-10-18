@@ -101,11 +101,12 @@ class _$SeedImportWalletStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_SeedImportWalletStateCopyWith<$Res>
+abstract class _$$SeedImportWalletStateImplCopyWith<$Res>
     implements $SeedImportWalletStateCopyWith<$Res> {
-  factory _$$_SeedImportWalletStateCopyWith(_$_SeedImportWalletState value,
-          $Res Function(_$_SeedImportWalletState) then) =
-      __$$_SeedImportWalletStateCopyWithImpl<$Res>;
+  factory _$$SeedImportWalletStateImplCopyWith(
+          _$SeedImportWalletStateImpl value,
+          $Res Function(_$SeedImportWalletStateImpl) then) =
+      __$$SeedImportWalletStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -119,11 +120,12 @@ abstract class _$$_SeedImportWalletStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SeedImportWalletStateCopyWithImpl<$Res>
-    extends _$SeedImportWalletStateCopyWithImpl<$Res, _$_SeedImportWalletState>
-    implements _$$_SeedImportWalletStateCopyWith<$Res> {
-  __$$_SeedImportWalletStateCopyWithImpl(_$_SeedImportWalletState _value,
-      $Res Function(_$_SeedImportWalletState) _then)
+class __$$SeedImportWalletStateImplCopyWithImpl<$Res>
+    extends _$SeedImportWalletStateCopyWithImpl<$Res,
+        _$SeedImportWalletStateImpl>
+    implements _$$SeedImportWalletStateImplCopyWith<$Res> {
+  __$$SeedImportWalletStateImplCopyWithImpl(_$SeedImportWalletStateImpl _value,
+      $Res Function(_$SeedImportWalletStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -137,7 +139,7 @@ class __$$_SeedImportWalletStateCopyWithImpl<$Res>
     Object? newWalletSaved = null,
     Object? labelFixed = null,
   }) {
-    return _then(_$_SeedImportWalletState(
+    return _then(_$SeedImportWalletStateImpl(
       currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
@@ -172,9 +174,9 @@ class __$$_SeedImportWalletStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SeedImportWalletState extends _SeedImportWalletState
+class _$SeedImportWalletStateImpl extends _SeedImportWalletState
     with DiagnosticableTreeMixin {
-  const _$_SeedImportWalletState(
+  const _$SeedImportWalletStateImpl(
       {this.currentStep = SeedImportWalletSteps.warning,
       this.walletLabel = '',
       this.walletLabelError = '',
@@ -229,7 +231,7 @@ class _$_SeedImportWalletState extends _SeedImportWalletState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SeedImportWalletState &&
+            other is _$SeedImportWalletStateImpl &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
             (identical(other.walletLabel, walletLabel) ||
@@ -260,9 +262,9 @@ class _$_SeedImportWalletState extends _SeedImportWalletState
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SeedImportWalletStateCopyWith<_$_SeedImportWalletState> get copyWith =>
-      __$$_SeedImportWalletStateCopyWithImpl<_$_SeedImportWalletState>(
-          this, _$identity);
+  _$$SeedImportWalletStateImplCopyWith<_$SeedImportWalletStateImpl>
+      get copyWith => __$$SeedImportWalletStateImplCopyWithImpl<
+          _$SeedImportWalletStateImpl>(this, _$identity);
 }
 
 abstract class _SeedImportWalletState extends SeedImportWalletState {
@@ -273,7 +275,7 @@ abstract class _SeedImportWalletState extends SeedImportWalletState {
       final bool savingWallet,
       final String savingWalletError,
       final bool newWalletSaved,
-      final bool labelFixed}) = _$_SeedImportWalletState;
+      final bool labelFixed}) = _$SeedImportWalletStateImpl;
   const _SeedImportWalletState._() : super._();
 
   @override
@@ -292,6 +294,6 @@ abstract class _SeedImportWalletState extends SeedImportWalletState {
   bool get labelFixed;
   @override
   @JsonKey(ignore: true)
-  _$$_SeedImportWalletStateCopyWith<_$_SeedImportWalletState> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SeedImportWalletStateImplCopyWith<_$SeedImportWalletStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -68,18 +68,20 @@ class _$NodeCopyWithImpl<$Res, $Val extends Node>
 }
 
 /// @nodoc
-abstract class _$$_NodeCopyWith<$Res> implements $NodeCopyWith<$Res> {
-  factory _$$_NodeCopyWith(_$_Node value, $Res Function(_$_Node) then) =
-      __$$_NodeCopyWithImpl<$Res>;
+abstract class _$$NodeImplCopyWith<$Res> implements $NodeCopyWith<$Res> {
+  factory _$$NodeImplCopyWith(
+          _$NodeImpl value, $Res Function(_$NodeImpl) then) =
+      __$$NodeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@HiveField(1) String address, @HiveField(2) String name});
 }
 
 /// @nodoc
-class __$$_NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$_Node>
-    implements _$$_NodeCopyWith<$Res> {
-  __$$_NodeCopyWithImpl(_$_Node _value, $Res Function(_$_Node) _then)
+class __$$NodeImplCopyWithImpl<$Res>
+    extends _$NodeCopyWithImpl<$Res, _$NodeImpl>
+    implements _$$NodeImplCopyWith<$Res> {
+  __$$NodeImplCopyWithImpl(_$NodeImpl _value, $Res Function(_$NodeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -88,7 +90,7 @@ class __$$_NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$_Node>
     Object? address = null,
     Object? name = null,
   }) {
-    return _then(_$_Node(
+    return _then(_$NodeImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -104,12 +106,13 @@ class __$$_NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$_Node>
 /// @nodoc
 @JsonSerializable()
 @HiveType(typeId: 3, adapterName: 'NodeClassAdapter')
-class _$_Node extends _Node {
-  const _$_Node(
+class _$NodeImpl extends _Node {
+  const _$NodeImpl(
       {@HiveField(1) required this.address, @HiveField(2) required this.name})
       : super._();
 
-  factory _$_Node.fromJson(Map<String, dynamic> json) => _$$_NodeFromJson(json);
+  factory _$NodeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NodeImplFromJson(json);
 
   @override
   @HiveField(1)
@@ -127,7 +130,7 @@ class _$_Node extends _Node {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Node &&
+            other is _$NodeImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.name, name) || other.name == name));
   }
@@ -139,12 +142,12 @@ class _$_Node extends _Node {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NodeCopyWith<_$_Node> get copyWith =>
-      __$$_NodeCopyWithImpl<_$_Node>(this, _$identity);
+  _$$NodeImplCopyWith<_$NodeImpl> get copyWith =>
+      __$$NodeImplCopyWithImpl<_$NodeImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NodeToJson(
+    return _$$NodeImplToJson(
       this,
     );
   }
@@ -153,10 +156,10 @@ class _$_Node extends _Node {
 abstract class _Node extends Node {
   const factory _Node(
       {@HiveField(1) required final String address,
-      @HiveField(2) required final String name}) = _$_Node;
+      @HiveField(2) required final String name}) = _$NodeImpl;
   const _Node._() : super._();
 
-  factory _Node.fromJson(Map<String, dynamic> json) = _$_Node.fromJson;
+  factory _Node.fromJson(Map<String, dynamic> json) = _$NodeImpl.fromJson;
 
   @override
   @HiveField(1)
@@ -166,5 +169,6 @@ abstract class _Node extends Node {
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$$_NodeCopyWith<_$_Node> get copyWith => throw _privateConstructorUsedError;
+  _$$NodeImplCopyWith<_$NodeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

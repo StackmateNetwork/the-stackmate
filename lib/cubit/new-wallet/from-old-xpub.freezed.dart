@@ -87,11 +87,11 @@ class _$XpubImportWalletStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_SeedImportXpubStateCopyWith<$Res>
+abstract class _$$SeedImportXpubStateImplCopyWith<$Res>
     implements $XpubImportWalletStateCopyWith<$Res> {
-  factory _$$_SeedImportXpubStateCopyWith(_$_SeedImportXpubState value,
-          $Res Function(_$_SeedImportXpubState) then) =
-      __$$_SeedImportXpubStateCopyWithImpl<$Res>;
+  factory _$$SeedImportXpubStateImplCopyWith(_$SeedImportXpubStateImpl value,
+          $Res Function(_$SeedImportXpubStateImpl) then) =
+      __$$SeedImportXpubStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -103,11 +103,11 @@ abstract class _$$_SeedImportXpubStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SeedImportXpubStateCopyWithImpl<$Res>
-    extends _$XpubImportWalletStateCopyWithImpl<$Res, _$_SeedImportXpubState>
-    implements _$$_SeedImportXpubStateCopyWith<$Res> {
-  __$$_SeedImportXpubStateCopyWithImpl(_$_SeedImportXpubState _value,
-      $Res Function(_$_SeedImportXpubState) _then)
+class __$$SeedImportXpubStateImplCopyWithImpl<$Res>
+    extends _$XpubImportWalletStateCopyWithImpl<$Res, _$SeedImportXpubStateImpl>
+    implements _$$SeedImportXpubStateImplCopyWith<$Res> {
+  __$$SeedImportXpubStateImplCopyWithImpl(_$SeedImportXpubStateImpl _value,
+      $Res Function(_$SeedImportXpubStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -119,7 +119,7 @@ class __$$_SeedImportXpubStateCopyWithImpl<$Res>
     Object? errSavingWallet = null,
     Object? newWalletSaved = null,
   }) {
-    return _then(_$_SeedImportXpubState(
+    return _then(_$SeedImportXpubStateImpl(
       currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
@@ -146,9 +146,9 @@ class __$$_SeedImportXpubStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SeedImportXpubState extends _SeedImportXpubState
+class _$SeedImportXpubStateImpl extends _SeedImportXpubState
     with DiagnosticableTreeMixin {
-  const _$_SeedImportXpubState(
+  const _$SeedImportXpubStateImpl(
       {this.currentStep = XpubImportWalletStep.import,
       this.label = '',
       this.savingWallet = false,
@@ -193,7 +193,7 @@ class _$_SeedImportXpubState extends _SeedImportXpubState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SeedImportXpubState &&
+            other is _$SeedImportXpubStateImpl &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
             (identical(other.label, label) || other.label == label) &&
@@ -212,8 +212,8 @@ class _$_SeedImportXpubState extends _SeedImportXpubState
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SeedImportXpubStateCopyWith<_$_SeedImportXpubState> get copyWith =>
-      __$$_SeedImportXpubStateCopyWithImpl<_$_SeedImportXpubState>(
+  _$$SeedImportXpubStateImplCopyWith<_$SeedImportXpubStateImpl> get copyWith =>
+      __$$SeedImportXpubStateImplCopyWithImpl<_$SeedImportXpubStateImpl>(
           this, _$identity);
 }
 
@@ -223,7 +223,7 @@ abstract class _SeedImportXpubState extends XpubImportWalletState {
       final String label,
       final bool savingWallet,
       final String errSavingWallet,
-      final bool newWalletSaved}) = _$_SeedImportXpubState;
+      final bool newWalletSaved}) = _$SeedImportXpubStateImpl;
   const _SeedImportXpubState._() : super._();
 
   @override
@@ -238,6 +238,6 @@ abstract class _SeedImportXpubState extends XpubImportWalletState {
   bool get newWalletSaved;
   @override
   @JsonKey(ignore: true)
-  _$$_SeedImportXpubStateCopyWith<_$_SeedImportXpubState> get copyWith =>
+  _$$SeedImportXpubStateImplCopyWith<_$SeedImportXpubStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

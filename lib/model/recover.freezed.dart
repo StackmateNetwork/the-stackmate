@@ -80,22 +80,22 @@ class _$RecoveredKeyCopyWithImpl<$Res, $Val extends RecoveredKey>
 }
 
 /// @nodoc
-abstract class _$$_RecoveredKeyCopyWith<$Res>
+abstract class _$$RecoveredKeyImplCopyWith<$Res>
     implements $RecoveredKeyCopyWith<$Res> {
-  factory _$$_RecoveredKeyCopyWith(
-          _$_RecoveredKey value, $Res Function(_$_RecoveredKey) then) =
-      __$$_RecoveredKeyCopyWithImpl<$Res>;
+  factory _$$RecoveredKeyImplCopyWith(
+          _$RecoveredKeyImpl value, $Res Function(_$RecoveredKeyImpl) then) =
+      __$$RecoveredKeyImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String? seed, String? root, String? fingerprint, String? network});
 }
 
 /// @nodoc
-class __$$_RecoveredKeyCopyWithImpl<$Res>
-    extends _$RecoveredKeyCopyWithImpl<$Res, _$_RecoveredKey>
-    implements _$$_RecoveredKeyCopyWith<$Res> {
-  __$$_RecoveredKeyCopyWithImpl(
-      _$_RecoveredKey _value, $Res Function(_$_RecoveredKey) _then)
+class __$$RecoveredKeyImplCopyWithImpl<$Res>
+    extends _$RecoveredKeyCopyWithImpl<$Res, _$RecoveredKeyImpl>
+    implements _$$RecoveredKeyImplCopyWith<$Res> {
+  __$$RecoveredKeyImplCopyWithImpl(
+      _$RecoveredKeyImpl _value, $Res Function(_$RecoveredKeyImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_RecoveredKeyCopyWithImpl<$Res>
     Object? fingerprint = freezed,
     Object? network = freezed,
   }) {
-    return _then(_$_RecoveredKey(
+    return _then(_$RecoveredKeyImpl(
       seed: freezed == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -129,11 +129,12 @@ class __$$_RecoveredKeyCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RecoveredKey implements _RecoveredKey {
-  const _$_RecoveredKey({this.seed, this.root, this.fingerprint, this.network});
+class _$RecoveredKeyImpl implements _RecoveredKey {
+  const _$RecoveredKeyImpl(
+      {this.seed, this.root, this.fingerprint, this.network});
 
-  factory _$_RecoveredKey.fromJson(Map<String, dynamic> json) =>
-      _$$_RecoveredKeyFromJson(json);
+  factory _$RecoveredKeyImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RecoveredKeyImplFromJson(json);
 
   @override
   final String? seed;
@@ -153,7 +154,7 @@ class _$_RecoveredKey implements _RecoveredKey {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RecoveredKey &&
+            other is _$RecoveredKeyImpl &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.root, root) || other.root == root) &&
             (identical(other.fingerprint, fingerprint) ||
@@ -169,12 +170,12 @@ class _$_RecoveredKey implements _RecoveredKey {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RecoveredKeyCopyWith<_$_RecoveredKey> get copyWith =>
-      __$$_RecoveredKeyCopyWithImpl<_$_RecoveredKey>(this, _$identity);
+  _$$RecoveredKeyImplCopyWith<_$RecoveredKeyImpl> get copyWith =>
+      __$$RecoveredKeyImplCopyWithImpl<_$RecoveredKeyImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RecoveredKeyToJson(
+    return _$$RecoveredKeyImplToJson(
       this,
     );
   }
@@ -185,10 +186,10 @@ abstract class _RecoveredKey implements RecoveredKey {
       {final String? seed,
       final String? root,
       final String? fingerprint,
-      final String? network}) = _$_RecoveredKey;
+      final String? network}) = _$RecoveredKeyImpl;
 
   factory _RecoveredKey.fromJson(Map<String, dynamic> json) =
-      _$_RecoveredKey.fromJson;
+      _$RecoveredKeyImpl.fromJson;
 
   @override
   String? get seed;
@@ -200,6 +201,6 @@ abstract class _RecoveredKey implements RecoveredKey {
   String? get network;
   @override
   @JsonKey(ignore: true)
-  _$$_RecoveredKeyCopyWith<_$_RecoveredKey> get copyWith =>
+  _$$RecoveredKeyImplCopyWith<_$RecoveredKeyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

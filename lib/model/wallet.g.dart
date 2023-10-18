@@ -6,17 +6,17 @@ part of 'wallet.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class WalletClassAdapter extends TypeAdapter<_$_Wallet> {
+class WalletClassAdapter extends TypeAdapter<_$WalletImpl> {
   @override
   final int typeId = 1;
 
   @override
-  _$_Wallet read(BinaryReader reader) {
+  _$WalletImpl read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_Wallet(
+    return _$WalletImpl(
       id: fields[0] as int?,
       uid: fields[1] as String,
       label: fields[2] as String,
@@ -35,7 +35,7 @@ class WalletClassAdapter extends TypeAdapter<_$_Wallet> {
   }
 
   @override
-  void write(BinaryWriter writer, _$_Wallet obj) {
+  void write(BinaryWriter writer, _$WalletImpl obj) {
     writer
       ..writeByte(14)
       ..writeByte(0)
@@ -83,7 +83,7 @@ class WalletClassAdapter extends TypeAdapter<_$_Wallet> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
+_$WalletImpl _$$WalletImplFromJson(Map<String, dynamic> json) => _$WalletImpl(
       id: json['id'] as int?,
       uid: json['uid'] as String,
       label: json['label'] as String,
@@ -104,7 +104,8 @@ _$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
       fingerprint: json['fingerprint'] as String,
     );
 
-Map<String, dynamic> _$$_WalletToJson(_$_Wallet instance) => <String, dynamic>{
+Map<String, dynamic> _$$WalletImplToJson(_$WalletImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'uid': instance.uid,
       'label': instance.label,

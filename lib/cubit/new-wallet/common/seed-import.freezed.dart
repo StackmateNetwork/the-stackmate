@@ -17,6 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SeedImportState {
   SeedImportStep get currentStep => throw _privateConstructorUsedError;
+  String get err => throw _privateConstructorUsedError;
+  bool get loading => throw _privateConstructorUsedError;
+  List<String>? get words => throw _privateConstructorUsedError;
   String get seed => throw _privateConstructorUsedError;
   String get seedError => throw _privateConstructorUsedError;
   String get passPhrase => throw _privateConstructorUsedError;
@@ -39,6 +42,9 @@ abstract class $SeedImportStateCopyWith<$Res> {
   @useResult
   $Res call(
       {SeedImportStep currentStep,
+      String err,
+      bool loading,
+      List<String>? words,
       String seed,
       String seedError,
       String passPhrase,
@@ -63,6 +69,9 @@ class _$SeedImportStateCopyWithImpl<$Res, $Val extends SeedImportState>
   @override
   $Res call({
     Object? currentStep = null,
+    Object? err = null,
+    Object? loading = null,
+    Object? words = freezed,
     Object? seed = null,
     Object? seedError = null,
     Object? passPhrase = null,
@@ -77,6 +86,18 @@ class _$SeedImportStateCopyWithImpl<$Res, $Val extends SeedImportState>
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as SeedImportStep,
+      err: null == err
+          ? _value.err
+          : err // ignore: cast_nullable_to_non_nullable
+              as String,
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      words: freezed == words
+          ? _value.words
+          : words // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -114,15 +135,18 @@ class _$SeedImportStateCopyWithImpl<$Res, $Val extends SeedImportState>
 }
 
 /// @nodoc
-abstract class _$$_SeedImportStateCopyWith<$Res>
+abstract class _$$SeedImportStateImplCopyWith<$Res>
     implements $SeedImportStateCopyWith<$Res> {
-  factory _$$_SeedImportStateCopyWith(
-          _$_SeedImportState value, $Res Function(_$_SeedImportState) then) =
-      __$$_SeedImportStateCopyWithImpl<$Res>;
+  factory _$$SeedImportStateImplCopyWith(_$SeedImportStateImpl value,
+          $Res Function(_$SeedImportStateImpl) then) =
+      __$$SeedImportStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {SeedImportStep currentStep,
+      String err,
+      bool loading,
+      List<String>? words,
       String seed,
       String seedError,
       String passPhrase,
@@ -134,17 +158,20 @@ abstract class _$$_SeedImportStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SeedImportStateCopyWithImpl<$Res>
-    extends _$SeedImportStateCopyWithImpl<$Res, _$_SeedImportState>
-    implements _$$_SeedImportStateCopyWith<$Res> {
-  __$$_SeedImportStateCopyWithImpl(
-      _$_SeedImportState _value, $Res Function(_$_SeedImportState) _then)
+class __$$SeedImportStateImplCopyWithImpl<$Res>
+    extends _$SeedImportStateCopyWithImpl<$Res, _$SeedImportStateImpl>
+    implements _$$SeedImportStateImplCopyWith<$Res> {
+  __$$SeedImportStateImplCopyWithImpl(
+      _$SeedImportStateImpl _value, $Res Function(_$SeedImportStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? currentStep = null,
+    Object? err = null,
+    Object? loading = null,
+    Object? words = freezed,
     Object? seed = null,
     Object? seedError = null,
     Object? passPhrase = null,
@@ -154,11 +181,23 @@ class __$$_SeedImportStateCopyWithImpl<$Res>
     Object? masterXpriv = freezed,
     Object? wallet = freezed,
   }) {
-    return _then(_$_SeedImportState(
+    return _then(_$SeedImportStateImpl(
       currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as SeedImportStep,
+      err: null == err
+          ? _value.err
+          : err // ignore: cast_nullable_to_non_nullable
+              as String,
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      words: freezed == words
+          ? _value._words
+          : words // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -197,9 +236,12 @@ class __$$_SeedImportStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SeedImportState extends _SeedImportState {
-  const _$_SeedImportState(
+class _$SeedImportStateImpl extends _SeedImportState {
+  const _$SeedImportStateImpl(
       {this.currentStep = SeedImportStep.import,
+      this.err = '',
+      this.loading = false,
+      final List<String>? words,
       this.seed = '',
       this.seedError = '',
       this.passPhrase = '',
@@ -208,11 +250,28 @@ class _$_SeedImportState extends _SeedImportState {
       this.seedReady = false,
       this.masterXpriv,
       this.wallet})
-      : super._();
+      : _words = words,
+        super._();
 
   @override
   @JsonKey()
   final SeedImportStep currentStep;
+  @override
+  @JsonKey()
+  final String err;
+  @override
+  @JsonKey()
+  final bool loading;
+  final List<String>? _words;
+  @override
+  List<String>? get words {
+    final value = _words;
+    if (value == null) return null;
+    if (_words is EqualUnmodifiableListView) return _words;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey()
   final String seed;
@@ -238,16 +297,19 @@ class _$_SeedImportState extends _SeedImportState {
 
   @override
   String toString() {
-    return 'SeedImportState(currentStep: $currentStep, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
+    return 'SeedImportState(currentStep: $currentStep, err: $err, loading: $loading, words: $words, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SeedImportState &&
+            other is _$SeedImportStateImpl &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
+            (identical(other.err, err) || other.err == err) &&
+            (identical(other.loading, loading) || other.loading == loading) &&
+            const DeepCollectionEquality().equals(other._words, _words) &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.seedError, seedError) ||
                 other.seedError == seedError) &&
@@ -265,19 +327,35 @@ class _$_SeedImportState extends _SeedImportState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, currentStep, seed, seedError,
-      passPhrase, accountNumber, errPassPhrase, seedReady, masterXpriv, wallet);
+  int get hashCode => Object.hash(
+      runtimeType,
+      currentStep,
+      err,
+      loading,
+      const DeepCollectionEquality().hash(_words),
+      seed,
+      seedError,
+      passPhrase,
+      accountNumber,
+      errPassPhrase,
+      seedReady,
+      masterXpriv,
+      wallet);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SeedImportStateCopyWith<_$_SeedImportState> get copyWith =>
-      __$$_SeedImportStateCopyWithImpl<_$_SeedImportState>(this, _$identity);
+  _$$SeedImportStateImplCopyWith<_$SeedImportStateImpl> get copyWith =>
+      __$$SeedImportStateImplCopyWithImpl<_$SeedImportStateImpl>(
+          this, _$identity);
 }
 
 abstract class _SeedImportState extends SeedImportState {
   const factory _SeedImportState(
       {final SeedImportStep currentStep,
+      final String err,
+      final bool loading,
+      final List<String>? words,
       final String seed,
       final String seedError,
       final String passPhrase,
@@ -285,11 +363,17 @@ abstract class _SeedImportState extends SeedImportState {
       final String errPassPhrase,
       final bool seedReady,
       final String? masterXpriv,
-      final DerivedKeys? wallet}) = _$_SeedImportState;
+      final DerivedKeys? wallet}) = _$SeedImportStateImpl;
   const _SeedImportState._() : super._();
 
   @override
   SeedImportStep get currentStep;
+  @override
+  String get err;
+  @override
+  bool get loading;
+  @override
+  List<String>? get words;
   @override
   String get seed;
   @override
@@ -308,6 +392,6 @@ abstract class _SeedImportState extends SeedImportState {
   DerivedKeys? get wallet;
   @override
   @JsonKey(ignore: true)
-  _$$_SeedImportStateCopyWith<_$_SeedImportState> get copyWith =>
+  _$$SeedImportStateImplCopyWith<_$SeedImportStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -93,11 +93,11 @@ class _$PreferencesStateCopyWithImpl<$Res, $Val extends PreferencesState>
 }
 
 /// @nodoc
-abstract class _$$_PreferencesStateCopyWith<$Res>
+abstract class _$$PreferencesStateImplCopyWith<$Res>
     implements $PreferencesStateCopyWith<$Res> {
-  factory _$$_PreferencesStateCopyWith(
-          _$_PreferencesState value, $Res Function(_$_PreferencesState) then) =
-      __$$_PreferencesStateCopyWithImpl<$Res>;
+  factory _$$PreferencesStateImplCopyWith(_$PreferencesStateImpl value,
+          $Res Function(_$PreferencesStateImpl) then) =
+      __$$PreferencesStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -110,11 +110,11 @@ abstract class _$$_PreferencesStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PreferencesStateCopyWithImpl<$Res>
-    extends _$PreferencesStateCopyWithImpl<$Res, _$_PreferencesState>
-    implements _$$_PreferencesStateCopyWith<$Res> {
-  __$$_PreferencesStateCopyWithImpl(
-      _$_PreferencesState _value, $Res Function(_$_PreferencesState) _then)
+class __$$PreferencesStateImplCopyWithImpl<$Res>
+    extends _$PreferencesStateCopyWithImpl<$Res, _$PreferencesStateImpl>
+    implements _$$PreferencesStateImplCopyWith<$Res> {
+  __$$PreferencesStateImplCopyWithImpl(_$PreferencesStateImpl _value,
+      $Res Function(_$PreferencesStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -127,7 +127,7 @@ class __$$_PreferencesStateCopyWithImpl<$Res>
     Object? preferredFiatUnit = null,
     Object? errorPreferencesState = null,
   }) {
-    return _then(_$_PreferencesState(
+    return _then(_$PreferencesStateImpl(
       incognito: null == incognito
           ? _value.incognito
           : incognito // ignore: cast_nullable_to_non_nullable
@@ -158,8 +158,8 @@ class __$$_PreferencesStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PreferencesState extends _PreferencesState {
-  const _$_PreferencesState(
+class _$PreferencesStateImpl extends _PreferencesState {
+  const _$PreferencesStateImpl(
       {this.incognito = false,
       this.bitcoinStandard = false,
       this.preferredBitcoinUnit = 'sats',
@@ -196,7 +196,7 @@ class _$_PreferencesState extends _PreferencesState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PreferencesState &&
+            other is _$PreferencesStateImpl &&
             (identical(other.incognito, incognito) ||
                 other.incognito == incognito) &&
             (identical(other.bitcoinStandard, bitcoinStandard) ||
@@ -224,8 +224,9 @@ class _$_PreferencesState extends _PreferencesState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PreferencesStateCopyWith<_$_PreferencesState> get copyWith =>
-      __$$_PreferencesStateCopyWithImpl<_$_PreferencesState>(this, _$identity);
+  _$$PreferencesStateImplCopyWith<_$PreferencesStateImpl> get copyWith =>
+      __$$PreferencesStateImplCopyWithImpl<_$PreferencesStateImpl>(
+          this, _$identity);
 }
 
 abstract class _PreferencesState extends PreferencesState {
@@ -235,7 +236,7 @@ abstract class _PreferencesState extends PreferencesState {
       final String preferredBitcoinUnit,
       final String preferredExchange,
       final String preferredFiatUnit,
-      final String errorPreferencesState}) = _$_PreferencesState;
+      final String errorPreferencesState}) = _$PreferencesStateImpl;
   const _PreferencesState._() : super._();
 
   @override
@@ -252,6 +253,6 @@ abstract class _PreferencesState extends PreferencesState {
   String get errorPreferencesState;
   @override
   @JsonKey(ignore: true)
-  _$$_PreferencesStateCopyWith<_$_PreferencesState> get copyWith =>
+  _$$PreferencesStateImplCopyWith<_$PreferencesStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

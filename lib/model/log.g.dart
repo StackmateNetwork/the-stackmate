@@ -6,7 +6,7 @@ part of 'log.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Log _$$_LogFromJson(Map<String, dynamic> json) => _$_Log(
+_$LogImpl _$$LogImplFromJson(Map<String, dynamic> json) => _$LogImpl(
       type: $enumDecode(_$LogTypeEnumMap, json['type']),
       path: json['path'] as String?,
       response: json['response'] as String?,
@@ -18,7 +18,7 @@ _$_Log _$$_LogFromJson(Map<String, dynamic> json) => _$_Log(
       stackTrace: json['stackTrace'] as String?,
     );
 
-Map<String, dynamic> _$$_LogToJson(_$_Log instance) => <String, dynamic>{
+Map<String, dynamic> _$$LogImplToJson(_$LogImpl instance) => <String, dynamic>{
       'type': _$LogTypeEnumMap[instance.type]!,
       'path': instance.path,
       'response': instance.response,

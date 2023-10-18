@@ -6,17 +6,17 @@ part of 'transaction.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TransactionClassAdapter extends TypeAdapter<_$_Transaction> {
+class TransactionClassAdapter extends TypeAdapter<_$TransactionImpl> {
   @override
   final int typeId = 6;
 
   @override
-  _$_Transaction read(BinaryReader reader) {
+  _$TransactionImpl read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_Transaction(
+    return _$TransactionImpl(
       timestamp: fields[0] as int,
       height: fields[1] as int,
       txid: fields[2] as String,
@@ -27,7 +27,7 @@ class TransactionClassAdapter extends TypeAdapter<_$_Transaction> {
   }
 
   @override
-  void write(BinaryWriter writer, _$_Transaction obj) {
+  void write(BinaryWriter writer, _$TransactionImpl obj) {
     writer
       ..writeByte(6)
       ..writeByte(0)
@@ -59,8 +59,8 @@ class TransactionClassAdapter extends TypeAdapter<_$_Transaction> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Transaction _$$_TransactionFromJson(Map<String, dynamic> json) =>
-    _$_Transaction(
+_$TransactionImpl _$$TransactionImplFromJson(Map<String, dynamic> json) =>
+    _$TransactionImpl(
       timestamp: json['timestamp'] as int,
       height: json['height'] as int,
       txid: json['txid'] as String,
@@ -69,7 +69,7 @@ _$_Transaction _$$_TransactionFromJson(Map<String, dynamic> json) =>
       fee: json['fee'] as int,
     );
 
-Map<String, dynamic> _$$_TransactionToJson(_$_Transaction instance) =>
+Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) =>
     <String, dynamic>{
       'timestamp': instance.timestamp,
       'height': instance.height,

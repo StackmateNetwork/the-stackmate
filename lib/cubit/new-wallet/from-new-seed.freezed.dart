@@ -94,11 +94,12 @@ class _$SeedGenerateWalletStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_SeedGenerateWalletStateCopyWith<$Res>
+abstract class _$$SeedGenerateWalletStateImplCopyWith<$Res>
     implements $SeedGenerateWalletStateCopyWith<$Res> {
-  factory _$$_SeedGenerateWalletStateCopyWith(_$_SeedGenerateWalletState value,
-          $Res Function(_$_SeedGenerateWalletState) then) =
-      __$$_SeedGenerateWalletStateCopyWithImpl<$Res>;
+  factory _$$SeedGenerateWalletStateImplCopyWith(
+          _$SeedGenerateWalletStateImpl value,
+          $Res Function(_$SeedGenerateWalletStateImpl) then) =
+      __$$SeedGenerateWalletStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -111,12 +112,13 @@ abstract class _$$_SeedGenerateWalletStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SeedGenerateWalletStateCopyWithImpl<$Res>
+class __$$SeedGenerateWalletStateImplCopyWithImpl<$Res>
     extends _$SeedGenerateWalletStateCopyWithImpl<$Res,
-        _$_SeedGenerateWalletState>
-    implements _$$_SeedGenerateWalletStateCopyWith<$Res> {
-  __$$_SeedGenerateWalletStateCopyWithImpl(_$_SeedGenerateWalletState _value,
-      $Res Function(_$_SeedGenerateWalletState) _then)
+        _$SeedGenerateWalletStateImpl>
+    implements _$$SeedGenerateWalletStateImplCopyWith<$Res> {
+  __$$SeedGenerateWalletStateImplCopyWithImpl(
+      _$SeedGenerateWalletStateImpl _value,
+      $Res Function(_$SeedGenerateWalletStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -129,7 +131,7 @@ class __$$_SeedGenerateWalletStateCopyWithImpl<$Res>
     Object? savingWalletError = null,
     Object? newWalletSaved = null,
   }) {
-    return _then(_$_SeedGenerateWalletState(
+    return _then(_$SeedGenerateWalletStateImpl(
       currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
@@ -160,9 +162,9 @@ class __$$_SeedGenerateWalletStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SeedGenerateWalletState extends _SeedGenerateWalletState
+class _$SeedGenerateWalletStateImpl extends _SeedGenerateWalletState
     with DiagnosticableTreeMixin {
-  const _$_SeedGenerateWalletState(
+  const _$SeedGenerateWalletStateImpl(
       {this.currentStep = SeedGenerateWalletSteps.warning,
       this.walletLabel = '',
       this.walletLabelError = '',
@@ -212,7 +214,7 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SeedGenerateWalletState &&
+            other is _$SeedGenerateWalletStateImpl &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
             (identical(other.walletLabel, walletLabel) ||
@@ -234,10 +236,9 @@ class _$_SeedGenerateWalletState extends _SeedGenerateWalletState
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SeedGenerateWalletStateCopyWith<_$_SeedGenerateWalletState>
-      get copyWith =>
-          __$$_SeedGenerateWalletStateCopyWithImpl<_$_SeedGenerateWalletState>(
-              this, _$identity);
+  _$$SeedGenerateWalletStateImplCopyWith<_$SeedGenerateWalletStateImpl>
+      get copyWith => __$$SeedGenerateWalletStateImplCopyWithImpl<
+          _$SeedGenerateWalletStateImpl>(this, _$identity);
 }
 
 abstract class _SeedGenerateWalletState extends SeedGenerateWalletState {
@@ -247,7 +248,7 @@ abstract class _SeedGenerateWalletState extends SeedGenerateWalletState {
       final String walletLabelError,
       final bool savingWallet,
       final String savingWalletError,
-      final bool newWalletSaved}) = _$_SeedGenerateWalletState;
+      final bool newWalletSaved}) = _$SeedGenerateWalletStateImpl;
   const _SeedGenerateWalletState._() : super._();
 
   @override
@@ -264,6 +265,6 @@ abstract class _SeedGenerateWalletState extends SeedGenerateWalletState {
   bool get newWalletSaved;
   @override
   @JsonKey(ignore: true)
-  _$$_SeedGenerateWalletStateCopyWith<_$_SeedGenerateWalletState>
+  _$$SeedGenerateWalletStateImplCopyWith<_$SeedGenerateWalletStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

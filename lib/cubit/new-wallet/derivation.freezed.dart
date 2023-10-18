@@ -128,11 +128,11 @@ class _$DeriveWalletStateCopyWithImpl<$Res, $Val extends DeriveWalletState>
 }
 
 /// @nodoc
-abstract class _$$_DeriveWalletStateCopyWith<$Res>
+abstract class _$$DeriveWalletStateImplCopyWith<$Res>
     implements $DeriveWalletStateCopyWith<$Res> {
-  factory _$$_DeriveWalletStateCopyWith(_$_DeriveWalletState value,
-          $Res Function(_$_DeriveWalletState) then) =
-      __$$_DeriveWalletStateCopyWithImpl<$Res>;
+  factory _$$DeriveWalletStateImplCopyWith(_$DeriveWalletStateImpl value,
+          $Res Function(_$DeriveWalletStateImpl) then) =
+      __$$DeriveWalletStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -150,11 +150,11 @@ abstract class _$$_DeriveWalletStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DeriveWalletStateCopyWithImpl<$Res>
-    extends _$DeriveWalletStateCopyWithImpl<$Res, _$_DeriveWalletState>
-    implements _$$_DeriveWalletStateCopyWith<$Res> {
-  __$$_DeriveWalletStateCopyWithImpl(
-      _$_DeriveWalletState _value, $Res Function(_$_DeriveWalletState) _then)
+class __$$DeriveWalletStateImplCopyWithImpl<$Res>
+    extends _$DeriveWalletStateCopyWithImpl<$Res, _$DeriveWalletStateImpl>
+    implements _$$DeriveWalletStateImplCopyWith<$Res> {
+  __$$DeriveWalletStateImplCopyWithImpl(_$DeriveWalletStateImpl _value,
+      $Res Function(_$DeriveWalletStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -172,7 +172,7 @@ class __$$_DeriveWalletStateCopyWithImpl<$Res>
     Object? errSavingWallet = null,
     Object? newWalletSaved = null,
   }) {
-    return _then(_$_DeriveWalletState(
+    return _then(_$DeriveWalletStateImpl(
       currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
@@ -223,10 +223,10 @@ class __$$_DeriveWalletStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DeriveWalletState
+class _$DeriveWalletStateImpl
     with DiagnosticableTreeMixin
     implements _DeriveWalletState {
-  const _$_DeriveWalletState(
+  const _$DeriveWalletStateImpl(
       {this.currentStep = DeriveWalletStep.purpose,
       this.purpose = DerivationPurpose.segwit,
       this.index = 0,
@@ -300,7 +300,7 @@ class _$_DeriveWalletState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DeriveWalletState &&
+            other is _$DeriveWalletStateImpl &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
             (identical(other.purpose, purpose) || other.purpose == purpose) &&
@@ -339,8 +339,8 @@ class _$_DeriveWalletState
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DeriveWalletStateCopyWith<_$_DeriveWalletState> get copyWith =>
-      __$$_DeriveWalletStateCopyWithImpl<_$_DeriveWalletState>(
+  _$$DeriveWalletStateImplCopyWith<_$DeriveWalletStateImpl> get copyWith =>
+      __$$DeriveWalletStateImplCopyWithImpl<_$DeriveWalletStateImpl>(
           this, _$identity);
 }
 
@@ -356,7 +356,7 @@ abstract class _DeriveWalletState implements DeriveWalletState {
       final String walletLabelError,
       final bool savingWallet,
       final String errSavingWallet,
-      final bool newWalletSaved}) = _$_DeriveWalletState;
+      final bool newWalletSaved}) = _$DeriveWalletStateImpl;
 
   @override
   DeriveWalletStep get currentStep;
@@ -382,6 +382,6 @@ abstract class _DeriveWalletState implements DeriveWalletState {
   bool get newWalletSaved;
   @override
   @JsonKey(ignore: true)
-  _$$_DeriveWalletStateCopyWith<_$_DeriveWalletState> get copyWith =>
+  _$$DeriveWalletStateImplCopyWith<_$DeriveWalletStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

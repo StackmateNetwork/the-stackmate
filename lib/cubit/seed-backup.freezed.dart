@@ -143,11 +143,11 @@ class _$SeedBackupStateCopyWithImpl<$Res, $Val extends SeedBackupState>
 }
 
 /// @nodoc
-abstract class _$$_SeedBackupStateCopyWith<$Res>
+abstract class _$$SeedBackupStateImplCopyWith<$Res>
     implements $SeedBackupStateCopyWith<$Res> {
-  factory _$$_SeedBackupStateCopyWith(
-          _$_SeedBackupState value, $Res Function(_$_SeedBackupState) then) =
-      __$$_SeedBackupStateCopyWithImpl<$Res>;
+  factory _$$SeedBackupStateImplCopyWith(_$SeedBackupStateImpl value,
+          $Res Function(_$SeedBackupStateImpl) then) =
+      __$$SeedBackupStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -167,11 +167,11 @@ abstract class _$$_SeedBackupStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SeedBackupStateCopyWithImpl<$Res>
-    extends _$SeedBackupStateCopyWithImpl<$Res, _$_SeedBackupState>
-    implements _$$_SeedBackupStateCopyWith<$Res> {
-  __$$_SeedBackupStateCopyWithImpl(
-      _$_SeedBackupState _value, $Res Function(_$_SeedBackupState) _then)
+class __$$SeedBackupStateImplCopyWithImpl<$Res>
+    extends _$SeedBackupStateCopyWithImpl<$Res, _$SeedBackupStateImpl>
+    implements _$$SeedBackupStateImplCopyWith<$Res> {
+  __$$SeedBackupStateImplCopyWithImpl(
+      _$SeedBackupStateImpl _value, $Res Function(_$SeedBackupStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -191,7 +191,7 @@ class __$$_SeedBackupStateCopyWithImpl<$Res>
     Object? backupLater = null,
     Object? backupComplete = null,
   }) {
-    return _then(_$_SeedBackupState(
+    return _then(_$SeedBackupStateImpl(
       currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
@@ -250,8 +250,8 @@ class __$$_SeedBackupStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SeedBackupState extends _SeedBackupState {
-  const _$_SeedBackupState(
+class _$SeedBackupStateImpl extends _SeedBackupState {
+  const _$SeedBackupStateImpl(
       {this.currentStep = SeedBackupSteps.warning,
       final List<String>? seed,
       this.rootXprv,
@@ -337,7 +337,7 @@ class _$_SeedBackupState extends _SeedBackupState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SeedBackupState &&
+            other is _$SeedBackupStateImpl &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
             const DeepCollectionEquality().equals(other._seed, _seed) &&
@@ -385,8 +385,9 @@ class _$_SeedBackupState extends _SeedBackupState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SeedBackupStateCopyWith<_$_SeedBackupState> get copyWith =>
-      __$$_SeedBackupStateCopyWithImpl<_$_SeedBackupState>(this, _$identity);
+  _$$SeedBackupStateImplCopyWith<_$SeedBackupStateImpl> get copyWith =>
+      __$$SeedBackupStateImplCopyWithImpl<_$SeedBackupStateImpl>(
+          this, _$identity);
 }
 
 abstract class _SeedBackupState extends SeedBackupState {
@@ -403,7 +404,7 @@ abstract class _SeedBackupState extends SeedBackupState {
       final String quizSeedError,
       final String errMasterKeyUpdate,
       final bool backupLater,
-      final bool backupComplete}) = _$_SeedBackupState;
+      final bool backupComplete}) = _$SeedBackupStateImpl;
   const _SeedBackupState._() : super._();
 
   @override
@@ -434,6 +435,6 @@ abstract class _SeedBackupState extends SeedBackupState {
   bool get backupComplete;
   @override
   @JsonKey(ignore: true)
-  _$$_SeedBackupStateCopyWith<_$_SeedBackupState> get copyWith =>
+  _$$SeedBackupStateImplCopyWith<_$SeedBackupStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

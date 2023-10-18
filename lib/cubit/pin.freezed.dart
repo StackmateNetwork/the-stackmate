@@ -141,10 +141,11 @@ class _$PinStateCopyWithImpl<$Res, $Val extends PinState>
 }
 
 /// @nodoc
-abstract class _$$_PinStateCopyWith<$Res> implements $PinStateCopyWith<$Res> {
-  factory _$$_PinStateCopyWith(
-          _$_PinState value, $Res Function(_$_PinState) then) =
-      __$$_PinStateCopyWithImpl<$Res>;
+abstract class _$$PinStateImplCopyWith<$Res>
+    implements $PinStateCopyWith<$Res> {
+  factory _$$PinStateImplCopyWith(
+          _$PinStateImpl value, $Res Function(_$PinStateImpl) then) =
+      __$$PinStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -164,11 +165,11 @@ abstract class _$$_PinStateCopyWith<$Res> implements $PinStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_PinStateCopyWithImpl<$Res>
-    extends _$PinStateCopyWithImpl<$Res, _$_PinState>
-    implements _$$_PinStateCopyWith<$Res> {
-  __$$_PinStateCopyWithImpl(
-      _$_PinState _value, $Res Function(_$_PinState) _then)
+class __$$PinStateImplCopyWithImpl<$Res>
+    extends _$PinStateCopyWithImpl<$Res, _$PinStateImpl>
+    implements _$$PinStateImplCopyWith<$Res> {
+  __$$PinStateImplCopyWithImpl(
+      _$PinStateImpl _value, $Res Function(_$PinStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -188,7 +189,7 @@ class __$$_PinStateCopyWithImpl<$Res>
     Object? hiddenValue = null,
     Object? error = freezed,
   }) {
-    return _then(_$_PinState(
+    return _then(_$PinStateImpl(
       value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -247,8 +248,8 @@ class __$$_PinStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PinState extends _PinState {
-  const _$_PinState(
+class _$PinStateImpl extends _PinState {
+  const _$PinStateImpl(
       {this.value,
       this.attemptsLeft = 3,
       this.lastFailure = 0,
@@ -311,7 +312,7 @@ class _$_PinState extends _PinState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PinState &&
+            other is _$PinStateImpl &&
             (identical(other.value, value) || other.value == value) &&
             (identical(other.attemptsLeft, attemptsLeft) ||
                 other.attemptsLeft == attemptsLeft) &&
@@ -358,8 +359,8 @@ class _$_PinState extends _PinState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PinStateCopyWith<_$_PinState> get copyWith =>
-      __$$_PinStateCopyWithImpl<_$_PinState>(this, _$identity);
+  _$$PinStateImplCopyWith<_$PinStateImpl> get copyWith =>
+      __$$PinStateImplCopyWithImpl<_$PinStateImpl>(this, _$identity);
 }
 
 abstract class _PinState extends PinState {
@@ -376,7 +377,7 @@ abstract class _PinState extends PinState {
       final String confirmedValue,
       final String enteredValue,
       final String hiddenValue,
-      final String? error}) = _$_PinState;
+      final String? error}) = _$PinStateImpl;
   const _PinState._() : super._();
 
   @override
@@ -407,6 +408,6 @@ abstract class _PinState extends PinState {
   String? get error;
   @override
   @JsonKey(ignore: true)
-  _$$_PinStateCopyWith<_$_PinState> get copyWith =>
+  _$$PinStateImplCopyWith<_$PinStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

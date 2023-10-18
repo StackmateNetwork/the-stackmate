@@ -57,22 +57,22 @@ class _$LoggerStateCopyWithImpl<$Res, $Val extends LoggerState>
 }
 
 /// @nodoc
-abstract class _$$_LoggerStateCopyWith<$Res>
+abstract class _$$LoggerStateImplCopyWith<$Res>
     implements $LoggerStateCopyWith<$Res> {
-  factory _$$_LoggerStateCopyWith(
-          _$_LoggerState value, $Res Function(_$_LoggerState) then) =
-      __$$_LoggerStateCopyWithImpl<$Res>;
+  factory _$$LoggerStateImplCopyWith(
+          _$LoggerStateImpl value, $Res Function(_$LoggerStateImpl) then) =
+      __$$LoggerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<Log> logs});
 }
 
 /// @nodoc
-class __$$_LoggerStateCopyWithImpl<$Res>
-    extends _$LoggerStateCopyWithImpl<$Res, _$_LoggerState>
-    implements _$$_LoggerStateCopyWith<$Res> {
-  __$$_LoggerStateCopyWithImpl(
-      _$_LoggerState _value, $Res Function(_$_LoggerState) _then)
+class __$$LoggerStateImplCopyWithImpl<$Res>
+    extends _$LoggerStateCopyWithImpl<$Res, _$LoggerStateImpl>
+    implements _$$LoggerStateImplCopyWith<$Res> {
+  __$$LoggerStateImplCopyWithImpl(
+      _$LoggerStateImpl _value, $Res Function(_$LoggerStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -80,7 +80,7 @@ class __$$_LoggerStateCopyWithImpl<$Res>
   $Res call({
     Object? logs = null,
   }) {
-    return _then(_$_LoggerState(
+    return _then(_$LoggerStateImpl(
       logs: null == logs
           ? _value._logs
           : logs // ignore: cast_nullable_to_non_nullable
@@ -91,8 +91,8 @@ class __$$_LoggerStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LoggerState with DiagnosticableTreeMixin implements _LoggerState {
-  const _$_LoggerState({final List<Log> logs = const []}) : _logs = logs;
+class _$LoggerStateImpl with DiagnosticableTreeMixin implements _LoggerState {
+  const _$LoggerStateImpl({final List<Log> logs = const []}) : _logs = logs;
 
   final List<Log> _logs;
   @override
@@ -120,7 +120,7 @@ class _$_LoggerState with DiagnosticableTreeMixin implements _LoggerState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LoggerState &&
+            other is _$LoggerStateImpl &&
             const DeepCollectionEquality().equals(other._logs, _logs));
   }
 
@@ -131,17 +131,17 @@ class _$_LoggerState with DiagnosticableTreeMixin implements _LoggerState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LoggerStateCopyWith<_$_LoggerState> get copyWith =>
-      __$$_LoggerStateCopyWithImpl<_$_LoggerState>(this, _$identity);
+  _$$LoggerStateImplCopyWith<_$LoggerStateImpl> get copyWith =>
+      __$$LoggerStateImplCopyWithImpl<_$LoggerStateImpl>(this, _$identity);
 }
 
 abstract class _LoggerState implements LoggerState {
-  const factory _LoggerState({final List<Log> logs}) = _$_LoggerState;
+  const factory _LoggerState({final List<Log> logs}) = _$LoggerStateImpl;
 
   @override
   List<Log> get logs;
   @override
   @JsonKey(ignore: true)
-  _$$_LoggerStateCopyWith<_$_LoggerState> get copyWith =>
+  _$$LoggerStateImplCopyWith<_$LoggerStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

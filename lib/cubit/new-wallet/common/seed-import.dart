@@ -6,6 +6,7 @@ import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
+import 'package:sats/pkg/mnemonic_word.dart';
 
 part 'seed-import.freezed.dart';
 
@@ -18,6 +19,9 @@ enum SeedImportStep {
 class SeedImportState with _$SeedImportState {
   const factory SeedImportState({
     @Default(SeedImportStep.import) SeedImportStep currentStep,
+    @Default('') String err,
+    @Default(false) bool loading,
+    List<String>? words,
     @Default('') String seed,
     @Default('') String seedError,
     @Default('') String passPhrase,
@@ -29,9 +33,21 @@ class SeedImportState with _$SeedImportState {
   }) = _SeedImportState;
   const SeedImportState._();
 
-  bool showSeedCompleteButton() =>
-      seed.split(' ').length == 12 ||
-      seed.split(' ').length == 24 && bip39.validateMnemonic(seed);
+  List<String> findWords(String str) {
+    if (str.isEmpty) return [];
+
+    final w = words!
+        .where(
+          (word) => word.toLowerCase().startsWith(
+                str.toLowerCase(),
+              ),
+        )
+        .toList();
+
+    return w.length > 3 ? w.sublist(0, 3) : w;
+  }
+
+  bool showSeedCompleteButton() => bip39.validateMnemonic(seed);
 }
 
 class SeedImportCubit extends Cubit<SeedImportState> {
@@ -40,16 +56,30 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     this._masterKey,
     this._blockchainCubit,
     this._core,
-  ) : super(const SeedImportState());
+    this.mnemonicWords,
+  ) : super(const SeedImportState()) {
+    loadWords();
+  }
 
   final IStackMateBitcoin _core;
   final MasterKeyCubit _masterKey;
   final Logger logger;
   final ChainSelectCubit _blockchainCubit;
+  final MnemonicWords mnemonicWords;
 
   static const segwitNativePurpose = '84';
   static const invalidSeedError = 'Invalid Seed Words.';
   static const emptyString = '';
+
+  Future<void> loadWords() async {
+    emit(state.copyWith(loading: true));
+    final words = await mnemonicWords.loadWordList();
+    if (words.result != null) {
+      emit(state.copyWith(err: words.error.toString(), loading: false));
+      return;
+    }
+    emit(state.copyWith(words: words.result, loading: false));
+  }
 
   void backOnPassphaseClicked() {
     emit(
@@ -98,8 +128,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
       final tseed = state.seed;
       //print(seed);
 
-      if (tseed.split(' ').length == 12 ||
-          tseed.split(' ').length == 24 && bip39.validateMnemonic(tseed)) {
+      if (bip39.validateMnemonic(tseed)) {
         emit(
           state.copyWith(
             seedError: invalidSeedError,

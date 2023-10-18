@@ -85,10 +85,11 @@ class _$FeesStateCopyWithImpl<$Res, $Val extends FeesState>
 }
 
 /// @nodoc
-abstract class _$$_FeesStateCopyWith<$Res> implements $FeesStateCopyWith<$Res> {
-  factory _$$_FeesStateCopyWith(
-          _$_FeesState value, $Res Function(_$_FeesState) then) =
-      __$$_FeesStateCopyWithImpl<$Res>;
+abstract class _$$FeesStateImplCopyWith<$Res>
+    implements $FeesStateCopyWith<$Res> {
+  factory _$$FeesStateImplCopyWith(
+          _$FeesStateImpl value, $Res Function(_$FeesStateImpl) then) =
+      __$$FeesStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -99,11 +100,11 @@ abstract class _$$_FeesStateCopyWith<$Res> implements $FeesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_FeesStateCopyWithImpl<$Res>
-    extends _$FeesStateCopyWithImpl<$Res, _$_FeesState>
-    implements _$$_FeesStateCopyWith<$Res> {
-  __$$_FeesStateCopyWithImpl(
-      _$_FeesState _value, $Res Function(_$_FeesState) _then)
+class __$$FeesStateImplCopyWithImpl<$Res>
+    extends _$FeesStateCopyWithImpl<$Res, _$FeesStateImpl>
+    implements _$$FeesStateImplCopyWith<$Res> {
+  __$$FeesStateImplCopyWithImpl(
+      _$FeesStateImpl _value, $Res Function(_$FeesStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -114,7 +115,7 @@ class __$$_FeesStateCopyWithImpl<$Res>
     Object? errUpdating = null,
     Object? networkStrength = null,
   }) {
-    return _then(_$_FeesState(
+    return _then(_$FeesStateImpl(
       fees: null == fees
           ? _value.fees
           : fees // ignore: cast_nullable_to_non_nullable
@@ -137,8 +138,8 @@ class __$$_FeesStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
-  const _$_FeesState(
+class _$FeesStateImpl with DiagnosticableTreeMixin implements _FeesState {
+  const _$FeesStateImpl(
       {this.fees = const Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0),
       this.updating = false,
       this.errUpdating = '',
@@ -177,7 +178,7 @@ class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FeesState &&
+            other is _$FeesStateImpl &&
             (identical(other.fees, fees) || other.fees == fees) &&
             (identical(other.updating, updating) ||
                 other.updating == updating) &&
@@ -194,8 +195,8 @@ class _$_FeesState with DiagnosticableTreeMixin implements _FeesState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FeesStateCopyWith<_$_FeesState> get copyWith =>
-      __$$_FeesStateCopyWithImpl<_$_FeesState>(this, _$identity);
+  _$$FeesStateImplCopyWith<_$FeesStateImpl> get copyWith =>
+      __$$FeesStateImplCopyWithImpl<_$FeesStateImpl>(this, _$identity);
 }
 
 abstract class _FeesState implements FeesState {
@@ -203,7 +204,7 @@ abstract class _FeesState implements FeesState {
       {final Fees fees,
       final bool updating,
       final String errUpdating,
-      final String networkStrength}) = _$_FeesState;
+      final String networkStrength}) = _$FeesStateImpl;
 
   @override
   Fees get fees;
@@ -215,6 +216,6 @@ abstract class _FeesState implements FeesState {
   String get networkStrength;
   @override
   @JsonKey(ignore: true)
-  _$$_FeesStateCopyWith<_$_FeesState> get copyWith =>
+  _$$FeesStateImplCopyWith<_$FeesStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

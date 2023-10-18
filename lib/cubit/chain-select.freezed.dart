@@ -57,22 +57,22 @@ class _$BlockchainStateCopyWithImpl<$Res, $Val extends BlockchainState>
 }
 
 /// @nodoc
-abstract class _$$_BlockchainStateCopyWith<$Res>
+abstract class _$$BlockchainStateImplCopyWith<$Res>
     implements $BlockchainStateCopyWith<$Res> {
-  factory _$$_BlockchainStateCopyWith(
-          _$_BlockchainState value, $Res Function(_$_BlockchainState) then) =
-      __$$_BlockchainStateCopyWithImpl<$Res>;
+  factory _$$BlockchainStateImplCopyWith(_$BlockchainStateImpl value,
+          $Res Function(_$BlockchainStateImpl) then) =
+      __$$BlockchainStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Blockchain blockchain});
 }
 
 /// @nodoc
-class __$$_BlockchainStateCopyWithImpl<$Res>
-    extends _$BlockchainStateCopyWithImpl<$Res, _$_BlockchainState>
-    implements _$$_BlockchainStateCopyWith<$Res> {
-  __$$_BlockchainStateCopyWithImpl(
-      _$_BlockchainState _value, $Res Function(_$_BlockchainState) _then)
+class __$$BlockchainStateImplCopyWithImpl<$Res>
+    extends _$BlockchainStateCopyWithImpl<$Res, _$BlockchainStateImpl>
+    implements _$$BlockchainStateImplCopyWith<$Res> {
+  __$$BlockchainStateImplCopyWithImpl(
+      _$BlockchainStateImpl _value, $Res Function(_$BlockchainStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -80,7 +80,7 @@ class __$$_BlockchainStateCopyWithImpl<$Res>
   $Res call({
     Object? blockchain = null,
   }) {
-    return _then(_$_BlockchainState(
+    return _then(_$BlockchainStateImpl(
       blockchain: null == blockchain
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
@@ -91,8 +91,8 @@ class __$$_BlockchainStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BlockchainState implements _BlockchainState {
-  const _$_BlockchainState({this.blockchain = Blockchain.main});
+class _$BlockchainStateImpl implements _BlockchainState {
+  const _$BlockchainStateImpl({this.blockchain = Blockchain.main});
 
   @override
   @JsonKey()
@@ -107,7 +107,7 @@ class _$_BlockchainState implements _BlockchainState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BlockchainState &&
+            other is _$BlockchainStateImpl &&
             (identical(other.blockchain, blockchain) ||
                 other.blockchain == blockchain));
   }
@@ -118,18 +118,19 @@ class _$_BlockchainState implements _BlockchainState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BlockchainStateCopyWith<_$_BlockchainState> get copyWith =>
-      __$$_BlockchainStateCopyWithImpl<_$_BlockchainState>(this, _$identity);
+  _$$BlockchainStateImplCopyWith<_$BlockchainStateImpl> get copyWith =>
+      __$$BlockchainStateImplCopyWithImpl<_$BlockchainStateImpl>(
+          this, _$identity);
 }
 
 abstract class _BlockchainState implements BlockchainState {
   const factory _BlockchainState({final Blockchain blockchain}) =
-      _$_BlockchainState;
+      _$BlockchainStateImpl;
 
   @override
   Blockchain get blockchain;
   @override
   @JsonKey(ignore: true)
-  _$$_BlockchainStateCopyWith<_$_BlockchainState> get copyWith =>
+  _$$BlockchainStateImplCopyWith<_$BlockchainStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

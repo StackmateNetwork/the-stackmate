@@ -72,18 +72,20 @@ class _$RateCopyWithImpl<$Res, $Val extends Rate>
 }
 
 /// @nodoc
-abstract class _$$_RateCopyWith<$Res> implements $RateCopyWith<$Res> {
-  factory _$$_RateCopyWith(_$_Rate value, $Res Function(_$_Rate) then) =
-      __$$_RateCopyWithImpl<$Res>;
+abstract class _$$RateImplCopyWith<$Res> implements $RateCopyWith<$Res> {
+  factory _$$RateImplCopyWith(
+          _$RateImpl value, $Res Function(_$RateImpl) then) =
+      __$$RateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String symbol, String name, double rate});
 }
 
 /// @nodoc
-class __$$_RateCopyWithImpl<$Res> extends _$RateCopyWithImpl<$Res, _$_Rate>
-    implements _$$_RateCopyWith<$Res> {
-  __$$_RateCopyWithImpl(_$_Rate _value, $Res Function(_$_Rate) _then)
+class __$$RateImplCopyWithImpl<$Res>
+    extends _$RateCopyWithImpl<$Res, _$RateImpl>
+    implements _$$RateImplCopyWith<$Res> {
+  __$$RateImplCopyWithImpl(_$RateImpl _value, $Res Function(_$RateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,7 +95,7 @@ class __$$_RateCopyWithImpl<$Res> extends _$RateCopyWithImpl<$Res, _$_Rate>
     Object? name = null,
     Object? rate = null,
   }) {
-    return _then(_$_Rate(
+    return _then(_$RateImpl(
       symbol: null == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
@@ -112,10 +114,12 @@ class __$$_RateCopyWithImpl<$Res> extends _$RateCopyWithImpl<$Res, _$_Rate>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Rate implements _Rate {
-  const _$_Rate({required this.symbol, required this.name, required this.rate});
+class _$RateImpl implements _Rate {
+  const _$RateImpl(
+      {required this.symbol, required this.name, required this.rate});
 
-  factory _$_Rate.fromJson(Map<String, dynamic> json) => _$$_RateFromJson(json);
+  factory _$RateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RateImplFromJson(json);
 
   @override
   final String symbol;
@@ -133,7 +137,7 @@ class _$_Rate implements _Rate {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Rate &&
+            other is _$RateImpl &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.rate, rate) || other.rate == rate));
@@ -146,12 +150,12 @@ class _$_Rate implements _Rate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RateCopyWith<_$_Rate> get copyWith =>
-      __$$_RateCopyWithImpl<_$_Rate>(this, _$identity);
+  _$$RateImplCopyWith<_$RateImpl> get copyWith =>
+      __$$RateImplCopyWithImpl<_$RateImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RateToJson(
+    return _$$RateImplToJson(
       this,
     );
   }
@@ -161,9 +165,9 @@ abstract class _Rate implements Rate {
   const factory _Rate(
       {required final String symbol,
       required final String name,
-      required final double rate}) = _$_Rate;
+      required final double rate}) = _$RateImpl;
 
-  factory _Rate.fromJson(Map<String, dynamic> json) = _$_Rate.fromJson;
+  factory _Rate.fromJson(Map<String, dynamic> json) = _$RateImpl.fromJson;
 
   @override
   String get symbol;
@@ -173,5 +177,6 @@ abstract class _Rate implements Rate {
   double get rate;
   @override
   @JsonKey(ignore: true)
-  _$$_RateCopyWith<_$_Rate> get copyWith => throw _privateConstructorUsedError;
+  _$$RateImplCopyWith<_$RateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

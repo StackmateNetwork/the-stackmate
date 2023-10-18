@@ -116,9 +116,9 @@ class _$LogCopyWithImpl<$Res, $Val extends Log> implements $LogCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_LogCopyWith<$Res> implements $LogCopyWith<$Res> {
-  factory _$$_LogCopyWith(_$_Log value, $Res Function(_$_Log) then) =
-      __$$_LogCopyWithImpl<$Res>;
+abstract class _$$LogImplCopyWith<$Res> implements $LogCopyWith<$Res> {
+  factory _$$LogImplCopyWith(_$LogImpl value, $Res Function(_$LogImpl) then) =
+      __$$LogImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -134,9 +134,9 @@ abstract class _$$_LogCopyWith<$Res> implements $LogCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_LogCopyWithImpl<$Res> extends _$LogCopyWithImpl<$Res, _$_Log>
-    implements _$$_LogCopyWith<$Res> {
-  __$$_LogCopyWithImpl(_$_Log _value, $Res Function(_$_Log) _then)
+class __$$LogImplCopyWithImpl<$Res> extends _$LogCopyWithImpl<$Res, _$LogImpl>
+    implements _$$LogImplCopyWith<$Res> {
+  __$$LogImplCopyWithImpl(_$LogImpl _value, $Res Function(_$LogImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -152,7 +152,7 @@ class __$$_LogCopyWithImpl<$Res> extends _$LogCopyWithImpl<$Res, _$_Log>
     Object? exceptionSource = freezed,
     Object? stackTrace = freezed,
   }) {
-    return _then(_$_Log(
+    return _then(_$LogImpl(
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -195,8 +195,8 @@ class __$$_LogCopyWithImpl<$Res> extends _$LogCopyWithImpl<$Res, _$_Log>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Log with DiagnosticableTreeMixin implements _Log {
-  const _$_Log(
+class _$LogImpl with DiagnosticableTreeMixin implements _Log {
+  const _$LogImpl(
       {required this.type,
       this.path,
       this.response,
@@ -207,7 +207,8 @@ class _$_Log with DiagnosticableTreeMixin implements _Log {
       this.exceptionSource,
       this.stackTrace});
 
-  factory _$_Log.fromJson(Map<String, dynamic> json) => _$$_LogFromJson(json);
+  factory _$LogImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LogImplFromJson(json);
 
   @override
   final LogType type;
@@ -253,7 +254,7 @@ class _$_Log with DiagnosticableTreeMixin implements _Log {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Log &&
+            other is _$LogImpl &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.path, path) || other.path == path) &&
             (identical(other.response, response) ||
@@ -278,12 +279,12 @@ class _$_Log with DiagnosticableTreeMixin implements _Log {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LogCopyWith<_$_Log> get copyWith =>
-      __$$_LogCopyWithImpl<_$_Log>(this, _$identity);
+  _$$LogImplCopyWith<_$LogImpl> get copyWith =>
+      __$$LogImplCopyWithImpl<_$LogImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LogToJson(
+    return _$$LogImplToJson(
       this,
     );
   }
@@ -299,9 +300,9 @@ abstract class _Log implements Log {
       final String? event,
       final String? exceptionType,
       final String? exceptionSource,
-      final String? stackTrace}) = _$_Log;
+      final String? stackTrace}) = _$LogImpl;
 
-  factory _Log.fromJson(Map<String, dynamic> json) = _$_Log.fromJson;
+  factory _Log.fromJson(Map<String, dynamic> json) = _$LogImpl.fromJson;
 
   @override
   LogType get type;
@@ -323,5 +324,6 @@ abstract class _Log implements Log {
   String? get stackTrace;
   @override
   @JsonKey(ignore: true)
-  _$$_LogCopyWith<_$_Log> get copyWith => throw _privateConstructorUsedError;
+  _$$LogImplCopyWith<_$LogImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

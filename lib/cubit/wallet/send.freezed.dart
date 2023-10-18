@@ -256,10 +256,11 @@ class _$SendStateCopyWithImpl<$Res, $Val extends SendState>
 }
 
 /// @nodoc
-abstract class _$$_SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
-  factory _$$_SendStateCopyWith(
-          _$_SendState value, $Res Function(_$_SendState) then) =
-      __$$_SendStateCopyWithImpl<$Res>;
+abstract class _$$SendStateImplCopyWith<$Res>
+    implements $SendStateCopyWith<$Res> {
+  factory _$$SendStateImplCopyWith(
+          _$SendStateImpl value, $Res Function(_$SendStateImpl) then) =
+      __$$SendStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -297,11 +298,11 @@ abstract class _$$_SendStateCopyWith<$Res> implements $SendStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SendStateCopyWithImpl<$Res>
-    extends _$SendStateCopyWithImpl<$Res, _$_SendState>
-    implements _$$_SendStateCopyWith<$Res> {
-  __$$_SendStateCopyWithImpl(
-      _$_SendState _value, $Res Function(_$_SendState) _then)
+class __$$SendStateImplCopyWithImpl<$Res>
+    extends _$SendStateCopyWithImpl<$Res, _$SendStateImpl>
+    implements _$$SendStateImplCopyWith<$Res> {
+  __$$SendStateImplCopyWithImpl(
+      _$SendStateImpl _value, $Res Function(_$SendStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -336,7 +337,7 @@ class __$$_SendStateCopyWithImpl<$Res>
     Object? finalAmount = freezed,
     Object? sweepWallet = null,
   }) {
-    return _then(_$_SendState(
+    return _then(_$SendStateImpl(
       wallet: null == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
@@ -455,8 +456,8 @@ class __$$_SendStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SendState extends _SendState with DiagnosticableTreeMixin {
-  const _$_SendState(
+class _$SendStateImpl extends _SendState with DiagnosticableTreeMixin {
+  const _$SendStateImpl(
       {required this.wallet,
       this.currentStep = SendSteps.address,
       this.loadingStart = true,
@@ -608,7 +609,7 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SendState &&
+            other is _$SendStateImpl &&
             (identical(other.wallet, wallet) || other.wallet == wallet) &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
@@ -692,8 +693,8 @@ class _$_SendState extends _SendState with DiagnosticableTreeMixin {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SendStateCopyWith<_$_SendState> get copyWith =>
-      __$$_SendStateCopyWithImpl<_$_SendState>(this, _$identity);
+  _$$SendStateImplCopyWith<_$SendStateImpl> get copyWith =>
+      __$$SendStateImplCopyWithImpl<_$SendStateImpl>(this, _$identity);
 }
 
 abstract class _SendState extends SendState {
@@ -725,7 +726,7 @@ abstract class _SendState extends SendState {
       final String txId,
       final int? finalFee,
       final int? finalAmount,
-      final bool sweepWallet}) = _$_SendState;
+      final bool sweepWallet}) = _$SendStateImpl;
   const _SendState._() : super._();
 
   @override
@@ -786,6 +787,6 @@ abstract class _SendState extends SendState {
   bool get sweepWallet;
   @override
   @JsonKey(ignore: true)
-  _$$_SendStateCopyWith<_$_SendState> get copyWith =>
+  _$$SendStateImplCopyWith<_$SendStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

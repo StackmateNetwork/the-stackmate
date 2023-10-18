@@ -72,9 +72,9 @@ class _$TorCopyWithImpl<$Res, $Val extends Tor> implements $TorCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_TorCopyWith<$Res> implements $TorCopyWith<$Res> {
-  factory _$$_TorCopyWith(_$_Tor value, $Res Function(_$_Tor) then) =
-      __$$_TorCopyWithImpl<$Res>;
+abstract class _$$TorImplCopyWith<$Res> implements $TorCopyWith<$Res> {
+  factory _$$TorImplCopyWith(_$TorImpl value, $Res Function(_$TorImpl) then) =
+      __$$TorImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -84,9 +84,9 @@ abstract class _$$_TorCopyWith<$Res> implements $TorCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TorCopyWithImpl<$Res> extends _$TorCopyWithImpl<$Res, _$_Tor>
-    implements _$$_TorCopyWith<$Res> {
-  __$$_TorCopyWithImpl(_$_Tor _value, $Res Function(_$_Tor) _then)
+class __$$TorImplCopyWithImpl<$Res> extends _$TorCopyWithImpl<$Res, _$TorImpl>
+    implements _$$TorImplCopyWith<$Res> {
+  __$$TorImplCopyWithImpl(_$TorImpl _value, $Res Function(_$TorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -96,7 +96,7 @@ class __$$_TorCopyWithImpl<$Res> extends _$TorCopyWithImpl<$Res, _$_Tor>
     Object? internal = null,
     Object? externalPort = null,
   }) {
-    return _then(_$_Tor(
+    return _then(_$TorImpl(
       enforced: null == enforced
           ? _value.enforced
           : enforced // ignore: cast_nullable_to_non_nullable
@@ -116,8 +116,8 @@ class __$$_TorCopyWithImpl<$Res> extends _$TorCopyWithImpl<$Res, _$_Tor>
 /// @nodoc
 
 @HiveType(typeId: 8, adapterName: 'TorClassAdapter')
-class _$_Tor extends _Tor {
-  const _$_Tor(
+class _$TorImpl extends _Tor {
+  const _$TorImpl(
       {@HiveField(0) required this.enforced,
       @HiveField(1) required this.internal,
       @HiveField(2) required this.externalPort})
@@ -142,7 +142,7 @@ class _$_Tor extends _Tor {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Tor &&
+            other is _$TorImpl &&
             (identical(other.enforced, enforced) ||
                 other.enforced == enforced) &&
             (identical(other.internal, internal) ||
@@ -158,15 +158,15 @@ class _$_Tor extends _Tor {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TorCopyWith<_$_Tor> get copyWith =>
-      __$$_TorCopyWithImpl<_$_Tor>(this, _$identity);
+  _$$TorImplCopyWith<_$TorImpl> get copyWith =>
+      __$$TorImplCopyWithImpl<_$TorImpl>(this, _$identity);
 }
 
 abstract class _Tor extends Tor {
   const factory _Tor(
       {@HiveField(0) required final bool enforced,
       @HiveField(1) required final bool internal,
-      @HiveField(2) required final int externalPort}) = _$_Tor;
+      @HiveField(2) required final int externalPort}) = _$TorImpl;
   const _Tor._() : super._();
 
   @override
@@ -180,5 +180,6 @@ abstract class _Tor extends Tor {
   int get externalPort;
   @override
   @JsonKey(ignore: true)
-  _$$_TorCopyWith<_$_Tor> get copyWith => throw _privateConstructorUsedError;
+  _$$TorImplCopyWith<_$TorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

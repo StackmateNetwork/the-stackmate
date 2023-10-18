@@ -75,22 +75,22 @@ class _$NodeAddressStateCopyWithImpl<$Res, $Val extends NodeAddressState>
 }
 
 /// @nodoc
-abstract class _$$_NodeAddressStateCopyWith<$Res>
+abstract class _$$NodeAddressStateImplCopyWith<$Res>
     implements $NodeAddressStateCopyWith<$Res> {
-  factory _$$_NodeAddressStateCopyWith(
-          _$_NodeAddressState value, $Res Function(_$_NodeAddressState) then) =
-      __$$_NodeAddressStateCopyWithImpl<$Res>;
+  factory _$$NodeAddressStateImplCopyWith(_$NodeAddressStateImpl value,
+          $Res Function(_$NodeAddressStateImpl) then) =
+      __$$NodeAddressStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String address, String errNodeState, String name, bool isEditing});
 }
 
 /// @nodoc
-class __$$_NodeAddressStateCopyWithImpl<$Res>
-    extends _$NodeAddressStateCopyWithImpl<$Res, _$_NodeAddressState>
-    implements _$$_NodeAddressStateCopyWith<$Res> {
-  __$$_NodeAddressStateCopyWithImpl(
-      _$_NodeAddressState _value, $Res Function(_$_NodeAddressState) _then)
+class __$$NodeAddressStateImplCopyWithImpl<$Res>
+    extends _$NodeAddressStateCopyWithImpl<$Res, _$NodeAddressStateImpl>
+    implements _$$NodeAddressStateImplCopyWith<$Res> {
+  __$$NodeAddressStateImplCopyWithImpl(_$NodeAddressStateImpl _value,
+      $Res Function(_$NodeAddressStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -101,7 +101,7 @@ class __$$_NodeAddressStateCopyWithImpl<$Res>
     Object? name = null,
     Object? isEditing = null,
   }) {
-    return _then(_$_NodeAddressState(
+    return _then(_$NodeAddressStateImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -124,8 +124,8 @@ class __$$_NodeAddressStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NodeAddressState extends _NodeAddressState {
-  const _$_NodeAddressState(
+class _$NodeAddressStateImpl extends _NodeAddressState {
+  const _$NodeAddressStateImpl(
       {this.address = defaultNodeAddress,
       this.errNodeState = '',
       this.name = 'Blockstream',
@@ -154,7 +154,7 @@ class _$_NodeAddressState extends _NodeAddressState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NodeAddressState &&
+            other is _$NodeAddressStateImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.errNodeState, errNodeState) ||
                 other.errNodeState == errNodeState) &&
@@ -170,8 +170,9 @@ class _$_NodeAddressState extends _NodeAddressState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NodeAddressStateCopyWith<_$_NodeAddressState> get copyWith =>
-      __$$_NodeAddressStateCopyWithImpl<_$_NodeAddressState>(this, _$identity);
+  _$$NodeAddressStateImplCopyWith<_$NodeAddressStateImpl> get copyWith =>
+      __$$NodeAddressStateImplCopyWithImpl<_$NodeAddressStateImpl>(
+          this, _$identity);
 }
 
 abstract class _NodeAddressState extends NodeAddressState {
@@ -179,7 +180,7 @@ abstract class _NodeAddressState extends NodeAddressState {
       {final String address,
       final String errNodeState,
       final String name,
-      final bool isEditing}) = _$_NodeAddressState;
+      final bool isEditing}) = _$NodeAddressStateImpl;
   const _NodeAddressState._() : super._();
 
   @override
@@ -192,6 +193,6 @@ abstract class _NodeAddressState extends NodeAddressState {
   bool get isEditing;
   @override
   @JsonKey(ignore: true)
-  _$$_NodeAddressStateCopyWith<_$_NodeAddressState> get copyWith =>
+  _$$NodeAddressStateImplCopyWith<_$NodeAddressStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

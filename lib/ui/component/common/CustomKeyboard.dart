@@ -3,58 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class KeyboardSuggestionsView<T> extends StatelessWidget {
-  const KeyboardSuggestionsView({
-    required this.controller,
-    required this.suggestions,
-    required this.onTap,
-    this.backgroundColor,
-    this.textStyle,
-    this.numberResultsPerScreen = 4,
-  });
-  final TextEditingController? controller;
-  final List<String> suggestions;
-  final Function onTap;
-  final Color? backgroundColor;
-  final TextStyle? textStyle;
-  final int numberResultsPerScreen;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      color: backgroundColor,
-      width: MediaQuery.of(context).size.width,
-      child: ListView.separated(
-        shrinkWrap: false,
-        scrollDirection: Axis.horizontal,
-        itemCount: suggestions.length,
-        separatorBuilder: (c, i) => const VerticalDivider(),
-        itemBuilder: (c, i) {
-          return Container(
-            width: suggestions.length > numberResultsPerScreen
-                ? (MediaQuery.of(context).size.width - 100) /
-                    numberResultsPerScreen
-                : (MediaQuery.of(context).size.width - 30) /
-                    numberResultsPerScreen,
-            child: TextButton(
-              onPressed: () {
-                onTap(suggestions[i]);
-              },
-              child: Center(
-                child: Text(
-                  suggestions[i],
-                  style: textStyle,
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
 enum Language {
   EN,
   FR,
@@ -151,6 +99,11 @@ class BuiltInKeyboard extends StatefulWidget {
     this.enableLongPressUppercase = false,
     this.highlightColor,
     this.splashColor,
+    required this.suggestions,
+    required this.onTap,
+    this.backgroundColor,
+    this.textStyle,
+    this.numberResultsPerScreen = 4,
   });
   // Language of the keyboard
   final Language language;
@@ -193,6 +146,11 @@ class BuiltInKeyboard extends StatefulWidget {
   // The color displayed when the key is pressed
   final Color? highlightColor;
   final Color? splashColor;
+  final List<String> suggestions;
+  final Function onTap;
+  final Color? backgroundColor;
+  final TextStyle? textStyle;
+  final int numberResultsPerScreen;
   @override
   State<BuiltInKeyboard> createState() => _BuiltInKeyboardState();
 }
@@ -281,7 +239,32 @@ class _BuiltInKeyboardState extends State<BuiltInKeyboard> {
           )
         else
           const SizedBox(),
+        const SizedBox(
+          height: 5,
+        ),
+        keyboardSuggestion(),
       ],
+    );
+  }
+
+//keyboard word suggestion
+  Widget keyboardSuggestion() {
+    return Container(
+      height: 40,
+      color: widget.backgroundColor,
+      width: MediaQuery.of(context).size.width,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: widget.suggestions.length,
+        separatorBuilder: (BuildContext context, int index) =>
+            const VerticalDivider(),
+        itemBuilder: (BuildContext context, int index) {
+          return TextButton(
+            onPressed: () {},
+            child: Text('item $index'),
+          );
+        },
+      ),
     );
   }
 

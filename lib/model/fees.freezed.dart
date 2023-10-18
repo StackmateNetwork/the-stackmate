@@ -86,9 +86,10 @@ class _$FeesCopyWithImpl<$Res, $Val extends Fees>
 }
 
 /// @nodoc
-abstract class _$$_FeesCopyWith<$Res> implements $FeesCopyWith<$Res> {
-  factory _$$_FeesCopyWith(_$_Fees value, $Res Function(_$_Fees) then) =
-      __$$_FeesCopyWithImpl<$Res>;
+abstract class _$$FeesImplCopyWith<$Res> implements $FeesCopyWith<$Res> {
+  factory _$$FeesImplCopyWith(
+          _$FeesImpl value, $Res Function(_$FeesImpl) then) =
+      __$$FeesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -99,9 +100,10 @@ abstract class _$$_FeesCopyWith<$Res> implements $FeesCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_FeesCopyWithImpl<$Res> extends _$FeesCopyWithImpl<$Res, _$_Fees>
-    implements _$$_FeesCopyWith<$Res> {
-  __$$_FeesCopyWithImpl(_$_Fees _value, $Res Function(_$_Fees) _then)
+class __$$FeesImplCopyWithImpl<$Res>
+    extends _$FeesCopyWithImpl<$Res, _$FeesImpl>
+    implements _$$FeesImplCopyWith<$Res> {
+  __$$FeesImplCopyWithImpl(_$FeesImpl _value, $Res Function(_$FeesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -112,7 +114,7 @@ class __$$_FeesCopyWithImpl<$Res> extends _$FeesCopyWithImpl<$Res, _$_Fees>
     Object? medium = null,
     Object? fast = null,
   }) {
-    return _then(_$_Fees(
+    return _then(_$FeesImpl(
       timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -136,15 +138,16 @@ class __$$_FeesCopyWithImpl<$Res> extends _$FeesCopyWithImpl<$Res, _$_Fees>
 /// @nodoc
 @JsonSerializable()
 @HiveType(typeId: 5, adapterName: 'FeesClassAdapter')
-class _$_Fees extends _Fees {
-  const _$_Fees(
+class _$FeesImpl extends _Fees {
+  const _$FeesImpl(
       {@HiveField(0) required this.timestamp,
       @HiveField(1) required this.slow,
       @HiveField(2) required this.medium,
       @HiveField(3) required this.fast})
       : super._();
 
-  factory _$_Fees.fromJson(Map<String, dynamic> json) => _$$_FeesFromJson(json);
+  factory _$FeesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FeesImplFromJson(json);
 
   @override
   @HiveField(0)
@@ -168,7 +171,7 @@ class _$_Fees extends _Fees {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Fees &&
+            other is _$FeesImpl &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp) &&
             (identical(other.slow, slow) || other.slow == slow) &&
@@ -183,12 +186,12 @@ class _$_Fees extends _Fees {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FeesCopyWith<_$_Fees> get copyWith =>
-      __$$_FeesCopyWithImpl<_$_Fees>(this, _$identity);
+  _$$FeesImplCopyWith<_$FeesImpl> get copyWith =>
+      __$$FeesImplCopyWithImpl<_$FeesImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FeesToJson(
+    return _$$FeesImplToJson(
       this,
     );
   }
@@ -199,10 +202,10 @@ abstract class _Fees extends Fees {
       {@HiveField(0) required final int timestamp,
       @HiveField(1) required final double slow,
       @HiveField(2) required final double medium,
-      @HiveField(3) required final double fast}) = _$_Fees;
+      @HiveField(3) required final double fast}) = _$FeesImpl;
   const _Fees._() : super._();
 
-  factory _Fees.fromJson(Map<String, dynamic> json) = _$_Fees.fromJson;
+  factory _Fees.fromJson(Map<String, dynamic> json) = _$FeesImpl.fromJson;
 
   @override
   @HiveField(0)
@@ -218,5 +221,6 @@ abstract class _Fees extends Fees {
   double get fast;
   @override
   @JsonKey(ignore: true)
-  _$$_FeesCopyWith<_$_Fees> get copyWith => throw _privateConstructorUsedError;
+  _$$FeesImplCopyWith<_$FeesImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

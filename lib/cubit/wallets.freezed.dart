@@ -100,11 +100,11 @@ class _$WalletsStateCopyWithImpl<$Res, $Val extends WalletsState>
 }
 
 /// @nodoc
-abstract class _$$_WalletsStateCopyWith<$Res>
+abstract class _$$WalletsStateImplCopyWith<$Res>
     implements $WalletsStateCopyWith<$Res> {
-  factory _$$_WalletsStateCopyWith(
-          _$_WalletsState value, $Res Function(_$_WalletsState) then) =
-      __$$_WalletsStateCopyWithImpl<$Res>;
+  factory _$$WalletsStateImplCopyWith(
+          _$WalletsStateImpl value, $Res Function(_$WalletsStateImpl) then) =
+      __$$WalletsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -119,11 +119,11 @@ abstract class _$$_WalletsStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_WalletsStateCopyWithImpl<$Res>
-    extends _$WalletsStateCopyWithImpl<$Res, _$_WalletsState>
-    implements _$$_WalletsStateCopyWith<$Res> {
-  __$$_WalletsStateCopyWithImpl(
-      _$_WalletsState _value, $Res Function(_$_WalletsState) _then)
+class __$$WalletsStateImplCopyWithImpl<$Res>
+    extends _$WalletsStateCopyWithImpl<$Res, _$WalletsStateImpl>
+    implements _$$WalletsStateImplCopyWith<$Res> {
+  __$$WalletsStateImplCopyWithImpl(
+      _$WalletsStateImpl _value, $Res Function(_$WalletsStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -135,7 +135,7 @@ class __$$_WalletsStateCopyWithImpl<$Res>
     Object? errDeleting = null,
     Object? networth = null,
   }) {
-    return _then(_$_WalletsState(
+    return _then(_$WalletsStateImpl(
       wallets: null == wallets
           ? _value._wallets
           : wallets // ignore: cast_nullable_to_non_nullable
@@ -162,8 +162,8 @@ class __$$_WalletsStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
-  const _$_WalletsState(
+class _$WalletsStateImpl with DiagnosticableTreeMixin implements _WalletsState {
+  const _$WalletsStateImpl(
       {final List<Wallet> wallets = const [],
       this.selectedWallet,
       this.toggler = true,
@@ -213,7 +213,7 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WalletsState &&
+            other is _$WalletsStateImpl &&
             const DeepCollectionEquality().equals(other._wallets, _wallets) &&
             (identical(other.selectedWallet, selectedWallet) ||
                 other.selectedWallet == selectedWallet) &&
@@ -236,8 +236,8 @@ class _$_WalletsState with DiagnosticableTreeMixin implements _WalletsState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WalletsStateCopyWith<_$_WalletsState> get copyWith =>
-      __$$_WalletsStateCopyWithImpl<_$_WalletsState>(this, _$identity);
+  _$$WalletsStateImplCopyWith<_$WalletsStateImpl> get copyWith =>
+      __$$WalletsStateImplCopyWithImpl<_$WalletsStateImpl>(this, _$identity);
 }
 
 abstract class _WalletsState implements WalletsState {
@@ -246,7 +246,7 @@ abstract class _WalletsState implements WalletsState {
       final Wallet? selectedWallet,
       final bool toggler,
       final String errDeleting,
-      final int networth}) = _$_WalletsState;
+      final int networth}) = _$WalletsStateImpl;
 
   @override
   List<Wallet> get wallets;
@@ -260,6 +260,6 @@ abstract class _WalletsState implements WalletsState {
   int get networth;
   @override
   @JsonKey(ignore: true)
-  _$$_WalletsStateCopyWith<_$_WalletsState> get copyWith =>
+  _$$WalletsStateImplCopyWith<_$WalletsStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

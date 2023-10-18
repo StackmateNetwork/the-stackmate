@@ -103,11 +103,11 @@ class _$MasterKeyStateCopyWithImpl<$Res, $Val extends MasterKeyState>
 }
 
 /// @nodoc
-abstract class _$$_MasterKeyStateCopyWith<$Res>
+abstract class _$$MasterKeyStateImplCopyWith<$Res>
     implements $MasterKeyStateCopyWith<$Res> {
-  factory _$$_MasterKeyStateCopyWith(
-          _$_MasterKeyState value, $Res Function(_$_MasterKeyState) then) =
-      __$$_MasterKeyStateCopyWithImpl<$Res>;
+  factory _$$MasterKeyStateImplCopyWith(_$MasterKeyStateImpl value,
+          $Res Function(_$MasterKeyStateImpl) then) =
+      __$$MasterKeyStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -120,11 +120,11 @@ abstract class _$$_MasterKeyStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MasterKeyStateCopyWithImpl<$Res>
-    extends _$MasterKeyStateCopyWithImpl<$Res, _$_MasterKeyState>
-    implements _$$_MasterKeyStateCopyWith<$Res> {
-  __$$_MasterKeyStateCopyWithImpl(
-      _$_MasterKeyState _value, $Res Function(_$_MasterKeyState) _then)
+class __$$MasterKeyStateImplCopyWithImpl<$Res>
+    extends _$MasterKeyStateCopyWithImpl<$Res, _$MasterKeyStateImpl>
+    implements _$$MasterKeyStateImplCopyWith<$Res> {
+  __$$MasterKeyStateImplCopyWithImpl(
+      _$MasterKeyStateImpl _value, $Res Function(_$MasterKeyStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -135,7 +135,7 @@ class __$$_MasterKeyStateCopyWithImpl<$Res>
     Object? error = freezed,
     Object? network = freezed,
   }) {
-    return _then(_$_MasterKeyState(
+    return _then(_$MasterKeyStateImpl(
       key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
@@ -158,8 +158,8 @@ class __$$_MasterKeyStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MasterKeyState extends _MasterKeyState {
-  const _$_MasterKeyState({this.key, this.rkey, this.error, this.network})
+class _$MasterKeyStateImpl extends _MasterKeyState {
+  const _$MasterKeyStateImpl({this.key, this.rkey, this.error, this.network})
       : super._();
 
   @override
@@ -180,7 +180,7 @@ class _$_MasterKeyState extends _MasterKeyState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MasterKeyState &&
+            other is _$MasterKeyStateImpl &&
             (identical(other.key, key) || other.key == key) &&
             (identical(other.rkey, rkey) || other.rkey == rkey) &&
             (identical(other.error, error) || other.error == error) &&
@@ -193,8 +193,9 @@ class _$_MasterKeyState extends _MasterKeyState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MasterKeyStateCopyWith<_$_MasterKeyState> get copyWith =>
-      __$$_MasterKeyStateCopyWithImpl<_$_MasterKeyState>(this, _$identity);
+  _$$MasterKeyStateImplCopyWith<_$MasterKeyStateImpl> get copyWith =>
+      __$$MasterKeyStateImplCopyWithImpl<_$MasterKeyStateImpl>(
+          this, _$identity);
 }
 
 abstract class _MasterKeyState extends MasterKeyState {
@@ -202,7 +203,7 @@ abstract class _MasterKeyState extends MasterKeyState {
       {final MasterKey? key,
       final RecoveredKey? rkey,
       final String? error,
-      final String? network}) = _$_MasterKeyState;
+      final String? network}) = _$MasterKeyStateImpl;
   const _MasterKeyState._() : super._();
 
   @override
@@ -215,6 +216,6 @@ abstract class _MasterKeyState extends MasterKeyState {
   String? get network;
   @override
   @JsonKey(ignore: true)
-  _$$_MasterKeyStateCopyWith<_$_MasterKeyState> get copyWith =>
+  _$$MasterKeyStateImplCopyWith<_$MasterKeyStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
