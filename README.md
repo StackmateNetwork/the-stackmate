@@ -43,7 +43,7 @@ This app communicates with [stackmate-core's](https://github.com/i5hi/stackmate-
 
 ## Features
 
-- **Descriptors** uses descriptor wallet specifications for simplicity in development and compatability in recovery 
+- **Descriptors** uses descriptor wallet specifications for simplicity in development and compatability in recovery
 - **PSBT** uses psbt specifications to support watch-only wallets and compatability with hardware wallets
 - **Taproot** supports taproot for single-sig to improve the overall anonymity set of bitcoin transactions
 - **Cross Platform:** built using Flutter 💙 and Rust, allowing easy extension to multiple platforms
@@ -78,14 +78,13 @@ Visibility of files and folders can be toggled from
 
 <br/>
 
-
 ### Updating stackmate-core
 
 <br/>
 Make sure Rust and Android NDK are installed.
 
 ```bash
-cd packages/bitcoin
+cd packages/libstackmate
 sh update-core.sh
 ```
 

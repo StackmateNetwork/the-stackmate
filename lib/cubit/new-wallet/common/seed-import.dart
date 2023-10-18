@@ -38,9 +38,9 @@ class SeedImportState with _$SeedImportState {
 
     final w = words!
         .where(
-          (word) => word.toLowerCase().startsWith(
-                str.toLowerCase(),
-              ),
+          (word) => word.startsWith(
+            str,
+          ),
         )
         .toList();
 

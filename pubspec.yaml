@@ -84,6 +84,7 @@ flutter:
     - assets/icon/bitcoin_icons/png/outline/satoshi-v2.png
     - assets/icon/bitcoin_icons/png/outline/proxy.png
     - assets/icon/bitcoin_icons/png/outline/link.png
+    - assets/bip39_english.txt
   fonts:
     - family: NF3270
       fonts:

@@ -242,13 +242,13 @@ class _BuiltInKeyboardState extends State<BuiltInKeyboard> {
         const SizedBox(
           height: 5,
         ),
-        keyboardSuggestion(),
+        keyboardSuggestion(widget.onTap),
       ],
     );
   }
 
 //keyboard word suggestion
-  Widget keyboardSuggestion() {
+  Widget keyboardSuggestion(Function onTap) {
     return Container(
       height: 40,
       color: widget.backgroundColor,
@@ -260,8 +260,10 @@ class _BuiltInKeyboardState extends State<BuiltInKeyboard> {
             const VerticalDivider(),
         itemBuilder: (BuildContext context, int index) {
           return TextButton(
-            onPressed: () {},
-            child: Text('item $index'),
+            onPressed: () {
+              onTap();
+            },
+            child: Text(widget.suggestions.first),
           );
         },
       ),

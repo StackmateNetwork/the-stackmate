@@ -110,11 +110,11 @@ class SeedImportPhrase extends StatelessWidget {
           child: Column(
             children: [
               BuiltInKeyboard(
-                textStyle: TextStyle(fontSize: 14, color: c.colours.background),
+                textStyle: TextStyle(fontSize: 14, color: c.colours.error),
                 backgroundColor: c.colours.primary,
-                suggestions: words!,
-                onTap: (v) {
-                  print(v);
+                suggestions: state.findWords(textController.text),
+                onTap: () {
+                  c.read<SeedImportCubit>().seedTextChanged(state.words!.first);
                 },
                 color: c.colours.primary,
                 width: 26,
