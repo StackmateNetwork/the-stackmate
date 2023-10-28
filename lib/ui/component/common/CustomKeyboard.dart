@@ -80,6 +80,63 @@ var arabicConfig = {
   },
 };
 
+// class Suggestion<T> {
+//   Suggestion({required this.title, required this.value});
+//   final String title;
+//   final T value;
+// }
+
+// typedef OnTap<T> = Function(T value);
+
+// class KeyboardSuggestionsView<T> extends StatelessWidget {
+//   const KeyboardSuggestionsView({
+//     required this.suggestions,
+//     required this.onTap,
+//     required this.backgroundColor,
+//     required this.textStyle,
+//     this.numberResultsPerScreen = 3,
+//   });
+//   final List<Suggestion<T>> suggestions;
+//   final OnTap<T> onTap;
+//   final Color backgroundColor;
+//   final TextStyle textStyle;
+//   final int numberResultsPerScreen;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: 60,
+//       color: backgroundColor,
+//       width: MediaQuery.of(context).size.width,
+//       child: ListView.separated(
+//         scrollDirection: Axis.horizontal,
+//         itemCount: suggestions.length,
+//         separatorBuilder: (c, i) => const VerticalDivider(),
+//         itemBuilder: (c, i) {
+//           return Container(
+//             width: suggestions.length > numberResultsPerScreen
+//                 ? (MediaQuery.of(context).size.width - 100) /
+//                     numberResultsPerScreen
+//                 : (MediaQuery.of(context).size.width - 30) /
+//                     numberResultsPerScreen,
+//             child: TextButton(
+//               onPressed: () {
+//                 onTap(suggestions[i].value);
+//               },
+//               child: Center(
+//                 child: Text(
+//                   suggestions[i].title,
+//                   style: textStyle,
+//                 ),
+//               ),
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
 class BuiltInKeyboard extends StatefulWidget {
   const BuiltInKeyboard({
     super.key,
@@ -99,11 +156,6 @@ class BuiltInKeyboard extends StatefulWidget {
     this.enableLongPressUppercase = false,
     this.highlightColor,
     this.splashColor,
-    required this.suggestions,
-    required this.onTap,
-    this.backgroundColor,
-    this.textStyle,
-    this.numberResultsPerScreen = 4,
   });
   // Language of the keyboard
   final Language language;
@@ -146,11 +198,7 @@ class BuiltInKeyboard extends StatefulWidget {
   // The color displayed when the key is pressed
   final Color? highlightColor;
   final Color? splashColor;
-  final List<String> suggestions;
-  final Function onTap;
-  final Color? backgroundColor;
-  final TextStyle? textStyle;
-  final int numberResultsPerScreen;
+
   @override
   State<BuiltInKeyboard> createState() => _BuiltInKeyboardState();
 }
@@ -242,33 +290,45 @@ class _BuiltInKeyboardState extends State<BuiltInKeyboard> {
         const SizedBox(
           height: 5,
         ),
-        keyboardSuggestion(widget.onTap),
+        // keyboardSuggestion(),
       ],
     );
   }
 
-//keyboard word suggestion
-  Widget keyboardSuggestion(Function onTap) {
-    return Container(
-      height: 40,
-      color: widget.backgroundColor,
-      width: MediaQuery.of(context).size.width,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: widget.suggestions.length,
-        separatorBuilder: (BuildContext context, int index) =>
-            const VerticalDivider(),
-        itemBuilder: (BuildContext context, int index) {
-          return TextButton(
-            onPressed: () {
-              onTap();
-            },
-            child: Text(widget.suggestions.first),
-          );
-        },
-      ),
-    );
-  }
+// //keyboard word suggestion
+//   Widget keyboardSuggestion() {
+//     return Container(
+//       height: 40,
+//       color: widget.color,
+//       width: MediaQuery.of(context).size.width,
+//       child: ListView.separated(
+//         scrollDirection: Axis.horizontal,
+//         itemCount: widget.suggestions.length,
+//         separatorBuilder: (BuildContext context, int index) =>
+//             const VerticalDivider(),
+//         itemBuilder: (BuildContext context, int i) {
+//           return Container(
+//             width: widget.suggestions.length > widget.numberResultsPerScreen
+//                 ? (MediaQuery.of(context).size.width - 100) /
+//                     widget.numberResultsPerScreen
+//                 : (MediaQuery.of(context).size.width - 30) /
+//                     widget.numberResultsPerScreen,
+//             child: TextButton(
+//               onPressed: () {
+//                 widget.onTap(widget.suggestions[i].value);
+//               },
+//               child: Center(
+//                 child: Text(
+//                   widget.suggestions[i].title,
+//                   style: widget.textStyle,
+//                 ),
+//               ),
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
 
   // Letter button widget
   Widget buttonLetter(String letter) {

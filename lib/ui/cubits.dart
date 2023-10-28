@@ -6,6 +6,7 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
+import 'package:sats/cubit/new-wallet/common/words_cubit.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/pin.dart';
 import 'package:sats/cubit/preferences.dart';
@@ -14,6 +15,7 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
+import 'package:sats/pkg/mnemonic_word.dart';
 // import 'package:sats/pkg/vibrate.dart';
 
 class Cubits extends StatefulWidget {
@@ -76,6 +78,8 @@ class _CubitsState extends State<Cubits> {
     final pinCubit = PinCubit(
       storage,
     );
+    final wordCubit = WordsCubit(mnemonicWords: MnemonicWords());
+    wordCubit.loadWords();
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: networkSelectCubit),
@@ -88,6 +92,7 @@ class _CubitsState extends State<Cubits> {
         BlocProvider.value(value: masterKeyCubit),
         BlocProvider.value(value: broadcastHex),
         BlocProvider.value(value: pinCubit),
+        BlocProvider.value(value: wordCubit),
       ],
       child: BlocListener<ChainSelectCubit, BlockchainState>(
         listener: (context, state) {

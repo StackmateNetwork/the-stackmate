@@ -19,7 +19,6 @@ mixin _$SeedImportState {
   SeedImportStep get currentStep => throw _privateConstructorUsedError;
   String get err => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
-  List<String>? get words => throw _privateConstructorUsedError;
   String get seed => throw _privateConstructorUsedError;
   String get seedError => throw _privateConstructorUsedError;
   String get passPhrase => throw _privateConstructorUsedError;
@@ -44,7 +43,6 @@ abstract class $SeedImportStateCopyWith<$Res> {
       {SeedImportStep currentStep,
       String err,
       bool loading,
-      List<String>? words,
       String seed,
       String seedError,
       String passPhrase,
@@ -71,7 +69,6 @@ class _$SeedImportStateCopyWithImpl<$Res, $Val extends SeedImportState>
     Object? currentStep = null,
     Object? err = null,
     Object? loading = null,
-    Object? words = freezed,
     Object? seed = null,
     Object? seedError = null,
     Object? passPhrase = null,
@@ -94,10 +91,6 @@ class _$SeedImportStateCopyWithImpl<$Res, $Val extends SeedImportState>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
-      words: freezed == words
-          ? _value.words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
       seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -146,7 +139,6 @@ abstract class _$$SeedImportStateImplCopyWith<$Res>
       {SeedImportStep currentStep,
       String err,
       bool loading,
-      List<String>? words,
       String seed,
       String seedError,
       String passPhrase,
@@ -171,7 +163,6 @@ class __$$SeedImportStateImplCopyWithImpl<$Res>
     Object? currentStep = null,
     Object? err = null,
     Object? loading = null,
-    Object? words = freezed,
     Object? seed = null,
     Object? seedError = null,
     Object? passPhrase = null,
@@ -194,10 +185,6 @@ class __$$SeedImportStateImplCopyWithImpl<$Res>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
-      words: freezed == words
-          ? _value._words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
       seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -241,7 +228,6 @@ class _$SeedImportStateImpl extends _SeedImportState {
       {this.currentStep = SeedImportStep.import,
       this.err = '',
       this.loading = false,
-      final List<String>? words,
       this.seed = '',
       this.seedError = '',
       this.passPhrase = '',
@@ -250,8 +236,7 @@ class _$SeedImportStateImpl extends _SeedImportState {
       this.seedReady = false,
       this.masterXpriv,
       this.wallet})
-      : _words = words,
-        super._();
+      : super._();
 
   @override
   @JsonKey()
@@ -262,16 +247,6 @@ class _$SeedImportStateImpl extends _SeedImportState {
   @override
   @JsonKey()
   final bool loading;
-  final List<String>? _words;
-  @override
-  List<String>? get words {
-    final value = _words;
-    if (value == null) return null;
-    if (_words is EqualUnmodifiableListView) return _words;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
   @override
   @JsonKey()
   final String seed;
@@ -297,7 +272,7 @@ class _$SeedImportStateImpl extends _SeedImportState {
 
   @override
   String toString() {
-    return 'SeedImportState(currentStep: $currentStep, err: $err, loading: $loading, words: $words, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
+    return 'SeedImportState(currentStep: $currentStep, err: $err, loading: $loading, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
   }
 
   @override
@@ -309,7 +284,6 @@ class _$SeedImportStateImpl extends _SeedImportState {
                 other.currentStep == currentStep) &&
             (identical(other.err, err) || other.err == err) &&
             (identical(other.loading, loading) || other.loading == loading) &&
-            const DeepCollectionEquality().equals(other._words, _words) &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.seedError, seedError) ||
                 other.seedError == seedError) &&
@@ -332,7 +306,6 @@ class _$SeedImportStateImpl extends _SeedImportState {
       currentStep,
       err,
       loading,
-      const DeepCollectionEquality().hash(_words),
       seed,
       seedError,
       passPhrase,
@@ -355,7 +328,6 @@ abstract class _SeedImportState extends SeedImportState {
       {final SeedImportStep currentStep,
       final String err,
       final bool loading,
-      final List<String>? words,
       final String seed,
       final String seedError,
       final String passPhrase,
@@ -372,8 +344,6 @@ abstract class _SeedImportState extends SeedImportState {
   String get err;
   @override
   bool get loading;
-  @override
-  List<String>? get words;
   @override
   String get seed;
   @override

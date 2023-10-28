@@ -156,13 +156,12 @@ class SeedImportScreen extends StatelessWidget {
     final nodeSelect = context.select((NodeAddressCubit c) => c);
     final tor = context.select((TorCubit c) => c);
     final masterKey = context.select((MasterKeyCubit c) => c);
-    final words = MnemonicWords();
+
     final importCubit = SeedImportCubit(
       logger,
       masterKey,
       networkSelect,
       locator<IStackMateBitcoin>(),
-      words,
     );
 
     final seedImportCubit = SeedImportWalletCubit(
