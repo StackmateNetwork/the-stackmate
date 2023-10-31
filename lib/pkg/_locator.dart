@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sats/api/cpsocket.dart';
 import 'package:sats/api/interface/cpsocket.dart';
@@ -15,6 +16,7 @@ import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/pkg/launcher.dart';
 import 'package:sats/pkg/mnemonic_word.dart';
+import 'package:sats/pkg/secure-storage.dart';
 import 'package:sats/pkg/share.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/pkg/vibrate.dart';
@@ -28,6 +30,7 @@ void setupDependencies({required bool useDummies}) {
         mnemonicWords: MnemonicWords(),
       ),
     );
+    locator.registerLazySingleton<SStorage>(() => SecureStorage());
     locator.registerLazySingleton<IStorage>(() => HiveStore());
     locator.registerLazySingleton<IClipBoard>(() => ClipBoard());
     locator.registerLazySingleton<IShare>(() => Sharer());
@@ -42,6 +45,7 @@ void setupDependencies({required bool useDummies}) {
         mnemonicWords: MnemonicWords(),
       ),
     );
+    locator.registerLazySingleton<SStorage>(() => SecureStorage());
     locator.registerLazySingleton<IShare>(() => Sharer());
     locator.registerLazySingleton<ILauncher>(() => Launcher());
     locator.registerLazySingleton<IClipBoard>(() => ClipBoard());

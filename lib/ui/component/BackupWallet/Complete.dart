@@ -103,10 +103,10 @@ class SeedBackup extends StatelessWidget {
                             const SizedBox(width: 8),
                             SeedWordCell(
                               text: (i + 2).toString() + '. ' + words[i + 1],
-                            )
+                            ),
                           ],
                         ),
-                      )
+                      ),
               ],
             ),
           ),
@@ -115,7 +115,8 @@ class SeedBackup extends StatelessWidget {
             height: 52,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                foregroundColor: c.colours.background, backgroundColor: c.colours.primary,
+                foregroundColor: c.colours.background,
+                backgroundColor: c.colours.primary,
               ),
               onPressed: () {
                 c.read<SeedBackupCubit>().startQuiz();
@@ -123,7 +124,7 @@ class SeedBackup extends StatelessWidget {
               child: Text('Next'.toUpperCase()),
             ),
           ),
-          const SizedBox(height: 12)
+          const SizedBox(height: 12),
         ],
       ),
     );
@@ -163,7 +164,7 @@ class ConfirmStepCell extends StatelessWidget {
               color: isSelected ? c.colours.primary : c.colours.secondary,
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -251,7 +252,7 @@ class SeedConfirm extends StatelessWidget {
                   onTap: () {
                     c.read<SeedBackupCubit>().seedWordSelected(words[i + 1]);
                   },
-                )
+                ),
               ],
             ),
         const SizedBox(height: 32),
@@ -260,9 +261,9 @@ class SeedConfirm extends StatelessWidget {
           children: [
             const ConfirmStepCell(isOn: true, isSelected: true, text: ''),
             ConfirmStepCell(isOn: completedIdx > 1, isSelected: true, text: ''),
-            ConfirmStepCell(isOn: completedIdx > 2, isSelected: true, text: '')
+            ConfirmStepCell(isOn: completedIdx > 2, isSelected: true, text: ''),
           ],
-        )
+        ),
       ],
     );
   }

@@ -96,7 +96,7 @@ class _BackupWalletState extends State<_BackupWallet> {
                           }
                         }(),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

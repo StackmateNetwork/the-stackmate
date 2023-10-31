@@ -73,14 +73,12 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
             currentStep: SeedBackupSteps.warning,
           ),
         );
-        break;
       case SeedBackupSteps.quiz:
         emit(
           state.copyWith(
             currentStep: SeedBackupSteps.display,
           ),
         );
-        break;
     }
   }
 
@@ -88,15 +86,12 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
     switch (state.currentStep) {
       case SeedBackupSteps.warning:
         emit(state.copyWith(currentStep: SeedBackupSteps.display));
-        break;
 
       case SeedBackupSteps.display:
         emit(state.copyWith(currentStep: SeedBackupSteps.quiz));
-        break;
 
       case SeedBackupSteps.quiz:
         if (!state.backupComplete) await _completeBackup();
-        break;
     }
   }
 

@@ -16,6 +16,7 @@ import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/mnemonic_word.dart';
+import 'package:sats/pkg/secure-storage.dart';
 // import 'package:sats/pkg/vibrate.dart';
 
 class Cubits extends StatefulWidget {
@@ -31,7 +32,7 @@ class _CubitsState extends State<Cubits> {
   Widget build(BuildContext context) {
     final logger = locator<Logger>();
     final storage = locator<IStorage>();
-
+    final sstorage = locator<SStorage>();
     final networkSelectCubit = ChainSelectCubit(
       storage,
       logger,
@@ -40,7 +41,7 @@ class _CubitsState extends State<Cubits> {
     final torCubit = TorCubit(storage, logger);
     torCubit.start();
 
-    final masterKeyCubit = MasterKeyCubit(networkSelectCubit);
+    final masterKeyCubit = MasterKeyCubit(sstorage, networkSelectCubit);
     masterKeyCubit.init();
 
     final preferencesCubit = PreferencesCubit(storage);
