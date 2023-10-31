@@ -216,7 +216,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
       }
       // we cannot import a primary key with passphrase - pp wallets can be derived later
       final pp =
-          (_masterKey.state.key != null) ? emptyString : state.passPhrase;
+          (_masterKey.state.key == null) ? emptyString : state.passPhrase;
       final root = _core.importMaster(
         mnemonic: state.seed,
         passphrase: pp,
