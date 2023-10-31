@@ -127,7 +127,7 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   static const wshScript = 'wsh';
   static const emptyString = '';
 
-  void nextClicked() async {
+  void nextClicked() {
     switch (state.currentStep) {
       case SeedImportWalletSteps.warning:
         emit(
@@ -135,7 +135,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
             currentStep: SeedImportWalletSteps.import,
           ),
         );
-        break;
 
       case SeedImportWalletSteps.import:
         if (_masterKeyCubit.state.key != null)
@@ -144,11 +143,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
               currentStep: SeedImportWalletSteps.label,
             ),
           );
-        break;
 
       case SeedImportWalletSteps.label:
         if (!state.savingWallet) _saveClicked();
-        break;
     }
   }
 
@@ -165,12 +162,9 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
               const SeedImportWalletState(),
             );
             _importCubit.backOnPassphaseClicked();
-            break;
           case SeedImportStep.passphrase:
             _importCubit.backOnSeedClicked();
-            break;
         }
-        break;
 
       case SeedImportWalletSteps.label:
         emit(
@@ -179,7 +173,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
           ),
         );
         _importCubit.backOnSeedClicked();
-        break;
     }
   }
 

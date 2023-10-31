@@ -16,7 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SeedImportState {
+  List<({bool tapped, String word})> get words12 =>
+      throw _privateConstructorUsedError;
+  List<({bool tapped, String word})> get words24 =>
+      throw _privateConstructorUsedError;
   SeedImportStep get currentStep => throw _privateConstructorUsedError;
+  ImportTypes get importType => throw _privateConstructorUsedError;
   String get err => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   String get seed => throw _privateConstructorUsedError;
@@ -40,7 +45,10 @@ abstract class $SeedImportStateCopyWith<$Res> {
       _$SeedImportStateCopyWithImpl<$Res, SeedImportState>;
   @useResult
   $Res call(
-      {SeedImportStep currentStep,
+      {List<({bool tapped, String word})> words12,
+      List<({bool tapped, String word})> words24,
+      SeedImportStep currentStep,
+      ImportTypes importType,
       String err,
       bool loading,
       String seed,
@@ -66,7 +74,10 @@ class _$SeedImportStateCopyWithImpl<$Res, $Val extends SeedImportState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? words12 = null,
+    Object? words24 = null,
     Object? currentStep = null,
+    Object? importType = null,
     Object? err = null,
     Object? loading = null,
     Object? seed = null,
@@ -79,10 +90,22 @@ class _$SeedImportStateCopyWithImpl<$Res, $Val extends SeedImportState>
     Object? wallet = freezed,
   }) {
     return _then(_value.copyWith(
+      words12: null == words12
+          ? _value.words12
+          : words12 // ignore: cast_nullable_to_non_nullable
+              as List<({bool tapped, String word})>,
+      words24: null == words24
+          ? _value.words24
+          : words24 // ignore: cast_nullable_to_non_nullable
+              as List<({bool tapped, String word})>,
       currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as SeedImportStep,
+      importType: null == importType
+          ? _value.importType
+          : importType // ignore: cast_nullable_to_non_nullable
+              as ImportTypes,
       err: null == err
           ? _value.err
           : err // ignore: cast_nullable_to_non_nullable
@@ -136,7 +159,10 @@ abstract class _$$SeedImportStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {SeedImportStep currentStep,
+      {List<({bool tapped, String word})> words12,
+      List<({bool tapped, String word})> words24,
+      SeedImportStep currentStep,
+      ImportTypes importType,
       String err,
       bool loading,
       String seed,
@@ -160,7 +186,10 @@ class __$$SeedImportStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? words12 = null,
+    Object? words24 = null,
     Object? currentStep = null,
+    Object? importType = null,
     Object? err = null,
     Object? loading = null,
     Object? seed = null,
@@ -173,10 +202,22 @@ class __$$SeedImportStateImplCopyWithImpl<$Res>
     Object? wallet = freezed,
   }) {
     return _then(_$SeedImportStateImpl(
+      words12: null == words12
+          ? _value._words12
+          : words12 // ignore: cast_nullable_to_non_nullable
+              as List<({bool tapped, String word})>,
+      words24: null == words24
+          ? _value._words24
+          : words24 // ignore: cast_nullable_to_non_nullable
+              as List<({bool tapped, String word})>,
       currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as SeedImportStep,
+      importType: null == importType
+          ? _value.importType
+          : importType // ignore: cast_nullable_to_non_nullable
+              as ImportTypes,
       err: null == err
           ? _value.err
           : err // ignore: cast_nullable_to_non_nullable
@@ -225,7 +266,10 @@ class __$$SeedImportStateImplCopyWithImpl<$Res>
 
 class _$SeedImportStateImpl extends _SeedImportState {
   const _$SeedImportStateImpl(
-      {this.currentStep = SeedImportStep.import,
+      {final List<({bool tapped, String word})> words12 = const [],
+      final List<({bool tapped, String word})> words24 = const [],
+      this.currentStep = SeedImportStep.import,
+      this.importType = ImportTypes.words12,
       this.err = '',
       this.loading = false,
       this.seed = '',
@@ -236,11 +280,34 @@ class _$SeedImportStateImpl extends _SeedImportState {
       this.seedReady = false,
       this.masterXpriv,
       this.wallet})
-      : super._();
+      : _words12 = words12,
+        _words24 = words24,
+        super._();
+
+  final List<({bool tapped, String word})> _words12;
+  @override
+  @JsonKey()
+  List<({bool tapped, String word})> get words12 {
+    if (_words12 is EqualUnmodifiableListView) return _words12;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_words12);
+  }
+
+  final List<({bool tapped, String word})> _words24;
+  @override
+  @JsonKey()
+  List<({bool tapped, String word})> get words24 {
+    if (_words24 is EqualUnmodifiableListView) return _words24;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_words24);
+  }
 
   @override
   @JsonKey()
   final SeedImportStep currentStep;
+  @override
+  @JsonKey()
+  final ImportTypes importType;
   @override
   @JsonKey()
   final String err;
@@ -272,7 +339,7 @@ class _$SeedImportStateImpl extends _SeedImportState {
 
   @override
   String toString() {
-    return 'SeedImportState(currentStep: $currentStep, err: $err, loading: $loading, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
+    return 'SeedImportState(words12: $words12, words24: $words24, currentStep: $currentStep, importType: $importType, err: $err, loading: $loading, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
   }
 
   @override
@@ -280,8 +347,12 @@ class _$SeedImportStateImpl extends _SeedImportState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SeedImportStateImpl &&
+            const DeepCollectionEquality().equals(other._words12, _words12) &&
+            const DeepCollectionEquality().equals(other._words24, _words24) &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
+            (identical(other.importType, importType) ||
+                other.importType == importType) &&
             (identical(other.err, err) || other.err == err) &&
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.seed, seed) || other.seed == seed) &&
@@ -303,7 +374,10 @@ class _$SeedImportStateImpl extends _SeedImportState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(_words12),
+      const DeepCollectionEquality().hash(_words24),
       currentStep,
+      importType,
       err,
       loading,
       seed,
@@ -325,7 +399,10 @@ class _$SeedImportStateImpl extends _SeedImportState {
 
 abstract class _SeedImportState extends SeedImportState {
   const factory _SeedImportState(
-      {final SeedImportStep currentStep,
+      {final List<({bool tapped, String word})> words12,
+      final List<({bool tapped, String word})> words24,
+      final SeedImportStep currentStep,
+      final ImportTypes importType,
       final String err,
       final bool loading,
       final String seed,
@@ -339,7 +416,13 @@ abstract class _SeedImportState extends SeedImportState {
   const _SeedImportState._() : super._();
 
   @override
+  List<({bool tapped, String word})> get words12;
+  @override
+  List<({bool tapped, String word})> get words24;
+  @override
   SeedImportStep get currentStep;
+  @override
+  ImportTypes get importType;
   @override
   String get err;
   @override

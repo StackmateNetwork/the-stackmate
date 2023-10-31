@@ -13,11 +13,9 @@ import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
-import 'package:sats/pkg/mnemonic_word.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Label.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Loader.dart';
-
 import 'package:sats/ui/component/NewWallet/SeedImport/Stepper.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Warning.dart';
 
@@ -99,7 +97,7 @@ class _SeedImport extends StatelessWidget {
                 },
               ),
             ),
-            body: SafeArea(
+            body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -113,10 +111,10 @@ class _SeedImport extends StatelessWidget {
                     key: Key(state.currentStepLabel()),
                     child: Container(
                       margin: const EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 24,
+                        horizontal: 15,
+                        vertical: 20,
                       ),
-                      padding: const EdgeInsets.all(16),
+                      // padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: c.colours.surface,
                         borderRadius: BorderRadius.circular(8),
@@ -156,7 +154,6 @@ class SeedImportScreen extends StatelessWidget {
     final nodeSelect = context.select((NodeAddressCubit c) => c);
     final tor = context.select((TorCubit c) => c);
     final masterKey = context.select((MasterKeyCubit c) => c);
-
     final importCubit = SeedImportCubit(
       logger,
       masterKey,
