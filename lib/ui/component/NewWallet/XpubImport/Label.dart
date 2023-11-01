@@ -17,8 +17,8 @@ class XpubLabel extends StatelessWidget {
             handleError(
               context,
               state.errSavingWallet,
-            )
-          }
+            ),
+          },
       },
       child: IgnorePointer(
         ignoring: savingWallet,

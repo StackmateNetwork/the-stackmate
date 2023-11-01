@@ -45,7 +45,7 @@ class LogItem extends StatelessWidget {
                 style: context.fonts.bodyLarge!.copyWith(
                   color: context.colours.primary,
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -63,7 +63,7 @@ class LogItem extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       );
 
@@ -88,7 +88,7 @@ class LogItem extends StatelessWidget {
                 style: context.fonts.bodySmall!.copyWith(
                   color: context.colours.onBackground,
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -104,7 +104,7 @@ class LogItem extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       );
 

@@ -104,10 +104,10 @@ class SeedGenerate extends StatelessWidget {
                             const SizedBox(width: 8),
                             SeedWordCell(
                               text: (i + 2).toString() + '. ' + words[i + 1],
-                            )
+                            ),
                           ],
                         ),
-                      )
+                      ),
               ],
             ),
           ),
@@ -139,7 +139,7 @@ class SeedGenerate extends StatelessWidget {
               child: Text('BackUp Later'.toUpperCase()),
             ),
           ),
-          const SizedBox(height: 12)
+          const SizedBox(height: 12),
         ],
       ),
     );
@@ -179,7 +179,7 @@ class ConfirmStepCell extends StatelessWidget {
               color: isSelected ? c.colours.primary : c.colours.onPrimary,
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -267,7 +267,7 @@ class SeedConfirm extends StatelessWidget {
                   onTap: () {
                     c.read<SeedGenerateCubit>().seedWordSelected(words[i + 1]);
                   },
-                )
+                ),
               ],
             ),
         const SizedBox(height: 32),
@@ -276,9 +276,9 @@ class SeedConfirm extends StatelessWidget {
           children: [
             const ConfirmStepCell(isOn: true, isSelected: true, text: ''),
             ConfirmStepCell(isOn: completedIdx > 1, isSelected: true, text: ''),
-            ConfirmStepCell(isOn: completedIdx > 2, isSelected: true, text: '')
+            ConfirmStepCell(isOn: completedIdx > 2, isSelected: true, text: ''),
           ],
-        )
+        ),
       ],
     );
   }

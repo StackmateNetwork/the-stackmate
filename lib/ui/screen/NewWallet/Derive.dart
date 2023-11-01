@@ -62,7 +62,7 @@ class _Derive extends StatelessWidget {
                         color: c.colours.tertiaryContainer,
                       ),
                     ),
-                  )
+                  ),
                 ] else ...[
                   IconButton(
                     color: c.colours.error,
@@ -118,7 +118,7 @@ class _Derive extends StatelessWidget {
                             return const DeriveLabel();
                         }
                       }(),
-                    )
+                    ),
                   ],
                 ),
               ),

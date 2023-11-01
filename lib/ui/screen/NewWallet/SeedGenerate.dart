@@ -86,7 +86,7 @@ class _SeedGenerateState extends State<_SeedGenerate> {
                         color: c.colours.tertiaryContainer,
                       ),
                     ),
-                  )
+                  ),
                 ] else ...[
                   IconButton(
                     color: c.colours.error,
@@ -147,7 +147,7 @@ class _SeedGenerateState extends State<_SeedGenerate> {
                           }
                         }(),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

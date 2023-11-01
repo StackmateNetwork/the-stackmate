@@ -116,7 +116,6 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
           return;
         }
         if (!state.savingWallet) _saveWallet();
-        break;
     }
   }
 
@@ -124,7 +123,6 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     switch (state.currentStep) {
       case XpubImportWalletStep.import:
         _importCubit.clear();
-        break;
       case XpubImportWalletStep.label:
         emit(
           state.copyWith(
@@ -133,7 +131,6 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
             errSavingWallet: emptyString,
           ),
         );
-        break;
     }
   }
 

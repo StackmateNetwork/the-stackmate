@@ -68,7 +68,7 @@ class _WalletSend extends StatelessWidget {
                       color: context.colours.tertiaryContainer,
                     ),
                   ),
-                )
+                ),
               ] else ...[
                 IconButton(
                   color: context.colours.error,

@@ -101,7 +101,7 @@ class TextAddress extends StatelessWidget {
             fontSize: 12,
           ),
           textAlign: TextAlign.center,
-        )
+        ),
       ],
     );
   }

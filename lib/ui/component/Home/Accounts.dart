@@ -41,7 +41,7 @@ class Accounts extends StatelessWidget {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              for (var w in wallets) ...[
+              for (final w in wallets) ...[
                 const SizedBox(height: 5),
                 BlocProvider.value(
                   value: InfoCubit(

@@ -65,7 +65,7 @@ class TransactionItem extends StatelessWidget {
                         ],
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 8),
@@ -157,7 +157,7 @@ class TransactionItem extends StatelessWidget {
                       ],
                     ],
                   ),
-                )
+                ),
               ],
             ),
             const SizedBox(height: 8),
@@ -262,10 +262,10 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                             style: c.fonts.labelSmall!.copyWith(
                               color: c.colours.onBackground,
                             ),
-                          )
+                          ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 8),
@@ -318,7 +318,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -408,10 +408,10 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                             style: c.fonts.labelSmall!.copyWith(
                               color: c.colours.onBackground,
                             ),
-                          )
+                          ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 8),
@@ -496,8 +496,8 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                     ),
                     const SizedBox(width: 32),
                   ],
-                )
-              ]
+                ),
+              ],
             ],
           ),
         ),

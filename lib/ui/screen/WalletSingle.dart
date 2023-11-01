@@ -61,7 +61,7 @@ class _Wallet extends StatelessWidget {
                       color: c.colours.tertiaryContainer,
                     ),
                   ),
-                )
+                ),
               ] else ...[
                 IconButton(
                   color: c.colours.error,
@@ -188,7 +188,7 @@ class _Wallet extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 6),
-                    if (!showInfo) TransactionsList() else const WalletInfo()
+                    if (!showInfo) TransactionsList() else const WalletInfo(),
                   ],
                 ),
               ),

@@ -40,7 +40,7 @@ class Header extends StatelessWidget {
               top: 0,
               end: 0,
               child: LogButton(child: CornerTitle(text: cornerTitle)),
-            )
+            ),
           ],
         ),
       ),

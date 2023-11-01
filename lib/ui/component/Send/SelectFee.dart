@@ -52,15 +52,15 @@ class _SelectFeeState extends State<SelectFee> {
             handleError(
               context,
               state.errLoading,
-            )
+            ),
           }
         else if (state.errFees != '')
           {
             handleError(
               context,
               state.errFees,
-            )
-          }
+            ),
+          },
       },
       child: BlocBuilder<SendCubit, SendState>(
         builder: (context, state) {

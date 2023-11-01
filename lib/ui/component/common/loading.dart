@@ -21,7 +21,7 @@ class Loading extends StatelessWidget {
             color: c.colours.onBackground,
           ),
           textAlign: TextAlign.center,
-        )
+        ),
       ],
     );
   }

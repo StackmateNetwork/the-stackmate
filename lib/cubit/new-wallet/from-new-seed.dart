@@ -99,7 +99,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         );
         _generateCubit.clear();
 
-        break;
 
       case SeedGenerateWalletSteps.label:
         break;
@@ -111,15 +110,12 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
       case SeedGenerateWalletSteps.warning:
         emit(state.copyWith(currentStep: SeedGenerateWalletSteps.generate));
         _generateCubit.generateSeed();
-        break;
 
       case SeedGenerateWalletSteps.generate:
         emit(state.copyWith(currentStep: SeedGenerateWalletSteps.label));
-        break;
 
       case SeedGenerateWalletSteps.label:
         if (!state.savingWallet) saveClicked();
-        break;
     }
   }
 

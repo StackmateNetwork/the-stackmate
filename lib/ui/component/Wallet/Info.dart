@@ -74,7 +74,7 @@ class WalletInfo extends StatelessWidget {
                         SizedBox(
                           height: 32,
                         ),
-                        BackupOps()
+                        BackupOps(),
                       ],
                     ),
                   ),

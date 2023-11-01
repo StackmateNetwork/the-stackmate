@@ -52,7 +52,7 @@ class _Home extends StatelessWidget {
                               height: 16,
                             ),
                             Networth(),
-                            WalletTools()
+                            WalletTools(),
                           ],
                         ),
                       ),
@@ -74,7 +74,7 @@ class _Home extends StatelessWidget {
                           children: [
                             const HomeLoader(),
                             TorHeader(),
-                            WalletTools()
+                            WalletTools(),
                           ],
                         ),
                       ),

@@ -65,7 +65,7 @@ class TorConfigScreen extends StatelessWidget {
                         color: c.colours.tertiaryContainer,
                       ),
                     ),
-                  )
+                  ),
                 ] else ...[
                   Icon(
                     Icons.security_sharp,

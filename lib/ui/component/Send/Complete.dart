@@ -43,7 +43,7 @@ class TransactionComplete extends StatelessWidget {
                 },
                 child: const Text('RETURN'),
               ),
-            )
+            ),
           ],
         ),
       );

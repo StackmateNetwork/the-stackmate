@@ -16,15 +16,15 @@ class DeriveLabel extends StatelessWidget {
             handleError(
               context,
               state.walletLabelError,
-            )
+            ),
           }
         else if (state.errSavingWallet != '')
           {
             handleError(
               context,
               state.errSavingWallet,
-            )
-          }
+            ),
+          },
       },
       child: IgnorePointer(
         ignoring: savingWallet,

@@ -42,7 +42,7 @@ class Back extends StatelessWidget {
                     color: c.colours.primary,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

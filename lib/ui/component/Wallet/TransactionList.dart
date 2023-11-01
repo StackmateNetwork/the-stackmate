@@ -34,7 +34,7 @@ class TransactionsList extends StatelessWidget {
               ),
             ),
           ),
-          for (var transaction in transactions)
+          for (final transaction in transactions)
             TransactionItem(transaction: transaction),
           const SizedBox(height: 24),
         ],

@@ -33,7 +33,7 @@ class WalletDetails extends StatelessWidget {
           BitcoinDisplaySmall(
             satsAmount: balance.toString(),
             bitcoinUnit: preferences.preferredBitcoinUnit,
-          )
+          ),
         ],
       ],
     );

@@ -43,7 +43,7 @@ class AddWalletScreen extends StatelessWidget {
                           color: c.colours.tertiaryContainer,
                         ),
                       ),
-                    )
+                    ),
                   ] else ...[
                     IconButton(
                       color: c.colours.error,
@@ -95,7 +95,7 @@ class AddWalletScreen extends StatelessWidget {
                           color: c.colours.tertiaryContainer,
                         ),
                       ),
-                    )
+                    ),
                   ] else ...[
                     IconButton(
                       color: c.colours.error,

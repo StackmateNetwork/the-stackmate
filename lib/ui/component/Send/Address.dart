@@ -39,15 +39,15 @@ class _SendAddressState extends State<SendAddress> {
             handleError(
               context,
               state.errLoading,
-            )
+            ),
           }
         else if (state.errAddress != '')
           {
             handleError(
               context,
               state.errAddress,
-            )
-          }
+            ),
+          },
       },
       child: BlocBuilder<SendCubit, SendState>(
         builder: (context, state) {

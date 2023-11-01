@@ -27,7 +27,7 @@ class BckButton extends StatelessWidget {
               text,
               style: c.fonts.labelLarge!.copyWith(color: c.colours.onSurface),
             ),
-          )
+          ),
         ],
       ),
     );

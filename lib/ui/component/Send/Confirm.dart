@@ -22,15 +22,15 @@ class ConfirmTransaction extends StatelessWidget {
             handleError(
               context,
               state.errLoading,
-            )
+            ),
           }
         else if (state.errSending != '')
           {
             handleError(
               context,
               state.errSending,
-            )
-          }
+            ),
+          },
       },
       child: BlocBuilder<SendCubit, SendState>(
         builder: (context, state) {
@@ -152,7 +152,7 @@ class ConfirmTransaction extends StatelessWidget {
                           // Future.delayed(Duration(seconds: 2));
                         },
                         child: const Text('SAVE PSBT'),
-                      )
+                      ),
                     ],
                     const SizedBox(height: 6),
                     if (state.errSending != '')

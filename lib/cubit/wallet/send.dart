@@ -625,13 +625,10 @@ class SendCubit extends Cubit<SendState> {
     switch (idx) {
       case 0:
         finalFee = state.feeSlow!;
-        break;
       case 1:
         finalFee = state.feeMedium!;
-        break;
       case 2:
         finalFee = state.feeFast!;
-        break;
     }
     emit(
       state.copyWith(
@@ -793,7 +790,6 @@ class SendCubit extends Cubit<SendState> {
             errFees: emptyString,
           ),
         );
-        break;
       case SendSteps.fees:
         emit(
           state.copyWith(
@@ -805,7 +801,6 @@ class SendCubit extends Cubit<SendState> {
             errFees: emptyString,
           ),
         );
-        break;
       case SendSteps.confirm:
         emit(
           state.copyWith(
@@ -817,7 +812,6 @@ class SendCubit extends Cubit<SendState> {
             errFees: emptyString,
           ),
         );
-        break;
       case SendSteps.sent:
         break;
     }

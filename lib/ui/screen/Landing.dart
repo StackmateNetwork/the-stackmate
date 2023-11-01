@@ -28,15 +28,15 @@ class _Landing extends StatelessWidget {
             else
               {
                 c.push('/add-wallet'),
-              }
+              },
           }
         else if (state.error != null)
           {
             handleError(
               context,
               state.error!,
-            )
-          }
+            ),
+          },
       },
       child: Scaffold(
         body: SafeArea(

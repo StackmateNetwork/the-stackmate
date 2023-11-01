@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sats/api/libbitcoin.dart';
-import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 
 void main() {
   // THE FOLLOWING WALLET NEEDS SYNC TO SUPPORT HIGHER MAX ADDRESS VALUE

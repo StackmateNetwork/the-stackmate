@@ -67,7 +67,7 @@ class _XpubImport extends StatelessWidget {
                         color: c.colours.tertiaryContainer,
                       ),
                     ),
-                  )
+                  ),
                 ] else ...[
                   IconButton(
                     color: c.colours.error,
@@ -126,7 +126,7 @@ class _XpubImport extends StatelessWidget {
                             return const XpubLabel();
                         }
                       }(),
-                    )
+                    ),
                   ],
                 ),
               ),

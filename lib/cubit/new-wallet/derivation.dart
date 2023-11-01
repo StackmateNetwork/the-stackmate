@@ -99,10 +99,8 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
     switch (state.currentStep) {
       case DeriveWalletStep.purpose:
         emit(state.copyWith(currentStep: DeriveWalletStep.passphrase));
-        break;
       case DeriveWalletStep.passphrase:
         emit(state.copyWith(currentStep: DeriveWalletStep.label));
-        break;
       case DeriveWalletStep.label:
         if (state.label == emptyString ||
             state.label.length < 3 ||
@@ -116,8 +114,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
           (state.purpose == DerivationPurpose.taproot)
               ? deriveTaproot()
               : deriveSegwit();
-
-        break;
     }
   }
 
@@ -138,7 +134,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
             walletLabelError: emptyString,
           ),
         );
-        break;
       case DeriveWalletStep.label:
         emit(
           state.copyWith(
@@ -148,7 +143,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
             walletLabelError: emptyString,
           ),
         );
-        break;
     }
   }
 

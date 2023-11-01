@@ -317,7 +317,7 @@ void _deleteWalletClicked(
               Navigator.pop(context, false);
             },
           ),
-        )
+        ),
       ],
     ),
   );

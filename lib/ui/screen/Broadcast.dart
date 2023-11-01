@@ -35,7 +35,7 @@ class _Broadcast extends StatelessWidget {
                   color: c.colours.tertiaryContainer,
                 ),
               ),
-            )
+            ),
           ] else ...[
             IconButton(
               color: c.colours.error,

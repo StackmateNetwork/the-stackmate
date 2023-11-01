@@ -16,15 +16,15 @@ class SeedImportLabel extends StatelessWidget {
             handleError(
               context,
               state.walletLabelError,
-            )
+            ),
           }
         else if (state.savingWalletError != '')
           {
             handleError(
               context,
               state.savingWalletError,
-            )
-          }
+            ),
+          },
       },
       child: IgnorePointer(
         ignoring: savingWallet,
