@@ -99,7 +99,6 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         );
         _generateCubit.clear();
 
-
       case SeedGenerateWalletSteps.label:
         break;
     }
@@ -126,7 +125,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
   void saveClicked() async {
     if (state.walletLabel.length < 3 ||
         state.walletLabel.length > 20 ||
-        state.walletLabel == emptyString) {
+        state.walletLabel.isEmpty) {
       emit(
         state.copyWith(
           walletLabelError: invalidLabelError,

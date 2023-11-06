@@ -102,7 +102,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       case DeriveWalletStep.passphrase:
         emit(state.copyWith(currentStep: DeriveWalletStep.label));
       case DeriveWalletStep.label:
-        if (state.label == emptyString ||
+        if (state.label.isEmpty ||
             state.label.length < 3 ||
             state.label.length > 20) {
           emit(state.copyWith(walletLabelError: invalidLabelError));

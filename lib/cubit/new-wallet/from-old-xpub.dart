@@ -105,7 +105,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         break;
 
       case XpubImportWalletStep.label:
-        if (state.label == emptyString ||
+        if (state.label.isEmpty ||
             state.label.length < 3 ||
             state.label.length > 20) {
           emit(
