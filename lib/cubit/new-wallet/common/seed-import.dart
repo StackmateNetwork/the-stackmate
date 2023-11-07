@@ -134,6 +134,13 @@ class SeedImportCubit extends Cubit<SeedImportState> {
   }
 
   void gotoPassPhrase() {
+    final type = state.importType;
+    switch (type) {
+      case ImportTypes.words12:
+        recoverWallet12Clicked();
+      case ImportTypes.words24:
+        recoverWallet24Clicked();
+    }
     emit(
       state.copyWith(
         currentStep: SeedImportStep.passphrase,

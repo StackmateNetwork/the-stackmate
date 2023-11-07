@@ -7,6 +7,7 @@ import 'package:sats/cubit/new-wallet/common/words_cubit.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Passphrase.dart';
+import 'package:sats/ui/component/common/ErrorHandler.dart';
 import 'package:sats/ui/component/common/textInput.dart';
 
 class SeedImportSteps extends StatelessWidget {
@@ -49,136 +50,154 @@ class SeedImportPhrase extends StatelessWidget {
       focusNodes24[idx + 1].requestFocus();
     }
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              alignment: Alignment.topRight,
-              child: SegmentedButton(
-                segments: <ButtonSegment<ImportTypes>>[
-                  ButtonSegment(
-                    value: ImportTypes.words12,
-                    label: Text(
-                      '12',
-                      style: TextStyle(
-                        color: c.colours.onBackground,
+    return BlocListener<SeedImportCubit, SeedImportState>(
+      listenWhen: (previous, current) =>
+          previous.words12 != current.words12 ||
+          previous.words24 != current.words24,
+      listener: (context, state) => {
+        if (state.showSeedCompleteButton())
+          handleError(
+            context,
+            'Invalid seed words', //state.errLoading,
+          ),
+        if (state.words12.length == 12 || state.words24.length == 24)
+          handleError(
+            context,
+            'Please fill all words', //state.errLoading,
+          ),
+      },
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                alignment: Alignment.topRight,
+                child: SegmentedButton(
+                  segments: <ButtonSegment<ImportTypes>>[
+                    ButtonSegment(
+                      value: ImportTypes.words12,
+                      label: Text(
+                        '12',
+                        style: TextStyle(
+                          color: c.colours.onBackground,
+                        ),
                       ),
                     ),
-                  ),
-                  ButtonSegment(
-                    value: ImportTypes.words24,
-                    label: Text(
-                      '24',
-                      style: TextStyle(
-                        color: c.colours.onBackground,
+                    ButtonSegment(
+                      value: ImportTypes.words24,
+                      label: Text(
+                        '24',
+                        style: TextStyle(
+                          color: c.colours.onBackground,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-                selected: <ImportTypes>{
-                  if (state.importType == ImportTypes.words12)
-                    ImportTypes.words12
-                  else
-                    ImportTypes.words24,
-                },
-                onSelectionChanged: (p0) {
-                  if (state.importType == ImportTypes.words12)
-                    c.read<SeedImportCubit>().recoverClicked24();
-                  else
-                    c.read<SeedImportCubit>().recoverClicked();
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            if (state.importType == ImportTypes.words12)
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        for (var i = 0; i < 6; i++)
-                          ImportWordTextField(
-                            index: i,
-                            focusNode: focusNodes[i],
-                            returnClicked: returnClicked,
-                          ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        for (var i = 6; i < 12; i++)
-                          ImportWordTextField(
-                            index: i,
-                            focusNode: focusNodes[i],
-                            returnClicked: returnClicked,
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              )
-            else
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        for (var i = 0; i < 12; i++)
-                          ImportWordTextField24(
-                            index: i,
-                            focusNode: focusNodes24[i],
-                            returnClicked: returnClicked24,
-                          ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        for (var i = 12; i < 24; i++)
-                          ImportWordTextField24(
-                            index: i,
-                            focusNode: focusNodes24[i],
-                            returnClicked: returnClicked24,
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            const SizedBox(height: 15),
-            SizedBox(
-              height: 52,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: c.colours.background,
-                  backgroundColor: c.colours.primary,
+                  ],
+                  selected: <ImportTypes>{
+                    if (state.importType == ImportTypes.words12)
+                      ImportTypes.words12
+                    else
+                      ImportTypes.words24,
+                  },
+                  onSelectionChanged: (p0) {
+                    if (state.importType == ImportTypes.words12)
+                      c.read<SeedImportCubit>().recoverClicked24();
+                    else
+                      c.read<SeedImportCubit>().recoverClicked();
+                  },
                 ),
-                onPressed: () async {
-                  final FocusScopeNode currentFocus = FocusScope.of(c);
-
-                  if (!currentFocus.hasPrimaryFocus) {
-                    currentFocus.unfocus();
-                  }
-                  if (!hasMaster) {
-                    await c.read<SeedImportCubit>().checkSeed();
-                    c.read<SeedImportWalletCubit>().nextClicked();
-                  } else {
-                    c.read<SeedImportCubit>().gotoPassPhrase();
-                  }
-                },
-                child: const Text('Next'),
               ),
-            ),
-            //const SizedBox(height: 5),
-          ],
+              const SizedBox(
+                height: 5,
+              ),
+              if (state.importType == ImportTypes.words12)
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          for (var i = 0; i < 6; i++)
+                            ImportWordTextField(
+                              index: i,
+                              focusNode: focusNodes[i],
+                              returnClicked: returnClicked,
+                            ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          for (var i = 6; i < 12; i++)
+                            ImportWordTextField(
+                              index: i,
+                              focusNode: focusNodes[i],
+                              returnClicked: returnClicked,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              else
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          for (var i = 0; i < 12; i++)
+                            ImportWordTextField24(
+                              index: i,
+                              focusNode: focusNodes24[i],
+                              returnClicked: returnClicked24,
+                            ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          for (var i = 12; i < 24; i++)
+                            ImportWordTextField24(
+                              index: i,
+                              focusNode: focusNodes24[i],
+                              returnClicked: returnClicked24,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              const SizedBox(height: 15),
+              SizedBox(
+                height: 52,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: c.colours.background,
+                    backgroundColor: c.colours.primary,
+                  ),
+                  onPressed: () async {
+                    final FocusScopeNode currentFocus = FocusScope.of(c);
+
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
+                    if (!hasMaster) {
+                      await c.read<SeedImportCubit>().checkSeed();
+                      c.read<SeedImportWalletCubit>().nextClicked();
+                    } else {
+                      if (state.showSeedCompleteButton())
+                        c.read<SeedImportCubit>().gotoPassPhrase();
+                    }
+                  },
+                  child: const Text('Next'),
+                ),
+              ),
+              //const SizedBox(height: 5),
+            ],
+          ),
         ),
       ),
     );
