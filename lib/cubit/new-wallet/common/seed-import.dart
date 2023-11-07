@@ -82,6 +82,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
       state.copyWith(
         currentStep: SeedImportStep.import,
         importType: ImportTypes.words12,
+        words12: emptyWords12,
       ),
     );
   }
@@ -91,6 +92,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
       state.copyWith(
         currentStep: SeedImportStep.import,
         importType: ImportTypes.words24,
+        words24: emptyWords24,
       ),
     );
   }
@@ -212,7 +214,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
       }
 
       final tseed = state.seed;
-      print(tseed);
+      // print(tseed);
 
       if (bip39.validateMnemonic(tseed)) {
         emit(
@@ -238,7 +240,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
         account: state.accountNumber.toString(),
         purpose: segwitNativePurpose,
       );
-      print(wallet.result!.fingerPrint);
+      //print(wallet.result!.fingerPrint);
       if (wallet.hasError) {
         throw SMError.fromJson(wallet.error!).message;
       }
@@ -251,6 +253,14 @@ class SeedImportCubit extends Cubit<SeedImportState> {
           wallet: wallet.result,
         ),
       );
+      if (wallet.result!.fingerPrint == _masterKey.state.rkey!.fingerprint) {
+        emit(
+          state.copyWith(
+            currentStep: SeedImportStep.import,
+            seedError: 'Wallet exists',
+          ),
+        );
+      }
     } catch (e, s) {
       emit(state.copyWith(seedError: e.toString()));
       logger.logException(

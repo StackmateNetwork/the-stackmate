@@ -107,7 +107,7 @@ class _WalletSend extends StatelessWidget {
                   if (state.zeroBalanceAmt()) {
                     Navigator.pop(context);
                   }
-                  await context.read<FeesCubit>().getFees();
+                  await context.read<FeesCubit>().update();
                 },
                 listenWhen: (p, c) =>
                     p.zeroBalanceAmt().not(c.zeroBalanceAmt()),

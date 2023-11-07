@@ -91,7 +91,7 @@ class _Wallet extends StatelessWidget {
             child: RefreshIndicator(
               onRefresh: () async {
                 c.read<InfoCubit>().sqliteSyncHistory();
-                await c.read<FeesCubit>().getFees();
+                await c.read<FeesCubit>().update();
                 return;
               },
               child: SingleChildScrollView(
