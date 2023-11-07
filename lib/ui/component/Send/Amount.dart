@@ -40,14 +40,14 @@ class _AmountRowState extends State<AmountRow> {
           {
             handleError(
               context,
-              state.errLoading,
+              'Check tor connection', //state.errLoading,
             ),
           }
         else if (state.errAmount != '')
           {
             handleError(
               context,
-              state.errAmount,
+              'Invalid amount', //state.errAmount,
             ),
           }
         else if (state.errFees != '')

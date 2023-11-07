@@ -125,7 +125,8 @@ class FeesCubit extends Cubit<FeesState> {
     }
   }
 
-  Fees getFees() {
+  Future<Fees> getFees() async {
+    await update();
     return state.fees;
   }
 

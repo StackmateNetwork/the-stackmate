@@ -38,14 +38,14 @@ class _SendAddressState extends State<SendAddress> {
           {
             handleError(
               context,
-              state.errLoading,
+              'Check tor connection', // state.errLoading,
             ),
           }
         else if (state.errAddress != '')
           {
             handleError(
               context,
-              state.errAddress,
+              'Invalid address', //state.errAddress,
             ),
           },
       },

@@ -23,7 +23,7 @@ class _Home extends StatelessWidget {
           displacement: 10.0,
           onRefresh: () async {
             // await c.read<TorCubit>().testConnection();
-            await c.read<FeesCubit>().update();
+            await c.read<FeesCubit>().getFees();
             return;
           },
           child: BlocBuilder<TorCubit, TorState>(

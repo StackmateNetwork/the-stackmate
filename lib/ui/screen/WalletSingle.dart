@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/info.dart';
@@ -90,6 +91,7 @@ class _Wallet extends StatelessWidget {
             child: RefreshIndicator(
               onRefresh: () async {
                 c.read<InfoCubit>().sqliteSyncHistory();
+                await c.read<FeesCubit>().getFees();
                 return;
               },
               child: SingleChildScrollView(

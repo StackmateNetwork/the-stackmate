@@ -67,6 +67,7 @@ class _CubitsState extends State<Cubits> {
       torCubit,
       logger,
     );
+    feesCubit.init();
     final broadcastHex = BroadcastCubit(
       logger,
       locator<IStackMateBitcoin>(),
@@ -79,6 +80,7 @@ class _CubitsState extends State<Cubits> {
     final pinCubit = PinCubit(
       storage,
     );
+    pinCubit.init();
     final wordCubit = WordsCubit(mnemonicWords: MnemonicWords());
     wordCubit.loadWords();
     return MultiBlocProvider(

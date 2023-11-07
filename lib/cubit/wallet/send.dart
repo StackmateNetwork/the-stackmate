@@ -572,12 +572,12 @@ class SendCubit extends Cubit<SendState> {
 
       final now = DateTime.now().millisecondsSinceEpoch;
       const tenMinutes = 600000;
-      var feesComplete = _fees.getFees();
+      var feesComplete = await _fees.getFees();
       if (feesComplete.fast == 0.0 ||
           feesComplete.timestamp < now - tenMinutes) {
         await _fees.update();
       }
-      feesComplete = _fees.getFees();
+      feesComplete = await _fees.getFees();
 
       final fast = _core.feeRateToAbsolute(
         feeRate: feesComplete.fast.toString(),

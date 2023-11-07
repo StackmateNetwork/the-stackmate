@@ -31,7 +31,6 @@ class _SelectFeeState extends State<SelectFee> {
     // return BlocBuilder<SendCubit, SendState>(
     //   builder: (context, state) {
     // context.read<FeesCubit>().update();
-
     if (state.feeSlow == null ||
         state.feeMedium == null ||
         state.feeFast == null) return Container();
@@ -47,18 +46,21 @@ class _SelectFeeState extends State<SelectFee> {
 
     return BlocListener<SendCubit, SendState>(
       listener: (context, state) => {
+        if (state.feeSlow == null ||
+            state.feeMedium == null ||
+            state.feeFast == null)
+          handleError(context, 'Check tor connection'),
         if (state.errLoading != '')
           {
             handleError(
-              context,
-              state.errLoading,
+              context, 'Error loading fees', //state.errLoading,
             ),
           }
         else if (state.errFees != '')
           {
             handleError(
               context,
-              state.errFees,
+              'Error loading fee,Check tor connection', // state.errFees,
             ),
           },
       },
@@ -202,7 +204,8 @@ class _SelectFeeState extends State<SelectFee> {
                     height: 52,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: context.colours.background, backgroundColor: context.colours.primary,
+                        foregroundColor: context.colours.background,
+                        backgroundColor: context.colours.primary,
                       ),
                       onPressed: () {
                         context.read<SendCubit>().feeConfirmedClicked();
