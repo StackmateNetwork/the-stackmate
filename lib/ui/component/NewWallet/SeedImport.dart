@@ -208,7 +208,7 @@ class SeedImportPhrase extends StatelessWidget {
               ignoring: !state.showSeedCompleteButton(),
               child: AnimatedOpacity(
                 duration: const Duration(milliseconds: 400),
-                opacity: (!state.showSeedCompleteButton()) ? 0.3 : 1,
+                opacity: (!state.showSeedCompleteButton()) ? 0.1 : 1,
                 child: SizedBox(
                   height: 52,
                   child: ElevatedButton(
