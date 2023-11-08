@@ -195,6 +195,7 @@ class _BBTextInputState extends State<BBTextInput> {
         widgett = SizedBox(
           height: 40,
           child: TextField(
+            enableSuggestions: false,
             focusNode: widget.focusNode,
             enabled: !widget.disabled,
             onChanged: widget.onChanged,

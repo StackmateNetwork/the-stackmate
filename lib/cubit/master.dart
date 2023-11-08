@@ -37,8 +37,7 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
   Future<void> init() async {
     if (_chainSelect.state.blockchain.name == 'main') {
       final value = await storage.getValue(mainkey);
-      // ignore: unnecessary_null_comparison
-      if (value == null) {
+      if (value.result == null) {
         emit(state.copyWith(key: null));
         return;
       } else {
@@ -56,8 +55,7 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       }
     } else {
       final value = await storage.getValue(testkey);
-      // ignore: unnecessary_null_comparison
-      if (value == null) {
+      if (value.result == null) {
         emit(state.copyWith(key: null));
         return;
       } else {
@@ -107,8 +105,7 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
   ) async {
     if (_chainSelect.state.blockchain.name == 'main') {
       final value = await storage.getValue(recoverkey + fingerPrint);
-      // ignore: unnecessary_null_comparison
-      if (value == null) {
+      if (value.result == null) {
         emit(state.copyWith(rkey: null));
         return;
       } else {
@@ -128,8 +125,8 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       final value = await storage.getValue(
         recoverkey + fingerPrint,
       );
-      // ignore: unnecessary_null_comparison
-      if (value == null) {
+
+      if (value.result == null) {
         emit(state.copyWith(rkey: null));
         return;
       } else {

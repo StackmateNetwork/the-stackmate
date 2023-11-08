@@ -235,7 +235,7 @@ class SeedImportPhrase extends StatelessWidget {
                 ),
               ),
             ),
-            //const SizedBox(height: 5),
+            const SizedBox(height: 5),
           ],
         ),
       ),
@@ -340,6 +340,7 @@ class _ImportWordTextFieldState extends State<ImportWordTextField> {
         children: [
           for (final word in suggestions)
             ListTile(
+              titleAlignment: ListTileTitleAlignment.bottom,
               title: Text(word),
               onTap: () {
                 context
