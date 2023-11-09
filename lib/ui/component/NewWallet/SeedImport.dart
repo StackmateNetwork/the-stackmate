@@ -184,6 +184,8 @@ class SeedImportPhrase extends StatelessWidget {
                     onPressed: () async {
                       if (state.seedError == 'Please fill all words')
                         handleError(c, 'Please fill all words');
+                      if (!state.showSeedCompleteButton())
+                        handleError(c, 'Invalid seed');
                       if (!hasMaster) {
                         (state.importType == ImportTypes.words12)
                             ? c.read<SeedImportCubit>().recoverWallet12Clicked()

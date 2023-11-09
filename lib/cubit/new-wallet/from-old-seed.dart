@@ -209,7 +209,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       final istate = _importCubit.state;
       final wallet = istate.wallet;
       if (wallet == null) return;
-      //if (wallet.fingerPrint == _masterKeyCubit.state.rkey!.fingerprint) return;
 
       final root = _importCubit.state.masterXpriv!;
 

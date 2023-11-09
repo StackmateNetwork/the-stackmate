@@ -253,14 +253,14 @@ class SeedImportCubit extends Cubit<SeedImportState> {
           wallet: wallet.result,
         ),
       );
-      if (wallet.result!.fingerPrint == _masterKey.state.rkey!.fingerprint) {
-        emit(
-          state.copyWith(
-            currentStep: SeedImportStep.import,
-            seedError: 'Wallet exists',
-          ),
-        );
-      }
+      // if (wallet.result!.fingerPrint == _masterKey.state.rkey!.fingerprint) {
+      //   emit(
+      //     state.copyWith(
+      //       currentStep: SeedImportStep.import,
+      //       seedError: 'Wallet exists',
+      //     ),
+      //   );
+      // }
     } catch (e, s) {
       emit(state.copyWith(seedError: e.toString()));
       logger.logException(
