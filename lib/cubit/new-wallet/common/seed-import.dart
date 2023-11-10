@@ -136,13 +136,6 @@ class SeedImportCubit extends Cubit<SeedImportState> {
   }
 
   void gotoPassPhrase() {
-    final type = state.importType;
-    switch (type) {
-      case ImportTypes.words12:
-        recoverWallet12Clicked();
-      case ImportTypes.words24:
-        recoverWallet24Clicked();
-    }
     emit(
       state.copyWith(
         currentStep: SeedImportStep.passphrase,
@@ -178,7 +171,13 @@ class SeedImportCubit extends Cubit<SeedImportState> {
 
     if (type == ImportTypes.words12) {
       final mnemonic = state.words12.map((_) => _.word).join(' ');
-      emit(state.copyWith(seed: mnemonic));
+      final seedTest = bip39.validateMnemonic(mnemonic);
+      emit(
+        state.copyWith(
+          seed: mnemonic,
+          seedError: seedTest ? '' : 'Invalid seed',
+        ),
+      );
     }
   }
 
@@ -199,20 +198,18 @@ class SeedImportCubit extends Cubit<SeedImportState> {
 
     if (type == ImportTypes.words24) {
       final mnemonic = state.words24.map((_) => _.word).join(' ');
-      emit(state.copyWith(seed: mnemonic));
+      final seedTest = bip39.validateMnemonic(mnemonic);
+      emit(
+        state.copyWith(
+          seed: mnemonic,
+          seedError: seedTest ? '' : 'Invalid seed',
+        ),
+      );
     }
   }
 
   Future<void> checkSeed() async {
     try {
-      final type = state.importType;
-      switch (type) {
-        case ImportTypes.words12:
-          recoverWallet12Clicked();
-        case ImportTypes.words24:
-          recoverWallet24Clicked();
-      }
-
       final tseed = state.seed;
       // print(tseed);
 

@@ -26,115 +26,118 @@ class _Home extends StatelessWidget {
             await c.read<FeesCubit>().update();
             return;
           },
-          child: BlocBuilder<TorCubit, TorState>(
-            builder: (context, torState) {
-              return CustomScrollView(
-                slivers: [
-                  if (masterKey != null)
-                    SliverAppBar(
-                      stretch: true,
-                      pinned: true,
-                      collapsedHeight: 256,
-                      expandedHeight: 256,
-                      automaticallyImplyLeading: false,
-                      backgroundColor: c.colours.background,
-                      flexibleSpace: FlexibleSpaceBar(
-                        stretchModes: const [
-                          StretchMode.fadeTitle,
+          child: BlocListener<TorCubit, TorState>(
+            listenWhen: (previous, current) =>
+                previous.isConnected != current.isConnected,
+            listener: (context, torState) {
+              if (!torState.isConnected) c.read<TorCubit>().start();
+            },
+            child: CustomScrollView(
+              slivers: [
+                if (masterKey != null)
+                  SliverAppBar(
+                    stretch: true,
+                    pinned: true,
+                    collapsedHeight: 256,
+                    expandedHeight: 256,
+                    automaticallyImplyLeading: false,
+                    backgroundColor: c.colours.background,
+                    flexibleSpace: FlexibleSpaceBar(
+                      stretchModes: const [
+                        StretchMode.fadeTitle,
+                      ],
+                      background: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const HomeLoader(),
+                          TorHeader(),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Networth(),
+                          WalletTools(),
                         ],
-                        background: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const HomeLoader(),
-                            TorHeader(),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Networth(),
-                            WalletTools(),
-                          ],
-                        ),
-                      ),
-                    )
-                  else
-                    SliverAppBar(
-                      stretch: true,
-                      pinned: true,
-                      expandedHeight: c.height / 3,
-                      automaticallyImplyLeading: false,
-                      backgroundColor: c.colours.background,
-                      flexibleSpace: FlexibleSpaceBar(
-                        stretchModes: const [
-                          StretchMode.fadeTitle,
-                        ],
-                        background: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const HomeLoader(),
-                            TorHeader(),
-                            WalletTools(),
-                          ],
-                        ),
                       ),
                     ),
-                  if (masterKey != null)
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 12,
-                              bottom: 12,
-                              left: 12,
-                              right: 12,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [BackupWarning(), Accounts()],
-                            ),
-                          ),
+                  )
+                else
+                  SliverAppBar(
+                    stretch: true,
+                    pinned: true,
+                    expandedHeight: c.height / 3,
+                    automaticallyImplyLeading: false,
+                    backgroundColor: c.colours.background,
+                    flexibleSpace: FlexibleSpaceBar(
+                      stretchModes: const [
+                        StretchMode.fadeTitle,
+                      ],
+                      background: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const HomeLoader(),
+                          TorHeader(),
+                          WalletTools(),
                         ],
                       ),
-                    )
-                  else
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 12,
-                              bottom: 12,
-                              left: 12,
-                              right: 12,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 24,
-                                    vertical: 24,
-                                  ),
-                                  child: Text(
-                                    'Click on + icon to Create wallet',
-                                    style: c.fonts.bodySmall!.copyWith(
-                                      color: c.colours.onBackground,
-                                    ),
+                    ),
+                  ),
+                if (masterKey != null)
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 12,
+                            bottom: 12,
+                            left: 12,
+                            right: 12,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [BackupWarning(), Accounts()],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                else
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 12,
+                            bottom: 12,
+                            left: 12,
+                            right: 12,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                  vertical: 24,
+                                ),
+                                child: Text(
+                                  'Click on + icon to Create wallet',
+                                  style: c.fonts.bodySmall!.copyWith(
+                                    color: c.colours.onBackground,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                ],
-              ).animate(delay: 200.ms).fadeIn();
-            },
+                  ),
+              ],
+            ).animate(delay: 200.ms).fadeIn(),
           ),
         ),
       ),

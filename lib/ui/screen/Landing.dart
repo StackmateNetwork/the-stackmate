@@ -27,6 +27,7 @@ class _Landing extends StatelessWidget {
               }
             else
               {
+                c.read<TorCubit>().start(),
                 c.push('/add-wallet'),
               },
           }
@@ -43,15 +44,10 @@ class _Landing extends StatelessWidget {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
-                stretch: true,
-                pinned: true,
                 expandedHeight: c.height / 1.2,
                 automaticallyImplyLeading: false,
                 backgroundColor: c.colours.background,
                 flexibleSpace: const FlexibleSpaceBar(
-                  stretchModes: [
-                    StretchMode.fadeTitle,
-                  ],
                   background: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [

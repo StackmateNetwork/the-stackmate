@@ -181,10 +181,10 @@ class SeedImportPhrase extends StatelessWidget {
                       foregroundColor: c.colours.background,
                       backgroundColor: c.colours.primary,
                     ),
-                    onPressed: () async {
+                    onPressed: () {
                       if (state.seedError == 'Please fill all words')
                         handleError(c, 'Please fill all words');
-                      if (!state.showSeedCompleteButton())
+                      if (state.seedError == 'Invalid seed')
                         handleError(c, 'Invalid seed');
                       if (!hasMaster) {
                         (state.importType == ImportTypes.words12)
