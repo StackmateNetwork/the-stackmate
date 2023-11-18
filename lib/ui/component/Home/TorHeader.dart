@@ -26,7 +26,7 @@ class TorHeader extends StatelessWidget {
             )
           else ...[
             Padding(
-              padding: const EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.all(2),
               child: Column(
                 children: [
                   Icon(

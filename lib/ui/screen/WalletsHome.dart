@@ -53,7 +53,7 @@ class _Home extends StatelessWidget {
                           const HomeLoader(),
                           TorHeader(),
                           const SizedBox(
-                            height: 16,
+                            height: 8,
                           ),
                           Networth(),
                           WalletTools(),
@@ -89,7 +89,7 @@ class _Home extends StatelessWidget {
                       [
                         Padding(
                           padding: const EdgeInsets.only(
-                            top: 12,
+                            top: 16,
                             bottom: 12,
                             left: 12,
                             right: 12,
@@ -110,7 +110,7 @@ class _Home extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(
                             top: 12,
-                            bottom: 12,
+                            // bottom: 12,
                             left: 12,
                             right: 12,
                           ),

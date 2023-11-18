@@ -54,7 +54,7 @@ class WalletCard extends StatelessWidget {
                 height: 92,
                 width: context.width / 2,
                 padding: const EdgeInsets.only(
-                  top: 16,
+                  // top: 10,
                   left: 12,
                   right: 12,
                   bottom: 12,

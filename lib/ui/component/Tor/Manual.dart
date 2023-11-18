@@ -16,7 +16,8 @@ class ManualTor extends StatelessWidget {
             await context.read<TorCubit>().toggleEnforce();
           },
           style: ElevatedButton.styleFrom(
-            elevation: 0, backgroundColor: context.colours.surface,
+            elevation: 0,
+            backgroundColor: context.colours.surface,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           ),
@@ -24,7 +25,7 @@ class ManualTor extends StatelessWidget {
             height: 90,
             padding: const EdgeInsets.only(
               top: 16,
-              bottom: 16,
+              bottom: 5,
             ),
             child: Row(
               children: [
@@ -73,7 +74,8 @@ class ManualTor extends StatelessWidget {
             context.read<TorCubit>().toggleInternal();
           },
           style: ElevatedButton.styleFrom(
-            elevation: 0, backgroundColor: context.colours.surface,
+            elevation: 0,
+            backgroundColor: context.colours.surface,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           ),
@@ -81,7 +83,7 @@ class ManualTor extends StatelessWidget {
             height: 90,
             padding: const EdgeInsets.only(
               top: 16,
-              bottom: 16,
+              bottom: 3,
             ),
             child: Row(
               children: [
