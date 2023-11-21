@@ -62,7 +62,9 @@ class Stackmate extends StatelessWidget {
           builder: (context, child) {
             final mediaQueryData = MediaQuery.of(context);
             return MediaQuery(
-              data: mediaQueryData.copyWith(textScaleFactor: 1.0),
+              data: mediaQueryData.copyWith(
+                textScaler: const TextScaler.linear(1.001),
+              ),
               child: child!,
             );
           },

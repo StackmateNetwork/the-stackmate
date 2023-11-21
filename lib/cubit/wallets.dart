@@ -79,7 +79,7 @@ class WalletsCubit extends Cubit<WalletsState> {
     emit(state.copyWith(selectedWallet: wallet));
   }
 
-  void networth() {
+  Future<void> networth() async {
     var net = 0;
 
     // THIS WILL ONLY WORK FOR SINGLE SIGS

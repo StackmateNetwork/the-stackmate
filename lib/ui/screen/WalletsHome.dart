@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/tor.dart';
+import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Home/Accounts.dart';
 import 'package:sats/ui/component/Home/Actions.dart';
@@ -16,6 +17,7 @@ class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key);
+    //final networth = c.select((WalletsCubit w) => w.state.networth);
 
     return Scaffold(
       body: SafeArea(
@@ -24,120 +26,122 @@ class _Home extends StatelessWidget {
           onRefresh: () async {
             // await c.read<TorCubit>().testConnection();
             await c.read<FeesCubit>().update();
+            await c.read<WalletsCubit>().networth();
             return;
           },
-          child: BlocListener<TorCubit, TorState>(
-            listenWhen: (previous, current) =>
+          child: BlocBuilder<TorCubit, TorState>(
+            buildWhen: (previous, current) =>
                 previous.isConnected != current.isConnected,
-            listener: (context, torState) {
-              if (!torState.isConnected) c.read<TorCubit>().start();
-            },
-            child: CustomScrollView(
-              slivers: [
-                if (masterKey != null)
-                  SliverAppBar(
-                    stretch: true,
-                    pinned: true,
-                    collapsedHeight: 256,
-                    expandedHeight: 256,
-                    automaticallyImplyLeading: false,
-                    backgroundColor: c.colours.background,
-                    flexibleSpace: FlexibleSpaceBar(
-                      stretchModes: const [
-                        StretchMode.fadeTitle,
-                      ],
-                      background: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const HomeLoader(),
-                          TorHeader(),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Networth(),
-                          WalletTools(),
+            builder: (context, torState) {
+              if (torState.isConnected) c.read<WalletsCubit>().networth();
+
+              return CustomScrollView(
+                slivers: [
+                  if (masterKey != null)
+                    SliverAppBar(
+                      stretch: true,
+                      pinned: true,
+                      collapsedHeight: 256,
+                      expandedHeight: 256,
+                      automaticallyImplyLeading: false,
+                      backgroundColor: c.colours.background,
+                      flexibleSpace: FlexibleSpaceBar(
+                        stretchModes: const [
+                          StretchMode.fadeTitle,
                         ],
-                      ),
-                    ),
-                  )
-                else
-                  SliverAppBar(
-                    stretch: true,
-                    pinned: true,
-                    expandedHeight: c.height / 3,
-                    automaticallyImplyLeading: false,
-                    backgroundColor: c.colours.background,
-                    flexibleSpace: FlexibleSpaceBar(
-                      stretchModes: const [
-                        StretchMode.fadeTitle,
-                      ],
-                      background: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const HomeLoader(),
-                          TorHeader(),
-                          WalletTools(),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (masterKey != null)
-                  SliverList(
-                    delegate: SliverChildListDelegate(
-                      [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 16,
-                            bottom: 12,
-                            left: 12,
-                            right: 12,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [BackupWarning(), Accounts()],
-                          ),
+                        background: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const HomeLoader(),
+                            TorHeader(),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Networth(),
+                            WalletTools(),
+                          ],
                         ),
-                      ],
+                      ),
+                    )
+                  else
+                    SliverAppBar(
+                      stretch: true,
+                      pinned: true,
+                      expandedHeight: c.height / 3,
+                      automaticallyImplyLeading: false,
+                      backgroundColor: c.colours.background,
+                      flexibleSpace: FlexibleSpaceBar(
+                        stretchModes: const [
+                          StretchMode.fadeTitle,
+                        ],
+                        background: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const HomeLoader(),
+                            TorHeader(),
+                            WalletTools(),
+                          ],
+                        ),
+                      ),
                     ),
-                  )
-                else
-                  SliverList(
-                    delegate: SliverChildListDelegate(
-                      [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 12,
-                            // bottom: 12,
-                            left: 12,
-                            right: 12,
+                  if (masterKey != null)
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 16,
+                              bottom: 12,
+                              left: 12,
+                              right: 12,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [BackupWarning(), Accounts()],
+                            ),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 24,
-                                  vertical: 24,
-                                ),
-                                child: Text(
-                                  'Click on + icon to Create wallet',
-                                  style: c.fonts.bodySmall!.copyWith(
-                                    color: c.colours.onBackground,
+                        ],
+                      ),
+                    )
+                  else
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 12,
+                              // bottom: 12,
+                              left: 12,
+                              right: 12,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                    vertical: 24,
+                                  ),
+                                  child: Text(
+                                    'Click on + icon to Create wallet',
+                                    style: c.fonts.bodySmall!.copyWith(
+                                      color: c.colours.onBackground,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-              ],
-            ).animate(delay: 200.ms).fadeIn(),
+                ],
+              ).animate(delay: 200.ms).fadeIn();
+            },
           ),
         ),
       ),
