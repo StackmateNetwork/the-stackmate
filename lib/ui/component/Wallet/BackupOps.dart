@@ -108,7 +108,7 @@ class _BackupOpsState extends State<BackupOps> {
                           c.read<InfoCubit>().testPassPhrase(masterKey.seed!);
                           _controller.clear();
                         },
-                        child: const Text('OK'),
+                        child: const Text('Test'),
                       ),
                     ],
                   ),
