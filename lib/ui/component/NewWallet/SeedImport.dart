@@ -34,7 +34,7 @@ class SeedImportPhrase extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final hasMaster = c.select((MasterKeyCubit mk) => mk.state.key != null);
-    final state = c.select((SeedImportCubit _) => _.state);
+    final state = c.select((SeedImportCubit s) => s.state);
 
     final focusNodes = List<FocusNode>.generate(12, (index) => FocusNode());
 

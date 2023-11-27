@@ -33,10 +33,9 @@ class _Wallet extends StatelessWidget {
           handleSuccess(c, 'Fingerprint Match!');
         }
       },
-      child: WillPopScope(
-        onWillPop: () async {
+      child: PopScope(
+        onPopInvoked: (_) {
           c.read<WalletsCubit>().clearSelectedWallet();
-          return true;
         },
         child: Scaffold(
           appBar: AppBar(

@@ -6,7 +6,7 @@ import 'package:sats/pkg/extensions.dart';
 class WalletTools extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final preferences = c.select((PreferencesCubit _) => _);
+    final preferences = c.select((PreferencesCubit p) => p);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 1),

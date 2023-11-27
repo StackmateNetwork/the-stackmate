@@ -20,7 +20,7 @@ import 'package:sats/ui/component/NewWallet/Derive/Stepper.dart';
 class _Derive extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final tor = c.select((TorCubit _) => _.state);
+    final tor = c.select((TorCubit t) => t.state);
     return BlocConsumer<DeriveWalletCubit, DeriveWalletState>(
       listenWhen: (previous, current) =>
           previous.currentStep != current.currentStep ||
@@ -34,9 +34,9 @@ class _Derive extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.currentStep != current.currentStep,
       builder: (context, state) {
-        return WillPopScope(
-          onWillPop: () async {
-            return true;
+        return PopScope(
+          onPopInvoked: (_) async {
+            return;
           },
           child: Scaffold(
             appBar: AppBar(

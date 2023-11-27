@@ -20,7 +20,7 @@ import 'package:sats/ui/component/NewWallet/XpubImport/Stepper.dart';
 class _XpubColdcard extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final tor = c.select((TorCubit _) => _.state);
+    final tor = c.select((TorCubit t) => t.state);
     return BlocConsumer<XpubImportWalletCubit, XpubImportWalletState>(
       listenWhen: (previous, current) =>
           previous.currentStep != current.currentStep ||
@@ -34,14 +34,14 @@ class _XpubColdcard extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.currentStep != current.currentStep,
       builder: (context, state) {
-        return WillPopScope(
-          onWillPop: () async {
+        return PopScope(
+          onPopInvoked: (_) async {
             if (!state.canGoBack()) {
               c.read<XpubImportWalletCubit>().backClicked();
-              return false;
+              return;
             }
 
-            return true;
+            return;
           },
           child: Scaffold(
             appBar: AppBar(

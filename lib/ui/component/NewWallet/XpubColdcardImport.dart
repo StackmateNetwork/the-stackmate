@@ -13,7 +13,7 @@ class XpubColdcardImport extends StatelessWidget {
     final result = c.select((XpubImportCubit sc) => sc.state.clearJson);
     final name =
         c.select((XpubImportCubit sn) => sn.state.importedJSONfileName);
-    final state = c.select((XpubImportCubit _) => _.state);
+    final state = c.select((XpubImportCubit x) => x.state);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

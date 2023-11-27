@@ -8,7 +8,7 @@ class XPubImportStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    final state = c.select((XpubImportWalletCubit _) => _.state);
+    final state = c.select((XpubImportWalletCubit x) => x.state);
 
     final steps = XpubImportWalletStep.values.length;
     final idx = state.currentStep.index;

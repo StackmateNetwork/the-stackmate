@@ -170,7 +170,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     final type = state.importType;
 
     if (type == ImportTypes.words12) {
-      final mnemonic = state.words12.map((_) => _.word).join(' ');
+      final mnemonic = state.words12.map((w) => w.word).join(' ');
       final seedTest = bip39.validateMnemonic(mnemonic);
       emit(
         state.copyWith(
@@ -197,7 +197,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     final type = state.importType;
 
     if (type == ImportTypes.words24) {
-      final mnemonic = state.words24.map((_) => _.word).join(' ');
+      final mnemonic = state.words24.map((w) => w.word).join(' ');
       final seedTest = bip39.validateMnemonic(mnemonic);
       emit(
         state.copyWith(

@@ -8,7 +8,7 @@ class DeriveStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    final state = c.select((DeriveWalletCubit _) => _.state);
+    final state = c.select((DeriveWalletCubit d) => d.state);
 
     final steps = DeriveWalletStep.values.length;
     final idx = state.currentStep.index;

@@ -34,13 +34,13 @@ class _WalletSend extends StatelessWidget {
     final walletType =
         context.select((SendCubit c) => c.state.wallet.walletType);
     final tor = context.select((TorCubit t) => t.state);
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (_) async {
         if (step == SendSteps.address || step == SendSteps.sent) {
-          return true;
+          return;
         }
         context.read<SendCubit>().backClicked();
-        return false;
+        return;
       },
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

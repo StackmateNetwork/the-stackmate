@@ -23,7 +23,7 @@ class _Receive extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final state = c.select((ReceiveCubit h) => h.state);
-    final tor = c.select((TorCubit _) => _.state);
+    final tor = c.select((TorCubit t) => t.state);
     return Scaffold(
       appBar: AppBar(
         actions: [

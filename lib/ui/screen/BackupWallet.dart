@@ -45,9 +45,9 @@ class _BackupWalletState extends State<_BackupWallet> {
       buildWhen: (previous, current) =>
           previous.currentStep != current.currentStep,
       builder: (context, state) {
-        return WillPopScope(
-          onWillPop: () async {
-            return true;
+        return PopScope(
+          onPopInvoked: (_) async {
+            return;
           },
           child: Scaffold(
             body: SafeArea(

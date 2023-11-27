@@ -22,7 +22,7 @@ import 'package:sats/ui/component/NewWallet/SeedImport/Warning.dart';
 class _SeedImport extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
-    final tor = c.select((TorCubit _) => _.state);
+    final tor = c.select((TorCubit t) => t.state);
     return BlocConsumer<SeedImportWalletCubit, SeedImportWalletState>(
       listenWhen: (previous, current) =>
           previous.currentStep != current.currentStep ||
@@ -36,13 +36,13 @@ class _SeedImport extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.currentStep != current.currentStep,
       builder: (context, state) {
-        return WillPopScope(
-          onWillPop: () async {
+        return PopScope(
+          onPopInvoked: (_) async {
             if (!state.canGoBack()) {
               c.read<SeedImportWalletCubit>().backClicked();
-              return false;
+              return;
             }
-            return true;
+            return;
           },
           child: Scaffold(
             appBar: AppBar(

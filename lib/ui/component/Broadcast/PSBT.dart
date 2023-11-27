@@ -7,7 +7,7 @@ class BroadcastPSBT extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    final psbtState = c.select((BroadcastCubit _) => _.state);
+    final psbtState = c.select((BroadcastCubit b) => b.state);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

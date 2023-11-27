@@ -36,7 +36,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
 
   @override
   Widget build(BuildContext c) {
-    final state = c.select((XpubImportCubit _) => _.state);
+    final state = c.select((XpubImportCubit x) => x.state);
 
     if (_xpubController.text != state.xpub) _xpubController.text = state.xpub;
 
