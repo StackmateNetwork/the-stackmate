@@ -747,6 +747,7 @@ class SendCubit extends Cubit<SendState> {
           errFees: emptyString,
         ),
       );
+
       db.close();
     } catch (e, s) {
       emit(
@@ -921,8 +922,8 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final masterDescriptor = state.wallet.descriptor.startsWith('w')
-          ? (state.wallet.walletType == 'PRIMARY'
+      final descriptor = state.wallet.descriptor.startsWith('wpkh')
+          ? ((state.wallet.walletType == 'PRIMARY')
               ? segwitDescriptor()
               : segwitrecoveredDescriptor())
           : taprootDescriptor();
@@ -931,10 +932,10 @@ class SendCubit extends Cubit<SendState> {
       final socks5 = _torCubit.state.getSocks5();
 
       final signed = await compute(signTx, {
-        'descriptor': state.wallet.walletType == 'PRIMARY' ||
-                state.wallet.walletType == 'RECOVERED'
-            ? masterDescriptor
-            : xpubDescr,
+        'descriptor': ((state.wallet.walletType == 'PRIMARY' ||
+                state.wallet.walletType == 'RECOVERED')
+            ? descriptor
+            : xpubDescr),
         'unsignedPSBT': state.psbt,
       });
 
@@ -954,7 +955,7 @@ class SendCubit extends Cubit<SendState> {
       final txid = await compute(broadcastTx, {
         'descriptor': state.wallet.walletType == 'PRIMARY' ||
                 state.wallet.walletType == 'RECOVERED'
-            ? masterDescriptor
+            ? descriptor
             : xpubDescr,
         'nodeAddress': nodeAddress,
         'socks5': socks5,
