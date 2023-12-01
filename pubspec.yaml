@@ -9,13 +9,11 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  animate_do: ^3.0.2
-  animations: ^2.0.0
+  animate_do: ^3.1.2
   bip39: ^1.0.6
   bloc_concurrency: ^0.2.0
   crypto: ^3.0.2
   # connectivity: ^3.0.3
-  drag_and_drop_lists: ^0.3.2
   equatable: ^2.0.3
   file_cryptor: ^0.0.3
   file_picker: ^5.2.11
@@ -24,7 +22,6 @@ dependencies:
   flutter_animate: ^4.2.0+1
   flutter_barcode_scanner: ^2.0.0
   flutter_bloc: ^8.0.1
-  flutter_chat_ui: ^1.6.4
   flutter_localizations:
     sdk: flutter
   flutter_secure_storage: ^8.0.0
@@ -32,7 +29,6 @@ dependencies:
   freezed_annotation: ^2.0.3
   get_it: ^7.2.0
   go_router: ^7.0.0
-  google_fonts: ^4.0.4
   hive: ^2.1.0
   hive_flutter: ^1.1.0
   image_picker: ^0.8.6
@@ -45,9 +41,8 @@ dependencies:
   path_provider: ^2.0.1
   pattern_formatter: ^3.0.0
   permission_handler: ^10.0.0
-  petitparser: ^5.0.0
   qr_flutter: ^4.0.0
-  share: ^2.0.1
+  share: ^2.0.4
   sqflite: ^2.2.8
   top_snackbar_flutter: ^3.0.0+1
   url_launcher: ^6.0.3
