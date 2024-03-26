@@ -8,7 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:libstackmate/outputs.dart';
 import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -400,21 +400,21 @@ class SendCubit extends Cubit<SendState> {
       );
   }
 
-  Future<void> _getStoragePermission() async {
-    if (await Permission.storage.request().isGranted) {
-      // ignore: unused_local_variable
-      const permissionGranted = true;
-    } else if (await Permission.storage.request().isPermanentlyDenied) {
-      await openAppSettings();
-    } else if (await Permission.storage.request().isDenied) {
-      // ignore: unused_local_variable
-      const permissionGranted = false;
-    }
-  }
+  // Future<void> _getStoragePermission() async {
+  //   if (await Permission.storage.request().isGranted) {
+  //     // ignore: unused_local_variable
+  //     const permissionGranted = true;
+  //   } else if (await Permission.storage.request().isPermanentlyDenied) {
+  //     await openAppSettings();
+  //   } else if (await Permission.storage.request().isDenied) {
+  //     // ignore: unused_local_variable
+  //     const permissionGranted = false;
+  //   }
+  // }
 
   Future<void> savePSBTToFile() async {
     try {
-      await _getStoragePermission();
+      // await _getStoragePermission();
       final path = await FilePicker.platform.getDirectoryPath();
       if (path == null) {
         emit(

@@ -58,6 +58,7 @@ class Stackmate extends StatelessWidget {
         textStyle: c.fonts.bodySmall!.copyWith(color: c.colours.onBackground),
         child: MaterialApp.router(
           routeInformationParser: _router.routeInformationParser,
+          routeInformationProvider: _router.routeInformationProvider,
           routerDelegate: _router.routerDelegate,
           builder: (context, child) {
             final mediaQueryData = MediaQuery.of(context);

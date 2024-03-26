@@ -210,13 +210,13 @@ class _BBTextInputState extends State<BBTextInput> {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(80.0),
                 borderSide: BorderSide(
-                  color: context.colours.onBackground.withOpacity(0.2),
+                  color: context.colours.primary.withOpacity(0.1),
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(80.0),
                 borderSide: BorderSide(
-                  color: context.colours.onBackground,
+                  color: context.colours.primary,
                 ),
               ),
               labelStyle: context.fonts.labelSmall,
