@@ -4,7 +4,7 @@ part 'master.g.dart';
 part 'master.freezed.dart';
 
 @freezed
-class MasterKey with _$MasterKey {
+abstract class MasterKey with _$MasterKey {
   const factory MasterKey({
     String? seed,
     String? root,

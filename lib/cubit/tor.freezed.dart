@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,409 +9,299 @@ part of 'tor.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$TorState {
-  String get workingDir => throw _privateConstructorUsedError;
-  bool get enforced => throw _privateConstructorUsedError;
-  bool get internal => throw _privateConstructorUsedError;
-  int get socks5Port => throw _privateConstructorUsedError;
-  String get httpProxy => throw _privateConstructorUsedError;
-  String get bootstapProgress => throw _privateConstructorUsedError;
-  bool get isRunning => throw _privateConstructorUsedError;
-  bool get isEdittingExternal => throw _privateConstructorUsedError;
-  bool get isConnected => throw _privateConstructorUsedError;
-  String get controlKey => throw _privateConstructorUsedError;
-  String get errConnection => throw _privateConstructorUsedError;
-  String get errStorage => throw _privateConstructorUsedError;
-  String get errMessage => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
-  $TorStateCopyWith<TorState> get copyWith =>
-      throw _privateConstructorUsedError;
+ String get workingDir; bool get enforced; bool get internal; int get socks5Port; String get httpProxy; String get bootstapProgress; bool get isRunning; bool get isEdittingExternal; bool get isConnected; String get controlKey; String get errConnection; String get errStorage; String get errMessage;
+/// Create a copy of TorState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TorStateCopyWith<TorState> get copyWith => _$TorStateCopyWithImpl<TorState>(this as TorState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TorState&&(identical(other.workingDir, workingDir) || other.workingDir == workingDir)&&(identical(other.enforced, enforced) || other.enforced == enforced)&&(identical(other.internal, internal) || other.internal == internal)&&(identical(other.socks5Port, socks5Port) || other.socks5Port == socks5Port)&&(identical(other.httpProxy, httpProxy) || other.httpProxy == httpProxy)&&(identical(other.bootstapProgress, bootstapProgress) || other.bootstapProgress == bootstapProgress)&&(identical(other.isRunning, isRunning) || other.isRunning == isRunning)&&(identical(other.isEdittingExternal, isEdittingExternal) || other.isEdittingExternal == isEdittingExternal)&&(identical(other.isConnected, isConnected) || other.isConnected == isConnected)&&(identical(other.controlKey, controlKey) || other.controlKey == controlKey)&&(identical(other.errConnection, errConnection) || other.errConnection == errConnection)&&(identical(other.errStorage, errStorage) || other.errStorage == errStorage)&&(identical(other.errMessage, errMessage) || other.errMessage == errMessage));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,workingDir,enforced,internal,socks5Port,httpProxy,bootstapProgress,isRunning,isEdittingExternal,isConnected,controlKey,errConnection,errStorage,errMessage);
+
+@override
+String toString() {
+  return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isEdittingExternal: $isEdittingExternal, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage, errMessage: $errMessage)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $TorStateCopyWith<$Res> {
-  factory $TorStateCopyWith(TorState value, $Res Function(TorState) then) =
-      _$TorStateCopyWithImpl<$Res, TorState>;
-  @useResult
-  $Res call(
-      {String workingDir,
-      bool enforced,
-      bool internal,
-      int socks5Port,
-      String httpProxy,
-      String bootstapProgress,
-      bool isRunning,
-      bool isEdittingExternal,
-      bool isConnected,
-      String controlKey,
-      String errConnection,
-      String errStorage,
-      String errMessage});
-}
+abstract mixin class $TorStateCopyWith<$Res>  {
+  factory $TorStateCopyWith(TorState value, $Res Function(TorState) _then) = _$TorStateCopyWithImpl;
+@useResult
+$Res call({
+ String workingDir, bool enforced, bool internal, int socks5Port, String httpProxy, String bootstapProgress, bool isRunning, bool isEdittingExternal, bool isConnected, String controlKey, String errConnection, String errStorage, String errMessage
+});
 
+
+
+
+}
 /// @nodoc
-class _$TorStateCopyWithImpl<$Res, $Val extends TorState>
+class _$TorStateCopyWithImpl<$Res>
     implements $TorStateCopyWith<$Res> {
-  _$TorStateCopyWithImpl(this._value, this._then);
+  _$TorStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final TorState _self;
+  final $Res Function(TorState) _then;
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? workingDir = null,
-    Object? enforced = null,
-    Object? internal = null,
-    Object? socks5Port = null,
-    Object? httpProxy = null,
-    Object? bootstapProgress = null,
-    Object? isRunning = null,
-    Object? isEdittingExternal = null,
-    Object? isConnected = null,
-    Object? controlKey = null,
-    Object? errConnection = null,
-    Object? errStorage = null,
-    Object? errMessage = null,
-  }) {
-    return _then(_value.copyWith(
-      workingDir: null == workingDir
-          ? _value.workingDir
-          : workingDir // ignore: cast_nullable_to_non_nullable
-              as String,
-      enforced: null == enforced
-          ? _value.enforced
-          : enforced // ignore: cast_nullable_to_non_nullable
-              as bool,
-      internal: null == internal
-          ? _value.internal
-          : internal // ignore: cast_nullable_to_non_nullable
-              as bool,
-      socks5Port: null == socks5Port
-          ? _value.socks5Port
-          : socks5Port // ignore: cast_nullable_to_non_nullable
-              as int,
-      httpProxy: null == httpProxy
-          ? _value.httpProxy
-          : httpProxy // ignore: cast_nullable_to_non_nullable
-              as String,
-      bootstapProgress: null == bootstapProgress
-          ? _value.bootstapProgress
-          : bootstapProgress // ignore: cast_nullable_to_non_nullable
-              as String,
-      isRunning: null == isRunning
-          ? _value.isRunning
-          : isRunning // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isEdittingExternal: null == isEdittingExternal
-          ? _value.isEdittingExternal
-          : isEdittingExternal // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isConnected: null == isConnected
-          ? _value.isConnected
-          : isConnected // ignore: cast_nullable_to_non_nullable
-              as bool,
-      controlKey: null == controlKey
-          ? _value.controlKey
-          : controlKey // ignore: cast_nullable_to_non_nullable
-              as String,
-      errConnection: null == errConnection
-          ? _value.errConnection
-          : errConnection // ignore: cast_nullable_to_non_nullable
-              as String,
-      errStorage: null == errStorage
-          ? _value.errStorage
-          : errStorage // ignore: cast_nullable_to_non_nullable
-              as String,
-      errMessage: null == errMessage
-          ? _value.errMessage
-          : errMessage // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
+/// Create a copy of TorState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? workingDir = null,Object? enforced = null,Object? internal = null,Object? socks5Port = null,Object? httpProxy = null,Object? bootstapProgress = null,Object? isRunning = null,Object? isEdittingExternal = null,Object? isConnected = null,Object? controlKey = null,Object? errConnection = null,Object? errStorage = null,Object? errMessage = null,}) {
+  return _then(_self.copyWith(
+workingDir: null == workingDir ? _self.workingDir : workingDir // ignore: cast_nullable_to_non_nullable
+as String,enforced: null == enforced ? _self.enforced : enforced // ignore: cast_nullable_to_non_nullable
+as bool,internal: null == internal ? _self.internal : internal // ignore: cast_nullable_to_non_nullable
+as bool,socks5Port: null == socks5Port ? _self.socks5Port : socks5Port // ignore: cast_nullable_to_non_nullable
+as int,httpProxy: null == httpProxy ? _self.httpProxy : httpProxy // ignore: cast_nullable_to_non_nullable
+as String,bootstapProgress: null == bootstapProgress ? _self.bootstapProgress : bootstapProgress // ignore: cast_nullable_to_non_nullable
+as String,isRunning: null == isRunning ? _self.isRunning : isRunning // ignore: cast_nullable_to_non_nullable
+as bool,isEdittingExternal: null == isEdittingExternal ? _self.isEdittingExternal : isEdittingExternal // ignore: cast_nullable_to_non_nullable
+as bool,isConnected: null == isConnected ? _self.isConnected : isConnected // ignore: cast_nullable_to_non_nullable
+as bool,controlKey: null == controlKey ? _self.controlKey : controlKey // ignore: cast_nullable_to_non_nullable
+as String,errConnection: null == errConnection ? _self.errConnection : errConnection // ignore: cast_nullable_to_non_nullable
+as String,errStorage: null == errStorage ? _self.errStorage : errStorage // ignore: cast_nullable_to_non_nullable
+as String,errMessage: null == errMessage ? _self.errMessage : errMessage // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-/// @nodoc
-abstract class _$$TorStateImplCopyWith<$Res>
-    implements $TorStateCopyWith<$Res> {
-  factory _$$TorStateImplCopyWith(
-          _$TorStateImpl value, $Res Function(_$TorStateImpl) then) =
-      __$$TorStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String workingDir,
-      bool enforced,
-      bool internal,
-      int socks5Port,
-      String httpProxy,
-      String bootstapProgress,
-      bool isRunning,
-      bool isEdittingExternal,
-      bool isConnected,
-      String controlKey,
-      String errConnection,
-      String errStorage,
-      String errMessage});
 }
 
-/// @nodoc
-class __$$TorStateImplCopyWithImpl<$Res>
-    extends _$TorStateCopyWithImpl<$Res, _$TorStateImpl>
-    implements _$$TorStateImplCopyWith<$Res> {
-  __$$TorStateImplCopyWithImpl(
-      _$TorStateImpl _value, $Res Function(_$TorStateImpl) _then)
-      : super(_value, _then);
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? workingDir = null,
-    Object? enforced = null,
-    Object? internal = null,
-    Object? socks5Port = null,
-    Object? httpProxy = null,
-    Object? bootstapProgress = null,
-    Object? isRunning = null,
-    Object? isEdittingExternal = null,
-    Object? isConnected = null,
-    Object? controlKey = null,
-    Object? errConnection = null,
-    Object? errStorage = null,
-    Object? errMessage = null,
-  }) {
-    return _then(_$TorStateImpl(
-      workingDir: null == workingDir
-          ? _value.workingDir
-          : workingDir // ignore: cast_nullable_to_non_nullable
-              as String,
-      enforced: null == enforced
-          ? _value.enforced
-          : enforced // ignore: cast_nullable_to_non_nullable
-              as bool,
-      internal: null == internal
-          ? _value.internal
-          : internal // ignore: cast_nullable_to_non_nullable
-              as bool,
-      socks5Port: null == socks5Port
-          ? _value.socks5Port
-          : socks5Port // ignore: cast_nullable_to_non_nullable
-              as int,
-      httpProxy: null == httpProxy
-          ? _value.httpProxy
-          : httpProxy // ignore: cast_nullable_to_non_nullable
-              as String,
-      bootstapProgress: null == bootstapProgress
-          ? _value.bootstapProgress
-          : bootstapProgress // ignore: cast_nullable_to_non_nullable
-              as String,
-      isRunning: null == isRunning
-          ? _value.isRunning
-          : isRunning // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isEdittingExternal: null == isEdittingExternal
-          ? _value.isEdittingExternal
-          : isEdittingExternal // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isConnected: null == isConnected
-          ? _value.isConnected
-          : isConnected // ignore: cast_nullable_to_non_nullable
-              as bool,
-      controlKey: null == controlKey
-          ? _value.controlKey
-          : controlKey // ignore: cast_nullable_to_non_nullable
-              as String,
-      errConnection: null == errConnection
-          ? _value.errConnection
-          : errConnection // ignore: cast_nullable_to_non_nullable
-              as String,
-      errStorage: null == errStorage
-          ? _value.errStorage
-          : errStorage // ignore: cast_nullable_to_non_nullable
-              as String,
-      errMessage: null == errMessage
-          ? _value.errMessage
-          : errMessage // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Adds pattern-matching-related methods to [TorState].
+extension TorStatePatterns on TorState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TorState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TorState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TorState value)  $default,){
+final _that = this;
+switch (_that) {
+case _TorState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TorState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _TorState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String workingDir,  bool enforced,  bool internal,  int socks5Port,  String httpProxy,  String bootstapProgress,  bool isRunning,  bool isEdittingExternal,  bool isConnected,  String controlKey,  String errConnection,  String errStorage,  String errMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TorState() when $default != null:
+return $default(_that.workingDir,_that.enforced,_that.internal,_that.socks5Port,_that.httpProxy,_that.bootstapProgress,_that.isRunning,_that.isEdittingExternal,_that.isConnected,_that.controlKey,_that.errConnection,_that.errStorage,_that.errMessage);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String workingDir,  bool enforced,  bool internal,  int socks5Port,  String httpProxy,  String bootstapProgress,  bool isRunning,  bool isEdittingExternal,  bool isConnected,  String controlKey,  String errConnection,  String errStorage,  String errMessage)  $default,) {final _that = this;
+switch (_that) {
+case _TorState():
+return $default(_that.workingDir,_that.enforced,_that.internal,_that.socks5Port,_that.httpProxy,_that.bootstapProgress,_that.isRunning,_that.isEdittingExternal,_that.isConnected,_that.controlKey,_that.errConnection,_that.errStorage,_that.errMessage);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String workingDir,  bool enforced,  bool internal,  int socks5Port,  String httpProxy,  String bootstapProgress,  bool isRunning,  bool isEdittingExternal,  bool isConnected,  String controlKey,  String errConnection,  String errStorage,  String errMessage)?  $default,) {final _that = this;
+switch (_that) {
+case _TorState() when $default != null:
+return $default(_that.workingDir,_that.enforced,_that.internal,_that.socks5Port,_that.httpProxy,_that.bootstapProgress,_that.isRunning,_that.isEdittingExternal,_that.isConnected,_that.controlKey,_that.errConnection,_that.errStorage,_that.errMessage);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 
-class _$TorStateImpl extends _TorState {
-  const _$TorStateImpl(
-      {this.workingDir = '/tmp',
-      this.enforced = true,
-      this.internal = true,
-      this.socks5Port = 9050,
-      this.httpProxy = '',
-      this.bootstapProgress = 'Starting Tor.\nThis may take a while ...',
-      this.isRunning = false,
-      this.isEdittingExternal = false,
-      this.isConnected = false,
-      this.controlKey = '',
-      this.errConnection = '',
-      this.errStorage = '',
-      this.errMessage = ''})
-      : super._();
 
-  @override
-  @JsonKey()
-  final String workingDir;
-  @override
-  @JsonKey()
-  final bool enforced;
-  @override
-  @JsonKey()
-  final bool internal;
-  @override
-  @JsonKey()
-  final int socks5Port;
-  @override
-  @JsonKey()
-  final String httpProxy;
-  @override
-  @JsonKey()
-  final String bootstapProgress;
-  @override
-  @JsonKey()
-  final bool isRunning;
-  @override
-  @JsonKey()
-  final bool isEdittingExternal;
-  @override
-  @JsonKey()
-  final bool isConnected;
-  @override
-  @JsonKey()
-  final String controlKey;
-  @override
-  @JsonKey()
-  final String errConnection;
-  @override
-  @JsonKey()
-  final String errStorage;
-  @override
-  @JsonKey()
-  final String errMessage;
+class _TorState extends TorState {
+  const _TorState({this.workingDir = '/tmp', this.enforced = true, this.internal = true, this.socks5Port = 9050, this.httpProxy = '', this.bootstapProgress = 'Starting Tor.\nThis may take a while ...', this.isRunning = false, this.isEdittingExternal = false, this.isConnected = false, this.controlKey = '', this.errConnection = '', this.errStorage = '', this.errMessage = ''}): super._();
+  
 
-  @override
-  String toString() {
-    return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isEdittingExternal: $isEdittingExternal, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage, errMessage: $errMessage)';
-  }
+@override@JsonKey() final  String workingDir;
+@override@JsonKey() final  bool enforced;
+@override@JsonKey() final  bool internal;
+@override@JsonKey() final  int socks5Port;
+@override@JsonKey() final  String httpProxy;
+@override@JsonKey() final  String bootstapProgress;
+@override@JsonKey() final  bool isRunning;
+@override@JsonKey() final  bool isEdittingExternal;
+@override@JsonKey() final  bool isConnected;
+@override@JsonKey() final  String controlKey;
+@override@JsonKey() final  String errConnection;
+@override@JsonKey() final  String errStorage;
+@override@JsonKey() final  String errMessage;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TorStateImpl &&
-            (identical(other.workingDir, workingDir) ||
-                other.workingDir == workingDir) &&
-            (identical(other.enforced, enforced) ||
-                other.enforced == enforced) &&
-            (identical(other.internal, internal) ||
-                other.internal == internal) &&
-            (identical(other.socks5Port, socks5Port) ||
-                other.socks5Port == socks5Port) &&
-            (identical(other.httpProxy, httpProxy) ||
-                other.httpProxy == httpProxy) &&
-            (identical(other.bootstapProgress, bootstapProgress) ||
-                other.bootstapProgress == bootstapProgress) &&
-            (identical(other.isRunning, isRunning) ||
-                other.isRunning == isRunning) &&
-            (identical(other.isEdittingExternal, isEdittingExternal) ||
-                other.isEdittingExternal == isEdittingExternal) &&
-            (identical(other.isConnected, isConnected) ||
-                other.isConnected == isConnected) &&
-            (identical(other.controlKey, controlKey) ||
-                other.controlKey == controlKey) &&
-            (identical(other.errConnection, errConnection) ||
-                other.errConnection == errConnection) &&
-            (identical(other.errStorage, errStorage) ||
-                other.errStorage == errStorage) &&
-            (identical(other.errMessage, errMessage) ||
-                other.errMessage == errMessage));
-  }
+/// Create a copy of TorState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TorStateCopyWith<_TorState> get copyWith => __$TorStateCopyWithImpl<_TorState>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      workingDir,
-      enforced,
-      internal,
-      socks5Port,
-      httpProxy,
-      bootstapProgress,
-      isRunning,
-      isEdittingExternal,
-      isConnected,
-      controlKey,
-      errConnection,
-      errStorage,
-      errMessage);
 
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$TorStateImplCopyWith<_$TorStateImpl> get copyWith =>
-      __$$TorStateImplCopyWithImpl<_$TorStateImpl>(this, _$identity);
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TorState&&(identical(other.workingDir, workingDir) || other.workingDir == workingDir)&&(identical(other.enforced, enforced) || other.enforced == enforced)&&(identical(other.internal, internal) || other.internal == internal)&&(identical(other.socks5Port, socks5Port) || other.socks5Port == socks5Port)&&(identical(other.httpProxy, httpProxy) || other.httpProxy == httpProxy)&&(identical(other.bootstapProgress, bootstapProgress) || other.bootstapProgress == bootstapProgress)&&(identical(other.isRunning, isRunning) || other.isRunning == isRunning)&&(identical(other.isEdittingExternal, isEdittingExternal) || other.isEdittingExternal == isEdittingExternal)&&(identical(other.isConnected, isConnected) || other.isConnected == isConnected)&&(identical(other.controlKey, controlKey) || other.controlKey == controlKey)&&(identical(other.errConnection, errConnection) || other.errConnection == errConnection)&&(identical(other.errStorage, errStorage) || other.errStorage == errStorage)&&(identical(other.errMessage, errMessage) || other.errMessage == errMessage));
 }
 
-abstract class _TorState extends TorState {
-  const factory _TorState(
-      {final String workingDir,
-      final bool enforced,
-      final bool internal,
-      final int socks5Port,
-      final String httpProxy,
-      final String bootstapProgress,
-      final bool isRunning,
-      final bool isEdittingExternal,
-      final bool isConnected,
-      final String controlKey,
-      final String errConnection,
-      final String errStorage,
-      final String errMessage}) = _$TorStateImpl;
-  const _TorState._() : super._();
 
-  @override
-  String get workingDir;
-  @override
-  bool get enforced;
-  @override
-  bool get internal;
-  @override
-  int get socks5Port;
-  @override
-  String get httpProxy;
-  @override
-  String get bootstapProgress;
-  @override
-  bool get isRunning;
-  @override
-  bool get isEdittingExternal;
-  @override
-  bool get isConnected;
-  @override
-  String get controlKey;
-  @override
-  String get errConnection;
-  @override
-  String get errStorage;
-  @override
-  String get errMessage;
-  @override
-  @JsonKey(ignore: true)
-  _$$TorStateImplCopyWith<_$TorStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+int get hashCode => Object.hash(runtimeType,workingDir,enforced,internal,socks5Port,httpProxy,bootstapProgress,isRunning,isEdittingExternal,isConnected,controlKey,errConnection,errStorage,errMessage);
+
+@override
+String toString() {
+  return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isEdittingExternal: $isEdittingExternal, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage, errMessage: $errMessage)';
 }
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TorStateCopyWith<$Res> implements $TorStateCopyWith<$Res> {
+  factory _$TorStateCopyWith(_TorState value, $Res Function(_TorState) _then) = __$TorStateCopyWithImpl;
+@override @useResult
+$Res call({
+ String workingDir, bool enforced, bool internal, int socks5Port, String httpProxy, String bootstapProgress, bool isRunning, bool isEdittingExternal, bool isConnected, String controlKey, String errConnection, String errStorage, String errMessage
+});
+
+
+
+
+}
+/// @nodoc
+class __$TorStateCopyWithImpl<$Res>
+    implements _$TorStateCopyWith<$Res> {
+  __$TorStateCopyWithImpl(this._self, this._then);
+
+  final _TorState _self;
+  final $Res Function(_TorState) _then;
+
+/// Create a copy of TorState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? workingDir = null,Object? enforced = null,Object? internal = null,Object? socks5Port = null,Object? httpProxy = null,Object? bootstapProgress = null,Object? isRunning = null,Object? isEdittingExternal = null,Object? isConnected = null,Object? controlKey = null,Object? errConnection = null,Object? errStorage = null,Object? errMessage = null,}) {
+  return _then(_TorState(
+workingDir: null == workingDir ? _self.workingDir : workingDir // ignore: cast_nullable_to_non_nullable
+as String,enforced: null == enforced ? _self.enforced : enforced // ignore: cast_nullable_to_non_nullable
+as bool,internal: null == internal ? _self.internal : internal // ignore: cast_nullable_to_non_nullable
+as bool,socks5Port: null == socks5Port ? _self.socks5Port : socks5Port // ignore: cast_nullable_to_non_nullable
+as int,httpProxy: null == httpProxy ? _self.httpProxy : httpProxy // ignore: cast_nullable_to_non_nullable
+as String,bootstapProgress: null == bootstapProgress ? _self.bootstapProgress : bootstapProgress // ignore: cast_nullable_to_non_nullable
+as String,isRunning: null == isRunning ? _self.isRunning : isRunning // ignore: cast_nullable_to_non_nullable
+as bool,isEdittingExternal: null == isEdittingExternal ? _self.isEdittingExternal : isEdittingExternal // ignore: cast_nullable_to_non_nullable
+as bool,isConnected: null == isConnected ? _self.isConnected : isConnected // ignore: cast_nullable_to_non_nullable
+as bool,controlKey: null == controlKey ? _self.controlKey : controlKey // ignore: cast_nullable_to_non_nullable
+as String,errConnection: null == errConnection ? _self.errConnection : errConnection // ignore: cast_nullable_to_non_nullable
+as String,errStorage: null == errStorage ? _self.errStorage : errStorage // ignore: cast_nullable_to_non_nullable
+as String,errMessage: null == errMessage ? _self.errMessage : errMessage // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+// dart format on

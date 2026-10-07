@@ -46,7 +46,7 @@ The following steps are critical to ensure safe recovery of your funds.
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              foregroundColor: c.colours.background, backgroundColor: c.colours.primary,
+              foregroundColor: c.colours.surface, backgroundColor: c.colours.primary,
             ),
             onPressed: () {
               c.read<SeedBackupCubit>().nextClicked();

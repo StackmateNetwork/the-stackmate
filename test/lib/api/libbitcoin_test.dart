@@ -1,431 +1,328 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:bdk_dart/bdk.dart' as bdk;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sats/api/libbitcoin.dart';
 
+/// Offline tests for the BDK-backed wallet engine. Nothing here touches the
+/// network: funding transactions are injected straight into the wallet.
 void main() {
-  // THE FOLLOWING WALLET NEEDS SYNC TO SUPPORT HIGHER MAX ADDRESS VALUE
-  const seed0 =
-      'famous frown october famous satisfy gasp bottle laptop leave close garage tuna';
-
-  const seed1 =
-      'tongue ring torch unhappy moral course sugar crucial tribe brush amount sheriff';
-
-  const seed2 =
-      'damage enter pony canvas dad matrix rug engine paper warfare orange quote';
-  const myImportedWords =
+  const bip39TestVector =
+      'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about';
+  const importedWords =
       'burger arrest eight spin embrace outer green fine couch entry drastic kiwi';
-  var expPublicDesc =
-      'wpkh([8099ce1e/84h/1h/0h]tpubDCBjCC5aZ6wXLtZMSJDkBYZ3AFuors2YzzBhD5ZqP3uPqbzzH5YjD2CA9HDhUYNhrqq67v4XAN93KSbSL4bwa5hEvidkFuj7ycWA7EYzp41/*)';
-  var expPrivateDesc =
-      'wpkh([8099ce1e/84h/1h/0h]tprv8fVh3n3LQjFrTRXZYeZ9n8tvbEPshXqeRgauvZXXxn7117kDegj92XaHy9kVTH2zN9fXg8Ce4cpX5ihr9CBBAuA7DJSmdU2gVj3Xjd2T41G/*)';
-  const nodeAddress = 'default';
   const network = 'test';
-  // const _readableSoloPolicy = 'wpkh(___primary___)';
-  const faucetReturnAddress = 'tb1qw2c3lxufxqe2x9s4rdzh65tpf4d7fssjgh8nv6';
-  const returnAmount = 1000;
-  const minerTxOutput = 'miner';
-  const finalizedPsbt =
-      'cHNidP8BAHQBAAAAATP//sNP6QoTAtgzs2Eof4+e95GYAQeLE1wWqs4tFSoRAQAAAAD9////AvwCAAAAAAAAFgAUdzOj/AqxHes2No9ip9nkUBeHzM1YAgAAAAAAABl2qRQ0Sg9IyhUOwrkDgXZgubaLE6ZwJoisAAAAAAABAN8BAAAAAAEBSon1NvP7dcSgLFyS3noWwD5D54uhcVlVKX43LU+wAB0AAAAAAP3///8CECcAAAAAAAAWABTB5EuPpQOVbyqPM6pHkQJUsKTBLTwJAAAAAAAAFgAUeO/Z0zlT3dQTQP3Aqkp6Z1XyEWMCSDBFAiEAorKfWQvy3zysktKtk/FRatxbopZlnDHzIxUaR87O56QCIHIleIl98pbPbXgYhearHMysQ47HLqLEEkx09T+3wflDASEDh9xUMJ5DYt5r7TVE+3nwazApjYVEKHMcg5QXqVA2HJMAAAAAAQEfPAkAAAAAAAAWABR479nTOVPd1BNA/cCqSnpnVfIRYyIGAyA0nu2ZNJECxF4M8iU9XHhINvajPckJ618FAvXbKLxGGICZzh5UAACAAQAAgAAAAIABAAAABAAAAAAiAgLiTSQCgBofPHrv4cRlx8wOMx6vLHHv2B2m4zRLXZTpcxiAmc4eVAAAgAEAAIAAAACAAQAAAAUAAAAAAA==';
-  late LibBitcoin libstackmate;
 
-  setUp(() async {
-    libstackmate = LibBitcoin();
-    final root = libstackmate.importMaster(
-      mnemonic: myImportedWords,
+  late LibBitcoin lib;
+  late Directory tmp;
+
+  setUp(() {
+    lib = LibBitcoin();
+    tmp = Directory.systemTemp.createTempSync('stackmate_bdk_');
+  });
+
+  tearDown(() => tmp.deleteSync(recursive: true));
+
+  ({String pub, String prv}) descriptors(
+    String words,
+    String purpose,
+    String script, {
+    String net = network,
+  }) {
+    final root =
+        lib.importMaster(mnemonic: words, passphrase: '', network: net);
+    expect(root.hasError, false, reason: root.error);
+    final child = lib.deriveHardened(
+      masterXPriv: root.result!.xprv,
+      account: '0',
+      purpose: purpose,
+    );
+    expect(child.hasError, false, reason: child.error);
+    final pub = lib.compile(
+      policy: 'pk(${child.result!.fullXPub}/*)',
+      scriptType: script,
+    );
+    final prv = lib.compile(
+      policy: 'pk(${child.result!.fullXPrv}/*)',
+      scriptType: script,
+    );
+    expect(pub.hasError, false, reason: pub.error);
+    expect(prv.hasError, false, reason: prv.error);
+    return (pub: pub.result!, prv: prv.result!);
+  }
+
+  test('generateMaster returns a mnemonic of the requested length', () {
+    final seed =
+        lib.generateMaster(length: '24', passphrase: '', network: network);
+    expect(seed.hasError, false, reason: seed.error);
+    expect(seed.result!.neuList.length, 24);
+    expect(seed.result!.xprv, startsWith('tprv'));
+    expect(seed.result!.fingerprint.length, 8);
+  });
+
+  test('importMaster rejects an invalid mnemonic', () {
+    final seed = lib.importMaster(
+      mnemonic: 'not a real mnemonic',
       passphrase: '',
       network: network,
     );
-    final derived = libstackmate.deriveHardened(
+    expect(seed.hasError, true);
+  });
+
+  test('derives account keys with origin info', () {
+    final root = lib.importMaster(
+      mnemonic: bip39TestVector,
+      passphrase: '',
+      network: 'main',
+    );
+    expect(root.result!.fingerprint, '73c5da0a');
+    final child = lib.deriveHardened(
       masterXPriv: root.result!.xprv,
       account: '0',
       purpose: '84',
     );
-    expPrivateDesc = 'wpkh(${derived.result!.fullXPrv}/*)';
-    expPublicDesc = 'wpkh(${derived.result!.fullXPub}/*)';
-  });
-
-  test('Create New Wallet Flow', () async {
-    var root = libstackmate.generateMaster(
-      length: '19',
-      passphrase: '',
-      network: network,
+    expect(child.result!.hardenedPath, "m/84'/0'/0'");
+    // BIP84 test vector account xpub
+    expect(
+      child.result!.xpub,
+      'xpub6CatWdiZiodmUeTDp8LT5or8nmbKNcuyvz7WyksVFkKB4RHwCD3XyuvPEbvqAQY3rAPshWcMLoP2fMFMKHPJ4ZeZXYVUhLv1VMrjPC7PW6V',
     );
-    assert(!root.hasError);
-    assert(root.result!.neuList.length == 24);
-    // show user
-    // import from mnemonic from user
-    root = libstackmate.importMaster(
-      mnemonic: myImportedWords,
-      passphrase: '',
-      network: network,
+    expect(
+      child.result!.fullXPub,
+      startsWith("[73c5da0a/84'/0'/0']xpub6CatWdiZ"),
     );
 
-    assert(!root.hasError);
-
-    final accountMasterKey = libstackmate.deriveHardened(
-      masterXPriv: root.result!.xprv,
+    final testnet =
+        lib.importMaster(mnemonic: importedWords, passphrase: '', network: network);
+    final testChild = lib.deriveHardened(
+      masterXPriv: testnet.result!.xprv,
       account: '0',
       purpose: '84',
     );
-
-    assert(!accountMasterKey.hasError);
-    // discard root
-    // only use descriptors with account master keys
-    final spenderPolicy = 'pk(${accountMasterKey.result!.fullXPrv}/*)';
-    final watcherPolicy = 'pk(${accountMasterKey.result!.fullXPub}/*)';
-
-    final privateDescriptor =
-        libstackmate.compile(policy: spenderPolicy, scriptType: 'wpkh');
-    assert(!privateDescriptor.hasError);
-    assert(privateDescriptor.result == expPrivateDesc);
-
-    final publicDescriptor =
-        libstackmate.compile(policy: watcherPolicy, scriptType: 'wpkh');
-    assert(!publicDescriptor.hasError);
-    assert(publicDescriptor.result == expPublicDesc);
-    final policyid =
-        libstackmate.policyId(descriptor: privateDescriptor.result.toString());
-    print(policyid.result);
-    final ffiAddress0 = libstackmate.getAddress(
-      descriptor: publicDescriptor.result!,
-      index: '0',
-    );
-    assert(!ffiAddress0.hasError);
-    // assert(ffiAddress0.result! == myAddress0);
-  });
-  test('Height of current block', () async {
-    final height = libstackmate.getHeight(
-      network: 'test', //test,main
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-    );
-    assert(!height.hasError);
-    print(height.result);
+    expect(testChild.result!.hardenedPath, "m/84'/1'/0'");
+    expect(testChild.result!.xpub, startsWith('tpub'));
   });
 
-  test('Wallet History & Balance Ops', () async {
-    final history = libstackmate.getHistory(
-      descriptor: expPublicDesc,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-    );
-    assert(!history.hasError);
-
-    final balance = libstackmate.syncBalance(
-      descriptor: expPublicDesc,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-    );
-    assert(!balance.hasError);
-
-    final utxos = libstackmate.getUTXOSet(
-      descriptor: expPublicDesc,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-    );
-    assert(!utxos.hasError);
-
-    assert(!utxos.hasError);
-  });
-
-  test('SQLITE: Wallet History & Balance Ops', () async {});
-
-  test('Wallet Transaction Flow', () async {
-    final fees = libstackmate.estimateNetworkFee(
-      network: network,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-      targetSize: '6',
-    );
-    assert(!fees.hasError);
-
-    const txOutputs = '$faucetReturnAddress:$returnAmount';
-
-    final dummyBuildPsbt = libstackmate.buildTransaction(
-      descriptor: expPublicDesc,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-      txOutputs: txOutputs,
-      feeAbsolute: '1000',
-      policyPath: '',
-      sweep: 'false',
-    );
-    assert(!dummyBuildPsbt.hasError);
-
-    final weight = libstackmate.getWeight(
-      descriptor: expPublicDesc,
-      psbt: dummyBuildPsbt.result!.psbt,
-    );
-    assert(!weight.hasError);
-
-    final absoluteFees = libstackmate.feeRateToAbsolute(
-      feeRate: fees.result!.toString(),
-      weight: weight.result!.toString(),
-    );
-    assert(!absoluteFees.hasError);
-
-    final feeRate = libstackmate.feeAbsoluteToRate(
-      feeAbsolute: absoluteFees.result!.absolute.toString(),
-      weight: weight.result!.toString(),
-    );
-    assert(!feeRate.hasError);
-
-    final finalBuildPsbt = libstackmate.buildTransaction(
-      descriptor: expPublicDesc,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-      txOutputs: txOutputs,
-      feeAbsolute: absoluteFees.result!.absolute.toString(),
-      policyPath: '',
-      sweep: 'false',
-    );
-    assert(!finalBuildPsbt.hasError);
-    assert(!finalBuildPsbt.result!.isFinalized);
-
-    final decodedPsbt = libstackmate.decodePsbt(
-      network: network,
-      psbt: finalBuildPsbt.result!.psbt,
-    );
-    assert(!decodedPsbt.hasError);
-    assert(decodedPsbt.result!.isNotEmpty);
-
-    for (final output in decodedPsbt.result!) {
-      if (output.to == faucetReturnAddress) {
-        assert(output.value == returnAmount);
-      } else if (output.to == minerTxOutput) {
-        // show as fees
-      } else {
-        // this is change
-        // check if this address isMine
-      }
+  test('BIP84 and BIP86 mainnet test vectors', () {
+    String firstAddress(String purpose, String script) {
+      final root = lib.importMaster(
+        mnemonic: bip39TestVector,
+        passphrase: '',
+        network: 'main',
+      );
+      final child = lib.deriveHardened(
+        masterXPriv: root.result!.xprv,
+        account: '0',
+        purpose: purpose,
+      );
+      final desc = lib.compile(
+        policy: 'pk(${child.result!.fullXPub}/0/*)',
+        scriptType: script,
+      );
+      return lib.getAddress(descriptor: desc.result!, index: '0').result!;
     }
 
-    // THE ONLY OCCASION A PRIVATE DESCRIPTOR IS NEEDED
-    final signedPsbt = libstackmate.signTransaction(
-      descriptor: expPrivateDesc,
-      unsignedPSBT: finalBuildPsbt.result!.psbt,
+    expect(
+      firstAddress('84', 'wpkh'),
+      'bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu',
     );
-    assert(!signedPsbt.hasError);
-    assert(signedPsbt.result!.isFinalized);
-
-    // final txid = await libstackmate.broadcastTransaction(
-    //   descriptor: expPublicDesc,
-    //   nodeAddress: nodeAddress,
-    //   socks5: 'none',
-    //   signedPSBT: signedPsbt.result!.psbt,
-    // );
-    // assert(!txid.hasError);
+    expect(
+      firstAddress('86', 'tr'),
+      'bc1p5cyxnuxmeuwuvkwfem96lqzszd02n6xdcjrs20cac6yqjjwudpxqkedrcr',
+    );
   });
 
-  test('Error States', () async {
-    var response = await libstackmate.broadcastTransaction(
-      descriptor: expPublicDesc,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-      signedPSBT: finalizedPsbt,
+  test('keeps the stackmate account/index address scheme', () {
+    // Wallets created by stackmate-core use `pk(account_xpub/*)`, i.e.
+    // addresses at m/84'/0'/0'/i. They must keep resolving identically.
+    final d = descriptors(bip39TestVector, '84', 'wpkh', net: 'main');
+    final addr = lib.getAddress(descriptor: d.pub, index: '0').result!;
+    final standardReceive = lib.compile(
+      policy: 'pk(${d.pub.substring(5, d.pub.indexOf('/*'))}/0/*)',
+      scriptType: 'wpkh',
     );
-    assert(response.hasError);
-    // print(response);
-
-    var errorMessage = response.error!;
-    print(errorMessage);
-
-    response = await libstackmate.broadcastTransaction(
-      descriptor: expPublicDesc,
-      nodeAddress: nodeAddress,
-      socks5: 'blazed',
-      signedPSBT: finalizedPsbt,
+    expect(addr, startsWith('bc1q'));
+    expect(
+      addr,
+      isNot(lib.getAddress(descriptor: standardReceive.result!, index: '0').result),
     );
-    assert(response.hasError);
-    errorMessage = response.error!;
-    print(errorMessage);
-
-    response = await libstackmate.broadcastTransaction(
-      descriptor: expPublicDesc,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-      signedPSBT: 'finalizedPsbt',
+    expect(
+      lib.getAddress(descriptor: d.prv, index: '7').result,
+      lib.getAddress(descriptor: d.pub, index: '7').result,
     );
-    assert(response.hasError);
-    errorMessage = response.error!;
-    print(errorMessage);
-    return;
   });
-  test('2 of 3 multisig flow', () async {
-    //step 1 generate xprv of 3 wallets
 
-    final m0 = libstackmate.importMaster(
-      mnemonic: myImportedWords,
-      passphrase: '',
-      network: network,
-    );
-    final m1 = libstackmate.importMaster(
-      mnemonic: seed1,
-      passphrase: '',
-      network: network,
-    );
-    final m2 = libstackmate.importMaster(
-      mnemonic: seed2,
-      passphrase: '',
-      network: network,
-    );
-    // print(m0.result!.xprv);
-    // print(m1.result!.xprv);
-    // print(m2.result!.xprv);
-    //step 2 derive xpubs and xprvs from root xprvs of 3 wallets
-    final xpub0 = libstackmate.deriveHardened(
-      masterXPriv: m0.result!.xprv,
-      account: '0',
-      purpose: '84',
-    );
-    final xpub1 = libstackmate.deriveHardened(
-      masterXPriv: m1.result!.xprv,
-      account: '0',
-      purpose: '84',
+  test('fee conversions round-trip', () {
+    final abs = lib.feeRateToAbsolute(feeRate: '2.5', weight: '561');
+    expect(abs.result!.absolute, 351);
+    final rate = lib.feeAbsoluteToRate(feeAbsolute: '351', weight: '561');
+    expect(rate.result!.rate, closeTo(2.5, 0.01));
+  });
+
+  test('build, weigh, decode, sign and bump fee offline', () {
+    final d = descriptors(importedWords, '84', 'wpkh');
+    final dbPath = '${tmp.path}/wallet.db';
+    const recipient = 'tb1qw2c3lxufxqe2x9s4rdzh65tpf4d7fssjgh8nv6';
+
+    final receive = lib.lastUnusedAddress(descriptor: d.pub, dbPath: dbPath);
+    expect(receive.hasError, false, reason: receive.error);
+    expect(receive.result!.index, '0');
+
+    _fund(dbPath, d.pub, receive.result!.address, 100000);
+    expect(
+      lib.sqliteBalance(descriptor: d.pub, dbPath: dbPath).result,
+      100000,
     );
 
-    final xpub2 = libstackmate.deriveHardened(
-      masterXPriv: m2.result!.xprv,
-      account: '0',
-      purpose: '84',
-    );
-
-    final Xpub0 =
-        '[${xpub0.result!.fingerPrint}/${xpub0.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub0.result!.xpub}';
-
-    final Xpub1 =
-        '[${xpub1.result!.fingerPrint}/${xpub1.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub1.result!.xpub}';
-
-    final Xpub2 =
-        '[${xpub2.result!.fingerPrint}/${xpub2.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub2.result!.xpub}';
-
-    // print(Xpub0);
-    // print(Xpub1);
-    // print(Xpub2);
-
-    final Xprv0 =
-        '[${xpub0.result!.fingerPrint}/${xpub0.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub0.result!.xprv}';
-    final Xprv1 =
-        '[${xpub1.result!.fingerPrint}/${xpub1.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub1.result!.xprv}';
-    final Xprv2 =
-        '[${xpub2.result!.fingerPrint}/${xpub2.result!.hardenedPath.replaceFirst('m/', '').replaceAll('h', "'")}]${xpub2.result!.xprv}';
-    print(Xprv0);
-
-    print('pk($Xprv0/*)');
-
-    //step 3 create multisig descriptor wallets
-    //final policy = 'thresh(2, pk($xprv0), pk($xpub1), pk($xpub2))';
-    final multid0 = libstackmate.compile(
-      policy: 'thresh(2,pk($Xprv0/*),pk($Xpub1/*),pk($Xpub2/*))',
-      scriptType: 'wsh',
-    );
-    final multid1 = libstackmate.compile(
-      policy: 'thresh(2,pk($Xpub0/*),pk($Xprv1/*),pk($Xpub2/*))',
-      scriptType: 'wsh',
-    );
-    final multid2 = libstackmate.compile(
-      policy: 'thresh(2,pk($Xpub0/*),pk($Xpub1/*),pk($Xprv2/*))',
-      scriptType: 'wsh',
-    );
-    print(multid0.result);
-    print(multid1.result);
-    print(multid2.result);
-    final multiAddress = libstackmate.getAddress(
-      descriptor: multid0.result!,
-      index: '0',
-    );
-    print(multiAddress.result);
-    // final multiAddress1 = libstackmate.getAddress(
-    //   descriptor: multid1.result!,
-    //   index: '0',
-    // );
-    // print(multiAddress1.result);
-
-    final balance = libstackmate.syncBalance(
-      descriptor: multid0.result!,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-    );
-    print(balance.result);
-    final history = libstackmate.getHistory(
-      descriptor: multid0.result!,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-    );
-    print(history.result);
-    final policyid = libstackmate.policyId(descriptor: multid0.result!);
-    print(policyid.result);
-
-    //policy id/path - hcm2tqnh
-    final fees = libstackmate.estimateNetworkFee(
-      network: network,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-      targetSize: '6',
-    );
-    assert(!fees.hasError);
-//bitcoin:tb1qw2c3lxufxqe2x9s4rdzh65tpf4d7fssjgh8nv6
-    const txOutputs = '$faucetReturnAddress:$returnAmount';
-
-    final dummyBuildPsbt = libstackmate.buildTransaction(
-      descriptor: multid0.result!,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-      txOutputs: txOutputs,
-      feeAbsolute: '1000',
-      policyPath: 'hcm2tqnh',
+    final dummy = lib.sqliteBuildTransaction(
+      descriptor: d.pub,
+      dbPath: dbPath,
+      txOutputs: '$recipient:20000',
+      feeAbsolute: '500',
+      policyPath: '',
       sweep: 'false',
     );
-    final weight = libstackmate.getWeight(
-      descriptor: multid0.result!,
-      psbt: dummyBuildPsbt.result!.psbt,
-    );
-    assert(!weight.hasError);
+    expect(dummy.hasError, false, reason: dummy.error);
 
-    final absoluteFees = libstackmate.feeRateToAbsolute(
-      feeRate: fees.result!.toString(),
+    final weight = lib.getWeight(descriptor: d.pub, psbt: dummy.result!.psbt);
+    expect(weight.hasError, false, reason: weight.error);
+    // 1-in 2-out P2WPKH is ~141 vB.
+    expect(weight.result! / 4, inInclusiveRange(135, 150));
+
+    final fee = lib.feeRateToAbsolute(
+      feeRate: '2',
       weight: weight.result!.toString(),
     );
-    assert(!absoluteFees.hasError);
-
-    final feeRate = libstackmate.feeAbsoluteToRate(
-      feeAbsolute: absoluteFees.result!.absolute.toString(),
-      weight: weight.result!.toString(),
-    );
-    assert(!feeRate.hasError);
-
-    final createBuildPsbt = libstackmate.buildTransaction(
-      descriptor: multid0.result!,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-      txOutputs: txOutputs,
-      feeAbsolute: absoluteFees.result!.absolute.toString(),
-      policyPath: 'hcm2tqnh',
+    final psbt = lib.sqliteBuildTransaction(
+      descriptor: d.pub,
+      dbPath: dbPath,
+      txOutputs: '$recipient:20000',
+      feeAbsolute: fee.result!.absolute.toString(),
+      policyPath: '',
       sweep: 'false',
     );
-    assert(!createBuildPsbt.hasError);
-    assert(!createBuildPsbt.result!.isFinalized);
 
-    final decodedPsbt = libstackmate.decodePsbt(
-      network: network,
-      psbt: createBuildPsbt.result!.psbt,
+    final decoded = lib.decodePsbt(network: network, psbt: psbt.result!.psbt);
+    expect(decoded.hasError, false, reason: decoded.error);
+    expect(
+      decoded.result!.firstWhere((o) => o.to == recipient).value,
+      20000,
     );
-    print(decodedPsbt.result);
-    final firstsignPsbt = libstackmate.signTransaction(
-      descriptor: multid0.result!,
-      unsignedPSBT: createBuildPsbt.result!.psbt,
+    expect(
+      decoded.result!.firstWhere((o) => o.to == LibBitcoin.minerOutput).value,
+      fee.result!.absolute,
     );
-    print(firstsignPsbt.result);
-    final secondsignPsbt = libstackmate.signTransaction(
-      descriptor: multid1.result!,
-      unsignedPSBT: firstsignPsbt.result!.psbt,
+
+    final watchOnlySign = lib.signTransaction(
+      descriptor: d.pub,
+      unsignedPSBT: psbt.result!.psbt,
     );
-    print(secondsignPsbt.result!.psbt);
-    final txid = await libstackmate.broadcastTransaction(
-      descriptor: multid2.result!,
-      nodeAddress: nodeAddress,
-      socks5: 'none',
-      signedPSBT: secondsignPsbt.result!.psbt,
+    expect(watchOnlySign.result?.isFinalized ?? false, false);
+
+    final signed = lib.signTransaction(
+      descriptor: d.prv,
+      unsignedPSBT: psbt.result!.psbt,
     );
-    print(txid.result);
+    expect(signed.hasError, false, reason: signed.error);
+    expect(signed.result!.isFinalized, true);
+
+    // Pretend we broadcast it, then replace it with a higher fee.
+    final tx = bdk.Psbt(psbtBase64: signed.result!.psbt).extractTx();
+    _applyUnconfirmed(dbPath, d.pub, tx);
+    final history = lib.sqliteHistory(descriptor: d.pub, dbPath: dbPath);
+    final spend = history.result!.firstWhere((t) => !t.isReceive());
+    expect(spend.sent, 20000);
+    expect(spend.fee, fee.result!.absolute);
+
+    final bumped = lib.sqliteBumpFee(
+      descriptor: d.pub,
+      dbPath: dbPath,
+      txid: spend.txid,
+      feeRate: '10',
+    );
+    expect(bumped.hasError, false, reason: bumped.error);
+    final bumpedDecoded =
+        lib.decodePsbt(network: network, psbt: bumped.result!.psbt);
+    final bumpedFee = bumpedDecoded.result!
+        .firstWhere((o) => o.to == LibBitcoin.minerOutput)
+        .value;
+    expect(bumpedFee, greaterThan(fee.result!.absolute));
+    expect(
+      bumpedDecoded.result!.firstWhere((o) => o.to == recipient).value,
+      20000,
+    );
+    final bumpSigned = lib.signTransaction(
+      descriptor: d.prv,
+      unsignedPSBT: bumped.result!.psbt,
+    );
+    expect(bumpSigned.result!.isFinalized, true);
+  });
+
+  test('taproot wallet signs offline', () {
+    final d = descriptors(importedWords, '86', 'tr');
+    final dbPath = '${tmp.path}/tr.db';
+    final receive = lib.lastUnusedAddress(descriptor: d.pub, dbPath: dbPath);
+    _fund(dbPath, d.pub, receive.result!.address, 50000);
+    final psbt = lib.sqliteBuildTransaction(
+      descriptor: d.pub,
+      dbPath: dbPath,
+      txOutputs: 'tb1qw2c3lxufxqe2x9s4rdzh65tpf4d7fssjgh8nv6:0',
+      feeAbsolute: '300',
+      policyPath: '',
+      sweep: 'true',
+    );
+    expect(psbt.hasError, false, reason: psbt.error);
+    final signed =
+        lib.signTransaction(descriptor: d.prv, unsignedPSBT: psbt.result!.psbt);
+    expect(signed.result!.isFinalized, true);
   });
 }
+
+void _applyUnconfirmed(String dbPath, String descriptor, bdk.Transaction tx) {
+  final persister = bdk.Persister.newSqlite(path: '$dbPath.bdk');
+  final wallet = bdk.Wallet.loadSingle(
+    descriptor: bdk.Descriptor(
+      descriptor: descriptor,
+      networkKind: bdk.NetworkKind.test,
+    ),
+    persister: persister,
+    lookahead: 25,
+  );
+  wallet.applyUnconfirmedTxs(
+    unconfirmedTxs: [
+      bdk.UnconfirmedTx(
+        tx: tx,
+        lastSeen: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      ),
+    ],
+  );
+  wallet.persist(persister: persister);
+}
+
+/// Injects an unconfirmed transaction paying [sats] to [address].
+void _fund(String dbPath, String descriptor, String address, int sats) {
+  final script = bdk.Address(address: address, network: bdk.Network.testnet)
+      .scriptPubkey()
+      .toBytes();
+  final raw = BytesBuilder()
+    ..add(_le(2, 4)) // version
+    ..addByte(1) // input count
+    ..add(List.filled(32, 7)) // dummy prevout txid
+    ..add(_le(0, 4)) // prevout index
+    ..addByte(0) // empty scriptSig
+    ..add(_le(0xfffffffd, 4)) // sequence
+    ..addByte(1) // output count
+    ..add(_le(sats, 8))
+    ..addByte(script.length)
+    ..add(script)
+    ..add(_le(0, 4)); // locktime
+  _applyUnconfirmed(
+    dbPath,
+    descriptor,
+    bdk.Transaction(transactionBytes: raw.toBytes()),
+  );
+}
+
+List<int> _le(int value, int bytes) =>
+    [for (var i = 0; i < bytes; i++) (value >> (8 * i)) & 0xff];

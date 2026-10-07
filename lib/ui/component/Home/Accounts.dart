@@ -27,7 +27,7 @@ class Accounts extends StatelessWidget {
             child: Text(
               'No\nwallets\nadded',
               style: c.fonts.bodySmall!.copyWith(
-                color: c.colours.onBackground,
+                color: c.colours.onSurface,
               ),
             ),
           ),

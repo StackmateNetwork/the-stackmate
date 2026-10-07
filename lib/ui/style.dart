@@ -28,14 +28,12 @@ ThemeData mainTheme() => ThemeData(
         secondary: blueJeans,
         tertiary: brightCrayola,
         tertiaryContainer: frenchViolet,
-        surface: ghostWhite.withOpacity(0.009),
-        onPrimaryContainer: vantaBlack.withOpacity(0.92),
-        background: vantaBlack,
+        surface: ghostWhite.withValues(alpha: 0.009),
+        onPrimaryContainer: vantaBlack.withValues(alpha: 0.92),
         error: venetian,
-        onPrimary: cultured.withOpacity(0.82),
+        onPrimary: cultured.withValues(alpha: 0.82),
         onSecondary: lightSeaGreen,
         onSurface: cultured,
-        onBackground: cultured,
         onError: cultured,
         brightness: Brightness.dark,
       ),
@@ -46,7 +44,7 @@ ThemeData mainTheme() => ThemeData(
 //     primary: brightCrayola,
 //     secondary: blueJeans,
 //     tertiary: maximumGreen,
-//     surface: richFogra.withOpacity(0.09),
+//     surface: richFogra.withValues(alpha: 0.09),
 //     background: cultured,
 //     error: goldenBridge,
 //     onPrimary: richFogra,
@@ -59,7 +57,7 @@ ThemeData mainTheme() => ThemeData(
 // );
 ThemeData derivedTheme(ThemeData theme) {
   return theme.copyWith(
-    scaffoldBackgroundColor: theme.colorScheme.background,
+    scaffoldBackgroundColor: theme.colorScheme.surface,
     //Colors.blue[50], //_background,
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: theme.colorScheme.primary,
@@ -89,9 +87,9 @@ ThemeData derivedTheme(ThemeData theme) {
       errorStyle: TextStyle(color: theme.colorScheme.error),
       filled: true,
       fillColor: theme.colorScheme.surface,
-      focusColor: theme.colorScheme.onBackground,
-      labelStyle: TextStyle(color: theme.colorScheme.onBackground),
-      hintStyle: TextStyle(color: theme.colorScheme.primary.withOpacity(0.7)),
+      focusColor: theme.colorScheme.onSurface,
+      labelStyle: TextStyle(color: theme.colorScheme.onSurface),
+      hintStyle: TextStyle(color: theme.colorScheme.primary.withValues(alpha: 0.7)),
     ),
   );
 }

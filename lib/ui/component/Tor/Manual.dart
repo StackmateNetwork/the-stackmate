@@ -44,7 +44,7 @@ class ManualTor extends StatelessWidget {
                       'Privacy lost once, is lost forever.',
                       maxLines: 3,
                       style: context.fonts.bodySmall!.copyWith(
-                        color: context.colours.onSurface.withOpacity(0.7),
+                        color: context.colours.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -52,7 +52,7 @@ class ManualTor extends StatelessWidget {
                       tor.enforced ? 'ON' : 'OFF',
                       maxLines: 3,
                       style: context.fonts.bodyMedium!.copyWith(
-                        color: context.colours.onSurface.withOpacity(0.7),
+                        color: context.colours.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -103,7 +103,7 @@ class ManualTor extends StatelessWidget {
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                       style: context.fonts.bodyMedium!.copyWith(
-                        color: context.colours.onSurface.withOpacity(0.7),
+                        color: context.colours.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -111,7 +111,7 @@ class ManualTor extends StatelessWidget {
                       !tor.internal ? 'ON' : 'OFF',
                       maxLines: 3,
                       style: context.fonts.bodyMedium!.copyWith(
-                        color: context.colours.onSurface.withOpacity(0.7),
+                        color: context.colours.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -174,7 +174,7 @@ class _ExternalTorState extends State<ExternalTor> {
           Text(
             'External SockS5 Proxy'.toUpperCase(),
             style: c.fonts.labelLarge!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
               fontSize: 16,
             ),
           ),
@@ -183,7 +183,7 @@ class _ExternalTorState extends State<ExternalTor> {
             'Check your external Tor app.',
             maxLines: 3,
             style: c.fonts.bodySmall!.copyWith(
-              color: c.colours.onSurface.withOpacity(0.7),
+              color: c.colours.onSurface.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 16),
@@ -191,7 +191,7 @@ class _ExternalTorState extends State<ExternalTor> {
           TextField(
             controller: _socks5Port,
             autocorrect: false,
-            style: TextStyle(color: context.colours.onBackground),
+            style: TextStyle(color: context.colours.onSurface),
             decoration: InputDecoration(
               hintText: 'Enter SockS5Port'.toUpperCase(),
             ),

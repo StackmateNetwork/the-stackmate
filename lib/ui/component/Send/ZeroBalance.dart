@@ -15,7 +15,7 @@ class ZeroBalance extends StatelessWidget {
         child: Text(
           'You have\nZero\nBalance.',
           style: context.fonts.titleLarge!.copyWith(
-            color: context.colours.onBackground,
+            color: context.colours.onSurface,
           ),
         ),
       );

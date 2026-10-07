@@ -6,9 +6,7 @@ import 'package:sats/ui/component/NewWallet/Derive/Label.dart';
 import 'package:sats/ui/component/NewWallet/Derive/Passphrase.dart';
 
 class DeriveSteps extends StatelessWidget {
-  const DeriveSteps({
-    super.key,
-  });
+  const DeriveSteps({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +31,9 @@ class DerivePurpose extends StatelessWidget {
   Widget build(BuildContext c) {
     // final wallets = c.select((WalletsCubit wc) => wc.state.wallets);
 
-    final selectedPurpose =
-        c.select((DeriveWalletCubit mdw) => mdw.state.purpose);
+    final selectedPurpose = c.select(
+      (DeriveWalletCubit mdw) => mdw.state.purpose,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -47,54 +46,51 @@ class DerivePurpose extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-        ListTile(
-          title: Text(
-            'Taproot',
-            style: c.fonts.bodyMedium!.copyWith(
-              color: c.colours.onPrimary,
-              // fontWeight: FontWeight.bold,
-            ),
-          ),
-          leading: Radio<DerivationPurpose>(
-            activeColor: c.colours.primary,
-            value: DerivationPurpose.taproot,
-            groupValue: selectedPurpose,
-            onChanged: (DerivationPurpose? value) {
-              c
-                  .read<DeriveWalletCubit>()
-                  .purposeChanged(DerivationPurpose.taproot);
-            },
+        RadioGroup<DerivationPurpose>(
+          groupValue: selectedPurpose,
+          onChanged: (value) {
+            if (value != null)
+              c.read<DeriveWalletCubit>().purposeChanged(value);
+          },
+          child: Column(
+            children: [
+              ListTile(
+                title: Text(
+                  'Taproot',
+                  style: c.fonts.bodyMedium!.copyWith(
+                    color: c.colours.onPrimary,
+                    // fontWeight: FontWeight.bold,
+                  ),
+                ),
+                leading: Radio<DerivationPurpose>(
+                  activeColor: c.colours.primary,
+                  value: DerivationPurpose.taproot,
+                ),
+              ),
+              ListTile(
+                selectedColor: c.colours.primary,
+                selectedTileColor: c.colours.primary,
+                title: Text(
+                  'Segwit',
+                  style: c.fonts.bodyMedium!.copyWith(
+                    color: c.colours.onPrimary,
+                    // fontWeight: FontWeight.bold,
+                  ),
+                ),
+                leading: Radio<DerivationPurpose>(
+                  activeColor: c.colours.primary,
+                  value: DerivationPurpose.segwit,
+                ),
+              ),
+            ],
           ),
         ),
-        ListTile(
-          selectedColor: c.colours.primary,
-          selectedTileColor: c.colours.primary,
-          title: Text(
-            'Segwit',
-            style: c.fonts.bodyMedium!.copyWith(
-              color: c.colours.onPrimary,
-              // fontWeight: FontWeight.bold,
-            ),
-          ),
-          leading: Radio<DerivationPurpose>(
-            activeColor: c.colours.primary,
-            value: DerivationPurpose.segwit,
-            groupValue: selectedPurpose,
-            onChanged: (DerivationPurpose? value) {
-              c
-                  .read<DeriveWalletCubit>()
-                  .purposeChanged(DerivationPurpose.segwit);
-            },
-          ),
-        ),
-        const SizedBox(
-          height: 12,
-        ),
+        const SizedBox(height: 12),
         SizedBox(
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              foregroundColor: c.colours.background,
+              foregroundColor: c.colours.surface,
               backgroundColor: c.colours.primary,
             ),
             onPressed: () {

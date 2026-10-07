@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/outputs.dart';
 import 'package:path/path.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
@@ -10,6 +9,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
+import 'package:sats/model/core.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -22,7 +22,7 @@ import 'package:sqflite/sqflite.dart' hide Transaction;
 part 'receive.freezed.dart';
 
 @freezed
-class ReceiveState with _$ReceiveState {
+abstract class ReceiveState with _$ReceiveState {
   const factory ReceiveState({
     required Wallet wallet,
     @Default(true) bool loadingAddress,
@@ -211,7 +211,6 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       // THIS PART NEEDS TO BE REVIEWS
       // compute is used and errors are not properly handled
 
-      // ignore: unused_local_variable
       final syncStat = await compute(sqliteSync, {
         'dbPath': dbPath,
         'descriptor': state.wallet.descriptor,

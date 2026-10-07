@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/outputs.dart';
 import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:permission_handler/permission_handler.dart';
@@ -17,12 +15,16 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
+import 'package:sats/cubit/wallet/signer.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/core.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
+import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
+import 'package:sats/pkg/interface/qr_scanner.dart';
 import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -40,7 +42,7 @@ enum SendSteps {
 }
 
 @freezed
-class SendState with _$SendState {
+abstract class SendState with _$SendState {
   const factory SendState({
     required Wallet wallet,
     @Default(SendSteps.address) SendSteps currentStep,
@@ -131,10 +133,6 @@ class SendCubit extends Cubit<SendState> {
   static const minerOutput = 'miner';
   static const emptyString = '';
   static const sweepMessage = 'WALLET WILL BE EMPTIED.';
-  static const trScript = 'tr';
-  static const taprootPurpose = '86';
-  static const segwitScript = 'wpkh';
-  static const segwitPurpose = '84';
   void _init(bool withQR) async {
     if (withQR) {
       await Future.delayed(const Duration(milliseconds: 500));
@@ -288,13 +286,7 @@ class SendCubit extends Cubit<SendState> {
 
   void scanAddress(bool onStart) async {
     try {
-      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        'Cancel',
-        false,
-        ScanMode.QR,
-      );
-      if (barcodeScanRes == '-1') barcodeScanRes = emptyString;
+      final barcodeScanRes = await locator<IQrScanner>().scan();
       if (barcodeScanRes.contains('bitcoin:')) {
         final address = barcodeScanRes.split(':')[1].split('?')[0];
         adddressChanged(address);
@@ -415,7 +407,7 @@ class SendCubit extends Cubit<SendState> {
   Future<void> savePSBTToFile() async {
     try {
       // await _getStoragePermission();
-      final path = await FilePicker.platform.getDirectoryPath();
+      final path = await FilePicker.getDirectoryPath();
       if (path == null) {
         emit(
           state.copyWith(
@@ -428,6 +420,7 @@ class SendCubit extends Cubit<SendState> {
             errFees: emptyString,
           ),
         );
+        return;
       }
       //final File file = File('$path/build.psbt');
       // String _timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
@@ -818,95 +811,6 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
-  String segwitDescriptor() {
-    final masteRoot = _core.importMaster(
-      mnemonic: _masterKeyCubit.state.key!.seed!,
-      passphrase: state.wallet.passPhrase,
-      network: _blockchain.state.blockchain.name,
-    );
-    if (masteRoot.hasError) {
-      throw SMError.fromJson(masteRoot.error!).message;
-    }
-    final segwitChild = _core.deriveHardened(
-      masterXPriv: masteRoot.result!.xprv,
-      account: '0',
-      purpose: '84',
-    );
-    if (segwitChild.hasError) {
-      throw SMError.fromJson(segwitChild.error!).message;
-    }
-
-    final fullXPrv = segwitChild.result!.fullXPrv;
-    final policy = 'pk($fullXPrv/*)';
-
-    final desc = _core.compile(
-      policy: policy,
-      scriptType: segwitScript,
-    );
-
-    return desc.result!;
-  }
-
-  String segwitrecoveredDescriptor() {
-    _masterKeyCubit.getRecoverkey(state.wallet.fingerprint);
-
-    final masteRoot = _core.importMaster(
-      mnemonic: _masterKeyCubit.state.rkey!.seed!,
-      passphrase: state.wallet.passPhrase,
-      network: _blockchain.state.blockchain.name,
-    );
-    if (masteRoot.hasError) {
-      throw SMError.fromJson(masteRoot.error!).message;
-    }
-    final segwitChild = _core.deriveHardened(
-      masterXPriv: masteRoot.result!.xprv,
-      account: '0',
-      purpose: '84',
-    );
-    if (segwitChild.hasError) {
-      throw SMError.fromJson(segwitChild.error!).message;
-    }
-
-    final fullXPrv = segwitChild.result!.fullXPrv;
-    final policy = 'pk($fullXPrv/*)';
-
-    final desc = _core.compile(
-      policy: policy,
-      scriptType: segwitScript,
-    );
-
-    return desc.result!;
-  }
-
-  String taprootDescriptor() {
-    final masteRoot = _core.importMaster(
-      mnemonic: _masterKeyCubit.state.key!.seed!,
-      passphrase: state.wallet.passPhrase,
-      network: _blockchain.state.blockchain.name,
-    );
-    if (masteRoot.hasError) {
-      throw SMError.fromJson(masteRoot.error!).message;
-    }
-
-    final tapChild = _core.deriveHardened(
-      masterXPriv: masteRoot.result!.xprv,
-      account: '0',
-      purpose: '86',
-    );
-    if (tapChild.hasError) {
-      throw SMError.fromJson(tapChild.error!).message;
-    }
-    final fullXPrv = tapChild.result!.fullXPrv;
-    final policy = 'pk($fullXPrv/*)';
-
-    final desc = _core.compile(
-      policy: policy,
-      scriptType: trScript,
-    );
-
-    return desc.result!;
-  }
-
   void sendClicked() async {
     try {
       if (state.sendingTx) return;
@@ -922,20 +826,16 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final descriptor = state.wallet.descriptor.startsWith('wpkh')
-          ? ((state.wallet.walletType == 'PRIMARY')
-              ? segwitDescriptor()
-              : segwitrecoveredDescriptor())
-          : taprootDescriptor();
-      final xpubDescr = state.wallet.descriptor;
+      final descriptor = await WalletSigner(
+        _core,
+        _masterKeyCubit,
+        _blockchain,
+      ).signingDescriptor(state.wallet);
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
       final signed = await compute(signTx, {
-        'descriptor': ((state.wallet.walletType == 'PRIMARY' ||
-                state.wallet.walletType == 'RECOVERED')
-            ? descriptor
-            : xpubDescr),
+        'descriptor': descriptor,
         'unsignedPSBT': state.psbt,
       });
 
@@ -953,10 +853,7 @@ class SendCubit extends Cubit<SendState> {
       }
 
       final txid = await compute(broadcastTx, {
-        'descriptor': state.wallet.walletType == 'PRIMARY' ||
-                state.wallet.walletType == 'RECOVERED'
-            ? descriptor
-            : xpubDescr,
+        'descriptor': descriptor,
         'nodeAddress': nodeAddress,
         'socks5': socks5,
         'signedPSBT': signed.result!.psbt,

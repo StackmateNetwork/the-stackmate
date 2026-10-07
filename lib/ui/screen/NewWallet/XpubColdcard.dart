@@ -35,7 +35,7 @@ class _XpubColdcard extends StatelessWidget {
           previous.currentStep != current.currentStep,
       builder: (context, state) {
         return PopScope(
-          onPopInvoked: (_) async {
+          onPopInvokedWithResult: (didPop, _) async {
             if (!state.canGoBack()) {
               c.read<XpubImportWalletCubit>().backClicked();
               return;

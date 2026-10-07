@@ -73,7 +73,7 @@ class _AmountRowState extends State<AmountRow> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [ThousandsFormatter()],
                     style: TextStyle(
-                      color: c.colours.onBackground,
+                      color: c.colours.onSurface,
                       fontSize: 24,
                     ),
                     decoration: InputDecoration(
@@ -86,7 +86,7 @@ class _AmountRowState extends State<AmountRow> {
                           : 'Amount in SATS'.toUpperCase(),
                       hintStyle: isSweep
                           ? TextStyle(
-                              color: c.colours.onBackground,
+                              color: c.colours.onSurface,
                             )
                           : null,
                     ),
@@ -105,7 +105,7 @@ class _AmountRowState extends State<AmountRow> {
                         ? '    BTC: ' + balance.toBtc()
                         : '    BTC: ' + amount.toBtc(),
                     style: c.fonts.bodySmall!.copyWith(
-                      color: c.colours.onBackground.withOpacity(0.7),
+                      color: c.colours.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                   TextButton(
@@ -125,7 +125,7 @@ class _AmountRowState extends State<AmountRow> {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: c.colours.background,
+                    foregroundColor: c.colours.surface,
                     backgroundColor: c.colours.primary,
                   ),
                   onPressed: () {

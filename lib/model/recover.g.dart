@@ -6,15 +6,15 @@ part of 'recover.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$RecoveredKeyImpl _$$RecoveredKeyImplFromJson(Map<String, dynamic> json) =>
-    _$RecoveredKeyImpl(
+_RecoveredKey _$RecoveredKeyFromJson(Map<String, dynamic> json) =>
+    _RecoveredKey(
       seed: json['seed'] as String?,
       root: json['root'] as String?,
       fingerprint: json['fingerprint'] as String?,
       network: json['network'] as String?,
     );
 
-Map<String, dynamic> _$$RecoveredKeyImplToJson(_$RecoveredKeyImpl instance) =>
+Map<String, dynamic> _$RecoveredKeyToJson(_RecoveredKey instance) =>
     <String, dynamic>{
       'seed': instance.seed,
       'root': instance.root,

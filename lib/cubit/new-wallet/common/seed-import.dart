@@ -1,11 +1,11 @@
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/libstackmate.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
+import 'package:sats/model/core.dart';
 
 part 'seed-import.freezed.dart';
 
@@ -17,7 +17,7 @@ enum SeedImportStep {
 enum ImportTypes { words12, words24 }
 
 @freezed
-class SeedImportState with _$SeedImportState {
+abstract class SeedImportState with _$SeedImportState {
   const factory SeedImportState({
     @Default([]) List<({String word, bool tapped})> words12,
     @Default([]) List<({String word, bool tapped})> words24,

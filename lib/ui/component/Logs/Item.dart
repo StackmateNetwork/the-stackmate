@@ -36,7 +36,7 @@ class LogItem extends StatelessWidget {
               Text(
                 log.path!,
                 style: context.fonts.bodySmall!.copyWith(
-                  color: context.colours.onBackground,
+                  color: context.colours.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
@@ -59,7 +59,7 @@ class LogItem extends StatelessWidget {
               child: Text(
                 log.response!,
                 style: context.fonts.bodySmall!.copyWith(
-                  color: context.colours.onBackground,
+                  color: context.colours.onSurface,
                 ),
               ),
             ),
@@ -79,14 +79,14 @@ class LogItem extends StatelessWidget {
               Text(
                 log.exceptionSource!,
                 style: context.fonts.bodySmall!.copyWith(
-                  color: context.colours.onBackground,
+                  color: context.colours.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 'EXCEPTION: ' + log.exceptionType!,
                 style: context.fonts.bodySmall!.copyWith(
-                  color: context.colours.onBackground,
+                  color: context.colours.onSurface,
                 ),
               ),
             ],
@@ -100,7 +100,7 @@ class LogItem extends StatelessWidget {
               child: Text(
                 log.stackTrace!,
                 style: context.fonts.bodySmall!.copyWith(
-                  color: context.colours.onBackground,
+                  color: context.colours.onSurface,
                 ),
               ),
             ),

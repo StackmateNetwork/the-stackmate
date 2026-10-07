@@ -8,7 +8,7 @@ part of 'blockchain.dart';
 
 class BlockchainClassAdapter extends TypeAdapter<Blockchain> {
   @override
-  final int typeId = 4;
+  final typeId = 4;
 
   @override
   Blockchain read(BinaryReader reader) {
@@ -27,10 +27,8 @@ class BlockchainClassAdapter extends TypeAdapter<Blockchain> {
     switch (obj) {
       case Blockchain.main:
         writer.writeByte(0);
-        break;
       case Blockchain.test:
         writer.writeByte(1);
-        break;
     }
   }
 

@@ -1,5 +1,4 @@
 import 'dart:convert';
-// ignore: avoid_escaping_inner_quotes
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

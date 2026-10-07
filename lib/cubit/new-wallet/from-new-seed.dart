@@ -4,13 +4,13 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/outputs.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/core.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -32,7 +32,7 @@ const wpkhScript = 'wpkh';
 const emptyString = '';
 
 @freezed
-class SeedGenerateWalletState with _$SeedGenerateWalletState {
+abstract class SeedGenerateWalletState with _$SeedGenerateWalletState {
   const factory SeedGenerateWalletState({
     @Default(SeedGenerateWalletSteps.warning)
     SeedGenerateWalletSteps currentStep,

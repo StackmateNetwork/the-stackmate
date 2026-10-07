@@ -8,7 +8,7 @@ class _Logs extends StatelessWidget {
   Widget build(BuildContext c) {
     final logs = c.select((Logger l) => l.state.logs);
     return Scaffold(
-      backgroundColor: c.colours.background,
+      backgroundColor: c.colours.surface,
       appBar: AppBar(
         title: const Text(
           'LOGS',
@@ -16,7 +16,7 @@ class _Logs extends StatelessWidget {
               // color: Colors.black,
               ),
         ),
-        backgroundColor: c.colours.background,
+        backgroundColor: c.colours.surface,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(

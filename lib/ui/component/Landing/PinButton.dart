@@ -32,7 +32,7 @@ class PinButton extends StatelessWidget {
             height: 72,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                foregroundColor: context.colours.background,
+                foregroundColor: context.colours.surface,
                 backgroundColor: context.colours.primary,
               ),
               onPressed: () async {
@@ -48,7 +48,7 @@ class PinButton extends StatelessWidget {
             height: 72,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                foregroundColor: context.colours.background,
+                foregroundColor: context.colours.surface,
                 backgroundColor: context.colours.primary,
               ),
               onPressed: () async {

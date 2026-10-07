@@ -5,7 +5,7 @@ import 'package:sats/pkg/mnemonic_word.dart';
 part 'words_cubit.freezed.dart';
 
 @freezed
-class WordsState with _$WordsState {
+abstract class WordsState with _$WordsState {
   const factory WordsState({
     /**
      * 

@@ -6,17 +6,17 @@ part of 'preferences.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PreferencesClassAdapter extends TypeAdapter<_$PreferencesImpl> {
+class PreferencesClassAdapter extends TypeAdapter<_Preferences> {
   @override
-  final int typeId = 2;
+  final typeId = 2;
 
   @override
-  _$PreferencesImpl read(BinaryReader reader) {
+  _Preferences read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$PreferencesImpl(
+    return _Preferences(
       incognito: fields[0] as bool,
       bitcoinStandard: fields[1] as bool,
       preferredBitcoinUnit: fields[2] as String,
@@ -26,7 +26,7 @@ class PreferencesClassAdapter extends TypeAdapter<_$PreferencesImpl> {
   }
 
   @override
-  void write(BinaryWriter writer, _$PreferencesImpl obj) {
+  void write(BinaryWriter writer, _Preferences obj) {
     writer
       ..writeByte(5)
       ..writeByte(0)
@@ -56,16 +56,15 @@ class PreferencesClassAdapter extends TypeAdapter<_$PreferencesImpl> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PreferencesImpl _$$PreferencesImplFromJson(Map<String, dynamic> json) =>
-    _$PreferencesImpl(
-      incognito: json['incognito'] as bool,
-      bitcoinStandard: json['bitcoinStandard'] as bool,
-      preferredBitcoinUnit: json['preferredBitcoinUnit'] as String,
-      preferredExchange: json['preferredExchange'] as String,
-      preferredFiatUnit: json['preferredFiatUnit'] as String,
-    );
+_Preferences _$PreferencesFromJson(Map<String, dynamic> json) => _Preferences(
+  incognito: json['incognito'] as bool,
+  bitcoinStandard: json['bitcoinStandard'] as bool,
+  preferredBitcoinUnit: json['preferredBitcoinUnit'] as String,
+  preferredExchange: json['preferredExchange'] as String,
+  preferredFiatUnit: json['preferredFiatUnit'] as String,
+);
 
-Map<String, dynamic> _$$PreferencesImplToJson(_$PreferencesImpl instance) =>
+Map<String, dynamic> _$PreferencesToJson(_Preferences instance) =>
     <String, dynamic>{
       'incognito': instance.incognito,
       'bitcoinStandard': instance.bitcoinStandard,

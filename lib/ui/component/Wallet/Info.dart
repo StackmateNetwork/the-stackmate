@@ -23,7 +23,7 @@ class WalletInfo extends StatelessWidget {
               ),
               child: AppBar(
                 automaticallyImplyLeading: false,
-                backgroundColor: c.colours.background,
+                backgroundColor: c.colours.surface,
                 bottom: TabBar(
                   indicatorColor: c.colours.primary,
                   tabs: [
@@ -31,7 +31,7 @@ class WalletInfo extends StatelessWidget {
                       child: Text(
                         'INFO',
                         style: c.fonts.titleLarge!.copyWith(
-                          color: c.colours.onBackground,
+                          color: c.colours.onSurface,
                         ),
                       ),
                     ),
@@ -39,7 +39,7 @@ class WalletInfo extends StatelessWidget {
                       child: Text(
                         'BACKUP',
                         style: c.fonts.titleLarge!.copyWith(
-                          color: c.colours.onBackground,
+                          color: c.colours.onSurface,
                           fontWeight: FontWeight.normal,
                         ),
                       ),

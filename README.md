@@ -10,7 +10,6 @@
   - [Flutter Development](#flutter-development)
   - [VSCode Explorer](#vscode-explorer)
   - [Exchange Rates API](#exchange-rates-api)
-  - [Updating stackmate-core](#updating-stackmate-core)
 - [Maintainers](#maintainers)
 - [Contribution](#contribution)
 - [License](#license)
@@ -35,17 +34,18 @@ Prioritized in that order.
 
 ## Core
 
-This app uses [stackmate-core](https://github.com/i5hi/stackmate-core) for it's Bitcoin specific logic.
+This app uses [BDK](https://bitcoindevkit.org/) via the official [bdk_dart](https://pub.dev/packages/bdk_dart) bindings for its Bitcoin specific logic (descriptors, sync, PSBT building/signing and fee bumping).
 <br/>
-[stackmate-core](https://github.com/i5hi/stackmate-core) is built using Rust.
+Tor is provided by the [arti](https://gitlab.torproject.org/tpo/core/arti)-based [tor](https://pub.dev/packages/tor) plugin.
 <br/>
-This app communicates with [stackmate-core's](https://github.com/i5hi/stackmate-core) Rust binary via FFI.
+Both are Rust libraries that are compiled automatically during `flutter build` / `flutter run`.
 
 ## Features
 
 - **Descriptors** uses descriptor wallet specifications for simplicity in development and compatability in recovery
 - **PSBT** uses psbt specifications to support watch-only wallets and compatability with hardware wallets
 - **Taproot** supports taproot for single-sig to improve the overall anonymity set of bitcoin transactions
+- **RBF** bump the fee of unconfirmed outgoing transactions (BIP125 replace-by-fee)
 - **Cross Platform:** built using Flutter 💙 and Rust, allowing easy extension to multiple platforms
 
 ## Getting Started
@@ -54,7 +54,7 @@ This app communicates with [stackmate-core's](https://github.com/i5hi/stackmate-
 
 ### Flutter Development
 
-Make sure Flutter and Dart are installed.
+Make sure Flutter (3.38+), the [Rust toolchain](https://rustup.rs) and, for Android, the Android NDK are installed.
 
 ```bash
 flutter pub get
@@ -64,7 +64,7 @@ flutter run
 Run [freezed](https://pub.dev/packages/freezed) code-gen while updating cubit state classes or model classes.
 
 ```bash
-flutter pub run build_runner watch --delete-conflicting-outputs
+dart run build_runner watch --force-jit --delete-conflicting-outputs
 ```
 
 <br/>
@@ -76,19 +76,6 @@ Visibility of files and folders can be toggled from
     .vscode/
         └── settings.json
 
-<br/>
-
-### Updating stackmate-core
-
-<br/>
-Make sure Rust and Android NDK are installed.
-
-```bash
-cd packages/libstackmate
-sh update-core.sh
-```
-
-<br/>
 <br/>
 
 ## Maintainers

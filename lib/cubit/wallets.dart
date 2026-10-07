@@ -12,7 +12,7 @@ import 'package:sats/pkg/storage.dart';
 part 'wallets.freezed.dart';
 
 @freezed
-class WalletsState with _$WalletsState {
+abstract class WalletsState with _$WalletsState {
   const factory WalletsState({
     @Default([]) List<Wallet> wallets,
     Wallet? selectedWallet,

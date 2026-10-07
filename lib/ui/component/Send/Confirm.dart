@@ -48,21 +48,21 @@ class ConfirmTransaction extends StatelessWidget {
                     Text(
                       'Transaction\nDetails',
                       style: context.fonts.headlineSmall!.copyWith(
-                        color: context.colours.onBackground,
+                        color: context.colours.onSurface,
                       ),
                     ),
                     const SizedBox(height: 40),
                     Text(
                       'Address'.toUpperCase(),
                       style: context.fonts.labelSmall!.copyWith(
-                        color: context.colours.onBackground,
+                        color: context.colours.onSurface,
                       ),
                     ),
                     const SizedBox(height: 16),
                     Text(
                       state.address,
                       style: context.fonts.bodySmall!.copyWith(
-                        color: context.colours.onBackground,
+                        color: context.colours.onSurface,
                       ),
                     ),
                     const SizedBox(height: 60),
@@ -73,7 +73,7 @@ class ConfirmTransaction extends StatelessWidget {
                           child: Text(
                             'Amount'.toUpperCase(),
                             style: context.fonts.labelSmall!.copyWith(
-                              color: context.colours.onBackground,
+                              color: context.colours.onSurface,
                             ),
                           ),
                         ),
@@ -92,7 +92,7 @@ class ConfirmTransaction extends StatelessWidget {
                           child: Text(
                             'Network Fee'.toUpperCase(),
                             style: context.fonts.labelSmall!.copyWith(
-                              color: context.colours.onBackground,
+                              color: context.colours.onSurface,
                             ),
                           ),
                         ),
@@ -111,7 +111,7 @@ class ConfirmTransaction extends StatelessWidget {
                           child: Text(
                             'Total'.toUpperCase(),
                             style: context.fonts.labelSmall!.copyWith(
-                              color: context.colours.onBackground,
+                              color: context.colours.onSurface,
                             ),
                           ),
                         ),
@@ -128,7 +128,7 @@ class ConfirmTransaction extends StatelessWidget {
                         height: 52,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: context.colours.background,
+                            foregroundColor: context.colours.surface,
                             backgroundColor: context.colours.primary,
                           ),
                           onPressed: () {
@@ -159,7 +159,7 @@ class ConfirmTransaction extends StatelessWidget {
                       Text(
                         state.errSending,
                         style: context.fonts.bodySmall!.copyWith(
-                          color: context.colours.error.withOpacity(0.7),
+                          color: context.colours.error.withValues(alpha: 0.7),
                         ),
                         textAlign: TextAlign.center,
                       ),

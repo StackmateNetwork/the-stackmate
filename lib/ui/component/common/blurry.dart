@@ -54,7 +54,7 @@ class BlurryContainer extends StatelessWidget {
           padding: padding,
           color: bgColor == Colors.transparent
               ? bgColor
-              : bgColor.withOpacity(0.5),
+              : bgColor.withValues(alpha: 0.5),
           child: child,
         ),
       ),

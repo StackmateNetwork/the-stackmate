@@ -63,7 +63,7 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
                   onChanged: (text) {
                     c.read<DeriveWalletCubit>().passPhrasedChanged(text);
                   },
-                  style: TextStyle(color: c.colours.onBackground),
+                  style: TextStyle(color: c.colours.onSurface),
                   decoration: const InputDecoration(
                     labelText: 'Passphrase',
                   ),
@@ -85,7 +85,7 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
 
                     return null;
                   },
-                  style: TextStyle(color: c.colours.onBackground),
+                  style: TextStyle(color: c.colours.onSurface),
                   decoration: const InputDecoration(
                     labelText: 'Verify Passphrase',
                   ),
@@ -104,7 +104,7 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: c.colours.background,
+                    foregroundColor: c.colours.surface,
                     backgroundColor: c.colours.primary,
                   ),
                   onPressed: () {

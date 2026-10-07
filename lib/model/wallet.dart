@@ -1,5 +1,6 @@
+// ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:sats/model/transaction.dart';
 
 part 'wallet.g.dart';
@@ -8,7 +9,7 @@ part 'wallet.freezed.dart';
 const satsInBTC = 100000000;
 
 @freezed
-class Wallet with _$Wallet {
+abstract class Wallet with _$Wallet {
   @HiveType(typeId: 1, adapterName: 'WalletClassAdapter')
   const factory Wallet({
     @HiveField(0) int? id,

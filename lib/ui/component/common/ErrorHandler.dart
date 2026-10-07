@@ -13,7 +13,7 @@ void handleError(BuildContext context, String message) {
     Overlay.of(context),
     CustomSnackBar.error(
       textStyle: context.fonts.bodyLarge!.copyWith(
-        color: context.colours.onBackground,
+        color: context.colours.onSurface,
       ),
       message: message,
       backgroundColor: context.colours.error,

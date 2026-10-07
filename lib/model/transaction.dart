@@ -1,11 +1,12 @@
+// ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:intl/intl.dart';
 part 'transaction.g.dart';
 part 'transaction.freezed.dart';
 
 @freezed
-class Transaction with _$Transaction {
+abstract class Transaction with _$Transaction {
   @HiveType(typeId: 6, adapterName: 'TransactionClassAdapter')
   const factory Transaction({
     @HiveField(0) required int timestamp,

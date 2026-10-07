@@ -100,7 +100,7 @@ class _BBTextInputState extends State<BBTextInput> {
           keyboardType: TextInputType.multiline,
           maxLines: 5,
           style: context.fonts.bodySmall!
-              .copyWith(color: context.colours.onBackground),
+              .copyWith(color: context.colours.onSurface),
           decoration: InputDecoration(
             suffixIcon: widget.rightIcon,
             hintText: widget.hint,
@@ -110,13 +110,13 @@ class _BBTextInputState extends State<BBTextInput> {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(24.0),
               borderSide: BorderSide(
-                color: context.colours.onBackground.withOpacity(0.2),
+                color: context.colours.onSurface.withValues(alpha: 0.2),
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(24.0),
               borderSide: BorderSide(
-                color: context.colours.onBackground,
+                color: context.colours.onSurface,
               ),
             ),
           ),
@@ -137,19 +137,19 @@ class _BBTextInputState extends State<BBTextInput> {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(80.0),
               borderSide: BorderSide(
-                color: context.colours.onBackground.withOpacity(0.2),
+                color: context.colours.onSurface.withValues(alpha: 0.2),
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(80.0),
               borderSide: BorderSide(
-                color: context.colours.onBackground,
+                color: context.colours.onSurface,
               ),
             ),
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(80.0),
               borderSide: BorderSide(
-                color: context.colours.onBackground.withOpacity(0.2),
+                color: context.colours.onSurface.withValues(alpha: 0.2),
               ),
             ),
             labelStyle: context.fonts.labelSmall,
@@ -178,13 +178,13 @@ class _BBTextInputState extends State<BBTextInput> {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(80.0),
               borderSide: BorderSide(
-                color: context.colours.onBackground.withOpacity(0.2),
+                color: context.colours.onSurface.withValues(alpha: 0.2),
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(80.0),
               borderSide: BorderSide(
-                color: context.colours.onBackground,
+                color: context.colours.onSurface,
               ),
             ),
             labelStyle: context.fonts.labelSmall,
@@ -210,7 +210,7 @@ class _BBTextInputState extends State<BBTextInput> {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(80.0),
                 borderSide: BorderSide(
-                  color: context.colours.primary.withOpacity(0.1),
+                  color: context.colours.primary.withValues(alpha: 0.1),
                 ),
               ),
               focusedBorder: OutlineInputBorder(

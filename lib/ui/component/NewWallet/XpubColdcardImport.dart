@@ -47,7 +47,7 @@ class XpubColdcardImport extends StatelessWidget {
                   foregroundColor: c.colours.primary,
                   side: BorderSide(color: c.colours.onPrimary),
                   disabledForegroundColor:
-                      c.colours.background.withOpacity(0.38).withOpacity(0.38),
+                      c.colours.surface.withValues(alpha: 0.38).withValues(alpha: 0.38),
                 ),
                 onPressed: () {
                   c.read<XpubImportCubit>().updateFile();
@@ -82,7 +82,7 @@ class XpubColdcardImport extends StatelessWidget {
                 foregroundColor: c.colours.primary,
                 side: BorderSide(color: c.colours.onPrimary),
                 disabledForegroundColor:
-                    c.colours.background.withOpacity(0.38).withOpacity(0.38),
+                    c.colours.surface.withValues(alpha: 0.38).withValues(alpha: 0.38),
               ),
               onPressed: () async {
                 c.read<XpubImportCubit>().clearCachedFiles();
@@ -107,7 +107,7 @@ class XpubColdcardImport extends StatelessWidget {
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              foregroundColor: c.colours.background,
+              foregroundColor: c.colours.surface,
               backgroundColor: c.colours.primary,
             ),
             onPressed: () {

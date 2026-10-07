@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,250 +9,278 @@ part of 'preferences.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$PreferencesState {
-  bool get incognito => throw _privateConstructorUsedError;
-  bool get bitcoinStandard => throw _privateConstructorUsedError;
-  String get preferredBitcoinUnit => throw _privateConstructorUsedError;
-  String get preferredExchange => throw _privateConstructorUsedError;
-  String get preferredFiatUnit => throw _privateConstructorUsedError;
-  String get errorPreferencesState => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
-  $PreferencesStateCopyWith<PreferencesState> get copyWith =>
-      throw _privateConstructorUsedError;
+ bool get incognito; bool get bitcoinStandard; String get preferredBitcoinUnit; String get preferredExchange; String get preferredFiatUnit; String get errorPreferencesState;
+/// Create a copy of PreferencesState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$PreferencesStateCopyWith<PreferencesState> get copyWith => _$PreferencesStateCopyWithImpl<PreferencesState>(this as PreferencesState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PreferencesState&&(identical(other.incognito, incognito) || other.incognito == incognito)&&(identical(other.bitcoinStandard, bitcoinStandard) || other.bitcoinStandard == bitcoinStandard)&&(identical(other.preferredBitcoinUnit, preferredBitcoinUnit) || other.preferredBitcoinUnit == preferredBitcoinUnit)&&(identical(other.preferredExchange, preferredExchange) || other.preferredExchange == preferredExchange)&&(identical(other.preferredFiatUnit, preferredFiatUnit) || other.preferredFiatUnit == preferredFiatUnit)&&(identical(other.errorPreferencesState, errorPreferencesState) || other.errorPreferencesState == errorPreferencesState));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,incognito,bitcoinStandard,preferredBitcoinUnit,preferredExchange,preferredFiatUnit,errorPreferencesState);
+
+@override
+String toString() {
+  return 'PreferencesState(incognito: $incognito, bitcoinStandard: $bitcoinStandard, preferredBitcoinUnit: $preferredBitcoinUnit, preferredExchange: $preferredExchange, preferredFiatUnit: $preferredFiatUnit, errorPreferencesState: $errorPreferencesState)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $PreferencesStateCopyWith<$Res> {
-  factory $PreferencesStateCopyWith(
-          PreferencesState value, $Res Function(PreferencesState) then) =
-      _$PreferencesStateCopyWithImpl<$Res, PreferencesState>;
-  @useResult
-  $Res call(
-      {bool incognito,
-      bool bitcoinStandard,
-      String preferredBitcoinUnit,
-      String preferredExchange,
-      String preferredFiatUnit,
-      String errorPreferencesState});
-}
+abstract mixin class $PreferencesStateCopyWith<$Res>  {
+  factory $PreferencesStateCopyWith(PreferencesState value, $Res Function(PreferencesState) _then) = _$PreferencesStateCopyWithImpl;
+@useResult
+$Res call({
+ bool incognito, bool bitcoinStandard, String preferredBitcoinUnit, String preferredExchange, String preferredFiatUnit, String errorPreferencesState
+});
 
+
+
+
+}
 /// @nodoc
-class _$PreferencesStateCopyWithImpl<$Res, $Val extends PreferencesState>
+class _$PreferencesStateCopyWithImpl<$Res>
     implements $PreferencesStateCopyWith<$Res> {
-  _$PreferencesStateCopyWithImpl(this._value, this._then);
+  _$PreferencesStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final PreferencesState _self;
+  final $Res Function(PreferencesState) _then;
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? incognito = null,
-    Object? bitcoinStandard = null,
-    Object? preferredBitcoinUnit = null,
-    Object? preferredExchange = null,
-    Object? preferredFiatUnit = null,
-    Object? errorPreferencesState = null,
-  }) {
-    return _then(_value.copyWith(
-      incognito: null == incognito
-          ? _value.incognito
-          : incognito // ignore: cast_nullable_to_non_nullable
-              as bool,
-      bitcoinStandard: null == bitcoinStandard
-          ? _value.bitcoinStandard
-          : bitcoinStandard // ignore: cast_nullable_to_non_nullable
-              as bool,
-      preferredBitcoinUnit: null == preferredBitcoinUnit
-          ? _value.preferredBitcoinUnit
-          : preferredBitcoinUnit // ignore: cast_nullable_to_non_nullable
-              as String,
-      preferredExchange: null == preferredExchange
-          ? _value.preferredExchange
-          : preferredExchange // ignore: cast_nullable_to_non_nullable
-              as String,
-      preferredFiatUnit: null == preferredFiatUnit
-          ? _value.preferredFiatUnit
-          : preferredFiatUnit // ignore: cast_nullable_to_non_nullable
-              as String,
-      errorPreferencesState: null == errorPreferencesState
-          ? _value.errorPreferencesState
-          : errorPreferencesState // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
+/// Create a copy of PreferencesState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? incognito = null,Object? bitcoinStandard = null,Object? preferredBitcoinUnit = null,Object? preferredExchange = null,Object? preferredFiatUnit = null,Object? errorPreferencesState = null,}) {
+  return _then(_self.copyWith(
+incognito: null == incognito ? _self.incognito : incognito // ignore: cast_nullable_to_non_nullable
+as bool,bitcoinStandard: null == bitcoinStandard ? _self.bitcoinStandard : bitcoinStandard // ignore: cast_nullable_to_non_nullable
+as bool,preferredBitcoinUnit: null == preferredBitcoinUnit ? _self.preferredBitcoinUnit : preferredBitcoinUnit // ignore: cast_nullable_to_non_nullable
+as String,preferredExchange: null == preferredExchange ? _self.preferredExchange : preferredExchange // ignore: cast_nullable_to_non_nullable
+as String,preferredFiatUnit: null == preferredFiatUnit ? _self.preferredFiatUnit : preferredFiatUnit // ignore: cast_nullable_to_non_nullable
+as String,errorPreferencesState: null == errorPreferencesState ? _self.errorPreferencesState : errorPreferencesState // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [PreferencesState].
+extension PreferencesStatePatterns on PreferencesState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _PreferencesState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _PreferencesState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _PreferencesState value)  $default,){
+final _that = this;
+switch (_that) {
+case _PreferencesState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _PreferencesState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _PreferencesState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool incognito,  bool bitcoinStandard,  String preferredBitcoinUnit,  String preferredExchange,  String preferredFiatUnit,  String errorPreferencesState)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _PreferencesState() when $default != null:
+return $default(_that.incognito,_that.bitcoinStandard,_that.preferredBitcoinUnit,_that.preferredExchange,_that.preferredFiatUnit,_that.errorPreferencesState);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool incognito,  bool bitcoinStandard,  String preferredBitcoinUnit,  String preferredExchange,  String preferredFiatUnit,  String errorPreferencesState)  $default,) {final _that = this;
+switch (_that) {
+case _PreferencesState():
+return $default(_that.incognito,_that.bitcoinStandard,_that.preferredBitcoinUnit,_that.preferredExchange,_that.preferredFiatUnit,_that.errorPreferencesState);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool incognito,  bool bitcoinStandard,  String preferredBitcoinUnit,  String preferredExchange,  String preferredFiatUnit,  String errorPreferencesState)?  $default,) {final _that = this;
+switch (_that) {
+case _PreferencesState() when $default != null:
+return $default(_that.incognito,_that.bitcoinStandard,_that.preferredBitcoinUnit,_that.preferredExchange,_that.preferredFiatUnit,_that.errorPreferencesState);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$PreferencesStateImplCopyWith<$Res>
-    implements $PreferencesStateCopyWith<$Res> {
-  factory _$$PreferencesStateImplCopyWith(_$PreferencesStateImpl value,
-          $Res Function(_$PreferencesStateImpl) then) =
-      __$$PreferencesStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {bool incognito,
-      bool bitcoinStandard,
-      String preferredBitcoinUnit,
-      String preferredExchange,
-      String preferredFiatUnit,
-      String errorPreferencesState});
+
+
+class _PreferencesState extends PreferencesState {
+  const _PreferencesState({this.incognito = false, this.bitcoinStandard = false, this.preferredBitcoinUnit = 'sats', this.preferredExchange = 'CoinCap', this.preferredFiatUnit = 'USD', this.errorPreferencesState = ''}): super._();
+  
+
+@override@JsonKey() final  bool incognito;
+@override@JsonKey() final  bool bitcoinStandard;
+@override@JsonKey() final  String preferredBitcoinUnit;
+@override@JsonKey() final  String preferredExchange;
+@override@JsonKey() final  String preferredFiatUnit;
+@override@JsonKey() final  String errorPreferencesState;
+
+/// Create a copy of PreferencesState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PreferencesStateCopyWith<_PreferencesState> get copyWith => __$PreferencesStateCopyWithImpl<_PreferencesState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PreferencesState&&(identical(other.incognito, incognito) || other.incognito == incognito)&&(identical(other.bitcoinStandard, bitcoinStandard) || other.bitcoinStandard == bitcoinStandard)&&(identical(other.preferredBitcoinUnit, preferredBitcoinUnit) || other.preferredBitcoinUnit == preferredBitcoinUnit)&&(identical(other.preferredExchange, preferredExchange) || other.preferredExchange == preferredExchange)&&(identical(other.preferredFiatUnit, preferredFiatUnit) || other.preferredFiatUnit == preferredFiatUnit)&&(identical(other.errorPreferencesState, errorPreferencesState) || other.errorPreferencesState == errorPreferencesState));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,incognito,bitcoinStandard,preferredBitcoinUnit,preferredExchange,preferredFiatUnit,errorPreferencesState);
+
+@override
+String toString() {
+  return 'PreferencesState(incognito: $incognito, bitcoinStandard: $bitcoinStandard, preferredBitcoinUnit: $preferredBitcoinUnit, preferredExchange: $preferredExchange, preferredFiatUnit: $preferredFiatUnit, errorPreferencesState: $errorPreferencesState)';
+}
+
+
 }
 
 /// @nodoc
-class __$$PreferencesStateImplCopyWithImpl<$Res>
-    extends _$PreferencesStateCopyWithImpl<$Res, _$PreferencesStateImpl>
-    implements _$$PreferencesStateImplCopyWith<$Res> {
-  __$$PreferencesStateImplCopyWithImpl(_$PreferencesStateImpl _value,
-      $Res Function(_$PreferencesStateImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$PreferencesStateCopyWith<$Res> implements $PreferencesStateCopyWith<$Res> {
+  factory _$PreferencesStateCopyWith(_PreferencesState value, $Res Function(_PreferencesState) _then) = __$PreferencesStateCopyWithImpl;
+@override @useResult
+$Res call({
+ bool incognito, bool bitcoinStandard, String preferredBitcoinUnit, String preferredExchange, String preferredFiatUnit, String errorPreferencesState
+});
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? incognito = null,
-    Object? bitcoinStandard = null,
-    Object? preferredBitcoinUnit = null,
-    Object? preferredExchange = null,
-    Object? preferredFiatUnit = null,
-    Object? errorPreferencesState = null,
-  }) {
-    return _then(_$PreferencesStateImpl(
-      incognito: null == incognito
-          ? _value.incognito
-          : incognito // ignore: cast_nullable_to_non_nullable
-              as bool,
-      bitcoinStandard: null == bitcoinStandard
-          ? _value.bitcoinStandard
-          : bitcoinStandard // ignore: cast_nullable_to_non_nullable
-              as bool,
-      preferredBitcoinUnit: null == preferredBitcoinUnit
-          ? _value.preferredBitcoinUnit
-          : preferredBitcoinUnit // ignore: cast_nullable_to_non_nullable
-              as String,
-      preferredExchange: null == preferredExchange
-          ? _value.preferredExchange
-          : preferredExchange // ignore: cast_nullable_to_non_nullable
-              as String,
-      preferredFiatUnit: null == preferredFiatUnit
-          ? _value.preferredFiatUnit
-          : preferredFiatUnit // ignore: cast_nullable_to_non_nullable
-              as String,
-      errorPreferencesState: null == errorPreferencesState
-          ? _value.errorPreferencesState
-          : errorPreferencesState // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$PreferencesStateCopyWithImpl<$Res>
+    implements _$PreferencesStateCopyWith<$Res> {
+  __$PreferencesStateCopyWithImpl(this._self, this._then);
 
-class _$PreferencesStateImpl extends _PreferencesState {
-  const _$PreferencesStateImpl(
-      {this.incognito = false,
-      this.bitcoinStandard = false,
-      this.preferredBitcoinUnit = 'sats',
-      this.preferredExchange = 'CoinCap',
-      this.preferredFiatUnit = 'USD',
-      this.errorPreferencesState = ''})
-      : super._();
+  final _PreferencesState _self;
+  final $Res Function(_PreferencesState) _then;
 
-  @override
-  @JsonKey()
-  final bool incognito;
-  @override
-  @JsonKey()
-  final bool bitcoinStandard;
-  @override
-  @JsonKey()
-  final String preferredBitcoinUnit;
-  @override
-  @JsonKey()
-  final String preferredExchange;
-  @override
-  @JsonKey()
-  final String preferredFiatUnit;
-  @override
-  @JsonKey()
-  final String errorPreferencesState;
-
-  @override
-  String toString() {
-    return 'PreferencesState(incognito: $incognito, bitcoinStandard: $bitcoinStandard, preferredBitcoinUnit: $preferredBitcoinUnit, preferredExchange: $preferredExchange, preferredFiatUnit: $preferredFiatUnit, errorPreferencesState: $errorPreferencesState)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PreferencesStateImpl &&
-            (identical(other.incognito, incognito) ||
-                other.incognito == incognito) &&
-            (identical(other.bitcoinStandard, bitcoinStandard) ||
-                other.bitcoinStandard == bitcoinStandard) &&
-            (identical(other.preferredBitcoinUnit, preferredBitcoinUnit) ||
-                other.preferredBitcoinUnit == preferredBitcoinUnit) &&
-            (identical(other.preferredExchange, preferredExchange) ||
-                other.preferredExchange == preferredExchange) &&
-            (identical(other.preferredFiatUnit, preferredFiatUnit) ||
-                other.preferredFiatUnit == preferredFiatUnit) &&
-            (identical(other.errorPreferencesState, errorPreferencesState) ||
-                other.errorPreferencesState == errorPreferencesState));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      incognito,
-      bitcoinStandard,
-      preferredBitcoinUnit,
-      preferredExchange,
-      preferredFiatUnit,
-      errorPreferencesState);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PreferencesStateImplCopyWith<_$PreferencesStateImpl> get copyWith =>
-      __$$PreferencesStateImplCopyWithImpl<_$PreferencesStateImpl>(
-          this, _$identity);
+/// Create a copy of PreferencesState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? incognito = null,Object? bitcoinStandard = null,Object? preferredBitcoinUnit = null,Object? preferredExchange = null,Object? preferredFiatUnit = null,Object? errorPreferencesState = null,}) {
+  return _then(_PreferencesState(
+incognito: null == incognito ? _self.incognito : incognito // ignore: cast_nullable_to_non_nullable
+as bool,bitcoinStandard: null == bitcoinStandard ? _self.bitcoinStandard : bitcoinStandard // ignore: cast_nullable_to_non_nullable
+as bool,preferredBitcoinUnit: null == preferredBitcoinUnit ? _self.preferredBitcoinUnit : preferredBitcoinUnit // ignore: cast_nullable_to_non_nullable
+as String,preferredExchange: null == preferredExchange ? _self.preferredExchange : preferredExchange // ignore: cast_nullable_to_non_nullable
+as String,preferredFiatUnit: null == preferredFiatUnit ? _self.preferredFiatUnit : preferredFiatUnit // ignore: cast_nullable_to_non_nullable
+as String,errorPreferencesState: null == errorPreferencesState ? _self.errorPreferencesState : errorPreferencesState // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-abstract class _PreferencesState extends PreferencesState {
-  const factory _PreferencesState(
-      {final bool incognito,
-      final bool bitcoinStandard,
-      final String preferredBitcoinUnit,
-      final String preferredExchange,
-      final String preferredFiatUnit,
-      final String errorPreferencesState}) = _$PreferencesStateImpl;
-  const _PreferencesState._() : super._();
 
-  @override
-  bool get incognito;
-  @override
-  bool get bitcoinStandard;
-  @override
-  String get preferredBitcoinUnit;
-  @override
-  String get preferredExchange;
-  @override
-  String get preferredFiatUnit;
-  @override
-  String get errorPreferencesState;
-  @override
-  @JsonKey(ignore: true)
-  _$$PreferencesStateImplCopyWith<_$PreferencesStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

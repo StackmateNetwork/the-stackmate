@@ -43,7 +43,7 @@ class _BackupOpsState extends State<BackupOps> {
           Text(
             'BACKUP OPERATIONS',
             style: c.fonts.labelSmall!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -56,7 +56,7 @@ class _BackupOpsState extends State<BackupOps> {
                 style: OutlinedButton.styleFrom(
                   foregroundColor: c.colours.error,
                   disabledForegroundColor:
-                      c.colours.background.withOpacity(0.38).withOpacity(0.38),
+                      c.colours.surface.withValues(alpha: 0.38).withValues(alpha: 0.38),
                 ),
                 onPressed: () {
                   c.push('/backup-master');
@@ -92,7 +92,7 @@ class _BackupOpsState extends State<BackupOps> {
                         onChanged: (text) {
                           c.read<InfoCubit>().passPhraseChanged(text);
                         },
-                        style: TextStyle(color: c.colours.onBackground),
+                        style: TextStyle(color: c.colours.onSurface),
                         decoration: const InputDecoration(
                           labelText: 'Passphrase',
                         ),
@@ -131,7 +131,7 @@ class _BackupOpsState extends State<BackupOps> {
                 style: OutlinedButton.styleFrom(
                   foregroundColor: c.colours.tertiary,
                   disabledForegroundColor:
-                      c.colours.background.withOpacity(0.38).withOpacity(0.38),
+                      c.colours.surface.withValues(alpha: 0.38).withValues(alpha: 0.38),
                 ),
                 onPressed: () {
                   peekSeed(c, masterKey);
@@ -145,7 +145,7 @@ class _BackupOpsState extends State<BackupOps> {
             Text(
               'There are no backup operations for this wallet.',
               style: c.fonts.bodyMedium!.copyWith(
-                color: c.colours.onBackground,
+                color: c.colours.onSurface,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -161,7 +161,7 @@ class _BackupOpsState extends State<BackupOps> {
                 style: OutlinedButton.styleFrom(
                   foregroundColor: c.colours.error,
                   disabledForegroundColor:
-                      c.colours.background.withOpacity(0.38).withOpacity(0.38),
+                      c.colours.surface.withValues(alpha: 0.38).withValues(alpha: 0.38),
                 ),
                 onPressed: () {
                   _deleteWalletClicked(c, zeroBal, wallet);
@@ -240,11 +240,11 @@ void _deleteWalletClicked(
         ),
         message: Text(
           'Please send transfer all funds before deleting wallet.',
-          style: c.fonts.titleSmall!.copyWith(color: c.colours.onBackground),
+          style: c.fonts.titleSmall!.copyWith(color: c.colours.onSurface),
         ),
         actions: [
           ColoredBox(
-            color: c.colours.background,
+            color: c.colours.surface,
             child: CupertinoActionSheetAction(
               child: Text(
                 'Please sweep your funds'.toUpperCase(),
@@ -258,7 +258,7 @@ void _deleteWalletClicked(
             ),
           ),
           ColoredBox(
-            color: c.colours.background,
+            color: c.colours.surface,
             child: CupertinoActionSheetAction(
               onPressed: () {
                 Navigator.pop(context, true);
@@ -266,7 +266,7 @@ void _deleteWalletClicked(
               child: Text(
                 'BACK',
                 style:
-                    c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
+                    c.fonts.labelLarge!.copyWith(color: c.colours.onSurface),
               ),
             ),
           ),
@@ -288,11 +288,11 @@ void _deleteWalletClicked(
       ),
       message: Text(
         'All wallet information will be deleted.',
-        style: c.fonts.titleSmall!.copyWith(color: c.colours.onBackground),
+        style: c.fonts.titleSmall!.copyWith(color: c.colours.onSurface),
       ),
       actions: [
         ColoredBox(
-          color: c.colours.background,
+          color: c.colours.surface,
           child: CupertinoActionSheetAction(
             isDestructiveAction: true,
             onPressed: () {
@@ -306,12 +306,12 @@ void _deleteWalletClicked(
         ),
         // const SizedBox(height: 24),
         ColoredBox(
-          color: c.colours.background,
+          color: c.colours.surface,
           child: CupertinoActionSheetAction(
             child: Text(
               'CANCEL',
               style:
-                  c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
+                  c.fonts.labelLarge!.copyWith(color: c.colours.onSurface),
             ),
             onPressed: () {
               Navigator.pop(context, false);

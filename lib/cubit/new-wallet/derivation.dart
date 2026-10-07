@@ -5,7 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/outputs.dart';
 import 'package:path/path.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
@@ -16,6 +15,7 @@ import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/core.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
@@ -30,7 +30,7 @@ enum DeriveWalletStep { purpose, passphrase, label }
 enum DerivationPurpose { segwit, taproot, legacy, bip85 }
 
 @freezed
-class DeriveWalletState with _$DeriveWalletState {
+abstract class DeriveWalletState with _$DeriveWalletState {
   const factory DeriveWalletState({
     @Default(DeriveWalletStep.purpose) DeriveWalletStep currentStep,
     @Default(DerivationPurpose.segwit) DerivationPurpose purpose,
@@ -388,7 +388,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         'descriptor': descriptor.result!,
         'dbPath': dbPath,
       });
-// ignore: unused_local_variable
       var recievedCount = 0;
 
       if (history.hasError) {

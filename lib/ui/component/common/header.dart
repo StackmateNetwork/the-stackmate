@@ -24,7 +24,7 @@ class Header extends StatelessWidget {
           // bottom: 0,
         ),
         decoration: BoxDecoration(
-          color: c.colours.background,
+          color: c.colours.surface,
         ),
         child: Stack(
           children: [

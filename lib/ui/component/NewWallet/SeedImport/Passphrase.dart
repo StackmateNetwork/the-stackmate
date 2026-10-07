@@ -65,7 +65,7 @@ class _SeedImportPassphraseState extends State<SeedImportPassphrase> {
                   onChanged: (text) {
                     c.read<SeedImportCubit>().passPhraseChanged(text);
                   },
-                  style: TextStyle(color: c.colours.onBackground),
+                  style: TextStyle(color: c.colours.onSurface),
                   decoration: const InputDecoration(
                     labelText: 'Passphrase',
                   ),
@@ -86,7 +86,7 @@ class _SeedImportPassphraseState extends State<SeedImportPassphrase> {
                       return 'Passphrases do no match!';
                     return null;
                   },
-                  style: TextStyle(color: c.colours.onBackground),
+                  style: TextStyle(color: c.colours.onSurface),
                   decoration: const InputDecoration(
                     labelText: 'Verify Passphrase',
                   ),
@@ -105,7 +105,7 @@ class _SeedImportPassphraseState extends State<SeedImportPassphrase> {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: c.colours.background,
+                    foregroundColor: c.colours.surface,
                     backgroundColor: c.colours.primary,
                   ),
                   onPressed: () async {

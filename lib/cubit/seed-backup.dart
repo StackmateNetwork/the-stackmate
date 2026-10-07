@@ -14,7 +14,7 @@ enum SeedBackupSteps {
 }
 
 @freezed
-class SeedBackupState with _$SeedBackupState {
+abstract class SeedBackupState with _$SeedBackupState {
   const factory SeedBackupState({
     @Default(SeedBackupSteps.warning) SeedBackupSteps currentStep,
     List<String>? seed,

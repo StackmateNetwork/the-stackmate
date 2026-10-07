@@ -15,7 +15,7 @@ class TransactionsList extends StatelessWidget {
         child: Text(
           'No transactions',
           style: c.fonts.labelSmall!.copyWith(
-            color: c.colours.onBackground,
+            color: c.colours.onSurface,
           ),
         ),
       );
@@ -30,7 +30,7 @@ class TransactionsList extends StatelessWidget {
             child: Text(
               'HISTORY',
               style: c.fonts.labelSmall!.copyWith(
-                color: c.colours.onBackground,
+                color: c.colours.onSurface,
               ),
             ),
           ),

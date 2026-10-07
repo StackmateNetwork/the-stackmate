@@ -8,8 +8,9 @@ class SeedGenerateWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    final selectedSeedPhraseLength =
-        c.select((SeedGenerateCubit sgc) => sgc.state.seedLength);
+    final selectedSeedPhraseLength = c.select(
+      (SeedGenerateCubit sgc) => sgc.state.seedLength,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -46,58 +47,51 @@ The following steps are critical to ensure safety of your funds.
           ),
         ),
         const SizedBox(height: 16),
-        ListTile(
-          title: Text(
-            '12 Words',
-            style: c.fonts.bodyLarge!.copyWith(
-              color: c.colours.onPrimary,
-              // fontWeight: FontWeight.bold,
-            ),
-          ),
-          leading: Radio<int>(
-            activeColor: c.colours.primary,
-            value: 12,
-            groupValue: selectedSeedPhraseLength,
-            onChanged: (int? value) {
-              c.read<SeedGenerateCubit>().seedLengthChanged(12);
-            },
-          ),
-        ),
-        ListTile(
-          selectedColor: c.colours.primary,
-          selectedTileColor: c.colours.primary,
-          title: Text(
-            '24 Words',
-            style: c.fonts.bodyLarge!.copyWith(
-              color: c.colours.onPrimary,
-              // fontWeight: FontWeight.bold,
-            ),
-          ),
-          leading: Radio<int>(
-            activeColor: c.colours.primary,
-            value: 24,
-            groupValue: selectedSeedPhraseLength,
-            onChanged: (int? value) {
-              c.read<SeedGenerateCubit>().seedLengthChanged(24);
-            },
+        RadioGroup<int>(
+          groupValue: selectedSeedPhraseLength,
+          onChanged: (value) {
+            if (value != null)
+              c.read<SeedGenerateCubit>().seedLengthChanged(value);
+          },
+          child: Column(
+            children: [
+              ListTile(
+                title: Text(
+                  '12 Words',
+                  style: c.fonts.bodyLarge!.copyWith(
+                    color: c.colours.onPrimary,
+                    // fontWeight: FontWeight.bold,
+                  ),
+                ),
+                leading: Radio<int>(activeColor: c.colours.primary, value: 12),
+              ),
+              ListTile(
+                selectedColor: c.colours.primary,
+                selectedTileColor: c.colours.primary,
+                title: Text(
+                  '24 Words',
+                  style: c.fonts.bodyLarge!.copyWith(
+                    color: c.colours.onPrimary,
+                    // fontWeight: FontWeight.bold,
+                  ),
+                ),
+                leading: Radio<int>(activeColor: c.colours.primary, value: 24),
+              ),
+            ],
           ),
         ),
-        const SizedBox(
-          height: 24,
-        ),
+        const SizedBox(height: 24),
         SizedBox(
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              foregroundColor: c.colours.background,
+              foregroundColor: c.colours.surface,
               backgroundColor: c.colours.primary,
             ),
             onPressed: () {
               c.read<SeedGenerateWalletCubit>().nextClicked();
             },
-            child: Text(
-              'I Understand'.toUpperCase().notLocalised(),
-            ),
+            child: Text('I Understand'.toUpperCase().notLocalised()),
           ),
         ),
       ],

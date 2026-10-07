@@ -25,7 +25,7 @@ class StepLine extends StatelessWidget {
               // width: 50,
               decoration: BoxDecoration(
                 color: i <= idx
-                    ? context.colours.onSecondary.withOpacity(1)
+                    ? context.colours.onSecondary.withValues(alpha: 1)
                     : context.colours.onPrimary,
                 borderRadius: BorderRadius.circular(8),
               ),

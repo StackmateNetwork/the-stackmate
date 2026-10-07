@@ -1,5 +1,4 @@
-import 'package:libstackmate/libstackmate.dart';
-
+import 'package:sats/model/core.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
 
@@ -135,6 +134,15 @@ abstract class IStackMateBitcoin {
     required String socks5,
     required String signedPSBT,
   });
+  /// Builds a replacement (RBF) for an unconfirmed wallet transaction
+  /// paying [feeRate] sat/vB. The returned PSBT still needs signing.
+  R<PSBT> sqliteBumpFee({
+    required String descriptor,
+    required String dbPath,
+    required String txid,
+    required String feeRate,
+  });
+
   Future<R<String>> broadcastTransactionHex({
     required String descriptor,
     required String nodeAddress,

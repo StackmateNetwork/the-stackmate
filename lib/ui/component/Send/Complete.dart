@@ -17,14 +17,14 @@ class TransactionComplete extends StatelessWidget {
             Text(
               'Transaction\nSuccessful.',
               style: context.fonts.headlineSmall!.copyWith(
-                color: context.colours.onBackground,
+                color: context.colours.onSurface,
               ),
             ),
             const SizedBox(height: 16),
             Text(
               'Open your wallet to update your balance and history.',
               style: context.fonts.bodySmall!.copyWith(
-                color: context.colours.onBackground,
+                color: context.colours.onSurface,
                 fontSize: 16,
               ),
             ),
@@ -35,7 +35,7 @@ class TransactionComplete extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: context.colours.background,
+                  foregroundColor: context.colours.surface,
                   backgroundColor: context.colours.primary,
                 ),
                 onPressed: () {
@@ -56,14 +56,14 @@ class TransactionComplete extends StatelessWidget {
             Text(
               'PSBT\nBuild Complete.',
               style: context.fonts.headlineSmall!.copyWith(
-                color: context.colours.onBackground,
+                color: context.colours.onSurface,
               ),
             ),
             const SizedBox(height: 16),
             Text(
               'Pass it to a signing device.',
               style: context.fonts.bodySmall!.copyWith(
-                color: context.colours.onBackground,
+                color: context.colours.onSurface,
                 fontSize: 16,
               ),
             ),

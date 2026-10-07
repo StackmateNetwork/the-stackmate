@@ -6,28 +6,28 @@ part of 'transaction.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TransactionClassAdapter extends TypeAdapter<_$TransactionImpl> {
+class TransactionClassAdapter extends TypeAdapter<_Transaction> {
   @override
-  final int typeId = 6;
+  final typeId = 6;
 
   @override
-  _$TransactionImpl read(BinaryReader reader) {
+  _Transaction read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$TransactionImpl(
-      timestamp: fields[0] as int,
-      height: fields[1] as int,
+    return _Transaction(
+      timestamp: (fields[0] as num).toInt(),
+      height: (fields[1] as num).toInt(),
       txid: fields[2] as String,
-      received: fields[3] as int,
-      sent: fields[4] as int,
-      fee: fields[5] as int,
+      received: (fields[3] as num).toInt(),
+      sent: (fields[4] as num).toInt(),
+      fee: (fields[5] as num).toInt(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, _$TransactionImpl obj) {
+  void write(BinaryWriter writer, _Transaction obj) {
     writer
       ..writeByte(6)
       ..writeByte(0)
@@ -59,17 +59,16 @@ class TransactionClassAdapter extends TypeAdapter<_$TransactionImpl> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TransactionImpl _$$TransactionImplFromJson(Map<String, dynamic> json) =>
-    _$TransactionImpl(
-      timestamp: json['timestamp'] as int,
-      height: json['height'] as int,
-      txid: json['txid'] as String,
-      received: json['received'] as int,
-      sent: json['sent'] as int,
-      fee: json['fee'] as int,
-    );
+_Transaction _$TransactionFromJson(Map<String, dynamic> json) => _Transaction(
+  timestamp: (json['timestamp'] as num).toInt(),
+  height: (json['height'] as num).toInt(),
+  txid: json['txid'] as String,
+  received: (json['received'] as num).toInt(),
+  sent: (json['sent'] as num).toInt(),
+  fee: (json['fee'] as num).toInt(),
+);
 
-Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) =>
+Map<String, dynamic> _$TransactionToJson(_Transaction instance) =>
     <String, dynamic>{
       'timestamp': instance.timestamp,
       'height': instance.height,

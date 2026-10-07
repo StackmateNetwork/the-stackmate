@@ -10,7 +10,7 @@ import 'package:sats/pkg/interface/clipboard.dart';
 part 'logger.freezed.dart';
 
 @freezed
-class LoggerState with _$LoggerState {
+abstract class LoggerState with _$LoggerState {
   const factory LoggerState({
     @Default([]) List<Log> logs,
   }) = _LoggerState;

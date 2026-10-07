@@ -25,7 +25,7 @@ class SeedWordCell extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 8),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
-            color: c.colours.background,
+            color: c.colours.surface,
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(
@@ -53,9 +53,9 @@ class SeedGenerateStepSelect extends StatelessWidget {
         return SeedGenerate();
       case SeedGenerateSteps.quiz:
         return SeedConfirm();
+      case SeedGenerateSteps.label:
+        return Container();
     }
-
-    return Container();
   }
 }
 
@@ -116,7 +116,7 @@ class SeedGenerate extends StatelessWidget {
             height: 52,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                foregroundColor: c.colours.background,
+                foregroundColor: c.colours.surface,
                 backgroundColor: c.colours.primary,
               ),
               onPressed: () {

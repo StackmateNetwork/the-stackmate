@@ -65,7 +65,7 @@ class SeedGenerateLabel extends StatelessWidget {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: c.colours.background,
+                    foregroundColor: c.colours.surface,
                     backgroundColor: c.colours.primary,
                   ),
                   onPressed: () async {

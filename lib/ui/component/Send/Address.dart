@@ -62,13 +62,13 @@ class _SendAddressState extends State<SendAddress> {
                   Text(
                     'To Address'.toUpperCase(),
                     style: context.fonts.labelSmall!.copyWith(
-                      color: context.colours.onBackground,
+                      color: context.colours.onSurface,
                     ),
                   ),
                   const SizedBox(height: 16),
                   TextField(
                     controller: _controller,
-                    style: TextStyle(color: context.colours.onBackground),
+                    style: TextStyle(color: context.colours.onSurface),
                     decoration: InputDecoration(
                       hintText: 'Enter Address'.toUpperCase(),
                     ),
@@ -103,7 +103,7 @@ class _SendAddressState extends State<SendAddress> {
                     height: 52,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: context.colours.background,
+                        foregroundColor: context.colours.surface,
                         backgroundColor: context.colours.primary,
                       ),
                       onPressed: () {

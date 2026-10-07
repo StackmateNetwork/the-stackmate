@@ -2,7 +2,7 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/share.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Sharer implements IShare {
   @override
@@ -11,7 +11,9 @@ class Sharer implements IShare {
     required String subjectForEmail,
   }) async {
     try {
-      await Share.share(text, subject: subjectForEmail);
+      await SharePlus.instance.share(
+        ShareParams(text: text, subject: subjectForEmail),
+      );
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);

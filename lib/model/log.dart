@@ -7,7 +7,7 @@ part 'log.g.dart';
 enum LogType { api, event, exception }
 
 @freezed
-class Log with _$Log {
+abstract class Log with _$Log {
   const factory Log({
     required LogType type,
     String? path,

@@ -44,7 +44,7 @@ class _Home extends StatelessWidget {
                       collapsedHeight: 256,
                       expandedHeight: 256,
                       automaticallyImplyLeading: false,
-                      backgroundColor: c.colours.background,
+                      backgroundColor: c.colours.surface,
                       flexibleSpace: FlexibleSpaceBar(
                         stretchModes: const [
                           StretchMode.fadeTitle,
@@ -70,7 +70,7 @@ class _Home extends StatelessWidget {
                       pinned: true,
                       expandedHeight: c.height / 3,
                       automaticallyImplyLeading: false,
-                      backgroundColor: c.colours.background,
+                      backgroundColor: c.colours.surface,
                       flexibleSpace: FlexibleSpaceBar(
                         stretchModes: const [
                           StretchMode.fadeTitle,
@@ -129,7 +129,7 @@ class _Home extends StatelessWidget {
                                   child: Text(
                                     'Click on + icon to Create wallet',
                                     style: c.fonts.bodySmall!.copyWith(
-                                      color: c.colours.onBackground,
+                                      color: c.colours.onSurface,
                                     ),
                                   ),
                                 ),

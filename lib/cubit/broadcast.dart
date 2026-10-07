@@ -4,19 +4,19 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/outputs.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
+import 'package:sats/model/core.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'broadcast.freezed.dart';
 
 @freezed
-class BroadcastState with _$BroadcastState {
+abstract class BroadcastState with _$BroadcastState {
   const factory BroadcastState({
     @Default(false) bool broadcasting,
     @Default('') String errBroadcasting,
@@ -70,13 +70,9 @@ class BroadcastCubit extends Cubit<BroadcastState> {
 
   Future<void> updatePSBTFile() async {
     try {
-      final FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowedExtensions: [],
-      );
+      final psbtFile = await FilePicker.pickFile();
 
-      if (result != null) {
-        final PlatformFile psbtFile = result.files.single;
-
+      if (psbtFile != null) {
         emit(
           state.copyWith(
             importedPsbtPath: psbtFile.path,
@@ -98,12 +94,8 @@ class BroadcastCubit extends Cubit<BroadcastState> {
 
   Future<void> updateHexFile() async {
     try {
-      final FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowedExtensions: [],
-      );
-      if (result != null) {
-        final hexFile = result.files.first;
-
+      final hexFile = await FilePicker.pickFile();
+      if (hexFile != null) {
         emit(
           state.copyWith(
             importedHexPath: hexFile.path,
@@ -124,8 +116,8 @@ class BroadcastCubit extends Cubit<BroadcastState> {
   }
 
   Future<void> clearCachedFiles() async {
-    final bool? result = await FilePicker.platform.clearTemporaryFiles();
-    if (result != null) {
+    try {
+      await FilePicker.clearTemporaryFiles();
       emit(
         state.copyWith(
           clearData: true,
@@ -133,7 +125,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
           importedPsbtfileName: '',
         ),
       );
-    } else {
+    } catch (_) {
       emit(state.copyWith(errFileImport: 'Could not find file.'));
     }
   }

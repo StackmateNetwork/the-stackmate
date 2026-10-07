@@ -4,7 +4,7 @@ part 'rate.g.dart';
 part 'rate.freezed.dart';
 
 @freezed
-class Rate with _$Rate {
+abstract class Rate with _$Rate {
   const factory Rate({
     required String symbol,
     required String name,

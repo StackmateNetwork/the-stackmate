@@ -6,26 +6,26 @@ part of 'pin.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PinClassAdapter extends TypeAdapter<_$PinImpl> {
+class PinClassAdapter extends TypeAdapter<_Pin> {
   @override
-  final int typeId = 9;
+  final typeId = 9;
 
   @override
-  _$PinImpl read(BinaryReader reader) {
+  _Pin read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$PinImpl(
+    return _Pin(
       value: fields[0] as String,
-      attemptsLeft: fields[1] as int,
-      lastFailure: fields[2] as int,
+      attemptsLeft: (fields[1] as num).toInt(),
+      lastFailure: (fields[2] as num).toInt(),
       isLocked: fields[3] as bool,
     );
   }
 
   @override
-  void write(BinaryWriter writer, _$PinImpl obj) {
+  void write(BinaryWriter writer, _Pin obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
