@@ -22,7 +22,9 @@ class Validation {
         // address.length >= 25 &&
         // address.length <= 35
 
-        ) return true;
+        ) {
+      return true;
+    }
 
     return false;
   }

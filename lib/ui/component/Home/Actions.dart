@@ -12,8 +12,9 @@ class HomeActions extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              if (ModalRoute.of(context)!.settings.name != '/home')
+              if (ModalRoute.of(context)!.settings.name != '/home') {
                 context.push('/home');
+              }
             },
             icon: Icon(
               Icons.account_balance_wallet_outlined,
@@ -35,8 +36,9 @@ class HomeActions extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              if (ModalRoute.of(context)!.settings.name != '/settings')
+              if (ModalRoute.of(context)!.settings.name != '/settings') {
                 context.push('/settings');
+              }
             },
             icon: Icon(
               Icons.settings,

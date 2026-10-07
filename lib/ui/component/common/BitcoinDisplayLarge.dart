@@ -16,7 +16,7 @@ class BitcoinDisplayLarge extends StatelessWidget {
   Widget build(BuildContext c) {
     // final btcAmount = int.parse(satsAmount) / 100000000;
 
-    if (bitcoinUnit == 'sats')
+    if (bitcoinUnit == 'sats') {
       return Column(
         children: [
           Text(
@@ -42,7 +42,7 @@ class BitcoinDisplayLarge extends StatelessWidget {
           ),
         ],
       );
-    else
+    } else {
       return Column(
         children: [
           Text(
@@ -68,5 +68,6 @@ class BitcoinDisplayLarge extends StatelessWidget {
           ),
         ],
       );
+    }
   }
 }

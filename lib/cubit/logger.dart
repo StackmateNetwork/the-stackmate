@@ -25,7 +25,7 @@ class Logger extends Cubit<LoggerState> {
   final IClipBoard _clipBoard;
   final ILogAPI _logAPI;
 
-  void logAPI(
+  Future<void> logAPI(
     String path,
     String response,
     int statusCode,
@@ -44,7 +44,7 @@ class Logger extends Cubit<LoggerState> {
     }
   }
 
-  void logEvent(String event) async {
+  Future<void> logEvent(String event) async {
     try {
       final strs = event.split('.');
       final log = Log(
@@ -61,7 +61,7 @@ class Logger extends Cubit<LoggerState> {
     }
   }
 
-  void logException(
+  Future<void> logException(
     dynamic e,
     String source,
     dynamic s,

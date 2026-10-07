@@ -25,8 +25,6 @@ class _BackupOpsState extends State<BackupOps> {
 
   @override
   Widget build(BuildContext c) {
-    const primaryWallet = 'PRIMARY';
-    // const recoveredWallet = 'RECOVERED';
     final wallet = c.select((InfoCubit wc) => wc.state.wallet);
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key!);
     final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
@@ -48,7 +46,7 @@ class _BackupOpsState extends State<BackupOps> {
             ),
           ),
           const SizedBox(height: 24),
-          if (!isBackedUp && walletType == primaryWallet) ...[
+          if (!isBackedUp && walletType == WalletType.primary) ...[
             SizedBox(
               height: 52,
               width: c.width,
@@ -66,7 +64,7 @@ class _BackupOpsState extends State<BackupOps> {
             ),
             const SizedBox(height: 24),
           ],
-          if (walletType == primaryWallet) ...[
+          if (walletType == WalletType.primary) ...[
             SizedBox(
               height: 52,
               width: c.width,
@@ -123,7 +121,7 @@ class _BackupOpsState extends State<BackupOps> {
             ),
             const SizedBox(height: 24),
           ],
-          if (isBackedUp && wallet.walletType == primaryWallet) ...[
+          if (isBackedUp && wallet.walletType == WalletType.primary) ...[
             SizedBox(
               height: 52,
               width: c.width,
@@ -141,7 +139,7 @@ class _BackupOpsState extends State<BackupOps> {
             ),
             const SizedBox(height: 24),
           ],
-          if (walletType != primaryWallet) ...[
+          if (walletType != WalletType.primary) ...[
             Text(
               'There are no backup operations for this wallet.',
               style: c.fonts.bodyMedium!.copyWith(
@@ -225,7 +223,7 @@ Future<void> peekSeed(BuildContext context, MasterKey key) async {
   );
 }
 
-void _deleteWalletClicked(
+Future<void> _deleteWalletClicked(
   BuildContext c,
   bool zeroBalance,
   Wallet wallet,
@@ -253,6 +251,7 @@ void _deleteWalletClicked(
               onPressed: () async {
                 Navigator.pop(context, true);
                 await Future.delayed(const Duration(milliseconds: 200));
+                if (!c.mounted) return;
                 c.push('/send', extra: wallet);
               },
             ),
@@ -322,7 +321,7 @@ void _deleteWalletClicked(
     ),
   );
 
-  if (delete != null && delete) {
+  if ((delete ?? false) && c.mounted) {
     c.read<InfoCubit>().deleteClicked();
   }
 }

@@ -29,13 +29,11 @@ import 'package:sats/ui/screen/TorConfig.dart';
 import 'package:sats/ui/screen/WalletSingle.dart';
 import 'package:sats/ui/screen/WalletsHome.dart';
 import 'package:sats/ui/style.dart';
-import 'package:sqflite/sqflite.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeHive();
   setupDependencies(useDummies: false);
-  await openDatabase('stackmate.db');
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };

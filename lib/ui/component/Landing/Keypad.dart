@@ -28,20 +28,23 @@ class PinKeypad extends StatelessWidget {
                 color: context.colours.error,
               ),
               onKeyboardTap: (String value) {
-                if (state.value == null && !state.hasChosenPin)
+                if (state.value == null && !state.hasChosenPin) {
                   pinCubit.addToChosenPin(value);
+                }
 
                 if (state.hasChosenPin) pinCubit.addToConfPin(value);
               },
               rightButtonFn: () {
-                if (state.value == null && !state.hasChosenPin)
+                if (state.value == null && !state.hasChosenPin) {
                   pinCubit.deleteOneFromChosenPin();
+                }
 
                 if (state.hasChosenPin) pinCubit.deleteOneFromConfPin();
               },
               leftButtonFn: () {
-                if (state.value == null && !state.hasChosenPin)
+                if (state.value == null && !state.hasChosenPin) {
                   pinCubit.clearChosenPin();
+                }
 
                 if (state.hasChosenPin) pinCubit.clearConfPin();
               },

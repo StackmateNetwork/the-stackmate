@@ -75,7 +75,7 @@ class WalletsCubit extends Cubit<WalletsState> {
     );
   }
 
-  void walletSelected(Wallet wallet) async {
+  Future<void> walletSelected(Wallet wallet) async {
     emit(state.copyWith(selectedWallet: wallet));
   }
 
@@ -126,11 +126,11 @@ class WalletsCubit extends Cubit<WalletsState> {
   //   refresh();
   // }
 
-  void clearSelectedWallet() async {
+  Future<void> clearSelectedWallet() async {
     await Future.delayed(const Duration(milliseconds: 500));
     emit(state.copyWith(selectedWallet: null));
   }
 
-  void copyDescriptor(String text) async =>
+  Future<void> copyDescriptor(String text) async =>
       await _clipBoard.copyToClipBoard(text);
 }

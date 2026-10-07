@@ -31,8 +31,9 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
   Widget build(BuildContext c) {
     return BlocBuilder<DeriveWalletCubit, DeriveWalletState>(
       builder: (context, state) {
-        if (_textController.text != state.passPhrase)
+        if (_textController.text != state.passPhrase) {
           _textController.text = state.passPhrase;
+        }
         return Form(
           key: _form,
           child: Column(
@@ -80,8 +81,9 @@ class _DerivePassphraseState extends State<DerivePassphrase> {
                   obscuringCharacter: '*',
                   controller: _textControllerP,
                   validator: (val) {
-                    if (val != _textController.text)
+                    if (val != _textController.text) {
                       return 'Passphrases do no match!';
+                    }
 
                     return null;
                   },

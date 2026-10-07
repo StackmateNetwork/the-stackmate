@@ -12,7 +12,7 @@ class PinButton extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.hasChosenPin != current.hasChosenPin,
       builder: (context, state) {
-        if (pinCubit.state.value == null && !pinCubit.state.hasChosenPin)
+        if (pinCubit.state.value == null && !pinCubit.state.hasChosenPin) {
           return SizedBox(
             height: 72,
             child: OutlinedButton(
@@ -27,7 +27,8 @@ class PinButton extends StatelessWidget {
               child: const Text('SET'),
             ),
           );
-        else if (pinCubit.state.value == null && pinCubit.state.hasChosenPin)
+        } else if (pinCubit.state.value == null &&
+            pinCubit.state.hasChosenPin) {
           return SizedBox(
             height: 72,
             child: ElevatedButton(
@@ -43,7 +44,7 @@ class PinButton extends StatelessWidget {
               child: const Text('CONFIRM'),
             ),
           );
-        else
+        } else {
           return SizedBox(
             height: 72,
             child: ElevatedButton(
@@ -58,6 +59,7 @@ class PinButton extends StatelessWidget {
               child: const Text('START'),
             ),
           );
+        }
       },
     );
   }

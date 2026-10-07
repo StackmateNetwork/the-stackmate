@@ -9,7 +9,7 @@ class ZeroBalance extends StatelessWidget {
   Widget build(BuildContext context) {
     final zerobal = context.select((SendCubit sc) => sc.state.zeroBalanceAmt());
 
-    if (zerobal)
+    if (zerobal) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
@@ -19,6 +19,7 @@ class ZeroBalance extends StatelessWidget {
           ),
         ),
       );
+    }
 
     return Container();
   }

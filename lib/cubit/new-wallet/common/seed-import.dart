@@ -1,6 +1,7 @@
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
@@ -117,11 +118,13 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     final words12 = state.words12.toList();
     final words24 = state.words24.toList();
 
-    for (int i = 0; i < words12.length; i++)
+    for (int i = 0; i < words12.length; i++) {
       if (!words12[i].tapped) words12[i] = (word: '', tapped: false);
+    }
 
-    for (int i = 0; i < words24.length; i++)
+    for (int i = 0; i < words24.length; i++) {
       if (!words24[i].tapped) words24[i] = (word: '', tapped: false);
+    }
 
     emit(
       state.copyWith(
@@ -154,18 +157,19 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     );
   }
 
-  void recoverWallet12Clicked() async {
+  Future<void> recoverWallet12Clicked() async {
     emit(
       state.copyWith(
         importType: ImportTypes.words12,
         seedError: '',
       ),
     );
-    for (final word in state.words12)
+    for (final word in state.words12) {
       if (word.word.isEmpty) {
         emit(state.copyWith(seedError: 'Please fill all words'));
         return;
       }
+    }
     if (state.seedError.isNotEmpty) return;
     final type = state.importType;
 
@@ -181,18 +185,19 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     }
   }
 
-  void recoverWallet24Clicked() async {
+  Future<void> recoverWallet24Clicked() async {
     emit(
       state.copyWith(
         importType: ImportTypes.words24,
         seedError: '',
       ),
     );
-    for (final word in state.words24)
+    for (final word in state.words24) {
       if (word.word.isEmpty) {
         emit(state.copyWith(seedError: 'Please fill all words'));
         return;
       }
+    }
     if (state.seedError.isNotEmpty) return;
     final type = state.importType;
 
@@ -228,9 +233,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
         passphrase: pp,
         network: _blockchainCubit.state.blockchain.name,
       );
-      if (root.hasError) {
-        throw SMError.fromJson(root.error!).message;
-      }
+      root.orThrow();
 
       final wallet = _core.deriveHardened(
         masterXPriv: root.result!.xprv,
@@ -238,9 +241,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
         purpose: segwitNativePurpose,
       );
       //print(wallet.result!.fingerPrint);
-      if (wallet.hasError) {
-        throw SMError.fromJson(wallet.error!).message;
-      }
+      wallet.orThrow();
 
       emit(
         state.copyWith(

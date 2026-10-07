@@ -37,8 +37,9 @@ abstract class XpubImportState with _$XpubImportState {
   const XpubImportState._();
 
   bool hasNoKeySource() {
-    if (xpub.startsWith('[') && xpub.contains(']') && xpub.contains('/'))
+    if (xpub.startsWith('[') && xpub.contains(']') && xpub.contains('/')) {
       return false;
+    }
     return true;
   }
 }
@@ -87,7 +88,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
     }
   }
 
-  void toggleCamera() async {
+  Future<void> toggleCamera() async {
     try {
       emit(state.copyWith(cameraOpened: true, errXpub: emptyString));
 
@@ -106,7 +107,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
     }
   }
 
-  void xpubPasteClicked() async {
+  Future<void> xpubPasteClicked() async {
     final text = await _clipboard.pasteFromClipBoard();
     if (text.hasError) return;
     emit(
@@ -130,7 +131,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
     emit(state.copyWith(fingerPrint: text, errXpub: emptyString));
   }
 
-  void fingerPrintPastedClicked() async {
+  Future<void> fingerPrintPastedClicked() async {
     final text = await _clipboard.pasteFromClipBoard();
     if (text.hasError) return;
     emit(state.copyWith(fingerPrint: text.result!, errXpub: emptyString));
@@ -145,7 +146,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
     );
   }
 
-  void pathPasteClicked() async {
+  Future<void> pathPasteClicked() async {
     final text = await _clipboard.pasteFromClipBoard();
     if (text.hasError) return;
 

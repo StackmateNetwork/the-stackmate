@@ -109,7 +109,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
         'SeedImportWalletCubit._createNewLocalWallet',
         emptyString,
       );
-    } else
+    } else {
       emit(
         state.copyWith(
           wallet: wallet.result,
@@ -117,6 +117,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
           quizSeedAnswer: '',
         ),
       );
+    }
   }
 
   void seedLengthChanged(int len) => emit(
@@ -125,7 +126,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
         ),
       );
 
-  void generateSeed() async {
+  Future<void> generateSeed() async {
     emit(
       state.copyWith(
         generatingSeed: true,
@@ -193,13 +194,15 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
     String answer = emptyString;
     while (answer == emptyString) {
       final idx = Random().nextInt(quizList.length);
-      if (!state.quizSeedCompletedAnswers.contains(quizList[idx]))
+      if (!state.quizSeedCompletedAnswers.contains(quizList[idx])) {
         answer = quizList[idx];
+      }
     }
     final answerIdx = quizList.indexOf(answer);
 
-    for (final completed in state.quizSeedCompletedAnswers)
+    for (final completed in state.quizSeedCompletedAnswers) {
       quizList.remove(completed);
+    }
 
     final List<String> answerList = [answer];
     quizList.remove(answer);
@@ -223,7 +226,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
     return;
   }
 
-  void seedWordSelected(String text) async {
+  Future<void> seedWordSelected(String text) async {
     if (text != state.quizSeedAnswer) {
       emit(state.copyWith(quizSeedError: incorerctWordError));
       await Future.delayed(const Duration(seconds: 1));
@@ -270,7 +273,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
         'SeedImportWalletCubit._createNewLocalWallet',
         emptyString,
       );
-    } else
+    } else {
       emit(
         state.copyWith(
           wallet: wallet.result,
@@ -279,6 +282,7 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
           quizSeedAnswer: '',
         ),
       );
+    }
   }
 
   void openLink(String url) {

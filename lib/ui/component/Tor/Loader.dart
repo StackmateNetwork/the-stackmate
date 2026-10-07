@@ -12,11 +12,11 @@ class TorLoader extends StatelessWidget {
     // final fees = context.select((FeesCubit hc) => hc.state);
 
     if (tor.isConnected) return Container();
-    if (tor.isRunning)
+    if (tor.isRunning) {
       return Loading(
         text: tor.bootstapProgress,
       );
-    else
+    } else {
       return Padding(
         padding: const EdgeInsets.only(top: 5),
         child: Text(
@@ -27,6 +27,7 @@ class TorLoader extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       );
+    }
     // else
     //   return Padding(
     //     padding: const EdgeInsets.only(top: 5),

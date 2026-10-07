@@ -4,11 +4,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:permission_handler/permission_handler.dart';
+import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
-import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
@@ -18,9 +17,6 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/signer.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
-import 'package:sats/model/core.dart';
-import 'package:sats/model/result.dart';
-import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -29,7 +25,7 @@ import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/pkg/validation.dart';
-import 'package:sqflite/sqflite.dart' hide Transaction;
+import 'package:sats/pkg/wallet_db.dart';
 
 part 'send.freezed.dart';
 
@@ -133,7 +129,7 @@ class SendCubit extends Cubit<SendState> {
   static const minerOutput = 'miner';
   static const emptyString = '';
   static const sweepMessage = 'WALLET WILL BE EMPTIED.';
-  void _init(bool withQR) async {
+  Future<void> _init(bool withQR) async {
     if (withQR) {
       await Future.delayed(const Duration(milliseconds: 500));
       scanAddress(true);
@@ -162,13 +158,10 @@ class SendCubit extends Cubit<SendState> {
     _walletsCubit.refresh();
   }
 
-  void getBalance() async {
+  Future<void> getBalance() async {
     try {
       final wallet = state.wallet;
-      final dbName = wallet.label + wallet.uid + '.db';
-      final db = await openDatabase(dbName);
-      final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, dbName);
+      final dbPath = await walletDbPath(wallet.label, wallet.uid);
 
       emit(
         state.copyWith(
@@ -182,10 +175,10 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final balance = await compute(sqliteBalance, {
-        'descriptor': state.wallet.descriptor,
-        'dbPath': dbPath,
-      });
+      final balance = (await BitcoinWorker.balance(
+        descriptor: state.wallet.descriptor,
+        dbPath: dbPath,
+      )).orThrow();
 
       emit(
         state.copyWith(
@@ -198,7 +191,6 @@ class SendCubit extends Cubit<SendState> {
           errFees: emptyString,
         ),
       );
-      db.close();
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -220,41 +212,35 @@ class SendCubit extends Cubit<SendState> {
     final node = _nodeAddressCubit.state.getAddress();
     final socks5 = _torCubit.state.getSocks5();
 
-    final dbName = wallet.label + wallet.uid + '.db';
-    final db = await openDatabase(dbName);
-    final databasesPath = await getDatabasesPath();
-    final dbPath = join(databasesPath, dbName);
+    final dbPath = await walletDbPath(wallet.label, wallet.uid);
 
-    final syncStat = await compute(sqliteSync, {
-      'dbPath': dbPath,
-      'descriptor': state.wallet.descriptor,
-      'nodeAddress': node,
-      'socks5': socks5,
-    });
-    if (syncStat.hasError) {
-      throw SMError.fromJson(syncStat.error!).message;
-    }
+    final syncStat = await BitcoinWorker.sync(
+      dbPath: dbPath,
+      descriptor: state.wallet.descriptor,
+      nodeAddress: node,
+      socks5: socks5,
+    );
+    syncStat.orThrow();
 
-    final balance = await compute(sqliteBalance, {
-      'descriptor': state.wallet.descriptor,
-      'dbPath': dbPath,
-    });
+    final balance = (await BitcoinWorker.balance(
+      descriptor: state.wallet.descriptor,
+      dbPath: dbPath,
+    )).orThrow();
 
-    final transactions = await compute(sqliteHistory, {
-      'descriptor': state.wallet.descriptor,
-      'dbPath': dbPath,
-    });
+    final transactions = (await BitcoinWorker.history(
+      descriptor: state.wallet.descriptor,
+      dbPath: dbPath,
+    )).orThrow();
 
     final updated = state.wallet.copyWith(
       balance: balance,
       transactions: transactions,
     );
     await updateWalletStorage(updated);
-    db.close();
   }
 
   void adddressChanged(String text) {
-    if (text.startsWith('BC1') || text.startsWith('TB1'))
+    if (text.startsWith('BC1') || text.startsWith('TB1')) {
       emit(
         state.copyWith(
           address: text.toLowerCase(),
@@ -265,7 +251,7 @@ class SendCubit extends Cubit<SendState> {
           errFees: emptyString,
         ),
       );
-    else
+    } else {
       emit(
         state.copyWith(
           address: text,
@@ -276,15 +262,16 @@ class SendCubit extends Cubit<SendState> {
           errFees: emptyString,
         ),
       );
+    }
   }
 
-  void pasteAddress() async {
+  Future<void> pasteAddress() async {
     final text = await _clipBoard.pasteFromClipBoard();
     if (text.hasError) return;
     adddressChanged(text.result!);
   }
 
-  void scanAddress(bool onStart) async {
+  Future<void> scanAddress(bool onStart) async {
     try {
       final barcodeScanRes = await locator<IQrScanner>().scan();
       if (barcodeScanRes.contains('bitcoin:')) {
@@ -296,8 +283,9 @@ class SendCubit extends Cubit<SendState> {
           amount = (double.parse(amount) * 100000000).toStringAsFixed(0);
         }
         amountChanged(amount);
-      } else
+      } else {
         adddressChanged(barcodeScanRes);
+      }
       await Future.delayed(const Duration(milliseconds: 1000));
 
       if (onStart) getBalance();
@@ -316,7 +304,7 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
-  void addressConfirmedClicked() async {
+  Future<void> addressConfirmedClicked() async {
     emit(
       state.copyWith(
         errLoading: emptyString,
@@ -378,7 +366,7 @@ class SendCubit extends Cubit<SendState> {
           errFees: emptyString,
         ),
       );
-    } else
+    } else {
       emit(
         state.copyWith(
           sweepWallet: !state.sweepWallet,
@@ -390,6 +378,7 @@ class SendCubit extends Cubit<SendState> {
           errFees: emptyString,
         ),
       );
+    }
   }
 
   // Future<void> _getStoragePermission() async {
@@ -501,13 +490,10 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
-  void amountConfirmedClicked() async {
+  Future<void> amountConfirmedClicked() async {
     try {
       final wallet = state.wallet;
-      final dbName = wallet.label + wallet.uid + '.db';
-      final db = await openDatabase(dbName);
-      final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, dbName);
+      final dbPath = await walletDbPath(wallet.label, wallet.uid);
 
       emit(
         state.copyWith(
@@ -536,32 +522,28 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final syncRes = await compute(sqliteSync, {
-        'dbPath': dbPath,
-        'descriptor': state.wallet.descriptor,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
-      });
-      if (syncRes.hasError) {
-        throw SMError.fromJson(syncRes.error!).message;
-      }
+      final syncRes = await BitcoinWorker.sync(
+        dbPath: dbPath,
+        descriptor: state.wallet.descriptor,
+        nodeAddress: nodeAddress,
+        socks5: socks5,
+      );
+      syncRes.orThrow();
 
-      final psbt = await compute(sqliteBuildTx, {
-        'descriptor': state.wallet.descriptor,
-        'dbPath': dbPath,
-        'txOutputs': txOutputs,
-        'feeAbsolute': dummyFeeValue,
-        'policyPath': state.policyPath,
-        'sweep': state.sweepWallet.toString(),
-      });
-      if (psbt.hasError) {
-        throw SMError.fromJson(psbt.error!).message;
-      }
+      final psbt = await BitcoinWorker.buildTx(
+        descriptor: state.wallet.descriptor,
+        dbPath: dbPath,
+        txOutputs: txOutputs,
+        feeAbsolute: dummyFeeValue,
+        policyPath: state.policyPath,
+        sweep: state.sweepWallet.toString(),
+      );
+      psbt.orThrow();
 
-      final weight = await compute(getWeight, {
-        'descriptor': state.wallet.descriptor,
-        'psbt': psbt.result!.psbt,
-      });
+      final weight = (await BitcoinWorker.weight(
+        descriptor: state.wallet.descriptor,
+        psbt: psbt.result!.psbt,
+      )).orThrow();
 
       final now = DateTime.now().millisecondsSinceEpoch;
       const tenMinutes = 600000;
@@ -598,7 +580,6 @@ class SendCubit extends Cubit<SendState> {
           currentStep: SendSteps.fees,
         ),
       );
-      db.close();
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -666,13 +647,10 @@ class SendCubit extends Cubit<SendState> {
     return true;
   }
 
-  void feeConfirmedClicked() async {
+  Future<void> feeConfirmedClicked() async {
     try {
       final wallet = state.wallet;
-      final dbName = wallet.label + wallet.uid + '.db';
-      final db = await openDatabase(dbName);
-      final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, dbName);
+      final dbPath = await walletDbPath(wallet.label, wallet.uid);
 
       emit(
         state.copyWith(
@@ -705,23 +683,21 @@ class SendCubit extends Cubit<SendState> {
         ),
       );
 
-      final psbt = await compute(sqliteBuildTx, {
-        'descriptor': state.wallet.descriptor,
-        'dbPath': dbPath,
-        'txOutputs': state.txOutputs,
-        'feeAbsolute': state.finalFee.toString(),
-        'policyPath': state.policyPath,
-        'sweep': state.sweepWallet.toString(),
-      });
+      final psbt = await BitcoinWorker.buildTx(
+        descriptor: state.wallet.descriptor,
+        dbPath: dbPath,
+        txOutputs: state.txOutputs,
+        feeAbsolute: state.finalFee.toString(),
+        policyPath: state.policyPath,
+        sweep: state.sweepWallet.toString(),
+      );
 
-      if (psbt.hasError) {
-        throw SMError.fromJson(psbt.error!).message;
-      }
+      psbt.orThrow();
 
-      final decode = await compute(decodePSBT, {
-        'network': _blockchain.state.blockchain.name,
-        'psbt': psbt.result!.psbt,
-      });
+      final decode = (await BitcoinWorker.decodePsbt(
+        network: _blockchain.state.blockchain.name,
+        psbt: psbt.result!.psbt,
+      )).orThrow();
 
       final amtoutput = decode.firstWhere((o) => o.to == state.address);
       final feeoutput = decode.firstWhere((o) => o.to == minerOutput);
@@ -740,8 +716,6 @@ class SendCubit extends Cubit<SendState> {
           errFees: emptyString,
         ),
       );
-
-      db.close();
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -811,7 +785,7 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
-  void sendClicked() async {
+  Future<void> sendClicked() async {
     try {
       if (state.sendingTx) return;
       emit(
@@ -834,14 +808,12 @@ class SendCubit extends Cubit<SendState> {
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
-      final signed = await compute(signTx, {
-        'descriptor': descriptor,
-        'unsignedPSBT': state.psbt,
-      });
+      final signed = await BitcoinWorker.sign(
+        descriptor: descriptor,
+        unsignedPSBT: state.psbt,
+      );
 
-      if (signed.hasError) {
-        throw SMError.fromJson(signed.error!).message;
-      }
+      signed.orThrow();
       if (!signed.result!.isFinalized) {
         emit(
           state.copyWith(
@@ -852,17 +824,15 @@ class SendCubit extends Cubit<SendState> {
         return;
       }
 
-      final txid = await compute(broadcastTx, {
-        'descriptor': descriptor,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
-        'signedPSBT': signed.result!.psbt,
-      });
+      final txid = await BitcoinWorker.broadcast(
+        descriptor: descriptor,
+        nodeAddress: nodeAddress,
+        socks5: socks5,
+        signedPSBT: signed.result!.psbt,
+      );
 
-      if (txid.hasError)
-        throw SMError.fromJson(txid.error!).message;
-      else
-        await syncWallet();
+      txid.orThrow();
+      await syncWallet();
 
       updateWalletStorage(state.wallet);
 
@@ -926,146 +896,4 @@ class SendCubit extends Cubit<SendState> {
       ),
     );
   }
-}
-
-R<double> estimateFeees(dynamic data) {
-  final obj = data as Map<String, String?>;
-  final resp = LibBitcoin().estimateNetworkFee(
-    network: obj['network']!,
-    nodeAddress: obj['nodeAddress']!,
-    socks5: obj['socks5']!,
-    targetSize: obj['targetSize']!,
-  );
-  return resp;
-}
-
-int getWeight(dynamic data) {
-  final obj = data as Map<String, String?>;
-  final resp = LibBitcoin().getWeight(
-    descriptor: obj['descriptor']!,
-    psbt: obj['psbt']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!).message;
-  }
-  return resp.result!;
-}
-
-NetworkFees getAbsoluteFees(dynamic data) {
-  final obj = data as Map<String, String?>;
-  final resp = LibBitcoin().feeAbsoluteToRate(
-    feeAbsolute: obj['feeRate']!,
-    weight: obj['weight']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
-}
-
-String buildTx(dynamic data) {
-  final obj = data as Map<String, String?>;
-  final resp = LibBitcoin().buildTransaction(
-    descriptor: obj['descriptor']!,
-    nodeAddress: obj['nodeAddress']!,
-    socks5: obj['socks5']!,
-    txOutputs: obj['txOutputs']!,
-    feeAbsolute: obj['feeAbsolute']!,
-    policyPath: obj['policyPath']!,
-    sweep: obj['sweep']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!.psbt;
-}
-
-R<PSBT> sqliteBuildTx(dynamic data) {
-  final obj = data as Map<String, String?>;
-  final resp = LibBitcoin().sqliteBuildTransaction(
-    descriptor: obj['descriptor']!,
-    dbPath: obj['dbPath']!,
-    txOutputs: obj['txOutputs']!,
-    feeAbsolute: obj['feeAbsolute']!,
-    policyPath: obj['policyPath']!,
-    sweep: obj['sweep']!,
-  );
-
-  return resp;
-}
-
-List<DecodedTxOutput> decodePSBT(dynamic data) {
-  final obj = data as Map<String, String?>;
-  final resp = LibBitcoin().decodePsbt(
-    network: obj['network']!,
-    psbt: obj['psbt']!,
-  );
-
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-
-  return resp.result!;
-}
-
-R<PSBT> signTx(dynamic data) {
-  final obj = data as Map<String, String?>;
-
-  final resp = LibBitcoin().signTransaction(
-    descriptor: obj['descriptor']!,
-    unsignedPSBT: obj['unsignedPSBT']!,
-  );
-
-  return resp;
-}
-
-Future<R<String>> broadcastTx(dynamic data) async {
-  final obj = data as Map<String, String?>;
-
-  final resp = await LibBitcoin().broadcastTransaction(
-    descriptor: obj['descriptor']!,
-    nodeAddress: obj['nodeAddress']!,
-    socks5: obj['socks5']!,
-    signedPSBT: obj['signedPSBT']!,
-  );
-
-  return resp;
-}
-
-// tb1qcd0dej2spq73nlkr4d5w3scksqagz0nzmdnzgg
-int sqliteBalance(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteBalance(
-    descriptor: data['descriptor']!,
-    dbPath: data['dbPath']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
-}
-
-R<String> sqliteSync(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteSync(
-    dbPath: obj['dbPath']!,
-    descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-
-  return resp;
-}
-
-List<Transaction> sqliteHistory(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteHistory(
-    descriptor: data['descriptor']!,
-    dbPath: data['dbPath']!,
-  );
-
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
 }

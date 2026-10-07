@@ -5,9 +5,8 @@ import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:path/path.dart';
+import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
-import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
@@ -15,13 +14,11 @@ import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
-import 'package:sats/model/core.dart';
 import 'package:sats/model/result.dart';
-import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sqflite/sqflite.dart' hide Transaction;
+import 'package:sats/pkg/wallet_db.dart';
 
 part 'derivation.freezed.dart';
 
@@ -71,7 +68,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
 
   static const invalidLabelError = 'Invalid Label (must be 3-20 chars)';
   static const internalError = 'Internal Error';
-  static const signerWalletType = 'PRIMARY';
   static const trScript = 'tr';
   static const taprootPurpose = '86';
   static const segwitScript = 'wpkh';
@@ -79,11 +75,8 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
   static const emptyString = '';
   static const couldNotSaveError = 'Error Saving Wallet!';
 
-  void passPhrasedChanged(String text) => emit(
-        state.copyWith(
-          passPhrase: text,
-        ),
-      );
+  void passPhrasedChanged(String text) =>
+      emit(state.copyWith(passPhrase: text));
 
   void labelChanged(String text) {
     emit(
@@ -95,7 +88,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
     );
   }
 
-  void nextClicked() async {
+  Future<void> nextClicked() async {
     switch (state.currentStep) {
       case DeriveWalletStep.purpose:
         emit(state.copyWith(currentStep: DeriveWalletStep.passphrase));
@@ -110,10 +103,11 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         } else {
           emit(state.copyWith(walletLabelError: emptyString));
         }
-        if (!state.savingWallet)
+        if (!state.savingWallet) {
           (state.purpose == DerivationPurpose.taproot)
               ? deriveTaproot()
               : deriveSegwit();
+        }
     }
   }
 
@@ -146,7 +140,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
     }
   }
 
-  void deriveTaproot() async {
+  Future<void> deriveTaproot() async {
     try {
       emit(
         state.copyWith(
@@ -160,9 +154,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         passphrase: state.passPhrase,
         network: _blockchainCubit.state.blockchain.name,
       );
-      if (parent.hasError) {
-        throw SMError.fromJson(parent.error!).message;
-      }
+      parent.orThrow();
 
       final child = _core.deriveHardened(
         masterXPriv: parent.result!.xprv,
@@ -170,88 +162,68 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         purpose: taprootPurpose,
       );
 
-      if (child.hasError) {
-        throw SMError.fromJson(child.error!);
-      }
+      child.orThrow();
       final fingerprint = child.result!.fingerPrint;
       final path = child.result!.hardenedPath;
       // final xprv = child.result!.xprv;
       // final fullXPrv =
       //     '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
       final xpub = child.result!.xpub;
-      final fullXPub =
-          '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
+      final fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst(
+        '/m',
+        emptyString,
+      );
       final policy = 'pk($fullXPub/*)';
 
       const readable = 'pk(__primary__)';
       final uid = sha1.convert(utf8.encode(xpub)).toString().substring(0, 21);
 
-      final exists = _wallets.state.wallets.any(
-        (wallet) => wallet.uid == uid,
-      );
+      final exists = _wallets.state.wallets.any((wallet) => wallet.uid == uid);
       if (exists) {
         throw 'This account already exists.';
       }
 
-      final descriptor = _core.compile(
-        policy: policy,
-        scriptType: trScript,
-      );
+      final descriptor = _core.compile(policy: policy, scriptType: trScript);
 
-      if (descriptor.hasError) {
-        throw SMError.fromJson(descriptor.error!).message;
-      }
+      descriptor.orThrow();
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final dbName = state.label + uid + '.db';
-      final db = await openDatabase(dbName);
-      final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, dbName);
-      // ensure to delete db if process errors
-      final syncStat = await compute(sqliteSync, {
-        'dbPath': dbPath,
-        'descriptor': descriptor.result!,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
-      });
-      if (syncStat.hasError) {
-        throw SMError.fromJson(syncStat.error!);
-      }
+      final dbPath = await walletDbPath(state.label, uid);
+      final syncStat = await BitcoinWorker.sync(
+        dbPath: dbPath,
+        descriptor: descriptor.result!,
+        nodeAddress: nodeAddress,
+        socks5: socks5,
+      );
+      syncStat.orThrow();
 
-      var history = await compute(sqliteHistory, {
-        'descriptor': descriptor.result!,
-        'dbPath': dbPath,
-      });
+      var history = await BitcoinWorker.history(
+        descriptor: descriptor.result!,
+        dbPath: dbPath,
+      );
 
       // ignore: unused_local_variable
       var recievedCount = 0;
 
       if (history.hasError) {
-        emit(
-          state.copyWith(
-            errSavingWallet: history.error!,
-          ),
-        );
+        emit(state.copyWith(errSavingWallet: history.error!));
         history = const R(result: []);
-      } else
+      } else {
         for (final item in history.result!) {
           if (item.sent == 0) {
             recievedCount++;
           }
         }
+      }
 
-      var balance = await compute(sqliteBalance, {
-        'descriptor': descriptor.result!,
-        'dbPath': dbPath,
-      });
+      var balance = await BitcoinWorker.balance(
+        descriptor: descriptor.result!,
+        dbPath: dbPath,
+      );
 
       if (balance.hasError) {
-        emit(
-          state.copyWith(
-            errSavingWallet: balance.error!,
-          ),
-        );
+        emit(state.copyWith(errSavingWallet: balance.error!));
         balance = const R(result: 0);
       }
       final lastUnused = _core.lastUnusedAddress(
@@ -261,9 +233,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       var lastIndex = 0;
       if (lastUnused.hasError) {
         emit(
-          state.copyWith(
-            errSavingWallet: 'Could not set last unused address.',
-          ),
+          state.copyWith(errSavingWallet: 'Could not set last unused address.'),
         );
       } else {
         lastIndex = int.parse(lastUnused.result!.index);
@@ -278,7 +248,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         requiredPolicyElements: 1,
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
-        walletType: signerWalletType,
+        walletType: WalletType.primary,
         lastAddressIndex: lastIndex,
         balance: balance.result!,
         transactions: history.result!,
@@ -287,13 +257,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
 
       updateWalletStorage(newWallet);
 
-      emit(
-        state.copyWith(
-          savingWallet: false,
-          newWalletSaved: true,
-        ),
-      );
-      db.close();
+      emit(state.copyWith(savingWallet: false, newWalletSaved: true));
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -307,22 +271,15 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
     }
   }
 
-  void deriveSegwit() async {
+  Future<void> deriveSegwit() async {
     try {
-      emit(
-        state.copyWith(
-          savingWallet: true,
-          errSavingWallet: emptyString,
-        ),
-      );
+      emit(state.copyWith(savingWallet: true, errSavingWallet: emptyString));
       final parent = _core.importMaster(
         mnemonic: _masterKeyCubit.state.key!.seed!,
         passphrase: state.passPhrase,
         network: _blockchainCubit.state.blockchain.name,
       );
-      if (parent.hasError) {
-        throw SMError.fromJson(parent.error!);
-      }
+      parent.orThrow();
 
       final child = _core.deriveHardened(
         masterXPriv: parent.result!.xprv,
@@ -330,25 +287,23 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         purpose: segwitPurpose,
       );
 
-      if (child.hasError) {
-        throw SMError.fromJson(child.error!);
-      }
+      child.orThrow();
       final fingerprint = child.result!.fingerPrint;
       final path = child.result!.hardenedPath;
       // final xprv = child.result!.xprv;
       // final fullXPrv =
       //     '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
       final xpub = child.result!.xpub;
-      final fullXPub =
-          '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
+      final fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst(
+        '/m',
+        emptyString,
+      );
       final policy = 'pk($fullXPub/*)';
 
       const readable = 'pk(__primary__)';
       final bytes = utf8.encode(xpub);
       final uid = sha1.convert(bytes).toString().substring(0, 21);
-      final exists = _wallets.state.wallets.any(
-        (wallet) => wallet.uid == uid,
-      );
+      final exists = _wallets.state.wallets.any((wallet) => wallet.uid == uid);
       if (exists) {
         throw 'This account already exists.';
       }
@@ -358,51 +313,41 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         scriptType: segwitScript,
       );
 
-      if (descriptor.hasError) {
-        throw SMError.fromJson(descriptor.error!);
-      }
+      descriptor.orThrow();
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      //for dbName uniqueness
-      final pathString =
-          path.replaceFirst('m', emptyString).replaceAll('/', emptyString);
-      final dbName = state.label + fingerprint + pathString + '.db';
-      final db = await openDatabase(dbName);
+      final dbPath = await walletDbPath(state.label, uid);
 
-      final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, dbName);
+      final syncStat = await BitcoinWorker.sync(
+        dbPath: dbPath,
+        descriptor: descriptor.result!,
+        nodeAddress: nodeAddress,
+        socks5: socks5,
+      );
 
-      final syncStat = await compute(sqliteSync, {
-        'dbPath': dbPath,
-        'descriptor': descriptor.result!,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
-      });
+      syncStat.orThrow();
 
-      if (syncStat.hasError) {
-        throw SMError.fromJson(syncStat.error!);
-      }
-
-      var history = await compute(sqliteHistory, {
-        'descriptor': descriptor.result!,
-        'dbPath': dbPath,
-      });
+      var history = await BitcoinWorker.history(
+        descriptor: descriptor.result!,
+        dbPath: dbPath,
+      );
       var recievedCount = 0;
 
       if (history.hasError) {
         history = const R(result: []);
-      } else
+      } else {
         for (final item in history.result!) {
           if (item.sent == 0) {
             recievedCount++;
           }
         }
+      }
 
-      var balance = await compute(sqliteBalance, {
-        'descriptor': descriptor.result!,
-        'dbPath': dbPath,
-      });
+      var balance = await BitcoinWorker.balance(
+        descriptor: descriptor.result!,
+        dbPath: dbPath,
+      );
 
       if (balance.hasError) {
         balance = const R(result: 0);
@@ -411,9 +356,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         descriptor: descriptor.result!,
         dbPath: dbPath,
       );
-      if (lastUnused.hasError) {
-        throw SMError.fromJson(lastUnused.error!);
-      }
+      lastUnused.orThrow();
       // check balance and see if last address index needs update
       final newWallet = Wallet(
         fingerprint: fingerprint,
@@ -424,7 +367,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
         requiredPolicyElements: 1,
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
-        walletType: signerWalletType,
+        walletType: WalletType.primary,
         lastAddressIndex: (recievedCount == 0) ? 0 : recievedCount,
         balance: balance.result!,
         transactions: history.result!,
@@ -433,13 +376,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
 
       updateWalletStorage(newWallet);
 
-      emit(
-        state.copyWith(
-          savingWallet: false,
-          newWalletSaved: true,
-        ),
-      );
-      db.close();
+      emit(state.copyWith(savingWallet: false, newWalletSaved: true));
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -464,84 +401,7 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
 
     final newWallet = wallet.copyWith(id: id);
 
-    await _storage.saveItemAt<Wallet>(
-      StoreKeys.Wallet.name,
-      id,
-      newWallet,
-    );
+    await _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, id, newWallet);
     _wallets.refresh();
   }
-}
-
-Future<R<List<Transaction>>> computeHistory(dynamic obj) async {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().getHistory(
-    descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-
-  return resp;
-}
-
-Future<R<int>> computeBalance(dynamic obj) async {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().syncBalance(
-    descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-
-  return resp;
-}
-
-R<int> sqliteBalance(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteBalance(
-    descriptor: data['descriptor']!,
-    dbPath: data['dbPath']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp;
-}
-
-R<List<Transaction>> sqliteHistory(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteHistory(
-    descriptor: data['descriptor']!,
-    dbPath: data['dbPath']!,
-  );
-
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp;
-}
-
-R<Address> getLastUnusedAddress(dynamic msg) {
-  final data = msg as Map<String, String?>;
-  final resp = LibBitcoin().lastUnusedAddress(
-    descriptor: data['descriptor']!,
-    dbPath: data['dbPath']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp;
-}
-
-R<String> sqliteSync(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteSync(
-    dbPath: obj['dbPath']!,
-    descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp;
 }

@@ -4,13 +4,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
-import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
-import 'package:sats/model/core.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 
 part 'broadcast.freezed.dart';
@@ -142,29 +141,34 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     );
   }
 
-  void pastePSBT() async {
+  Future<void> pastePSBT() async {
     final text = await _clipBoard.pasteFromClipBoard();
-    if (text.hasError) emit(state.copyWith(errFileImport: text.error!));
+    if (text.hasError) {
+      emit(state.copyWith(errFileImport: text.error!));
+      return;
+    }
     final decoded = _core.decodePsbt(
       network: _blockchainCubit.state.blockchain.name,
       psbt: text.result!,
     );
     if (decoded.hasError) {
       emit(state.copyWith(errBroadcasting: 'Invalid PSBT.'));
-    } else
+    } else {
       emit(state.copyWith(psbt: text.result!));
+    }
     return;
   }
 
-  void pasteHex() async {
+  Future<void> pasteHex() async {
     final text = await _clipBoard.pasteFromClipBoard();
-    if (text.hasError)
+    if (text.hasError) {
       emit(state.copyWith(errFileImport: text.error!));
-    else
+    } else {
       emit(state.copyWith(hex: text.result!));
+    }
   }
 
-  void verifyImportPSBT() async {
+  Future<void> verifyImportPSBT() async {
     try {
       final psbtFile = File(state.importedPsbtPath!);
       final content = await psbtFile.readAsString();
@@ -174,7 +178,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       );
       if (decoded.hasError) {
         emit(state.copyWith(errBroadcasting: 'Invalid PSBT.'));
-      } else
+      } else {
         emit(
           state.copyWith(
             psbt: content
@@ -183,6 +187,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
                 .replaceAll('\n', ''),
           ),
         );
+      }
       return;
     } catch (e, s) {
       _logger.logException(e, 'BroadcastCubit.verifyImportPSBT', s);
@@ -194,7 +199,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     }
   }
 
-  void verifyImportHex() async {
+  Future<void> verifyImportHex() async {
     try {
       final hexFile = File(state.importedHexPath!);
 
@@ -218,7 +223,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     }
   }
 
-  void hexText(String hex) async {
+  Future<void> hexText(String hex) async {
     await Future.delayed(const Duration(milliseconds: 3000));
     emit(
       state.copyWith(
@@ -232,7 +237,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final hex = await _core.broadcastTransactionHex(
+      final hex = await BitcoinWorker.broadcastHex(
         descriptor: dummyDescriptor,
         nodeAddress: nodeAddress,
         socks5: socks5,
@@ -242,12 +247,12 @@ class BroadcastCubit extends Cubit<BroadcastState> {
         emit(
           state.copyWith(
             broadcasting: false,
-            errBroadcasting: hex.error!,
+            errBroadcasting: hex.errorMessage,
             txId: '',
             hex: '',
           ),
         );
-      } else
+      } else {
         emit(
           state.copyWith(
             broadcasting: false,
@@ -256,6 +261,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
             errBroadcasting: emptyString,
           ),
         );
+      }
     } catch (e, s) {
       _logger.logException(e, 'BroadcastCubit.confirmclicked', s);
       emit(
@@ -267,12 +273,12 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     }
   }
 
-  void broadcastConfirmed() async {
+  Future<void> broadcastConfirmed() async {
     try {
       emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final psbt = await _core.broadcastTransaction(
+      final psbt = await BitcoinWorker.broadcast(
         descriptor: dummyDescriptor,
         nodeAddress: nodeAddress,
         socks5: socks5,
@@ -283,12 +289,12 @@ class BroadcastCubit extends Cubit<BroadcastState> {
         emit(
           state.copyWith(
             broadcasting: false,
-            errBroadcasting: psbt.error!,
+            errBroadcasting: psbt.errorMessage,
             txId: '',
             psbt: '',
           ),
         );
-      } else
+      } else {
         emit(
           state.copyWith(
             broadcasting: false,
@@ -297,6 +303,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
             errBroadcasting: emptyString,
           ),
         );
+      }
     } catch (e, s) {
       _logger.logException(e, 'BroadcastCubit.confirmclicked', s);
       emit(
@@ -309,49 +316,4 @@ class BroadcastCubit extends Cubit<BroadcastState> {
   }
 }
 
-String buildTx(dynamic data) {
-  final obj = data as Map<String, String?>;
-  final resp = LibBitcoin().buildTransaction(
-    descriptor: obj['descriptor']!,
-    nodeAddress: obj['nodeAddress']!,
-    socks5: obj['socks5']!,
-    txOutputs: obj['txOutputs']!,
-    feeAbsolute: obj['feeAbsolute']!,
-    policyPath: obj['policyPath']!,
-    sweep: obj['sweep']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!.psbt;
-}
-
-List<DecodedTxOutput> decodePSBT(dynamic data) {
-  final obj = data as Map<String, String?>;
-  final resp = LibBitcoin().decodePsbt(
-    network: obj['network']!,
-    psbt: obj['psbt']!,
-  );
-
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-
-  return resp.result!;
-}
-
-Future<String> broadcastTx(dynamic data) async {
-  final obj = data as Map<String, String?>;
-
-  final resp = await LibBitcoin().broadcastTransaction(
-    descriptor: obj['descriptor']!,
-    nodeAddress: obj['nodeAddress']!,
-    socks5: obj['socks5']!,
-    signedPSBT: obj['signedPSBT']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
-}
 // tb1qcd0dej2spq73nlkr4d5w3scksqagz0nzmdnzgg

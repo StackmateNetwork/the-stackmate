@@ -112,8 +112,9 @@ class XpubColdcardImport extends StatelessWidget {
             ),
             onPressed: () {
               c.read<XpubImportCubit>().importColdCardSegwit();
-              if (state.errFileImport != '')
+              if (state.errFileImport != '') {
                 handleError(c, 'Error reading file');
+              }
             },
             child: const Text('CONFIRM'),
           ),

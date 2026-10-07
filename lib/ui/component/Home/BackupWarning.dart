@@ -9,7 +9,7 @@ class BackupWarning extends StatelessWidget {
     final masterKeyState = c.select((MasterKeyCubit mkc) => mkc.state);
     final isBackedUp = masterKeyState.key!.backedUp!;
 
-    if (!isBackedUp)
+    if (!isBackedUp) {
       return Padding(
         padding: const EdgeInsets.all(12),
         child: SizedBox(
@@ -27,7 +27,8 @@ class BackupWarning extends StatelessWidget {
           ),
         ),
       );
-    else
+    } else {
       return Container();
+    }
   }
 }

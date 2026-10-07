@@ -10,7 +10,7 @@ class LogItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (log.type == LogType.event)
+    if (log.type == LogType.event) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -21,8 +21,9 @@ class LogItem extends StatelessWidget {
           ],
         ),
       );
+    }
 
-    if (log.type == LogType.api)
+    if (log.type == LogType.api) {
       return ExpansionTile(
         collapsedIconColor: context.colours.primary,
         iconColor: context.colours.primary,
@@ -66,8 +67,9 @@ class LogItem extends StatelessWidget {
           ),
         ],
       );
+    }
 
-    if (log.type == LogType.exception)
+    if (log.type == LogType.exception) {
       return ExpansionTile(
         // maintainState: false,
         tilePadding: EdgeInsets.zero,
@@ -107,6 +109,7 @@ class LogItem extends StatelessWidget {
           ),
         ],
       );
+    }
 
     return Container();
   }

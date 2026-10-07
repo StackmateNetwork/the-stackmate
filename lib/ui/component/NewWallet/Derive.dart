@@ -49,8 +49,9 @@ class DerivePurpose extends StatelessWidget {
         RadioGroup<DerivationPurpose>(
           groupValue: selectedPurpose,
           onChanged: (value) {
-            if (value != null)
+            if (value != null) {
               c.read<DeriveWalletCubit>().purposeChanged(value);
+            }
           },
           child: Column(
             children: [

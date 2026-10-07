@@ -13,15 +13,17 @@ class WalletLoader extends StatelessWidget {
     const String syncBalance = 'Syncing balance...';
     const String syncHistory = 'Syncing history...';
 
-    if (history.loadingBalance)
+    if (history.loadingBalance) {
       return const Loading(
         text: syncBalance,
       );
-    if (history.loadingTransactions)
+    }
+    if (history.loadingTransactions) {
       return const Loading(
         text: syncHistory,
       );
-    else
+    } else {
       return Container();
+    }
   }
 }

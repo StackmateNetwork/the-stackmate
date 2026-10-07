@@ -30,11 +30,11 @@ class PreferencesCubit extends Cubit<PreferencesState> {
 
   final IStorage _storage;
 
-  void init() async {
+  Future<void> init() async {
     final preferences =
         _storage.getFirstItem<Preferences>(StoreKeys.Preferences.name);
     if (preferences.hasError) {
-      if (preferences.error! == 'empty')
+      if (preferences.error! == 'empty') {
         emit(
           state.copyWith(
             incognito: false,
@@ -44,13 +44,14 @@ class PreferencesCubit extends Cubit<PreferencesState> {
             preferredFiatUnit: 'USD',
           ),
         );
-      else
+      } else {
         emit(
           state.copyWith(
             errorPreferencesState: preferences.error.toString(),
           ),
         );
-    } else
+      }
+    } else {
       emit(
         state.copyWith(
           incognito: preferences.result!.incognito,
@@ -60,6 +61,7 @@ class PreferencesCubit extends Cubit<PreferencesState> {
           preferredFiatUnit: preferences.result!.preferredFiatUnit,
         ),
       );
+    }
   }
 
   void incognitoChanged() {
@@ -87,7 +89,7 @@ class PreferencesCubit extends Cubit<PreferencesState> {
     emit(state.copyWith(preferredFiatUnit: unit));
   }
 
-  void saveClicked() async {
+  Future<void> saveClicked() async {
     final preferences = Preferences(
       incognito: state.incognito,
       bitcoinStandard: state.bitcoinStandard,

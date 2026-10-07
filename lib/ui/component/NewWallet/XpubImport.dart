@@ -40,8 +40,9 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
 
     if (_xpubController.text != state.xpub) _xpubController.text = state.xpub;
 
-    if (_fingerPrintController.text != state.fingerPrint)
+    if (_fingerPrintController.text != state.fingerPrint) {
       _fingerPrintController.text = state.fingerPrint;
+    }
 
     if (_pathController.text != state.path) _pathController.text = state.path;
 

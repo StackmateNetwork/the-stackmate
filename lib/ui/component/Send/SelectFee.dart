@@ -33,7 +33,9 @@ class _SelectFeeState extends State<SelectFee> {
     // context.read<FeesCubit>().update();
     if (state.feeSlow == null ||
         state.feeMedium == null ||
-        state.feeFast == null) return Container();
+        state.feeFast == null) {
+      return Container();
+    }
 
     final slow = state.feeSlow!.toString();
     final medium = state.feeMedium!.toString();

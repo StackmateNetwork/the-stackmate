@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/info.dart';
-import 'package:sats/cubit/wallet/signer.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Wallet/BumpFee.dart';
@@ -209,7 +208,7 @@ class TransactionItem extends StatelessWidget {
 void _showTxinfo(BuildContext c, Transaction transaction) {
   const sats = 'sats';
   final wallet = c.read<InfoCubit>().state.wallet;
-  final canBump = wallet != null && WalletSigner.canSign(wallet);
+  final canBump = wallet?.canSign ?? false;
   final isReceive = transaction.isReceive();
   if (isReceive) {
     showCupertinoModalPopup(

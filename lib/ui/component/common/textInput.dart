@@ -60,14 +60,14 @@ class BBTextInput extends StatefulWidget {
   final _TextInputType type;
 
   final TextEditingController? controller;
-  final Function(String) onChanged;
+  final ValueChanged<String> onChanged;
   final String value;
   final String? hint;
   final Widget? rightIcon;
-  final Function? onRightTap;
+  final VoidCallback? onRightTap;
   final bool disabled;
   final FocusNode? focusNode;
-  final Function? onEnter;
+  final VoidCallback? onEnter;
 
   @override
   State<BBTextInput> createState() => _BBTextInputState();
@@ -84,8 +84,9 @@ class _BBTextInputState extends State<BBTextInput> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.value != _editingController.text)
+    if (widget.value != _editingController.text) {
       _editingController.text = widget.value;
+    }
 
     Widget widgett;
 
@@ -170,7 +171,7 @@ class _BBTextInputState extends State<BBTextInput> {
                 padding: const EdgeInsets.only(right: 16),
                 child: widget.rightIcon,
               ),
-              onPressed: () => widget.onRightTap!(),
+              onPressed: widget.onRightTap,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(80.0),
@@ -200,7 +201,7 @@ class _BBTextInputState extends State<BBTextInput> {
             enabled: !widget.disabled,
             onChanged: widget.onChanged,
             controller: _editingController,
-            onTap: () => widget.onEnter!(),
+            onTap: widget.onEnter,
             enableIMEPersonalizedLearning: false,
             decoration: InputDecoration(
               hintText: widget.hint,

@@ -50,8 +50,9 @@ The following steps are critical to ensure safety of your funds.
         RadioGroup<int>(
           groupValue: selectedSeedPhraseLength,
           onChanged: (value) {
-            if (value != null)
+            if (value != null) {
               c.read<SeedGenerateCubit>().seedLengthChanged(value);
+            }
           },
           child: Column(
             children: [

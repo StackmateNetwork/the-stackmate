@@ -35,10 +35,10 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
   final IStorage _storage;
   final ChainSelectCubit _network;
 
-  void init() async {
+  Future<void> init() async {
     final node = _storage.getFirstItem<Node>(StoreKeys.Node.name);
     if (node.hasError) {
-      if (node.error! == 'empty')
+      if (node.error! == 'empty') {
         emit(
           state.copyWith(
             address: (_network.state.blockchain.name == 'test')
@@ -46,8 +46,9 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
                 : mainnetBlockstream,
           ),
         );
-      else
+      } else {
         emit(state.copyWith(errNodeState: node.error.toString()));
+      }
     } else {
       emit(
         state.copyWith(
@@ -81,7 +82,7 @@ class NodeAddressCubit extends Cubit<NodeAddressState> {
     emit(state.copyWith(name: text));
   }
 
-  void saveClicked() async {
+  Future<void> saveClicked() async {
     final node = Node(
       address: state.address,
       name: state.name,

@@ -86,10 +86,11 @@ class SeedImportPhrase extends StatelessWidget {
                     ImportTypes.words24,
                 },
                 onSelectionChanged: (p0) {
-                  if (state.importType == ImportTypes.words12)
+                  if (state.importType == ImportTypes.words12) {
                     c.read<SeedImportCubit>().recoverClicked24();
-                  else
+                  } else {
                     c.read<SeedImportCubit>().recoverClicked();
+                  }
                 },
               ),
             ),
@@ -182,10 +183,12 @@ class SeedImportPhrase extends StatelessWidget {
                       backgroundColor: c.colours.primary,
                     ),
                     onPressed: () {
-                      if (state.seedError == 'Please fill all words')
+                      if (state.seedError == 'Please fill all words') {
                         handleError(c, 'Please fill all words');
-                      if (state.seedError == 'Invalid seed')
+                      }
+                      if (state.seedError == 'Invalid seed') {
                         handleError(c, 'Invalid seed');
+                      }
                       if (!hasMaster) {
                         (state.importType == ImportTypes.words12)
                             ? c.read<SeedImportCubit>().recoverWallet12Clicked()
@@ -225,11 +228,13 @@ class SeedImportPhrase extends StatelessWidget {
                         currentFocus.unfocus();
                       }
                       if (!hasMaster) {
+                        final walletCubit = c.read<SeedImportWalletCubit>();
                         await c.read<SeedImportCubit>().checkSeed();
-                        c.read<SeedImportWalletCubit>().nextClicked();
+                        walletCubit.nextClicked();
                       } else {
-                        if (state.showSeedCompleteButton())
+                        if (state.showSeedCompleteButton()) {
                           c.read<SeedImportCubit>().gotoPassPhrase();
+                        }
                       }
                     },
                     child: const Text('Validated. Next'),
@@ -275,8 +280,9 @@ class _ImportWordTextFieldState extends State<ImportWordTextField> {
     widget.focusNode.addListener(() {
       if (widget.focusNode.hasFocus) {
         showOverLay();
-      } else
+      } else {
         hideOverlay();
+      }
     });
 
     controller.addListener(() {
@@ -390,8 +396,9 @@ class _ImportWordTextFieldState extends State<ImportWordTextField> {
               child: CallbackShortcuts(
                 bindings: {
                   LogicalKeySet(LogicalKeyboardKey.enter): () {
-                    if (widget.focusNode.hasFocus)
+                    if (widget.focusNode.hasFocus) {
                       widget.returnClicked(widget.index);
+                    }
                   },
                 },
                 child: AnimatedOpacity(
@@ -456,8 +463,9 @@ class _ImportWordTextFieldState24 extends State<ImportWordTextField24> {
     widget.focusNode.addListener(() {
       if (widget.focusNode.hasFocus) {
         showOverLay();
-      } else
+      } else {
         hideOverlay();
+      }
     });
 
     controller.addListener(() {
@@ -571,8 +579,9 @@ class _ImportWordTextFieldState24 extends State<ImportWordTextField24> {
               child: CallbackShortcuts(
                 bindings: {
                   LogicalKeySet(LogicalKeyboardKey.enter): () {
-                    if (widget.focusNode.hasFocus)
+                    if (widget.focusNode.hasFocus) {
                       widget.returnClicked(widget.index);
+                    }
                   },
                 },
                 child: AnimatedOpacity(

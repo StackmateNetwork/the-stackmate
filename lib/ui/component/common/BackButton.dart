@@ -8,7 +8,7 @@ class Back extends StatelessWidget {
     this.onPressed,
   });
 
-  final Function? onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext c) {
