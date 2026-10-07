@@ -12,7 +12,6 @@ environment:
 dependencies:
   animate_do: ^5.1.0
   bdk_dart: ^1.0.0
-  bip39: ^1.0.6
   bloc: ^9.2.1
   crypto: ^3.0.7
   file_picker: ^13.1.0

@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/new-wallet/common/words_cubit.dart';
 import 'package:sats/cubit/new-wallet/from-old-seed.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Passphrase.dart';
-import 'package:sats/ui/component/common/ErrorHandler.dart';
-import 'package:sats/ui/component/common/textInput.dart';
 
 class SeedImportSteps extends StatelessWidget {
-  const SeedImportSteps({
-    super.key,
-  });
+  const SeedImportSteps({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,221 +22,222 @@ class SeedImportSteps extends StatelessWidget {
   }
 }
 
-class SeedImportPhrase extends StatelessWidget {
-  const SeedImportPhrase();
+/// Entry of the 12 or 24 recovery words of an existing wallet.
+class SeedImportPhrase extends StatefulWidget {
+  const SeedImportPhrase({super.key});
+
+  @override
+  State<SeedImportPhrase> createState() => _SeedImportPhraseState();
+}
+
+class _SeedImportPhraseState extends State<SeedImportPhrase> {
+  static final _maxWords = supportedWordCounts.last;
+
+  final _controllers = List.generate(_maxWords, (_) => TextEditingController());
+  final _focusNodes = List.generate(_maxWords, (_) => FocusNode());
+  int? _focused;
+
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i < _maxWords; i++) {
+      _focusNodes[i].addListener(() => _onFocusChanged(i));
+    }
+    _syncControllers(context.read<SeedImportCubit>().state.words);
+  }
+
+  @override
+  void dispose() {
+    for (final c in _controllers) {
+      c.dispose();
+    }
+    for (final f in _focusNodes) {
+      f.dispose();
+    }
+    super.dispose();
+  }
+
+  void _onFocusChanged(int index) {
+    setState(() {
+      if (_focusNodes[index].hasFocus) {
+        _focused = index;
+      } else if (_focused == index) {
+        _focused = null;
+      }
+    });
+  }
+
+  void _syncControllers(List<String> words) {
+    for (var i = 0; i < words.length; i++) {
+      final controller = _controllers[i];
+      if (controller.text != words[i]) {
+        controller.value = TextEditingValue(
+          text: words[i],
+          selection: TextSelection.collapsed(offset: words[i].length),
+        );
+      }
+    }
+  }
+
+  void _focusNext(int index, int wordCount) {
+    if (index + 1 < wordCount) {
+      _focusNodes[index + 1].requestFocus();
+    } else {
+      _focusNodes[index].unfocus();
+    }
+  }
+
+  void _onChanged(int index, String value, int wordCount) {
+    final cubit = context.read<SeedImportCubit>();
+    cubit.wordChanged(index, value);
+    // A space after a word moves on to the next field.
+    if (value.endsWith(' ') &&
+        value.trim().isNotEmpty &&
+        !value.trim().contains(' ')) {
+      _focusNext(index, wordCount);
+    }
+  }
+
+  void _pickSuggestion(int index, String word, int wordCount) {
+    context.read<SeedImportCubit>().wordChanged(index, word);
+    _focusNext(index, wordCount);
+  }
+
+  Future<void> _recover(bool hasMaster) async {
+    FocusScope.of(context).unfocus();
+    final importCubit = context.read<SeedImportCubit>();
+    if (hasMaster) {
+      importCubit.gotoPassPhrase();
+      return;
+    }
+    final walletCubit = context.read<SeedImportWalletCubit>();
+    await importCubit.checkSeed();
+    if (importCubit.state.seedReady) walletCubit.nextClicked();
+  }
 
   @override
   Widget build(BuildContext c) {
     final hasMaster = c.select((MasterKeyCubit mk) => mk.state.key != null);
     final state = c.select((SeedImportCubit s) => s.state);
+    final wordList = c.select((WordsCubit w) => w.state);
+    final count = state.wordCount;
+    final half = count ~/ 2;
 
-    final focusNodes = List<FocusNode>.generate(12, (index) => FocusNode());
+    final focused = _focused;
+    final suggestions = focused == null || focused >= count
+        ? const <String>[]
+        : wordList
+              .findWords(state.words[focused])
+              .where((w) => w != state.words[focused])
+              .toList();
 
-    void returnClicked(int idx) {
-      if (idx == 11) return;
-      focusNodes[idx + 1].requestFocus();
-    }
+    Widget field(int i) => _SeedWordField(
+      index: i,
+      controller: _controllers[i],
+      focusNode: _focusNodes[i],
+      isInvalid: state.words[i].isNotEmpty && !wordList.isWord(state.words[i]),
+      isLast: i == count - 1,
+      onChanged: (v) => _onChanged(i, v, count),
+      onSubmitted: () => _focusNext(i, count),
+    );
 
-    final focusNodes24 = List<FocusNode>.generate(24, (index) => FocusNode());
-
-    void returnClicked24(int idx) {
-      if (idx == 23) return;
-      focusNodes24[idx + 1].requestFocus();
-    }
-
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
+    return BlocListener<SeedImportCubit, SeedImportState>(
+      listenWhen: (a, b) => a.words != b.words,
+      listener: (_, s) => _syncControllers(s.words),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              alignment: Alignment.topRight,
-              child: SegmentedButton(
-                segments: <ButtonSegment<ImportTypes>>[
-                  ButtonSegment(
-                    value: ImportTypes.words12,
-                    label: Text(
-                      '12',
-                      style: TextStyle(
-                        color: c.colours.onSurface,
-                      ),
-                    ),
-                  ),
-                  ButtonSegment(
-                    value: ImportTypes.words24,
-                    label: Text(
-                      '24',
-                      style: TextStyle(
-                        color: c.colours.onSurface,
-                      ),
-                    ),
-                  ),
-                ],
-                selected: <ImportTypes>{
-                  if (state.importType == ImportTypes.words12)
-                    ImportTypes.words12
-                  else
-                    ImportTypes.words24,
-                },
-                onSelectionChanged: (p0) {
-                  if (state.importType == ImportTypes.words12) {
-                    c.read<SeedImportCubit>().recoverClicked24();
-                  } else {
-                    c.read<SeedImportCubit>().recoverClicked();
-                  }
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            if (state.importType == ImportTypes.words12)
-              IgnorePointer(
-                ignoring: state.showSeedCompleteButton(),
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 400),
-                  opacity: (state.showSeedCompleteButton()) ? 0.3 : 1,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            for (var i = 0; i < 6; i++)
-                              ImportWordTextField(
-                                index: i,
-                                focusNode: focusNodes[i],
-                                returnClicked: returnClicked,
-                              ),
-                          ],
+            Row(
+              children: [
+                Expanded(
+                  child: SegmentedButton<int>(
+                    showSelectedIcon: false,
+                    segments: [
+                      for (final n in supportedWordCounts)
+                        ButtonSegment(
+                          value: n,
+                          label: Text(
+                            '$n words',
+                            style: TextStyle(color: c.colours.onSurface),
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            for (var i = 6; i < 12; i++)
-                              ImportWordTextField(
-                                index: i,
-                                focusNode: focusNodes[i],
-                                returnClicked: returnClicked,
-                              ),
-                          ],
-                        ),
-                      ),
                     ],
+                    selected: {count},
+                    onSelectionChanged: (s) =>
+                        c.read<SeedImportCubit>().wordCountChanged(s.first),
                   ),
                 ),
-              )
-            else
-              IgnorePointer(
-                ignoring: state.showSeedCompleteButton(),
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 400),
-                  opacity: (state.showSeedCompleteButton()) ? 0.3 : 1,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            for (var i = 0; i < 12; i++)
-                              ImportWordTextField24(
-                                index: i,
-                                focusNode: focusNodes24[i],
-                                returnClicked: returnClicked24,
-                              ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            for (var i = 12; i < 24; i++)
-                              ImportWordTextField24(
-                                index: i,
-                                focusNode: focusNodes24[i],
-                                returnClicked: returnClicked24,
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
+                IconButton(
+                  tooltip: 'Clear',
+                  icon: Icon(Icons.clear_all, color: c.colours.onSurface),
+                  onPressed: () => c.read<SeedImportCubit>().clearWords(),
+                ),
+                TextButton.icon(
+                  icon: const Icon(Icons.content_paste),
+                  label: const Text('PASTE'),
+                  onPressed: () =>
+                      c.read<SeedImportCubit>().pasteFromClipboard(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [for (var i = 0; i < half; i++) field(i)],
                   ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [for (var i = half; i < count; i++) field(i)],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 48,
+              child: suggestions.isEmpty
+                  ? null
+                  : ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        for (final word in suggestions)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: ActionChip(
+                              label: Text(word),
+                              onPressed: () =>
+                                  _pickSuggestion(focused!, word, count),
+                            ),
+                          ),
+                      ],
+                    ),
+            ),
+            if (state.seedError.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  state.seedError,
+                  textAlign: TextAlign.center,
+                  style: c.fonts.bodySmall!.copyWith(color: c.colours.error),
                 ),
               ),
-            const SizedBox(height: 15),
-            IgnorePointer(
-              ignoring: state.showSeedCompleteButton(),
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 400),
-                opacity: (state.showSeedCompleteButton()) ? 0.3 : 1,
-                child: SizedBox(
-                  height: 52,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: c.colours.surface,
-                      backgroundColor: c.colours.primary,
-                    ),
-                    onPressed: () {
-                      if (state.seedError == 'Please fill all words') {
-                        handleError(c, 'Please fill all words');
-                      }
-                      if (state.seedError == 'Invalid seed') {
-                        handleError(c, 'Invalid seed');
-                      }
-                      if (!hasMaster) {
-                        (state.importType == ImportTypes.words12)
-                            ? c.read<SeedImportCubit>().recoverWallet12Clicked()
-                            : c
-                                .read<SeedImportCubit>()
-                                .recoverWallet24Clicked();
-                      } else {
-                        (state.importType == ImportTypes.words12)
-                            ? c.read<SeedImportCubit>().recoverWallet12Clicked()
-                            : c
-                                .read<SeedImportCubit>()
-                                .recoverWallet24Clicked();
-                      }
-                    },
-                    child: const Text('Validate Seed'),
-                  ),
+            SizedBox(
+              height: 52,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: c.colours.surface,
+                  backgroundColor: c.colours.primary,
                 ),
+                onPressed: state.seedValid ? () => _recover(hasMaster) : null,
+                child: const Text('RECOVER WALLET'),
               ),
             ),
-            const SizedBox(height: 15),
-            IgnorePointer(
-              ignoring: !state.showSeedCompleteButton(),
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 400),
-                opacity: (!state.showSeedCompleteButton()) ? 0.1 : 1,
-                child: SizedBox(
-                  height: 52,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: c.colours.surface,
-                      backgroundColor: c.colours.primary,
-                    ),
-                    onPressed: () async {
-                      final FocusScopeNode currentFocus = FocusScope.of(c);
-
-                      if (!currentFocus.hasPrimaryFocus) {
-                        currentFocus.unfocus();
-                      }
-                      if (!hasMaster) {
-                        final walletCubit = c.read<SeedImportWalletCubit>();
-                        await c.read<SeedImportCubit>().checkSeed();
-                        walletCubit.nextClicked();
-                      } else {
-                        if (state.showSeedCompleteButton()) {
-                          c.read<SeedImportCubit>().gotoPassPhrase();
-                        }
-                      }
-                    },
-                    child: const Text('Validated. Next'),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -250,366 +245,68 @@ class SeedImportPhrase extends StatelessWidget {
   }
 }
 
-class ImportWordTextField extends StatefulWidget {
-  const ImportWordTextField({
-    super.key,
+class _SeedWordField extends StatelessWidget {
+  const _SeedWordField({
     required this.index,
+    required this.controller,
     required this.focusNode,
-    required this.returnClicked,
+    required this.isInvalid,
+    required this.isLast,
+    required this.onChanged,
+    required this.onSubmitted,
   });
 
   final int index;
+  final TextEditingController controller;
   final FocusNode focusNode;
-  final Function(int) returnClicked;
+  final bool isInvalid;
+  final bool isLast;
+  final ValueChanged<String> onChanged;
+  final VoidCallback onSubmitted;
 
   @override
-  State<ImportWordTextField> createState() => _ImportWordTextFieldState();
-}
-
-class _ImportWordTextFieldState extends State<ImportWordTextField> {
-  OverlayEntry? entry;
-  final layerLink = LayerLink();
-  final controller = TextEditingController();
-  List<String> suggestions = [];
-  bool tapped = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    widget.focusNode.addListener(() {
-      if (widget.focusNode.hasFocus) {
-        showOverLay();
-      } else {
-        hideOverlay();
-      }
-    });
-
-    controller.addListener(() {
-      // if (suggestions.isNotEmpty
-      //     // && suggestions.contains(controller.text)
-      //     ) return;
-
-      hideOverlay();
-      setState(() {
-        suggestions =
-            context.read<WordsCubit>().state.findWords(controller.text);
-      });
-      if (tapped) return;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showOverLay();
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    widget.focusNode.dispose();
-
-    super.dispose();
-  }
-
-  void showOverLay() {
-    final overlay = Overlay.of(context);
-    final renderBox = context.findRenderObject()! as RenderBox;
-    final size = renderBox.size;
-
-    entry = OverlayEntry(
-      builder: (context) => Positioned(
-        width: size.width - 24,
-        child: CompositedTransformFollower(
-          link: layerLink,
-          showWhenUnlinked: false,
-          offset: Offset(24, size.height - 8),
-          child: buildOverlay(),
-        ),
-      ),
-    );
-
-    overlay.insert(entry!);
-  }
-
-  void hideOverlay() {
-    entry?.remove();
-    entry = null;
-  }
-
-  Widget buildOverlay() {
-    if (suggestions.isEmpty) {
-      hideOverlay();
-      return Container();
-    }
-
-    return Material(
-      elevation: 4,
-      borderRadius: BorderRadius.circular(8),
-      child: Column(
+  Widget build(BuildContext c) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
+      child: Row(
         children: [
-          for (final word in suggestions)
-            ListTile(
-              titleAlignment: ListTileTitleAlignment.bottom,
-              title: Text(word),
-              onTap: () {
-                context
-                    .read<SeedImportCubit>()
-                    .wordChanged12(widget.index, word, true);
-                hideOverlay();
-                setState(() {
-                  tapped = true;
-                });
-                widget.focusNode.unfocus();
-                widget.returnClicked(widget.index);
-              },
+          SizedBox(
+            width: 26,
+            child: Text(
+              '${index + 1}',
+              textAlign: TextAlign.right,
+              style: c.fonts.bodySmall!.copyWith(color: c.colours.onSurface),
             ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final word = context.select(
-      (SeedImportCubit cubit) =>
-          cubit.state.words12.elementAtOrNull(widget.index),
-    );
-
-    if (word == null) return const SizedBox.shrink();
-    if (controller.text != word.word) controller.text = word.word;
-
-    return CompositedTransformTarget(
-      link: layerLink,
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-        height: 45,
-        child: Row(
-          children: [
-            SizedBox(
-              width: 25,
-              child: Text(
-                '${widget.index + 1}',
-                textAlign: TextAlign.right,
-              ),
-            ),
-            const SizedBox(height: 5),
-            Expanded(
-              child: CallbackShortcuts(
-                bindings: {
-                  LogicalKeySet(LogicalKeyboardKey.enter): () {
-                    if (widget.focusNode.hasFocus) {
-                      widget.returnClicked(widget.index);
-                    }
-                  },
-                },
-                child: AnimatedOpacity(
-                  duration: 200.ms,
-                  opacity: !word.tapped ? 0.5 : 1,
-                  child: BBTextInput.small(
-                    focusNode: widget.focusNode,
-                    controller: controller,
-                    onEnter: () {
-                      context.read<SeedImportCubit>().clearUntappedWords();
-                    },
-                    onChanged: (value) {
-                      context
-                          .read<SeedImportCubit>()
-                          .wordChanged12(widget.index, value, false);
-                      hideOverlay();
-
-                      setState(() {
-                        tapped = false;
-                      });
-                    },
-                    value: word.word,
-                  ),
+          ),
+          const SizedBox(width: 6),
+          Expanded(
+            child: TextField(
+              controller: controller,
+              focusNode: focusNode,
+              onChanged: onChanged,
+              onSubmitted: (_) => onSubmitted(),
+              // Recovery words must never be learned or suggested by the
+              // keyboard.
+              autocorrect: false,
+              enableSuggestions: false,
+              enableIMEPersonalizedLearning: false,
+              keyboardType: TextInputType.visiblePassword,
+              textInputAction: isLast
+                  ? TextInputAction.done
+                  : TextInputAction.next,
+              style: c.fonts.bodyMedium!.copyWith(color: c.colours.onSurface),
+              decoration: InputDecoration(
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 10,
                 ),
+                errorText: isInvalid ? '' : null,
+                errorStyle: const TextStyle(height: 0, fontSize: 0),
               ),
-              // ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ImportWordTextField24 extends StatefulWidget {
-  const ImportWordTextField24({
-    super.key,
-    required this.index,
-    required this.focusNode,
-    required this.returnClicked,
-  });
-
-  final int index;
-  final FocusNode focusNode;
-  final Function(int) returnClicked;
-
-  @override
-  State<ImportWordTextField24> createState() => _ImportWordTextFieldState24();
-}
-
-class _ImportWordTextFieldState24 extends State<ImportWordTextField24> {
-  OverlayEntry? entry;
-  final layerLink = LayerLink();
-  final controller = TextEditingController();
-  List<String> suggestions = [];
-  bool tapped = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    widget.focusNode.addListener(() {
-      if (widget.focusNode.hasFocus) {
-        showOverLay();
-      } else {
-        hideOverlay();
-      }
-    });
-
-    controller.addListener(() {
-      // if (suggestions.isNotEmpty && suggestions.contains(controller.text))
-      //   return;
-
-      hideOverlay();
-      setState(() {
-        suggestions =
-            context.read<WordsCubit>().state.findWords(controller.text);
-      });
-      if (tapped) return;
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showOverLay();
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    widget.focusNode.dispose();
-
-    super.dispose();
-  }
-
-  void showOverLay() {
-    final overlay = Overlay.of(context);
-    final renderBox = context.findRenderObject()! as RenderBox;
-    final size = renderBox.size;
-
-    entry = OverlayEntry(
-      builder: (context) => Positioned(
-        width: size.width - 24,
-        child: CompositedTransformFollower(
-          link: layerLink,
-          showWhenUnlinked: false,
-          offset: Offset(24, size.height - 8),
-          child: buildOverlay(),
-        ),
-      ),
-    );
-
-    overlay.insert(entry!);
-  }
-
-  void hideOverlay() {
-    entry?.remove();
-    entry = null;
-  }
-
-  Widget buildOverlay() {
-    if (suggestions.isEmpty) {
-      hideOverlay();
-      return Container();
-    }
-
-    return Material(
-      elevation: 2,
-      shadowColor: Colors.white,
-      borderRadius: BorderRadius.circular(8),
-      child: Column(
-        children: [
-          for (final word in suggestions)
-            ListTile(
-              title: Text(word),
-              onTap: () {
-                context
-                    .read<SeedImportCubit>()
-                    .wordChanged24(widget.index, word, true);
-                hideOverlay();
-                setState(() {
-                  tapped = true;
-                });
-                widget.focusNode.unfocus();
-                widget.returnClicked(widget.index);
-              },
-            ),
+          ),
         ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final word = context.select(
-      (SeedImportCubit cubit) =>
-          cubit.state.words24.elementAtOrNull(widget.index),
-    );
-
-    if (word == null) return const SizedBox.shrink();
-    if (controller.text != word.word) controller.text = word.word;
-
-    return CompositedTransformTarget(
-      link: layerLink,
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-        height: 45,
-        child: Row(
-          children: [
-            SizedBox(
-              width: 28,
-              child: Text(
-                '${widget.index + 1}',
-                textAlign: TextAlign.right,
-              ),
-            ),
-            const SizedBox(height: 5),
-            Expanded(
-              child: CallbackShortcuts(
-                bindings: {
-                  LogicalKeySet(LogicalKeyboardKey.enter): () {
-                    if (widget.focusNode.hasFocus) {
-                      widget.returnClicked(widget.index);
-                    }
-                  },
-                },
-                child: AnimatedOpacity(
-                  duration: 200.ms,
-                  opacity: !word.tapped ? 0.5 : 1,
-                  child: BBTextInput.small(
-                    focusNode: widget.focusNode,
-                    controller: controller,
-                    onEnter: () {
-                      context.read<SeedImportCubit>().clearUntappedWords();
-                    },
-                    onChanged: (value) {
-                      context
-                          .read<SeedImportCubit>()
-                          .wordChanged24(widget.index, value, false);
-                      hideOverlay();
-                      setState(() {
-                        tapped = false;
-                      });
-                    },
-                    value: word.word,
-                  ),
-                ),
-              ),
-              // ),
-            ),
-          ],
-        ),
       ),
     );
   }

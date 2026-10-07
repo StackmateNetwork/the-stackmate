@@ -14,17 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$WordsState {
 
-/**
-     * 
-     * SENSITIVE
-     * 
-     */
- List<String>? get words;/**
-     * 
-     * SENSITIVE
-     * 
-     */
- String get err; bool get loading;
+ List<String> get words; String get err; bool get loading;
 /// Create a copy of WordsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -55,7 +45,7 @@ abstract mixin class $WordsStateCopyWith<$Res>  {
   factory $WordsStateCopyWith(WordsState value, $Res Function(WordsState) _then) = _$WordsStateCopyWithImpl;
 @useResult
 $Res call({
- List<String>? words, String err, bool loading
+ List<String> words, String err, bool loading
 });
 
 
@@ -72,10 +62,10 @@ class _$WordsStateCopyWithImpl<$Res>
 
 /// Create a copy of WordsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? words = freezed,Object? err = null,Object? loading = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? words = null,Object? err = null,Object? loading = null,}) {
   return _then(_self.copyWith(
-words: freezed == words ? _self.words : words // ignore: cast_nullable_to_non_nullable
-as List<String>?,err: null == err ? _self.err : err // ignore: cast_nullable_to_non_nullable
+words: null == words ? _self.words : words // ignore: cast_nullable_to_non_nullable
+as List<String>,err: null == err ? _self.err : err // ignore: cast_nullable_to_non_nullable
 as String,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
@@ -162,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String>? words,  String err,  bool loading)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String> words,  String err,  bool loading)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WordsState() when $default != null:
 return $default(_that.words,_that.err,_that.loading);case _:
@@ -183,7 +173,7 @@ return $default(_that.words,_that.err,_that.loading);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String>? words,  String err,  bool loading)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String> words,  String err,  bool loading)  $default,) {final _that = this;
 switch (_that) {
 case _WordsState():
 return $default(_that.words,_that.err,_that.loading);case _:
@@ -203,7 +193,7 @@ return $default(_that.words,_that.err,_that.loading);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String>? words,  String err,  bool loading)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String> words,  String err,  bool loading)?  $default,) {final _that = this;
 switch (_that) {
 case _WordsState() when $default != null:
 return $default(_that.words,_that.err,_that.loading);case _:
@@ -218,33 +208,16 @@ return $default(_that.words,_that.err,_that.loading);case _:
 
 
 class _WordsState extends WordsState {
-  const _WordsState({final  List<String>? words, this.err = '', this.loading = false}): _words = words,super._();
+  const _WordsState({final  List<String> words = const [], this.err = '', this.loading = false}): _words = words,super._();
   
 
-/**
-     * 
-     * SENSITIVE
-     * 
-     */
- final  List<String>? _words;
-/**
-     * 
-     * SENSITIVE
-     * 
-     */
-@override List<String>? get words {
-  final value = _words;
-  if (value == null) return null;
+ final  List<String> _words;
+@override@JsonKey() List<String> get words {
   if (_words is EqualUnmodifiableListView) return _words;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
+  return EqualUnmodifiableListView(_words);
 }
 
-/**
-     * 
-     * SENSITIVE
-     * 
-     */
 @override@JsonKey() final  String err;
 @override@JsonKey() final  bool loading;
 
@@ -278,7 +251,7 @@ abstract mixin class _$WordsStateCopyWith<$Res> implements $WordsStateCopyWith<$
   factory _$WordsStateCopyWith(_WordsState value, $Res Function(_WordsState) _then) = __$WordsStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<String>? words, String err, bool loading
+ List<String> words, String err, bool loading
 });
 
 
@@ -295,10 +268,10 @@ class __$WordsStateCopyWithImpl<$Res>
 
 /// Create a copy of WordsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? words = freezed,Object? err = null,Object? loading = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? words = null,Object? err = null,Object? loading = null,}) {
   return _then(_WordsState(
-words: freezed == words ? _self._words : words // ignore: cast_nullable_to_non_nullable
-as List<String>?,err: null == err ? _self.err : err // ignore: cast_nullable_to_non_nullable
+words: null == words ? _self._words : words // ignore: cast_nullable_to_non_nullable
+as List<String>,err: null == err ? _self.err : err // ignore: cast_nullable_to_non_nullable
 as String,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,
   ));

@@ -14,7 +14,13 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SeedImportState {
 
- List<({String word, bool tapped})> get words12; List<({String word, bool tapped})> get words24; SeedImportStep get currentStep; ImportTypes get importType; String get err; bool get loading; String get seed; String get seedError; String get passPhrase; int get accountNumber; String get errPassPhrase; bool get seedReady; String? get masterXpriv; DerivedKeys? get wallet;
+/*
+     * SENSITIVE: the recovery words being entered.
+     */
+ List<String> get words; int get wordCount; SeedImportStep get currentStep;/*
+     * SENSITIVE: the full mnemonic, set only once its checksum is valid.
+     */
+ String get seed; String get seedError; String get passPhrase; int get accountNumber; String get errPassPhrase; bool get seedReady; String? get masterXpriv; DerivedKeys? get wallet;
 /// Create a copy of SeedImportState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +31,16 @@ $SeedImportStateCopyWith<SeedImportState> get copyWith => _$SeedImportStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeedImportState&&const DeepCollectionEquality().equals(other.words12, words12)&&const DeepCollectionEquality().equals(other.words24, words24)&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.importType, importType) || other.importType == importType)&&(identical(other.err, err) || other.err == err)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.seed, seed) || other.seed == seed)&&(identical(other.seedError, seedError) || other.seedError == seedError)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.errPassPhrase, errPassPhrase) || other.errPassPhrase == errPassPhrase)&&(identical(other.seedReady, seedReady) || other.seedReady == seedReady)&&(identical(other.masterXpriv, masterXpriv) || other.masterXpriv == masterXpriv)&&(identical(other.wallet, wallet) || other.wallet == wallet));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeedImportState&&const DeepCollectionEquality().equals(other.words, words)&&(identical(other.wordCount, wordCount) || other.wordCount == wordCount)&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.seed, seed) || other.seed == seed)&&(identical(other.seedError, seedError) || other.seedError == seedError)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.errPassPhrase, errPassPhrase) || other.errPassPhrase == errPassPhrase)&&(identical(other.seedReady, seedReady) || other.seedReady == seedReady)&&(identical(other.masterXpriv, masterXpriv) || other.masterXpriv == masterXpriv)&&(identical(other.wallet, wallet) || other.wallet == wallet));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(words12),const DeepCollectionEquality().hash(words24),currentStep,importType,err,loading,seed,seedError,passPhrase,accountNumber,errPassPhrase,seedReady,masterXpriv,wallet);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(words),wordCount,currentStep,seed,seedError,passPhrase,accountNumber,errPassPhrase,seedReady,masterXpriv,wallet);
 
 @override
 String toString() {
-  return 'SeedImportState(words12: $words12, words24: $words24, currentStep: $currentStep, importType: $importType, err: $err, loading: $loading, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
+  return 'SeedImportState(words: $words, wordCount: $wordCount, currentStep: $currentStep, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
 }
 
 
@@ -45,7 +51,7 @@ abstract mixin class $SeedImportStateCopyWith<$Res>  {
   factory $SeedImportStateCopyWith(SeedImportState value, $Res Function(SeedImportState) _then) = _$SeedImportStateCopyWithImpl;
 @useResult
 $Res call({
- List<({String word, bool tapped})> words12, List<({String word, bool tapped})> words24, SeedImportStep currentStep, ImportTypes importType, String err, bool loading, String seed, String seedError, String passPhrase, int accountNumber, String errPassPhrase, bool seedReady, String? masterXpriv, DerivedKeys? wallet
+ List<String> words, int wordCount, SeedImportStep currentStep, String seed, String seedError, String passPhrase, int accountNumber, String errPassPhrase, bool seedReady, String? masterXpriv, DerivedKeys? wallet
 });
 
 
@@ -62,15 +68,12 @@ class _$SeedImportStateCopyWithImpl<$Res>
 
 /// Create a copy of SeedImportState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? words12 = null,Object? words24 = null,Object? currentStep = null,Object? importType = null,Object? err = null,Object? loading = null,Object? seed = null,Object? seedError = null,Object? passPhrase = null,Object? accountNumber = null,Object? errPassPhrase = null,Object? seedReady = null,Object? masterXpriv = freezed,Object? wallet = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? words = null,Object? wordCount = null,Object? currentStep = null,Object? seed = null,Object? seedError = null,Object? passPhrase = null,Object? accountNumber = null,Object? errPassPhrase = null,Object? seedReady = null,Object? masterXpriv = freezed,Object? wallet = freezed,}) {
   return _then(_self.copyWith(
-words12: null == words12 ? _self.words12 : words12 // ignore: cast_nullable_to_non_nullable
-as List<({String word, bool tapped})>,words24: null == words24 ? _self.words24 : words24 // ignore: cast_nullable_to_non_nullable
-as List<({String word, bool tapped})>,currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
-as SeedImportStep,importType: null == importType ? _self.importType : importType // ignore: cast_nullable_to_non_nullable
-as ImportTypes,err: null == err ? _self.err : err // ignore: cast_nullable_to_non_nullable
-as String,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
-as bool,seed: null == seed ? _self.seed : seed // ignore: cast_nullable_to_non_nullable
+words: null == words ? _self.words : words // ignore: cast_nullable_to_non_nullable
+as List<String>,wordCount: null == wordCount ? _self.wordCount : wordCount // ignore: cast_nullable_to_non_nullable
+as int,currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
+as SeedImportStep,seed: null == seed ? _self.seed : seed // ignore: cast_nullable_to_non_nullable
 as String,seedError: null == seedError ? _self.seedError : seedError // ignore: cast_nullable_to_non_nullable
 as String,passPhrase: null == passPhrase ? _self.passPhrase : passPhrase // ignore: cast_nullable_to_non_nullable
 as String,accountNumber: null == accountNumber ? _self.accountNumber : accountNumber // ignore: cast_nullable_to_non_nullable
@@ -163,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<({String word, bool tapped})> words12,  List<({String word, bool tapped})> words24,  SeedImportStep currentStep,  ImportTypes importType,  String err,  bool loading,  String seed,  String seedError,  String passPhrase,  int accountNumber,  String errPassPhrase,  bool seedReady,  String? masterXpriv,  DerivedKeys? wallet)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String> words,  int wordCount,  SeedImportStep currentStep,  String seed,  String seedError,  String passPhrase,  int accountNumber,  String errPassPhrase,  bool seedReady,  String? masterXpriv,  DerivedKeys? wallet)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SeedImportState() when $default != null:
-return $default(_that.words12,_that.words24,_that.currentStep,_that.importType,_that.err,_that.loading,_that.seed,_that.seedError,_that.passPhrase,_that.accountNumber,_that.errPassPhrase,_that.seedReady,_that.masterXpriv,_that.wallet);case _:
+return $default(_that.words,_that.wordCount,_that.currentStep,_that.seed,_that.seedError,_that.passPhrase,_that.accountNumber,_that.errPassPhrase,_that.seedReady,_that.masterXpriv,_that.wallet);case _:
   return orElse();
 
 }
@@ -184,10 +187,10 @@ return $default(_that.words12,_that.words24,_that.currentStep,_that.importType,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<({String word, bool tapped})> words12,  List<({String word, bool tapped})> words24,  SeedImportStep currentStep,  ImportTypes importType,  String err,  bool loading,  String seed,  String seedError,  String passPhrase,  int accountNumber,  String errPassPhrase,  bool seedReady,  String? masterXpriv,  DerivedKeys? wallet)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String> words,  int wordCount,  SeedImportStep currentStep,  String seed,  String seedError,  String passPhrase,  int accountNumber,  String errPassPhrase,  bool seedReady,  String? masterXpriv,  DerivedKeys? wallet)  $default,) {final _that = this;
 switch (_that) {
 case _SeedImportState():
-return $default(_that.words12,_that.words24,_that.currentStep,_that.importType,_that.err,_that.loading,_that.seed,_that.seedError,_that.passPhrase,_that.accountNumber,_that.errPassPhrase,_that.seedReady,_that.masterXpriv,_that.wallet);case _:
+return $default(_that.words,_that.wordCount,_that.currentStep,_that.seed,_that.seedError,_that.passPhrase,_that.accountNumber,_that.errPassPhrase,_that.seedReady,_that.masterXpriv,_that.wallet);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +207,10 @@ return $default(_that.words12,_that.words24,_that.currentStep,_that.importType,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<({String word, bool tapped})> words12,  List<({String word, bool tapped})> words24,  SeedImportStep currentStep,  ImportTypes importType,  String err,  bool loading,  String seed,  String seedError,  String passPhrase,  int accountNumber,  String errPassPhrase,  bool seedReady,  String? masterXpriv,  DerivedKeys? wallet)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String> words,  int wordCount,  SeedImportStep currentStep,  String seed,  String seedError,  String passPhrase,  int accountNumber,  String errPassPhrase,  bool seedReady,  String? masterXpriv,  DerivedKeys? wallet)?  $default,) {final _that = this;
 switch (_that) {
 case _SeedImportState() when $default != null:
-return $default(_that.words12,_that.words24,_that.currentStep,_that.importType,_that.err,_that.loading,_that.seed,_that.seedError,_that.passPhrase,_that.accountNumber,_that.errPassPhrase,_that.seedReady,_that.masterXpriv,_that.wallet);case _:
+return $default(_that.words,_that.wordCount,_that.currentStep,_that.seed,_that.seedError,_that.passPhrase,_that.accountNumber,_that.errPassPhrase,_that.seedReady,_that.masterXpriv,_that.wallet);case _:
   return null;
 
 }
@@ -219,27 +222,27 @@ return $default(_that.words12,_that.words24,_that.currentStep,_that.importType,_
 
 
 class _SeedImportState extends SeedImportState {
-  const _SeedImportState({final  List<({String word, bool tapped})> words12 = const [], final  List<({String word, bool tapped})> words24 = const [], this.currentStep = SeedImportStep.import, this.importType = ImportTypes.words12, this.err = '', this.loading = false, this.seed = '', this.seedError = '', this.passPhrase = '', this.accountNumber = 0, this.errPassPhrase = '', this.seedReady = false, this.masterXpriv, this.wallet}): _words12 = words12,_words24 = words24,super._();
+  const _SeedImportState({final  List<String> words = const <String>[], this.wordCount = 12, this.currentStep = SeedImportStep.import, this.seed = '', this.seedError = '', this.passPhrase = '', this.accountNumber = 0, this.errPassPhrase = '', this.seedReady = false, this.masterXpriv, this.wallet}): _words = words,super._();
   
 
- final  List<({String word, bool tapped})> _words12;
-@override@JsonKey() List<({String word, bool tapped})> get words12 {
-  if (_words12 is EqualUnmodifiableListView) return _words12;
+/*
+     * SENSITIVE: the recovery words being entered.
+     */
+ final  List<String> _words;
+/*
+     * SENSITIVE: the recovery words being entered.
+     */
+@override@JsonKey() List<String> get words {
+  if (_words is EqualUnmodifiableListView) return _words;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_words12);
+  return EqualUnmodifiableListView(_words);
 }
 
- final  List<({String word, bool tapped})> _words24;
-@override@JsonKey() List<({String word, bool tapped})> get words24 {
-  if (_words24 is EqualUnmodifiableListView) return _words24;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_words24);
-}
-
+@override@JsonKey() final  int wordCount;
 @override@JsonKey() final  SeedImportStep currentStep;
-@override@JsonKey() final  ImportTypes importType;
-@override@JsonKey() final  String err;
-@override@JsonKey() final  bool loading;
+/*
+     * SENSITIVE: the full mnemonic, set only once its checksum is valid.
+     */
 @override@JsonKey() final  String seed;
 @override@JsonKey() final  String seedError;
 @override@JsonKey() final  String passPhrase;
@@ -259,16 +262,16 @@ _$SeedImportStateCopyWith<_SeedImportState> get copyWith => __$SeedImportStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedImportState&&const DeepCollectionEquality().equals(other._words12, _words12)&&const DeepCollectionEquality().equals(other._words24, _words24)&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.importType, importType) || other.importType == importType)&&(identical(other.err, err) || other.err == err)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.seed, seed) || other.seed == seed)&&(identical(other.seedError, seedError) || other.seedError == seedError)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.errPassPhrase, errPassPhrase) || other.errPassPhrase == errPassPhrase)&&(identical(other.seedReady, seedReady) || other.seedReady == seedReady)&&(identical(other.masterXpriv, masterXpriv) || other.masterXpriv == masterXpriv)&&(identical(other.wallet, wallet) || other.wallet == wallet));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedImportState&&const DeepCollectionEquality().equals(other._words, _words)&&(identical(other.wordCount, wordCount) || other.wordCount == wordCount)&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.seed, seed) || other.seed == seed)&&(identical(other.seedError, seedError) || other.seedError == seedError)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.errPassPhrase, errPassPhrase) || other.errPassPhrase == errPassPhrase)&&(identical(other.seedReady, seedReady) || other.seedReady == seedReady)&&(identical(other.masterXpriv, masterXpriv) || other.masterXpriv == masterXpriv)&&(identical(other.wallet, wallet) || other.wallet == wallet));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_words12),const DeepCollectionEquality().hash(_words24),currentStep,importType,err,loading,seed,seedError,passPhrase,accountNumber,errPassPhrase,seedReady,masterXpriv,wallet);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_words),wordCount,currentStep,seed,seedError,passPhrase,accountNumber,errPassPhrase,seedReady,masterXpriv,wallet);
 
 @override
 String toString() {
-  return 'SeedImportState(words12: $words12, words24: $words24, currentStep: $currentStep, importType: $importType, err: $err, loading: $loading, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
+  return 'SeedImportState(words: $words, wordCount: $wordCount, currentStep: $currentStep, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
 }
 
 
@@ -279,7 +282,7 @@ abstract mixin class _$SeedImportStateCopyWith<$Res> implements $SeedImportState
   factory _$SeedImportStateCopyWith(_SeedImportState value, $Res Function(_SeedImportState) _then) = __$SeedImportStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<({String word, bool tapped})> words12, List<({String word, bool tapped})> words24, SeedImportStep currentStep, ImportTypes importType, String err, bool loading, String seed, String seedError, String passPhrase, int accountNumber, String errPassPhrase, bool seedReady, String? masterXpriv, DerivedKeys? wallet
+ List<String> words, int wordCount, SeedImportStep currentStep, String seed, String seedError, String passPhrase, int accountNumber, String errPassPhrase, bool seedReady, String? masterXpriv, DerivedKeys? wallet
 });
 
 
@@ -296,15 +299,12 @@ class __$SeedImportStateCopyWithImpl<$Res>
 
 /// Create a copy of SeedImportState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? words12 = null,Object? words24 = null,Object? currentStep = null,Object? importType = null,Object? err = null,Object? loading = null,Object? seed = null,Object? seedError = null,Object? passPhrase = null,Object? accountNumber = null,Object? errPassPhrase = null,Object? seedReady = null,Object? masterXpriv = freezed,Object? wallet = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? words = null,Object? wordCount = null,Object? currentStep = null,Object? seed = null,Object? seedError = null,Object? passPhrase = null,Object? accountNumber = null,Object? errPassPhrase = null,Object? seedReady = null,Object? masterXpriv = freezed,Object? wallet = freezed,}) {
   return _then(_SeedImportState(
-words12: null == words12 ? _self._words12 : words12 // ignore: cast_nullable_to_non_nullable
-as List<({String word, bool tapped})>,words24: null == words24 ? _self._words24 : words24 // ignore: cast_nullable_to_non_nullable
-as List<({String word, bool tapped})>,currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
-as SeedImportStep,importType: null == importType ? _self.importType : importType // ignore: cast_nullable_to_non_nullable
-as ImportTypes,err: null == err ? _self.err : err // ignore: cast_nullable_to_non_nullable
-as String,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
-as bool,seed: null == seed ? _self.seed : seed // ignore: cast_nullable_to_non_nullable
+words: null == words ? _self._words : words // ignore: cast_nullable_to_non_nullable
+as List<String>,wordCount: null == wordCount ? _self.wordCount : wordCount // ignore: cast_nullable_to_non_nullable
+as int,currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
+as SeedImportStep,seed: null == seed ? _self.seed : seed // ignore: cast_nullable_to_non_nullable
 as String,seedError: null == seedError ? _self.seedError : seedError // ignore: cast_nullable_to_non_nullable
 as String,passPhrase: null == passPhrase ? _self.passPhrase : passPhrase // ignore: cast_nullable_to_non_nullable
 as String,accountNumber: null == accountNumber ? _self.accountNumber : accountNumber // ignore: cast_nullable_to_non_nullable

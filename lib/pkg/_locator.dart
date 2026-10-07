@@ -4,7 +4,6 @@ import 'package:sats/api/interface/logger.dart';
 import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/api/logger.dart';
 import 'package:sats/cubit/logger.dart';
-import 'package:sats/cubit/new-wallet/common/words_cubit.dart';
 import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/launcher.dart';
@@ -13,7 +12,6 @@ import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/pkg/launcher.dart';
-import 'package:sats/pkg/mnemonic_word.dart';
 import 'package:sats/pkg/qr_scanner.dart';
 import 'package:sats/pkg/secure-storage.dart';
 import 'package:sats/pkg/share.dart';
@@ -24,11 +22,6 @@ GetIt locator = GetIt.instance;
 
 void setupDependencies({required bool useDummies}) {
   if (useDummies) {
-    locator.registerSingleton<WordsCubit>(
-      WordsCubit(
-        mnemonicWords: MnemonicWords(),
-      ),
-    );
     locator.registerLazySingleton<SStorage>(() => SecureStorage());
     locator.registerLazySingleton<IStorage>(() => HiveStore());
     locator.registerLazySingleton<IClipBoard>(() => ClipBoard());
@@ -39,11 +32,6 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<IStackMateBitcoin>(() => LibBitcoin());
     locator.registerLazySingleton<ILogAPI>(() => DummyLogAPI());
   } else {
-    locator.registerSingleton<WordsCubit>(
-      WordsCubit(
-        mnemonicWords: MnemonicWords(),
-      ),
-    );
     locator.registerLazySingleton<SStorage>(() => SecureStorage());
     locator.registerLazySingleton<IShare>(() => Sharer());
     locator.registerLazySingleton<ILauncher>(() => Launcher());

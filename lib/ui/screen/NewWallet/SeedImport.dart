@@ -12,6 +12,7 @@ import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport.dart';
 import 'package:sats/ui/component/NewWallet/SeedImport/Label.dart';
@@ -75,10 +76,7 @@ class _SeedImport extends StatelessWidget {
                     onPressed: () {
                       c.push('/tor-config');
                     },
-                    icon: Icon(
-                      Icons.security_sharp,
-                      color: c.colours.error,
-                    ),
+                    icon: Icon(Icons.security_sharp, color: c.colours.error),
                   ),
                 ],
               ],
@@ -143,40 +141,57 @@ class _SeedImport extends StatelessWidget {
   }
 }
 
-class SeedImportScreen extends StatelessWidget {
+class SeedImportScreen extends StatefulWidget {
   const SeedImportScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final logger = context.select((Logger c) => c);
-    final wallets = context.select((WalletsCubit c) => c);
-    final networkSelect = context.select((ChainSelectCubit c) => c);
-    final nodeSelect = context.select((NodeAddressCubit c) => c);
-    final tor = context.select((TorCubit c) => c);
-    final masterKey = context.select((MasterKeyCubit c) => c);
-    final importCubit = SeedImportCubit(
+  State<SeedImportScreen> createState() => _SeedImportScreenState();
+}
+
+class _SeedImportScreenState extends State<SeedImportScreen> {
+  // Created once: rebuilding must not reset the words being entered.
+  late final SeedImportCubit _importCubit;
+  late final SeedImportWalletCubit _walletCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    final logger = context.read<Logger>();
+    final networkSelect = context.read<ChainSelectCubit>();
+    final masterKey = context.read<MasterKeyCubit>();
+    _importCubit = SeedImportCubit(
       logger,
       masterKey,
       networkSelect,
       locator<IStackMateBitcoin>(),
+      locator<IClipBoard>(),
     );
-
-    final seedImportCubit = SeedImportWalletCubit(
+    _walletCubit = SeedImportWalletCubit(
       locator<IStackMateBitcoin>(),
       logger,
       locator<IStorage>(),
-      wallets,
+      context.read<WalletsCubit>(),
       networkSelect,
-      nodeSelect,
-      tor,
-      importCubit,
+      context.read<NodeAddressCubit>(),
+      context.read<TorCubit>(),
+      _importCubit,
       masterKey,
     );
+  }
 
+  @override
+  void dispose() {
+    _walletCubit.close();
+    _importCubit.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(value: importCubit),
-        BlocProvider.value(value: seedImportCubit),
+        BlocProvider.value(value: _importCubit),
+        BlocProvider.value(value: _walletCubit),
       ],
       child: _SeedImport(),
     );
