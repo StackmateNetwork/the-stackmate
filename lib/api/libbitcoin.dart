@@ -32,6 +32,16 @@ class LibBitcoin implements IStackMateBitcoin {
       });
 
   @override
+  bool isValidMnemonic(String mnemonic) {
+    try {
+      bdk.Mnemonic.fromString(mnemonic: mnemonic.trim());
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  @override
   R<Seed> importMaster({
     required String mnemonic,
     required String passphrase,

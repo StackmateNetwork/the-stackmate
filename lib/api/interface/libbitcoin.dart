@@ -9,6 +9,9 @@ abstract class IStackMateBitcoin {
     required String network,
   });
 
+  /// Whether [mnemonic] is a BIP39 phrase with a valid checksum.
+  bool isValidMnemonic(String mnemonic);
+
   R<Seed> importMaster({
     required String mnemonic,
     required String passphrase,

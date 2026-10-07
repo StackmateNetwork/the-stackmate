@@ -82,7 +82,6 @@ class _CubitsState extends State<Cubits> {
     );
     pinCubit.init();
     final wordCubit = WordsCubit(mnemonicWords: MnemonicWords());
-    wordCubit.loadWords();
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: networkSelectCubit),
