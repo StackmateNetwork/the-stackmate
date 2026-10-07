@@ -23,22 +23,23 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
   final IStorage _storage;
   final Logger _logger;
 
-  void init() async {
+  Future<void> init() async {
     final blockchain =
         _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name);
     if (blockchain.hasError) {
       if (blockchain.error! == 'empty') {
         emit(const BlockchainState());
         await Future.delayed(const Duration(milliseconds: 50));
-      } else
+      } else {
         return;
+      }
     } else {
       emit(BlockchainState(blockchain: blockchain.result!));
       await Future.delayed(const Duration(milliseconds: 50));
     }
   }
 
-  void changeBlockchain(Blockchain blockchain) async {
+  Future<void> changeBlockchain(Blockchain blockchain) async {
     try {
       emit(BlockchainState(blockchain: blockchain));
       await _storage.saveItemAt<Blockchain>(

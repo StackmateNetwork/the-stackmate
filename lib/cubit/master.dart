@@ -87,16 +87,17 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       backedUp: true,
     );
     final masterData = masterKey.toJson();
-    if (_chainSelect.state.blockchain.name == 'main')
+    if (_chainSelect.state.blockchain.name == 'main') {
       await storage.saveValue(
         key: mainkey,
         value: jsonEncode(masterData),
       );
-    else
+    } else {
       await storage.saveValue(
         key: testkey,
         value: jsonEncode(masterData),
       );
+    }
     await Future.delayed(const Duration(milliseconds: 200));
   }
 
@@ -157,16 +158,17 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       network: _chainSelect.state.blockchain.name,
     );
     final recoverData = recoverKey.toJson();
-    if (_chainSelect.state.blockchain.name == 'main')
+    if (_chainSelect.state.blockchain.name == 'main') {
       await storage.saveValue(
         key: recoverkey + fingerPrint,
         value: jsonEncode(recoverData),
       );
-    else
+    } else {
       await storage.saveValue(
         key: recoverkey + fingerPrint,
         value: jsonEncode(recoverData),
       );
+    }
     await Future.delayed(const Duration(milliseconds: 200));
   }
 
@@ -183,16 +185,17 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       backedUp: false,
     );
     final masterData = masterKey.toJson();
-    if (_chainSelect.state.blockchain.name == 'main')
+    if (_chainSelect.state.blockchain.name == 'main') {
       await storage.saveValue(
         key: mainkey,
         value: jsonEncode(masterData),
       );
-    else
+    } else {
       await storage.saveValue(
         key: testkey,
         value: jsonEncode(masterData),
       );
+    }
 
     await Future.delayed(const Duration(milliseconds: 200));
   }

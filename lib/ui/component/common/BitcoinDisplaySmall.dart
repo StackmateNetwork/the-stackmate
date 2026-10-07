@@ -14,7 +14,7 @@ class BitcoinDisplaySmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) {
-    if (bitcoinUnit == 'sats')
+    if (bitcoinUnit == 'sats') {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -27,7 +27,7 @@ class BitcoinDisplaySmall extends StatelessWidget {
           ),
         ],
       );
-    else
+    } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,5 +40,6 @@ class BitcoinDisplaySmall extends StatelessWidget {
           ),
         ],
       );
+    }
   }
 }

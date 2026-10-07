@@ -147,8 +147,9 @@ class _Wallet extends StatelessWidget {
                                         ? c.colours.tertiary
                                         : c.colours.primary,
                                     onPressed: () {
-                                      if (!isLoading)
+                                      if (!isLoading) {
                                         c.read<InfoCubit>().sqliteSyncHistory();
+                                      }
                                     },
                                     icon: const Icon(
                                       Icons.sync,
@@ -171,11 +172,12 @@ class _Wallet extends StatelessWidget {
                                   child: IconButton(
                                     color: c.colours.tertiary,
                                     onPressed: () {
-                                      if (!zeroBal)
+                                      if (!zeroBal) {
                                         c.push('/send', extra: wallet);
+                                      }
                                     },
                                     icon: Icon(
-                                      wallet!.walletType == 'WATCHER'
+                                      wallet!.isWatchOnly
                                           ? Icons.build
                                           : Icons.send,
                                       color: c.colours.tertiary,

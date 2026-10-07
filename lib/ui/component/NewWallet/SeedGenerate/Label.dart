@@ -75,8 +75,9 @@ class SeedGenerateLabel extends StatelessWidget {
                       currentFocus.unfocus();
                     }
 
+                    final walletCubit = c.read<SeedGenerateWalletCubit>();
                     await c.read<SeedGenerateCubit>().finalize();
-                    c.read<SeedGenerateWalletCubit>().nextClicked();
+                    walletCubit.nextClicked();
                   },
                   child: Text('Confirm'.toUpperCase()),
                 ),

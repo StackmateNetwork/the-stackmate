@@ -87,7 +87,7 @@ class WalletCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 10,
                       style: context.fonts.bodySmall!.copyWith(
-                        color: wallet.walletType == 'WATCHER'
+                        color: wallet.isWatchOnly
                             ? context.colours.secondary
                             : context.colours.tertiary,
                         fontSize: 10,

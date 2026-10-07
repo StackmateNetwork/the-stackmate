@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
+import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/validation.dart';
 
@@ -10,9 +11,9 @@ class KeyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final wallet = c.select((InfoCubit wc) => wc.state.wallet);
-    final walletTypeColor = (wallet!.walletType == 'PRIMARY')
+    final walletTypeColor = (wallet!.walletType == WalletType.primary)
         ? c.colours.tertiary
-        : (wallet.walletType == 'WATCHER')
+        : wallet.isWatchOnly
             ? c.colours.secondary
             : c.colours.error;
     return Padding(

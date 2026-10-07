@@ -4,13 +4,13 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
-import 'package:sats/model/core.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/storage.dart';
@@ -26,8 +26,6 @@ enum SeedGenerateWalletSteps {
 
 const invalidLabelError = 'Invalid Label (must be 3-20 chars)';
 const couldNotSaveError = 'Error Saving Wallet!';
-const primaryWalletType = 'PRIMARY';
-const signerWalletType = 'SIGNER';
 const wpkhScript = 'wpkh';
 const emptyString = '';
 
@@ -122,7 +120,7 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
     emit(state.copyWith(walletLabel: text, walletLabelError: emptyString));
   }
 
-  void saveClicked() async {
+  Future<void> saveClicked() async {
     if (state.walletLabel.length < 3 ||
         state.walletLabel.length > 20 ||
         state.walletLabel.isEmpty) {
@@ -164,15 +162,13 @@ class SeedGenerateWalletCubit extends Cubit<SeedGenerateWalletState> {
         policy: policy,
         scriptType: wpkhScript,
       );
-      if (descriptor.hasError) {
-        throw SMError.fromJson(descriptor.error!).message;
-      }
+      descriptor.orThrow();
 
       final newWallet = Wallet(
         fingerprint: fingerprint,
         passPhrase: emptyString,
         label: state.walletLabel,
-        walletType: primaryWalletType,
+        walletType: WalletType.primary,
         descriptor: descriptor.result!,
         policy: readable,
         requiredPolicyElements: 1,

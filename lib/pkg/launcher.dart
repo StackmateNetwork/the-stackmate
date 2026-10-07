@@ -20,12 +20,13 @@ class Launcher implements ILauncher {
   Future<R<bool>> launchApp(String link) async {
     try {
       final can = await canLaunchUrl(Uri.parse(link));
-      if (can)
+      if (can) {
         await launchUrl(
           Uri.parse(link),
           // forceWebView: true
           // universalLinksOnly: true,
         );
+      }
       return const R(result: true);
     } catch (e, s) {
       locator<Logger>().logException(e, '', s);

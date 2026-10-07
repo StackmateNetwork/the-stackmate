@@ -151,8 +151,9 @@ class _ExternalTorState extends State<ExternalTor> {
   }
 
   void _checkFields(TorState state) {
-    if (_socks5Port.text != state.socks5Port.toString())
+    if (_socks5Port.text != state.socks5Port.toString()) {
       _socks5Port.text = state.socks5Port.toString();
+    }
   }
 
   @override

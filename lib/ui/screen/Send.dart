@@ -31,8 +31,8 @@ class _WalletSend extends StatelessWidget {
   Widget build(BuildContext context) {
     final step = context.select((SendCubit sc) => sc.state.currentStep);
     final walletLabel = context.select((SendCubit c) => c.state.wallet.label);
-    final walletType =
-        context.select((SendCubit c) => c.state.wallet.walletType);
+    final isWatchOnly =
+        context.select((SendCubit c) => c.state.wallet.isWatchOnly);
     final tor = context.select((TorCubit t) => t.state);
     return PopScope(
       onPopInvokedWithResult: (didPop, _) async {
@@ -82,7 +82,7 @@ class _WalletSend extends StatelessWidget {
                 ),
               ],
             ],
-            title: Text((walletType == 'WATCHER') ? 'BUILD' : 'SEND'),
+            title: Text(isWatchOnly ? 'BUILD' : 'SEND'),
             leading: Builder(
               builder: (BuildContext context) {
                 return BackButton(

@@ -5,9 +5,8 @@ import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:path/path.dart';
+import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
-import 'package:sats/api/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
@@ -15,13 +14,11 @@ import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
-import 'package:sats/model/core.dart';
 import 'package:sats/model/result.dart';
-import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:sqflite/sqflite.dart' hide Transaction;
+import 'package:sats/pkg/wallet_db.dart';
 
 part 'from-old-xpub.freezed.dart';
 
@@ -89,7 +86,6 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
   static const invalidLabelError = 'Invalid Label (must be 3-20 chars).';
   static const internalError = 'Internal Error';
-  static const watcherWalletType = 'WATCHER';
   static const wpkhScript = 'wpkh';
   static const trScript = 'tr';
   static const emptyString = '';
@@ -99,7 +95,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     emit(state.copyWith(label: text, errSavingWallet: emptyString));
   }
 
-  void nextClicked() async {
+  Future<void> nextClicked() async {
     switch (state.currentStep) {
       case XpubImportWalletStep.import:
         break;
@@ -108,11 +104,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         if (state.label.isEmpty ||
             state.label.length < 3 ||
             state.label.length > 20) {
-          emit(
-            state.copyWith(
-              errSavingWallet: invalidLabelError,
-            ),
-          );
+          emit(state.copyWith(errSavingWallet: invalidLabelError));
           return;
         }
         if (!state.savingWallet) _saveWallet();
@@ -134,13 +126,8 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     }
   }
 
-  void _saveWallet() async {
-    emit(
-      state.copyWith(
-        savingWallet: true,
-        errSavingWallet: emptyString,
-      ),
-    );
+  Future<void> _saveWallet() async {
+    emit(state.copyWith(savingWallet: true, errSavingWallet: emptyString));
 
     try {
       final xpubState = _importCubit.state;
@@ -149,8 +136,9 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       final xpub = xpubState.xpub;
       String fullXPub = xpub.replaceFirst('/*', emptyString);
 
-      if (xpubState.hasNoKeySource())
+      if (xpubState.hasNoKeySource()) {
         fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst('/m', emptyString);
+      }
 
       final policy = 'pk($fullXPub/*)';
 
@@ -161,71 +149,55 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       final scriptType = policy.contains('/84h/')
           ? wpkhScript
           : policy.contains('/86h/')
-              ? trScript
-              : 'error';
-      if (scriptType == 'error')
+          ? trScript
+          : 'error';
+      if (scriptType == 'error') {
         throw 'Only Segwit 84h and Taproot 86h purpose paths are allowd.';
-
-      final descriptor = _core.compile(
-        policy: policy,
-        scriptType: scriptType,
-      );
-
-      if (descriptor.hasError) {
-        throw SMError.fromJson(descriptor.error!).message;
       }
+
+      final descriptor = _core.compile(policy: policy, scriptType: scriptType);
+
+      descriptor.orThrow();
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
-      final dbName = state.label + uid + '.db';
-      final db = await openDatabase(dbName);
-      final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, dbName);
+      final dbPath = await walletDbPath(state.label, uid);
 
-      final syncStat = await compute(sqliteSync, {
-        'dbPath': dbPath,
-        'descriptor': descriptor.result!,
-        'nodeAddress': nodeAddress,
-        'socks5': socks5,
-      });
+      final syncStat = await BitcoinWorker.sync(
+        dbPath: dbPath,
+        descriptor: descriptor.result!,
+        nodeAddress: nodeAddress,
+        socks5: socks5,
+      );
 
-      if (syncStat.hasError) {
-        throw SMError.fromJson(syncStat.error!).message;
-      }
+      syncStat.orThrow();
 
-      var history = await compute(sqliteHistory, {
-        'descriptor': descriptor.result!,
-        'dbPath': dbPath,
-      });
-// ignore: unused_local_variable
+      var history = await BitcoinWorker.history(
+        descriptor: descriptor.result!,
+        dbPath: dbPath,
+      );
+      // ignore: unused_local_variable
       var recievedCount = 0;
 
       if (history.hasError) {
-        emit(
-          state.copyWith(
-            errSavingWallet: 'Could not fetch history.',
-          ),
-        );
+        emit(state.copyWith(errSavingWallet: 'Could not fetch history.'));
         history = const R(result: []);
-      } else
+      } else {
         for (final item in history.result!) {
           if (item.sent == 0) {
             recievedCount++;
           }
         }
+      }
 
-      var balance = await compute(sqliteBalance, {
-        'descriptor': descriptor.result!,
-        'dbPath': dbPath,
-      });
+      var balance = await BitcoinWorker.balance(
+        descriptor: descriptor.result!,
+        dbPath: dbPath,
+      );
 
       if (balance.hasError) {
-        emit(
-          state.copyWith(
-            errSavingWallet: 'Could not fetch balance.',
-          ),
-        );
+        emit(state.copyWith(errSavingWallet: 'Could not fetch balance.'));
         balance = const R(result: 0);
       }
       final lastUnused = _core.lastUnusedAddress(
@@ -235,9 +207,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
       var lastIndex = 0;
       if (lastUnused.hasError) {
         emit(
-          state.copyWith(
-            errSavingWallet: 'Could not set last unused address.',
-          ),
+          state.copyWith(errSavingWallet: 'Could not set last unused address.'),
         );
       } else {
         lastIndex = int.parse(lastUnused.result!.index);
@@ -253,7 +223,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
         requiredPolicyElements: 1,
         policyElements: ['primary:$fullXPub'],
         blockchain: _blockchainCubit.state.blockchain.name,
-        walletType: watcherWalletType,
+        walletType: WalletType.watcher,
         lastAddressIndex: lastIndex,
         balance: balance.result!,
         transactions: history.result!,
@@ -262,21 +232,12 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
       updateWalletStorage(newWallet);
 
-      emit(
-        state.copyWith(
-          savingWallet: false,
-          newWalletSaved: true,
-        ),
-      );
-      db.close();
+      emit(state.copyWith(savingWallet: false, newWalletSaved: true));
     } catch (e, s) {
       _logger.logException(e, 'SeedXpubCubit._saveWallet', s);
 
       emit(
-        state.copyWith(
-          errSavingWallet: e.toString(),
-          newWalletSaved: false,
-        ),
+        state.copyWith(errSavingWallet: e.toString(), newWalletSaved: false),
       );
     }
   }
@@ -292,11 +253,7 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
 
     final newWallet = wallet.copyWith(id: id);
 
-    await _storage.saveItemAt<Wallet>(
-      StoreKeys.Wallet.name,
-      id,
-      newWallet,
-    );
+    await _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, id, newWallet);
     _wallets.refresh();
   }
 
@@ -305,68 +262,4 @@ class XpubImportWalletCubit extends Cubit<XpubImportWalletState> {
     _importSub.cancel();
     return super.close();
   }
-}
-
-Future<R<List<Transaction>>> computeHistory(dynamic obj) async {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().getHistory(
-    descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-
-  return resp;
-}
-
-Future<R<int>> computeBalance(dynamic obj) async {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().syncBalance(
-    descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-
-  return resp;
-}
-
-R<int> sqliteBalance(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteBalance(
-    descriptor: data['descriptor']!,
-    dbPath: data['dbPath']!,
-  );
-
-  return resp;
-}
-
-R<List<Transaction>> sqliteHistory(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteHistory(
-    descriptor: data['descriptor']!,
-    dbPath: data['dbPath']!,
-  );
-
-  return resp;
-}
-
-R<Address> getLastUnusedAddress(dynamic msg) {
-  final data = msg as Map<String, String?>;
-  final resp = LibBitcoin().lastUnusedAddress(
-    descriptor: data['descriptor']!,
-    dbPath: data['dbPath']!,
-  );
-
-  return resp;
-}
-
-R<String> sqliteSync(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteSync(
-    dbPath: obj['dbPath']!,
-    descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-
-  return resp;
 }

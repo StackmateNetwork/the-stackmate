@@ -1,17 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
-import 'package:sats/api/libbitcoin.dart';
+import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
-import 'package:sats/model/core.dart';
-import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/launcher.dart';
@@ -20,6 +17,7 @@ import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/pkg/validation.dart';
+import 'package:sats/pkg/wallet_db.dart';
 import 'package:sqflite/sqflite.dart' hide Transaction;
 
 part 'info.freezed.dart';
@@ -82,7 +80,7 @@ class InfoCubit extends Cubit<InfoState> {
   static const emailShareSubject = 'Transaction Details';
   static const walletHasFunds = 'Wallet has funds';
 
-  void _init() async {
+  Future<void> _init() async {
     try {
       final wallet = state.wallet;
       walletSelected(wallet!);
@@ -110,11 +108,11 @@ class InfoCubit extends Cubit<InfoState> {
     }
   }
 
-  void walletSelected(Wallet wallet) async {
+  Future<void> walletSelected(Wallet wallet) async {
     emit(state.copyWith(wallet: wallet));
   }
 
-  void sqliteSyncHistory() async {
+  Future<void> sqliteSyncHistory() async {
     try {
       final wallet = state.wallet;
       emit(
@@ -132,16 +130,13 @@ class InfoCubit extends Cubit<InfoState> {
       final node = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
 
-      final dbName = wallet.label + wallet.uid + '.db';
-      final db = await openDatabase(dbName);
-      final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, dbName);
+      final dbPath = await walletDbPath(wallet.label, wallet.uid);
 
-      final currentHeight = await compute(computeCurrentHeight, {
-        'network': _blockchainCubit.state.blockchain.name,
-        'nodeAddress': node,
-        'socks5': socks5,
-      });
+      final currentHeight = (await BitcoinWorker.height(
+        network: _blockchainCubit.state.blockchain.name,
+        nodeAddress: node,
+        socks5: socks5,
+      )).orThrow();
 
       emit(
         state.copyWith(
@@ -156,17 +151,17 @@ class InfoCubit extends Cubit<InfoState> {
       // THIS PART NEEDS TO BE REVIEWS
       // compute is used and errors are not properly handled
 
-      final syncStat = await compute(sqliteSync, {
-        'dbPath': dbPath,
-        'descriptor': state.wallet!.descriptor,
-        'nodeAddress': node,
-        'socks5': socks5,
-      });
-      if (syncStat.hasError) throw SMError.fromJson(syncStat.error!).message;
-      final balance = await compute(sqliteBalance, {
-        'descriptor': state.wallet!.descriptor,
-        'dbPath': dbPath,
-      });
+      final syncStat = await BitcoinWorker.sync(
+        dbPath: dbPath,
+        descriptor: state.wallet!.descriptor,
+        nodeAddress: node,
+        socks5: socks5,
+      );
+      syncStat.orThrow();
+      final balance = (await BitcoinWorker.balance(
+        descriptor: state.wallet!.descriptor,
+        dbPath: dbPath,
+      )).orThrow();
 
       _vibrate.vibe();
 
@@ -181,10 +176,10 @@ class InfoCubit extends Cubit<InfoState> {
       );
       await addBalanceToStorage(balance);
 
-      final transactions = await compute(sqliteHistory, {
-        'descriptor': state.wallet!.descriptor,
-        'dbPath': dbPath,
-      });
+      final transactions = (await BitcoinWorker.history(
+        descriptor: state.wallet!.descriptor,
+        dbPath: dbPath,
+      )).orThrow();
 
       _vibrate.vibe();
 
@@ -201,8 +196,6 @@ class InfoCubit extends Cubit<InfoState> {
 
       await addTransactionsToStorage(transactions);
 
-      db.close();
-
       return;
     } catch (e, s) {
       emit(
@@ -216,7 +209,7 @@ class InfoCubit extends Cubit<InfoState> {
     }
   }
 
-  void updateBalance() async {
+  Future<void> updateBalance() async {
     try {
       final wallet = state.wallet;
       final node = _nodeAddressCubit.state.getAddress();
@@ -231,16 +224,13 @@ class InfoCubit extends Cubit<InfoState> {
         ),
       );
 
-      final dbName = wallet.label + wallet.uid + '.db';
-      final db = await openDatabase(dbName);
-      final databasesPath = await getDatabasesPath();
-      final dbPath = join(databasesPath, dbName);
+      final dbPath = await walletDbPath(wallet.label, wallet.uid);
 
-      final currentHeight = await compute(computeCurrentHeight, {
-        'network': _blockchainCubit.state.blockchain.name,
-        'nodeAddress': node,
-        'socks5': socks5,
-      });
+      final currentHeight = (await BitcoinWorker.height(
+        network: _blockchainCubit.state.blockchain.name,
+        nodeAddress: node,
+        socks5: socks5,
+      )).orThrow();
 
       emit(
         state.copyWith(
@@ -252,19 +242,19 @@ class InfoCubit extends Cubit<InfoState> {
         ),
       );
 
-      final syncStat = await compute(sqliteSync, {
-        'dbPath': dbPath,
-        'descriptor': state.wallet!.descriptor,
-        'nodeAddress': node,
-        'socks5': socks5,
-      });
+      final syncStat = await BitcoinWorker.sync(
+        dbPath: dbPath,
+        descriptor: state.wallet!.descriptor,
+        nodeAddress: node,
+        socks5: socks5,
+      );
 
-      if (syncStat.hasError) throw SMError.fromJson(syncStat.error!).message;
+      syncStat.orThrow();
 
-      final balance = await compute(sqliteBalance, {
-        'descriptor': state.wallet!.descriptor,
-        'dbPath': dbPath,
-      });
+      final balance = (await BitcoinWorker.balance(
+        descriptor: state.wallet!.descriptor,
+        dbPath: dbPath,
+      )).orThrow();
 
       _vibrate.vibe();
 
@@ -278,7 +268,6 @@ class InfoCubit extends Cubit<InfoState> {
         ),
       );
       await addBalanceToStorage(balance);
-      db.close();
     } catch (e, s) {
       emit(
         state.copyWith(
@@ -292,14 +281,8 @@ class InfoCubit extends Cubit<InfoState> {
   }
 
   Future<void> addTransactionsToStorage(List<Transaction> transactions) async {
-    final wallet = state.wallet!.copyWith(
-      transactions: transactions,
-    );
-    emit(
-      state.copyWith(
-        wallet: wallet,
-      ),
-    );
+    final wallet = state.wallet!.copyWith(transactions: transactions);
+    emit(state.copyWith(wallet: wallet));
     await _storage.saveItemAt<Wallet>(
       StoreKeys.Wallet.name,
       wallet.id!,
@@ -314,14 +297,8 @@ class InfoCubit extends Cubit<InfoState> {
   }
 
   Future<void> addBalanceToStorage(int balance) async {
-    final wallet = state.wallet!.copyWith(
-      balance: balance,
-    );
-    emit(
-      state.copyWith(
-        wallet: wallet,
-      ),
-    );
+    final wallet = state.wallet!.copyWith(balance: balance);
+    emit(state.copyWith(wallet: wallet));
     await _storage.saveItemAt<Wallet>(
       StoreKeys.Wallet.name,
       wallet.id!,
@@ -338,10 +315,11 @@ class InfoCubit extends Cubit<InfoState> {
   void openLink(Transaction transaction) {
     try {
       String url = '';
-      if (_blockchainCubit.state.blockchain == Blockchain.test)
+      if (_blockchainCubit.state.blockchain == Blockchain.test) {
         url = defaultTestnetExplorer;
-      else
+      } else {
         url = defaultMainnetExplorer;
+      }
 
       url += transaction.txid;
 
@@ -364,20 +342,13 @@ class InfoCubit extends Cubit<InfoState> {
     }
   }
 
-  void deleteClicked() async {
+  Future<void> deleteClicked() async {
     emit(state.copyWith(errDeleting: ''));
     final wallet = state.wallet;
-    final dbName = wallet!.label + wallet.uid + '.db';
-    final db = await openDatabase(dbName);
-    final databasesPath = await getDatabasesPath();
-    final dbPath = join(databasesPath, dbName);
-    db.close();
+    final dbPath = await walletDbPath(wallet!.label, wallet.uid);
     await deleteDatabase(dbPath);
 
-    _storage.deleteItemAt<Wallet>(
-      StoreKeys.Wallet.name,
-      state.wallet!.id!,
-    );
+    _storage.deleteItemAt<Wallet>(StoreKeys.Wallet.name, state.wallet!.id!);
     _walletsCubit.refresh();
     emit(state.copyWith(deleted: true));
   }
@@ -387,22 +358,18 @@ class InfoCubit extends Cubit<InfoState> {
   }
 
   void passPhraseChanged(String text) {
-    emit(
-      state.copyWith(
-        passPhraseTest: text,
-      ),
-    );
+    emit(state.copyWith(passPhraseTest: text));
   }
 
-  void testPassPhrase(String mnemonic) async {
-    final seed = await compute(importMaster, {
-      'mnemonic': mnemonic,
-      'passphrase': state.passPhraseTest,
-      'network': _blockchainCubit.state.blockchain.name,
-    });
+  Future<void> testPassPhrase(String mnemonic) async {
+    final seed = await BitcoinWorker.importMaster(
+      mnemonic: mnemonic,
+      passphrase: state.passPhraseTest,
+      network: _blockchainCubit.state.blockchain.name,
+    );
 
     final wallet = state.wallet;
-    if (seed.hasError)
+    if (seed.hasError) {
       emit(
         state.copyWith(
           errorPPTest: seed.error!,
@@ -410,16 +377,12 @@ class InfoCubit extends Cubit<InfoState> {
           ppTestPassed: false,
         ),
       );
-    else if (Validation.fingerPrintFromXKey(wallet!.policyElements[0]) ==
+    } else if (Validation.fingerPrintFromXKey(wallet!.policyElements[0]) ==
         seed.result!.fingerprint) {
       emit(
-        state.copyWith(
-          errorPPTest: '',
-          passPhraseTest: '',
-          ppTestPassed: true,
-        ),
+        state.copyWith(errorPPTest: '', passPhraseTest: '', ppTestPassed: true),
       );
-    } else
+    } else {
       emit(
         state.copyWith(
           errorPPTest: 'Fingerprint Mismatch!',
@@ -427,106 +390,11 @@ class InfoCubit extends Cubit<InfoState> {
           ppTestPassed: false,
         ),
       );
+    }
 
-    await Future.delayed(
-      const Duration(
-        milliseconds: 500,
-      ),
-    );
+    await Future.delayed(const Duration(milliseconds: 500));
     emit(
-      state.copyWith(
-        ppTestPassed: false,
-        errorPPTest: '',
-        passPhraseTest: '',
-      ),
+      state.copyWith(ppTestPassed: false, errorPPTest: '', passPhraseTest: ''),
     );
   }
-}
-
-R<Seed> importMaster(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().importMaster(
-    mnemonic: data['mnemonic']!,
-    passphrase: data['passphrase']!,
-    network: obj['network']!,
-  );
-
-  return resp;
-}
-
-List<Transaction> computeHistory(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().getHistory(
-    descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
-}
-
-List<Transaction> sqliteHistory(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteHistory(
-    descriptor: data['descriptor']!,
-    dbPath: data['dbPath']!,
-  );
-
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
-}
-
-int computeBalance(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().syncBalance(
-    descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
-}
-
-int sqliteBalance(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteBalance(
-    descriptor: data['descriptor']!,
-    dbPath: data['dbPath']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
-}
-
-R<String> sqliteSync(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().sqliteSync(
-    dbPath: obj['dbPath']!,
-    descriptor: data['descriptor']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-
-  return resp;
-}
-
-int computeCurrentHeight(dynamic obj) {
-  final data = obj as Map<String, String?>;
-  final resp = LibBitcoin().getHeight(
-    network: data['network']!,
-    nodeAddress: data['nodeAddress']!,
-    socks5: obj['socks5']!,
-  );
-  if (resp.hasError) {
-    throw SMError.fromJson(resp.error!);
-  }
-  return resp.result!;
 }

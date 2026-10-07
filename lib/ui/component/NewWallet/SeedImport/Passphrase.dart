@@ -33,8 +33,9 @@ class _SeedImportPassphraseState extends State<SeedImportPassphrase> {
   Widget build(BuildContext c) {
     return BlocBuilder<SeedImportCubit, SeedImportState>(
       builder: (context, state) {
-        if (_textController.text != state.passPhrase)
+        if (_textController.text != state.passPhrase) {
           _textController.text = state.passPhrase;
+        }
         return Form(
           key: _form,
           child: Column(
@@ -82,8 +83,9 @@ class _SeedImportPassphraseState extends State<SeedImportPassphrase> {
                   obscuringCharacter: '*',
                   controller: _textControllerP,
                   validator: (val) {
-                    if (val != _textController.text)
+                    if (val != _textController.text) {
                       return 'Passphrases do no match!';
+                    }
                     return null;
                   },
                   style: TextStyle(color: c.colours.onSurface),
@@ -116,8 +118,9 @@ class _SeedImportPassphraseState extends State<SeedImportPassphrase> {
                       if (!currentFocus.hasPrimaryFocus) {
                         currentFocus.unfocus();
                       }
+                      final walletCubit = c.read<SeedImportWalletCubit>();
                       await c.read<SeedImportCubit>().checkSeed();
-                      c.read<SeedImportWalletCubit>().nextClicked();
+                      walletCubit.nextClicked();
                     }
                   },
                   child: Text('Confirm'.toUpperCase()),

@@ -50,7 +50,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
   static const segwitNativePurpose = '84';
   static const incorerctWordError = 'Incorrect Word Selected.';
   static const emptyString = '';
-  void init() async {
+  Future<void> init() async {
     await _masterKey.init();
 
     emit(
@@ -140,13 +140,15 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
     String answer = emptyString;
     while (answer == emptyString) {
       final idx = Random().nextInt(quizList.length);
-      if (!state.quizSeedCompletedAnswers.contains(quizList[idx]))
+      if (!state.quizSeedCompletedAnswers.contains(quizList[idx])) {
         answer = quizList[idx];
+      }
     }
     final answerIdx = quizList.indexOf(answer);
 
-    for (final completed in state.quizSeedCompletedAnswers)
+    for (final completed in state.quizSeedCompletedAnswers) {
       quizList.remove(completed);
+    }
 
     final List<String> answerList = [answer];
     quizList.remove(answer);
@@ -169,7 +171,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
     );
   }
 
-  void seedWordSelected(String text) async {
+  Future<void> seedWordSelected(String text) async {
     if (text != state.quizSeedAnswer) {
       emit(state.copyWith(quizSeedError: incorerctWordError));
       await Future.delayed(const Duration(seconds: 1));

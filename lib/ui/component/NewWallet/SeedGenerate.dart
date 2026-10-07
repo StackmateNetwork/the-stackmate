@@ -11,16 +11,13 @@ class SeedWordCell extends StatelessWidget {
   });
 
   final String text;
-  final Function? onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext c) {
     return Expanded(
       child: GestureDetector(
-        onTap: () {
-          if (onTap == null) return;
-          onTap!();
-        },
+        onTap: onTap,
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 8),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

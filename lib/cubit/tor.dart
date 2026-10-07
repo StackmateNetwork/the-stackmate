@@ -58,24 +58,26 @@ class TorCubit extends Cubit<TorState> {
     if (saved.hasError) {
       emit(state.copyWith(errStorage: saved.error.toString()));
     }
-    if (!settings.enforced)
+    if (!settings.enforced) {
       await stop();
-    else
+    } else {
       await start();
+    }
   }
 
   Future<void> _readConfig() async {
     final settings = _storage.getFirstItem<Tor>(StoreKeys.Tor.name);
     if (settings.hasError) {
-      if (settings.error! == 'empty')
+      if (settings.error! == 'empty') {
         await updateConfig();
-      else
+      } else {
         emit(
           state.copyWith(
             errStorage: settings.error!,
           ),
         );
-    } else
+      }
+    } else {
       emit(
         state.copyWith(
           enforced: settings.result!.enforced,
@@ -83,6 +85,7 @@ class TorCubit extends Cubit<TorState> {
           socks5Port: settings.result!.externalPort,
         ),
       );
+    }
   }
 
   Future<void> toggleEnforce() async {

@@ -5,14 +5,12 @@ class BckButton extends StatelessWidget {
   const BckButton({super.key, required this.text, required this.onTapped});
 
   final String text;
-  final Function onTapped;
+  final VoidCallback onTapped;
 
   @override
   Widget build(BuildContext c) {
     return InkWell(
-      onTap: () {
-        onTapped();
-      },
+      onTap: onTapped,
       child: Row(
         // mainAxisAlignment: MainAxisAlignment.start,
         children: [

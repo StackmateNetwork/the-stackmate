@@ -44,10 +44,11 @@ abstract class Transaction with _$Transaction {
     if (txid.startsWith('2') ||
         txid.startsWith('m') ||
         txid.startsWith('n') ||
-        txid.startsWith('tb'))
+        txid.startsWith('tb')) {
       url = 'https://blockstream.info/testnet/tx/';
-    else
+    } else {
       url = 'https://blockstream.info/tx/';
+    }
     url += txid;
     return url;
   }

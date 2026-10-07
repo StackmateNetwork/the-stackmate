@@ -8,7 +8,7 @@ class TransactionComplete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wallet = context.select((SendCubit w) => w.state.wallet);
-    if (wallet.isNotWatchOnly())
+    if (wallet.isNotWatchOnly()) {
       return Padding(
         padding: const EdgeInsets.only(top: 35),
         child: Column(
@@ -47,7 +47,7 @@ class TransactionComplete extends StatelessWidget {
           ],
         ),
       );
-    else
+    } else {
       return Padding(
         padding: const EdgeInsets.only(top: 35),
         child: Column(
@@ -70,5 +70,6 @@ class TransactionComplete extends StatelessWidget {
           ],
         ),
       );
+    }
   }
 }

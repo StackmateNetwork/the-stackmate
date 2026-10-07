@@ -18,7 +18,7 @@ class Accounts extends StatelessWidget {
   Widget build(BuildContext c) {
     final wallets = c.select((WalletsCubit w) => w.state.wallets);
 
-    if (wallets.isEmpty)
+    if (wallets.isEmpty) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,7 +33,7 @@ class Accounts extends StatelessWidget {
           ),
         ],
       );
-    else
+    } else {
       return Container(
         width: c.width,
         child: SingleChildScrollView(
@@ -64,5 +64,6 @@ class Accounts extends StatelessWidget {
           ),
         ),
       );
+    }
   }
 }

@@ -13,14 +13,12 @@ class SelectButton extends StatelessWidget {
   final String text;
   final String description;
   final Color colour;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        onPressed();
-      },
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         elevation: 0, backgroundColor: colour,
         // borderRadius: BorderRadius.circular(8),

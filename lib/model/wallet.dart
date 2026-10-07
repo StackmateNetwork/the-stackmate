@@ -8,6 +8,18 @@ part 'wallet.freezed.dart';
 
 const satsInBTC = 100000000;
 
+/// Values of [Wallet.walletType]. They are persisted, so never change them.
+abstract final class WalletType {
+  /// Signs with the app's master key.
+  static const primary = 'PRIMARY';
+
+  /// Signs with an imported (recovered) mnemonic.
+  static const recovered = 'RECOVERED';
+
+  /// Watch-only: builds PSBTs that are signed elsewhere.
+  static const watcher = 'WATCHER';
+}
+
 @freezed
 abstract class Wallet with _$Wallet {
   @HiveType(typeId: 1, adapterName: 'WalletClassAdapter')
@@ -33,7 +45,12 @@ abstract class Wallet with _$Wallet {
 
   String balanceToBtc() => (balance / satsInBTC).toStringAsFixed(8);
 
-  bool isNotWatchOnly() => walletType != 'WATCHER';
+  bool get isWatchOnly => walletType == WalletType.watcher;
+
+  bool isNotWatchOnly() => !isWatchOnly;
+
+  bool get canSign =>
+      walletType == WalletType.primary || walletType == WalletType.recovered;
 
   int pendingPolicyElements() {
     return policyElements.length - requiredPolicyElements;
