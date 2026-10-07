@@ -55,7 +55,7 @@ class _SeedGenerateState extends State<_SeedGenerate> {
           previous.currentStep != current.currentStep,
       builder: (context, state) {
         return PopScope(
-          onPopInvoked: (_) async {
+          onPopInvokedWithResult: (didPop, _) async {
             if (!state.canGoBack()) {
               c.read<SeedGenerateWalletCubit>().backClicked();
               return;

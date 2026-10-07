@@ -1,4 +1,4 @@
-import 'package:hive/src/hive_impl.dart';
+import 'package:hive_ce/src/hive_impl.dart';
 import 'package:test/test.dart';
 import 'hive_common.dart';
 

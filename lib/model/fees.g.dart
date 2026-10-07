@@ -6,26 +6,26 @@ part of 'fees.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class FeesClassAdapter extends TypeAdapter<_$FeesImpl> {
+class FeesClassAdapter extends TypeAdapter<_Fees> {
   @override
-  final int typeId = 5;
+  final typeId = 5;
 
   @override
-  _$FeesImpl read(BinaryReader reader) {
+  _Fees read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$FeesImpl(
-      timestamp: fields[0] as int,
-      slow: fields[1] as double,
-      medium: fields[2] as double,
-      fast: fields[3] as double,
+    return _Fees(
+      timestamp: (fields[0] as num).toInt(),
+      slow: (fields[1] as num).toDouble(),
+      medium: (fields[2] as num).toDouble(),
+      fast: (fields[3] as num).toDouble(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, _$FeesImpl obj) {
+  void write(BinaryWriter writer, _Fees obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -53,17 +53,16 @@ class FeesClassAdapter extends TypeAdapter<_$FeesImpl> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$FeesImpl _$$FeesImplFromJson(Map<String, dynamic> json) => _$FeesImpl(
-      timestamp: json['timestamp'] as int,
-      slow: (json['slow'] as num).toDouble(),
-      medium: (json['medium'] as num).toDouble(),
-      fast: (json['fast'] as num).toDouble(),
-    );
+_Fees _$FeesFromJson(Map<String, dynamic> json) => _Fees(
+  timestamp: (json['timestamp'] as num).toInt(),
+  slow: (json['slow'] as num).toDouble(),
+  medium: (json['medium'] as num).toDouble(),
+  fast: (json['fast'] as num).toDouble(),
+);
 
-Map<String, dynamic> _$$FeesImplToJson(_$FeesImpl instance) =>
-    <String, dynamic>{
-      'timestamp': instance.timestamp,
-      'slow': instance.slow,
-      'medium': instance.medium,
-      'fast': instance.fast,
-    };
+Map<String, dynamic> _$FeesToJson(_Fees instance) => <String, dynamic>{
+  'timestamp': instance.timestamp,
+  'slow': instance.slow,
+  'medium': instance.medium,
+  'fast': instance.fast,
+};

@@ -35,7 +35,7 @@ class _Derive extends StatelessWidget {
           previous.currentStep != current.currentStep,
       builder: (context, state) {
         return PopScope(
-          onPopInvoked: (_) async {
+          onPopInvokedWithResult: (didPop, _) async {
             return;
           },
           child: Scaffold(

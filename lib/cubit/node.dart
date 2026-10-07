@@ -12,7 +12,7 @@ const testnetBlockstream = 'ssl://electrum.blockstream.info:60002';
 const mainnetBlockstream = 'ssl://electrum.blockstream.info:50002';
 
 @freezed
-class NodeAddressState with _$NodeAddressState {
+abstract class NodeAddressState with _$NodeAddressState {
   const factory NodeAddressState({
     @Default(defaultNodeAddress) String address,
     @Default('') String errNodeState,

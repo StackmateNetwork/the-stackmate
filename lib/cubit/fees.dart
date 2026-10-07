@@ -15,7 +15,7 @@ import 'package:sats/pkg/storage.dart';
 part 'fees.freezed.dart';
 
 @freezed
-class FeesState with _$FeesState {
+abstract class FeesState with _$FeesState {
   const factory FeesState({
     @Default(Fees(timestamp: 0, slow: 0.0, medium: 0.0, fast: 0.0)) Fees fees,
     @Default(false) bool updating,
@@ -69,7 +69,6 @@ class FeesCubit extends Cubit<FeesState> {
       } else {
         emit(
           state.copyWith(
-            // ignore: unnecessary_null_checks
             fees: fees.result!,
           ),
         );

@@ -43,7 +43,7 @@ class WalletCard extends StatelessWidget {
             elevation: 4,
             borderRadius: BorderRadius.circular(12),
             clipBehavior: Clip.antiAliasWithSaveLayer,
-            color: context.colours.background,
+            color: context.colours.surface,
             child: BackdropFilter(
               filter: ImageFilter.blur(
                 // sigmaX: 0,
@@ -126,7 +126,7 @@ class WalletCard extends StatelessWidget {
             elevation: 4,
             borderRadius: BorderRadius.circular(12),
             clipBehavior: Clip.antiAliasWithSaveLayer,
-            color: context.colours.background,
+            color: context.colours.surface,
             child: BackdropFilter(
               filter: ImageFilter.blur(
                 tileMode: TileMode.mirror,
@@ -173,7 +173,7 @@ class WalletCard extends StatelessWidget {
               elevation: 4,
               borderRadius: BorderRadius.circular(12),
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              color: context.colours.background,
+              color: context.colours.surface,
               child: BackdropFilter(
                 filter: ImageFilter.blur(
                   tileMode: TileMode.mirror,

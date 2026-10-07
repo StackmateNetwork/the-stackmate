@@ -35,7 +35,7 @@ class _WalletSend extends StatelessWidget {
         context.select((SendCubit c) => c.state.wallet.walletType);
     final tor = context.select((TorCubit t) => t.state);
     return PopScope(
-      onPopInvoked: (_) async {
+      onPopInvokedWithResult: (didPop, _) async {
         if (step == SendSteps.address || step == SendSteps.sent) {
           return;
         }
@@ -152,7 +152,7 @@ class _WalletSend extends StatelessWidget {
                         child: Text(
                           'Select Network Fee'.toUpperCase(),
                           style: context.fonts.labelSmall!.copyWith(
-                            color: context.colours.onBackground,
+                            color: context.colours.onSurface,
                           ),
                         ),
                       ),

@@ -16,7 +16,7 @@ class BroadcastPSBT extends StatelessWidget {
           'Broadcast PSBT'.toUpperCase(),
           textAlign: TextAlign.center,
           style: c.fonts.labelSmall!.copyWith(
-            color: c.colours.onBackground,
+            color: c.colours.onSurface,
           ),
         ),
         const SizedBox(height: 26),
@@ -24,7 +24,7 @@ class BroadcastPSBT extends StatelessWidget {
           Text(
             'Paste a PSBT from your Clipboard or Import from File.',
             style: c.fonts.bodyMedium!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
             ),
           )
         else
@@ -37,7 +37,7 @@ class BroadcastPSBT extends StatelessWidget {
               foregroundColor: c.colours.primary,
               side: BorderSide(color: c.colours.onPrimary),
               disabledForegroundColor:
-                  c.colours.background.withOpacity(0.38).withOpacity(0.38),
+                  c.colours.surface.withValues(alpha: 0.38).withValues(alpha: 0.38),
             ),
             onPressed: () {
               c.read<BroadcastCubit>().pastePSBT();
@@ -53,7 +53,7 @@ class BroadcastPSBT extends StatelessWidget {
               foregroundColor: c.colours.primary,
               side: BorderSide(color: c.colours.onPrimary),
               disabledForegroundColor:
-                  c.colours.background.withOpacity(0.38).withOpacity(0.38),
+                  c.colours.surface.withValues(alpha: 0.38).withValues(alpha: 0.38),
             ),
             onPressed: () {
               c.read<BroadcastCubit>().updatePSBTFile();
@@ -69,7 +69,7 @@ class BroadcastPSBT extends StatelessWidget {
               foregroundColor: c.colours.primary,
               side: BorderSide(color: c.colours.onPrimary),
               disabledForegroundColor:
-                  c.colours.background.withOpacity(0.38).withOpacity(0.38),
+                  c.colours.surface.withValues(alpha: 0.38).withValues(alpha: 0.38),
             ),
             onPressed: () {
               c.read<BroadcastCubit>().verifyImportPSBT();
@@ -82,7 +82,7 @@ class BroadcastPSBT extends StatelessWidget {
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              foregroundColor: c.colours.background,
+              foregroundColor: c.colours.surface,
               backgroundColor: c.colours.primary,
             ),
             onPressed: () {
@@ -97,7 +97,7 @@ class BroadcastPSBT extends StatelessWidget {
             psbtState.txId,
             textAlign: TextAlign.center,
             style: c.fonts.titleLarge!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
             ),
           )
         else

@@ -9,6 +9,7 @@ import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/pkg/qr_scanner.dart';
 import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
@@ -31,10 +32,10 @@ import 'package:sats/ui/style.dart';
 import 'package:sqflite/sqflite.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initializeHive();
   setupDependencies(useDummies: false);
   await openDatabase('stackmate.db');
-  WidgetsFlutterBinding.ensureInitialized();
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
@@ -55,7 +56,7 @@ class Stackmate extends StatelessWidget {
       child: OKToast(
         duration: const Duration(milliseconds: 2000),
         position: ToastPosition.bottom,
-        textStyle: c.fonts.bodySmall!.copyWith(color: c.colours.onBackground),
+        textStyle: c.fonts.bodySmall!.copyWith(color: c.colours.onSurface),
         child: MaterialApp.router(
           routeInformationParser: _router.routeInformationParser,
           routeInformationProvider: _router.routeInformationProvider,
@@ -77,55 +78,56 @@ class Stackmate extends StatelessWidget {
   }
 
   late final _router = GoRouter(
+    navigatorKey: rootNavigatorKey,
     debugLogDiagnostics: true,
     routes: [
       GoRoute(
         path: '/',
-        builder: (_, __) => const LandingScreen(),
+        builder: (_, _) => const LandingScreen(),
       ),
       GoRoute(
         path: '/home',
-        builder: (_, __) => const HomeScreen(),
+        builder: (_, _) => const HomeScreen(),
       ),
       GoRoute(
         path: '/settings',
-        builder: (_, __) => const SettingsScreen(),
+        builder: (_, _) => const SettingsScreen(),
       ),
       GoRoute(
         path: '/add-wallet',
-        builder: (_, __) => const AddWalletScreen(),
+        builder: (_, _) => const AddWalletScreen(),
       ),
       GoRoute(
         path: '/broadcast',
-        builder: (_, __) => const BroadcastScreen(),
+        builder: (_, _) => const BroadcastScreen(),
       ),
       GoRoute(
         path: '/backup-master',
-        builder: (_, __) => const BackupWalletScreen(),
+        builder: (_, _) => const BackupWalletScreen(),
       ),
       GoRoute(
         path: '/tor-config',
-        builder: (_, __) => const TorConfigScreen(),
+        builder: (_, _) => const TorConfigScreen(),
       ),
       GoRoute(
         path: '/generate-seed',
-        builder: (_, __) => const SeedGenerateScreen(),
+        builder: (_, _) => const SeedGenerateScreen(),
       ),
       GoRoute(
         path: '/import-seed',
-        builder: (_, __) => const SeedImportScreen(),
+        builder: (_, _) => const SeedImportScreen(),
       ),
       GoRoute(
         path: '/derive-account',
-        builder: (_, __) => const DeriveScreen(),
+        builder: (_, _) => const DeriveScreen(),
       ),
       GoRoute(
         path: '/watch-only',
-        builder: (_, __) => const XPubImportScreen(),
+        builder: (_, _) => const XPubImportScreen(),
       ),
       GoRoute(
         path: '/coldcard',
-        builder: (_, __) => const XPubColdcardScreen(),
+        builder: (_, _) => const XPubColdcardScreen(),
       ),
       GoRoute(
         path: '/wallet',
@@ -153,7 +155,7 @@ class Stackmate extends StatelessWidget {
       ),
       GoRoute(
         path: '/logs',
-        builder: (_, __) => const LogsScreen(),
+        builder: (_, _) => const LogsScreen(),
       ),
     ],
     errorBuilder: (context, state) => Container(color: Colors.red),

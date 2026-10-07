@@ -115,7 +115,7 @@ class BroadcastHex extends StatelessWidget {
               height: 52,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: context.colours.background,
+                  foregroundColor: context.colours.surface,
                   backgroundColor: context.colours.primary,
                 ),
                 onPressed: () async {
@@ -133,7 +133,7 @@ class BroadcastHex extends StatelessWidget {
                 broadcastState.txId,
                 textAlign: TextAlign.center,
                 style: context.fonts.titleLarge!.copyWith(
-                  color: context.colours.onBackground,
+                  color: context.colours.onSurface,
                 ),
               )
             else

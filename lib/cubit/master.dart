@@ -12,7 +12,7 @@ part 'master.freezed.dart';
 const defaultNodeAddress = 'default';
 
 @freezed
-class MasterKeyState with _$MasterKeyState {
+abstract class MasterKeyState with _$MasterKeyState {
   const factory MasterKeyState({
     MasterKey? key,
     RecoveredKey? rkey,

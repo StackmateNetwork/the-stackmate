@@ -65,7 +65,7 @@ class SeedImportPhrase extends StatelessWidget {
                     label: Text(
                       '12',
                       style: TextStyle(
-                        color: c.colours.onBackground,
+                        color: c.colours.onSurface,
                       ),
                     ),
                   ),
@@ -74,7 +74,7 @@ class SeedImportPhrase extends StatelessWidget {
                     label: Text(
                       '24',
                       style: TextStyle(
-                        color: c.colours.onBackground,
+                        color: c.colours.onSurface,
                       ),
                     ),
                   ),
@@ -178,7 +178,7 @@ class SeedImportPhrase extends StatelessWidget {
                   height: 52,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: c.colours.background,
+                      foregroundColor: c.colours.surface,
                       backgroundColor: c.colours.primary,
                     ),
                     onPressed: () {
@@ -215,7 +215,7 @@ class SeedImportPhrase extends StatelessWidget {
                   height: 52,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: c.colours.background,
+                      foregroundColor: c.colours.surface,
                       backgroundColor: c.colours.primary,
                     ),
                     onPressed: () async {

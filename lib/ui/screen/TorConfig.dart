@@ -93,7 +93,7 @@ class TorConfigScreen extends StatelessWidget {
                   height: 52,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: c.colours.background,
+                      foregroundColor: c.colours.surface,
                       backgroundColor: c.colours.primary,
                     ),
                     onPressed: () {
@@ -115,9 +115,9 @@ class TorConfigScreen extends StatelessWidget {
                       style: OutlinedButton.styleFrom(
                         foregroundColor: c.colours.primary,
                         side: BorderSide(color: c.colours.onPrimary),
-                        disabledForegroundColor: c.colours.background
-                            .withOpacity(0.38)
-                            .withOpacity(0.38),
+                        disabledForegroundColor: c.colours.surface
+                            .withValues(alpha: 0.38)
+                            .withValues(alpha: 0.38),
                       ),
                       onPressed: () {
                         c.read<TorCubit>().start();

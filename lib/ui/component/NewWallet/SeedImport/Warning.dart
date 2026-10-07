@@ -29,7 +29,7 @@ Incognito mode is enforced on your keyboard.
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              foregroundColor: c.colours.background,
+              foregroundColor: c.colours.surface,
               backgroundColor: c.colours.primary,
             ),
             onPressed: () => c.read<SeedImportWalletCubit>().nextClicked(),

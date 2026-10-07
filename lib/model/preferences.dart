@@ -1,11 +1,12 @@
+// ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 
 part 'preferences.g.dart';
 part 'preferences.freezed.dart';
 
 @freezed
-class Preferences with _$Preferences {
+abstract class Preferences with _$Preferences {
   @HiveType(typeId: 2, adapterName: 'PreferencesClassAdapter')
   const factory Preferences({
     @HiveField(0) required bool incognito,

@@ -9,12 +9,12 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/tor.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
-import 'package:utopic_tor_onion_proxy/utopic_tor_onion_proxy.dart';
+import 'package:tor/tor.dart' as arti;
 
 part 'tor.freezed.dart';
 
 @freezed
-class TorState with _$TorState {
+abstract class TorState with _$TorState {
   const factory TorState({
     @Default('/tmp') String workingDir,
     @Default(true) bool enforced,
@@ -139,10 +139,11 @@ class TorCubit extends Cubit<TorState> {
         );
         final result = await InternetAddress.lookup('google.com');
         if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-          final port = await UtopicTorOnionProxy.startTor();
+          final tor = await arti.Tor.init();
+          await tor.enable();
           emit(
             state.copyWith(
-              socks5Port: port!,
+              socks5Port: tor.port,
               errConnection: '',
               isRunning: true,
               isConnected: true,
@@ -190,9 +191,9 @@ class TorCubit extends Cubit<TorState> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        final isConnected = await UtopicTorOnionProxy.isTorRunning();
+        final tor = arti.Tor.instance;
         emit(
-          state.copyWith(isConnected: isConnected!),
+          state.copyWith(isConnected: tor.started && tor.bootstrapped),
         );
       } else {
         emit(
@@ -221,10 +222,10 @@ class TorCubit extends Cubit<TorState> {
           errConnection: '',
         ),
       );
-      final isStopped = await UtopicTorOnionProxy.stopTor();
+      await arti.Tor.instance.stop();
       emit(
         state.copyWith(
-          isRunning: !isStopped!,
+          isRunning: false,
           isConnected: false,
           bootstapProgress: 'Tor stopped.',
         ),

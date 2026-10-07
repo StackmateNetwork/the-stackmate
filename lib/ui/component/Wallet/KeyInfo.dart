@@ -23,7 +23,7 @@ class KeyInfo extends StatelessWidget {
           Text(
             'WALLET INFORMATION',
             style: c.fonts.labelSmall!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -31,7 +31,7 @@ class KeyInfo extends StatelessWidget {
           Text(
             'Fingerprint',
             style: c.fonts.labelSmall!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
             ),
           ),
           const SizedBox(height: 8),
@@ -47,7 +47,7 @@ class KeyInfo extends StatelessWidget {
           Text(
             'Kind',
             style: c.fonts.labelSmall!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
             ),
           ),
           const SizedBox(height: 8),
@@ -61,33 +61,33 @@ class KeyInfo extends StatelessWidget {
           Text(
             'Script Type',
             style: c.fonts.labelSmall!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             wallet.descriptor.startsWith('w') ? 'SEGWIT' : 'TAPROOT',
             style: c.fonts.bodySmall!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
             ),
           ),
           const SizedBox(height: 24),
           Text(
             'Extended Public Key',
             style: c.fonts.labelSmall!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             wallet.policyElements[0].split(':')[1],
             style: c.fonts.bodySmall!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
             ),
           ),
           TextButton(
             style: ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.zero),
+              padding: WidgetStateProperty.all(EdgeInsets.zero),
               alignment: Alignment.centerLeft,
             ),
             onPressed: () {

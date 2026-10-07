@@ -11,7 +11,7 @@ const defaultNodeAddress = 'default';
 const String hiddenPin = ' . ';
 
 @freezed
-class PinState with _$PinState {
+abstract class PinState with _$PinState {
   const factory PinState({
     String? value,
     @Default(3) int attemptsLeft,
@@ -301,7 +301,7 @@ class PinCubit extends Cubit<PinState> {
           );
         }
       } else {
-        final timeLeft = 60 - ((now - state.lastFailure) / (1000)).round();
+        final timeLeft = 60 - ((now - state.lastFailure) / 1000).round();
         emit(
           state.copyWith(
             error: 'Locked! $timeLeft seconds left.',
@@ -354,7 +354,7 @@ class PinCubit extends Cubit<PinState> {
     final now = DateTime.now().millisecondsSinceEpoch;
 
     if (state.isLocked) {
-      final timeLeft = 60 - ((now - state.lastFailure) / (1000)).round();
+      final timeLeft = 60 - ((now - state.lastFailure) / 1000).round();
       emit(
         state.copyWith(
           error: 'Locked! $timeLeft seconds left.',
@@ -363,7 +363,6 @@ class PinCubit extends Cubit<PinState> {
           attemptsLeft: (state.value == null) ? 3 : updatedAttempts,
           isLocked: state.value == null,
           // will be false if pin is set(stays locked) true if no pin set(unlock to set again)
-          // ignore: avoid_bool_literals_in_conditional_expressions
           hasChosenPin: state.value !=
               null, // will be true if pin is set, will be false if not set (triggers a reset)
           setValue: emptyString,

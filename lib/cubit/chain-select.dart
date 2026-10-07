@@ -8,7 +8,7 @@ import 'package:sats/pkg/storage.dart';
 part 'chain-select.freezed.dart';
 
 @freezed
-class BlockchainState with _$BlockchainState {
+abstract class BlockchainState with _$BlockchainState {
   const factory BlockchainState({
     @Default(Blockchain.main) Blockchain blockchain,
   }) = _BlockchainState;

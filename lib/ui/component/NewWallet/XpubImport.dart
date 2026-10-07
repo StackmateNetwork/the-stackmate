@@ -75,7 +75,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
             controller: _xpubController,
             maxLines: 4,
             style: c.fonts.bodyLarge!.copyWith(
-              color: c.colours.onBackground,
+              color: c.colours.onSurface,
             ),
             onChanged: (text) {
               c.read<XpubImportCubit>().xpubChanged(text);
@@ -105,7 +105,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
             style: OutlinedButton.styleFrom(
               foregroundColor: c.colours.primary,
               disabledForegroundColor:
-                  c.colours.background.withOpacity(0.38).withOpacity(0.38),
+                  c.colours.surface.withValues(alpha: 0.38).withValues(alpha: 0.38),
             ),
             onPressed: () {
               c.read<XpubImportCubit>().toggleCamera();
@@ -123,7 +123,7 @@ class _XpubImportFieldsState extends State<XpubFieldsImport> {
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              foregroundColor: c.colours.background,
+              foregroundColor: c.colours.surface,
               backgroundColor: c.colours.primary,
             ),
             onPressed: () async {

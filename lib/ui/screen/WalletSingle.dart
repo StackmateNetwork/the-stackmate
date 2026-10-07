@@ -34,7 +34,7 @@ class _Wallet extends StatelessWidget {
         }
       },
       child: PopScope(
-        onPopInvoked: (_) {
+        onPopInvokedWithResult: (didPop, _) {
           c.read<WalletsCubit>().clearSelectedWallet();
         },
         child: Scaffold(

@@ -11,14 +11,14 @@ class Loading extends StatelessWidget {
     return Column(
       children: [
         LinearProgressIndicator(
-          backgroundColor: c.colours.background,
+          backgroundColor: c.colours.surface,
           valueColor: AlwaysStoppedAnimation<Color>(c.colours.primary),
         ),
         const SizedBox(height: 4),
         Text(
           text,
           style: c.fonts.bodySmall!.copyWith(
-            color: c.colours.onBackground,
+            color: c.colours.onSurface,
           ),
           textAlign: TextAlign.center,
         ),

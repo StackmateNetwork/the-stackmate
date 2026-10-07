@@ -3,11 +3,12 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/model/coldcard.dart';
+import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
+import 'package:sats/pkg/interface/qr_scanner.dart';
 import 'package:sats/pkg/validation.dart';
 
 part 'xpub-import.freezed.dart';
@@ -20,7 +21,7 @@ const cameraError = 'Error while opening camera.';
 const emptyString = '';
 
 @freezed
-class XpubImportState with _$XpubImportState {
+abstract class XpubImportState with _$XpubImportState {
   const factory XpubImportState({
     @Default('') String xpub,
     @Default('') String fingerPrint,
@@ -54,14 +55,12 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   final Logger _logger;
 
   Future<void> updateFile() async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
+    final coldcardJson = await FilePicker.pickFile(
       type: FileType.custom,
       allowedExtensions: ['json'],
     );
 
-    if (result != null) {
-      final PlatformFile coldcardJson = result.files.single;
-
+    if (coldcardJson != null) {
       emit(
         state.copyWith(
           importedJSONPath: coldcardJson.path,
@@ -74,8 +73,8 @@ class XpubImportCubit extends Cubit<XpubImportState> {
   }
 
   Future<void> clearCachedFiles() async {
-    final bool? result = await FilePicker.platform.clearTemporaryFiles();
-    if (result != null) {
+    try {
+      await FilePicker.clearTemporaryFiles();
       emit(
         state.copyWith(
           clearJson: true,
@@ -83,7 +82,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
           importedJSONfileName: emptyString,
         ),
       );
-    } else {
+    } catch (_) {
       emit(state.copyWith(errFileImport: 'Error importing file'));
     }
   }
@@ -92,14 +91,7 @@ class XpubImportCubit extends Cubit<XpubImportState> {
     try {
       emit(state.copyWith(cameraOpened: true, errXpub: emptyString));
 
-      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        'Cancel',
-        false,
-        ScanMode.QR,
-      );
-
-      if (barcodeScanRes == '-1') barcodeScanRes = emptyString;
+      final barcodeScanRes = await locator<IQrScanner>().scan();
 
       emit(
         state.copyWith(

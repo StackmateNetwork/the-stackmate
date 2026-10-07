@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/libstackmate.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/core.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/pkg/interface/launcher.dart';
 
@@ -19,9 +19,9 @@ enum SeedGenerateSteps {
 }
 
 @freezed
-class SeedGenerateState with _$SeedGenerateState {
+abstract class SeedGenerateState with _$SeedGenerateState {
   const factory SeedGenerateState({
-    @Default(SeedGenerateSteps.generate) currentStep,
+    @Default(SeedGenerateSteps.generate) SeedGenerateSteps currentStep,
     List<String>? seed,
     String? masterXpriv,
     String? xpriv,

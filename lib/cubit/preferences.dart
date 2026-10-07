@@ -7,7 +7,7 @@ import 'package:sats/pkg/storage.dart';
 part 'preferences.freezed.dart';
 
 @freezed
-class PreferencesState with _$PreferencesState {
+abstract class PreferencesState with _$PreferencesState {
   const factory PreferencesState({
     @Default(false) bool incognito,
     @Default(false) bool bitcoinStandard,

@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:libstackmate/outputs.dart';
 import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:sats/api/libbitcoin.dart';
@@ -11,6 +10,7 @@ import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
+import 'package:sats/model/core.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
@@ -25,7 +25,7 @@ import 'package:sqflite/sqflite.dart' hide Transaction;
 part 'info.freezed.dart';
 
 @freezed
-class InfoState with _$InfoState {
+abstract class InfoState with _$InfoState {
   const factory InfoState({
     required Wallet? wallet,
     @Default(false) bool loadingTransactions,

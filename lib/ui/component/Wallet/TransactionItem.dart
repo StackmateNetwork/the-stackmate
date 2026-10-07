@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/info.dart';
+import 'package:sats/cubit/wallet/signer.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/pkg/extensions.dart';
+import 'package:sats/ui/component/Wallet/BumpFee.dart';
 import 'package:sats/ui/component/common/BitcoinDisplayMedium.dart';
 
 class TransactionItem extends StatelessWidget {
@@ -41,7 +43,7 @@ class TransactionItem extends StatelessWidget {
                       'RECEIVE'.notLocalised(),
                       style: c.fonts.titleSmall!.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: c.colours.onBackground,
+                        color: c.colours.onSurface,
                       ),
                     ),
                   ),
@@ -53,7 +55,7 @@ class TransactionItem extends StatelessWidget {
                           Text(
                             transaction.timeStr(),
                             style: c.fonts.bodySmall!.copyWith(
-                              color: c.colours.onBackground,
+                              color: c.colours.onSurface,
                             ),
                           ),
                         ] else ...[
@@ -72,7 +74,7 @@ class TransactionItem extends StatelessWidget {
               Text(
                 'TRANSACTION ID'.notLocalised(),
                 style: c.fonts.labelSmall!.copyWith(
-                  color: c.colours.onBackground,
+                  color: c.colours.onSurface,
                 ),
               ),
               GestureDetector(
@@ -133,7 +135,7 @@ class TransactionItem extends StatelessWidget {
                     'SEND'.notLocalised(),
                     style: c.fonts.titleSmall!.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: c.colours.onBackground,
+                      color: c.colours.onSurface,
                     ),
                   ),
                 ),
@@ -145,7 +147,7 @@ class TransactionItem extends StatelessWidget {
                         Text(
                           transaction.timeStr(),
                           style: c.fonts.bodySmall!.copyWith(
-                            color: c.colours.onBackground,
+                            color: c.colours.onSurface,
                           ),
                         ),
                       ] else ...[
@@ -164,7 +166,7 @@ class TransactionItem extends StatelessWidget {
             Text(
               'TRANSACTION ID'.notLocalised(),
               style: c.fonts.labelSmall!.copyWith(
-                color: c.colours.onBackground,
+                color: c.colours.onSurface,
               ),
             ),
             GestureDetector(
@@ -206,13 +208,15 @@ class TransactionItem extends StatelessWidget {
 
 void _showTxinfo(BuildContext c, Transaction transaction) {
   const sats = 'sats';
+  final wallet = c.read<InfoCubit>().state.wallet;
+  final canBump = wallet != null && WalletSigner.canSign(wallet);
   final isReceive = transaction.isReceive();
   if (isReceive) {
     showCupertinoModalPopup(
       context: c,
       builder: (BuildContext context) => CupertinoActionSheet(
         cancelButton: ColoredBox(
-          color: c.colours.background,
+          color: c.colours.surface,
           child: CupertinoActionSheetAction(
             onPressed: () {
               Navigator.pop(context, true);
@@ -220,7 +224,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
             child: Text(
               'BACK',
               style:
-                  c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
+                  c.fonts.labelLarge!.copyWith(color: c.colours.onSurface),
             ),
           ),
         ),
@@ -244,7 +248,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                     'RECEIVE'.notLocalised(),
                     style: c.fonts.titleSmall!.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: c.colours.onBackground,
+                      color: c.colours.onSurface,
                     ),
                   ),
                   Expanded(
@@ -260,7 +264,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                           Text(
                             'UNCONFIRMED',
                             style: c.fonts.labelSmall!.copyWith(
-                              color: c.colours.onBackground,
+                              color: c.colours.onSurface,
                             ),
                           ),
                       ],
@@ -272,7 +276,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               Text(
                 'TRANSACTION ID'.notLocalised(),
                 style: c.fonts.labelSmall!.copyWith(
-                  color: c.colours.onBackground,
+                  color: c.colours.onSurface,
                 ),
               ),
               GestureDetector(
@@ -295,13 +299,13 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 Text(
                   'TIME'.notLocalised(),
                   style: c.fonts.labelSmall!.copyWith(
-                    color: c.colours.onBackground,
+                    color: c.colours.onSurface,
                   ),
                 ),
                 Text(
                   transaction.timeStr(),
                   style: c.fonts.bodySmall!.copyWith(
-                    color: c.colours.onBackground,
+                    color: c.colours.onSurface,
                   ),
                 ),
               ],
@@ -323,22 +327,9 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
           ),
         ),
         actions: [
-          if (transaction.height == 0)
+          if (transaction.height != 0)
             ColoredBox(
-              color: c.colours.background,
-              child: CupertinoActionSheetAction(
-                child: Text(
-                  'Bump fee',
-                  style: c.fonts.labelLarge!.copyWith(color: c.colours.primary),
-                ),
-                onPressed: () async {
-                  // c.read<InfoCubit>().openLink(transaction);
-                },
-              ),
-            )
-          else
-            ColoredBox(
-              color: c.colours.background,
+              color: c.colours.surface,
               child: CupertinoActionSheetAction(
                 onPressed: () {
                   Navigator.pop(context, true);
@@ -346,12 +337,12 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 child: Text(
                   'Success',
                   style: c.fonts.labelLarge!
-                      .copyWith(color: c.colours.onBackground),
+                      .copyWith(color: c.colours.onSurface),
                 ),
               ),
             ),
           ColoredBox(
-            color: c.colours.background,
+            color: c.colours.surface,
             child: CupertinoActionSheetAction(
               onPressed: () {
                 Navigator.pop(context, true);
@@ -359,7 +350,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               child: Text(
                 'BACK',
                 style:
-                    c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
+                    c.fonts.labelLarge!.copyWith(color: c.colours.onSurface),
               ),
             ),
           ),
@@ -390,7 +381,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                     'SEND'.notLocalised(),
                     style: c.fonts.titleSmall!.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: c.colours.onBackground,
+                      color: c.colours.onSurface,
                     ),
                   ),
                   Expanded(
@@ -406,7 +397,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                           Text(
                             'UNCONFIRMED',
                             style: c.fonts.labelSmall!.copyWith(
-                              color: c.colours.onBackground,
+                              color: c.colours.onSurface,
                             ),
                           ),
                       ],
@@ -418,7 +409,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               Text(
                 'TRANSACTION ID'.notLocalised(),
                 style: c.fonts.labelSmall!.copyWith(
-                  color: c.colours.onBackground,
+                  color: c.colours.onSurface,
                 ),
               ),
               GestureDetector(
@@ -443,13 +434,13 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                   Text(
                     'TIME'.notLocalised(),
                     style: c.fonts.labelSmall!.copyWith(
-                      color: c.colours.onBackground,
+                      color: c.colours.onSurface,
                     ),
                   ),
                   Text(
                     transaction.timeStr(),
                     style: c.fonts.bodySmall!.copyWith(
-                      color: c.colours.onBackground,
+                      color: c.colours.onSurface,
                     ),
                   ),
                 ],
@@ -458,7 +449,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 Text(
                   'AMOUNT'.notLocalised(),
                   style: c.fonts.labelSmall!.copyWith(
-                    color: c.colours.onBackground,
+                    color: c.colours.onSurface,
                   ),
                 ),
                 Text(
@@ -466,14 +457,14 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                           .format(double.parse(transaction.sent.toString())) +
                       ' sats',
                   style: c.fonts.bodySmall!.copyWith(
-                    color: c.colours.onBackground,
+                    color: c.colours.onSurface,
                   ),
                 ),
                 const SizedBox(height: 16),
                 Text(
                   'Fees'.notLocalised(),
                   style: c.fonts.labelSmall!.copyWith(
-                    color: c.colours.onBackground,
+                    color: c.colours.onSurface,
                   ),
                 ),
                 Text(
@@ -481,7 +472,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                           .format(double.parse(transaction.fee.toString())) +
                       ' sats',
                   style: c.fonts.bodySmall!.copyWith(
-                    color: c.colours.onBackground,
+                    color: c.colours.onSurface,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -502,22 +493,23 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
           ),
         ),
         actions: [
-          if (transaction.height == 0)
+          if (transaction.height == 0 && canBump)
             ColoredBox(
-              color: c.colours.background,
+              color: c.colours.surface,
               child: CupertinoActionSheetAction(
                 child: Text(
                   'Bump fee',
                   style: c.fonts.labelLarge!.copyWith(color: c.colours.primary),
                 ),
-                onPressed: () async {
-                  // c.read<InfoCubit>().openLink(transaction);
+                onPressed: () {
+                  Navigator.pop(context);
+                  showBumpFeeSheet(c, transaction);
                 },
               ),
             )
-          else
+          else if (transaction.height != 0)
             ColoredBox(
-              color: c.colours.background,
+              color: c.colours.surface,
               child: CupertinoActionSheetAction(
                 onPressed: () {
                   Navigator.pop(context, true);
@@ -525,12 +517,12 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
                 child: Text(
                   'Success',
                   style: c.fonts.labelLarge!
-                      .copyWith(color: c.colours.onBackground),
+                      .copyWith(color: c.colours.onSurface),
                 ),
               ),
             ),
           ColoredBox(
-            color: c.colours.background,
+            color: c.colours.surface,
             child: CupertinoActionSheetAction(
               onPressed: () {
                 Navigator.pop(context, true);
@@ -538,7 +530,7 @@ void _showTxinfo(BuildContext c, Transaction transaction) {
               child: Text(
                 'BACK',
                 style:
-                    c.fonts.labelLarge!.copyWith(color: c.colours.onBackground),
+                    c.fonts.labelLarge!.copyWith(color: c.colours.onSurface),
               ),
             ),
           ),

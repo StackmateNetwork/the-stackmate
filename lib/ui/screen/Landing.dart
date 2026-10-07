@@ -46,7 +46,7 @@ class _Landing extends StatelessWidget {
               SliverAppBar(
                 expandedHeight: c.height / 1.2,
                 automaticallyImplyLeading: false,
-                backgroundColor: c.colours.background,
+                backgroundColor: c.colours.surface,
                 flexibleSpace: const FlexibleSpaceBar(
                   background: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

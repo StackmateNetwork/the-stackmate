@@ -94,7 +94,7 @@ class _SelectFeeState extends State<SelectFee> {
                             style: context.fonts.bodySmall!.copyWith(
                               fontSize: 10,
                               color:
-                                  context.colours.onBackground.withOpacity(0.7),
+                                  context.colours.onSurface.withValues(alpha: 0.7),
                             ),
                           ),
                         ],
@@ -116,7 +116,7 @@ class _SelectFeeState extends State<SelectFee> {
                             style: context.fonts.bodySmall!.copyWith(
                               fontSize: 10,
                               color:
-                                  context.colours.onBackground.withOpacity(0.7),
+                                  context.colours.onSurface.withValues(alpha: 0.7),
                             ),
                           ),
                         ],
@@ -138,7 +138,7 @@ class _SelectFeeState extends State<SelectFee> {
                             style: context.fonts.bodySmall!.copyWith(
                               fontSize: 10,
                               color:
-                                  context.colours.onBackground.withOpacity(0.7),
+                                  context.colours.onSurface.withValues(alpha: 0.7),
                             ),
                           ),
                         ],
@@ -181,21 +181,21 @@ class _SelectFeeState extends State<SelectFee> {
                     Text(
                       'FINAL FEES',
                       style: context.fonts.labelSmall!.copyWith(
-                        color: context.colours.onBackground,
+                        color: context.colours.onSurface,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '${state.finalFee} sats',
                       style: context.fonts.titleMedium!.copyWith(
-                        color: context.colours.onBackground,
+                        color: context.colours.onSurface,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '${state.finalFee!.toBtc()} BTC',
                       style: context.fonts.bodySmall!.copyWith(
-                        color: context.colours.onBackground,
+                        color: context.colours.onSurface,
                       ),
                     ),
                   ],
@@ -204,7 +204,7 @@ class _SelectFeeState extends State<SelectFee> {
                     height: 52,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: context.colours.background,
+                        foregroundColor: context.colours.surface,
                         backgroundColor: context.colours.primary,
                       ),
                       onPressed: () {

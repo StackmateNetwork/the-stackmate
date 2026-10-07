@@ -1,6 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:sats/api/cpsocket.dart';
-import 'package:sats/api/interface/cpsocket.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/api/interface/logger.dart';
 import 'package:sats/api/libbitcoin.dart';
@@ -10,11 +8,13 @@ import 'package:sats/cubit/new-wallet/common/words_cubit.dart';
 import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/launcher.dart';
+import 'package:sats/pkg/interface/qr_scanner.dart';
 import 'package:sats/pkg/interface/share.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/interface/vibrate.dart';
 import 'package:sats/pkg/launcher.dart';
 import 'package:sats/pkg/mnemonic_word.dart';
+import 'package:sats/pkg/qr_scanner.dart';
 import 'package:sats/pkg/secure-storage.dart';
 import 'package:sats/pkg/share.dart';
 import 'package:sats/pkg/storage.dart';
@@ -32,12 +32,12 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<SStorage>(() => SecureStorage());
     locator.registerLazySingleton<IStorage>(() => HiveStore());
     locator.registerLazySingleton<IClipBoard>(() => ClipBoard());
+    locator.registerLazySingleton<IQrScanner>(() => QrScanner());
     locator.registerLazySingleton<IShare>(() => Sharer());
     locator.registerSingleton<ILauncher>(Launcher());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
     locator.registerLazySingleton<IStackMateBitcoin>(() => LibBitcoin());
     locator.registerLazySingleton<ILogAPI>(() => DummyLogAPI());
-    locator.registerLazySingleton<ICPSocket>(() => CypherpostStream());
   } else {
     locator.registerSingleton<WordsCubit>(
       WordsCubit(
@@ -48,11 +48,11 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<IShare>(() => Sharer());
     locator.registerLazySingleton<ILauncher>(() => Launcher());
     locator.registerLazySingleton<IClipBoard>(() => ClipBoard());
+    locator.registerLazySingleton<IQrScanner>(() => QrScanner());
     locator.registerLazySingleton<IStorage>(() => HiveStore());
     locator.registerLazySingleton<IStackMateBitcoin>(() => LibBitcoin());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
     locator.registerLazySingleton<ILogAPI>(() => SentryLogger());
-    locator.registerLazySingleton<ICPSocket>(() => CypherpostStream());
   }
 
   final loggerCubit = Logger(

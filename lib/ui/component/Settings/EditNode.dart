@@ -49,7 +49,7 @@ class _EditNodeState extends State<EditNode> {
             Text(
               'Change Electrum Node'.toUpperCase(),
               style: c.fonts.labelLarge!.copyWith(
-                color: c.colours.onBackground,
+                color: c.colours.onSurface,
                 fontSize: 16,
               ),
             ),
@@ -58,7 +58,7 @@ class _EditNodeState extends State<EditNode> {
               'Provide Full Address (URL:PORT) and give it a name.',
               maxLines: 3,
               style: c.fonts.bodySmall!.copyWith(
-                color: c.colours.onSurface.withOpacity(0.7),
+                color: c.colours.onSurface.withValues(alpha: 0.7),
               ),
             ),
             const SizedBox(height: 16),
@@ -66,7 +66,7 @@ class _EditNodeState extends State<EditNode> {
             TextField(
               controller: _address,
               autocorrect: false,
-              style: TextStyle(color: context.colours.onBackground),
+              style: TextStyle(color: context.colours.onSurface),
               decoration: InputDecoration(
                 hintText: 'Enter Full Address'.toUpperCase(),
               ),
@@ -78,7 +78,7 @@ class _EditNodeState extends State<EditNode> {
             TextField(
               controller: _name,
               autocorrect: false,
-              style: TextStyle(color: context.colours.onBackground),
+              style: TextStyle(color: context.colours.onSurface),
               decoration: InputDecoration(
                 hintText: 'Name Your Node'.toUpperCase(),
               ),

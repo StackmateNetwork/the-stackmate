@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
@@ -135,14 +135,3 @@ Future<void> expectDirEqualsAssetDir(
 
 void returnFutureVoid(When<Future<void>> v) =>
     v.thenAnswer((i) => Future.value());
-
-final bool soundNullSafety = (() {
-  try {
-    // ignore: cast_nullable_to_non_nullable
-    null as Object;
-    return false;
-    // ignore: avoid_catching_errors
-  } on TypeError {
-    return true;
-  }
-})();

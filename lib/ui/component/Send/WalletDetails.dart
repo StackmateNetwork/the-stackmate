@@ -20,14 +20,14 @@ class WalletDetails extends StatelessWidget {
           Text(
             'Do you have what it takes?'.toUpperCase(),
             style: context.fonts.labelSmall!.copyWith(
-              color: context.colours.onBackground,
+              color: context.colours.onSurface,
             ),
           ),
         ] else ...[
           Text(
             'Balance'.toUpperCase(),
             style: context.fonts.labelSmall!.copyWith(
-              color: context.colours.onBackground,
+              color: context.colours.onSurface,
             ),
           ),
           BitcoinDisplaySmall(

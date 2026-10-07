@@ -4,7 +4,7 @@ part 'recover.g.dart';
 part 'recover.freezed.dart';
 
 @freezed
-class RecoveredKey with _$RecoveredKey {
+abstract class RecoveredKey with _$RecoveredKey {
   const factory RecoveredKey({
     String? seed,
     String? root,

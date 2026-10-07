@@ -6,24 +6,21 @@ part of 'node.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NodeClassAdapter extends TypeAdapter<_$NodeImpl> {
+class NodeClassAdapter extends TypeAdapter<_Node> {
   @override
-  final int typeId = 3;
+  final typeId = 3;
 
   @override
-  _$NodeImpl read(BinaryReader reader) {
+  _Node read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$NodeImpl(
-      address: fields[1] as String,
-      name: fields[2] as String,
-    );
+    return _Node(address: fields[1] as String, name: fields[2] as String);
   }
 
   @override
-  void write(BinaryWriter writer, _$NodeImpl obj) {
+  void write(BinaryWriter writer, _Node obj) {
     writer
       ..writeByte(2)
       ..writeByte(1)
@@ -47,13 +44,10 @@ class NodeClassAdapter extends TypeAdapter<_$NodeImpl> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$NodeImpl _$$NodeImplFromJson(Map<String, dynamic> json) => _$NodeImpl(
-      address: json['address'] as String,
-      name: json['name'] as String,
-    );
+_Node _$NodeFromJson(Map<String, dynamic> json) =>
+    _Node(address: json['address'] as String, name: json['name'] as String);
 
-Map<String, dynamic> _$$NodeImplToJson(_$NodeImpl instance) =>
-    <String, dynamic>{
-      'address': instance.address,
-      'name': instance.name,
-    };
+Map<String, dynamic> _$NodeToJson(_Node instance) => <String, dynamic>{
+  'address': instance.address,
+  'name': instance.name,
+};

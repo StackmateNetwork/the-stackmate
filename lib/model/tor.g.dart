@@ -6,25 +6,25 @@ part of 'tor.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TorClassAdapter extends TypeAdapter<_$TorImpl> {
+class TorClassAdapter extends TypeAdapter<_Tor> {
   @override
-  final int typeId = 8;
+  final typeId = 8;
 
   @override
-  _$TorImpl read(BinaryReader reader) {
+  _Tor read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$TorImpl(
+    return _Tor(
       enforced: fields[0] as bool,
       internal: fields[1] as bool,
-      externalPort: fields[2] as int,
+      externalPort: (fields[2] as num).toInt(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, _$TorImpl obj) {
+  void write(BinaryWriter writer, _Tor obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)

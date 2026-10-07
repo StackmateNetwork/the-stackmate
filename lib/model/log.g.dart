@@ -6,29 +6,29 @@ part of 'log.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$LogImpl _$$LogImplFromJson(Map<String, dynamic> json) => _$LogImpl(
-      type: $enumDecode(_$LogTypeEnumMap, json['type']),
-      path: json['path'] as String?,
-      response: json['response'] as String?,
-      statusCode: json['statusCode'] as String?,
-      bloc: json['bloc'] as String?,
-      event: json['event'] as String?,
-      exceptionType: json['exceptionType'] as String?,
-      exceptionSource: json['exceptionSource'] as String?,
-      stackTrace: json['stackTrace'] as String?,
-    );
+_Log _$LogFromJson(Map<String, dynamic> json) => _Log(
+  type: $enumDecode(_$LogTypeEnumMap, json['type']),
+  path: json['path'] as String?,
+  response: json['response'] as String?,
+  statusCode: json['statusCode'] as String?,
+  bloc: json['bloc'] as String?,
+  event: json['event'] as String?,
+  exceptionType: json['exceptionType'] as String?,
+  exceptionSource: json['exceptionSource'] as String?,
+  stackTrace: json['stackTrace'] as String?,
+);
 
-Map<String, dynamic> _$$LogImplToJson(_$LogImpl instance) => <String, dynamic>{
-      'type': _$LogTypeEnumMap[instance.type]!,
-      'path': instance.path,
-      'response': instance.response,
-      'statusCode': instance.statusCode,
-      'bloc': instance.bloc,
-      'event': instance.event,
-      'exceptionType': instance.exceptionType,
-      'exceptionSource': instance.exceptionSource,
-      'stackTrace': instance.stackTrace,
-    };
+Map<String, dynamic> _$LogToJson(_Log instance) => <String, dynamic>{
+  'type': _$LogTypeEnumMap[instance.type]!,
+  'path': instance.path,
+  'response': instance.response,
+  'statusCode': instance.statusCode,
+  'bloc': instance.bloc,
+  'event': instance.event,
+  'exceptionType': instance.exceptionType,
+  'exceptionSource': instance.exceptionSource,
+  'stackTrace': instance.stackTrace,
+};
 
 const _$LogTypeEnumMap = {
   LogType.api: 'api',
