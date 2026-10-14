@@ -191,25 +191,6 @@ class AddWalletScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 16),
-              // SelectButton(
-              //   text: 'Legacy (coming soon...)',
-              //   description:
-              //       'Derive a legacy ("1") account from your master key.',
-              //   colour: c.colours.surface,
-              //   onPressed: () {
-              //     // c.push('/watch-only');
-              //   },
-              // ),
-              // const SizedBox(height: 16),
-              // SelectButton(
-              //   text: 'Compatible (coming soon...)',
-              //   description:
-              //       'Derive a compatible ("3") account from your master key.',
-              //   colour: c.colours.surface,
-              //   onPressed: () {
-              //     // c.push('/watch-only');
-              //   },
-              // ),
               const SizedBox(height: 16),
 
               Padding(

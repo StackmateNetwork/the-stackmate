@@ -106,7 +106,6 @@ class BroadcastHex extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: 'Transaction Hex / PSBT',
                   fillColor: c.colours.surface,
-                  //errorText: state.seedError.nullIfEmpty(),
                 ),
               ),
             ),
@@ -118,12 +117,10 @@ class BroadcastHex extends StatelessWidget {
                   foregroundColor: context.colours.surface,
                   backgroundColor: context.colours.primary,
                 ),
-                onPressed: () async {
-                  if (broadcastState.errBroadcasting != '') {
-                    handleError(context, 'Error validating hex');
-                  }
-                  context.read<BroadcastCubit>().broadcastHexConfirmed();
-                },
+                onPressed: broadcastState.broadcasting
+                    ? null
+                    : () =>
+                          context.read<BroadcastCubit>().broadcastHexConfirmed(),
                 child: Text('Broadcast'.toUpperCase()),
               ),
             ),

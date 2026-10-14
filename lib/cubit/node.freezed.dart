@@ -209,7 +209,7 @@ return $default(_that.address,_that.errNodeState,_that.name,_that.isEditing);cas
 
 
 class _NodeAddressState extends NodeAddressState {
-  const _NodeAddressState({this.address = defaultNodeAddress, this.errNodeState = '', this.name = 'Blockstream', this.isEditing = false}): super._();
+  const _NodeAddressState({this.address = defaultNodeAddress, this.errNodeState = '', this.name = NodeAddressCubit.defaultName, this.isEditing = false}): super._();
   
 
 @override@JsonKey() final  String address;

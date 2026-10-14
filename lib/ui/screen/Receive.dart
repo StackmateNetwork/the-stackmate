@@ -80,6 +80,25 @@ class _Receive extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const Loader(),
+              if (state.errLoadingAddress.isNotEmpty) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    'Could not find the best unused address. '
+                    'Check your node and Tor connection.\n'
+                    '${state.errLoadingAddress}',
+                    style: c.fonts.bodySmall!.copyWith(
+                      color: c.colours.error,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () =>
+                      c.read<ReceiveCubit>().getLastUnusedAddress(),
+                  child: const Text('RETRY'),
+                ),
+              ],
               const SizedBox(height: 24),
               Align(
                 child: Text(
@@ -90,10 +109,8 @@ class _Receive extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              FadeIn(
-                // delay: const Duration(milliseconds: 400),
-                child: QRAddress(address: state.address),
-              ),
+              if (state.address.isNotEmpty)
+                FadeIn(child: QRAddress(address: state.address)),
               const SizedBox(height: 24),
               FadeIn(
                 delay: const Duration(milliseconds: 300),
@@ -118,21 +135,19 @@ class ReceiveScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final receive = ReceiveCubit(
-      context.read<WalletsCubit>(),
-      context.read<Logger>(),
-      locator<IClipBoard>(),
-      locator<IShare>(),
-      locator<IVibrate>(),
-      locator<IStackMateBitcoin>(),
-      context.read<NodeAddressCubit>(),
-      context.read<TorCubit>(),
-      locator<IStorage>(),
-      wallet,
-    );
-
-    return BlocProvider.value(
-      value: receive,
+    return BlocProvider(
+      create: (_) => ReceiveCubit(
+        context.read<WalletsCubit>(),
+        context.read<Logger>(),
+        locator<IClipBoard>(),
+        locator<IShare>(),
+        locator<IVibrate>(),
+        locator<IStackMateBitcoin>(),
+        context.read<NodeAddressCubit>(),
+        context.read<TorCubit>(),
+        locator<IStorage>(),
+        wallet,
+      ),
       child: const _Receive(),
     );
   }

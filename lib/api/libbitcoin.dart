@@ -5,6 +5,7 @@ import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/model/core.dart';
 import 'package:sats/model/result.dart';
 import 'package:sats/model/transaction.dart';
+import 'package:sats/pkg/wallet_db.dart';
 
 /// Bitcoin wallet engine backed by BDK (bdk_dart).
 ///
@@ -169,16 +170,6 @@ class LibBitcoin implements IStackMateBitcoin {
         return wallet.balance().total.toSat();
       });
 
-  @override
-  R<int> syncBalance({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-  }) =>
-      _guard(() {
-        final wallet = _syncedMemoryWallet(descriptor, nodeAddress, socks5);
-        return wallet.balance().total.toSat();
-      });
 
   @override
   R<int> getHeight({
@@ -200,36 +191,20 @@ class LibBitcoin implements IStackMateBitcoin {
         return _history(wallet);
       });
 
-  @override
-  R<List<Transaction>> getHistory({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-  }) =>
-      _guard(() {
-        final wallet = _syncedMemoryWallet(descriptor, nodeAddress, socks5);
-        return _history(wallet);
-      });
+
 
   @override
-  R<List<UTXO>> getUTXOSet({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-  }) =>
-      _guard(() {
-        final wallet = _syncedMemoryWallet(descriptor, nodeAddress, socks5);
-        return [
-          for (final u in wallet.listUnspent())
-            UTXO(
-              u.outpoint.txid.toString(),
-              u.outpoint.vout,
-              u.txout.value.toSat(),
-              _hex(u.txout.scriptPubkey.toBytes()),
-              u.keychain == bdk.KeychainKind.internal ? 'internal' : 'external',
-            ),
-        ];
-      });
+  bool isValidAddress({
+    required String address,
+    required String network,
+  }) {
+    try {
+      bdk.Address(address: address.trim(), network: _network(network));
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
 
   @override
   R<String> getAddress({
@@ -274,20 +249,6 @@ class LibBitcoin implements IStackMateBitcoin {
         return psbt;
       });
 
-  @override
-  R<PSBT> buildTransaction({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-    required String txOutputs,
-    required String feeAbsolute,
-    required String policyPath,
-    required String sweep,
-  }) =>
-      _guard(() {
-        final wallet = _syncedMemoryWallet(descriptor, nodeAddress, socks5);
-        return _buildPsbt(wallet, descriptor, txOutputs, feeAbsolute, sweep);
-      });
 
   @override
   R<PSBT> sqliteBumpFee({
@@ -464,12 +425,8 @@ class LibBitcoin implements IStackMateBitcoin {
     return (fingerprint: m.group(1)!, path: m.group(2)!, key: m.group(3)!);
   }
 
-  /// BDK keeps its own sqlite schema, separate from the legacy
-  /// stackmate-core database at [dbPath]; chain data is re-synced into it.
-  String _bdkDbPath(String dbPath) => '$dbPath.bdk';
-
   (bdk.Wallet, bdk.Persister) _openWallet(String descriptor, String dbPath) {
-    final persister = bdk.Persister.newSqlite(path: _bdkDbPath(dbPath));
+    final persister = bdk.Persister.newSqlite(path: bdkDbPath(dbPath));
     final desc = _descriptor(descriptor);
     try {
       final wallet = bdk.Wallet.loadSingle(
@@ -490,20 +447,6 @@ class LibBitcoin implements IStackMateBitcoin {
     }
   }
 
-  bdk.Wallet _syncedMemoryWallet(
-    String descriptor,
-    String nodeAddress,
-    String socks5,
-  ) {
-    final wallet = bdk.Wallet.createSingle(
-      descriptor: _descriptor(descriptor),
-      network: _networkOfDescriptor(descriptor),
-      persister: bdk.Persister.newInMemory(),
-      lookahead: _lookahead,
-    );
-    _fullScan(wallet, nodeAddress, socks5);
-    return wallet;
-  }
 
   bdk.ElectrumClient _electrum(String nodeAddress, String socks5) =>
       bdk.ElectrumClient(
@@ -606,8 +549,6 @@ class LibBitcoin implements IStackMateBitcoin {
     return max;
   }
 
-  String _hex(Uint8List bytes) =>
-      bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
 
   Uint8List _unhex(String hex) => Uint8List.fromList([
         for (var i = 0; i < hex.length; i += 2)

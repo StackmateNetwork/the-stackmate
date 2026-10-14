@@ -135,29 +135,17 @@ class DeriveScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final networkSelect = context.select((ChainSelectCubit c) => c);
-    final nodeSelect = context.select((NodeAddressCubit c) => c);
-    final tor = context.select((TorCubit c) => c);
-
-    final logger = context.select((Logger c) => c);
-    final wallets = context.select((WalletsCubit c) => c);
-    final masterKey = context.select((MasterKeyCubit c) => c);
-
-    final deriveMasterCubit = DeriveWalletCubit(
-      locator<IStackMateBitcoin>(),
-      logger,
-      locator<IStorage>(),
-      wallets,
-      networkSelect,
-      nodeSelect,
-      tor,
-      masterKey,
-    );
-
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: deriveMasterCubit),
-      ],
+    return BlocProvider(
+      create: (_) => DeriveWalletCubit(
+        locator<IStackMateBitcoin>(),
+        context.read<Logger>(),
+        locator<IStorage>(),
+        context.read<WalletsCubit>(),
+        context.read<ChainSelectCubit>(),
+        context.read<NodeAddressCubit>(),
+        context.read<TorCubit>(),
+        context.read<MasterKeyCubit>(),
+      ),
       child: _Derive(),
     );
   }

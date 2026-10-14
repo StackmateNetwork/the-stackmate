@@ -17,7 +17,6 @@ import 'package:sats/pkg/interface/clipboard.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/mnemonic_word.dart';
 import 'package:sats/pkg/secure-storage.dart';
-// import 'package:sats/pkg/vibrate.dart';
 
 class Cubits extends StatefulWidget {
   const Cubits({super.key, required this.child});
@@ -28,47 +27,55 @@ class Cubits extends StatefulWidget {
 }
 
 class _CubitsState extends State<Cubits> {
+  final logger = locator<Logger>();
+  late final ChainSelectCubit networkSelectCubit;
+  late final TorCubit torCubit;
+  late final MasterKeyCubit masterKeyCubit;
+  late final PreferencesCubit preferencesCubit;
+  late final WalletsCubit walletsCubit;
+  late final NodeAddressCubit nodeAddressCubit;
+  late final FeesCubit feesCubit;
+  late final BroadcastCubit broadcastHex;
+  late final PinCubit pinCubit;
+  late final WordsCubit wordCubit;
+
   @override
-  Widget build(BuildContext context) {
-    final logger = locator<Logger>();
+  void initState() {
+    super.initState();
     final storage = locator<IStorage>();
-    final sstorage = locator<SStorage>();
-    final networkSelectCubit = ChainSelectCubit(
-      storage,
-      logger,
-    );
+
+    networkSelectCubit = ChainSelectCubit(storage, logger);
     networkSelectCubit.init();
-    final torCubit = TorCubit(storage, logger);
+
+    torCubit = TorCubit(storage, logger);
     torCubit.start();
 
-    final masterKeyCubit = MasterKeyCubit(sstorage, networkSelectCubit);
+    masterKeyCubit = MasterKeyCubit(locator<SStorage>(), networkSelectCubit);
     masterKeyCubit.init();
 
-    final preferencesCubit = PreferencesCubit(storage);
+    preferencesCubit = PreferencesCubit(storage);
     preferencesCubit.init();
 
-    final walletsCubit = WalletsCubit(
+    walletsCubit = WalletsCubit(
       storage,
       logger,
       networkSelectCubit,
       locator<IClipBoard>(),
     );
 
-    final nodeAddressCubit = NodeAddressCubit(
-      storage,
-      networkSelectCubit,
-    );
+    nodeAddressCubit = NodeAddressCubit(storage, networkSelectCubit);
     nodeAddressCubit.init();
 
-    final feesCubit = FeesCubit(
+    // Loads cached fees and fetches fresh ones on creation.
+    feesCubit = FeesCubit(
       storage,
       networkSelectCubit,
       nodeAddressCubit,
       torCubit,
       logger,
     );
-    feesCubit.init();
-    final broadcastHex = BroadcastCubit(
+
+    broadcastHex = BroadcastCubit(
       logger,
       locator<IStackMateBitcoin>(),
       locator<IClipBoard>(),
@@ -77,11 +84,23 @@ class _CubitsState extends State<Cubits> {
       networkSelectCubit,
     );
 
-    final pinCubit = PinCubit(
-      storage,
-    );
+    pinCubit = PinCubit(storage);
     pinCubit.init();
-    final wordCubit = WordsCubit(mnemonicWords: MnemonicWords());
+
+    wordCubit = WordsCubit(mnemonicWords: MnemonicWords());
+  }
+
+  /// Everything that depends on the selected network is reloaded here, so a
+  /// switch takes effect however the settings screen is left.
+  Future<void> _networkChanged() async {
+    walletsCubit.refresh();
+    await masterKeyCubit.init();
+    await nodeAddressCubit.init();
+    await feesCubit.update();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: networkSelectCubit),
@@ -97,42 +116,10 @@ class _CubitsState extends State<Cubits> {
         BlocProvider.value(value: wordCubit),
       ],
       child: BlocListener<ChainSelectCubit, BlockchainState>(
-        listener: (context, state) {
-          walletsCubit.refresh();
-        },
+        listenWhen: (p, c) => p.blockchain != c.blockchain,
+        listener: (context, state) => _networkChanged(),
         child: widget.child,
       ),
     );
   }
-}
-
-class SimpleBlocObserver extends BlocObserver {
-  void prettyPrint(String input) {
-    String str = input.replaceAll(', ', ',\n    ');
-    str = str.replaceAll('(', '(\n    ');
-    str = str.replaceAll(')', '\n)');
-    str = '\n' + str.replaceAll('),', '  ),') + '\n\n';
-
-    print(str);
-  }
-
-  @override
-  void onChange(BlocBase bloc, Change change) {
-    try {
-      super.onChange(bloc, change);
-    } catch (e) {
-      print('STATE ERROR: ' + e.toString());
-    }
-  }
-
-  @override
-  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    print('$error, $stackTrace');
-    super.onError(bloc, error, stackTrace);
-  }
-
-  // @override
-  // void onTransition(Bloc bloc, Transition transition) {
-  //   super.onTransition(bloc, transition);
-  // }
 }

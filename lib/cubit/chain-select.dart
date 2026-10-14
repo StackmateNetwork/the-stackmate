@@ -15,28 +15,27 @@ abstract class BlockchainState with _$BlockchainState {
 }
 
 class ChainSelectCubit extends Cubit<BlockchainState> {
-  ChainSelectCubit(
-    this._storage,
-    this._logger,
-  ) : super(const BlockchainState());
+  ChainSelectCubit(this._storage, this._logger)
+    : super(const BlockchainState());
 
   final IStorage _storage;
   final Logger _logger;
 
   Future<void> init() async {
-    final blockchain =
-        _storage.getFirstItem<Blockchain>(StoreKeys.Blockchain.name);
+    final blockchain = _storage.getFirstItem<Blockchain>(
+      StoreKeys.Blockchain.name,
+    );
     if (blockchain.hasError) {
-      if (blockchain.error! == 'empty') {
-        emit(const BlockchainState());
-        await Future.delayed(const Duration(milliseconds: 50));
-      } else {
-        return;
+      if (blockchain.error != 'empty') {
+        _logger.logException(
+          blockchain.error,
+          'BlockchainCubit.init',
+          StackTrace.current,
+        );
       }
-    } else {
-      emit(BlockchainState(blockchain: blockchain.result!));
-      await Future.delayed(const Duration(milliseconds: 50));
+      return;
     }
+    emit(BlockchainState(blockchain: blockchain.result!));
   }
 
   Future<void> changeBlockchain(Blockchain blockchain) async {
@@ -47,7 +46,6 @@ class ChainSelectCubit extends Cubit<BlockchainState> {
         0,
         blockchain,
       );
-      await Future.delayed(const Duration(milliseconds: 200));
     } catch (e, s) {
       _logger.logException(e, 'BlockchainCubit.changeBlockchain', s);
     }

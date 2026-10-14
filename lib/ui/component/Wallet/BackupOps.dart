@@ -24,6 +24,12 @@ class _BackupOpsState extends State<BackupOps> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext c) {
     final wallet = c.select((InfoCubit wc) => wc.state.wallet);
     final masterKey = c.select((MasterKeyCubit mc) => mc.state.key!);

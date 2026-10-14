@@ -7,18 +7,18 @@ class EditNode extends StatefulWidget {
   const EditNode({super.key});
 
   @override
-  _EditNodeState createState() => _EditNodeState();
+  State<EditNode> createState() => _EditNodeState();
 }
 
 class _EditNodeState extends State<EditNode> {
-  late TextEditingController _address;
-  late TextEditingController _name;
+  final _address = TextEditingController();
+  final _name = TextEditingController();
 
   @override
-  void initState() {
-    _address = TextEditingController();
-    _name = TextEditingController();
-    super.initState();
+  void dispose() {
+    _address.dispose();
+    _name.dispose();
+    super.dispose();
   }
 
   void _checkFields(NodeAddressState state) {
@@ -31,82 +31,82 @@ class _EditNodeState extends State<EditNode> {
     final nodeState = c.select((NodeAddressCubit nac) => nac.state);
     _checkFields(nodeState);
 
-    return GestureDetector(
-      onTap: () {
-        context.read<NodeAddressCubit>().toggleIsEditting();
-      },
-      child: Container(
-        color: c.colours.surface,
-        padding: const EdgeInsets.only(
-          top: 16,
-          bottom: 16,
-          left: 16,
-          right: 16,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Change Electrum Node'.toUpperCase(),
-              style: c.fonts.labelLarge!.copyWith(
-                color: c.colours.onSurface,
-                fontSize: 16,
-              ),
+    return Container(
+      color: c.colours.surface,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Change Electrum Node'.toUpperCase(),
+            style: c.fonts.labelLarge!.copyWith(
+              color: c.colours.onSurface,
+              fontSize: 16,
             ),
-            const SizedBox(height: 4),
-            Text(
-              'Provide Full Address (URL:PORT) and give it a name.',
-              maxLines: 3,
-              style: c.fonts.bodySmall!.copyWith(
-                color: c.colours.onSurface.withValues(alpha: 0.7),
-              ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Provide Full Address (ssl://HOST:PORT) and give it a name.',
+            maxLines: 3,
+            style: c.fonts.bodySmall!.copyWith(
+              color: c.colours.onSurface.withValues(alpha: 0.7),
             ),
-            const SizedBox(height: 16),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _address,
-              autocorrect: false,
-              style: TextStyle(color: context.colours.onSurface),
-              decoration: InputDecoration(
-                hintText: 'Enter Full Address'.toUpperCase(),
-              ),
-              onChanged: (t) {
-                context.read<NodeAddressCubit>().addressChanged(t);
-              },
+          ),
+          const SizedBox(height: 32),
+          TextField(
+            controller: _address,
+            autocorrect: false,
+            keyboardType: TextInputType.url,
+            style: TextStyle(color: c.colours.onSurface),
+            decoration: InputDecoration(
+              hintText: 'Enter Full Address'.toUpperCase(),
+              errorText: nodeState.errNodeState.nullIfEmpty(),
+              errorMaxLines: 3,
             ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _name,
-              autocorrect: false,
-              style: TextStyle(color: context.colours.onSurface),
-              decoration: InputDecoration(
-                hintText: 'Name Your Node'.toUpperCase(),
-              ),
-              onChanged: (t) {
-                context.read<NodeAddressCubit>().nameChanged(t);
-              },
+            onChanged: (t) {
+              c.read<NodeAddressCubit>().addressChanged(t);
+            },
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: _name,
+            autocorrect: false,
+            style: TextStyle(color: c.colours.onSurface),
+            decoration: InputDecoration(
+              hintText: 'Name Your Node'.toUpperCase(),
             ),
-            const SizedBox(height: 32),
-            TextButton(
-              onPressed: () {
-                c.read<NodeAddressCubit>().saveClicked();
-              },
-              child: const Text('SAVE'),
+            onChanged: (t) {
+              c.read<NodeAddressCubit>().nameChanged(t);
+            },
+          ),
+          const SizedBox(height: 32),
+          TextButton(
+            onPressed: () {
+              c.read<NodeAddressCubit>().saveClicked();
+            },
+            child: const Text('SAVE'),
+          ),
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: () {
+              c.read<NodeAddressCubit>().cancelEditing();
+            },
+            child: const Text('CANCEL'),
+          ),
+          const SizedBox(height: 24),
+          TextButton(
+            onPressed: () async {
+              final node = c.read<NodeAddressCubit>();
+              await node.revertToDefault();
+              node.toggleIsEditting();
+            },
+            child: Text(
+              'RESET TO DEFAULT',
+              style: c.fonts.labelLarge!.copyWith(color: c.colours.error),
             ),
-            const SizedBox(height: 24),
-            TextButton(
-              onPressed: () {
-                c.read<NodeAddressCubit>().revertToDefault();
-                c.read<NodeAddressCubit>().saveClicked();
-              },
-              child: Text(
-                'RESET TO DEFAULT',
-                style: c.fonts.labelLarge!.copyWith(color: c.colours.error),
-              ),
-            ),
-            const SizedBox(height: 24),
-          ],
-        ),
+          ),
+          const SizedBox(height: 24),
+        ],
       ),
     ).animate(delay: 200.ms).fadeIn();
   }

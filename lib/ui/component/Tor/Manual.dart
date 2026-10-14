@@ -150,6 +150,12 @@ class _ExternalTorState extends State<ExternalTor> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _socks5Port.dispose();
+    super.dispose();
+  }
+
   void _checkFields(TorState state) {
     if (_socks5Port.text != state.socks5Port.toString()) {
       _socks5Port.text = state.socks5Port.toString();

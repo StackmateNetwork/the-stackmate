@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sats/cubit/master.dart';
-import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Settings/BitcoinUnit.dart';
 import 'package:sats/ui/component/Settings/Incognito.dart';
@@ -54,12 +52,8 @@ class SettingsScreen extends StatelessWidget {
                     foregroundColor: c.colours.surface,
                     backgroundColor: c.colours.primary,
                   ),
-                  onPressed: () {
-                    c.read<MasterKeyCubit>().init();
-                    c.read<WalletsCubit>().refresh();
-                    Navigator.of(c).pop();
-                  },
-                  child: const Text('SAVE'),
+                  onPressed: () => Navigator.of(c).pop(),
+                  child: const Text('DONE'),
                 ),
               ),
             ],

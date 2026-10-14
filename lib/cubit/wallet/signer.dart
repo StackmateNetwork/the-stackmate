@@ -16,6 +16,8 @@ class WalletSigner {
   final MasterKeyCubit _masterKey;
   final ChainSelectCubit _blockchain;
 
+  static const missingKeyError = 'Signing key for this wallet not found.';
+
   Future<String> signingDescriptor(Wallet wallet) async {
     if (!wallet.canSign) return wallet.descriptor;
 
@@ -23,9 +25,9 @@ class WalletSigner {
     final String mnemonic;
     if (isSegwit && wallet.walletType != WalletType.primary) {
       await _masterKey.getRecoverkey(wallet.fingerprint);
-      mnemonic = _masterKey.state.rkey!.seed!;
+      mnemonic = _masterKey.state.rkey?.seed ?? (throw missingKeyError);
     } else {
-      mnemonic = _masterKey.state.key!.seed!;
+      mnemonic = _masterKey.state.key?.seed ?? (throw missingKeyError);
     }
 
     final root = _core

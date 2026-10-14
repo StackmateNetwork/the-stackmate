@@ -143,32 +143,26 @@ class XPubColdcardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final networkSelect = context.select((ChainSelectCubit c) => c);
-    final nodeSelect = context.select((NodeAddressCubit c) => c);
-    final tor = context.select((TorCubit c) => c);
-
-    final logger = context.select((Logger c) => c);
-    final wallets = context.select((WalletsCubit c) => c);
-
-    final xpubCub = XpubImportCubit(
-      logger,
-      locator<IClipBoard>(),
-    );
-    final xpubCubit = XpubImportWalletCubit(
-      locator<IStackMateBitcoin>(),
-      logger,
-      locator<IStorage>(),
-      wallets,
-      networkSelect,
-      nodeSelect,
-      tor,
-      xpubCub,
-    );
-
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(value: xpubCub),
-        BlocProvider.value(value: xpubCubit),
+        BlocProvider(
+          create: (_) => XpubImportCubit(
+            context.read<Logger>(),
+            locator<IClipBoard>(),
+          ),
+        ),
+        BlocProvider(
+          create: (c) => XpubImportWalletCubit(
+            locator<IStackMateBitcoin>(),
+            c.read<Logger>(),
+            locator<IStorage>(),
+            c.read<WalletsCubit>(),
+            c.read<ChainSelectCubit>(),
+            c.read<NodeAddressCubit>(),
+            c.read<TorCubit>(),
+            c.read<XpubImportCubit>(),
+          ),
+        ),
       ],
       child: _XpubColdcard(),
     );

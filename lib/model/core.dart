@@ -130,27 +130,3 @@ class Address {
   final String address;
   final String index;
 }
-
-class UTXO {
-  const UTXO(
-    this.txid,
-    this.vout,
-    this.value,
-    this.scriptPubkey,
-    this.keychainKind,
-  );
-  factory UTXO.fromJson(Map<String, dynamic> json) {
-    return UTXO(
-      json['txid'] as String,
-      json['vout'] as int,
-      json['value'] as int,
-      json['script_pubkey'] as String,
-      json['keychain_kind'] as String,
-    );
-  }
-  final String txid;
-  final int vout;
-  final int value;
-  final String scriptPubkey;
-  final String keychainKind;
-}

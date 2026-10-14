@@ -25,6 +25,12 @@ class _BackupWalletState extends State<_BackupWallet> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext c) {
     return BlocConsumer<SeedBackupCubit, SeedBackupState>(
       listenWhen: (previous, current) =>
@@ -113,15 +119,11 @@ class BackupWalletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final masterKey = context.select((MasterKeyCubit c) => c);
-
-    final seedBackupCubit = SeedBackupCubit(
-      masterKey,
-      locator<ILauncher>(),
-    );
-
-    return BlocProvider.value(
-      value: seedBackupCubit,
+    return BlocProvider(
+      create: (_) => SeedBackupCubit(
+        context.read<MasterKeyCubit>(),
+        locator<ILauncher>(),
+      ),
       child: _BackupWallet(),
     );
   }

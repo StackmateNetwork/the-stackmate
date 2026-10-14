@@ -8,6 +8,20 @@ class TransactionComplete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wallet = context.select((SendCubit w) => w.state.wallet);
+    final txId = context.select((SendCubit w) => w.state.txId);
+    final returnButton = SizedBox(
+      height: 52,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: context.colours.surface,
+          backgroundColor: context.colours.primary,
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: const Text('RETURN'),
+      ),
+    );
     if (wallet.isNotWatchOnly()) {
       return Padding(
         padding: const EdgeInsets.only(top: 35),
@@ -22,28 +36,26 @@ class TransactionComplete extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Open your wallet to update your balance and history.',
+              'TXID'.toUpperCase(),
+              style: context.fonts.labelSmall!.copyWith(
+                color: context.colours.onSurface,
+              ),
+            ),
+            const SizedBox(height: 8),
+            SelectableText(
+              txId,
               style: context.fonts.bodySmall!.copyWith(
                 color: context.colours.onSurface,
-                fontSize: 16,
               ),
+            ),
+            TextButton(
+              onPressed: () => context.read<SendCubit>().shareTxId(),
+              child: const Text('SHARE TXID'),
             ),
             const SizedBox(height: 32),
             const Icon(Icons.check_circle, size: 80),
             const SizedBox(height: 32),
-            SizedBox(
-              height: 52,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: context.colours.surface,
-                  backgroundColor: context.colours.primary,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('RETURN'),
-              ),
-            ),
+            returnButton,
           ],
         ),
       );
@@ -67,6 +79,8 @@ class TransactionComplete extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
+            const SizedBox(height: 32),
+            returnButton,
           ],
         ),
       );

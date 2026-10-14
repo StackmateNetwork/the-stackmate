@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 
 extension ContextUtils on BuildContext {
@@ -9,17 +8,10 @@ extension ContextUtils on BuildContext {
   ThemeData get theme => Theme.of(this);
   double get width => MediaQuery.of(this).size.width;
   double get height => MediaQuery.of(this).size.height;
-  // AppLocalizations get word => AppLocalizations.of(this);
 }
 
 extension Strings on String {
   String notLocalised() {
-    //print('"' + this + '" not localised');
-    return this;
-  }
-
-  String printForDebug() {
-    print('STRING:: ' + this);
     return this;
   }
 
@@ -38,8 +30,7 @@ extension Strings on String {
       final amt = int.parse(replaceAll(' ', '').replaceAll(',', ''));
 
       return amt.toBtc();
-    } catch (e) {
-      //print(e.toString());
+    } catch (_) {
       return '0.00000000';
     }
   }
@@ -67,5 +58,3 @@ String readableDateFrom(int timeStamp) {
   final formattedDate = DateFormat.yMMMd().format(date);
   return formattedDate;
 }
-
-class CCC {}

@@ -40,6 +40,13 @@ abstract final class BitcoinWorker {
     () => LibBitcoin().sqliteHistory(descriptor: descriptor, dbPath: dbPath),
   );
 
+  static Future<R<Address>> lastUnusedAddress({
+    required String descriptor,
+    required String dbPath,
+  }) => Isolate.run(
+    () => LibBitcoin().lastUnusedAddress(descriptor: descriptor, dbPath: dbPath),
+  );
+
   static Future<R<int>> height({
     required String network,
     required String nodeAddress,

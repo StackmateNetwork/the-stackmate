@@ -11,21 +11,15 @@ class SelectNetwork extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final blockchain = c.select((ChainSelectCubit b) => b.state.blockchain);
-    final nodeState = c.select((NodeAddressCubit nac) => nac.state);
+    final nodeName = c.select((NodeAddressCubit nac) => nac.state.name);
     return ElevatedButton(
       onPressed: () {
-        if (blockchain == Blockchain.main) {
-          c.read<ChainSelectCubit>().changeBlockchain(Blockchain.test);
-          handleHelp(c, 'Modify full node uri or click on reset to default');
-          if (nodeState.name == 'Blockstream') {
-            c.read<NodeAddressCubit>().revertToDefault();
-          }
-        } else {
-          c.read<ChainSelectCubit>().changeBlockchain(Blockchain.main);
-          handleHelp(c, 'Modify full node uri or click on reset to default');
-          if (nodeState.name == 'Blockstream') {
-            c.read<NodeAddressCubit>().revertToDefault();
-          }
+        c.read<ChainSelectCubit>().changeBlockchain(
+          blockchain == Blockchain.main ? Blockchain.test : Blockchain.main,
+        );
+        // The default node follows the network; a custom one does not.
+        if (nodeName != NodeAddressCubit.defaultName) {
+          handleHelp(c, 'Update your custom node for the new network.');
         }
       },
       style: ElevatedButton.styleFrom(
@@ -35,10 +29,7 @@ class SelectNetwork extends StatelessWidget {
       ),
       child: Container(
         height: 80,
-        padding: const EdgeInsets.only(
-          top: 16,
-          bottom: 16,
-        ),
+        padding: const EdgeInsets.only(top: 16, bottom: 16),
         child: Row(
           children: [
             Column(
@@ -56,18 +47,12 @@ class SelectNetwork extends StatelessWidget {
                 Text(
                   blockchain.displayName,
                   maxLines: 3,
-                  style: c.fonts.bodySmall!.copyWith(
-                    color: c.colours.primary,
-                  ),
+                  style: c.fonts.bodySmall!.copyWith(color: c.colours.primary),
                 ),
               ],
             ),
             const Spacer(),
-            Icon(
-              Icons.public_rounded,
-              size: 24,
-              color: c.colours.secondary,
-            ),
+            Icon(Icons.public_rounded, size: 24, color: c.colours.secondary),
           ],
         ),
       ),

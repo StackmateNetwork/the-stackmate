@@ -53,9 +53,6 @@ class BroadcastCubit extends Cubit<BroadcastState> {
 
   static const dummyDescriptor = 'wpkh(xprv/*)';
   static const emptyString = '';
-  // void completed() {
-  //   _walletsCubit.walletSelected(wallet)
-  // }
   void reset() {
     emit(
       state.copyWith(
@@ -147,16 +144,16 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       emit(state.copyWith(errFileImport: text.error!));
       return;
     }
+    final psbt = text.result!.replaceAll(RegExp(r'\s'), '');
     final decoded = _core.decodePsbt(
       network: _blockchainCubit.state.blockchain.name,
-      psbt: text.result!,
+      psbt: psbt,
     );
     if (decoded.hasError) {
       emit(state.copyWith(errBroadcasting: 'Invalid PSBT.'));
     } else {
-      emit(state.copyWith(psbt: text.result!));
+      emit(state.copyWith(psbt: psbt));
     }
-    return;
   }
 
   Future<void> pasteHex() async {
@@ -164,7 +161,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     if (text.hasError) {
       emit(state.copyWith(errFileImport: text.error!));
     } else {
-      emit(state.copyWith(hex: text.result!));
+      hexText(text.result!);
     }
   }
 
@@ -223,40 +220,57 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     }
   }
 
-  Future<void> hexText(String hex) async {
-    await Future.delayed(const Duration(milliseconds: 3000));
-    emit(
-      state.copyWith(
-        hex: hex,
-      ),
-    );
+  void hexText(String hex) {
+    emit(state.copyWith(hex: hex.trim(), errBroadcasting: emptyString));
   }
 
+  static final _hexPattern = RegExp(r'^[0-9a-fA-F]+$');
+
+  /// Broadcasts the entered text, which may be a raw transaction in hex or
+  /// a finalized PSBT in base64.
   Future<void> broadcastHexConfirmed() async {
+    if (state.broadcasting) return;
+    final input = state.hex.replaceAll(RegExp(r'\s'), '');
+    if (input.isEmpty) {
+      emit(state.copyWith(errBroadcasting: 'Nothing to broadcast.'));
+      return;
+    }
     try {
-      emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
+      emit(
+        state.copyWith(
+          broadcasting: true,
+          errBroadcasting: emptyString,
+          txId: emptyString,
+        ),
+      );
       final nodeAddress = _nodeAddressCubit.state.getAddress();
       final socks5 = _torCubit.state.getSocks5();
-      final hex = await BitcoinWorker.broadcastHex(
-        descriptor: dummyDescriptor,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-        signedHex: state.hex,
-      );
-      if (hex.hasError) {
+      final result = _hexPattern.hasMatch(input)
+          ? await BitcoinWorker.broadcastHex(
+              descriptor: dummyDescriptor,
+              nodeAddress: nodeAddress,
+              socks5: socks5,
+              signedHex: input,
+            )
+          : await BitcoinWorker.broadcast(
+              descriptor: dummyDescriptor,
+              nodeAddress: nodeAddress,
+              socks5: socks5,
+              signedPSBT: input,
+            );
+      if (result.hasError) {
+        // Keep the input so the user can fix the node/Tor and retry.
         emit(
           state.copyWith(
             broadcasting: false,
-            errBroadcasting: hex.errorMessage,
-            txId: '',
-            hex: '',
+            errBroadcasting: result.errorMessage,
           ),
         );
       } else {
         emit(
           state.copyWith(
             broadcasting: false,
-            txId: 'BROADCAST SUCCESSFUL.',
+            txId: 'BROADCAST SUCCESSFUL.\n${result.result}',
             hex: '',
             errBroadcasting: emptyString,
           ),
@@ -274,6 +288,7 @@ class BroadcastCubit extends Cubit<BroadcastState> {
   }
 
   Future<void> broadcastConfirmed() async {
+    if (state.broadcasting) return;
     try {
       emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
       final nodeAddress = _nodeAddressCubit.state.getAddress();
@@ -291,14 +306,13 @@ class BroadcastCubit extends Cubit<BroadcastState> {
             broadcasting: false,
             errBroadcasting: psbt.errorMessage,
             txId: '',
-            psbt: '',
           ),
         );
       } else {
         emit(
           state.copyWith(
             broadcasting: false,
-            txId: 'BROADCAST SUCCESSFUL.',
+            txId: 'BROADCAST SUCCESSFUL.\n${psbt.result}',
             psbt: '',
             errBroadcasting: emptyString,
           ),
@@ -315,5 +329,3 @@ class BroadcastCubit extends Cubit<BroadcastState> {
     }
   }
 }
-
-// tb1qcd0dej2spq73nlkr4d5w3scksqagz0nzmdnzgg

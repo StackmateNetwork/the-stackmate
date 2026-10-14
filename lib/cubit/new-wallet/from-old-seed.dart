@@ -44,9 +44,7 @@ abstract class SeedImportWalletState with _$SeedImportWalletState {
   }
 
   bool canGoBack() {
-    // if (currentStep == SeedImportWalletSteps.warning)
     return true;
-    // return false;
   }
 
   double completePercent() =>
@@ -63,9 +61,6 @@ abstract class SeedImportWalletState with _$SeedImportWalletState {
 
       case SeedImportWalletSteps.import:
         return 'Enter Seed';
-
-      // case SeedImportWalletSteps.passphrase:
-      //   return 'Extra Details';
 
       case SeedImportWalletSteps.label:
         return 'Label Wallet';
@@ -202,10 +197,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
       final root = _importCubit.state.masterXpriv!;
 
-      // final fullXPrv =
-      //     '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
-      //         .replaceFirst('/m', emptyString);
-
       final fullXPub =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
               .replaceFirst('/m', emptyString);
@@ -331,11 +322,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     }
   }
 
-  // Future<void> updateWalletStorage(Wallet wallet) async {
-  //   await _storage.saveItemAt<Wallet>(
-  //       StoreKeys.Wallet.name, wallet.id!, wallet);
-  //   _wallets.update(wallet);
-  // }
   Future<void> updateWalletStorage(Wallet wallet) async {
     final savedid = await _storage.saveItem<Wallet>(
       StoreKeys.Wallet.name,

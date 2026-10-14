@@ -71,18 +71,6 @@ class DeriveLabel extends StatelessWidget {
                       currentFocus.unfocus();
                     }
                     c.read<DeriveWalletCubit>().nextClicked();
-                    // if (state.walletLabelError != '') {
-                    //   handleError(
-                    //     context,
-                    //     state.walletLabelError,
-                    //   );
-                    // }
-                    // if (state.errSavingWallet != '') {
-                    //   handleError(
-                    //     context,
-                    //     state.errSavingWallet,
-                    //   );
-                    // }
                   },
                   child: const Text('Confirm'),
                 ),

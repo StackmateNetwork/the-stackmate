@@ -82,18 +82,6 @@ class BroadcastScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final nodeAddressCubit = context.select((NodeAddressCubit c) => c);
-    // final blockchainCubit = context.select((ChainSelectCubit c) => c);
-    // final tor = context.select((TorCubit c) => c);
-    // final logger = context.select((Logger c) => c);
-    // final psbt = BroadcastCubit(
-    //   logger,
-    //   locator<IStackMateBitcoin>(),
-    //   locator<IClipBoard>(),
-    //   nodeAddressCubit,
-    //   tor,
-    //   blockchainCubit,
-    // );
 
     return const _Broadcast();
   }

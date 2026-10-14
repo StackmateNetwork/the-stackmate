@@ -33,6 +33,12 @@ class _SeedGenerateState extends State<_SeedGenerate> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext c) {
     final tor = c.select((TorCubit t) => t.state);
     return BlocConsumer<SeedGenerateWalletCubit, SeedGenerateWalletState>(
@@ -164,32 +170,27 @@ class SeedGenerateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final networkSelect = context.select((ChainSelectCubit c) => c);
-    final logger = context.select((Logger c) => c);
-    final wallets = context.select((WalletsCubit c) => c);
-    final masterKey = context.select((MasterKeyCubit c) => c);
-
-    final seedGenerateCubit = SeedGenerateCubit(
-      locator<IStackMateBitcoin>(),
-      masterKey,
-      networkSelect,
-      logger,
-      locator<ILauncher>(),
-    );
-
-    final seedGenerateWalletCubit = SeedGenerateWalletCubit(
-      locator<IStackMateBitcoin>(),
-      locator<IStorage>(),
-      logger,
-      wallets,
-      networkSelect,
-      seedGenerateCubit,
-    );
-
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(value: seedGenerateCubit),
-        BlocProvider.value(value: seedGenerateWalletCubit),
+        BlocProvider(
+          create: (_) => SeedGenerateCubit(
+            locator<IStackMateBitcoin>(),
+            context.read<MasterKeyCubit>(),
+            context.read<ChainSelectCubit>(),
+            context.read<Logger>(),
+            locator<ILauncher>(),
+          ),
+        ),
+        BlocProvider(
+          create: (c) => SeedGenerateWalletCubit(
+            locator<IStackMateBitcoin>(),
+            locator<IStorage>(),
+            c.read<Logger>(),
+            c.read<WalletsCubit>(),
+            c.read<ChainSelectCubit>(),
+            c.read<SeedGenerateCubit>(),
+          ),
+        ),
       ],
       child: _SeedGenerate(),
     );

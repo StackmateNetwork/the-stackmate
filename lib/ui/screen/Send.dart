@@ -23,6 +23,7 @@ import 'package:sats/ui/component/Send/Loader.dart';
 import 'package:sats/ui/component/Send/SelectFee.dart';
 import 'package:sats/ui/component/Send/WalletDetails.dart';
 import 'package:sats/ui/component/Send/ZeroBalance.dart';
+import 'package:sats/ui/component/common/ErrorHandler.dart';
 
 class _WalletSend extends StatelessWidget {
   const _WalletSend();
@@ -35,12 +36,9 @@ class _WalletSend extends StatelessWidget {
         context.select((SendCubit c) => c.state.wallet.isWatchOnly);
     final tor = context.select((TorCubit t) => t.state);
     return PopScope(
-      onPopInvokedWithResult: (didPop, _) async {
-        if (step == SendSteps.address || step == SendSteps.sent) {
-          return;
-        }
-        context.read<SendCubit>().backClicked();
-        return;
+      canPop: step == SendSteps.address || step == SendSteps.sent,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) context.read<SendCubit>().backClicked();
       },
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -89,11 +87,8 @@ class _WalletSend extends StatelessWidget {
                   onPressed: () {
                     if (step == SendSteps.address || step == SendSteps.sent) {
                       Navigator.pop(context);
-                      return;
-                    }
-                    if (step != SendSteps.fees) {
+                    } else {
                       context.read<SendCubit>().backClicked();
-                      return;
                     }
                   },
                 );
@@ -103,22 +98,15 @@ class _WalletSend extends StatelessWidget {
           body: SafeArea(
             child: SingleChildScrollView(
               child: BlocListener<SendCubit, SendState>(
-                listener: (context, state) async {
-                  if (state.zeroBalanceAmt()) {
-                    Navigator.pop(context);
-                  }
-                  await context.read<FeesCubit>().update();
-                },
-                listenWhen: (p, c) =>
-                    p.zeroBalanceAmt().not(c.zeroBalanceAmt()),
+                listenWhen: (p, c) => _error(c).isNotEmpty && _error(c) != _error(p),
+                listener: (context, state) => handleError(context, _error(state)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Loader(),
                     const SizedBox(height: 24),
-                    const ZeroBalance(),
                     if (step == SendSteps.address) ...[
-                      const SizedBox(height: 0),
+                      const ZeroBalance(),
                       Align(
                         child: Text(
                           walletLabel.toUpperCase(),
@@ -134,7 +122,6 @@ class _WalletSend extends StatelessWidget {
                       ),
                     ],
                     if (step == SendSteps.amount) ...[
-                      const SizedBox(height: 0),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: WalletDetails(),
@@ -146,7 +133,6 @@ class _WalletSend extends StatelessWidget {
                       ),
                     ],
                     if (step == SendSteps.fees) ...[
-                      const SizedBox(height: 0),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
@@ -186,6 +172,15 @@ class _WalletSend extends StatelessWidget {
   }
 }
 
+/// The message of whichever error is set; at most one is at a time.
+String _error(SendState s) => [
+      s.errLoading,
+      s.errAddress,
+      s.errAmount,
+      s.errFees,
+      s.errSending,
+    ].firstWhere((e) => e.isNotEmpty, orElse: () => '');
+
 class WalletSendScreen extends StatelessWidget {
   const WalletSendScreen({
     super.key,
@@ -198,25 +193,22 @@ class WalletSendScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final send = SendCubit(
-      fromQr,
-      context.read<WalletsCubit>(),
-      context.read<ChainSelectCubit>(),
-      context.read<Logger>(),
-      locator<IClipBoard>(),
-      locator<IShare>(),
-      context.read<NodeAddressCubit>(),
-      context.read<TorCubit>(),
-      locator<IStackMateBitcoin>(),
-      context.read<FeesCubit>(),
-      locator<IStorage>(),
-      context.read<MasterKeyCubit>(),
-      wallet,
-      // locator<FileManager>(),
-    );
-
-    return BlocProvider.value(
-      value: send,
+    return BlocProvider(
+      create: (_) => SendCubit(
+        fromQr,
+        context.read<WalletsCubit>(),
+        context.read<ChainSelectCubit>(),
+        context.read<Logger>(),
+        locator<IClipBoard>(),
+        locator<IShare>(),
+        context.read<NodeAddressCubit>(),
+        context.read<TorCubit>(),
+        locator<IStackMateBitcoin>(),
+        context.read<FeesCubit>(),
+        locator<IStorage>(),
+        context.read<MasterKeyCubit>(),
+        wallet,
+      ),
       child: const _WalletSend(),
     );
   }

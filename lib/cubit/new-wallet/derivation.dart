@@ -42,7 +42,6 @@ abstract class DeriveWalletState with _$DeriveWalletState {
     @Default(false) bool newWalletSaved,
   }) = _DeriveWalletState;
 
-  // bool canGoBack() => true;
 }
 
 class DeriveWalletCubit extends Cubit<DeriveWalletState> {
@@ -165,9 +164,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       child.orThrow();
       final fingerprint = child.result!.fingerPrint;
       final path = child.result!.hardenedPath;
-      // final xprv = child.result!.xprv;
-      // final fullXPrv =
-      //     '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
       final xpub = child.result!.xpub;
       final fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst(
         '/m',
@@ -290,9 +286,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       child.orThrow();
       final fingerprint = child.result!.fingerPrint;
       final path = child.result!.hardenedPath;
-      // final xprv = child.result!.xprv;
-      // final fullXPrv =
-      //     '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
       final xpub = child.result!.xpub;
       final fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst(
         '/m',

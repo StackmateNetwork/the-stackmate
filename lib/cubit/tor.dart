@@ -251,44 +251,6 @@ class TorCubit extends Cubit<TorState> {
       emit(
         state.copyWith(isConnected: true),
       );
-      // SocksProxy.initProxy(
-      //   proxy: 'SOCKS5 localhost:${state.socks5Port.toString()}',
-      // );
-      // await HttpClient()
-      //     .getUrl(
-      //   Uri.parse(
-      //     'https://google.com',
-      //   ),
-      // )
-      //     .then((value) {
-      //   return value.close();
-      // }).then((value) {
-      //   return value.transform(utf8.decoder);
-      // }).then((value) {
-      //   return value.fold(
-      //     '',
-      //     (dynamic previous, element) => previous + element,
-      //   );
-      // }).then(
-      //   (value) {
-      //     SocksProxy.initProxy(
-      //       proxy: 'DIRECT',
-      //     );
-      //     emit(
-      //       state.copyWith(isConnected: true),
-      //     );
-      //   },
-      // ).catchError((e) {
-      //   SocksProxy.initProxy(
-      //     proxy: 'DIRECT',
-      //   );
-      //   state.copyWith(
-      //     isConnected: false,
-      //     errConnection:
-      //         'Could not connect to the internet via Tor. Restart Tor or try another external port.',
-      //   );
-      //   _logger.logException(e, 'Tor.ConnectionStatus', '');
-      // });
     } catch (e) {
       state.copyWith(
         isConnected: false,
@@ -299,40 +261,3 @@ class TorCubit extends Cubit<TorState> {
     }
   }
 }
-
-
-// void daemonStart(dynamic data) {
-//   final obj = data as Map<String, String?>;
-
-//   LibTor().torStart(
-//     path: obj['path']!,
-//     socks5Port: obj['socks5Port']!,
-//     httpProxy: obj['httpProxy']!,
-//   );
-// }
-
-// Future<R<String>> controlProgress(dynamic data) async {
-//   final obj = data as Map<String, String?>;
-
-//   final resp = LibTor().torStatus(
-//     controlPort: obj['controlPort']!,
-//     controlKey: obj['controlKey']!,
-//   );
-//   if (resp.hasError)
-//     return resp;
-//   else if (resp.result!.startsWith('101'))
-//     return const R(error: 'Error, requires restart.');
-//   else
-//     return resp;
-// }
-
-// Future<R<String>> controlShutdown(dynamic data) async {
-//   final obj = data as Map<String, String?>;
-
-//   final resp = LibTor().torStop(
-//     controlPort: obj['controlPort']!,
-//     controlKey: obj['controlKey']!,
-//   );
-
-//   return resp;
-// }

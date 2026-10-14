@@ -1,7 +1,8 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-//import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
@@ -40,136 +41,59 @@ class FeesCubit extends Cubit<FeesState> {
   final TorCubit _torCubit;
   final Logger _logger;
 
-  Future init() async {
-    try {
-      emit(state.copyWith(updating: true, errUpdating: ''));
-      final timestamp = DateTime.now().millisecondsSinceEpoch;
-
-      final fees = _storage.getFirstItem<Fees>(StoreKeys.Fees.name);
-      if (fees.hasError) {
-        if (fees.error! == 'empty') {
-          final defaultFees = Fees(
-            timestamp: timestamp,
-            slow: 0.000,
-            medium: 0.000,
-            fast: 0.000,
-          );
-          emit(state.copyWith(fees: defaultFees));
-        } else {
-          emit(state.copyWith(errUpdating: fees.error.toString()));
-        }
-      } else {
-        emit(state.copyWith(fees: fees.result!));
-      }
-
-      final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
-
-      final fastRate = await BitcoinWorker.estimateFee(
-        network: _blockchain.state.blockchain.name,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-        targetSize: '1',
-      );
-
-      if (fastRate.hasError) {
-        throw fastRate.error!;
-      }
-
-      const slowRate = 1.0;
-
-      final feesUpdated = Fees(
-        timestamp: timestamp,
-        slow: slowRate,
-        medium: (fastRate.result == slowRate) ? 1.0 : fastRate.result! / 2,
-        fast: fastRate.result!,
-      );
-
-      emit(state.copyWith(fees: feesUpdated));
-
-      final cleared = await _storage.clearAll<Fees>(StoreKeys.Fees.name);
-      if (cleared.hasError) {
-        emit(state.copyWith(errUpdating: cleared.error.toString()));
-        return;
-      }
-
-      final saved = await _storage.saveItem<Fees>(
-        StoreKeys.Fees.name,
-        feesUpdated,
-      );
-      if (saved.hasError) {
-        emit(state.copyWith(errUpdating: saved.error.toString()));
-        return;
-      }
-      emit(state.copyWith(updating: false, errUpdating: ''));
-      return;
-    } catch (e, s) {
-      _logger.logException(e.toString(), 'FeesCubit', s);
+  /// Shows the last saved fees, then fetches fresh ones.
+  Future<void> init() async {
+    final fees = _storage.getFirstItem<Fees>(StoreKeys.Fees.name);
+    if (!fees.hasError) {
+      emit(state.copyWith(fees: fees.result!));
+      networkStrength();
     }
+    await update();
   }
 
-  Fees getFees() {
-    // await update();
-    return state.fees;
-  }
+  Fees getFees() => state.fees;
 
   void networkStrength() {
-    if (state.fees.fast < 5) {
-      emit(state.copyWith(networkStrength: 'LOW'));
-    } else if (state.fees.fast > 5 && state.fees.fast < 25) {
-      emit(state.copyWith(networkStrength: 'MEDIUM'));
-    } else {
-      emit(state.copyWith(networkStrength: 'HIGH'));
-    }
+    final fast = state.fees.fast;
+    final strength = fast < 5
+        ? 'LOW'
+        : fast < 25
+            ? 'MEDIUM'
+            : 'HIGH';
+    emit(state.copyWith(networkStrength: strength));
   }
 
-  Future update() async {
+  Future<void> update() async {
+    emit(state.copyWith(updating: true, errUpdating: ''));
     try {
-      emit(state.copyWith(updating: true, errUpdating: ''));
-      final timestamp = DateTime.now().millisecondsSinceEpoch;
-
-      final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
-
-      final fastRate = await BitcoinWorker.estimateFee(
+      final fastRate = (await BitcoinWorker.estimateFee(
         network: _blockchain.state.blockchain.name,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
+        nodeAddress: _nodeAddressCubit.state.getAddress(),
+        socks5: _torCubit.state.getSocks5(),
         targetSize: '1',
-      );
-
-      if (fastRate.hasError) {
-        throw fastRate.error!;
-      }
+      )).orThrow();
 
       const slowRate = 1.0;
-
       final feesUpdated = Fees(
-        timestamp: timestamp,
+        timestamp: DateTime.now().millisecondsSinceEpoch,
         slow: slowRate,
-        medium: (fastRate.result == slowRate) ? 1.0 : fastRate.result! / 2,
-        fast: fastRate.result!,
+        medium: max(slowRate, fastRate / 2),
+        fast: max(slowRate, fastRate),
       );
-
       emit(state.copyWith(fees: feesUpdated));
+      networkStrength();
 
       final cleared = await _storage.clearAll<Fees>(StoreKeys.Fees.name);
-      if (cleared.hasError) {
-        emit(state.copyWith(errUpdating: cleared.error.toString()));
-        return;
-      }
-
+      if (cleared.hasError) throw cleared.error!;
       final saved = await _storage.saveItem<Fees>(
         StoreKeys.Fees.name,
         feesUpdated,
       );
-      if (saved.hasError) {
-        emit(state.copyWith(errUpdating: saved.error.toString()));
-        return;
-      }
-      emit(state.copyWith(updating: false, errUpdating: ''));
-      return;
+      if (saved.hasError) throw saved.error!;
+
+      emit(state.copyWith(updating: false));
     } catch (e, s) {
+      emit(state.copyWith(updating: false, errUpdating: e.toString()));
       _logger.logException(e.toString(), 'FeesCubit', s);
     }
   }

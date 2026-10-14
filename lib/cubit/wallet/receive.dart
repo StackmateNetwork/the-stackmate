@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -59,172 +58,74 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   static const emailShareSubject = 'Bitcoin Address';
 
   Future<void> _init() async {
-    emit(
-      state.copyWith(
-        errLoadingAddress: '',
-      ),
-    );
-
-    final wallet = state.wallet;
-    final index = wallet.lastAddressIndex;
-
-    final latestAddress = _core.getAddress(
-      descriptor: wallet.descriptor,
-      index: index.toString(),
-    );
-    latestAddress.orThrow();
-    emit(
-      state.copyWith(
-        loadingAddress: true,
-        address: latestAddress.result!,
-        index: index,
-      ),
-    );
-
+    // Show the last known address straight away, then look for a better one.
+    _showAddressAt(state.wallet.lastAddressIndex);
     await getLastUnusedAddress();
   }
 
-  Future<void> updateWalletStorage(Wallet wallet) async {
-    emit(
-      state.copyWith(
-        wallet: wallet,
-      ),
-    );
-    await _storage.saveItemAt<Wallet>(
-      StoreKeys.Wallet.name,
-      wallet.id!,
-      wallet,
-    );
-
-    walletsCubit.update(wallet);
-    // walletsCubit.refresh();
-
-    // emit(
-    //   state.copyWith(
-    //     wallet: wallet,
-    //   ),
-    // );
-  }
-
-  Future<void> getNewAddress() async {
+  void _showAddressAt(int index) {
     try {
+      final address = _core
+          .getAddress(descriptor: state.wallet.descriptor, index: '$index')
+          .orThrow();
       emit(
         state.copyWith(
+          address: address,
+          index: index,
           errLoadingAddress: '',
         ),
       );
-      final wallet = state.wallet;
-      final currentIndex = state.index + 1;
-
-      final latestAddress = _core.getAddress(
-        descriptor: wallet.descriptor,
-        index: currentIndex.toString(),
-      );
-      latestAddress.orThrow();
-
-      // final updated = wallet.copyWith(
-      //   lastAddressIndex: currentIndex,
-      // );
-
-      // updateWalletStorage(updated);
-
-      emit(
-        state.copyWith(
-          address: latestAddress.result!,
-          index: currentIndex,
-        ),
-      );
     } catch (e, s) {
-      emit(
-        state.copyWith(
-          errLoadingAddress: e.toString(),
-        ),
-      );
+      emit(state.copyWith(errLoadingAddress: e.toString()));
       _logger.logException(e, 'ReceiveCubit.getAddress', s);
     }
   }
 
-  Future<void> getLastAddress() async {
-    try {
-      emit(
-        state.copyWith(
-          errLoadingAddress: '',
-        ),
-      );
-      final wallet = state.wallet;
-      final currentIndex = state.index - 1;
-
-      final latestAddress = _core.getAddress(
-        descriptor: wallet.descriptor,
-        index: currentIndex.toString(),
-      );
-      latestAddress.orThrow();
-
-      // final updated = wallet.copyWith(
-      //   lastAddressIndex: currentIndex,
-      // );
-
-      // await updateWalletStorage(updated);
-
-      emit(
-        state.copyWith(
-          address: latestAddress.result!,
-          index: currentIndex,
-        ),
-      );
-    } catch (e, s) {
-      emit(
-        state.copyWith(
-          errLoadingAddress: e.toString(),
-        ),
-      );
-      _logger.logException(e, 'ReceiveCubit.getAddress', s);
-    }
+  void getNewAddress() {
+    if (state.loadingAddress) return;
+    _showAddressAt(state.index + 1);
   }
 
+  void getLastAddress() {
+    if (state.loadingAddress || state.index == 0) return;
+    _showAddressAt(state.index - 1);
+  }
+
+  /// Syncs the wallet and shows the first address that has not received
+  /// funds yet.
   Future<void> getLastUnusedAddress() async {
-    emit(
-      state.copyWith(
-        loadingAddress: true,
-      ),
-    );
+    emit(state.copyWith(loadingAddress: true, errLoadingAddress: ''));
     try {
-      final node = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
       final wallet = state.wallet;
-
       final dbPath = await walletDbPath(wallet.label, wallet.uid);
 
-      // THIS PART NEEDS TO BE REVIEWS
-      // compute is used and errors are not properly handled
-
-      final syncStat = await BitcoinWorker.sync(
+      (await BitcoinWorker.sync(
         dbPath: dbPath,
-        descriptor: state.wallet.descriptor,
-        nodeAddress: node,
-        socks5: socks5,
-      );
-      syncStat.orThrow();
+        descriptor: wallet.descriptor,
+        nodeAddress: _nodeAddressCubit.state.getAddress(),
+        socks5: _torCubit.state.getSocks5(),
+      )).orThrow();
 
-      final lastUnused = _core.lastUnusedAddress(
+      final unused = (await BitcoinWorker.lastUnusedAddress(
         descriptor: wallet.descriptor,
         dbPath: dbPath,
-      );
+      )).orThrow();
+      final index = int.parse(unused.index);
 
-      lastUnused.orThrow();
-
-      final updated = wallet.copyWith(
-        lastAddressIndex: int.parse(lastUnused.result!.index),
-      );
-      await updateWalletStorage(
+      final updated = wallet.copyWith(lastAddressIndex: index);
+      await _storage.saveItemAt<Wallet>(
+        StoreKeys.Wallet.name,
+        updated.id!,
         updated,
       );
+      walletsCubit.update(updated);
 
       emit(
         state.copyWith(
+          wallet: updated,
           loadingAddress: false,
-          address: lastUnused.result!.address,
-          index: int.parse(lastUnused.result!.index),
+          address: unused.address,
+          index: index,
         ),
       );
     } catch (e, s) {
@@ -234,7 +135,7 @@ class ReceiveCubit extends Cubit<ReceiveState> {
           errLoadingAddress: e.toString(),
         ),
       );
-      _logger.logException(e, 'WalletCubit.lastUnusedAddress', s);
+      _logger.logException(e, 'ReceiveCubit.getLastUnusedAddress', s);
     }
   }
 
@@ -243,17 +144,15 @@ class ReceiveCubit extends Cubit<ReceiveState> {
       _clipBoard.copyToClipBoard(state.address);
       _vibrate.vibe();
     } catch (e, s) {
-      _logger.logException(e, 'WalletCubit.copyAddress', s);
+      _logger.logException(e, 'ReceiveCubit.copyAddress', s);
     }
   }
 
   void shareAddress() {
     try {
-      final address = state.address;
-      final text = address;
-      _share.share(text: text, subjectForEmail: emailShareSubject);
+      _share.share(text: state.address, subjectForEmail: emailShareSubject);
     } catch (e, s) {
-      _logger.logException(e, 'WalletCubit.shareAddress', s);
+      _logger.logException(e, 'ReceiveCubit.shareAddress', s);
     }
   }
 }

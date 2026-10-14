@@ -210,11 +210,6 @@ class PinCubit extends Cubit<PinState> {
       if (saved.hasError) {
         emit(state.copyWith(error: saved.error.toString()));
       }
-      // await Future.delayed(
-      //   const Duration(
-      //     milliseconds: 500,
-      //   ),
-      // );
       emit(state.copyWith(isVerified: true, hasChosenPin: true, error: null));
     } else {
       await saveFailedAttempt(); // we dont have to save this resetSetPin();
@@ -345,12 +340,6 @@ class PinCubit extends Cubit<PinState> {
       );
     }
 
-    // if (state.value == null || state.value == emptyString) {
-    //   // still in set/confirm stage (do not lock)
-    //   updatedAttempts = 3;
-    //   isLocked = false;
-    // }
-
     final pin = Pin(
       attemptsLeft: (state.value == null || state.value == emptyString)
           ? 3
@@ -367,12 +356,6 @@ class PinCubit extends Cubit<PinState> {
     if (saved.hasError) {
       emit(state.copyWith(error: saved.error.toString()));
     }
-
-    // await Future.delayed(
-    //   const Duration(
-    //     milliseconds: 200,
-    //   ),
-    // );
 
     init();
   }

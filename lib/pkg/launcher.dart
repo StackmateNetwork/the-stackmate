@@ -54,17 +54,4 @@ class Launcher implements ILauncher {
     }
   }
 
-  // @override
-  // Future<R<bool>> openEmailInbox() async {
-  //   try {
-  //     final result = await OpenMailApp.openMailApp();
-  //     if (!result.didOpen && !result.canOpen) {
-  //       throw 'didnt open';
-  //     }
-  //     return const R(result: true);
-  //   } catch (e, s) {
-  //     locator<Logger>().logException(e, '', s);
-  //     return R(error: e.toString());
-  //   }
-  // }
 }
