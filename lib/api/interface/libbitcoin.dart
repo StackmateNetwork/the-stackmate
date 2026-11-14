@@ -24,22 +24,15 @@ abstract class IStackMateBitcoin {
     required String purpose,
   });
 
-  R<String> compile({
-    required String policy,
-    required String scriptType,
-  });
+  R<String> compile({required String policy, required String scriptType});
 
   R<double> estimateNetworkFee({
     required String targetSize,
     required String network,
     required String nodeAddress,
-    required String socks5,
   });
 
-  R<int> getWeight({
-    required String descriptor,
-    required String psbt,
-  });
+  R<int> getWeight({required String descriptor, required String psbt});
 
   R<NetworkFees> feeRateToAbsolute({
     required String feeRate,
@@ -50,38 +43,21 @@ abstract class IStackMateBitcoin {
     required String dbPath,
     required String descriptor,
     required String nodeAddress,
-    required String socks5,
   });
 
-  R<int> sqliteBalance({
-    required String descriptor,
-    required String dbPath,
-  });
+  R<int> sqliteBalance({required String descriptor, required String dbPath});
 
-
-  R<int> getHeight({
-    required String network,
-    required String nodeAddress,
-    required String socks5,
-  });
+  R<int> getHeight({required String network, required String nodeAddress});
 
   R<List<Transaction>> sqliteHistory({
     required String descriptor,
     required String dbPath,
   });
 
-
-
   /// Whether [address] is a valid address on [network] ('main' or 'test').
-  bool isValidAddress({
-    required String address,
-    required String network,
-  });
+  bool isValidAddress({required String address, required String network});
 
-  R<String> getAddress({
-    required String descriptor,
-    required String index,
-  });
+  R<String> getAddress({required String descriptor, required String index});
 
   R<Address> lastUnusedAddress({
     required String descriptor,
@@ -97,7 +73,6 @@ abstract class IStackMateBitcoin {
     required String sweep,
   });
 
-
   R<List<DecodedTxOutput>> decodePsbt({
     required String network,
     required String psbt,
@@ -111,7 +86,6 @@ abstract class IStackMateBitcoin {
   Future<R<String>> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
-    required String socks5,
     required String signedPSBT,
   });
 
@@ -122,12 +96,5 @@ abstract class IStackMateBitcoin {
     required String dbPath,
     required String txid,
     required String feeRate,
-  });
-
-  Future<R<String>> broadcastTransactionHex({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-    required String signedHex,
   });
 }

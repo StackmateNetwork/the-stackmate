@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
@@ -9,7 +8,6 @@ import 'package:sats/cubit/new-wallet/common/words_cubit.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/pin.dart';
 import 'package:sats/cubit/preferences.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -28,13 +26,11 @@ class Cubits extends StatefulWidget {
 class _CubitsState extends State<Cubits> {
   final logger = locator<Logger>();
   late final ChainSelectCubit networkSelectCubit;
-  late final TorCubit torCubit;
   late final MasterKeyCubit masterKeyCubit;
   late final PreferencesCubit preferencesCubit;
   late final WalletsCubit walletsCubit;
   late final NodeAddressCubit nodeAddressCubit;
   late final FeesCubit feesCubit;
-  late final BroadcastCubit broadcastHex;
   late final PinCubit pinCubit;
   late final WordsCubit wordCubit;
 
@@ -45,9 +41,6 @@ class _CubitsState extends State<Cubits> {
 
     networkSelectCubit = ChainSelectCubit(storage, logger);
     networkSelectCubit.init();
-
-    torCubit = TorCubit(storage, logger);
-    torCubit.start();
 
     masterKeyCubit = MasterKeyCubit(locator<SStorage>(), networkSelectCubit);
     masterKeyCubit.init();
@@ -70,16 +63,9 @@ class _CubitsState extends State<Cubits> {
       storage,
       networkSelectCubit,
       nodeAddressCubit,
-      torCubit,
       logger,
     );
 
-    broadcastHex = BroadcastCubit(
-      logger,
-      locator<IClipBoard>(),
-      nodeAddressCubit,
-      torCubit,
-    );
 
     pinCubit = PinCubit(storage);
     pinCubit.init();
@@ -106,9 +92,7 @@ class _CubitsState extends State<Cubits> {
         BlocProvider.value(value: feesCubit),
         BlocProvider.value(value: nodeAddressCubit),
         BlocProvider.value(value: preferencesCubit),
-        BlocProvider.value(value: torCubit),
         BlocProvider.value(value: masterKeyCubit),
-        BlocProvider.value(value: broadcastHex),
         BlocProvider.value(value: pinCubit),
         BlocProvider.value(value: wordCubit),
       ],

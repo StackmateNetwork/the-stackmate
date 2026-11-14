@@ -15,7 +15,6 @@ dependencies:
   bloc: ^9.2.1
   crypto: ^3.0.8
   cupertino_ui: ^1.1.6
-  file_picker: ^13.3.3
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2
@@ -41,7 +40,6 @@ dependencies:
   share_plus: ^13.3.1
   sqflite: ^2.4.6
   top_snackbar_flutter: ^3.5.0
-  tor: ^0.1.1
   url_launcher: ^6.3.3
 
 dev_dependencies:
@@ -56,6 +54,7 @@ dev_dependencies:
   lint: ^2.14.0
   mocktail: ^1.0.5
   test: ^1.32.0
+
 
 flutter:
   uses-material-design: true

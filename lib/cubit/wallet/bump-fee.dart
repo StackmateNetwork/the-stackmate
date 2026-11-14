@@ -4,7 +4,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallet/signer.dart';
 import 'package:sats/model/transaction.dart';
@@ -34,7 +33,6 @@ class BumpFeeCubit extends Cubit<BumpFeeState> {
     this._infoCubit,
     this._signer,
     this._nodeAddressCubit,
-    this._torCubit,
     this._logger, {
     double suggestedFeeRate = 0,
   }) : super(
@@ -49,7 +47,6 @@ class BumpFeeCubit extends Cubit<BumpFeeState> {
   final InfoCubit _infoCubit;
   final WalletSigner _signer;
   final NodeAddressCubit _nodeAddressCubit;
-  final TorCubit _torCubit;
   final Logger _logger;
 
   static const emptyString = '';
@@ -72,14 +69,12 @@ class BumpFeeCubit extends Cubit<BumpFeeState> {
       final Wallet wallet = _infoCubit.state.wallet!;
       final dbPath = await walletDbPath(wallet.label, wallet.uid);
       final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
 
       // Refresh first so we bump against the latest mempool/chain state.
       (await BitcoinWorker.sync(
         descriptor: wallet.descriptor,
         dbPath: dbPath,
         nodeAddress: nodeAddress,
-        socks5: socks5,
       )).orThrow();
 
       final unsigned = (await BitcoinWorker.bumpFee(
@@ -99,7 +94,6 @@ class BumpFeeCubit extends Cubit<BumpFeeState> {
       final txid = (await BitcoinWorker.broadcast(
         descriptor: descriptor,
         nodeAddress: nodeAddress,
-        socks5: socks5,
         signedPSBT: signed.psbt,
       )).orThrow();
 

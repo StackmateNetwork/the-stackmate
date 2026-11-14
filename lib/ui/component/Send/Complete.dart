@@ -7,7 +7,6 @@ class TransactionComplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wallet = context.select((SendCubit w) => w.state.wallet);
     final txId = context.select((SendCubit w) => w.state.txId);
     final returnButton = SizedBox(
       height: 52,
@@ -22,68 +21,41 @@ class TransactionComplete extends StatelessWidget {
         child: const Text('RETURN'),
       ),
     );
-    if (wallet.isNotWatchOnly()) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 35),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Transaction\nSuccessful.',
-              style: context.fonts.headlineSmall!.copyWith(
-                color: context.colours.onSurface,
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 35),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Transaction\nSuccessful.',
+            style: context.fonts.headlineSmall!.copyWith(
+              color: context.colours.onSurface,
             ),
-            const SizedBox(height: 16),
-            Text(
-              'TXID'.toUpperCase(),
-              style: context.fonts.labelSmall!.copyWith(
-                color: context.colours.onSurface,
-              ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'TXID'.toUpperCase(),
+            style: context.fonts.labelSmall!.copyWith(
+              color: context.colours.onSurface,
             ),
-            const SizedBox(height: 8),
-            SelectableText(
-              txId,
-              style: context.fonts.bodySmall!.copyWith(
-                color: context.colours.onSurface,
-              ),
+          ),
+          const SizedBox(height: 8),
+          SelectableText(
+            txId,
+            style: context.fonts.bodySmall!.copyWith(
+              color: context.colours.onSurface,
             ),
-            TextButton(
-              onPressed: () => context.read<SendCubit>().shareTxId(),
-              child: const Text('SHARE TXID'),
-            ),
-            const SizedBox(height: 32),
-            const Icon(Icons.check_circle, size: 80),
-            const SizedBox(height: 32),
-            returnButton,
-          ],
-        ),
-      );
-    } else {
-      return Padding(
-        padding: const EdgeInsets.only(top: 35),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'PSBT\nBuild Complete.',
-              style: context.fonts.headlineSmall!.copyWith(
-                color: context.colours.onSurface,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Pass it to a signing device.',
-              style: context.fonts.bodySmall!.copyWith(
-                color: context.colours.onSurface,
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 32),
-            returnButton,
-          ],
-        ),
-      );
-    }
+          ),
+          TextButton(
+            onPressed: () => context.read<SendCubit>().shareTxId(),
+            child: const Text('SHARE TXID'),
+          ),
+          const SizedBox(height: 32),
+          const Icon(Icons.check_circle, size: 80),
+          const SizedBox(height: 32),
+          returnButton,
+        ],
+      ),
+    );
   }
 }

@@ -6,7 +6,6 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
@@ -28,7 +27,6 @@ class _MockShare extends Mock implements IShare {}
 
 class _MockNode extends Mock implements NodeAddressCubit {}
 
-class _MockTor extends Mock implements TorCubit {}
 
 class _MockCore extends Mock implements IStackMateBitcoin {}
 
@@ -78,7 +76,6 @@ void main() {
       clipBoard,
       _MockShare(),
       _MockNode(),
-      _MockTor(),
       core,
       _MockFees(),
       _MockStorage(),
@@ -125,6 +122,38 @@ void main() {
     expect(cubit.state.address, address);
     expect(cubit.state.currentStep, SendSteps.amount);
     expect(cubit.state.errAddress, isEmpty);
+  });
+
+  test('a typed upper-case bech32 address is normalised', () async {
+    final cubit = await build();
+    cubit
+      ..adddressChanged(address.toUpperCase())
+      ..addressConfirmedClicked();
+    expect(cubit.state.address, address);
+    expect(cubit.state.currentStep, SendSteps.amount);
+  });
+
+  test('a BIP21 uri typed into the address field keeps its amount', () async {
+    final cubit = await build();
+    cubit
+      ..adddressChanged('bitcoin:${address.toUpperCase()}?amount=0.0005')
+      ..addressConfirmedClicked();
+    expect(cubit.state.address, address);
+    expect(cubit.state.amount, '50000');
+    expect(cubit.state.currentStep, SendSteps.amount);
+  });
+
+  test('bech32 addresses compare case-insensitively, base58 ones do not', () {
+    expect(SendCubit.sameAddress(address, address.toUpperCase()), isTrue);
+    expect(SendCubit.sameAddress('bcrt1qabc', 'BCRT1QABC'), isTrue);
+    expect(SendCubit.sameAddress(address, 'tb1qsomethingelse'), isFalse);
+    expect(
+      SendCubit.sameAddress(
+        'mipcBbFg9gMiCh81Kj8tqqdgoZub1ZJRfn',
+        'MIPCBBFG9GMICH81KJ8TQQDGOZUB1ZJRFN',
+      ),
+      isFalse,
+    );
   });
 
   test('pasting a BIP21 uri fills address and amount', () async {

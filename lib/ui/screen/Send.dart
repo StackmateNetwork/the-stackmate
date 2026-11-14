@@ -1,4 +1,3 @@
-import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
@@ -6,7 +5,6 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
@@ -32,9 +30,6 @@ class _WalletSend extends StatelessWidget {
   Widget build(BuildContext context) {
     final step = context.select((SendCubit sc) => sc.state.currentStep);
     final walletLabel = context.select((SendCubit c) => c.state.wallet.label);
-    final isWatchOnly =
-        context.select((SendCubit c) => c.state.wallet.isWatchOnly);
-    final tor = context.select((TorCubit t) => t.state);
     return PopScope(
       canPop: step == SendSteps.address || step == SendSteps.sent,
       onPopInvokedWithResult: (didPop, _) {
@@ -44,43 +39,7 @@ class _WalletSend extends StatelessWidget {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           appBar: AppBar(
-            actions: [
-              if (tor.isConnected) ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Tooltip(
-                    preferBelow: false,
-                    triggerMode: TooltipTriggerMode.tap,
-                    message: (tor.isRunning)
-                        ? 'Torified Natively.'
-                        : 'Torified via External.',
-                    textStyle: context.fonts.bodySmall!.copyWith(
-                      color: context.colours.primary,
-                    ),
-                    decoration: BoxDecoration(
-                      color: context.colours.surface,
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: Icon(
-                      Icons.security_sharp,
-                      color: context.colours.tertiaryContainer,
-                    ),
-                  ),
-                ),
-              ] else ...[
-                IconButton(
-                  color: context.colours.error,
-                  onPressed: () {
-                    context.push('/tor-config');
-                  },
-                  icon: Icon(
-                    Icons.security_sharp,
-                    color: context.colours.error,
-                  ),
-                ),
-              ],
-            ],
-            title: Text(isWatchOnly ? 'BUILD' : 'SEND'),
+            title: const Text('SEND'),
             leading: Builder(
               builder: (BuildContext context) {
                 return BackButton(
@@ -202,7 +161,6 @@ class WalletSendScreen extends StatelessWidget {
         locator<IClipBoard>(),
         locator<IShare>(),
         context.read<NodeAddressCubit>(),
-        context.read<TorCubit>(),
         locator<IStackMateBitcoin>(),
         context.read<FeesCubit>(),
         locator<IStorage>(),

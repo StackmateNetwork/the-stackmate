@@ -18,9 +18,7 @@ class PaymentRequest {
     }
 
     final lower = body.toLowerCase();
-    final address = lower.startsWith('bc1') || lower.startsWith('tb1')
-        ? lower
-        : body;
+    final address = RegExp('^(bc|tb|bcrt)1').hasMatch(lower) ? lower : body;
 
     int? amount;
     if (query != null) {

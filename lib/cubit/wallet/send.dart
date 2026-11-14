@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,7 +8,6 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/signer.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
@@ -26,13 +22,7 @@ import 'package:sats/pkg/wallet_db.dart';
 
 part 'send.freezed.dart';
 
-enum SendSteps {
-  address,
-  amount,
-  fees,
-  confirm,
-  sent,
-}
+enum SendSteps { address, amount, fees, confirm, sent }
 
 @freezed
 abstract class SendState with _$SendState {
@@ -72,12 +62,12 @@ abstract class SendState with _$SendState {
   bool get isBusy => calculatingFees || buildingTx || sendingTx;
 
   SendState clearErrors() => copyWith(
-        errLoading: '',
-        errAddress: '',
-        errSending: '',
-        errAmount: '',
-        errFees: '',
-      );
+    errLoading: '',
+    errAddress: '',
+    errSending: '',
+    errAmount: '',
+    errFees: '',
+  );
 }
 
 class SendCubit extends Cubit<SendState> {
@@ -89,7 +79,6 @@ class SendCubit extends Cubit<SendState> {
     this._clipBoard,
     this._share,
     this._nodeAddressCubit,
-    this._torCubit,
     this._core,
     this._fees,
     this._storage,
@@ -106,7 +95,6 @@ class SendCubit extends Cubit<SendState> {
   final IShare _share;
   final IClipBoard _clipBoard;
   final NodeAddressCubit _nodeAddressCubit;
-  final TorCubit _torCubit;
   final IStackMateBitcoin _core;
   final FeesCubit _fees;
   final MasterKeyCubit _masterKeyCubit;
@@ -157,7 +145,6 @@ class SendCubit extends Cubit<SendState> {
       dbPath: dbPath,
       descriptor: wallet.descriptor,
       nodeAddress: _nodeAddressCubit.state.getAddress(),
-      socks5: _torCubit.state.getSocks5(),
     )).orThrow();
 
     final balance = (await BitcoinWorker.balance(
@@ -220,6 +207,9 @@ class SendCubit extends Cubit<SendState> {
   }
 
   void addressConfirmedClicked() {
+    // Typed text gets the same handling as a paste or scan: a BIP21 URI
+    // fills in its amount, and bech32 addresses are normalised.
+    _paymentRequestReceived(state.address);
     emit(state.clearErrors());
     final valid = _core.isValidAddress(
       address: state.address,
@@ -232,16 +222,22 @@ class SendCubit extends Cubit<SendState> {
     emit(state.clearErrors().copyWith(currentStep: SendSteps.amount));
   }
 
+  /// Bech32 addresses are case-insensitive; base58 ones are not.
+  @visibleForTesting
+  static bool sameAddress(String a, String b) {
+    if (a == b) return true;
+    final la = a.toLowerCase();
+    final isBech32 = RegExp('^(bc|tb|bcrt)1').hasMatch(la);
+    return isBech32 && la == b.toLowerCase();
+  }
+
   void amountChanged(String amount) {
     emit(state.clearErrors().copyWith(amount: amount));
   }
 
   void toggleSweep() {
     emit(
-      state.clearErrors().copyWith(
-        sweepWallet: !state.sweepWallet,
-        amount: '',
-      ),
+      state.clearErrors().copyWith(sweepWallet: !state.sweepWallet, amount: ''),
     );
   }
 
@@ -296,7 +292,6 @@ class SendCubit extends Cubit<SendState> {
         dbPath: dbPath,
         descriptor: wallet.descriptor,
         nodeAddress: _nodeAddressCubit.state.getAddress(),
-        socks5: _torCubit.state.getSocks5(),
       )).orThrow();
 
       final draft = (await BitcoinWorker.buildTx(
@@ -394,7 +389,9 @@ class SendCubit extends Cubit<SendState> {
 
       // Cross-check what was built against what the user asked for before
       // showing it for confirmation.
-      final payment = outputs.where((o) => o.to == state.address).firstOrNull;
+      final payment = outputs
+          .where((o) => sameAddress(o.to, state.address))
+          .firstOrNull;
       final minerFee = outputs.where((o) => o.to == _minerOutput).firstOrNull;
       if (payment == null || minerFee == null) {
         throw 'Built transaction does not pay ${state.address}.';
@@ -458,7 +455,6 @@ class SendCubit extends Cubit<SendState> {
       txid = (await BitcoinWorker.broadcast(
         descriptor: descriptor,
         nodeAddress: _nodeAddressCubit.state.getAddress(),
-        socks5: _torCubit.state.getSocks5(),
         signedPSBT: signed.psbt,
       )).orThrow();
     } catch (e, s) {
@@ -470,11 +466,7 @@ class SendCubit extends Cubit<SendState> {
     // The transaction is out: report success even if the refresh fails, so
     // the user is never invited to send it again.
     emit(
-      state.copyWith(
-        sendingTx: false,
-        txId: txid,
-        currentStep: SendSteps.sent,
-      ),
+      state.copyWith(sendingTx: false, txId: txid, currentStep: SendSteps.sent),
     );
     try {
       await _syncWallet();
@@ -483,26 +475,7 @@ class SendCubit extends Cubit<SendState> {
     }
   }
 
-  Future<void> savePSBTToFile() async {
-    try {
-      final path = await FilePicker.getDirectoryPath();
-      if (path == null) return;
-      final stamp = DateTime.now().millisecondsSinceEpoch;
-      await File('$path/stackmate-$stamp.psbt')
-          .writeAsString(state.psbt, flush: true);
-      emit(state.clearErrors().copyWith(currentStep: SendSteps.sent));
-    } catch (e, s) {
-      emit(state.clearErrors().copyWith(errSending: e.toString()));
-      _logger.logException(e, 'SendCubit.savePSBTToFile', s);
-    }
-  }
-
   void shareTxId() {
     _share.share(text: state.txId, subjectForEmail: emailShareTxidSubject);
-  }
-
-  void copyPSBT() {
-    _clipBoard.copyToClipBoard(state.psbt);
-    emit(state.clearErrors().copyWith(currentStep: SendSteps.sent));
   }
 }

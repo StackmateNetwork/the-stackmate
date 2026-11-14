@@ -7,7 +7,6 @@ import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/model/fees.dart';
 import 'package:sats/pkg/interface/storage.dart';
 import 'package:sats/pkg/storage.dart';
@@ -29,7 +28,6 @@ class FeesCubit extends Cubit<FeesState> {
     this._storage,
     this._blockchain,
     this._nodeAddressCubit,
-    this._torCubit,
     this._logger,
   ) : super(const FeesState()) {
     init();
@@ -38,7 +36,6 @@ class FeesCubit extends Cubit<FeesState> {
   final IStorage _storage;
   final ChainSelectCubit _blockchain;
   final NodeAddressCubit _nodeAddressCubit;
-  final TorCubit _torCubit;
   final Logger _logger;
 
   /// Shows the last saved fees, then fetches fresh ones.
@@ -69,7 +66,6 @@ class FeesCubit extends Cubit<FeesState> {
       final fastRate = (await BitcoinWorker.estimateFee(
         network: _blockchain.state.blockchain.name,
         nodeAddress: _nodeAddressCubit.state.getAddress(),
-        socks5: _torCubit.state.getSocks5(),
         targetSize: '1',
       )).orThrow();
 

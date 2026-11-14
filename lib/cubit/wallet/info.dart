@@ -5,7 +5,6 @@ import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/transaction.dart';
@@ -54,7 +53,6 @@ class InfoCubit extends Cubit<InfoState> {
     this._share,
     this._vibrate,
     this._nodeAddressCubit,
-    this._torCubit,
     this._blockchainCubit,
     Wallet wallet,
   ) : super(InfoState(wallet: wallet)) {
@@ -69,7 +67,6 @@ class InfoCubit extends Cubit<InfoState> {
   final IVibrate _vibrate;
   final ChainSelectCubit _blockchainCubit;
   final NodeAddressCubit _nodeAddressCubit;
-  final TorCubit _torCubit;
 
   static const defaultTestnetExplorer =
       'https://mempool.bullbitcoin.com/testnet/tx/';
@@ -141,14 +138,12 @@ class InfoCubit extends Cubit<InfoState> {
       );
 
       final node = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
 
       final dbPath = await walletDbPath(wallet.label, wallet.uid);
 
       final currentHeight = (await BitcoinWorker.height(
         network: _blockchainCubit.state.blockchain.name,
         nodeAddress: node,
-        socks5: socks5,
       )).orThrow();
 
       emit(
@@ -165,7 +160,6 @@ class InfoCubit extends Cubit<InfoState> {
         dbPath: dbPath,
         descriptor: state.wallet!.descriptor,
         nodeAddress: node,
-        socks5: socks5,
       );
       syncStat.orThrow();
       final balance = (await BitcoinWorker.balance(
@@ -223,7 +217,6 @@ class InfoCubit extends Cubit<InfoState> {
     try {
       final wallet = state.wallet;
       final node = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
 
       emit(
         state.copyWith(
@@ -239,7 +232,6 @@ class InfoCubit extends Cubit<InfoState> {
       final currentHeight = (await BitcoinWorker.height(
         network: _blockchainCubit.state.blockchain.name,
         nodeAddress: node,
-        socks5: socks5,
       )).orThrow();
 
       emit(
@@ -256,7 +248,6 @@ class InfoCubit extends Cubit<InfoState> {
         dbPath: dbPath,
         descriptor: state.wallet!.descriptor,
         nodeAddress: node,
-        socks5: socks5,
       );
 
       syncStat.orThrow();

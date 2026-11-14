@@ -48,4 +48,8 @@ void main() {
     expect(btcToSats(''), isNull);
     expect(btcToSats('.'), isNull);
   });
+
+  test('upper-case regtest addresses are lower-cased', () {
+    expect(PaymentRequest.parse('BCRT1QABC').address, 'bcrt1qabc');
+  });
 }

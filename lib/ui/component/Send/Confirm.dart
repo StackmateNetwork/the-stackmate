@@ -10,7 +10,6 @@ class ConfirmTransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.select((SendCubit sc) => sc.state);
-    final wallet = state.wallet;
     final preferences = context.select((PreferencesCubit p) => p.state);
 
     if (state.finalAmount == null) return Container();
@@ -103,35 +102,19 @@ class ConfirmTransaction extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30),
-              if (wallet.isNotWatchOnly())
-                SizedBox(
-                  height: 52,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: context.colours.surface,
-                      backgroundColor: context.colours.primary,
-                    ),
-                    onPressed: () {
-                      context.read<SendCubit>().sendClicked();
-                    },
-                    child: const Text('SEND'),
+              SizedBox(
+                height: 52,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: context.colours.surface,
+                    backgroundColor: context.colours.primary,
                   ),
-                )
-              else ...[
-                TextButton(
                   onPressed: () {
-                    context.read<SendCubit>().copyPSBT();
+                    context.read<SendCubit>().sendClicked();
                   },
-                  child: const Text('COPY PSBT'),
+                  child: const Text('SEND'),
                 ),
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: () async {
-                    await context.read<SendCubit>().savePSBTToFile();
-                  },
-                  child: const Text('SAVE PSBT'),
-                ),
-              ],
+              ),
               const SizedBox(height: 6),
               if (state.errSending != '')
                 Text(

@@ -1,8 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/fees.dart';
-import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Wallet/Balance.dart';
@@ -21,12 +19,11 @@ class _Wallet extends StatelessWidget {
     final showInfo = c.select((InfoCubit wc) => wc.state.showInfo);
     final isLoading = c.select((InfoCubit wc) => wc.state.loadingTransactions);
     final wallet = c.select((InfoCubit wc) => wc.state.wallet);
-    final tor = c.select((TorCubit t) => t.state);
     return BlocListener<InfoCubit, InfoState>(
       listener: (c, s) {
         if (s.deleted) Navigator.pop(c);
-        if (s.errDeleting != emptyString) handleError(c, s.errDeleting);
-        if (s.errorPPTest != emptyString) {
+        if (s.errDeleting.isNotEmpty) handleError(c, s.errDeleting);
+        if (s.errorPPTest.isNotEmpty) {
           handleError(c, s.errorPPTest);
         }
         if (s.ppTestPassed) {
@@ -35,39 +32,6 @@ class _Wallet extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          actions: [
-            if (tor.isConnected) ...[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Tooltip(
-                  preferBelow: false,
-                  triggerMode: TooltipTriggerMode.tap,
-                  message: (tor.isRunning)
-                      ? 'Torified Natively.'
-                      : 'Torified via External.',
-                  textStyle: c.fonts.bodySmall!.copyWith(
-                    color: c.colours.primary,
-                  ),
-                  decoration: BoxDecoration(
-                    color: c.colours.surface,
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  child: Icon(
-                    Icons.security_sharp,
-                    color: c.colours.tertiaryContainer,
-                  ),
-                ),
-              ),
-            ] else ...[
-              IconButton(
-                color: c.colours.error,
-                onPressed: () {
-                  c.push('/tor-config');
-                },
-                icon: Icon(Icons.security_sharp, color: c.colours.error),
-              ),
-            ],
-          ],
           leading: Builder(
             builder: (BuildContext context) {
               return BackButton(
@@ -144,38 +108,41 @@ class _Wallet extends StatelessWidget {
                                 color: c.colours.secondary,
                                 onPressed: () {
                                   c.push('/receive', extra: wallet).then((_) {
-                                      if (c.mounted) {
-                                        c.read<InfoCubit>().reload();
-                                      }
-                                    });
+                                    if (c.mounted) {
+                                      c.read<InfoCubit>().reload();
+                                    }
+                                  });
                                 },
                                 icon: Icon(
                                   Icons.call_received,
                                   color: c.colours.secondary,
                                 ),
                               ),
-                              AnimatedOpacity(
-                                duration: const Duration(milliseconds: 300),
-                                opacity: zeroBal ? 0.3 : 1,
-                                child: IconButton(
-                                  color: c.colours.tertiary,
-                                  onPressed: () {
-                                    if (!zeroBal) {
-                                      c.push('/send', extra: wallet).then((_) {
+                              // Watch-only wallets from older versions can
+                              // still be viewed but no longer spend.
+                              if (wallet!.canSign)
+                                AnimatedOpacity(
+                                  duration: const Duration(milliseconds: 300),
+                                  opacity: zeroBal ? 0.3 : 1,
+                                  child: IconButton(
+                                    color: c.colours.tertiary,
+                                    onPressed: () {
+                                      if (!zeroBal) {
+                                        c.push('/send', extra: wallet).then((
+                                          _,
+                                        ) {
                                           if (c.mounted) {
                                             c.read<InfoCubit>().reload();
                                           }
                                         });
-                                    }
-                                  },
-                                  icon: Icon(
-                                    wallet!.isWatchOnly
-                                        ? Icons.build
-                                        : Icons.send,
-                                    color: c.colours.tertiary,
+                                      }
+                                    },
+                                    icon: Icon(
+                                      Icons.send,
+                                      color: c.colours.tertiary,
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),

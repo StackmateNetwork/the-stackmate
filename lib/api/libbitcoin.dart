@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:bdk_dart/bdk.dart' as bdk;
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/model/core.dart';
@@ -26,11 +24,10 @@ class LibBitcoin implements IStackMateBitcoin {
     required String length,
     required String passphrase,
     required String network,
-  }) =>
-      _guard(() {
-        final mnemonic = bdk.Mnemonic(wordCount: _wordCount(length));
-        return _seedFrom(mnemonic, passphrase, network);
-      });
+  }) => _guard(() {
+    final mnemonic = bdk.Mnemonic(wordCount: _wordCount(length));
+    return _seedFrom(mnemonic, passphrase, network);
+  });
 
   @override
   bool isValidMnemonic(String mnemonic) {
@@ -47,35 +44,28 @@ class LibBitcoin implements IStackMateBitcoin {
     required String mnemonic,
     required String passphrase,
     required String network,
-  }) =>
-      _guard(() {
-        final m = bdk.Mnemonic.fromString(mnemonic: mnemonic.trim());
-        return _seedFrom(m, passphrase, network);
-      });
+  }) => _guard(() {
+    final m = bdk.Mnemonic.fromString(mnemonic: mnemonic.trim());
+    return _seedFrom(m, passphrase, network);
+  });
 
   @override
   R<DerivedKeys> deriveHardened({
     required String masterXPriv,
     required String account,
     required String purpose,
-  }) =>
-      _guard(() {
-        final coin = masterXPriv.startsWith('tprv') ? '1' : '0';
-        final path = "m/$purpose'/$coin'/$account'";
-        final root = bdk.DescriptorSecretKey.fromString(
-          privateKey: masterXPriv,
-        );
-        final child = root.derive(path: bdk.DerivationPath(path: path));
-        final xprv = _parseKey(child.toString());
-        final xpub = _parseKey(child.asPublic().toString());
-        return DerivedKeys(xprv.fingerprint, 'm/${xprv.path}', xprv.key, xpub.key);
-      });
+  }) => _guard(() {
+    final coin = masterXPriv.startsWith('tprv') ? '1' : '0';
+    final path = "m/$purpose'/$coin'/$account'";
+    final root = bdk.DescriptorSecretKey.fromString(privateKey: masterXPriv);
+    final child = root.derive(path: bdk.DerivationPath(path: path));
+    final xprv = _parseKey(child.toString());
+    final xpub = _parseKey(child.asPublic().toString());
+    return DerivedKeys(xprv.fingerprint, 'm/${xprv.path}', xprv.key, xpub.key);
+  });
 
   @override
-  R<String> compile({
-    required String policy,
-    required String scriptType,
-  }) =>
+  R<String> compile({required String policy, required String scriptType}) =>
       _guard(() {
         final p = policy.trim();
         final key = RegExp(r'^pk\((.+)\)$').firstMatch(p)?.group(1);
@@ -101,22 +91,17 @@ class LibBitcoin implements IStackMateBitcoin {
     required String targetSize,
     required String network,
     required String nodeAddress,
-    required String socks5,
-  }) =>
-      _guard(() {
-        final client = _electrum(nodeAddress, socks5);
-        final btcPerKvb = client.estimateFee(number: int.parse(targetSize));
-        // Electrum returns BTC/kvB, or -1 when it has no estimate.
-        final satPerVb = btcPerKvb * satsPerBtc / 1000;
-        if (satPerVb < 1) return 1.0;
-        return double.parse(satPerVb.toStringAsFixed(2));
-      });
+  }) => _guard(() {
+    final client = _electrum(nodeAddress);
+    final btcPerKvb = client.estimateFee(number: int.parse(targetSize));
+    // Electrum returns BTC/kvB, or -1 when it has no estimate.
+    final satPerVb = btcPerKvb * satsPerBtc / 1000;
+    if (satPerVb < 1) return 1.0;
+    return double.parse(satPerVb.toStringAsFixed(2));
+  });
 
   @override
-  R<int> getWeight({
-    required String descriptor,
-    required String psbt,
-  }) =>
+  R<int> getWeight({required String descriptor, required String psbt}) =>
       _guard(() {
         final tx = bdk.Psbt(psbtBase64: psbt).extractTxUncheckedFeeRate();
         final perInput = _descriptor(descriptor).maxWeightToSatisfy();
@@ -128,65 +113,48 @@ class LibBitcoin implements IStackMateBitcoin {
   R<NetworkFees> feeRateToAbsolute({
     required String feeRate,
     required String weight,
-  }) =>
-      _guard(() {
-        final rate = double.parse(feeRate);
-        final vbytes = int.parse(weight) / 4;
-        return NetworkFees(rate, (rate * vbytes).ceil());
-      });
+  }) => _guard(() {
+    final rate = double.parse(feeRate);
+    final vbytes = int.parse(weight) / 4;
+    return NetworkFees(rate, (rate * vbytes).ceil());
+  });
 
   @override
   R<String> sqliteSync({
     required String dbPath,
     required String descriptor,
     required String nodeAddress,
-    required String socks5,
-  }) =>
-      _guard(() {
-        final (wallet, persister) = _openWallet(descriptor, dbPath);
-        _fullScan(wallet, nodeAddress, socks5);
-        wallet.persist(persister: persister);
-        return 'synced';
-      });
+  }) => _guard(() {
+    final (wallet, persister) = _openWallet(descriptor, dbPath);
+    _fullScan(wallet, nodeAddress);
+    wallet.persist(persister: persister);
+    return 'synced';
+  });
 
   @override
-  R<int> sqliteBalance({
-    required String descriptor,
-    required String dbPath,
-  }) =>
+  R<int> sqliteBalance({required String descriptor, required String dbPath}) =>
       _guard(() {
         final (wallet, _) = _openWallet(descriptor, dbPath);
         return wallet.balance().total.toSat();
       });
 
-
   @override
-  R<int> getHeight({
-    required String network,
-    required String nodeAddress,
-    required String socks5,
-  }) =>
+  R<int> getHeight({required String network, required String nodeAddress}) =>
       _guard(() {
-        return _electrum(nodeAddress, socks5).blockHeadersSubscribe().height;
+        return _electrum(nodeAddress).blockHeadersSubscribe().height;
       });
 
   @override
   R<List<Transaction>> sqliteHistory({
     required String descriptor,
     required String dbPath,
-  }) =>
-      _guard(() {
-        final (wallet, _) = _openWallet(descriptor, dbPath);
-        return _history(wallet);
-      });
-
-
+  }) => _guard(() {
+    final (wallet, _) = _openWallet(descriptor, dbPath);
+    return _history(wallet);
+  });
 
   @override
-  bool isValidAddress({
-    required String address,
-    required String network,
-  }) {
+  bool isValidAddress({required String address, required String network}) {
     try {
       bdk.Address(address: address.trim(), network: _network(network));
       return true;
@@ -196,10 +164,7 @@ class LibBitcoin implements IStackMateBitcoin {
   }
 
   @override
-  R<String> getAddress({
-    required String descriptor,
-    required String index,
-  }) =>
+  R<String> getAddress({required String descriptor, required String index}) =>
       _guard(() {
         return _descriptor(descriptor)
             .deriveAddress(
@@ -213,14 +178,12 @@ class LibBitcoin implements IStackMateBitcoin {
   R<Address> lastUnusedAddress({
     required String descriptor,
     required String dbPath,
-  }) =>
-      _guard(() {
-        final (wallet, persister) = _openWallet(descriptor, dbPath);
-        final info =
-            wallet.nextUnusedAddress(keychain: bdk.KeychainKind.external_);
-        wallet.persist(persister: persister);
-        return Address(info.address.toString(), info.index.toString());
-      });
+  }) => _guard(() {
+    final (wallet, persister) = _openWallet(descriptor, dbPath);
+    final info = wallet.nextUnusedAddress(keychain: bdk.KeychainKind.external_);
+    wallet.persist(persister: persister);
+    return Address(info.address.toString(), info.index.toString());
+  });
 
   @override
   R<PSBT> sqliteBuildTransaction({
@@ -230,14 +193,12 @@ class LibBitcoin implements IStackMateBitcoin {
     required String feeAbsolute,
     required String policyPath,
     required String sweep,
-  }) =>
-      _guard(() {
-        final (wallet, persister) = _openWallet(descriptor, dbPath);
-        final psbt = _buildPsbt(wallet, descriptor, txOutputs, feeAbsolute, sweep);
-        wallet.persist(persister: persister);
-        return psbt;
-      });
-
+  }) => _guard(() {
+    final (wallet, persister) = _openWallet(descriptor, dbPath);
+    final psbt = _buildPsbt(wallet, descriptor, txOutputs, feeAbsolute, sweep);
+    wallet.persist(persister: persister);
+    return psbt;
+  });
 
   @override
   R<PSBT> sqliteBumpFee({
@@ -245,104 +206,85 @@ class LibBitcoin implements IStackMateBitcoin {
     required String dbPath,
     required String txid,
     required String feeRate,
-  }) =>
-      _guard(() {
-        final (wallet, persister) = _openWallet(descriptor, dbPath);
-        final satPerKwu = (double.parse(feeRate) * 250).ceil();
-        final psbt = bdk.BumpFeeTxBuilder(
-          txid: bdk.Txid.fromString(hex: txid),
-          feeRate: bdk.FeeRate.fromSatPerKwu(satKwu: satPerKwu),
-        ).finish(wallet: wallet);
-        wallet.persist(persister: persister);
-        return PSBT(psbt.serialize(), false);
-      });
+  }) => _guard(() {
+    final (wallet, persister) = _openWallet(descriptor, dbPath);
+    final satPerKwu = (double.parse(feeRate) * 250).ceil();
+    final psbt = bdk.BumpFeeTxBuilder(
+      txid: bdk.Txid.fromString(hex: txid),
+      feeRate: bdk.FeeRate.fromSatPerKwu(satKwu: satPerKwu),
+    ).finish(wallet: wallet);
+    wallet.persist(persister: persister);
+    return PSBT(psbt.serialize(), false);
+  });
 
   @override
   R<List<DecodedTxOutput>> decodePsbt({
     required String network,
     required String psbt,
-  }) =>
-      _guard(() {
-        final p = bdk.Psbt(psbtBase64: psbt);
-        final net = _network(network);
-        final outputs = [
-          for (final o in p.extractTxUncheckedFeeRate().output())
-            DecodedTxOutput(
-              o.value.toSat(),
-              bdk.Address.fromScript(script: o.scriptPubkey, network: net)
-                  .toString(),
-            ),
-        ];
-        outputs.add(DecodedTxOutput(p.fee(), minerOutput));
-        return outputs;
-      });
+  }) => _guard(() {
+    final p = bdk.Psbt(psbtBase64: psbt);
+    final net = _network(network);
+    final outputs = [
+      for (final o in p.extractTxUncheckedFeeRate().output())
+        DecodedTxOutput(
+          o.value.toSat(),
+          bdk.Address.fromScript(
+            script: o.scriptPubkey,
+            network: net,
+          ).toString(),
+        ),
+    ];
+    outputs.add(DecodedTxOutput(p.fee(), minerOutput));
+    return outputs;
+  });
 
   @override
   R<PSBT> signTransaction({
     required String descriptor,
     required String unsignedPSBT,
-  }) =>
-      _guard(() {
-        final wallet = bdk.Wallet.createSingle(
-          descriptor: _descriptor(descriptor),
-          network: _networkOfDescriptor(descriptor),
-          persister: bdk.Persister.newInMemory(),
-          lookahead: _lookahead,
-        );
-        final psbt = bdk.Psbt(psbtBase64: unsignedPSBT);
-        // Finalizing requires the spent scripts to be in the wallet's index.
-        final maxIndex = _maxDerivationIndex(psbt);
-        if (maxIndex >= _lookahead) {
-          wallet.revealAddressesTo(
-            keychain: bdk.KeychainKind.external_,
-            index: maxIndex,
-          );
-        }
-        final finalized = wallet.sign(
-          psbt: psbt,
-          signOptions: bdk.SignOptions(
-            trustWitnessUtxo: true,
-            allowAllSighashes: false,
-            tryFinalize: true,
-            signWithTapInternalKey: true,
-            allowGrinding: true,
-          ),
-        );
-        return PSBT(psbt.serialize(), finalized);
-      });
+  }) => _guard(() {
+    final wallet = bdk.Wallet.createSingle(
+      descriptor: _descriptor(descriptor),
+      network: _networkOfDescriptor(descriptor),
+      persister: bdk.Persister.newInMemory(),
+      lookahead: _lookahead,
+    );
+    final psbt = bdk.Psbt(psbtBase64: unsignedPSBT);
+    // Finalizing requires the spent scripts to be in the wallet's index.
+    final maxIndex = _maxDerivationIndex(psbt);
+    if (maxIndex >= _lookahead) {
+      wallet.revealAddressesTo(
+        keychain: bdk.KeychainKind.external_,
+        index: maxIndex,
+      );
+    }
+    final finalized = wallet.sign(
+      psbt: psbt,
+      signOptions: bdk.SignOptions(
+        trustWitnessUtxo: true,
+        allowAllSighashes: false,
+        tryFinalize: true,
+        signWithTapInternalKey: true,
+        allowGrinding: true,
+      ),
+    );
+    return PSBT(psbt.serialize(), finalized);
+  });
 
   @override
   Future<R<String>> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
-    required String socks5,
     required String signedPSBT,
-  }) async =>
-      _guard(() {
-        final psbt = bdk.Psbt(psbtBase64: signedPSBT);
-        final finalized = psbt.finalize();
-        if (!finalized.couldFinalize) {
-          throw StateError('PSBT is not fully signed.');
-        }
-        final tx = finalized.psbt.extractTx();
-        return _electrum(nodeAddress, socks5)
-            .transactionBroadcast(tx: tx)
-            .toString();
-      });
-
-  @override
-  Future<R<String>> broadcastTransactionHex({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-    required String signedHex,
-  }) async =>
-      _guard(() {
-        final tx = bdk.Transaction(transactionBytes: _unhex(signedHex.trim()));
-        return _electrum(nodeAddress, socks5)
-            .transactionBroadcast(tx: tx)
-            .toString();
-      });
+  }) async => _guard(() {
+    final psbt = bdk.Psbt(psbtBase64: signedPSBT);
+    final finalized = psbt.finalize();
+    if (!finalized.couldFinalize) {
+      throw StateError('PSBT is not fully signed.');
+    }
+    final tx = finalized.psbt.extractTx();
+    return _electrum(nodeAddress).transactionBroadcast(tx: tx).toString();
+  });
 
   // ---------------------------------------------------------------------------
 
@@ -369,32 +311,34 @@ class LibBitcoin implements IStackMateBitcoin {
   }
 
   bdk.WordCount _wordCount(String length) => switch (length) {
-        '12' => bdk.WordCount.words12,
-        '15' => bdk.WordCount.words15,
-        '18' => bdk.WordCount.words18,
-        '21' => bdk.WordCount.words21,
-        '24' => bdk.WordCount.words24,
-        _ => throw ArgumentError('Invalid mnemonic length: $length'),
-      };
+    '12' => bdk.WordCount.words12,
+    '15' => bdk.WordCount.words15,
+    '18' => bdk.WordCount.words18,
+    '21' => bdk.WordCount.words21,
+    '24' => bdk.WordCount.words24,
+    _ => throw ArgumentError('Invalid mnemonic length: $length'),
+  };
 
   bdk.Network _network(String name) =>
       name == 'main' ? bdk.Network.bitcoin : bdk.Network.testnet;
 
   bdk.NetworkKind _networkKind(bdk.Network network) =>
-      network == bdk.Network.bitcoin ? bdk.NetworkKind.main : bdk.NetworkKind.test;
+      network == bdk.Network.bitcoin
+      ? bdk.NetworkKind.main
+      : bdk.NetworkKind.test;
 
   bool _hasSecret(String descriptor) =>
       descriptor.contains('xprv') || descriptor.contains('tprv');
 
   bdk.Network _networkOfDescriptor(String descriptor) =>
       descriptor.contains('tpub') || descriptor.contains('tprv')
-          ? bdk.Network.testnet
-          : bdk.Network.bitcoin;
+      ? bdk.Network.testnet
+      : bdk.Network.bitcoin;
 
   bdk.Descriptor _descriptor(String descriptor) => bdk.Descriptor(
-        descriptor: descriptor,
-        networkKind: _networkKind(_networkOfDescriptor(descriptor)),
-      );
+    descriptor: descriptor,
+    networkKind: _networkKind(_networkOfDescriptor(descriptor)),
+  );
 
   /// Translates the policies the app produces into miniscript:
   /// `pk(K)` stays as is, `thresh(k,pk(A),pk(B),..)` becomes `sortedmulti`.
@@ -436,18 +380,16 @@ class LibBitcoin implements IStackMateBitcoin {
     }
   }
 
+  bdk.ElectrumClient _electrum(String nodeAddress) => bdk.ElectrumClient(
+    url: nodeAddress,
+    socks5: null,
+    timeout: _electrumTimeoutSecs,
+    retry: _electrumRetry,
+    validateDomain: true,
+  );
 
-  bdk.ElectrumClient _electrum(String nodeAddress, String socks5) =>
-      bdk.ElectrumClient(
-        url: nodeAddress,
-        socks5: socks5.isEmpty || socks5 == 'none' ? null : socks5,
-        timeout: _electrumTimeoutSecs,
-        retry: _electrumRetry,
-        validateDomain: true,
-      );
-
-  void _fullScan(bdk.Wallet wallet, String nodeAddress, String socks5) {
-    final client = _electrum(nodeAddress, socks5);
+  void _fullScan(bdk.Wallet wallet, String nodeAddress) {
+    final client = _electrum(nodeAddress);
     final update = client.fullScan(
       request: wallet.startFullScan().build(),
       stopGap: _stopGap,
@@ -505,8 +447,10 @@ class LibBitcoin implements IStackMateBitcoin {
       final sep = output.lastIndexOf(':');
       final address = output.substring(0, sep).trim();
       final amount = output.substring(sep + 1).trim();
-      final script =
-          bdk.Address(address: address, network: network).scriptPubkey();
+      final script = bdk.Address(
+        address: address,
+        network: network,
+      ).scriptPubkey();
       if (sweep == 'true' || amount == _sweepAmount) {
         builder = builder.drainWallet().drainTo(script: script);
       } else {
@@ -537,10 +481,4 @@ class LibBitcoin implements IStackMateBitcoin {
     }
     return max;
   }
-
-
-  Uint8List _unhex(String hex) => Uint8List.fromList([
-        for (var i = 0; i < hex.length; i += 2)
-          int.parse(hex.substring(i, i + 2), radix: 16),
-      ]);
 }

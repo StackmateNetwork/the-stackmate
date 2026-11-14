@@ -2,7 +2,6 @@ import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -52,7 +51,6 @@ class Accounts extends StatelessWidget {
                     locator<IShare>(),
                     locator<IVibrate>(),
                     c.read<NodeAddressCubit>(),
-                    c.read<TorCubit>(),
                     c.read<ChainSelectCubit>(),
                     w,
                   ),

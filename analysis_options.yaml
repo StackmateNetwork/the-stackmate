@@ -19,6 +19,11 @@ linter:
     unnecessary_string_escapes: false
     # style-only; many cubit methods are fire-and-forget `void f() async`
     unnecessary_async: false
+    # Dart 3.14 primary-constructor style; not adopted yet (style only, and
+    # freezed/json/hive classes still need regular constructors).
+    use_primary_constructors: false
+    unnecessary_type_name_in_constructor: false
+    empty_container_bodies: false
 
 analyzer:
   exclude:

@@ -16,18 +16,14 @@ import 'package:sats/pkg/storage.dart';
 import 'package:sats/ui/cubits.dart';
 import 'package:sats/ui/screen/AddWallet.dart';
 import 'package:sats/ui/screen/BackupWallet.dart';
-import 'package:sats/ui/screen/Broadcast.dart';
 import 'package:sats/ui/screen/Landing.dart';
 import 'package:sats/ui/screen/Logs.dart';
 import 'package:sats/ui/screen/NewWallet/Derive.dart';
 import 'package:sats/ui/screen/NewWallet/SeedGenerate.dart';
 import 'package:sats/ui/screen/NewWallet/SeedImport.dart';
-import 'package:sats/ui/screen/NewWallet/XpubColdcard.dart';
-import 'package:sats/ui/screen/NewWallet/XpubImport.dart';
 import 'package:sats/ui/screen/Receive.dart';
 import 'package:sats/ui/screen/Send.dart';
 import 'package:sats/ui/screen/Settings.dart';
-import 'package:sats/ui/screen/TorConfig.dart';
 import 'package:sats/ui/screen/WalletSingle.dart';
 import 'package:sats/ui/screen/WalletsHome.dart';
 import 'package:sats/ui/style.dart';
@@ -43,6 +39,13 @@ void main() async {
     () => runApp(Stackmate()),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
+}
+
+/// Every screen but the PIN screen needs an unlocked app.
+String? pinGuard(BuildContext context, GoRouterState state) {
+  if (state.matchedLocation == '/') return null;
+  final unlocked = context.read<PinCubit>().state.isVerified;
+  return unlocked ? null : '/';
 }
 
 class Stackmate extends StatelessWidget {
@@ -80,12 +83,7 @@ class Stackmate extends StatelessWidget {
   late final _router = GoRouter(
     navigatorKey: rootNavigatorKey,
     debugLogDiagnostics: kDebugMode,
-    // Every screen but the PIN screen needs an unlocked app.
-    redirect: (context, state) {
-      if (state.matchedLocation == '/') return null;
-      final unlocked = context.read<PinCubit>().state.isVerified;
-      return unlocked ? null : '/';
-    },
+    redirect: pinGuard,
     routes: [
       GoRoute(
         path: '/',
@@ -104,16 +102,8 @@ class Stackmate extends StatelessWidget {
         builder: (_, _) => const AddWalletScreen(),
       ),
       GoRoute(
-        path: '/broadcast',
-        builder: (_, _) => const BroadcastScreen(),
-      ),
-      GoRoute(
         path: '/backup-master',
         builder: (_, _) => const BackupWalletScreen(),
-      ),
-      GoRoute(
-        path: '/tor-config',
-        builder: (_, _) => const TorConfigScreen(),
       ),
       GoRoute(
         path: '/generate-seed',
@@ -126,14 +116,6 @@ class Stackmate extends StatelessWidget {
       GoRoute(
         path: '/derive-account',
         builder: (_, _) => const DeriveScreen(),
-      ),
-      GoRoute(
-        path: '/watch-only',
-        builder: (_, _) => const XPubImportScreen(),
-      ),
-      GoRoute(
-        path: '/coldcard',
-        builder: (_, _) => const XPubColdcardScreen(),
       ),
       GoRoute(
         path: '/wallet',

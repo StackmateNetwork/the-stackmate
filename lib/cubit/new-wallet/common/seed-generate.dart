@@ -168,6 +168,8 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
         state.copyWith(
           currentStep: SeedGenerateSteps.quiz,
           quizSeedCompleted: 0,
+          // A wrong answer restarts the quiz: earlier answers don't count.
+          quizSeedCompletedAnswers: [],
         ),
       );
       _updateQuiz();
@@ -237,7 +239,6 @@ class SeedGenerateCubit extends Cubit<SeedGenerateState> {
       );
       return;
     }
-    // emit(state.copyWith(quizSeedError: emptyString));
 
     final List<String> completedAnswers =
         state.quizSeedCompletedAnswers.toList();

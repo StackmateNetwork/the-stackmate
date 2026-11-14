@@ -125,6 +125,8 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
         state.copyWith(
           currentStep: SeedBackupSteps.quiz,
           quizSeedCompleted: 0,
+          // A wrong answer restarts the quiz: earlier answers don't count.
+          quizSeedCompletedAnswers: [],
         ),
       );
 

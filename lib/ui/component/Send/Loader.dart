@@ -8,11 +8,13 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loadingStart =
-        context.select((SendCubit sc) => sc.state.loadingStart);
+    final loadingStart = context.select(
+      (SendCubit sc) => sc.state.loadingStart,
+    );
     final buildingTx = context.select((SendCubit sc) => sc.state.buildingTx);
-    final calculating =
-        context.select((SendCubit sc) => sc.state.calculatingFees);
+    final calculating = context.select(
+      (SendCubit sc) => sc.state.calculatingFees,
+    );
 
     final sendingTx = context.select((SendCubit sc) => sc.state.sendingTx);
 

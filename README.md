@@ -39,16 +39,14 @@ Prioritized in that order.
 
 ## Core
 
-This app uses [BDK](https://bitcoindevkit.org/) via the official [bdk_dart](https://pub.dev/packages/bdk_dart) bindings for its Bitcoin specific logic (descriptors, sync, PSBT building/signing and fee bumping).
-<br/>
-Tor is provided by the [arti](https://gitlab.torproject.org/tpo/core/arti)-based [tor](https://pub.dev/packages/tor) plugin.
-<br/>
-Both are Rust libraries that are compiled automatically during `flutter build` / `flutter run`.
+This app uses [BDK](https://bitcoindevkit.org/) via the official [bdk_dart](https://pub.dev/packages/bdk_dart) bindings for its Bitcoin specific logic (descriptors, sync, transaction building/signing and fee bumping).
+BDK is a Rust library that is compiled automatically during `flutter build` / `flutter run`.
 
 ## Features
 
+- **Wallets** create a new seed (with a backup quiz) or recover one, protected by a PIN
+- **Send & Receive** with QR codes and BIP21 payment links
 - **Descriptors** uses descriptor wallet specifications for simplicity in development and compatability in recovery
-- **PSBT** uses psbt specifications to support watch-only wallets and compatability with hardware wallets
 - **Taproot** supports taproot for single-sig to improve the overall anonymity set of bitcoin transactions
 - **RBF** bump the fee of unconfirmed outgoing transactions (BIP125 replace-by-fee)
 - **Cross Platform:** built using Flutter 💙 and Rust, allowing easy extension to multiple platforms
@@ -61,14 +59,14 @@ Both are Rust libraries that are compiled automatically during `flutter build` /
 | --- | --- | --- |
 | [Flutter](https://docs.flutter.dev/get-started/install) | 3.50.x (Dart 3.14) | Material widgets come from the `material_ui` / `cupertino_ui` packages (Flutter 3.47+). |
 | [Rust](https://rustup.rs) via `rustup` | stable | Install with `rustup`, not Homebrew. BDK pins its own toolchain (1.85.1) and rustup installs it automatically on the first build. |
-| JDK | 17 | Required by Android Gradle Plugin 8.13. AGP 9 is not used yet: the `tor` plugin version this app can use does not support it. |
+| JDK | 17 | Required by Android Gradle Plugin 9.3 / Gradle 9.5. |
 | Android SDK | platform 36, build-tools 36 | The NDK version Flutter expects (28.2.x) is downloaded by Gradle on the first build. |
 | Xcode (iOS only) | 26+ | Deployment target is iOS 14.0. |
 
-Install the Rust Android targets for the stable toolchain (used by the Tor plugin):
+Install the Rust Android target. The app is built for 64-bit ARM (`arm64-v8a`) only:
 
 ```bash
-rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-android
+rustup target add aarch64-linux-android
 ```
 
 Point Flutter at JDK 17 if it is not your default Java. For example, with Homebrew on macOS:
@@ -104,7 +102,7 @@ flutter emulators --launch <emulator_id>   # list ids with `flutter emulators`
 flutter run
 ```
 
-The first build compiles BDK and Tor (arti) from Rust, so it can take 10–20 minutes. Later builds are incremental.
+The first build compiles BDK from Rust, so it can take several minutes. Later builds are incremental.
 
 To build an APK without running it:
 

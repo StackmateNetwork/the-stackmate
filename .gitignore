@@ -85,3 +85,6 @@ key.properties
 .env.*
 google-services.json
 GoogleService-Info.plist
+
+# Kotlin compiler cache
+.kotlin/

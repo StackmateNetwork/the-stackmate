@@ -5,9 +5,7 @@ import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
 
 class WalletDetails extends StatelessWidget {
-  const WalletDetails({
-    super.key,
-  });
+  const WalletDetails({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,6 @@ import 'package:sats/model/node.dart';
 import 'package:sats/model/pin.dart';
 import 'package:sats/model/preferences.dart';
 import 'package:sats/model/result.dart';
-import 'package:sats/model/tor.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -23,7 +22,6 @@ enum StoreKeys {
   Node,
   Fees,
   Preferences,
-  Tor,
   Pin,
 }
 
@@ -34,7 +32,6 @@ extension StoreKeysFunctions on StoreKeys {
         StoreKeys.Node: 'node',
         StoreKeys.Fees: 'fees',
         StoreKeys.Preferences: 'preferences',
-        StoreKeys.Tor: 'tor',
         StoreKeys.Pin: 'pin',
       }[this]!;
 }
@@ -47,7 +44,6 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(FeesClassAdapter()); // typeId: 4
   Hive.registerAdapter(PreferencesClassAdapter()); // typeId: 5
   Hive.registerAdapter(TransactionClassAdapter()); // typeId: 6
-  Hive.registerAdapter(TorClassAdapter()); // typeId: 8
   Hive.registerAdapter(PinClassAdapter()); // typeId: 9
 
   const secureStorage = FlutterSecureStorage();
@@ -83,10 +79,8 @@ Future<void> initializeHive() async {
     encryptionCipher: HiveAesCipher(encryptionKey),
   );
 
-  await Hive.openBox<Tor>(
-    StoreKeys.Tor.name,
-    encryptionCipher: HiveAesCipher(encryptionKey),
-  );
+  // Tor was removed; drop its settings box left by older versions.
+  if (await Hive.boxExists('tor')) await Hive.deleteBoxFromDisk('tor');
   await Hive.openBox<Pin>(
     StoreKeys.Pin.name,
     encryptionCipher: HiveAesCipher(encryptionKey),

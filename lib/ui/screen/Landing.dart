@@ -2,7 +2,6 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/pin.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Landing/Keypad.dart';
 import 'package:sats/ui/component/Landing/Logo.dart';
@@ -21,15 +20,9 @@ class _Landing extends StatelessWidget {
         if (state.isVerified)
           {
             if (masterKey != null)
-              {
-                c.read<TorCubit>().start(),
-                c.push('/home'),
-              }
+              {c.push('/home')}
             else
-              {
-                c.read<TorCubit>().start(),
-                c.push('/add-wallet'),
-              },
+              {c.push('/add-wallet')},
           }
         else if (state.error != null)
           {

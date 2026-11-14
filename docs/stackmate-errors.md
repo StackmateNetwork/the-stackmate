@@ -1,3 +1,0 @@
-# Stackmate errors
-
--

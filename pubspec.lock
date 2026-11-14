@@ -25,14 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.4"
-  android_file_picker:
-    dependency: transitive
-    description:
-      name: android_file_picker
-      sha256: e7e02f9bab7e014e5b47e4cef135a8f5c66f5c14fd90986e415e758f6a1762e1
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.6"
   animate_do:
     dependency: "direct main"
     description:
@@ -249,14 +241,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.14"
-  dbus:
-    dependency: transitive
-    description:
-      name: dbus
-      sha256: f7db8504e715b835f5ebe5fe74604ccd961d504c73389a5d8e81bafc2e2f3612
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.0"
   diff_match_patch:
     dependency: transitive
     description:
@@ -297,46 +281,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.1"
-  file_picker:
-    dependency: "direct main"
-    description:
-      name: file_picker
-      sha256: "079dc46b753abbddb7f77cd87e6ed9ecc62902580707514568321bdf8e050a86"
-      url: "https://pub.dev"
-    source: hosted
-    version: "13.3.3"
-  file_picker_darwin:
-    dependency: transitive
-    description:
-      name: file_picker_darwin
-      sha256: b7d3a6bd26a18c503d29070fc2d7b26fbfe918d08a6bcd984b6e806ff5ad923f
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.1"
-  file_picker_linux:
-    dependency: transitive
-    description:
-      name: file_picker_linux
-      sha256: "9215ee8c672508cdd9a325202669f849e1baac883658626b3abed5d7777e6a4b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.4"
-  file_picker_platform_interface:
-    dependency: transitive
-    description:
-      name: file_picker_platform_interface
-      sha256: "336e7168306834a2b68e6168ed768e00d3fabeac23154d5793e277ca9f97cf20"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.0"
-  file_picker_web:
-    dependency: transitive
-    description:
-      name: file_picker_web
-      sha256: "50749a6da2984fc29609e102ad4d80fd1d07e6895150f8e4922086167d9d45d8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.1"
   fixnum:
     dependency: transitive
     description:
@@ -1162,14 +1106,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.5.0"
-  tor:
-    dependency: "direct main"
-    description:
-      name: tor
-      sha256: "87555f874704e6a379a98c7bb99e081da177a9bc8700550793417c9d39832513"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
   typed_data:
     dependency: transitive
     description:
@@ -1314,14 +1250,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.0"
-  windows_file_picker:
-    dependency: transitive
-    description:
-      name: windows_file_picker
-      sha256: cd1be37ada0abcfaa55bddb7410e8515844e35cd77669c35d9a28a15722299d8
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   xdg_directories:
     dependency: transitive
     description:
@@ -1330,14 +1258,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-  xml:
-    dependency: transitive
-    description:
-      name: xml
-      sha256: "0fe8cc98946def31cbcbc8734aa4067031e6f65ea3a78a508060bfed2200bfeb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.1.0"
   yaml:
     dependency: transitive
     description:

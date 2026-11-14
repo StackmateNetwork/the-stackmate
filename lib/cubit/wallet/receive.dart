@@ -5,7 +5,6 @@ import 'package:sats/api/bitcoin_worker.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -38,7 +37,6 @@ class ReceiveCubit extends Cubit<ReceiveState> {
     this._vibrate,
     this._core,
     this._nodeAddressCubit,
-    this._torCubit,
     this._storage,
     Wallet wallet,
   ) : super(ReceiveState(wallet: wallet)) {
@@ -53,7 +51,6 @@ class ReceiveCubit extends Cubit<ReceiveState> {
   final IVibrate _vibrate;
   final IStackMateBitcoin _core;
   final NodeAddressCubit _nodeAddressCubit;
-  final TorCubit _torCubit;
 
   static const emailShareSubject = 'Bitcoin Address';
 
@@ -103,7 +100,6 @@ class ReceiveCubit extends Cubit<ReceiveState> {
         dbPath: dbPath,
         descriptor: wallet.descriptor,
         nodeAddress: _nodeAddressCubit.state.getAddress(),
-        socks5: _torCubit.state.getSocks5(),
       )).orThrow();
 
       final unused = (await BitcoinWorker.lastUnusedAddress(

@@ -6,7 +6,6 @@ import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/bump-fee.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallet/signer.dart';
@@ -26,7 +25,6 @@ Future<void> showBumpFeeSheet(BuildContext c, Transaction transaction) {
       c.read<ChainSelectCubit>(),
     ),
     c.read<NodeAddressCubit>(),
-    c.read<TorCubit>(),
     c.read<Logger>(),
     suggestedFeeRate: c.read<FeesCubit>().getFees().fast,
   );

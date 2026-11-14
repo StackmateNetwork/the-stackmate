@@ -6,10 +6,6 @@ class Validation {
     );
   }
 
-  static String formatHardenedPath(String value) {
-    return value.replaceAll("'", 'h');
-  }
-
   static String fingerPrintFromXKey(String xkey) {
     final startIndex = xkey.indexOf('[');
     final fingerPrintEndIndex = xkey.indexOf('/');

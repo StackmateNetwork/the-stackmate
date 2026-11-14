@@ -6,7 +6,6 @@ import 'package:sats/ui/component/Settings/BitcoinUnit.dart';
 import 'package:sats/ui/component/Settings/Incognito.dart';
 import 'package:sats/ui/component/Settings/SelectNetwork.dart';
 import 'package:sats/ui/component/Settings/SelectNode.dart';
-import 'package:sats/ui/component/Settings/Tor.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -42,8 +41,6 @@ class SettingsScreen extends StatelessWidget {
               const SetBitcoinUnit(),
               const SizedBox(height: 8),
               const SetIncognito(),
-              const SizedBox(height: 8),
-              const TorSettings(),
               const SizedBox(height: 18),
               SizedBox(
                 height: 52,

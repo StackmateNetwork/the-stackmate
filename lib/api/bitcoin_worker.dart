@@ -16,13 +16,11 @@ abstract final class BitcoinWorker {
     required String descriptor,
     required String dbPath,
     required String nodeAddress,
-    required String socks5,
   }) => Isolate.run(
     () => LibBitcoin().sqliteSync(
       descriptor: descriptor,
       dbPath: dbPath,
       nodeAddress: nodeAddress,
-      socks5: socks5,
     ),
   );
 
@@ -44,31 +42,25 @@ abstract final class BitcoinWorker {
     required String descriptor,
     required String dbPath,
   }) => Isolate.run(
-    () => LibBitcoin().lastUnusedAddress(descriptor: descriptor, dbPath: dbPath),
+    () =>
+        LibBitcoin().lastUnusedAddress(descriptor: descriptor, dbPath: dbPath),
   );
 
   static Future<R<int>> height({
     required String network,
     required String nodeAddress,
-    required String socks5,
   }) => Isolate.run(
-    () => LibBitcoin().getHeight(
-      network: network,
-      nodeAddress: nodeAddress,
-      socks5: socks5,
-    ),
+    () => LibBitcoin().getHeight(network: network, nodeAddress: nodeAddress),
   );
 
   static Future<R<double>> estimateFee({
     required String network,
     required String nodeAddress,
-    required String socks5,
     required String targetSize,
   }) => Isolate.run(
     () => LibBitcoin().estimateNetworkFee(
       network: network,
       nodeAddress: nodeAddress,
-      socks5: socks5,
       targetSize: targetSize,
     ),
   );
@@ -143,28 +135,12 @@ abstract final class BitcoinWorker {
   static Future<R<String>> broadcast({
     required String descriptor,
     required String nodeAddress,
-    required String socks5,
     required String signedPSBT,
   }) => Isolate.run(
     () => LibBitcoin().broadcastTransaction(
       descriptor: descriptor,
       nodeAddress: nodeAddress,
-      socks5: socks5,
       signedPSBT: signedPSBT,
-    ),
-  );
-
-  static Future<R<String>> broadcastHex({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-    required String signedHex,
-  }) => Isolate.run(
-    () => LibBitcoin().broadcastTransactionHex(
-      descriptor: descriptor,
-      nodeAddress: nodeAddress,
-      socks5: socks5,
-      signedHex: signedHex,
     ),
   );
 }

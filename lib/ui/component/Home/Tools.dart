@@ -18,16 +18,6 @@ class WalletTools extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  c.push('/broadcast');
-                },
-                icon: Icon(
-                  Icons.language_sharp,
-                  size: 32,
-                  color: c.colours.primary,
-                ),
-              ),
-              IconButton(
-                onPressed: () {
                   preferences.incognitoChanged();
                 },
                 icon: Icon(

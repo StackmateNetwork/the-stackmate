@@ -7,7 +7,6 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -40,7 +39,6 @@ class _SeedGenerateState extends State<_SeedGenerate> {
 
   @override
   Widget build(BuildContext c) {
-    final tor = c.select((TorCubit t) => t.state);
     return BlocConsumer<SeedGenerateWalletCubit, SeedGenerateWalletState>(
       listenWhen: (previous, current) =>
           previous.currentStep != current.currentStep ||
@@ -70,42 +68,6 @@ class _SeedGenerateState extends State<_SeedGenerate> {
           },
           child: Scaffold(
             appBar: AppBar(
-              actions: [
-                if (tor.isConnected) ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Tooltip(
-                      preferBelow: false,
-                      triggerMode: TooltipTriggerMode.tap,
-                      message: (tor.isRunning)
-                          ? 'Torified Natively.'
-                          : 'Torified via External.',
-                      textStyle: c.fonts.bodySmall!.copyWith(
-                        color: c.colours.primary,
-                      ),
-                      decoration: BoxDecoration(
-                        color: c.colours.surface,
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: Icon(
-                        Icons.security_sharp,
-                        color: c.colours.tertiaryContainer,
-                      ),
-                    ),
-                  ),
-                ] else ...[
-                  IconButton(
-                    color: c.colours.error,
-                    onPressed: () {
-                      c.push('/tor-config');
-                    },
-                    icon: Icon(
-                      Icons.security_sharp,
-                      color: c.colours.error,
-                    ),
-                  ),
-                ],
-              ],
               title: const Text('Keygen'),
               leading: Builder(
                 builder: (BuildContext context) {
