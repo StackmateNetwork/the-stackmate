@@ -1,5 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/Wallet/BackupOps.dart';
 import 'package:sats/ui/component/Wallet/KeyInfo.dart';

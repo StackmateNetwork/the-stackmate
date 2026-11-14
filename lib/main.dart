@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:sats/cubit/pin.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/model/wallet.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -77,7 +79,13 @@ class Stackmate extends StatelessWidget {
 
   late final _router = GoRouter(
     navigatorKey: rootNavigatorKey,
-    debugLogDiagnostics: true,
+    debugLogDiagnostics: kDebugMode,
+    // Every screen but the PIN screen needs an unlocked app.
+    redirect: (context, state) {
+      if (state.matchedLocation == '/') return null;
+      final unlocked = context.read<PinCubit>().state.isVerified;
+      return unlocked ? null : '/';
+    },
     routes: [
       GoRoute(
         path: '/',

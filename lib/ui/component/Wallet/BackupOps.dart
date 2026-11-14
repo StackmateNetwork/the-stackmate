@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/model/master.dart';
@@ -117,11 +117,6 @@ class _BackupOpsState extends State<BackupOps> {
                     ],
                   ),
                 ),
-
-                //  () async {
-                //   c.read<InfoCubit>().testPassPhrase(masterKey.seed!);
-                //
-                // },
                 child: const Text('TEST PASSPHRASE'),
               ),
             ),
@@ -181,7 +176,7 @@ class _BackupOpsState extends State<BackupOps> {
 }
 
 Future<void> peekSeed(BuildContext context, MasterKey key) async {
-  return showDialog<void>(
+  await showDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(

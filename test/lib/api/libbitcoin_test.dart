@@ -153,11 +153,9 @@ void main() {
     );
   });
 
-  test('fee conversions round-trip', () {
+  test('fee rate converts to an absolute fee', () {
     final abs = lib.feeRateToAbsolute(feeRate: '2.5', weight: '561');
     expect(abs.result!.absolute, 351);
-    final rate = lib.feeAbsoluteToRate(feeAbsolute: '351', weight: '561');
-    expect(rate.result!.rate, closeTo(2.5, 0.01));
   });
 
   test('build, weigh, decode, sign and bump fee offline', () {

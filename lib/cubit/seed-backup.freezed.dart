@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'seed-backup.dart';
@@ -9,6 +9,7 @@ part of 'seed-backup.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $SeedBackupStateCopyWith<SeedBackupState> get copyWith => _$SeedBackupStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeedBackupState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&const DeepCollectionEquality().equals(other.seed, seed)&&(identical(other.rootXprv, rootXprv) || other.rootXprv == rootXprv)&&(identical(other.fingerPrint, fingerPrint) || other.fingerPrint == fingerPrint)&&(identical(other.quizSeedCompleted, quizSeedCompleted) || other.quizSeedCompleted == quizSeedCompleted)&&(identical(other.quizSeedAnswer, quizSeedAnswer) || other.quizSeedAnswer == quizSeedAnswer)&&(identical(other.quizSeedAnswerIdx, quizSeedAnswerIdx) || other.quizSeedAnswerIdx == quizSeedAnswerIdx)&&const DeepCollectionEquality().equals(other.quizSeedList, quizSeedList)&&const DeepCollectionEquality().equals(other.quizSeedCompletedAnswers, quizSeedCompletedAnswers)&&(identical(other.quizSeedError, quizSeedError) || other.quizSeedError == quizSeedError)&&(identical(other.errMasterKeyUpdate, errMasterKeyUpdate) || other.errMasterKeyUpdate == errMasterKeyUpdate)&&(identical(other.backupLater, backupLater) || other.backupLater == backupLater)&&(identical(other.backupComplete, backupComplete) || other.backupComplete == backupComplete));
+  final _this = this as SeedBackupState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeedBackupState&&(identical(other.currentStep, _this.currentStep) || other.currentStep == _this.currentStep)&&const DeepCollectionEquality().equals(other.seed, _this.seed)&&(identical(other.rootXprv, _this.rootXprv) || other.rootXprv == _this.rootXprv)&&(identical(other.fingerPrint, _this.fingerPrint) || other.fingerPrint == _this.fingerPrint)&&(identical(other.quizSeedCompleted, _this.quizSeedCompleted) || other.quizSeedCompleted == _this.quizSeedCompleted)&&(identical(other.quizSeedAnswer, _this.quizSeedAnswer) || other.quizSeedAnswer == _this.quizSeedAnswer)&&(identical(other.quizSeedAnswerIdx, _this.quizSeedAnswerIdx) || other.quizSeedAnswerIdx == _this.quizSeedAnswerIdx)&&const DeepCollectionEquality().equals(other.quizSeedList, _this.quizSeedList)&&const DeepCollectionEquality().equals(other.quizSeedCompletedAnswers, _this.quizSeedCompletedAnswers)&&(identical(other.quizSeedError, _this.quizSeedError) || other.quizSeedError == _this.quizSeedError)&&(identical(other.errMasterKeyUpdate, _this.errMasterKeyUpdate) || other.errMasterKeyUpdate == _this.errMasterKeyUpdate)&&(identical(other.backupLater, _this.backupLater) || other.backupLater == _this.backupLater)&&(identical(other.backupComplete, _this.backupComplete) || other.backupComplete == _this.backupComplete));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentStep,const DeepCollectionEquality().hash(seed),rootXprv,fingerPrint,quizSeedCompleted,quizSeedAnswer,quizSeedAnswerIdx,const DeepCollectionEquality().hash(quizSeedList),const DeepCollectionEquality().hash(quizSeedCompletedAnswers),quizSeedError,errMasterKeyUpdate,backupLater,backupComplete);
+int get hashCode {
+  final _this = this as SeedBackupState;
+  return Object.hash(runtimeType,_this.currentStep,const DeepCollectionEquality().hash(_this.seed),_this.rootXprv,_this.fingerPrint,_this.quizSeedCompleted,_this.quizSeedAnswer,_this.quizSeedAnswerIdx,const DeepCollectionEquality().hash(_this.quizSeedList),const DeepCollectionEquality().hash(_this.quizSeedCompletedAnswers),_this.quizSeedError,_this.errMasterKeyUpdate,_this.backupLater,_this.backupComplete);
+}
 
 @override
 String toString() {
-  return 'SeedBackupState(currentStep: $currentStep, seed: $seed, rootXprv: $rootXprv, fingerPrint: $fingerPrint, quizSeedCompleted: $quizSeedCompleted, quizSeedAnswer: $quizSeedAnswer, quizSeedAnswerIdx: $quizSeedAnswerIdx, quizSeedList: $quizSeedList, quizSeedCompletedAnswers: $quizSeedCompletedAnswers, quizSeedError: $quizSeedError, errMasterKeyUpdate: $errMasterKeyUpdate, backupLater: $backupLater, backupComplete: $backupComplete)';
+  final _this = this as SeedBackupState;
+  return 'SeedBackupState(currentStep: ${_this.currentStep}, seed: ${_this.seed}, rootXprv: ${_this.rootXprv}, fingerPrint: ${_this.fingerPrint}, quizSeedCompleted: ${_this.quizSeedCompleted}, quizSeedAnswer: ${_this.quizSeedAnswer}, quizSeedAnswerIdx: ${_this.quizSeedAnswerIdx}, quizSeedList: ${_this.quizSeedList}, quizSeedCompletedAnswers: ${_this.quizSeedCompletedAnswers}, quizSeedError: ${_this.quizSeedError}, errMasterKeyUpdate: ${_this.errMasterKeyUpdate}, backupLater: ${_this.backupLater}, backupComplete: ${_this.backupComplete})';
 }
 
 
@@ -63,7 +69,7 @@ class _$SeedBackupStateCopyWithImpl<$Res>
 /// Create a copy of SeedBackupState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? currentStep = null,Object? seed = freezed,Object? rootXprv = freezed,Object? fingerPrint = freezed,Object? quizSeedCompleted = null,Object? quizSeedAnswer = null,Object? quizSeedAnswerIdx = null,Object? quizSeedList = null,Object? quizSeedCompletedAnswers = null,Object? quizSeedError = null,Object? errMasterKeyUpdate = null,Object? backupLater = null,Object? backupComplete = null,}) {
-  return _then(_self.copyWith(
+  return _then(SeedBackupState(
 currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
 as SeedBackupSteps,seed: freezed == seed ? _self.seed : seed // ignore: cast_nullable_to_non_nullable
 as List<String>?,rootXprv: freezed == rootXprv ? _self.rootXprv : rootXprv // ignore: cast_nullable_to_non_nullable
@@ -218,7 +224,7 @@ return $default(_that.currentStep,_that.seed,_that.rootXprv,_that.fingerPrint,_t
 
 
 class _SeedBackupState extends SeedBackupState {
-  const _SeedBackupState({this.currentStep = SeedBackupSteps.warning, final  List<String>? seed, this.rootXprv, this.fingerPrint, this.quizSeedCompleted = 0, this.quizSeedAnswer = '', this.quizSeedAnswerIdx = -1, final  List<String> quizSeedList = const [], final  List<String> quizSeedCompletedAnswers = const [], this.quizSeedError = '', this.errMasterKeyUpdate = '', this.backupLater = false, this.backupComplete = false}): _seed = seed,_quizSeedList = quizSeedList,_quizSeedCompletedAnswers = quizSeedCompletedAnswers,super._();
+  const _SeedBackupState({this.currentStep = SeedBackupSteps.warning,  List<String>? seed, this.rootXprv, this.fingerPrint, this.quizSeedCompleted = 0, this.quizSeedAnswer = '', this.quizSeedAnswerIdx = -1,  List<String> quizSeedList = const [],  List<String> quizSeedCompletedAnswers = const [], this.quizSeedError = '', this.errMasterKeyUpdate = '', this.backupLater = false, this.backupComplete = false}): _seed = seed,_quizSeedList = quizSeedList,_quizSeedCompletedAnswers = quizSeedCompletedAnswers,super._();
   
 
 @override@JsonKey() final  SeedBackupSteps currentStep;
@@ -265,16 +271,18 @@ _$SeedBackupStateCopyWith<_SeedBackupState> get copyWith => __$SeedBackupStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedBackupState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&const DeepCollectionEquality().equals(other._seed, _seed)&&(identical(other.rootXprv, rootXprv) || other.rootXprv == rootXprv)&&(identical(other.fingerPrint, fingerPrint) || other.fingerPrint == fingerPrint)&&(identical(other.quizSeedCompleted, quizSeedCompleted) || other.quizSeedCompleted == quizSeedCompleted)&&(identical(other.quizSeedAnswer, quizSeedAnswer) || other.quizSeedAnswer == quizSeedAnswer)&&(identical(other.quizSeedAnswerIdx, quizSeedAnswerIdx) || other.quizSeedAnswerIdx == quizSeedAnswerIdx)&&const DeepCollectionEquality().equals(other._quizSeedList, _quizSeedList)&&const DeepCollectionEquality().equals(other._quizSeedCompletedAnswers, _quizSeedCompletedAnswers)&&(identical(other.quizSeedError, quizSeedError) || other.quizSeedError == quizSeedError)&&(identical(other.errMasterKeyUpdate, errMasterKeyUpdate) || other.errMasterKeyUpdate == errMasterKeyUpdate)&&(identical(other.backupLater, backupLater) || other.backupLater == backupLater)&&(identical(other.backupComplete, backupComplete) || other.backupComplete == backupComplete));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedBackupState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&const DeepCollectionEquality().equals(other.seed, _seed)&&(identical(other.rootXprv, rootXprv) || other.rootXprv == rootXprv)&&(identical(other.fingerPrint, fingerPrint) || other.fingerPrint == fingerPrint)&&(identical(other.quizSeedCompleted, quizSeedCompleted) || other.quizSeedCompleted == quizSeedCompleted)&&(identical(other.quizSeedAnswer, quizSeedAnswer) || other.quizSeedAnswer == quizSeedAnswer)&&(identical(other.quizSeedAnswerIdx, quizSeedAnswerIdx) || other.quizSeedAnswerIdx == quizSeedAnswerIdx)&&const DeepCollectionEquality().equals(other.quizSeedList, _quizSeedList)&&const DeepCollectionEquality().equals(other.quizSeedCompletedAnswers, _quizSeedCompletedAnswers)&&(identical(other.quizSeedError, quizSeedError) || other.quizSeedError == quizSeedError)&&(identical(other.errMasterKeyUpdate, errMasterKeyUpdate) || other.errMasterKeyUpdate == errMasterKeyUpdate)&&(identical(other.backupLater, backupLater) || other.backupLater == backupLater)&&(identical(other.backupComplete, backupComplete) || other.backupComplete == backupComplete));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentStep,const DeepCollectionEquality().hash(_seed),rootXprv,fingerPrint,quizSeedCompleted,quizSeedAnswer,quizSeedAnswerIdx,const DeepCollectionEquality().hash(_quizSeedList),const DeepCollectionEquality().hash(_quizSeedCompletedAnswers),quizSeedError,errMasterKeyUpdate,backupLater,backupComplete);
+int get hashCode {
+    return Object.hash(runtimeType,currentStep,const DeepCollectionEquality().hash(_seed),rootXprv,fingerPrint,quizSeedCompleted,quizSeedAnswer,quizSeedAnswerIdx,const DeepCollectionEquality().hash(_quizSeedList),const DeepCollectionEquality().hash(_quizSeedCompletedAnswers),quizSeedError,errMasterKeyUpdate,backupLater,backupComplete);
+}
 
 @override
 String toString() {
-  return 'SeedBackupState(currentStep: $currentStep, seed: $seed, rootXprv: $rootXprv, fingerPrint: $fingerPrint, quizSeedCompleted: $quizSeedCompleted, quizSeedAnswer: $quizSeedAnswer, quizSeedAnswerIdx: $quizSeedAnswerIdx, quizSeedList: $quizSeedList, quizSeedCompletedAnswers: $quizSeedCompletedAnswers, quizSeedError: $quizSeedError, errMasterKeyUpdate: $errMasterKeyUpdate, backupLater: $backupLater, backupComplete: $backupComplete)';
+    return 'SeedBackupState(currentStep: $currentStep, seed: $seed, rootXprv: $rootXprv, fingerPrint: $fingerPrint, quizSeedCompleted: $quizSeedCompleted, quizSeedAnswer: $quizSeedAnswer, quizSeedAnswerIdx: $quizSeedAnswerIdx, quizSeedList: $quizSeedList, quizSeedCompletedAnswers: $quizSeedCompletedAnswers, quizSeedError: $quizSeedError, errMasterKeyUpdate: $errMasterKeyUpdate, backupLater: $backupLater, backupComplete: $backupComplete)';
 }
 
 

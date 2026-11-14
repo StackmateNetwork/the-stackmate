@@ -5,8 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sats/api/bitcoin_worker.dart';
-import 'package:sats/api/interface/libbitcoin.dart';
-import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/cubit/tor.dart';
@@ -19,13 +17,10 @@ abstract class BroadcastState with _$BroadcastState {
   const factory BroadcastState({
     @Default(false) bool broadcasting,
     @Default('') String errBroadcasting,
-    @Default('') String psbt,
     @Default('') String hex,
     @Default('') String txId,
     @Default('') String errFileImport,
     @Default(false) bool clearData,
-    String? importedPsbtPath,
-    String? importedPsbtfileName,
     String? importedHexPath,
     String? importedHexfileName,
   }) = _BroadcastState;
@@ -36,19 +31,14 @@ abstract class BroadcastState with _$BroadcastState {
 class BroadcastCubit extends Cubit<BroadcastState> {
   BroadcastCubit(
     this._logger,
-    this._core,
     this._clipBoard,
     this._nodeAddressCubit,
     this._torCubit,
-    this._blockchainCubit,
   ) : super(const BroadcastState());
 
-  static const minerOutput = 'miner';
   final Logger _logger;
   final IClipBoard _clipBoard;
   final NodeAddressCubit _nodeAddressCubit;
-  final IStackMateBitcoin _core;
-  final ChainSelectCubit _blockchainCubit;
   final TorCubit _torCubit;
 
   static const dummyDescriptor = 'wpkh(xprv/*)';
@@ -58,34 +48,9 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       state.copyWith(
         txId: emptyString,
         importedHexfileName: '',
-        importedPsbtfileName: '',
         hex: '',
       ),
     );
-  }
-
-  Future<void> updatePSBTFile() async {
-    try {
-      final psbtFile = await FilePicker.pickFile();
-
-      if (psbtFile != null) {
-        emit(
-          state.copyWith(
-            importedPsbtPath: psbtFile.path,
-            importedPsbtfileName: psbtFile.name,
-          ),
-        );
-      } else {
-        emit(state.copyWith(errFileImport: 'Could not find file.'));
-      }
-    } catch (e, s) {
-      _logger.logException(e, 'BroadcastCubit.importPsbt', s);
-      emit(
-        state.copyWith(
-          errFileImport: e.toString(),
-        ),
-      );
-    }
   }
 
   Future<void> updateHexFile() async {
@@ -118,41 +83,10 @@ class BroadcastCubit extends Cubit<BroadcastState> {
         state.copyWith(
           clearData: true,
           importedHexfileName: '',
-          importedPsbtfileName: '',
         ),
       );
     } catch (_) {
       emit(state.copyWith(errFileImport: 'Could not find file.'));
-    }
-  }
-
-  void psbtChanged(String text) {
-    emit(
-      state.copyWith(psbt: text),
-    );
-  }
-
-  void hexChanged(String text) {
-    emit(
-      state.copyWith(hex: text),
-    );
-  }
-
-  Future<void> pastePSBT() async {
-    final text = await _clipBoard.pasteFromClipBoard();
-    if (text.hasError) {
-      emit(state.copyWith(errFileImport: text.error!));
-      return;
-    }
-    final psbt = text.result!.replaceAll(RegExp(r'\s'), '');
-    final decoded = _core.decodePsbt(
-      network: _blockchainCubit.state.blockchain.name,
-      psbt: psbt,
-    );
-    if (decoded.hasError) {
-      emit(state.copyWith(errBroadcasting: 'Invalid PSBT.'));
-    } else {
-      emit(state.copyWith(psbt: psbt));
     }
   }
 
@@ -162,37 +96,6 @@ class BroadcastCubit extends Cubit<BroadcastState> {
       emit(state.copyWith(errFileImport: text.error!));
     } else {
       hexText(text.result!);
-    }
-  }
-
-  Future<void> verifyImportPSBT() async {
-    try {
-      final psbtFile = File(state.importedPsbtPath!);
-      final content = await psbtFile.readAsString();
-      final decoded = _core.decodePsbt(
-        network: _blockchainCubit.state.blockchain.name,
-        psbt: content,
-      );
-      if (decoded.hasError) {
-        emit(state.copyWith(errBroadcasting: 'Invalid PSBT.'));
-      } else {
-        emit(
-          state.copyWith(
-            psbt: content
-                .replaceAll(' ', '')
-                .replaceAll('\r', '')
-                .replaceAll('\n', ''),
-          ),
-        );
-      }
-      return;
-    } catch (e, s) {
-      _logger.logException(e, 'BroadcastCubit.verifyImportPSBT', s);
-      emit(
-        state.copyWith(
-          errFileImport: e.toString(),
-        ),
-      );
     }
   }
 
@@ -272,48 +175,6 @@ class BroadcastCubit extends Cubit<BroadcastState> {
             broadcasting: false,
             txId: 'BROADCAST SUCCESSFUL.\n${result.result}',
             hex: '',
-            errBroadcasting: emptyString,
-          ),
-        );
-      }
-    } catch (e, s) {
-      _logger.logException(e, 'BroadcastCubit.confirmclicked', s);
-      emit(
-        state.copyWith(
-          errBroadcasting: e.toString(),
-          broadcasting: false,
-        ),
-      );
-    }
-  }
-
-  Future<void> broadcastConfirmed() async {
-    if (state.broadcasting) return;
-    try {
-      emit(state.copyWith(broadcasting: true, errBroadcasting: emptyString));
-      final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
-      final psbt = await BitcoinWorker.broadcast(
-        descriptor: dummyDescriptor,
-        nodeAddress: nodeAddress,
-        socks5: socks5,
-        signedPSBT: state.psbt,
-      );
-
-      if (psbt.hasError) {
-        emit(
-          state.copyWith(
-            broadcasting: false,
-            errBroadcasting: psbt.errorMessage,
-            txId: '',
-          ),
-        );
-      } else {
-        emit(
-          state.copyWith(
-            broadcasting: false,
-            txId: 'BROADCAST SUCCESSFUL.\n${psbt.result}',
-            psbt: '',
             errBroadcasting: emptyString,
           ),
         );

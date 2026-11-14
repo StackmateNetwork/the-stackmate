@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';

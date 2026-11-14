@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'xpub-import.dart';
@@ -9,6 +9,7 @@ part of 'xpub-import.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $XpubImportStateCopyWith<XpubImportState> get copyWith => _$XpubImportStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is XpubImportState&&(identical(other.xpub, xpub) || other.xpub == xpub)&&(identical(other.fingerPrint, fingerPrint) || other.fingerPrint == fingerPrint)&&(identical(other.path, path) || other.path == path)&&(identical(other.errXpub, errXpub) || other.errXpub == errXpub)&&(identical(other.errFileImport, errFileImport) || other.errFileImport == errFileImport)&&(identical(other.cameraOpened, cameraOpened) || other.cameraOpened == cameraOpened)&&(identical(other.detailsReady, detailsReady) || other.detailsReady == detailsReady)&&(identical(other.clearJson, clearJson) || other.clearJson == clearJson)&&(identical(other.importedJSONPath, importedJSONPath) || other.importedJSONPath == importedJSONPath)&&(identical(other.importedJSONfileName, importedJSONfileName) || other.importedJSONfileName == importedJSONfileName));
+  final _this = this as XpubImportState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is XpubImportState&&(identical(other.xpub, _this.xpub) || other.xpub == _this.xpub)&&(identical(other.fingerPrint, _this.fingerPrint) || other.fingerPrint == _this.fingerPrint)&&(identical(other.path, _this.path) || other.path == _this.path)&&(identical(other.errXpub, _this.errXpub) || other.errXpub == _this.errXpub)&&(identical(other.errFileImport, _this.errFileImport) || other.errFileImport == _this.errFileImport)&&(identical(other.cameraOpened, _this.cameraOpened) || other.cameraOpened == _this.cameraOpened)&&(identical(other.detailsReady, _this.detailsReady) || other.detailsReady == _this.detailsReady)&&(identical(other.clearJson, _this.clearJson) || other.clearJson == _this.clearJson)&&(identical(other.importedJSONPath, _this.importedJSONPath) || other.importedJSONPath == _this.importedJSONPath)&&(identical(other.importedJSONfileName, _this.importedJSONfileName) || other.importedJSONfileName == _this.importedJSONfileName));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,xpub,fingerPrint,path,errXpub,errFileImport,cameraOpened,detailsReady,clearJson,importedJSONPath,importedJSONfileName);
+int get hashCode {
+  final _this = this as XpubImportState;
+  return Object.hash(runtimeType,_this.xpub,_this.fingerPrint,_this.path,_this.errXpub,_this.errFileImport,_this.cameraOpened,_this.detailsReady,_this.clearJson,_this.importedJSONPath,_this.importedJSONfileName);
+}
 
 @override
 String toString() {
-  return 'XpubImportState(xpub: $xpub, fingerPrint: $fingerPrint, path: $path, errXpub: $errXpub, errFileImport: $errFileImport, cameraOpened: $cameraOpened, detailsReady: $detailsReady, clearJson: $clearJson, importedJSONPath: $importedJSONPath, importedJSONfileName: $importedJSONfileName)';
+  final _this = this as XpubImportState;
+  return 'XpubImportState(xpub: ${_this.xpub}, fingerPrint: ${_this.fingerPrint}, path: ${_this.path}, errXpub: ${_this.errXpub}, errFileImport: ${_this.errFileImport}, cameraOpened: ${_this.cameraOpened}, detailsReady: ${_this.detailsReady}, clearJson: ${_this.clearJson}, importedJSONPath: ${_this.importedJSONPath}, importedJSONfileName: ${_this.importedJSONfileName})';
 }
 
 
@@ -63,7 +69,7 @@ class _$XpubImportStateCopyWithImpl<$Res>
 /// Create a copy of XpubImportState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? xpub = null,Object? fingerPrint = null,Object? path = null,Object? errXpub = null,Object? errFileImport = null,Object? cameraOpened = null,Object? detailsReady = null,Object? clearJson = null,Object? importedJSONPath = freezed,Object? importedJSONfileName = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(XpubImportState(
 xpub: null == xpub ? _self.xpub : xpub // ignore: cast_nullable_to_non_nullable
 as String,fingerPrint: null == fingerPrint ? _self.fingerPrint : fingerPrint // ignore: cast_nullable_to_non_nullable
 as String,path: null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
@@ -239,16 +245,18 @@ _$SeedImportXpubStateCopyWith<_SeedImportXpubState> get copyWith => __$SeedImpor
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedImportXpubState&&(identical(other.xpub, xpub) || other.xpub == xpub)&&(identical(other.fingerPrint, fingerPrint) || other.fingerPrint == fingerPrint)&&(identical(other.path, path) || other.path == path)&&(identical(other.errXpub, errXpub) || other.errXpub == errXpub)&&(identical(other.errFileImport, errFileImport) || other.errFileImport == errFileImport)&&(identical(other.cameraOpened, cameraOpened) || other.cameraOpened == cameraOpened)&&(identical(other.detailsReady, detailsReady) || other.detailsReady == detailsReady)&&(identical(other.clearJson, clearJson) || other.clearJson == clearJson)&&(identical(other.importedJSONPath, importedJSONPath) || other.importedJSONPath == importedJSONPath)&&(identical(other.importedJSONfileName, importedJSONfileName) || other.importedJSONfileName == importedJSONfileName));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedImportXpubState&&(identical(other.xpub, xpub) || other.xpub == xpub)&&(identical(other.fingerPrint, fingerPrint) || other.fingerPrint == fingerPrint)&&(identical(other.path, path) || other.path == path)&&(identical(other.errXpub, errXpub) || other.errXpub == errXpub)&&(identical(other.errFileImport, errFileImport) || other.errFileImport == errFileImport)&&(identical(other.cameraOpened, cameraOpened) || other.cameraOpened == cameraOpened)&&(identical(other.detailsReady, detailsReady) || other.detailsReady == detailsReady)&&(identical(other.clearJson, clearJson) || other.clearJson == clearJson)&&(identical(other.importedJSONPath, importedJSONPath) || other.importedJSONPath == importedJSONPath)&&(identical(other.importedJSONfileName, importedJSONfileName) || other.importedJSONfileName == importedJSONfileName));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,xpub,fingerPrint,path,errXpub,errFileImport,cameraOpened,detailsReady,clearJson,importedJSONPath,importedJSONfileName);
+int get hashCode {
+    return Object.hash(runtimeType,xpub,fingerPrint,path,errXpub,errFileImport,cameraOpened,detailsReady,clearJson,importedJSONPath,importedJSONfileName);
+}
 
 @override
 String toString() {
-  return 'XpubImportState(xpub: $xpub, fingerPrint: $fingerPrint, path: $path, errXpub: $errXpub, errFileImport: $errFileImport, cameraOpened: $cameraOpened, detailsReady: $detailsReady, clearJson: $clearJson, importedJSONPath: $importedJSONPath, importedJSONfileName: $importedJSONfileName)';
+    return 'XpubImportState(xpub: $xpub, fingerPrint: $fingerPrint, path: $path, errXpub: $errXpub, errFileImport: $errFileImport, cameraOpened: $cameraOpened, detailsReady: $detailsReady, clearJson: $clearJson, importedJSONPath: $importedJSONPath, importedJSONfileName: $importedJSONfileName)';
 }
 
 

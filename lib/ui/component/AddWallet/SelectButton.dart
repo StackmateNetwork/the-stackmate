@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/pkg/extensions.dart';
 
 class SelectButton extends StatelessWidget {

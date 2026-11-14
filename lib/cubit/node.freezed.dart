@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'node.dart';
@@ -9,6 +9,7 @@ part of 'node.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $NodeAddressStateCopyWith<NodeAddressState> get copyWith => _$NodeAddressStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NodeAddressState&&(identical(other.address, address) || other.address == address)&&(identical(other.errNodeState, errNodeState) || other.errNodeState == errNodeState)&&(identical(other.name, name) || other.name == name)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing));
+  final _this = this as NodeAddressState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NodeAddressState&&(identical(other.address, _this.address) || other.address == _this.address)&&(identical(other.errNodeState, _this.errNodeState) || other.errNodeState == _this.errNodeState)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.isEditing, _this.isEditing) || other.isEditing == _this.isEditing));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,address,errNodeState,name,isEditing);
+int get hashCode {
+  final _this = this as NodeAddressState;
+  return Object.hash(runtimeType,_this.address,_this.errNodeState,_this.name,_this.isEditing);
+}
 
 @override
 String toString() {
-  return 'NodeAddressState(address: $address, errNodeState: $errNodeState, name: $name, isEditing: $isEditing)';
+  final _this = this as NodeAddressState;
+  return 'NodeAddressState(address: ${_this.address}, errNodeState: ${_this.errNodeState}, name: ${_this.name}, isEditing: ${_this.isEditing})';
 }
 
 
@@ -63,7 +69,7 @@ class _$NodeAddressStateCopyWithImpl<$Res>
 /// Create a copy of NodeAddressState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? address = null,Object? errNodeState = null,Object? name = null,Object? isEditing = null,}) {
-  return _then(_self.copyWith(
+  return _then(NodeAddressState(
 address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,errNodeState: null == errNodeState ? _self.errNodeState : errNodeState // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -227,16 +233,18 @@ _$NodeAddressStateCopyWith<_NodeAddressState> get copyWith => __$NodeAddressStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NodeAddressState&&(identical(other.address, address) || other.address == address)&&(identical(other.errNodeState, errNodeState) || other.errNodeState == errNodeState)&&(identical(other.name, name) || other.name == name)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NodeAddressState&&(identical(other.address, address) || other.address == address)&&(identical(other.errNodeState, errNodeState) || other.errNodeState == errNodeState)&&(identical(other.name, name) || other.name == name)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,address,errNodeState,name,isEditing);
+int get hashCode {
+    return Object.hash(runtimeType,address,errNodeState,name,isEditing);
+}
 
 @override
 String toString() {
-  return 'NodeAddressState(address: $address, errNodeState: $errNodeState, name: $name, isEditing: $isEditing)';
+    return 'NodeAddressState(address: $address, errNodeState: $errNodeState, name: $name, isEditing: $isEditing)';
 }
 
 

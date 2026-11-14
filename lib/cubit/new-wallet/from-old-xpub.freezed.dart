@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'from-old-xpub.dart';
@@ -9,6 +9,7 @@ part of 'from-old-xpub.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $XpubImportWalletStateCopyWith<XpubImportWalletState> get copyWith => _$XpubImpo
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as XpubImportWalletState;
   properties
     ..add(DiagnosticsProperty('type', 'XpubImportWalletState'))
-    ..add(DiagnosticsProperty('currentStep', currentStep))..add(DiagnosticsProperty('label', label))..add(DiagnosticsProperty('savingWallet', savingWallet))..add(DiagnosticsProperty('errSavingWallet', errSavingWallet))..add(DiagnosticsProperty('newWalletSaved', newWalletSaved));
+    ..add(DiagnosticsProperty('currentStep', _this.currentStep))..add(DiagnosticsProperty('label', _this.label))..add(DiagnosticsProperty('savingWallet', _this.savingWallet))..add(DiagnosticsProperty('errSavingWallet', _this.errSavingWallet))..add(DiagnosticsProperty('newWalletSaved', _this.newWalletSaved));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is XpubImportWalletState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.label, label) || other.label == label)&&(identical(other.savingWallet, savingWallet) || other.savingWallet == savingWallet)&&(identical(other.errSavingWallet, errSavingWallet) || other.errSavingWallet == errSavingWallet)&&(identical(other.newWalletSaved, newWalletSaved) || other.newWalletSaved == newWalletSaved));
+  final _this = this as XpubImportWalletState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is XpubImportWalletState&&(identical(other.currentStep, _this.currentStep) || other.currentStep == _this.currentStep)&&(identical(other.label, _this.label) || other.label == _this.label)&&(identical(other.savingWallet, _this.savingWallet) || other.savingWallet == _this.savingWallet)&&(identical(other.errSavingWallet, _this.errSavingWallet) || other.errSavingWallet == _this.errSavingWallet)&&(identical(other.newWalletSaved, _this.newWalletSaved) || other.newWalletSaved == _this.newWalletSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentStep,label,savingWallet,errSavingWallet,newWalletSaved);
+int get hashCode {
+  final _this = this as XpubImportWalletState;
+  return Object.hash(runtimeType,_this.currentStep,_this.label,_this.savingWallet,_this.errSavingWallet,_this.newWalletSaved);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'XpubImportWalletState(currentStep: $currentStep, label: $label, savingWallet: $savingWallet, errSavingWallet: $errSavingWallet, newWalletSaved: $newWalletSaved)';
+  final _this = this as XpubImportWalletState;
+  return 'XpubImportWalletState(currentStep: ${_this.currentStep}, label: ${_this.label}, savingWallet: ${_this.savingWallet}, errSavingWallet: ${_this.errSavingWallet}, newWalletSaved: ${_this.newWalletSaved})';
 }
 
 
@@ -69,7 +76,7 @@ class _$XpubImportWalletStateCopyWithImpl<$Res>
 /// Create a copy of XpubImportWalletState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? currentStep = null,Object? label = null,Object? savingWallet = null,Object? errSavingWallet = null,Object? newWalletSaved = null,}) {
-  return _then(_self.copyWith(
+  return _then(XpubImportWalletState(
 currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
 as XpubImportWalletStep,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,savingWallet: null == savingWallet ? _self.savingWallet : savingWallet // ignore: cast_nullable_to_non_nullable
@@ -234,23 +241,25 @@ _$SeedImportXpubStateCopyWith<_SeedImportXpubState> get copyWith => __$SeedImpor
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'XpubImportWalletState'))
     ..add(DiagnosticsProperty('currentStep', currentStep))..add(DiagnosticsProperty('label', label))..add(DiagnosticsProperty('savingWallet', savingWallet))..add(DiagnosticsProperty('errSavingWallet', errSavingWallet))..add(DiagnosticsProperty('newWalletSaved', newWalletSaved));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedImportXpubState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.label, label) || other.label == label)&&(identical(other.savingWallet, savingWallet) || other.savingWallet == savingWallet)&&(identical(other.errSavingWallet, errSavingWallet) || other.errSavingWallet == errSavingWallet)&&(identical(other.newWalletSaved, newWalletSaved) || other.newWalletSaved == newWalletSaved));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedImportXpubState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.label, label) || other.label == label)&&(identical(other.savingWallet, savingWallet) || other.savingWallet == savingWallet)&&(identical(other.errSavingWallet, errSavingWallet) || other.errSavingWallet == errSavingWallet)&&(identical(other.newWalletSaved, newWalletSaved) || other.newWalletSaved == newWalletSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentStep,label,savingWallet,errSavingWallet,newWalletSaved);
+int get hashCode {
+    return Object.hash(runtimeType,currentStep,label,savingWallet,errSavingWallet,newWalletSaved);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'XpubImportWalletState(currentStep: $currentStep, label: $label, savingWallet: $savingWallet, errSavingWallet: $errSavingWallet, newWalletSaved: $newWalletSaved)';
+    return 'XpubImportWalletState(currentStep: $currentStep, label: $label, savingWallet: $savingWallet, errSavingWallet: $errSavingWallet, newWalletSaved: $newWalletSaved)';
 }
 
 

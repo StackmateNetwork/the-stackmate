@@ -125,17 +125,6 @@ class LibBitcoin implements IStackMateBitcoin {
       });
 
   @override
-  R<NetworkFees> feeAbsoluteToRate({
-    required String feeAbsolute,
-    required String weight,
-  }) =>
-      _guard(() {
-        final abs = int.parse(feeAbsolute);
-        final vbytes = int.parse(weight) / 4;
-        return NetworkFees(abs / vbytes, abs);
-      });
-
-  @override
   R<NetworkFees> feeRateToAbsolute({
     required String feeRate,
     required String weight,

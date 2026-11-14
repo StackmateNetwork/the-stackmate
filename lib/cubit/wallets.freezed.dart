@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'wallets.dart';
@@ -9,6 +9,7 @@ part of 'wallets.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $WalletsStateCopyWith<WalletsState> get copyWith => _$WalletsStateCopyWithImpl<W
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as WalletsState;
   properties
     ..add(DiagnosticsProperty('type', 'WalletsState'))
-    ..add(DiagnosticsProperty('wallets', wallets))..add(DiagnosticsProperty('toggler', toggler))..add(DiagnosticsProperty('errDeleting', errDeleting))..add(DiagnosticsProperty('networth', networth));
+    ..add(DiagnosticsProperty('wallets', _this.wallets))..add(DiagnosticsProperty('toggler', _this.toggler))..add(DiagnosticsProperty('errDeleting', _this.errDeleting))..add(DiagnosticsProperty('networth', _this.networth));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WalletsState&&const DeepCollectionEquality().equals(other.wallets, wallets)&&(identical(other.toggler, toggler) || other.toggler == toggler)&&(identical(other.errDeleting, errDeleting) || other.errDeleting == errDeleting)&&(identical(other.networth, networth) || other.networth == networth));
+  final _this = this as WalletsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WalletsState&&const DeepCollectionEquality().equals(other.wallets, _this.wallets)&&(identical(other.toggler, _this.toggler) || other.toggler == _this.toggler)&&(identical(other.errDeleting, _this.errDeleting) || other.errDeleting == _this.errDeleting)&&(identical(other.networth, _this.networth) || other.networth == _this.networth));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(wallets),toggler,errDeleting,networth);
+int get hashCode {
+  final _this = this as WalletsState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.wallets),_this.toggler,_this.errDeleting,_this.networth);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'WalletsState(wallets: $wallets, toggler: $toggler, errDeleting: $errDeleting, networth: $networth)';
+  final _this = this as WalletsState;
+  return 'WalletsState(wallets: ${_this.wallets}, toggler: ${_this.toggler}, errDeleting: ${_this.errDeleting}, networth: ${_this.networth})';
 }
 
 
@@ -69,7 +76,7 @@ class _$WalletsStateCopyWithImpl<$Res>
 /// Create a copy of WalletsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? wallets = null,Object? toggler = null,Object? errDeleting = null,Object? networth = null,}) {
-  return _then(_self.copyWith(
+  return _then(WalletsState(
 wallets: null == wallets ? _self.wallets : wallets // ignore: cast_nullable_to_non_nullable
 as List<Wallet>,toggler: null == toggler ? _self.toggler : toggler // ignore: cast_nullable_to_non_nullable
 as bool,errDeleting: null == errDeleting ? _self.errDeleting : errDeleting // ignore: cast_nullable_to_non_nullable
@@ -215,7 +222,7 @@ return $default(_that.wallets,_that.toggler,_that.errDeleting,_that.networth);ca
 
 
 class _WalletsState with DiagnosticableTreeMixin implements WalletsState {
-  const _WalletsState({final  List<Wallet> wallets = const [], this.toggler = true, this.errDeleting = '', this.networth = 0}): _wallets = wallets;
+  const _WalletsState({ List<Wallet> wallets = const [], this.toggler = true, this.errDeleting = '', this.networth = 0}): _wallets = wallets;
   
 
  final  List<Wallet> _wallets;
@@ -238,23 +245,25 @@ _$WalletsStateCopyWith<_WalletsState> get copyWith => __$WalletsStateCopyWithImp
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'WalletsState'))
     ..add(DiagnosticsProperty('wallets', wallets))..add(DiagnosticsProperty('toggler', toggler))..add(DiagnosticsProperty('errDeleting', errDeleting))..add(DiagnosticsProperty('networth', networth));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WalletsState&&const DeepCollectionEquality().equals(other._wallets, _wallets)&&(identical(other.toggler, toggler) || other.toggler == toggler)&&(identical(other.errDeleting, errDeleting) || other.errDeleting == errDeleting)&&(identical(other.networth, networth) || other.networth == networth));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WalletsState&&const DeepCollectionEquality().equals(other.wallets, _wallets)&&(identical(other.toggler, toggler) || other.toggler == toggler)&&(identical(other.errDeleting, errDeleting) || other.errDeleting == errDeleting)&&(identical(other.networth, networth) || other.networth == networth));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_wallets),toggler,errDeleting,networth);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_wallets),toggler,errDeleting,networth);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'WalletsState(wallets: $wallets, toggler: $toggler, errDeleting: $errDeleting, networth: $networth)';
+    return 'WalletsState(wallets: $wallets, toggler: $toggler, errDeleting: $errDeleting, networth: $networth)';
 }
 
 

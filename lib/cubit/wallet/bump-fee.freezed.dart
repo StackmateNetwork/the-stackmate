@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'bump-fee.dart';
@@ -9,6 +9,7 @@ part of 'bump-fee.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $BumpFeeStateCopyWith<BumpFeeState> get copyWith => _$BumpFeeStateCopyWithImpl<B
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as BumpFeeState;
   properties
     ..add(DiagnosticsProperty('type', 'BumpFeeState'))
-    ..add(DiagnosticsProperty('feeRate', feeRate))..add(DiagnosticsProperty('bumping', bumping))..add(DiagnosticsProperty('error', error))..add(DiagnosticsProperty('newTxid', newTxid));
+    ..add(DiagnosticsProperty('feeRate', _this.feeRate))..add(DiagnosticsProperty('bumping', _this.bumping))..add(DiagnosticsProperty('error', _this.error))..add(DiagnosticsProperty('newTxid', _this.newTxid));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BumpFeeState&&(identical(other.feeRate, feeRate) || other.feeRate == feeRate)&&(identical(other.bumping, bumping) || other.bumping == bumping)&&(identical(other.error, error) || other.error == error)&&(identical(other.newTxid, newTxid) || other.newTxid == newTxid));
+  final _this = this as BumpFeeState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BumpFeeState&&(identical(other.feeRate, _this.feeRate) || other.feeRate == _this.feeRate)&&(identical(other.bumping, _this.bumping) || other.bumping == _this.bumping)&&(identical(other.error, _this.error) || other.error == _this.error)&&(identical(other.newTxid, _this.newTxid) || other.newTxid == _this.newTxid));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,feeRate,bumping,error,newTxid);
+int get hashCode {
+  final _this = this as BumpFeeState;
+  return Object.hash(runtimeType,_this.feeRate,_this.bumping,_this.error,_this.newTxid);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'BumpFeeState(feeRate: $feeRate, bumping: $bumping, error: $error, newTxid: $newTxid)';
+  final _this = this as BumpFeeState;
+  return 'BumpFeeState(feeRate: ${_this.feeRate}, bumping: ${_this.bumping}, error: ${_this.error}, newTxid: ${_this.newTxid})';
 }
 
 
@@ -69,7 +76,7 @@ class _$BumpFeeStateCopyWithImpl<$Res>
 /// Create a copy of BumpFeeState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? feeRate = null,Object? bumping = null,Object? error = null,Object? newTxid = null,}) {
-  return _then(_self.copyWith(
+  return _then(BumpFeeState(
 feeRate: null == feeRate ? _self.feeRate : feeRate // ignore: cast_nullable_to_non_nullable
 as String,bumping: null == bumping ? _self.bumping : bumping // ignore: cast_nullable_to_non_nullable
 as bool,error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
@@ -232,23 +239,25 @@ _$BumpFeeStateCopyWith<_BumpFeeState> get copyWith => __$BumpFeeStateCopyWithImp
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'BumpFeeState'))
     ..add(DiagnosticsProperty('feeRate', feeRate))..add(DiagnosticsProperty('bumping', bumping))..add(DiagnosticsProperty('error', error))..add(DiagnosticsProperty('newTxid', newTxid));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BumpFeeState&&(identical(other.feeRate, feeRate) || other.feeRate == feeRate)&&(identical(other.bumping, bumping) || other.bumping == bumping)&&(identical(other.error, error) || other.error == error)&&(identical(other.newTxid, newTxid) || other.newTxid == newTxid));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BumpFeeState&&(identical(other.feeRate, feeRate) || other.feeRate == feeRate)&&(identical(other.bumping, bumping) || other.bumping == bumping)&&(identical(other.error, error) || other.error == error)&&(identical(other.newTxid, newTxid) || other.newTxid == newTxid));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,feeRate,bumping,error,newTxid);
+int get hashCode {
+    return Object.hash(runtimeType,feeRate,bumping,error,newTxid);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'BumpFeeState(feeRate: $feeRate, bumping: $bumping, error: $error, newTxid: $newTxid)';
+    return 'BumpFeeState(feeRate: $feeRate, bumping: $bumping, error: $error, newTxid: $newTxid)';
 }
 
 

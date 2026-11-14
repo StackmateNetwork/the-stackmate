@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'master.dart';
@@ -9,6 +9,7 @@ part of 'master.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $MasterKeyStateCopyWith<MasterKeyState> get copyWith => _$MasterKeyStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MasterKeyState&&(identical(other.key, key) || other.key == key)&&(identical(other.rkey, rkey) || other.rkey == rkey)&&(identical(other.error, error) || other.error == error)&&(identical(other.network, network) || other.network == network));
+  final _this = this as MasterKeyState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MasterKeyState&&(identical(other.key, _this.key) || other.key == _this.key)&&(identical(other.rkey, _this.rkey) || other.rkey == _this.rkey)&&(identical(other.error, _this.error) || other.error == _this.error)&&(identical(other.network, _this.network) || other.network == _this.network));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,key,rkey,error,network);
+int get hashCode {
+  final _this = this as MasterKeyState;
+  return Object.hash(runtimeType,_this.key,_this.rkey,_this.error,_this.network);
+}
 
 @override
 String toString() {
-  return 'MasterKeyState(key: $key, rkey: $rkey, error: $error, network: $network)';
+  final _this = this as MasterKeyState;
+  return 'MasterKeyState(key: ${_this.key}, rkey: ${_this.rkey}, error: ${_this.error}, network: ${_this.network})';
 }
 
 
@@ -63,7 +69,7 @@ class _$MasterKeyStateCopyWithImpl<$Res>
 /// Create a copy of MasterKeyState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? key = freezed,Object? rkey = freezed,Object? error = freezed,Object? network = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(MasterKeyState(
 key: freezed == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
 as MasterKey?,rkey: freezed == rkey ? _self.rkey : rkey // ignore: cast_nullable_to_non_nullable
 as RecoveredKey?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
@@ -251,16 +257,18 @@ _$MasterKeyStateCopyWith<_MasterKeyState> get copyWith => __$MasterKeyStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MasterKeyState&&(identical(other.key, key) || other.key == key)&&(identical(other.rkey, rkey) || other.rkey == rkey)&&(identical(other.error, error) || other.error == error)&&(identical(other.network, network) || other.network == network));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MasterKeyState&&(identical(other.key, key) || other.key == key)&&(identical(other.rkey, rkey) || other.rkey == rkey)&&(identical(other.error, error) || other.error == error)&&(identical(other.network, network) || other.network == network));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,key,rkey,error,network);
+int get hashCode {
+    return Object.hash(runtimeType,key,rkey,error,network);
+}
 
 @override
 String toString() {
-  return 'MasterKeyState(key: $key, rkey: $rkey, error: $error, network: $network)';
+    return 'MasterKeyState(key: $key, rkey: $rkey, error: $error, network: $network)';
 }
 
 

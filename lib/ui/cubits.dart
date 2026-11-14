@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sats/api/interface/libbitcoin.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/broadcast.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/fees.dart';
@@ -77,11 +76,9 @@ class _CubitsState extends State<Cubits> {
 
     broadcastHex = BroadcastCubit(
       logger,
-      locator<IStackMateBitcoin>(),
       locator<IClipBoard>(),
       nodeAddressCubit,
       torCubit,
-      networkSelectCubit,
     );
 
     pinCubit = PinCubit(storage);

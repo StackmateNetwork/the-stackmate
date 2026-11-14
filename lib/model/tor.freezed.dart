@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'tor.dart';
@@ -9,6 +9,7 @@ part of 'tor.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $TorCopyWith<Tor> get copyWith => _$TorCopyWithImpl<Tor>(this as Tor, _$identity
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Tor&&(identical(other.enforced, enforced) || other.enforced == enforced)&&(identical(other.internal, internal) || other.internal == internal)&&(identical(other.externalPort, externalPort) || other.externalPort == externalPort));
+  final _this = this as Tor;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Tor&&(identical(other.enforced, _this.enforced) || other.enforced == _this.enforced)&&(identical(other.internal, _this.internal) || other.internal == _this.internal)&&(identical(other.externalPort, _this.externalPort) || other.externalPort == _this.externalPort));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,enforced,internal,externalPort);
+int get hashCode {
+  final _this = this as Tor;
+  return Object.hash(runtimeType,_this.enforced,_this.internal,_this.externalPort);
+}
 
 @override
 String toString() {
-  return 'Tor(enforced: $enforced, internal: $internal, externalPort: $externalPort)';
+  final _this = this as Tor;
+  return 'Tor(enforced: ${_this.enforced}, internal: ${_this.internal}, externalPort: ${_this.externalPort})';
 }
 
 
@@ -63,7 +69,7 @@ class _$TorCopyWithImpl<$Res>
 /// Create a copy of Tor
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? enforced = null,Object? internal = null,Object? externalPort = null,}) {
-  return _then(_self.copyWith(
+  return _then(Tor(
 enforced: null == enforced ? _self.enforced : enforced // ignore: cast_nullable_to_non_nullable
 as bool,internal: null == internal ? _self.internal : internal // ignore: cast_nullable_to_non_nullable
 as bool,externalPort: null == externalPort ? _self.externalPort : externalPort // ignore: cast_nullable_to_non_nullable
@@ -225,16 +231,18 @@ _$TorCopyWith<_Tor> get copyWith => __$TorCopyWithImpl<_Tor>(this, _$identity);
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Tor&&(identical(other.enforced, enforced) || other.enforced == enforced)&&(identical(other.internal, internal) || other.internal == internal)&&(identical(other.externalPort, externalPort) || other.externalPort == externalPort));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Tor&&(identical(other.enforced, enforced) || other.enforced == enforced)&&(identical(other.internal, internal) || other.internal == internal)&&(identical(other.externalPort, externalPort) || other.externalPort == externalPort));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,enforced,internal,externalPort);
+int get hashCode {
+    return Object.hash(runtimeType,enforced,internal,externalPort);
+}
 
 @override
 String toString() {
-  return 'Tor(enforced: $enforced, internal: $internal, externalPort: $externalPort)';
+    return 'Tor(enforced: $enforced, internal: $internal, externalPort: $externalPort)';
 }
 
 

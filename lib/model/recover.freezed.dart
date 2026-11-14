@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'recover.dart';
@@ -9,6 +9,7 @@ part of 'recover.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $RecoveredKeyCopyWith<RecoveredKey> get copyWith => _$RecoveredKeyCopyWithImpl<R
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecoveredKey&&(identical(other.seed, seed) || other.seed == seed)&&(identical(other.root, root) || other.root == root)&&(identical(other.fingerprint, fingerprint) || other.fingerprint == fingerprint)&&(identical(other.network, network) || other.network == network));
+  final _this = this as RecoveredKey;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecoveredKey&&(identical(other.seed, _this.seed) || other.seed == _this.seed)&&(identical(other.root, _this.root) || other.root == _this.root)&&(identical(other.fingerprint, _this.fingerprint) || other.fingerprint == _this.fingerprint)&&(identical(other.network, _this.network) || other.network == _this.network));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,seed,root,fingerprint,network);
+int get hashCode {
+  final _this = this as RecoveredKey;
+  return Object.hash(runtimeType,_this.seed,_this.root,_this.fingerprint,_this.network);
+}
 
 @override
 String toString() {
-  return 'RecoveredKey(seed: $seed, root: $root, fingerprint: $fingerprint, network: $network)';
+  final _this = this as RecoveredKey;
+  return 'RecoveredKey(seed: ${_this.seed}, root: ${_this.root}, fingerprint: ${_this.fingerprint}, network: ${_this.network})';
 }
 
 
@@ -66,7 +72,7 @@ class _$RecoveredKeyCopyWithImpl<$Res>
 /// Create a copy of RecoveredKey
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? seed = freezed,Object? root = freezed,Object? fingerprint = freezed,Object? network = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(RecoveredKey(
 seed: freezed == seed ? _self.seed : seed // ignore: cast_nullable_to_non_nullable
 as String?,root: freezed == root ? _self.root : root // ignore: cast_nullable_to_non_nullable
 as String?,fingerprint: freezed == fingerprint ? _self.fingerprint : fingerprint // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecoveredKey&&(identical(other.seed, seed) || other.seed == seed)&&(identical(other.root, root) || other.root == root)&&(identical(other.fingerprint, fingerprint) || other.fingerprint == fingerprint)&&(identical(other.network, network) || other.network == network));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecoveredKey&&(identical(other.seed, seed) || other.seed == seed)&&(identical(other.root, root) || other.root == root)&&(identical(other.fingerprint, fingerprint) || other.fingerprint == fingerprint)&&(identical(other.network, network) || other.network == network));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,seed,root,fingerprint,network);
+int get hashCode {
+    return Object.hash(runtimeType,seed,root,fingerprint,network);
+}
 
 @override
 String toString() {
-  return 'RecoveredKey(seed: $seed, root: $root, fingerprint: $fingerprint, network: $network)';
+    return 'RecoveredKey(seed: $seed, root: $root, fingerprint: $fingerprint, network: $network)';
 }
 
 

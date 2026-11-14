@@ -127,37 +127,6 @@ class XpubImportCubit extends Cubit<XpubImportState> {
     );
   }
 
-  void fingerPrintChanged(String text) {
-    emit(state.copyWith(fingerPrint: text, errXpub: emptyString));
-  }
-
-  Future<void> fingerPrintPastedClicked() async {
-    final text = await _clipboard.pasteFromClipBoard();
-    if (text.hasError) return;
-    emit(state.copyWith(fingerPrint: text.result!, errXpub: emptyString));
-  }
-
-  void pathChanged(String text) {
-    emit(
-      state.copyWith(
-        path: Validation.formatHardenedPath(text),
-        errXpub: emptyString,
-      ),
-    );
-  }
-
-  Future<void> pathPasteClicked() async {
-    final text = await _clipboard.pasteFromClipBoard();
-    if (text.hasError) return;
-
-    emit(
-      state.copyWith(
-        path: Validation.formatHardenedPath(text.result!),
-        errXpub: emptyString,
-      ),
-    );
-  }
-
   void checkDetails() {
     if (state.xpub == emptyString || state.xpub.length < 64) {
       emit(

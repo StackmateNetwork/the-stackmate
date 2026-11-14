@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'log.dart';
@@ -9,6 +9,7 @@ part of 'log.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -27,23 +28,29 @@ $LogCopyWith<Log> get copyWith => _$LogCopyWithImpl<Log>(this as Log, _$identity
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as Log;
   properties
     ..add(DiagnosticsProperty('type', 'Log'))
-    ..add(DiagnosticsProperty('type', type))..add(DiagnosticsProperty('path', path))..add(DiagnosticsProperty('response', response))..add(DiagnosticsProperty('statusCode', statusCode))..add(DiagnosticsProperty('bloc', bloc))..add(DiagnosticsProperty('event', event))..add(DiagnosticsProperty('exceptionType', exceptionType))..add(DiagnosticsProperty('exceptionSource', exceptionSource))..add(DiagnosticsProperty('stackTrace', stackTrace));
+    ..add(DiagnosticsProperty('type', _this.type))..add(DiagnosticsProperty('path', _this.path))..add(DiagnosticsProperty('response', _this.response))..add(DiagnosticsProperty('statusCode', _this.statusCode))..add(DiagnosticsProperty('bloc', _this.bloc))..add(DiagnosticsProperty('event', _this.event))..add(DiagnosticsProperty('exceptionType', _this.exceptionType))..add(DiagnosticsProperty('exceptionSource', _this.exceptionSource))..add(DiagnosticsProperty('stackTrace', _this.stackTrace));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Log&&(identical(other.type, type) || other.type == type)&&(identical(other.path, path) || other.path == path)&&(identical(other.response, response) || other.response == response)&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.bloc, bloc) || other.bloc == bloc)&&(identical(other.event, event) || other.event == event)&&(identical(other.exceptionType, exceptionType) || other.exceptionType == exceptionType)&&(identical(other.exceptionSource, exceptionSource) || other.exceptionSource == exceptionSource)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  final _this = this as Log;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Log&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.path, _this.path) || other.path == _this.path)&&(identical(other.response, _this.response) || other.response == _this.response)&&(identical(other.statusCode, _this.statusCode) || other.statusCode == _this.statusCode)&&(identical(other.bloc, _this.bloc) || other.bloc == _this.bloc)&&(identical(other.event, _this.event) || other.event == _this.event)&&(identical(other.exceptionType, _this.exceptionType) || other.exceptionType == _this.exceptionType)&&(identical(other.exceptionSource, _this.exceptionSource) || other.exceptionSource == _this.exceptionSource)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,type,path,response,statusCode,bloc,event,exceptionType,exceptionSource,stackTrace);
+int get hashCode {
+  final _this = this as Log;
+  return Object.hash(runtimeType,_this.type,_this.path,_this.response,_this.statusCode,_this.bloc,_this.event,_this.exceptionType,_this.exceptionSource,_this.stackTrace);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'Log(type: $type, path: $path, response: $response, statusCode: $statusCode, bloc: $bloc, event: $event, exceptionType: $exceptionType, exceptionSource: $exceptionSource, stackTrace: $stackTrace)';
+  final _this = this as Log;
+  return 'Log(type: ${_this.type}, path: ${_this.path}, response: ${_this.response}, statusCode: ${_this.statusCode}, bloc: ${_this.bloc}, event: ${_this.event}, exceptionType: ${_this.exceptionType}, exceptionSource: ${_this.exceptionSource}, stackTrace: ${_this.stackTrace})';
 }
 
 
@@ -72,7 +79,7 @@ class _$LogCopyWithImpl<$Res>
 /// Create a copy of Log
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? path = freezed,Object? response = freezed,Object? statusCode = freezed,Object? bloc = freezed,Object? event = freezed,Object? exceptionType = freezed,Object? exceptionSource = freezed,Object? stackTrace = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(Log(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as LogType,path: freezed == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
 as String?,response: freezed == response ? _self.response : response // ignore: cast_nullable_to_non_nullable
@@ -248,23 +255,25 @@ Map<String, dynamic> toJson() {
 }
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'Log'))
     ..add(DiagnosticsProperty('type', type))..add(DiagnosticsProperty('path', path))..add(DiagnosticsProperty('response', response))..add(DiagnosticsProperty('statusCode', statusCode))..add(DiagnosticsProperty('bloc', bloc))..add(DiagnosticsProperty('event', event))..add(DiagnosticsProperty('exceptionType', exceptionType))..add(DiagnosticsProperty('exceptionSource', exceptionSource))..add(DiagnosticsProperty('stackTrace', stackTrace));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Log&&(identical(other.type, type) || other.type == type)&&(identical(other.path, path) || other.path == path)&&(identical(other.response, response) || other.response == response)&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.bloc, bloc) || other.bloc == bloc)&&(identical(other.event, event) || other.event == event)&&(identical(other.exceptionType, exceptionType) || other.exceptionType == exceptionType)&&(identical(other.exceptionSource, exceptionSource) || other.exceptionSource == exceptionSource)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Log&&(identical(other.type, type) || other.type == type)&&(identical(other.path, path) || other.path == path)&&(identical(other.response, response) || other.response == response)&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.bloc, bloc) || other.bloc == bloc)&&(identical(other.event, event) || other.event == event)&&(identical(other.exceptionType, exceptionType) || other.exceptionType == exceptionType)&&(identical(other.exceptionSource, exceptionSource) || other.exceptionSource == exceptionSource)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,type,path,response,statusCode,bloc,event,exceptionType,exceptionSource,stackTrace);
+int get hashCode {
+    return Object.hash(runtimeType,type,path,response,statusCode,bloc,event,exceptionType,exceptionSource,stackTrace);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'Log(type: $type, path: $path, response: $response, statusCode: $statusCode, bloc: $bloc, event: $event, exceptionType: $exceptionType, exceptionSource: $exceptionSource, stackTrace: $stackTrace)';
+    return 'Log(type: $type, path: $path, response: $response, statusCode: $statusCode, bloc: $bloc, event: $event, exceptionType: $exceptionType, exceptionSource: $exceptionSource, stackTrace: $stackTrace)';
 }
 
 

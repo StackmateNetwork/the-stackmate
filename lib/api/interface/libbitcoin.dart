@@ -41,11 +41,6 @@ abstract class IStackMateBitcoin {
     required String psbt,
   });
 
-  R<NetworkFees> feeAbsoluteToRate({
-    required String feeAbsolute,
-    required String weight,
-  });
-
   R<NetworkFees> feeRateToAbsolute({
     required String feeRate,
     required String weight,

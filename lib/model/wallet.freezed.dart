@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'wallet.dart';
@@ -9,6 +9,7 @@ part of 'wallet.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $WalletCopyWith<Wallet> get copyWith => _$WalletCopyWithImpl<Wallet>(this as Wal
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Wallet&&(identical(other.id, id) || other.id == id)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.label, label) || other.label == label)&&(identical(other.descriptor, descriptor) || other.descriptor == descriptor)&&(identical(other.policy, policy) || other.policy == policy)&&(identical(other.requiredPolicyElements, requiredPolicyElements) || other.requiredPolicyElements == requiredPolicyElements)&&const DeepCollectionEquality().equals(other.policyElements, policyElements)&&(identical(other.blockchain, blockchain) || other.blockchain == blockchain)&&const DeepCollectionEquality().equals(other.transactions, transactions)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.lastAddressIndex, lastAddressIndex) || other.lastAddressIndex == lastAddressIndex)&&(identical(other.walletType, walletType) || other.walletType == walletType)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.fingerprint, fingerprint) || other.fingerprint == fingerprint));
+  final _this = this as Wallet;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Wallet&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.uid, _this.uid) || other.uid == _this.uid)&&(identical(other.label, _this.label) || other.label == _this.label)&&(identical(other.descriptor, _this.descriptor) || other.descriptor == _this.descriptor)&&(identical(other.policy, _this.policy) || other.policy == _this.policy)&&(identical(other.requiredPolicyElements, _this.requiredPolicyElements) || other.requiredPolicyElements == _this.requiredPolicyElements)&&const DeepCollectionEquality().equals(other.policyElements, _this.policyElements)&&(identical(other.blockchain, _this.blockchain) || other.blockchain == _this.blockchain)&&const DeepCollectionEquality().equals(other.transactions, _this.transactions)&&(identical(other.balance, _this.balance) || other.balance == _this.balance)&&(identical(other.lastAddressIndex, _this.lastAddressIndex) || other.lastAddressIndex == _this.lastAddressIndex)&&(identical(other.walletType, _this.walletType) || other.walletType == _this.walletType)&&(identical(other.passPhrase, _this.passPhrase) || other.passPhrase == _this.passPhrase)&&(identical(other.fingerprint, _this.fingerprint) || other.fingerprint == _this.fingerprint));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,uid,label,descriptor,policy,requiredPolicyElements,const DeepCollectionEquality().hash(policyElements),blockchain,const DeepCollectionEquality().hash(transactions),balance,lastAddressIndex,walletType,passPhrase,fingerprint);
+int get hashCode {
+  final _this = this as Wallet;
+  return Object.hash(runtimeType,_this.id,_this.uid,_this.label,_this.descriptor,_this.policy,_this.requiredPolicyElements,const DeepCollectionEquality().hash(_this.policyElements),_this.blockchain,const DeepCollectionEquality().hash(_this.transactions),_this.balance,_this.lastAddressIndex,_this.walletType,_this.passPhrase,_this.fingerprint);
+}
 
 @override
 String toString() {
-  return 'Wallet(id: $id, uid: $uid, label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, balance: $balance, lastAddressIndex: $lastAddressIndex, walletType: $walletType, passPhrase: $passPhrase, fingerprint: $fingerprint)';
+  final _this = this as Wallet;
+  return 'Wallet(id: ${_this.id}, uid: ${_this.uid}, label: ${_this.label}, descriptor: ${_this.descriptor}, policy: ${_this.policy}, requiredPolicyElements: ${_this.requiredPolicyElements}, policyElements: ${_this.policyElements}, blockchain: ${_this.blockchain}, transactions: ${_this.transactions}, balance: ${_this.balance}, lastAddressIndex: ${_this.lastAddressIndex}, walletType: ${_this.walletType}, passPhrase: ${_this.passPhrase}, fingerprint: ${_this.fingerprint})';
 }
 
 
@@ -66,7 +72,7 @@ class _$WalletCopyWithImpl<$Res>
 /// Create a copy of Wallet
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? uid = null,Object? label = null,Object? descriptor = null,Object? policy = null,Object? requiredPolicyElements = null,Object? policyElements = null,Object? blockchain = null,Object? transactions = null,Object? balance = null,Object? lastAddressIndex = null,Object? walletType = null,Object? passPhrase = null,Object? fingerprint = null,}) {
-  return _then(_self.copyWith(
+  return _then(Wallet(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
@@ -222,7 +228,7 @@ return $default(_that.id,_that.uid,_that.label,_that.descriptor,_that.policy,_th
 @JsonSerializable()
 @HiveType(typeId: 1, adapterName: 'WalletClassAdapter')
 class _Wallet extends Wallet {
-  const _Wallet({@HiveField(0) this.id, @HiveField(1) required this.uid, @HiveField(2) required this.label, @HiveField(3) required this.descriptor, @HiveField(4) required this.policy, @HiveField(5) required this.requiredPolicyElements, @HiveField(6) required final  List<String> policyElements, @HiveField(7) required this.blockchain, @HiveField(8) required final  List<Transaction> transactions, @HiveField(9) required this.balance, @HiveField(10) required this.lastAddressIndex, @HiveField(11) required this.walletType, @HiveField(12) required this.passPhrase, @HiveField(13) required this.fingerprint}): _policyElements = policyElements,_transactions = transactions,super._();
+  const _Wallet({@HiveField(0) this.id, @HiveField(1) required this.uid, @HiveField(2) required this.label, @HiveField(3) required this.descriptor, @HiveField(4) required this.policy, @HiveField(5) required this.requiredPolicyElements, @HiveField(6) required  List<String> policyElements, @HiveField(7) required this.blockchain, @HiveField(8) required  List<Transaction> transactions, @HiveField(9) required this.balance, @HiveField(10) required this.lastAddressIndex, @HiveField(11) required this.walletType, @HiveField(12) required this.passPhrase, @HiveField(13) required this.fingerprint}): _policyElements = policyElements,_transactions = transactions,super._();
   factory _Wallet.fromJson(Map<String, dynamic> json) => _$WalletFromJson(json);
 
 @override@HiveField(0) final  int? id;
@@ -265,16 +271,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Wallet&&(identical(other.id, id) || other.id == id)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.label, label) || other.label == label)&&(identical(other.descriptor, descriptor) || other.descriptor == descriptor)&&(identical(other.policy, policy) || other.policy == policy)&&(identical(other.requiredPolicyElements, requiredPolicyElements) || other.requiredPolicyElements == requiredPolicyElements)&&const DeepCollectionEquality().equals(other._policyElements, _policyElements)&&(identical(other.blockchain, blockchain) || other.blockchain == blockchain)&&const DeepCollectionEquality().equals(other._transactions, _transactions)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.lastAddressIndex, lastAddressIndex) || other.lastAddressIndex == lastAddressIndex)&&(identical(other.walletType, walletType) || other.walletType == walletType)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.fingerprint, fingerprint) || other.fingerprint == fingerprint));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Wallet&&(identical(other.id, id) || other.id == id)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.label, label) || other.label == label)&&(identical(other.descriptor, descriptor) || other.descriptor == descriptor)&&(identical(other.policy, policy) || other.policy == policy)&&(identical(other.requiredPolicyElements, requiredPolicyElements) || other.requiredPolicyElements == requiredPolicyElements)&&const DeepCollectionEquality().equals(other.policyElements, _policyElements)&&(identical(other.blockchain, blockchain) || other.blockchain == blockchain)&&const DeepCollectionEquality().equals(other.transactions, _transactions)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.lastAddressIndex, lastAddressIndex) || other.lastAddressIndex == lastAddressIndex)&&(identical(other.walletType, walletType) || other.walletType == walletType)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.fingerprint, fingerprint) || other.fingerprint == fingerprint));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,uid,label,descriptor,policy,requiredPolicyElements,const DeepCollectionEquality().hash(_policyElements),blockchain,const DeepCollectionEquality().hash(_transactions),balance,lastAddressIndex,walletType,passPhrase,fingerprint);
+int get hashCode {
+    return Object.hash(runtimeType,id,uid,label,descriptor,policy,requiredPolicyElements,const DeepCollectionEquality().hash(_policyElements),blockchain,const DeepCollectionEquality().hash(_transactions),balance,lastAddressIndex,walletType,passPhrase,fingerprint);
+}
 
 @override
 String toString() {
-  return 'Wallet(id: $id, uid: $uid, label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, balance: $balance, lastAddressIndex: $lastAddressIndex, walletType: $walletType, passPhrase: $passPhrase, fingerprint: $fingerprint)';
+    return 'Wallet(id: $id, uid: $uid, label: $label, descriptor: $descriptor, policy: $policy, requiredPolicyElements: $requiredPolicyElements, policyElements: $policyElements, blockchain: $blockchain, transactions: $transactions, balance: $balance, lastAddressIndex: $lastAddressIndex, walletType: $walletType, passPhrase: $passPhrase, fingerprint: $fingerprint)';
 }
 
 

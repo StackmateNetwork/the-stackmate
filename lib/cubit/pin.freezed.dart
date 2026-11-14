@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'pin.dart';
@@ -9,6 +9,7 @@ part of 'pin.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $PinStateCopyWith<PinState> get copyWith => _$PinStateCopyWithImpl<PinState>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PinState&&(identical(other.value, value) || other.value == value)&&(identical(other.attemptsLeft, attemptsLeft) || other.attemptsLeft == attemptsLeft)&&(identical(other.lastFailure, lastFailure) || other.lastFailure == lastFailure)&&(identical(other.isLocked, isLocked) || other.isLocked == isLocked)&&(identical(other.isVerified, isVerified) || other.isVerified == isVerified)&&(identical(other.hasChosenPin, hasChosenPin) || other.hasChosenPin == hasChosenPin)&&(identical(other.hasSetPin, hasSetPin) || other.hasSetPin == hasSetPin)&&(identical(other.hasEnteredPin, hasEnteredPin) || other.hasEnteredPin == hasEnteredPin)&&(identical(other.setValue, setValue) || other.setValue == setValue)&&(identical(other.confirmedValue, confirmedValue) || other.confirmedValue == confirmedValue)&&(identical(other.enteredValue, enteredValue) || other.enteredValue == enteredValue)&&(identical(other.hiddenValue, hiddenValue) || other.hiddenValue == hiddenValue)&&(identical(other.error, error) || other.error == error));
+  final _this = this as PinState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PinState&&(identical(other.value, _this.value) || other.value == _this.value)&&(identical(other.attemptsLeft, _this.attemptsLeft) || other.attemptsLeft == _this.attemptsLeft)&&(identical(other.lastFailure, _this.lastFailure) || other.lastFailure == _this.lastFailure)&&(identical(other.isLocked, _this.isLocked) || other.isLocked == _this.isLocked)&&(identical(other.isVerified, _this.isVerified) || other.isVerified == _this.isVerified)&&(identical(other.hasChosenPin, _this.hasChosenPin) || other.hasChosenPin == _this.hasChosenPin)&&(identical(other.hasSetPin, _this.hasSetPin) || other.hasSetPin == _this.hasSetPin)&&(identical(other.hasEnteredPin, _this.hasEnteredPin) || other.hasEnteredPin == _this.hasEnteredPin)&&(identical(other.setValue, _this.setValue) || other.setValue == _this.setValue)&&(identical(other.confirmedValue, _this.confirmedValue) || other.confirmedValue == _this.confirmedValue)&&(identical(other.enteredValue, _this.enteredValue) || other.enteredValue == _this.enteredValue)&&(identical(other.hiddenValue, _this.hiddenValue) || other.hiddenValue == _this.hiddenValue)&&(identical(other.error, _this.error) || other.error == _this.error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,value,attemptsLeft,lastFailure,isLocked,isVerified,hasChosenPin,hasSetPin,hasEnteredPin,setValue,confirmedValue,enteredValue,hiddenValue,error);
+int get hashCode {
+  final _this = this as PinState;
+  return Object.hash(runtimeType,_this.value,_this.attemptsLeft,_this.lastFailure,_this.isLocked,_this.isVerified,_this.hasChosenPin,_this.hasSetPin,_this.hasEnteredPin,_this.setValue,_this.confirmedValue,_this.enteredValue,_this.hiddenValue,_this.error);
+}
 
 @override
 String toString() {
-  return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, isVerified: $isVerified, hasChosenPin: $hasChosenPin, hasSetPin: $hasSetPin, hasEnteredPin: $hasEnteredPin, setValue: $setValue, confirmedValue: $confirmedValue, enteredValue: $enteredValue, hiddenValue: $hiddenValue, error: $error)';
+  final _this = this as PinState;
+  return 'PinState(value: ${_this.value}, attemptsLeft: ${_this.attemptsLeft}, lastFailure: ${_this.lastFailure}, isLocked: ${_this.isLocked}, isVerified: ${_this.isVerified}, hasChosenPin: ${_this.hasChosenPin}, hasSetPin: ${_this.hasSetPin}, hasEnteredPin: ${_this.hasEnteredPin}, setValue: ${_this.setValue}, confirmedValue: ${_this.confirmedValue}, enteredValue: ${_this.enteredValue}, hiddenValue: ${_this.hiddenValue}, error: ${_this.error})';
 }
 
 
@@ -63,7 +69,7 @@ class _$PinStateCopyWithImpl<$Res>
 /// Create a copy of PinState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? value = freezed,Object? attemptsLeft = null,Object? lastFailure = null,Object? isLocked = null,Object? isVerified = null,Object? hasChosenPin = null,Object? hasSetPin = null,Object? hasEnteredPin = null,Object? setValue = null,Object? confirmedValue = null,Object? enteredValue = null,Object? hiddenValue = null,Object? error = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(PinState(
 value: freezed == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as String?,attemptsLeft: null == attemptsLeft ? _self.attemptsLeft : attemptsLeft // ignore: cast_nullable_to_non_nullable
 as int,lastFailure: null == lastFailure ? _self.lastFailure : lastFailure // ignore: cast_nullable_to_non_nullable
@@ -245,16 +251,18 @@ _$PinStateCopyWith<_PinState> get copyWith => __$PinStateCopyWithImpl<_PinState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PinState&&(identical(other.value, value) || other.value == value)&&(identical(other.attemptsLeft, attemptsLeft) || other.attemptsLeft == attemptsLeft)&&(identical(other.lastFailure, lastFailure) || other.lastFailure == lastFailure)&&(identical(other.isLocked, isLocked) || other.isLocked == isLocked)&&(identical(other.isVerified, isVerified) || other.isVerified == isVerified)&&(identical(other.hasChosenPin, hasChosenPin) || other.hasChosenPin == hasChosenPin)&&(identical(other.hasSetPin, hasSetPin) || other.hasSetPin == hasSetPin)&&(identical(other.hasEnteredPin, hasEnteredPin) || other.hasEnteredPin == hasEnteredPin)&&(identical(other.setValue, setValue) || other.setValue == setValue)&&(identical(other.confirmedValue, confirmedValue) || other.confirmedValue == confirmedValue)&&(identical(other.enteredValue, enteredValue) || other.enteredValue == enteredValue)&&(identical(other.hiddenValue, hiddenValue) || other.hiddenValue == hiddenValue)&&(identical(other.error, error) || other.error == error));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PinState&&(identical(other.value, value) || other.value == value)&&(identical(other.attemptsLeft, attemptsLeft) || other.attemptsLeft == attemptsLeft)&&(identical(other.lastFailure, lastFailure) || other.lastFailure == lastFailure)&&(identical(other.isLocked, isLocked) || other.isLocked == isLocked)&&(identical(other.isVerified, isVerified) || other.isVerified == isVerified)&&(identical(other.hasChosenPin, hasChosenPin) || other.hasChosenPin == hasChosenPin)&&(identical(other.hasSetPin, hasSetPin) || other.hasSetPin == hasSetPin)&&(identical(other.hasEnteredPin, hasEnteredPin) || other.hasEnteredPin == hasEnteredPin)&&(identical(other.setValue, setValue) || other.setValue == setValue)&&(identical(other.confirmedValue, confirmedValue) || other.confirmedValue == confirmedValue)&&(identical(other.enteredValue, enteredValue) || other.enteredValue == enteredValue)&&(identical(other.hiddenValue, hiddenValue) || other.hiddenValue == hiddenValue)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,value,attemptsLeft,lastFailure,isLocked,isVerified,hasChosenPin,hasSetPin,hasEnteredPin,setValue,confirmedValue,enteredValue,hiddenValue,error);
+int get hashCode {
+    return Object.hash(runtimeType,value,attemptsLeft,lastFailure,isLocked,isVerified,hasChosenPin,hasSetPin,hasEnteredPin,setValue,confirmedValue,enteredValue,hiddenValue,error);
+}
 
 @override
 String toString() {
-  return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, isVerified: $isVerified, hasChosenPin: $hasChosenPin, hasSetPin: $hasSetPin, hasEnteredPin: $hasEnteredPin, setValue: $setValue, confirmedValue: $confirmedValue, enteredValue: $enteredValue, hiddenValue: $hiddenValue, error: $error)';
+    return 'PinState(value: $value, attemptsLeft: $attemptsLeft, lastFailure: $lastFailure, isLocked: $isLocked, isVerified: $isVerified, hasChosenPin: $hasChosenPin, hasSetPin: $hasSetPin, hasEnteredPin: $hasEnteredPin, setValue: $setValue, confirmedValue: $confirmedValue, enteredValue: $enteredValue, hiddenValue: $hiddenValue, error: $error)';
 }
 
 

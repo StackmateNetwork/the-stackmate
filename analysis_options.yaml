@@ -22,6 +22,7 @@ linter:
 
 analyzer:
   exclude:
+    - lib/pkg/words/app_localizations*.dart
     - lib/model/*.g.dart
     - lib/model/*.freezed.dart
     - lib/cubit/*.freezed.dart
@@ -30,3 +31,9 @@ analyzer:
     - lib/cubit/new-wallet/*.freezed.dart
     - lib/cubit/new-wallet/common/*.freezed.dart
     - lib/cubit/new-wallet/common/*.freezed.dart
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - macos/**
+    - linux/**

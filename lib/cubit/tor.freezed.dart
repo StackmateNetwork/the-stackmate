@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'tor.dart';
@@ -9,6 +9,7 @@ part of 'tor.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $TorStateCopyWith<TorState> get copyWith => _$TorStateCopyWithImpl<TorState>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TorState&&(identical(other.workingDir, workingDir) || other.workingDir == workingDir)&&(identical(other.enforced, enforced) || other.enforced == enforced)&&(identical(other.internal, internal) || other.internal == internal)&&(identical(other.socks5Port, socks5Port) || other.socks5Port == socks5Port)&&(identical(other.httpProxy, httpProxy) || other.httpProxy == httpProxy)&&(identical(other.bootstapProgress, bootstapProgress) || other.bootstapProgress == bootstapProgress)&&(identical(other.isRunning, isRunning) || other.isRunning == isRunning)&&(identical(other.isEdittingExternal, isEdittingExternal) || other.isEdittingExternal == isEdittingExternal)&&(identical(other.isConnected, isConnected) || other.isConnected == isConnected)&&(identical(other.controlKey, controlKey) || other.controlKey == controlKey)&&(identical(other.errConnection, errConnection) || other.errConnection == errConnection)&&(identical(other.errStorage, errStorage) || other.errStorage == errStorage)&&(identical(other.errMessage, errMessage) || other.errMessage == errMessage));
+  final _this = this as TorState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TorState&&(identical(other.workingDir, _this.workingDir) || other.workingDir == _this.workingDir)&&(identical(other.enforced, _this.enforced) || other.enforced == _this.enforced)&&(identical(other.internal, _this.internal) || other.internal == _this.internal)&&(identical(other.socks5Port, _this.socks5Port) || other.socks5Port == _this.socks5Port)&&(identical(other.httpProxy, _this.httpProxy) || other.httpProxy == _this.httpProxy)&&(identical(other.bootstapProgress, _this.bootstapProgress) || other.bootstapProgress == _this.bootstapProgress)&&(identical(other.isRunning, _this.isRunning) || other.isRunning == _this.isRunning)&&(identical(other.isEdittingExternal, _this.isEdittingExternal) || other.isEdittingExternal == _this.isEdittingExternal)&&(identical(other.isConnected, _this.isConnected) || other.isConnected == _this.isConnected)&&(identical(other.controlKey, _this.controlKey) || other.controlKey == _this.controlKey)&&(identical(other.errConnection, _this.errConnection) || other.errConnection == _this.errConnection)&&(identical(other.errStorage, _this.errStorage) || other.errStorage == _this.errStorage)&&(identical(other.errMessage, _this.errMessage) || other.errMessage == _this.errMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,workingDir,enforced,internal,socks5Port,httpProxy,bootstapProgress,isRunning,isEdittingExternal,isConnected,controlKey,errConnection,errStorage,errMessage);
+int get hashCode {
+  final _this = this as TorState;
+  return Object.hash(runtimeType,_this.workingDir,_this.enforced,_this.internal,_this.socks5Port,_this.httpProxy,_this.bootstapProgress,_this.isRunning,_this.isEdittingExternal,_this.isConnected,_this.controlKey,_this.errConnection,_this.errStorage,_this.errMessage);
+}
 
 @override
 String toString() {
-  return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isEdittingExternal: $isEdittingExternal, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage, errMessage: $errMessage)';
+  final _this = this as TorState;
+  return 'TorState(workingDir: ${_this.workingDir}, enforced: ${_this.enforced}, internal: ${_this.internal}, socks5Port: ${_this.socks5Port}, httpProxy: ${_this.httpProxy}, bootstapProgress: ${_this.bootstapProgress}, isRunning: ${_this.isRunning}, isEdittingExternal: ${_this.isEdittingExternal}, isConnected: ${_this.isConnected}, controlKey: ${_this.controlKey}, errConnection: ${_this.errConnection}, errStorage: ${_this.errStorage}, errMessage: ${_this.errMessage})';
 }
 
 
@@ -63,7 +69,7 @@ class _$TorStateCopyWithImpl<$Res>
 /// Create a copy of TorState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? workingDir = null,Object? enforced = null,Object? internal = null,Object? socks5Port = null,Object? httpProxy = null,Object? bootstapProgress = null,Object? isRunning = null,Object? isEdittingExternal = null,Object? isConnected = null,Object? controlKey = null,Object? errConnection = null,Object? errStorage = null,Object? errMessage = null,}) {
-  return _then(_self.copyWith(
+  return _then(TorState(
 workingDir: null == workingDir ? _self.workingDir : workingDir // ignore: cast_nullable_to_non_nullable
 as String,enforced: null == enforced ? _self.enforced : enforced // ignore: cast_nullable_to_non_nullable
 as bool,internal: null == internal ? _self.internal : internal // ignore: cast_nullable_to_non_nullable
@@ -245,16 +251,18 @@ _$TorStateCopyWith<_TorState> get copyWith => __$TorStateCopyWithImpl<_TorState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TorState&&(identical(other.workingDir, workingDir) || other.workingDir == workingDir)&&(identical(other.enforced, enforced) || other.enforced == enforced)&&(identical(other.internal, internal) || other.internal == internal)&&(identical(other.socks5Port, socks5Port) || other.socks5Port == socks5Port)&&(identical(other.httpProxy, httpProxy) || other.httpProxy == httpProxy)&&(identical(other.bootstapProgress, bootstapProgress) || other.bootstapProgress == bootstapProgress)&&(identical(other.isRunning, isRunning) || other.isRunning == isRunning)&&(identical(other.isEdittingExternal, isEdittingExternal) || other.isEdittingExternal == isEdittingExternal)&&(identical(other.isConnected, isConnected) || other.isConnected == isConnected)&&(identical(other.controlKey, controlKey) || other.controlKey == controlKey)&&(identical(other.errConnection, errConnection) || other.errConnection == errConnection)&&(identical(other.errStorage, errStorage) || other.errStorage == errStorage)&&(identical(other.errMessage, errMessage) || other.errMessage == errMessage));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TorState&&(identical(other.workingDir, workingDir) || other.workingDir == workingDir)&&(identical(other.enforced, enforced) || other.enforced == enforced)&&(identical(other.internal, internal) || other.internal == internal)&&(identical(other.socks5Port, socks5Port) || other.socks5Port == socks5Port)&&(identical(other.httpProxy, httpProxy) || other.httpProxy == httpProxy)&&(identical(other.bootstapProgress, bootstapProgress) || other.bootstapProgress == bootstapProgress)&&(identical(other.isRunning, isRunning) || other.isRunning == isRunning)&&(identical(other.isEdittingExternal, isEdittingExternal) || other.isEdittingExternal == isEdittingExternal)&&(identical(other.isConnected, isConnected) || other.isConnected == isConnected)&&(identical(other.controlKey, controlKey) || other.controlKey == controlKey)&&(identical(other.errConnection, errConnection) || other.errConnection == errConnection)&&(identical(other.errStorage, errStorage) || other.errStorage == errStorage)&&(identical(other.errMessage, errMessage) || other.errMessage == errMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,workingDir,enforced,internal,socks5Port,httpProxy,bootstapProgress,isRunning,isEdittingExternal,isConnected,controlKey,errConnection,errStorage,errMessage);
+int get hashCode {
+    return Object.hash(runtimeType,workingDir,enforced,internal,socks5Port,httpProxy,bootstapProgress,isRunning,isEdittingExternal,isConnected,controlKey,errConnection,errStorage,errMessage);
+}
 
 @override
 String toString() {
-  return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isEdittingExternal: $isEdittingExternal, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage, errMessage: $errMessage)';
+    return 'TorState(workingDir: $workingDir, enforced: $enforced, internal: $internal, socks5Port: $socks5Port, httpProxy: $httpProxy, bootstapProgress: $bootstapProgress, isRunning: $isRunning, isEdittingExternal: $isEdittingExternal, isConnected: $isConnected, controlKey: $controlKey, errConnection: $errConnection, errStorage: $errStorage, errMessage: $errMessage)';
 }
 
 

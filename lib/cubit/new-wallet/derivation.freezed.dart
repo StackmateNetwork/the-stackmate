@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'derivation.dart';
@@ -9,6 +9,7 @@ part of 'derivation.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $DeriveWalletStateCopyWith<DeriveWalletState> get copyWith => _$DeriveWalletStat
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as DeriveWalletState;
   properties
     ..add(DiagnosticsProperty('type', 'DeriveWalletState'))
-    ..add(DiagnosticsProperty('currentStep', currentStep))..add(DiagnosticsProperty('purpose', purpose))..add(DiagnosticsProperty('index', index))..add(DiagnosticsProperty('rawPath', rawPath))..add(DiagnosticsProperty('passPhrase', passPhrase))..add(DiagnosticsProperty('errPassphrase', errPassphrase))..add(DiagnosticsProperty('label', label))..add(DiagnosticsProperty('walletLabelError', walletLabelError))..add(DiagnosticsProperty('savingWallet', savingWallet))..add(DiagnosticsProperty('errSavingWallet', errSavingWallet))..add(DiagnosticsProperty('newWalletSaved', newWalletSaved));
+    ..add(DiagnosticsProperty('currentStep', _this.currentStep))..add(DiagnosticsProperty('purpose', _this.purpose))..add(DiagnosticsProperty('index', _this.index))..add(DiagnosticsProperty('rawPath', _this.rawPath))..add(DiagnosticsProperty('passPhrase', _this.passPhrase))..add(DiagnosticsProperty('errPassphrase', _this.errPassphrase))..add(DiagnosticsProperty('label', _this.label))..add(DiagnosticsProperty('walletLabelError', _this.walletLabelError))..add(DiagnosticsProperty('savingWallet', _this.savingWallet))..add(DiagnosticsProperty('errSavingWallet', _this.errSavingWallet))..add(DiagnosticsProperty('newWalletSaved', _this.newWalletSaved));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeriveWalletState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.purpose, purpose) || other.purpose == purpose)&&(identical(other.index, index) || other.index == index)&&(identical(other.rawPath, rawPath) || other.rawPath == rawPath)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.errPassphrase, errPassphrase) || other.errPassphrase == errPassphrase)&&(identical(other.label, label) || other.label == label)&&(identical(other.walletLabelError, walletLabelError) || other.walletLabelError == walletLabelError)&&(identical(other.savingWallet, savingWallet) || other.savingWallet == savingWallet)&&(identical(other.errSavingWallet, errSavingWallet) || other.errSavingWallet == errSavingWallet)&&(identical(other.newWalletSaved, newWalletSaved) || other.newWalletSaved == newWalletSaved));
+  final _this = this as DeriveWalletState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeriveWalletState&&(identical(other.currentStep, _this.currentStep) || other.currentStep == _this.currentStep)&&(identical(other.purpose, _this.purpose) || other.purpose == _this.purpose)&&(identical(other.index, _this.index) || other.index == _this.index)&&(identical(other.rawPath, _this.rawPath) || other.rawPath == _this.rawPath)&&(identical(other.passPhrase, _this.passPhrase) || other.passPhrase == _this.passPhrase)&&(identical(other.errPassphrase, _this.errPassphrase) || other.errPassphrase == _this.errPassphrase)&&(identical(other.label, _this.label) || other.label == _this.label)&&(identical(other.walletLabelError, _this.walletLabelError) || other.walletLabelError == _this.walletLabelError)&&(identical(other.savingWallet, _this.savingWallet) || other.savingWallet == _this.savingWallet)&&(identical(other.errSavingWallet, _this.errSavingWallet) || other.errSavingWallet == _this.errSavingWallet)&&(identical(other.newWalletSaved, _this.newWalletSaved) || other.newWalletSaved == _this.newWalletSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentStep,purpose,index,rawPath,passPhrase,errPassphrase,label,walletLabelError,savingWallet,errSavingWallet,newWalletSaved);
+int get hashCode {
+  final _this = this as DeriveWalletState;
+  return Object.hash(runtimeType,_this.currentStep,_this.purpose,_this.index,_this.rawPath,_this.passPhrase,_this.errPassphrase,_this.label,_this.walletLabelError,_this.savingWallet,_this.errSavingWallet,_this.newWalletSaved);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'DeriveWalletState(currentStep: $currentStep, purpose: $purpose, index: $index, rawPath: $rawPath, passPhrase: $passPhrase, errPassphrase: $errPassphrase, label: $label, walletLabelError: $walletLabelError, savingWallet: $savingWallet, errSavingWallet: $errSavingWallet, newWalletSaved: $newWalletSaved)';
+  final _this = this as DeriveWalletState;
+  return 'DeriveWalletState(currentStep: ${_this.currentStep}, purpose: ${_this.purpose}, index: ${_this.index}, rawPath: ${_this.rawPath}, passPhrase: ${_this.passPhrase}, errPassphrase: ${_this.errPassphrase}, label: ${_this.label}, walletLabelError: ${_this.walletLabelError}, savingWallet: ${_this.savingWallet}, errSavingWallet: ${_this.errSavingWallet}, newWalletSaved: ${_this.newWalletSaved})';
 }
 
 
@@ -69,7 +76,7 @@ class _$DeriveWalletStateCopyWithImpl<$Res>
 /// Create a copy of DeriveWalletState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? currentStep = null,Object? purpose = null,Object? index = null,Object? rawPath = null,Object? passPhrase = null,Object? errPassphrase = null,Object? label = null,Object? walletLabelError = null,Object? savingWallet = null,Object? errSavingWallet = null,Object? newWalletSaved = null,}) {
-  return _then(_self.copyWith(
+  return _then(DeriveWalletState(
 currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
 as DeriveWalletStep,purpose: null == purpose ? _self.purpose : purpose // ignore: cast_nullable_to_non_nullable
 as DerivationPurpose,index: null == index ? _self.index : index // ignore: cast_nullable_to_non_nullable
@@ -246,23 +253,25 @@ _$DeriveWalletStateCopyWith<_DeriveWalletState> get copyWith => __$DeriveWalletS
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'DeriveWalletState'))
     ..add(DiagnosticsProperty('currentStep', currentStep))..add(DiagnosticsProperty('purpose', purpose))..add(DiagnosticsProperty('index', index))..add(DiagnosticsProperty('rawPath', rawPath))..add(DiagnosticsProperty('passPhrase', passPhrase))..add(DiagnosticsProperty('errPassphrase', errPassphrase))..add(DiagnosticsProperty('label', label))..add(DiagnosticsProperty('walletLabelError', walletLabelError))..add(DiagnosticsProperty('savingWallet', savingWallet))..add(DiagnosticsProperty('errSavingWallet', errSavingWallet))..add(DiagnosticsProperty('newWalletSaved', newWalletSaved));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeriveWalletState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.purpose, purpose) || other.purpose == purpose)&&(identical(other.index, index) || other.index == index)&&(identical(other.rawPath, rawPath) || other.rawPath == rawPath)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.errPassphrase, errPassphrase) || other.errPassphrase == errPassphrase)&&(identical(other.label, label) || other.label == label)&&(identical(other.walletLabelError, walletLabelError) || other.walletLabelError == walletLabelError)&&(identical(other.savingWallet, savingWallet) || other.savingWallet == savingWallet)&&(identical(other.errSavingWallet, errSavingWallet) || other.errSavingWallet == errSavingWallet)&&(identical(other.newWalletSaved, newWalletSaved) || other.newWalletSaved == newWalletSaved));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeriveWalletState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.purpose, purpose) || other.purpose == purpose)&&(identical(other.index, index) || other.index == index)&&(identical(other.rawPath, rawPath) || other.rawPath == rawPath)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.errPassphrase, errPassphrase) || other.errPassphrase == errPassphrase)&&(identical(other.label, label) || other.label == label)&&(identical(other.walletLabelError, walletLabelError) || other.walletLabelError == walletLabelError)&&(identical(other.savingWallet, savingWallet) || other.savingWallet == savingWallet)&&(identical(other.errSavingWallet, errSavingWallet) || other.errSavingWallet == errSavingWallet)&&(identical(other.newWalletSaved, newWalletSaved) || other.newWalletSaved == newWalletSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentStep,purpose,index,rawPath,passPhrase,errPassphrase,label,walletLabelError,savingWallet,errSavingWallet,newWalletSaved);
+int get hashCode {
+    return Object.hash(runtimeType,currentStep,purpose,index,rawPath,passPhrase,errPassphrase,label,walletLabelError,savingWallet,errSavingWallet,newWalletSaved);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'DeriveWalletState(currentStep: $currentStep, purpose: $purpose, index: $index, rawPath: $rawPath, passPhrase: $passPhrase, errPassphrase: $errPassphrase, label: $label, walletLabelError: $walletLabelError, savingWallet: $savingWallet, errSavingWallet: $errSavingWallet, newWalletSaved: $newWalletSaved)';
+    return 'DeriveWalletState(currentStep: $currentStep, purpose: $purpose, index: $index, rawPath: $rawPath, passPhrase: $passPhrase, errPassphrase: $errPassphrase, label: $label, walletLabelError: $walletLabelError, savingWallet: $savingWallet, errSavingWallet: $errSavingWallet, newWalletSaved: $newWalletSaved)';
 }
 
 

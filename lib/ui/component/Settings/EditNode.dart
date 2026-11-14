@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/node.dart';
 import 'package:sats/pkg/extensions.dart';
 

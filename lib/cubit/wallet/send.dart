@@ -112,7 +112,6 @@ class SendCubit extends Cubit<SendState> {
   final MasterKeyCubit _masterKeyCubit;
 
   static const emailShareTxidSubject = 'Transaction ID';
-  static const emailSharePSBTSubject = 'PSBT Requires Signature';
   static const dustLimit = 546;
   static const belowDustError = 'Amount is below dust ($dustLimit sats).';
   static const insufficientBalanceError = 'Insufficient balance.';
@@ -504,11 +503,6 @@ class SendCubit extends Cubit<SendState> {
 
   void copyPSBT() {
     _clipBoard.copyToClipBoard(state.psbt);
-    emit(state.clearErrors().copyWith(currentStep: SendSteps.sent));
-  }
-
-  void sharePSBT() {
-    _share.share(text: state.psbt, subjectForEmail: emailSharePSBTSubject);
     emit(state.clearErrors().copyWith(currentStep: SendSteps.sent));
   }
 }

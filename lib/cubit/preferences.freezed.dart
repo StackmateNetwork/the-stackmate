@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'preferences.dart';
@@ -9,6 +9,7 @@ part of 'preferences.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $PreferencesStateCopyWith<PreferencesState> get copyWith => _$PreferencesStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PreferencesState&&(identical(other.incognito, incognito) || other.incognito == incognito)&&(identical(other.bitcoinStandard, bitcoinStandard) || other.bitcoinStandard == bitcoinStandard)&&(identical(other.preferredBitcoinUnit, preferredBitcoinUnit) || other.preferredBitcoinUnit == preferredBitcoinUnit)&&(identical(other.preferredExchange, preferredExchange) || other.preferredExchange == preferredExchange)&&(identical(other.preferredFiatUnit, preferredFiatUnit) || other.preferredFiatUnit == preferredFiatUnit)&&(identical(other.errorPreferencesState, errorPreferencesState) || other.errorPreferencesState == errorPreferencesState));
+  final _this = this as PreferencesState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PreferencesState&&(identical(other.incognito, _this.incognito) || other.incognito == _this.incognito)&&(identical(other.bitcoinStandard, _this.bitcoinStandard) || other.bitcoinStandard == _this.bitcoinStandard)&&(identical(other.preferredBitcoinUnit, _this.preferredBitcoinUnit) || other.preferredBitcoinUnit == _this.preferredBitcoinUnit)&&(identical(other.preferredExchange, _this.preferredExchange) || other.preferredExchange == _this.preferredExchange)&&(identical(other.preferredFiatUnit, _this.preferredFiatUnit) || other.preferredFiatUnit == _this.preferredFiatUnit)&&(identical(other.errorPreferencesState, _this.errorPreferencesState) || other.errorPreferencesState == _this.errorPreferencesState));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,incognito,bitcoinStandard,preferredBitcoinUnit,preferredExchange,preferredFiatUnit,errorPreferencesState);
+int get hashCode {
+  final _this = this as PreferencesState;
+  return Object.hash(runtimeType,_this.incognito,_this.bitcoinStandard,_this.preferredBitcoinUnit,_this.preferredExchange,_this.preferredFiatUnit,_this.errorPreferencesState);
+}
 
 @override
 String toString() {
-  return 'PreferencesState(incognito: $incognito, bitcoinStandard: $bitcoinStandard, preferredBitcoinUnit: $preferredBitcoinUnit, preferredExchange: $preferredExchange, preferredFiatUnit: $preferredFiatUnit, errorPreferencesState: $errorPreferencesState)';
+  final _this = this as PreferencesState;
+  return 'PreferencesState(incognito: ${_this.incognito}, bitcoinStandard: ${_this.bitcoinStandard}, preferredBitcoinUnit: ${_this.preferredBitcoinUnit}, preferredExchange: ${_this.preferredExchange}, preferredFiatUnit: ${_this.preferredFiatUnit}, errorPreferencesState: ${_this.errorPreferencesState})';
 }
 
 
@@ -63,7 +69,7 @@ class _$PreferencesStateCopyWithImpl<$Res>
 /// Create a copy of PreferencesState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? incognito = null,Object? bitcoinStandard = null,Object? preferredBitcoinUnit = null,Object? preferredExchange = null,Object? preferredFiatUnit = null,Object? errorPreferencesState = null,}) {
-  return _then(_self.copyWith(
+  return _then(PreferencesState(
 incognito: null == incognito ? _self.incognito : incognito // ignore: cast_nullable_to_non_nullable
 as bool,bitcoinStandard: null == bitcoinStandard ? _self.bitcoinStandard : bitcoinStandard // ignore: cast_nullable_to_non_nullable
 as bool,preferredBitcoinUnit: null == preferredBitcoinUnit ? _self.preferredBitcoinUnit : preferredBitcoinUnit // ignore: cast_nullable_to_non_nullable
@@ -231,16 +237,18 @@ _$PreferencesStateCopyWith<_PreferencesState> get copyWith => __$PreferencesStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PreferencesState&&(identical(other.incognito, incognito) || other.incognito == incognito)&&(identical(other.bitcoinStandard, bitcoinStandard) || other.bitcoinStandard == bitcoinStandard)&&(identical(other.preferredBitcoinUnit, preferredBitcoinUnit) || other.preferredBitcoinUnit == preferredBitcoinUnit)&&(identical(other.preferredExchange, preferredExchange) || other.preferredExchange == preferredExchange)&&(identical(other.preferredFiatUnit, preferredFiatUnit) || other.preferredFiatUnit == preferredFiatUnit)&&(identical(other.errorPreferencesState, errorPreferencesState) || other.errorPreferencesState == errorPreferencesState));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PreferencesState&&(identical(other.incognito, incognito) || other.incognito == incognito)&&(identical(other.bitcoinStandard, bitcoinStandard) || other.bitcoinStandard == bitcoinStandard)&&(identical(other.preferredBitcoinUnit, preferredBitcoinUnit) || other.preferredBitcoinUnit == preferredBitcoinUnit)&&(identical(other.preferredExchange, preferredExchange) || other.preferredExchange == preferredExchange)&&(identical(other.preferredFiatUnit, preferredFiatUnit) || other.preferredFiatUnit == preferredFiatUnit)&&(identical(other.errorPreferencesState, errorPreferencesState) || other.errorPreferencesState == errorPreferencesState));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,incognito,bitcoinStandard,preferredBitcoinUnit,preferredExchange,preferredFiatUnit,errorPreferencesState);
+int get hashCode {
+    return Object.hash(runtimeType,incognito,bitcoinStandard,preferredBitcoinUnit,preferredExchange,preferredFiatUnit,errorPreferencesState);
+}
 
 @override
 String toString() {
-  return 'PreferencesState(incognito: $incognito, bitcoinStandard: $bitcoinStandard, preferredBitcoinUnit: $preferredBitcoinUnit, preferredExchange: $preferredExchange, preferredFiatUnit: $preferredFiatUnit, errorPreferencesState: $errorPreferencesState)';
+    return 'PreferencesState(incognito: $incognito, bitcoinStandard: $bitcoinStandard, preferredBitcoinUnit: $preferredBitcoinUnit, preferredExchange: $preferredExchange, preferredFiatUnit: $preferredFiatUnit, errorPreferencesState: $errorPreferencesState)';
 }
 
 

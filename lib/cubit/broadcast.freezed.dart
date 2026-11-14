@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'broadcast.dart';
@@ -9,12 +9,13 @@ part of 'broadcast.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BroadcastState implements DiagnosticableTreeMixin {
 
- bool get broadcasting; String get errBroadcasting; String get psbt; String get hex; String get txId; String get errFileImport; bool get clearData; String? get importedPsbtPath; String? get importedPsbtfileName; String? get importedHexPath; String? get importedHexfileName;
+ bool get broadcasting; String get errBroadcasting; String get hex; String get txId; String get errFileImport; bool get clearData; String? get importedHexPath; String? get importedHexfileName;
 /// Create a copy of BroadcastState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -24,23 +25,29 @@ $BroadcastStateCopyWith<BroadcastState> get copyWith => _$BroadcastStateCopyWith
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as BroadcastState;
   properties
     ..add(DiagnosticsProperty('type', 'BroadcastState'))
-    ..add(DiagnosticsProperty('broadcasting', broadcasting))..add(DiagnosticsProperty('errBroadcasting', errBroadcasting))..add(DiagnosticsProperty('psbt', psbt))..add(DiagnosticsProperty('hex', hex))..add(DiagnosticsProperty('txId', txId))..add(DiagnosticsProperty('errFileImport', errFileImport))..add(DiagnosticsProperty('clearData', clearData))..add(DiagnosticsProperty('importedPsbtPath', importedPsbtPath))..add(DiagnosticsProperty('importedPsbtfileName', importedPsbtfileName))..add(DiagnosticsProperty('importedHexPath', importedHexPath))..add(DiagnosticsProperty('importedHexfileName', importedHexfileName));
+    ..add(DiagnosticsProperty('broadcasting', _this.broadcasting))..add(DiagnosticsProperty('errBroadcasting', _this.errBroadcasting))..add(DiagnosticsProperty('hex', _this.hex))..add(DiagnosticsProperty('txId', _this.txId))..add(DiagnosticsProperty('errFileImport', _this.errFileImport))..add(DiagnosticsProperty('clearData', _this.clearData))..add(DiagnosticsProperty('importedHexPath', _this.importedHexPath))..add(DiagnosticsProperty('importedHexfileName', _this.importedHexfileName));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BroadcastState&&(identical(other.broadcasting, broadcasting) || other.broadcasting == broadcasting)&&(identical(other.errBroadcasting, errBroadcasting) || other.errBroadcasting == errBroadcasting)&&(identical(other.psbt, psbt) || other.psbt == psbt)&&(identical(other.hex, hex) || other.hex == hex)&&(identical(other.txId, txId) || other.txId == txId)&&(identical(other.errFileImport, errFileImport) || other.errFileImport == errFileImport)&&(identical(other.clearData, clearData) || other.clearData == clearData)&&(identical(other.importedPsbtPath, importedPsbtPath) || other.importedPsbtPath == importedPsbtPath)&&(identical(other.importedPsbtfileName, importedPsbtfileName) || other.importedPsbtfileName == importedPsbtfileName)&&(identical(other.importedHexPath, importedHexPath) || other.importedHexPath == importedHexPath)&&(identical(other.importedHexfileName, importedHexfileName) || other.importedHexfileName == importedHexfileName));
+  final _this = this as BroadcastState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BroadcastState&&(identical(other.broadcasting, _this.broadcasting) || other.broadcasting == _this.broadcasting)&&(identical(other.errBroadcasting, _this.errBroadcasting) || other.errBroadcasting == _this.errBroadcasting)&&(identical(other.hex, _this.hex) || other.hex == _this.hex)&&(identical(other.txId, _this.txId) || other.txId == _this.txId)&&(identical(other.errFileImport, _this.errFileImport) || other.errFileImport == _this.errFileImport)&&(identical(other.clearData, _this.clearData) || other.clearData == _this.clearData)&&(identical(other.importedHexPath, _this.importedHexPath) || other.importedHexPath == _this.importedHexPath)&&(identical(other.importedHexfileName, _this.importedHexfileName) || other.importedHexfileName == _this.importedHexfileName));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,broadcasting,errBroadcasting,psbt,hex,txId,errFileImport,clearData,importedPsbtPath,importedPsbtfileName,importedHexPath,importedHexfileName);
+int get hashCode {
+  final _this = this as BroadcastState;
+  return Object.hash(runtimeType,_this.broadcasting,_this.errBroadcasting,_this.hex,_this.txId,_this.errFileImport,_this.clearData,_this.importedHexPath,_this.importedHexfileName);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'BroadcastState(broadcasting: $broadcasting, errBroadcasting: $errBroadcasting, psbt: $psbt, hex: $hex, txId: $txId, errFileImport: $errFileImport, clearData: $clearData, importedPsbtPath: $importedPsbtPath, importedPsbtfileName: $importedPsbtfileName, importedHexPath: $importedHexPath, importedHexfileName: $importedHexfileName)';
+  final _this = this as BroadcastState;
+  return 'BroadcastState(broadcasting: ${_this.broadcasting}, errBroadcasting: ${_this.errBroadcasting}, hex: ${_this.hex}, txId: ${_this.txId}, errFileImport: ${_this.errFileImport}, clearData: ${_this.clearData}, importedHexPath: ${_this.importedHexPath}, importedHexfileName: ${_this.importedHexfileName})';
 }
 
 
@@ -51,7 +58,7 @@ abstract mixin class $BroadcastStateCopyWith<$Res>  {
   factory $BroadcastStateCopyWith(BroadcastState value, $Res Function(BroadcastState) _then) = _$BroadcastStateCopyWithImpl;
 @useResult
 $Res call({
- bool broadcasting, String errBroadcasting, String psbt, String hex, String txId, String errFileImport, bool clearData, String? importedPsbtPath, String? importedPsbtfileName, String? importedHexPath, String? importedHexfileName
+ bool broadcasting, String errBroadcasting, String hex, String txId, String errFileImport, bool clearData, String? importedHexPath, String? importedHexfileName
 });
 
 
@@ -68,18 +75,15 @@ class _$BroadcastStateCopyWithImpl<$Res>
 
 /// Create a copy of BroadcastState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? broadcasting = null,Object? errBroadcasting = null,Object? psbt = null,Object? hex = null,Object? txId = null,Object? errFileImport = null,Object? clearData = null,Object? importedPsbtPath = freezed,Object? importedPsbtfileName = freezed,Object? importedHexPath = freezed,Object? importedHexfileName = freezed,}) {
-  return _then(_self.copyWith(
+@pragma('vm:prefer-inline') @override $Res call({Object? broadcasting = null,Object? errBroadcasting = null,Object? hex = null,Object? txId = null,Object? errFileImport = null,Object? clearData = null,Object? importedHexPath = freezed,Object? importedHexfileName = freezed,}) {
+  return _then(BroadcastState(
 broadcasting: null == broadcasting ? _self.broadcasting : broadcasting // ignore: cast_nullable_to_non_nullable
 as bool,errBroadcasting: null == errBroadcasting ? _self.errBroadcasting : errBroadcasting // ignore: cast_nullable_to_non_nullable
-as String,psbt: null == psbt ? _self.psbt : psbt // ignore: cast_nullable_to_non_nullable
 as String,hex: null == hex ? _self.hex : hex // ignore: cast_nullable_to_non_nullable
 as String,txId: null == txId ? _self.txId : txId // ignore: cast_nullable_to_non_nullable
 as String,errFileImport: null == errFileImport ? _self.errFileImport : errFileImport // ignore: cast_nullable_to_non_nullable
 as String,clearData: null == clearData ? _self.clearData : clearData // ignore: cast_nullable_to_non_nullable
-as bool,importedPsbtPath: freezed == importedPsbtPath ? _self.importedPsbtPath : importedPsbtPath // ignore: cast_nullable_to_non_nullable
-as String?,importedPsbtfileName: freezed == importedPsbtfileName ? _self.importedPsbtfileName : importedPsbtfileName // ignore: cast_nullable_to_non_nullable
-as String?,importedHexPath: freezed == importedHexPath ? _self.importedHexPath : importedHexPath // ignore: cast_nullable_to_non_nullable
+as bool,importedHexPath: freezed == importedHexPath ? _self.importedHexPath : importedHexPath // ignore: cast_nullable_to_non_nullable
 as String?,importedHexfileName: freezed == importedHexfileName ? _self.importedHexfileName : importedHexfileName // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -166,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool broadcasting,  String errBroadcasting,  String psbt,  String hex,  String txId,  String errFileImport,  bool clearData,  String? importedPsbtPath,  String? importedPsbtfileName,  String? importedHexPath,  String? importedHexfileName)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool broadcasting,  String errBroadcasting,  String hex,  String txId,  String errFileImport,  bool clearData,  String? importedHexPath,  String? importedHexfileName)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BroadcastState() when $default != null:
-return $default(_that.broadcasting,_that.errBroadcasting,_that.psbt,_that.hex,_that.txId,_that.errFileImport,_that.clearData,_that.importedPsbtPath,_that.importedPsbtfileName,_that.importedHexPath,_that.importedHexfileName);case _:
+return $default(_that.broadcasting,_that.errBroadcasting,_that.hex,_that.txId,_that.errFileImport,_that.clearData,_that.importedHexPath,_that.importedHexfileName);case _:
   return orElse();
 
 }
@@ -187,10 +191,10 @@ return $default(_that.broadcasting,_that.errBroadcasting,_that.psbt,_that.hex,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool broadcasting,  String errBroadcasting,  String psbt,  String hex,  String txId,  String errFileImport,  bool clearData,  String? importedPsbtPath,  String? importedPsbtfileName,  String? importedHexPath,  String? importedHexfileName)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool broadcasting,  String errBroadcasting,  String hex,  String txId,  String errFileImport,  bool clearData,  String? importedHexPath,  String? importedHexfileName)  $default,) {final _that = this;
 switch (_that) {
 case _BroadcastState():
-return $default(_that.broadcasting,_that.errBroadcasting,_that.psbt,_that.hex,_that.txId,_that.errFileImport,_that.clearData,_that.importedPsbtPath,_that.importedPsbtfileName,_that.importedHexPath,_that.importedHexfileName);case _:
+return $default(_that.broadcasting,_that.errBroadcasting,_that.hex,_that.txId,_that.errFileImport,_that.clearData,_that.importedHexPath,_that.importedHexfileName);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -207,10 +211,10 @@ return $default(_that.broadcasting,_that.errBroadcasting,_that.psbt,_that.hex,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool broadcasting,  String errBroadcasting,  String psbt,  String hex,  String txId,  String errFileImport,  bool clearData,  String? importedPsbtPath,  String? importedPsbtfileName,  String? importedHexPath,  String? importedHexfileName)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool broadcasting,  String errBroadcasting,  String hex,  String txId,  String errFileImport,  bool clearData,  String? importedHexPath,  String? importedHexfileName)?  $default,) {final _that = this;
 switch (_that) {
 case _BroadcastState() when $default != null:
-return $default(_that.broadcasting,_that.errBroadcasting,_that.psbt,_that.hex,_that.txId,_that.errFileImport,_that.clearData,_that.importedPsbtPath,_that.importedPsbtfileName,_that.importedHexPath,_that.importedHexfileName);case _:
+return $default(_that.broadcasting,_that.errBroadcasting,_that.hex,_that.txId,_that.errFileImport,_that.clearData,_that.importedHexPath,_that.importedHexfileName);case _:
   return null;
 
 }
@@ -222,18 +226,15 @@ return $default(_that.broadcasting,_that.errBroadcasting,_that.psbt,_that.hex,_t
 
 
 class _BroadcastState extends BroadcastState with DiagnosticableTreeMixin {
-  const _BroadcastState({this.broadcasting = false, this.errBroadcasting = '', this.psbt = '', this.hex = '', this.txId = '', this.errFileImport = '', this.clearData = false, this.importedPsbtPath, this.importedPsbtfileName, this.importedHexPath, this.importedHexfileName}): super._();
+  const _BroadcastState({this.broadcasting = false, this.errBroadcasting = '', this.hex = '', this.txId = '', this.errFileImport = '', this.clearData = false, this.importedHexPath, this.importedHexfileName}): super._();
   
 
 @override@JsonKey() final  bool broadcasting;
 @override@JsonKey() final  String errBroadcasting;
-@override@JsonKey() final  String psbt;
 @override@JsonKey() final  String hex;
 @override@JsonKey() final  String txId;
 @override@JsonKey() final  String errFileImport;
 @override@JsonKey() final  bool clearData;
-@override final  String? importedPsbtPath;
-@override final  String? importedPsbtfileName;
 @override final  String? importedHexPath;
 @override final  String? importedHexfileName;
 
@@ -246,23 +247,25 @@ _$BroadcastStateCopyWith<_BroadcastState> get copyWith => __$BroadcastStateCopyW
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'BroadcastState'))
-    ..add(DiagnosticsProperty('broadcasting', broadcasting))..add(DiagnosticsProperty('errBroadcasting', errBroadcasting))..add(DiagnosticsProperty('psbt', psbt))..add(DiagnosticsProperty('hex', hex))..add(DiagnosticsProperty('txId', txId))..add(DiagnosticsProperty('errFileImport', errFileImport))..add(DiagnosticsProperty('clearData', clearData))..add(DiagnosticsProperty('importedPsbtPath', importedPsbtPath))..add(DiagnosticsProperty('importedPsbtfileName', importedPsbtfileName))..add(DiagnosticsProperty('importedHexPath', importedHexPath))..add(DiagnosticsProperty('importedHexfileName', importedHexfileName));
+    ..add(DiagnosticsProperty('broadcasting', broadcasting))..add(DiagnosticsProperty('errBroadcasting', errBroadcasting))..add(DiagnosticsProperty('hex', hex))..add(DiagnosticsProperty('txId', txId))..add(DiagnosticsProperty('errFileImport', errFileImport))..add(DiagnosticsProperty('clearData', clearData))..add(DiagnosticsProperty('importedHexPath', importedHexPath))..add(DiagnosticsProperty('importedHexfileName', importedHexfileName));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BroadcastState&&(identical(other.broadcasting, broadcasting) || other.broadcasting == broadcasting)&&(identical(other.errBroadcasting, errBroadcasting) || other.errBroadcasting == errBroadcasting)&&(identical(other.psbt, psbt) || other.psbt == psbt)&&(identical(other.hex, hex) || other.hex == hex)&&(identical(other.txId, txId) || other.txId == txId)&&(identical(other.errFileImport, errFileImport) || other.errFileImport == errFileImport)&&(identical(other.clearData, clearData) || other.clearData == clearData)&&(identical(other.importedPsbtPath, importedPsbtPath) || other.importedPsbtPath == importedPsbtPath)&&(identical(other.importedPsbtfileName, importedPsbtfileName) || other.importedPsbtfileName == importedPsbtfileName)&&(identical(other.importedHexPath, importedHexPath) || other.importedHexPath == importedHexPath)&&(identical(other.importedHexfileName, importedHexfileName) || other.importedHexfileName == importedHexfileName));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BroadcastState&&(identical(other.broadcasting, broadcasting) || other.broadcasting == broadcasting)&&(identical(other.errBroadcasting, errBroadcasting) || other.errBroadcasting == errBroadcasting)&&(identical(other.hex, hex) || other.hex == hex)&&(identical(other.txId, txId) || other.txId == txId)&&(identical(other.errFileImport, errFileImport) || other.errFileImport == errFileImport)&&(identical(other.clearData, clearData) || other.clearData == clearData)&&(identical(other.importedHexPath, importedHexPath) || other.importedHexPath == importedHexPath)&&(identical(other.importedHexfileName, importedHexfileName) || other.importedHexfileName == importedHexfileName));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,broadcasting,errBroadcasting,psbt,hex,txId,errFileImport,clearData,importedPsbtPath,importedPsbtfileName,importedHexPath,importedHexfileName);
+int get hashCode {
+    return Object.hash(runtimeType,broadcasting,errBroadcasting,hex,txId,errFileImport,clearData,importedHexPath,importedHexfileName);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'BroadcastState(broadcasting: $broadcasting, errBroadcasting: $errBroadcasting, psbt: $psbt, hex: $hex, txId: $txId, errFileImport: $errFileImport, clearData: $clearData, importedPsbtPath: $importedPsbtPath, importedPsbtfileName: $importedPsbtfileName, importedHexPath: $importedHexPath, importedHexfileName: $importedHexfileName)';
+    return 'BroadcastState(broadcasting: $broadcasting, errBroadcasting: $errBroadcasting, hex: $hex, txId: $txId, errFileImport: $errFileImport, clearData: $clearData, importedHexPath: $importedHexPath, importedHexfileName: $importedHexfileName)';
 }
 
 
@@ -273,7 +276,7 @@ abstract mixin class _$BroadcastStateCopyWith<$Res> implements $BroadcastStateCo
   factory _$BroadcastStateCopyWith(_BroadcastState value, $Res Function(_BroadcastState) _then) = __$BroadcastStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool broadcasting, String errBroadcasting, String psbt, String hex, String txId, String errFileImport, bool clearData, String? importedPsbtPath, String? importedPsbtfileName, String? importedHexPath, String? importedHexfileName
+ bool broadcasting, String errBroadcasting, String hex, String txId, String errFileImport, bool clearData, String? importedHexPath, String? importedHexfileName
 });
 
 
@@ -290,18 +293,15 @@ class __$BroadcastStateCopyWithImpl<$Res>
 
 /// Create a copy of BroadcastState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? broadcasting = null,Object? errBroadcasting = null,Object? psbt = null,Object? hex = null,Object? txId = null,Object? errFileImport = null,Object? clearData = null,Object? importedPsbtPath = freezed,Object? importedPsbtfileName = freezed,Object? importedHexPath = freezed,Object? importedHexfileName = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? broadcasting = null,Object? errBroadcasting = null,Object? hex = null,Object? txId = null,Object? errFileImport = null,Object? clearData = null,Object? importedHexPath = freezed,Object? importedHexfileName = freezed,}) {
   return _then(_BroadcastState(
 broadcasting: null == broadcasting ? _self.broadcasting : broadcasting // ignore: cast_nullable_to_non_nullable
 as bool,errBroadcasting: null == errBroadcasting ? _self.errBroadcasting : errBroadcasting // ignore: cast_nullable_to_non_nullable
-as String,psbt: null == psbt ? _self.psbt : psbt // ignore: cast_nullable_to_non_nullable
 as String,hex: null == hex ? _self.hex : hex // ignore: cast_nullable_to_non_nullable
 as String,txId: null == txId ? _self.txId : txId // ignore: cast_nullable_to_non_nullable
 as String,errFileImport: null == errFileImport ? _self.errFileImport : errFileImport // ignore: cast_nullable_to_non_nullable
 as String,clearData: null == clearData ? _self.clearData : clearData // ignore: cast_nullable_to_non_nullable
-as bool,importedPsbtPath: freezed == importedPsbtPath ? _self.importedPsbtPath : importedPsbtPath // ignore: cast_nullable_to_non_nullable
-as String?,importedPsbtfileName: freezed == importedPsbtfileName ? _self.importedPsbtfileName : importedPsbtfileName // ignore: cast_nullable_to_non_nullable
-as String?,importedHexPath: freezed == importedHexPath ? _self.importedHexPath : importedHexPath // ignore: cast_nullable_to_non_nullable
+as bool,importedHexPath: freezed == importedHexPath ? _self.importedHexPath : importedHexPath // ignore: cast_nullable_to_non_nullable
 as String?,importedHexfileName: freezed == importedHexfileName ? _self.importedHexfileName : importedHexfileName // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

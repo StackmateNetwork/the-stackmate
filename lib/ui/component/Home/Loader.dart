@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/tor.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/loading.dart';

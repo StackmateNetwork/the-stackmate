@@ -64,10 +64,6 @@ class PreferencesCubit extends Cubit<PreferencesState> {
     emit(state.copyWith(incognito: !state.incognito));
   }
 
-  void bitcoinStandardChanged() {
-    emit(state.copyWith(bitcoinStandard: !state.bitcoinStandard));
-  }
-
   void preferredBitcoinUnitChanged() {
     emit(
       state.copyWith(
@@ -75,14 +71,6 @@ class PreferencesCubit extends Cubit<PreferencesState> {
             (state.preferredBitcoinUnit == 'sats') ? 'BTC' : 'sats',
       ),
     );
-  }
-
-  void preferredExchangeChanged(String exchange) {
-    emit(state.copyWith(preferredExchange: exchange));
-  }
-
-  void preferredFiatUnitChanged(String unit) {
-    emit(state.copyWith(preferredFiatUnit: unit));
   }
 
   Future<void> saveClicked() async {

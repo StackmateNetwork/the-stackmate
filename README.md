@@ -59,9 +59,9 @@ Both are Rust libraries that are compiled automatically during `flutter build` /
 
 | Tool | Version | Notes |
 | --- | --- | --- |
-| [Flutter](https://docs.flutter.dev/get-started/install) | 3.38.x (Dart 3.10) | Dart `^3.10.0` is required by `bdk_dart`. |
+| [Flutter](https://docs.flutter.dev/get-started/install) | 3.50.x (Dart 3.14) | Material widgets come from the `material_ui` / `cupertino_ui` packages (Flutter 3.47+). |
 | [Rust](https://rustup.rs) via `rustup` | stable | Install with `rustup`, not Homebrew. BDK pins its own toolchain (1.85.1) and rustup installs it automatically on the first build. |
-| JDK | 17 | Required by Android Gradle Plugin 8.11. |
+| JDK | 17 | Required by Android Gradle Plugin 8.13. AGP 9 is not used yet: the `tor` plugin version this app can use does not support it. |
 | Android SDK | platform 36, build-tools 36 | The NDK version Flutter expects (28.2.x) is downloaded by Gradle on the first build. |
 | Xcode (iOS only) | 26+ | Deployment target is iOS 14.0. |
 

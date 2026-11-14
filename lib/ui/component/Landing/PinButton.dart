@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/pin.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -20,9 +20,7 @@ class PinButton extends StatelessWidget {
                 foregroundColor: context.colours.primary,
               ),
               onPressed: () async {
-                // CHECK IF PIN IS VERIFIED
                 context.read<PinCubit>().setChosenPin();
-                // if (state.hasChosenPin) pinCubit.clearConfPin();
               },
               child: const Text('SET'),
             ),
@@ -37,9 +35,7 @@ class PinButton extends StatelessWidget {
                 backgroundColor: context.colours.primary,
               ),
               onPressed: () async {
-                // CHECK IF PIN IS VERIFIED
                 await pinCubit.checkConfirmedPin();
-                // if (state.hasChosenPin) pinCubit.clearConfPin();
               },
               child: const Text('CONFIRM'),
             ),
@@ -53,7 +49,6 @@ class PinButton extends StatelessWidget {
                 backgroundColor: context.colours.primary,
               ),
               onPressed: () async {
-                // CHECK IF PIN IS VERIFIED
                 await pinCubit.checkEnterPin();
               },
               child: const Text('START'),

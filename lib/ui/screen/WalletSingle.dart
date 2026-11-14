@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/fees.dart';
 import 'package:sats/cubit/new-wallet/common/xpub-import.dart';
 import 'package:sats/cubit/tor.dart';

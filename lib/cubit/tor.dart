@@ -98,12 +98,6 @@ class TorCubit extends Cubit<TorState> {
     );
   }
 
-  void toggleEditExternal() {
-    emit(
-      state.copyWith(isEdittingExternal: !state.isEdittingExternal),
-    );
-  }
-
   Future<void> toggleInternal() async {
     emit(
       state.copyWith(internal: !state.internal),
