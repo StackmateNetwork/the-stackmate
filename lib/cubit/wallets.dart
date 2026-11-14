@@ -15,7 +15,6 @@ part 'wallets.freezed.dart';
 abstract class WalletsState with _$WalletsState {
   const factory WalletsState({
     @Default([]) List<Wallet> wallets,
-    Wallet? selectedWallet,
     @Default(true) bool toggler,
     @Default('') String errDeleting,
     @Default(0) int networth,
@@ -23,12 +22,8 @@ abstract class WalletsState with _$WalletsState {
 }
 
 class WalletsCubit extends Cubit<WalletsState> {
-  WalletsCubit(
-    this._storage,
-    this._logger,
-    this._blockchain,
-    this._clipBoard,
-  ) : super(const WalletsState()) {
+  WalletsCubit(this._storage, this._logger, this._blockchain, this._clipBoard)
+    : super(const WalletsState()) {
     refresh();
   }
 
@@ -53,6 +48,7 @@ class WalletsCubit extends Cubit<WalletsState> {
       emit(
         state.copyWith(
           wallets: wallets,
+          networth: _networth(wallets),
           toggler: !state.toggler,
         ),
       );
@@ -62,73 +58,26 @@ class WalletsCubit extends Cubit<WalletsState> {
   }
 
   void update(Wallet wallet) {
-    final toUpdate =
-        state.wallets.firstWhere((element) => element.uid == wallet.uid);
-    final replaceIndex = state.wallets.indexOf(toUpdate);
+    final index = state.wallets.indexWhere((w) => w.uid == wallet.uid);
+    if (index == -1) return;
     final updatedList = List<Wallet>.from(state.wallets);
-    updatedList[replaceIndex] = wallet;
-
+    updatedList[index] = wallet;
     emit(
-      state.copyWith(
-        wallets: updatedList,
-      ),
+      state.copyWith(wallets: updatedList, networth: _networth(updatedList)),
     );
   }
 
-  Future<void> walletSelected(Wallet wallet) async {
-    emit(state.copyWith(selectedWallet: wallet));
-  }
-
-  Future<void> networth() async {
+  /// Total balance, counting wallets that share a key only once.
+  // THIS WILL ONLY WORK FOR SINGLE SIGS
+  // SCRIPTS NEED TO CHECK PUBLIC DESCRIPTOR
+  static int _networth(List<Wallet> wallets) {
     var net = 0;
-
-    // THIS WILL ONLY WORK FOR SINGLE SIGS
-    // SCRIPTS NEED TO CHECK PUBLIC DESCRIPTOR
-    final existingPubkeys = [];
-    for (final wallet in state.wallets) {
-      if (!existingPubkeys.contains(wallet.policyElements[0])) {
-        existingPubkeys.add(wallet.policyElements[0]);
-        net += wallet.balance;
-        emit(state.copyWith(networth: net));
-      }
+    final seenKeys = <String>{};
+    for (final wallet in wallets) {
+      final key = wallet.policyElements.firstOrNull;
+      if (key == null || seenKeys.add(key)) net += wallet.balance;
     }
-  }
-  // void addTransactionsToSelectedWallet(List<Transaction> transactions) {
-  //   final wallet = state.selectedWallet!.copyWith(
-  //     transactions: transactions,
-  //   );
-  //   emit(state.copyWith(selectedWallet: wallet));
-  //   _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
-  //   refresh();
-  // }
-
-  // Future<void> addBalanceToSelectedWallet(int balance) async {
-  //   if (state.selectedWallet == null) return;
-
-  //   final wallet = state.selectedWallet!.copyWith(
-  //     balance: balance,
-  //   );
-
-  //   emit(state.copyWith(selectedWallet: wallet));
-
-  //   _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
-  //   refresh();
-  // }
-
-  // Future<void> updateAddressIndexToSelectedWallet(int lastIndex) async {
-  //   if (state.selectedWallet == null) return;
-
-  //   final wallet = state.selectedWallet!.copyWith(
-  //     lastAddressIndex: lastIndex,
-  //   );
-
-  //   _storage.saveItemAt<Wallet>(StoreKeys.Wallet.name, wallet.id!, wallet);
-  //   refresh();
-  // }
-
-  Future<void> clearSelectedWallet() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    emit(state.copyWith(selectedWallet: null));
+    return net;
   }
 
   Future<void> copyDescriptor(String text) async =>

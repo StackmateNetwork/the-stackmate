@@ -1,8 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
-import 'package:sats/api/interface/logger.dart';
 import 'package:sats/api/libbitcoin.dart';
-import 'package:sats/api/logger.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/pkg/clipboard.dart';
 import 'package:sats/pkg/interface/clipboard.dart';
@@ -30,7 +28,6 @@ void setupDependencies({required bool useDummies}) {
     locator.registerSingleton<ILauncher>(Launcher());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
     locator.registerLazySingleton<IStackMateBitcoin>(() => LibBitcoin());
-    locator.registerLazySingleton<ILogAPI>(() => DummyLogAPI());
   } else {
     locator.registerLazySingleton<SStorage>(() => SecureStorage());
     locator.registerLazySingleton<IShare>(() => Sharer());
@@ -40,13 +37,9 @@ void setupDependencies({required bool useDummies}) {
     locator.registerLazySingleton<IStorage>(() => HiveStore());
     locator.registerLazySingleton<IStackMateBitcoin>(() => LibBitcoin());
     locator.registerLazySingleton<IVibrate>(() => Vibrate());
-    locator.registerLazySingleton<ILogAPI>(() => SentryLogger());
   }
 
-  final loggerCubit = Logger(
-    locator<IClipBoard>(),
-    locator<ILogAPI>(),
-  );
+  final loggerCubit = Logger(locator<IClipBoard>());
 
   locator.registerLazySingleton<Logger>(() => loggerCubit);
 }

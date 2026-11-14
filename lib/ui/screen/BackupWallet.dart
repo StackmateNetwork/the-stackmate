@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/seed-backup.dart';
 import 'package:sats/pkg/_locator.dart';
@@ -22,6 +22,12 @@ class _BackupWalletState extends State<_BackupWallet> {
   void initState() {
     _scrollController = ScrollController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -113,15 +119,11 @@ class BackupWalletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final masterKey = context.select((MasterKeyCubit c) => c);
-
-    final seedBackupCubit = SeedBackupCubit(
-      masterKey,
-      locator<ILauncher>(),
-    );
-
-    return BlocProvider.value(
-      value: seedBackupCubit,
+    return BlocProvider(
+      create: (_) => SeedBackupCubit(
+        context.read<MasterKeyCubit>(),
+        locator<ILauncher>(),
+      ),
       child: _BackupWallet(),
     );
   }

@@ -14,6 +14,9 @@ abstract class Pin with _$Pin {
     @HiveField(1) required int attemptsLeft,
     @HiveField(2) required int lastFailure,
     @HiveField(3) required bool isLocked,
+
+    /// Lockouts since the last correct PIN; each one doubles the wait.
+    @HiveField(4, defaultValue: 0) @Default(0) int lockouts,
   }) = _Pin;
   const Pin._();
 }

@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/BitcoinDisplaySmall.dart';
 
 class WalletDetails extends StatelessWidget {
-  const WalletDetails({
-    super.key,
-  });
+  const WalletDetails({super.key});
 
   @override
   Widget build(BuildContext context) {

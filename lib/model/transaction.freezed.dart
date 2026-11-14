@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'transaction.dart';
@@ -9,6 +9,7 @@ part of 'transaction.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $TransactionCopyWith<Transaction> get copyWith => _$TransactionCopyWithImpl<Tran
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Transaction&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.height, height) || other.height == height)&&(identical(other.txid, txid) || other.txid == txid)&&(identical(other.received, received) || other.received == received)&&(identical(other.sent, sent) || other.sent == sent)&&(identical(other.fee, fee) || other.fee == fee));
+  final _this = this as Transaction;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Transaction&&(identical(other.timestamp, _this.timestamp) || other.timestamp == _this.timestamp)&&(identical(other.height, _this.height) || other.height == _this.height)&&(identical(other.txid, _this.txid) || other.txid == _this.txid)&&(identical(other.received, _this.received) || other.received == _this.received)&&(identical(other.sent, _this.sent) || other.sent == _this.sent)&&(identical(other.fee, _this.fee) || other.fee == _this.fee));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,timestamp,height,txid,received,sent,fee);
+int get hashCode {
+  final _this = this as Transaction;
+  return Object.hash(runtimeType,_this.timestamp,_this.height,_this.txid,_this.received,_this.sent,_this.fee);
+}
 
 @override
 String toString() {
-  return 'Transaction(timestamp: $timestamp, height: $height, txid: $txid, received: $received, sent: $sent, fee: $fee)';
+  final _this = this as Transaction;
+  return 'Transaction(timestamp: ${_this.timestamp}, height: ${_this.height}, txid: ${_this.txid}, received: ${_this.received}, sent: ${_this.sent}, fee: ${_this.fee})';
 }
 
 
@@ -66,7 +72,7 @@ class _$TransactionCopyWithImpl<$Res>
 /// Create a copy of Transaction
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? timestamp = null,Object? height = null,Object? txid = null,Object? received = null,Object? sent = null,Object? fee = null,}) {
-  return _then(_self.copyWith(
+  return _then(Transaction(
 timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as int,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
 as int,txid: null == txid ? _self.txid : txid // ignore: cast_nullable_to_non_nullable
@@ -237,16 +243,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Transaction&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.height, height) || other.height == height)&&(identical(other.txid, txid) || other.txid == txid)&&(identical(other.received, received) || other.received == received)&&(identical(other.sent, sent) || other.sent == sent)&&(identical(other.fee, fee) || other.fee == fee));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Transaction&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.height, height) || other.height == height)&&(identical(other.txid, txid) || other.txid == txid)&&(identical(other.received, received) || other.received == received)&&(identical(other.sent, sent) || other.sent == sent)&&(identical(other.fee, fee) || other.fee == fee));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,timestamp,height,txid,received,sent,fee);
+int get hashCode {
+    return Object.hash(runtimeType,timestamp,height,txid,received,sent,fee);
+}
 
 @override
 String toString() {
-  return 'Transaction(timestamp: $timestamp, height: $height, txid: $txid, received: $received, sent: $sent, fee: $fee)';
+    return 'Transaction(timestamp: $timestamp, height: $height, txid: $txid, received: $received, sent: $sent, fee: $fee)';
 }
 
 

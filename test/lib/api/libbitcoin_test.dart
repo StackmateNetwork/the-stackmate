@@ -153,11 +153,9 @@ void main() {
     );
   });
 
-  test('fee conversions round-trip', () {
+  test('fee rate converts to an absolute fee', () {
     final abs = lib.feeRateToAbsolute(feeRate: '2.5', weight: '561');
     expect(abs.result!.absolute, 351);
-    final rate = lib.feeAbsoluteToRate(feeAbsolute: '351', weight: '561');
-    expect(rate.result!.rate, closeTo(2.5, 0.01));
   });
 
   test('build, weigh, decode, sign and bump fee offline', () {
@@ -276,6 +274,25 @@ void main() {
     final signed =
         lib.signTransaction(descriptor: d.prv, unsignedPSBT: psbt.result!.psbt);
     expect(signed.result!.isFinalized, true);
+  });
+
+  test('validates addresses against the network', () {
+    const testnet = 'tb1q6rz28mcfaxtmd6v789l9rrlrusdprr9pqcpvkl';
+    const mainnet = 'bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu';
+    const legacy = '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2';
+
+    expect(lib.isValidAddress(address: testnet, network: 'test'), isTrue);
+    expect(lib.isValidAddress(address: mainnet, network: 'main'), isTrue);
+    expect(lib.isValidAddress(address: legacy, network: 'main'), isTrue);
+
+    expect(lib.isValidAddress(address: testnet, network: 'main'), isFalse);
+    expect(lib.isValidAddress(address: mainnet, network: 'test'), isFalse);
+    expect(lib.isValidAddress(address: '1', network: 'main'), isFalse);
+    expect(lib.isValidAddress(address: 'mango', network: 'test'), isFalse);
+    expect(
+      lib.isValidAddress(address: '${mainnet}x', network: 'main'),
+      isFalse,
+    );
   });
 }
 

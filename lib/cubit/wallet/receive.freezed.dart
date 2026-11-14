@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'receive.dart';
@@ -9,6 +9,7 @@ part of 'receive.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $ReceiveStateCopyWith<ReceiveState> get copyWith => _$ReceiveStateCopyWithImpl<R
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as ReceiveState;
   properties
     ..add(DiagnosticsProperty('type', 'ReceiveState'))
-    ..add(DiagnosticsProperty('wallet', wallet))..add(DiagnosticsProperty('loadingAddress', loadingAddress))..add(DiagnosticsProperty('errLoadingAddress', errLoadingAddress))..add(DiagnosticsProperty('address', address))..add(DiagnosticsProperty('index', index));
+    ..add(DiagnosticsProperty('wallet', _this.wallet))..add(DiagnosticsProperty('loadingAddress', _this.loadingAddress))..add(DiagnosticsProperty('errLoadingAddress', _this.errLoadingAddress))..add(DiagnosticsProperty('address', _this.address))..add(DiagnosticsProperty('index', _this.index));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReceiveState&&(identical(other.wallet, wallet) || other.wallet == wallet)&&(identical(other.loadingAddress, loadingAddress) || other.loadingAddress == loadingAddress)&&(identical(other.errLoadingAddress, errLoadingAddress) || other.errLoadingAddress == errLoadingAddress)&&(identical(other.address, address) || other.address == address)&&(identical(other.index, index) || other.index == index));
+  final _this = this as ReceiveState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReceiveState&&(identical(other.wallet, _this.wallet) || other.wallet == _this.wallet)&&(identical(other.loadingAddress, _this.loadingAddress) || other.loadingAddress == _this.loadingAddress)&&(identical(other.errLoadingAddress, _this.errLoadingAddress) || other.errLoadingAddress == _this.errLoadingAddress)&&(identical(other.address, _this.address) || other.address == _this.address)&&(identical(other.index, _this.index) || other.index == _this.index));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,wallet,loadingAddress,errLoadingAddress,address,index);
+int get hashCode {
+  final _this = this as ReceiveState;
+  return Object.hash(runtimeType,_this.wallet,_this.loadingAddress,_this.errLoadingAddress,_this.address,_this.index);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'ReceiveState(wallet: $wallet, loadingAddress: $loadingAddress, errLoadingAddress: $errLoadingAddress, address: $address, index: $index)';
+  final _this = this as ReceiveState;
+  return 'ReceiveState(wallet: ${_this.wallet}, loadingAddress: ${_this.loadingAddress}, errLoadingAddress: ${_this.errLoadingAddress}, address: ${_this.address}, index: ${_this.index})';
 }
 
 
@@ -69,7 +76,7 @@ class _$ReceiveStateCopyWithImpl<$Res>
 /// Create a copy of ReceiveState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? wallet = null,Object? loadingAddress = null,Object? errLoadingAddress = null,Object? address = null,Object? index = null,}) {
-  return _then(_self.copyWith(
+  return _then(ReceiveState(
 wallet: null == wallet ? _self.wallet : wallet // ignore: cast_nullable_to_non_nullable
 as Wallet,loadingAddress: null == loadingAddress ? _self.loadingAddress : loadingAddress // ignore: cast_nullable_to_non_nullable
 as bool,errLoadingAddress: null == errLoadingAddress ? _self.errLoadingAddress : errLoadingAddress // ignore: cast_nullable_to_non_nullable
@@ -243,23 +250,25 @@ _$ReceiveStateCopyWith<_ReceiveState> get copyWith => __$ReceiveStateCopyWithImp
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'ReceiveState'))
     ..add(DiagnosticsProperty('wallet', wallet))..add(DiagnosticsProperty('loadingAddress', loadingAddress))..add(DiagnosticsProperty('errLoadingAddress', errLoadingAddress))..add(DiagnosticsProperty('address', address))..add(DiagnosticsProperty('index', index));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReceiveState&&(identical(other.wallet, wallet) || other.wallet == wallet)&&(identical(other.loadingAddress, loadingAddress) || other.loadingAddress == loadingAddress)&&(identical(other.errLoadingAddress, errLoadingAddress) || other.errLoadingAddress == errLoadingAddress)&&(identical(other.address, address) || other.address == address)&&(identical(other.index, index) || other.index == index));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReceiveState&&(identical(other.wallet, wallet) || other.wallet == wallet)&&(identical(other.loadingAddress, loadingAddress) || other.loadingAddress == loadingAddress)&&(identical(other.errLoadingAddress, errLoadingAddress) || other.errLoadingAddress == errLoadingAddress)&&(identical(other.address, address) || other.address == address)&&(identical(other.index, index) || other.index == index));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,wallet,loadingAddress,errLoadingAddress,address,index);
+int get hashCode {
+    return Object.hash(runtimeType,wallet,loadingAddress,errLoadingAddress,address,index);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'ReceiveState(wallet: $wallet, loadingAddress: $loadingAddress, errLoadingAddress: $errLoadingAddress, address: $address, index: $index)';
+    return 'ReceiveState(wallet: $wallet, loadingAddress: $loadingAddress, errLoadingAddress: $errLoadingAddress, address: $address, index: $index)';
 }
 
 

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const vantaBlack = Color(0xFF030303);
 const brightCrayola = Color(0xFFFFA827);

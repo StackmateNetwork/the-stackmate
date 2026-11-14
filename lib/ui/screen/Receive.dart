@@ -1,10 +1,9 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/receive.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';
@@ -23,45 +22,8 @@ class _Receive extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     final state = c.select((ReceiveCubit h) => h.state);
-    final tor = c.select((TorCubit t) => t.state);
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          if (tor.isConnected) ...[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Tooltip(
-                preferBelow: false,
-                triggerMode: TooltipTriggerMode.tap,
-                message: (tor.isRunning)
-                    ? 'Torified Natively.'
-                    : 'Torified via External.',
-                textStyle: c.fonts.bodySmall!.copyWith(
-                  color: c.colours.primary,
-                ),
-                decoration: BoxDecoration(
-                  color: c.colours.surface,
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: Icon(
-                  Icons.security_sharp,
-                  color: c.colours.tertiaryContainer,
-                ),
-              ),
-            ),
-          ] else ...[
-            IconButton(
-              color: c.colours.error,
-              onPressed: () {
-                c.push('/tor-config');
-              },
-              icon: Icon(
-                Icons.security_sharp,
-                color: c.colours.error,
-              ),
-            ),
-          ],
-        ],
         title: const Text('Receive'),
         leading: Builder(
           builder: (BuildContext context) {
@@ -80,6 +42,25 @@ class _Receive extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const Loader(),
+              if (state.errLoadingAddress.isNotEmpty) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    'Could not find the best unused address. '
+                    'Check your node and Tor connection.\n'
+                    '${state.errLoadingAddress}',
+                    style: c.fonts.bodySmall!.copyWith(
+                      color: c.colours.error,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () =>
+                      c.read<ReceiveCubit>().getLastUnusedAddress(),
+                  child: const Text('RETRY'),
+                ),
+              ],
               const SizedBox(height: 24),
               Align(
                 child: Text(
@@ -90,10 +71,8 @@ class _Receive extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              FadeIn(
-                // delay: const Duration(milliseconds: 400),
-                child: QRAddress(address: state.address),
-              ),
+              if (state.address.isNotEmpty)
+                FadeIn(child: QRAddress(address: state.address)),
               const SizedBox(height: 24),
               FadeIn(
                 delay: const Duration(milliseconds: 300),
@@ -118,21 +97,18 @@ class ReceiveScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final receive = ReceiveCubit(
-      context.read<WalletsCubit>(),
-      context.read<Logger>(),
-      locator<IClipBoard>(),
-      locator<IShare>(),
-      locator<IVibrate>(),
-      locator<IStackMateBitcoin>(),
-      context.read<NodeAddressCubit>(),
-      context.read<TorCubit>(),
-      locator<IStorage>(),
-      wallet,
-    );
-
-    return BlocProvider.value(
-      value: receive,
+    return BlocProvider(
+      create: (_) => ReceiveCubit(
+        context.read<WalletsCubit>(),
+        context.read<Logger>(),
+        locator<IClipBoard>(),
+        locator<IShare>(),
+        locator<IVibrate>(),
+        locator<IStackMateBitcoin>(),
+        context.read<NodeAddressCubit>(),
+        locator<IStorage>(),
+        wallet,
+      ),
       child: const _Receive(),
     );
   }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'logger.dart';
@@ -9,6 +9,7 @@ part of 'logger.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $LoggerStateCopyWith<LoggerState> get copyWith => _$LoggerStateCopyWithImpl<Logg
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as LoggerState;
   properties
     ..add(DiagnosticsProperty('type', 'LoggerState'))
-    ..add(DiagnosticsProperty('logs', logs));
+    ..add(DiagnosticsProperty('logs', _this.logs));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoggerState&&const DeepCollectionEquality().equals(other.logs, logs));
+  final _this = this as LoggerState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoggerState&&const DeepCollectionEquality().equals(other.logs, _this.logs));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(logs));
+int get hashCode {
+  final _this = this as LoggerState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.logs));
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'LoggerState(logs: $logs)';
+  final _this = this as LoggerState;
+  return 'LoggerState(logs: ${_this.logs})';
 }
 
 
@@ -69,7 +76,7 @@ class _$LoggerStateCopyWithImpl<$Res>
 /// Create a copy of LoggerState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? logs = null,}) {
-  return _then(_self.copyWith(
+  return _then(LoggerState(
 logs: null == logs ? _self.logs : logs // ignore: cast_nullable_to_non_nullable
 as List<Log>,
   ));
@@ -212,7 +219,7 @@ return $default(_that.logs);case _:
 
 
 class _LoggerState with DiagnosticableTreeMixin implements LoggerState {
-  const _LoggerState({final  List<Log> logs = const []}): _logs = logs;
+  const _LoggerState({ List<Log> logs = const []}): _logs = logs;
   
 
  final  List<Log> _logs;
@@ -232,23 +239,25 @@ _$LoggerStateCopyWith<_LoggerState> get copyWith => __$LoggerStateCopyWithImpl<_
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'LoggerState'))
     ..add(DiagnosticsProperty('logs', logs));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoggerState&&const DeepCollectionEquality().equals(other._logs, _logs));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoggerState&&const DeepCollectionEquality().equals(other.logs, _logs));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_logs));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_logs));
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'LoggerState(logs: $logs)';
+    return 'LoggerState(logs: $logs)';
 }
 
 

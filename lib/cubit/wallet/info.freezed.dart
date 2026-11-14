@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'info.dart';
@@ -9,6 +9,7 @@ part of 'info.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $InfoStateCopyWith<InfoState> get copyWith => _$InfoStateCopyWithImpl<InfoState>
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as InfoState;
   properties
     ..add(DiagnosticsProperty('type', 'InfoState'))
-    ..add(DiagnosticsProperty('wallet', wallet))..add(DiagnosticsProperty('loadingTransactions', loadingTransactions))..add(DiagnosticsProperty('errLoadingTransactions', errLoadingTransactions))..add(DiagnosticsProperty('loadingBalance', loadingBalance))..add(DiagnosticsProperty('errLoadingBalance', errLoadingBalance))..add(DiagnosticsProperty('balance', balance))..add(DiagnosticsProperty('uconfBalance', uconfBalance))..add(DiagnosticsProperty('transactions', transactions))..add(DiagnosticsProperty('errDeleting', errDeleting))..add(DiagnosticsProperty('deleted', deleted))..add(DiagnosticsProperty('showInfo', showInfo))..add(DiagnosticsProperty('currentHeight', currentHeight))..add(DiagnosticsProperty('passPhraseTest', passPhraseTest))..add(DiagnosticsProperty('ppTestPassed', ppTestPassed))..add(DiagnosticsProperty('errorPPTest', errorPPTest));
+    ..add(DiagnosticsProperty('wallet', _this.wallet))..add(DiagnosticsProperty('loadingTransactions', _this.loadingTransactions))..add(DiagnosticsProperty('errLoadingTransactions', _this.errLoadingTransactions))..add(DiagnosticsProperty('loadingBalance', _this.loadingBalance))..add(DiagnosticsProperty('errLoadingBalance', _this.errLoadingBalance))..add(DiagnosticsProperty('balance', _this.balance))..add(DiagnosticsProperty('uconfBalance', _this.uconfBalance))..add(DiagnosticsProperty('transactions', _this.transactions))..add(DiagnosticsProperty('errDeleting', _this.errDeleting))..add(DiagnosticsProperty('deleted', _this.deleted))..add(DiagnosticsProperty('showInfo', _this.showInfo))..add(DiagnosticsProperty('currentHeight', _this.currentHeight))..add(DiagnosticsProperty('passPhraseTest', _this.passPhraseTest))..add(DiagnosticsProperty('ppTestPassed', _this.ppTestPassed))..add(DiagnosticsProperty('errorPPTest', _this.errorPPTest));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InfoState&&(identical(other.wallet, wallet) || other.wallet == wallet)&&(identical(other.loadingTransactions, loadingTransactions) || other.loadingTransactions == loadingTransactions)&&(identical(other.errLoadingTransactions, errLoadingTransactions) || other.errLoadingTransactions == errLoadingTransactions)&&(identical(other.loadingBalance, loadingBalance) || other.loadingBalance == loadingBalance)&&(identical(other.errLoadingBalance, errLoadingBalance) || other.errLoadingBalance == errLoadingBalance)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.uconfBalance, uconfBalance) || other.uconfBalance == uconfBalance)&&const DeepCollectionEquality().equals(other.transactions, transactions)&&(identical(other.errDeleting, errDeleting) || other.errDeleting == errDeleting)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.showInfo, showInfo) || other.showInfo == showInfo)&&(identical(other.currentHeight, currentHeight) || other.currentHeight == currentHeight)&&(identical(other.passPhraseTest, passPhraseTest) || other.passPhraseTest == passPhraseTest)&&(identical(other.ppTestPassed, ppTestPassed) || other.ppTestPassed == ppTestPassed)&&(identical(other.errorPPTest, errorPPTest) || other.errorPPTest == errorPPTest));
+  final _this = this as InfoState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InfoState&&(identical(other.wallet, _this.wallet) || other.wallet == _this.wallet)&&(identical(other.loadingTransactions, _this.loadingTransactions) || other.loadingTransactions == _this.loadingTransactions)&&(identical(other.errLoadingTransactions, _this.errLoadingTransactions) || other.errLoadingTransactions == _this.errLoadingTransactions)&&(identical(other.loadingBalance, _this.loadingBalance) || other.loadingBalance == _this.loadingBalance)&&(identical(other.errLoadingBalance, _this.errLoadingBalance) || other.errLoadingBalance == _this.errLoadingBalance)&&(identical(other.balance, _this.balance) || other.balance == _this.balance)&&(identical(other.uconfBalance, _this.uconfBalance) || other.uconfBalance == _this.uconfBalance)&&const DeepCollectionEquality().equals(other.transactions, _this.transactions)&&(identical(other.errDeleting, _this.errDeleting) || other.errDeleting == _this.errDeleting)&&(identical(other.deleted, _this.deleted) || other.deleted == _this.deleted)&&(identical(other.showInfo, _this.showInfo) || other.showInfo == _this.showInfo)&&(identical(other.currentHeight, _this.currentHeight) || other.currentHeight == _this.currentHeight)&&(identical(other.passPhraseTest, _this.passPhraseTest) || other.passPhraseTest == _this.passPhraseTest)&&(identical(other.ppTestPassed, _this.ppTestPassed) || other.ppTestPassed == _this.ppTestPassed)&&(identical(other.errorPPTest, _this.errorPPTest) || other.errorPPTest == _this.errorPPTest));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,wallet,loadingTransactions,errLoadingTransactions,loadingBalance,errLoadingBalance,balance,uconfBalance,const DeepCollectionEquality().hash(transactions),errDeleting,deleted,showInfo,currentHeight,passPhraseTest,ppTestPassed,errorPPTest);
+int get hashCode {
+  final _this = this as InfoState;
+  return Object.hash(runtimeType,_this.wallet,_this.loadingTransactions,_this.errLoadingTransactions,_this.loadingBalance,_this.errLoadingBalance,_this.balance,_this.uconfBalance,const DeepCollectionEquality().hash(_this.transactions),_this.errDeleting,_this.deleted,_this.showInfo,_this.currentHeight,_this.passPhraseTest,_this.ppTestPassed,_this.errorPPTest);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'InfoState(wallet: $wallet, loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, uconfBalance: $uconfBalance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo, currentHeight: $currentHeight, passPhraseTest: $passPhraseTest, ppTestPassed: $ppTestPassed, errorPPTest: $errorPPTest)';
+  final _this = this as InfoState;
+  return 'InfoState(wallet: ${_this.wallet}, loadingTransactions: ${_this.loadingTransactions}, errLoadingTransactions: ${_this.errLoadingTransactions}, loadingBalance: ${_this.loadingBalance}, errLoadingBalance: ${_this.errLoadingBalance}, balance: ${_this.balance}, uconfBalance: ${_this.uconfBalance}, transactions: ${_this.transactions}, errDeleting: ${_this.errDeleting}, deleted: ${_this.deleted}, showInfo: ${_this.showInfo}, currentHeight: ${_this.currentHeight}, passPhraseTest: ${_this.passPhraseTest}, ppTestPassed: ${_this.ppTestPassed}, errorPPTest: ${_this.errorPPTest})';
 }
 
 
@@ -69,7 +76,7 @@ class _$InfoStateCopyWithImpl<$Res>
 /// Create a copy of InfoState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? wallet = freezed,Object? loadingTransactions = null,Object? errLoadingTransactions = null,Object? loadingBalance = null,Object? errLoadingBalance = null,Object? balance = null,Object? uconfBalance = null,Object? transactions = null,Object? errDeleting = null,Object? deleted = null,Object? showInfo = null,Object? currentHeight = null,Object? passPhraseTest = null,Object? ppTestPassed = null,Object? errorPPTest = null,}) {
-  return _then(_self.copyWith(
+  return _then(InfoState(
 wallet: freezed == wallet ? _self.wallet : wallet // ignore: cast_nullable_to_non_nullable
 as Wallet?,loadingTransactions: null == loadingTransactions ? _self.loadingTransactions : loadingTransactions // ignore: cast_nullable_to_non_nullable
 as bool,errLoadingTransactions: null == errLoadingTransactions ? _self.errLoadingTransactions : errLoadingTransactions // ignore: cast_nullable_to_non_nullable
@@ -238,7 +245,7 @@ return $default(_that.wallet,_that.loadingTransactions,_that.errLoadingTransacti
 
 
 class _InfoState extends InfoState with DiagnosticableTreeMixin {
-  const _InfoState({required this.wallet, this.loadingTransactions = false, this.errLoadingTransactions = '', this.loadingBalance = false, this.errLoadingBalance = '', this.balance = 0, this.uconfBalance = 0, final  List<Transaction> transactions = const [], this.errDeleting = '', this.deleted = false, this.showInfo = false, this.currentHeight = 0, this.passPhraseTest = '', this.ppTestPassed = false, this.errorPPTest = ''}): _transactions = transactions,super._();
+  const _InfoState({required this.wallet, this.loadingTransactions = false, this.errLoadingTransactions = '', this.loadingBalance = false, this.errLoadingBalance = '', this.balance = 0, this.uconfBalance = 0,  List<Transaction> transactions = const [], this.errDeleting = '', this.deleted = false, this.showInfo = false, this.currentHeight = 0, this.passPhraseTest = '', this.ppTestPassed = false, this.errorPPTest = ''}): _transactions = transactions,super._();
   
 
 @override final  Wallet? wallet;
@@ -272,23 +279,25 @@ _$InfoStateCopyWith<_InfoState> get copyWith => __$InfoStateCopyWithImpl<_InfoSt
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'InfoState'))
     ..add(DiagnosticsProperty('wallet', wallet))..add(DiagnosticsProperty('loadingTransactions', loadingTransactions))..add(DiagnosticsProperty('errLoadingTransactions', errLoadingTransactions))..add(DiagnosticsProperty('loadingBalance', loadingBalance))..add(DiagnosticsProperty('errLoadingBalance', errLoadingBalance))..add(DiagnosticsProperty('balance', balance))..add(DiagnosticsProperty('uconfBalance', uconfBalance))..add(DiagnosticsProperty('transactions', transactions))..add(DiagnosticsProperty('errDeleting', errDeleting))..add(DiagnosticsProperty('deleted', deleted))..add(DiagnosticsProperty('showInfo', showInfo))..add(DiagnosticsProperty('currentHeight', currentHeight))..add(DiagnosticsProperty('passPhraseTest', passPhraseTest))..add(DiagnosticsProperty('ppTestPassed', ppTestPassed))..add(DiagnosticsProperty('errorPPTest', errorPPTest));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InfoState&&(identical(other.wallet, wallet) || other.wallet == wallet)&&(identical(other.loadingTransactions, loadingTransactions) || other.loadingTransactions == loadingTransactions)&&(identical(other.errLoadingTransactions, errLoadingTransactions) || other.errLoadingTransactions == errLoadingTransactions)&&(identical(other.loadingBalance, loadingBalance) || other.loadingBalance == loadingBalance)&&(identical(other.errLoadingBalance, errLoadingBalance) || other.errLoadingBalance == errLoadingBalance)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.uconfBalance, uconfBalance) || other.uconfBalance == uconfBalance)&&const DeepCollectionEquality().equals(other._transactions, _transactions)&&(identical(other.errDeleting, errDeleting) || other.errDeleting == errDeleting)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.showInfo, showInfo) || other.showInfo == showInfo)&&(identical(other.currentHeight, currentHeight) || other.currentHeight == currentHeight)&&(identical(other.passPhraseTest, passPhraseTest) || other.passPhraseTest == passPhraseTest)&&(identical(other.ppTestPassed, ppTestPassed) || other.ppTestPassed == ppTestPassed)&&(identical(other.errorPPTest, errorPPTest) || other.errorPPTest == errorPPTest));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InfoState&&(identical(other.wallet, wallet) || other.wallet == wallet)&&(identical(other.loadingTransactions, loadingTransactions) || other.loadingTransactions == loadingTransactions)&&(identical(other.errLoadingTransactions, errLoadingTransactions) || other.errLoadingTransactions == errLoadingTransactions)&&(identical(other.loadingBalance, loadingBalance) || other.loadingBalance == loadingBalance)&&(identical(other.errLoadingBalance, errLoadingBalance) || other.errLoadingBalance == errLoadingBalance)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.uconfBalance, uconfBalance) || other.uconfBalance == uconfBalance)&&const DeepCollectionEquality().equals(other.transactions, _transactions)&&(identical(other.errDeleting, errDeleting) || other.errDeleting == errDeleting)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.showInfo, showInfo) || other.showInfo == showInfo)&&(identical(other.currentHeight, currentHeight) || other.currentHeight == currentHeight)&&(identical(other.passPhraseTest, passPhraseTest) || other.passPhraseTest == passPhraseTest)&&(identical(other.ppTestPassed, ppTestPassed) || other.ppTestPassed == ppTestPassed)&&(identical(other.errorPPTest, errorPPTest) || other.errorPPTest == errorPPTest));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,wallet,loadingTransactions,errLoadingTransactions,loadingBalance,errLoadingBalance,balance,uconfBalance,const DeepCollectionEquality().hash(_transactions),errDeleting,deleted,showInfo,currentHeight,passPhraseTest,ppTestPassed,errorPPTest);
+int get hashCode {
+    return Object.hash(runtimeType,wallet,loadingTransactions,errLoadingTransactions,loadingBalance,errLoadingBalance,balance,uconfBalance,const DeepCollectionEquality().hash(_transactions),errDeleting,deleted,showInfo,currentHeight,passPhraseTest,ppTestPassed,errorPPTest);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'InfoState(wallet: $wallet, loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, uconfBalance: $uconfBalance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo, currentHeight: $currentHeight, passPhraseTest: $passPhraseTest, ppTestPassed: $ppTestPassed, errorPPTest: $errorPPTest)';
+    return 'InfoState(wallet: $wallet, loadingTransactions: $loadingTransactions, errLoadingTransactions: $errLoadingTransactions, loadingBalance: $loadingBalance, errLoadingBalance: $errLoadingBalance, balance: $balance, uconfBalance: $uconfBalance, transactions: $transactions, errDeleting: $errDeleting, deleted: $deleted, showInfo: $showInfo, currentHeight: $currentHeight, passPhraseTest: $passPhraseTest, ppTestPassed: $ppTestPassed, errorPPTest: $errorPPTest)';
 }
 
 

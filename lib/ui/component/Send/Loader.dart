@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/wallet/send.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/loading.dart';
@@ -8,11 +8,13 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loadingStart =
-        context.select((SendCubit sc) => sc.state.loadingStart);
+    final loadingStart = context.select(
+      (SendCubit sc) => sc.state.loadingStart,
+    );
     final buildingTx = context.select((SendCubit sc) => sc.state.buildingTx);
-    final calculating =
-        context.select((SendCubit sc) => sc.state.calculatingFees);
+    final calculating = context.select(
+      (SendCubit sc) => sc.state.calculatingFees,
+    );
 
     final sendingTx = context.select((SendCubit sc) => sc.state.sendingTx);
 

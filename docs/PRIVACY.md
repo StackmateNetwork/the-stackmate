@@ -2,15 +2,13 @@
 
 Stackmate is designed to maximize self-sovereignty and minimize dependency and trust in third parties.
 
-## Tor By Default
+## Network Connections
 
-The client comes bundled with Tor, which is a requirement to make network calls from the app.
-
-This protects you from being fingerprinted via IP address by a backend service providers.
+The app connects directly to the Electrum node selected in Settings. That node can see your IP address and which addresses you sync, so for the most privacy use your own node.
 
 ## Backend Service Provider Defaults
 
-All backend services can be substituted with your own services or be entirely opted out of.
+All backend services can be substituted with your own services.
 
 We use the following services as default:
 
@@ -21,10 +19,6 @@ We use the following services as default:
 This is the core backend service required to sync your wallet public data and also broadcast transactions.
 
 This can be your own server.
-
-### Exchange Rate
-
-Coming soon
 
 ### Blockexplorer
 
@@ -48,11 +42,7 @@ The moment private data is either copied to a clipboard or typed by GBoard, it w
 
 #### Camera
 
-The app currently requires permission to use your camera ONLY when scanning a Bitcoin address or Public Key.
-
-#### Biometrics
-
-To use native authentication to access the app.
+The app currently requires permission to use your camera ONLY when scanning a Bitcoin address.
 
 ## Bitcoin Specific Considerations
 

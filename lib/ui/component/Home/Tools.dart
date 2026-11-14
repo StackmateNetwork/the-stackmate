@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/preferences.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -16,16 +16,6 @@ class WalletTools extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              IconButton(
-                onPressed: () {
-                  c.push('/broadcast');
-                },
-                icon: Icon(
-                  Icons.language_sharp,
-                  size: 32,
-                  color: c.colours.primary,
-                ),
-              ),
               IconButton(
                 onPressed: () {
                   preferences.incognitoChanged();

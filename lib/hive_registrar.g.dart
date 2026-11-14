@@ -2,13 +2,12 @@
 // Do not modify
 // Check in to version control
 
-import 'package:hive_ce/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/fees.dart';
 import 'package:sats/model/node.dart';
 import 'package:sats/model/pin.dart';
 import 'package:sats/model/preferences.dart';
-import 'package:sats/model/tor.dart';
 import 'package:sats/model/transaction.dart';
 import 'package:sats/model/wallet.dart';
 
@@ -19,7 +18,6 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(NodeClassAdapter());
     registerAdapter(PinClassAdapter());
     registerAdapter(PreferencesClassAdapter());
-    registerAdapter(TorClassAdapter());
     registerAdapter(TransactionClassAdapter());
     registerAdapter(WalletClassAdapter());
   }
@@ -32,7 +30,6 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(NodeClassAdapter());
     registerAdapter(PinClassAdapter());
     registerAdapter(PreferencesClassAdapter());
-    registerAdapter(TorClassAdapter());
     registerAdapter(TransactionClassAdapter());
     registerAdapter(WalletClassAdapter());
   }

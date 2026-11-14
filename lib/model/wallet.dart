@@ -16,7 +16,8 @@ abstract final class WalletType {
   /// Signs with an imported (recovered) mnemonic.
   static const recovered = 'RECOVERED';
 
-  /// Watch-only: builds PSBTs that are signed elsewhere.
+  /// Watch-only, from older versions: can be viewed and receive, but not
+  /// send (watch-only import was removed).
   static const watcher = 'WATCHER';
 }
 

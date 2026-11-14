@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'from-new-seed.dart';
@@ -9,6 +9,7 @@ part of 'from-new-seed.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $SeedGenerateWalletStateCopyWith<SeedGenerateWalletState> get copyWith => _$Seed
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as SeedGenerateWalletState;
   properties
     ..add(DiagnosticsProperty('type', 'SeedGenerateWalletState'))
-    ..add(DiagnosticsProperty('currentStep', currentStep))..add(DiagnosticsProperty('walletLabel', walletLabel))..add(DiagnosticsProperty('walletLabelError', walletLabelError))..add(DiagnosticsProperty('savingWallet', savingWallet))..add(DiagnosticsProperty('savingWalletError', savingWalletError))..add(DiagnosticsProperty('newWalletSaved', newWalletSaved));
+    ..add(DiagnosticsProperty('currentStep', _this.currentStep))..add(DiagnosticsProperty('walletLabel', _this.walletLabel))..add(DiagnosticsProperty('walletLabelError', _this.walletLabelError))..add(DiagnosticsProperty('savingWallet', _this.savingWallet))..add(DiagnosticsProperty('savingWalletError', _this.savingWalletError))..add(DiagnosticsProperty('newWalletSaved', _this.newWalletSaved));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeedGenerateWalletState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.walletLabel, walletLabel) || other.walletLabel == walletLabel)&&(identical(other.walletLabelError, walletLabelError) || other.walletLabelError == walletLabelError)&&(identical(other.savingWallet, savingWallet) || other.savingWallet == savingWallet)&&(identical(other.savingWalletError, savingWalletError) || other.savingWalletError == savingWalletError)&&(identical(other.newWalletSaved, newWalletSaved) || other.newWalletSaved == newWalletSaved));
+  final _this = this as SeedGenerateWalletState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeedGenerateWalletState&&(identical(other.currentStep, _this.currentStep) || other.currentStep == _this.currentStep)&&(identical(other.walletLabel, _this.walletLabel) || other.walletLabel == _this.walletLabel)&&(identical(other.walletLabelError, _this.walletLabelError) || other.walletLabelError == _this.walletLabelError)&&(identical(other.savingWallet, _this.savingWallet) || other.savingWallet == _this.savingWallet)&&(identical(other.savingWalletError, _this.savingWalletError) || other.savingWalletError == _this.savingWalletError)&&(identical(other.newWalletSaved, _this.newWalletSaved) || other.newWalletSaved == _this.newWalletSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentStep,walletLabel,walletLabelError,savingWallet,savingWalletError,newWalletSaved);
+int get hashCode {
+  final _this = this as SeedGenerateWalletState;
+  return Object.hash(runtimeType,_this.currentStep,_this.walletLabel,_this.walletLabelError,_this.savingWallet,_this.savingWalletError,_this.newWalletSaved);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'SeedGenerateWalletState(currentStep: $currentStep, walletLabel: $walletLabel, walletLabelError: $walletLabelError, savingWallet: $savingWallet, savingWalletError: $savingWalletError, newWalletSaved: $newWalletSaved)';
+  final _this = this as SeedGenerateWalletState;
+  return 'SeedGenerateWalletState(currentStep: ${_this.currentStep}, walletLabel: ${_this.walletLabel}, walletLabelError: ${_this.walletLabelError}, savingWallet: ${_this.savingWallet}, savingWalletError: ${_this.savingWalletError}, newWalletSaved: ${_this.newWalletSaved})';
 }
 
 
@@ -69,7 +76,7 @@ class _$SeedGenerateWalletStateCopyWithImpl<$Res>
 /// Create a copy of SeedGenerateWalletState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? currentStep = null,Object? walletLabel = null,Object? walletLabelError = null,Object? savingWallet = null,Object? savingWalletError = null,Object? newWalletSaved = null,}) {
-  return _then(_self.copyWith(
+  return _then(SeedGenerateWalletState(
 currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
 as SeedGenerateWalletSteps,walletLabel: null == walletLabel ? _self.walletLabel : walletLabel // ignore: cast_nullable_to_non_nullable
 as String,walletLabelError: null == walletLabelError ? _self.walletLabelError : walletLabelError // ignore: cast_nullable_to_non_nullable
@@ -236,23 +243,25 @@ _$SeedGenerateWalletStateCopyWith<_SeedGenerateWalletState> get copyWith => __$S
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'SeedGenerateWalletState'))
     ..add(DiagnosticsProperty('currentStep', currentStep))..add(DiagnosticsProperty('walletLabel', walletLabel))..add(DiagnosticsProperty('walletLabelError', walletLabelError))..add(DiagnosticsProperty('savingWallet', savingWallet))..add(DiagnosticsProperty('savingWalletError', savingWalletError))..add(DiagnosticsProperty('newWalletSaved', newWalletSaved));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedGenerateWalletState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.walletLabel, walletLabel) || other.walletLabel == walletLabel)&&(identical(other.walletLabelError, walletLabelError) || other.walletLabelError == walletLabelError)&&(identical(other.savingWallet, savingWallet) || other.savingWallet == savingWallet)&&(identical(other.savingWalletError, savingWalletError) || other.savingWalletError == savingWalletError)&&(identical(other.newWalletSaved, newWalletSaved) || other.newWalletSaved == newWalletSaved));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedGenerateWalletState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.walletLabel, walletLabel) || other.walletLabel == walletLabel)&&(identical(other.walletLabelError, walletLabelError) || other.walletLabelError == walletLabelError)&&(identical(other.savingWallet, savingWallet) || other.savingWallet == savingWallet)&&(identical(other.savingWalletError, savingWalletError) || other.savingWalletError == savingWalletError)&&(identical(other.newWalletSaved, newWalletSaved) || other.newWalletSaved == newWalletSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentStep,walletLabel,walletLabelError,savingWallet,savingWalletError,newWalletSaved);
+int get hashCode {
+    return Object.hash(runtimeType,currentStep,walletLabel,walletLabelError,savingWallet,savingWalletError,newWalletSaved);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'SeedGenerateWalletState(currentStep: $currentStep, walletLabel: $walletLabel, walletLabelError: $walletLabelError, savingWallet: $savingWallet, savingWalletError: $savingWalletError, newWalletSaved: $newWalletSaved)';
+    return 'SeedGenerateWalletState(currentStep: $currentStep, walletLabel: $walletLabel, walletLabelError: $walletLabelError, savingWallet: $savingWallet, savingWalletError: $savingWalletError, newWalletSaved: $newWalletSaved)';
 }
 
 

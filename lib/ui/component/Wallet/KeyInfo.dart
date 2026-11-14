@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/wallet.dart';

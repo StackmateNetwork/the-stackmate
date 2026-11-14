@@ -9,8 +9,6 @@ import 'package:sats/pkg/secure-storage.dart';
 
 part 'master.freezed.dart';
 
-const defaultNodeAddress = 'default';
-
 @freezed
 abstract class MasterKeyState with _$MasterKeyState {
   const factory MasterKeyState({
@@ -27,123 +25,70 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
     this.storage,
     this._chainSelect,
   ) : super(const MasterKeyState());
-//FlutterSecureStorage storage = const FlutterSecureStorage();
+
   final SStorage storage;
   final ChainSelectCubit _chainSelect;
   static const mainkey = 'Masterkey';
   static const testkey = 'Testkey';
   static const recoverkey = 'Recoverkey';
 
+  String get _network => _chainSelect.state.blockchain.name;
+
+  String get _masterKeyName => _network == 'main' ? mainkey : testkey;
+
+  /// Loads the master key of the selected network, or clears it if that
+  /// network has none.
   Future<void> init() async {
-    if (_chainSelect.state.blockchain.name == 'main') {
-      final value = await storage.getValue(mainkey);
-      if (value.result == null) {
-        emit(state.copyWith(key: null));
-        return;
-      } else {
-        final jsonD = jsonDecode(value.result!);
-        final key = MasterKey.fromJson(jsonD as Map<String, dynamic>);
-        if (key.seed != null) {
-          emit(
-            state.copyWith(
-              key: key,
-              error: null,
-            ),
-          );
-        }
-        return;
-      }
-    } else {
-      final value = await storage.getValue(testkey);
-      if (value.result == null) {
-        emit(state.copyWith(key: null));
-        return;
-      } else {
-        final jsonD = jsonDecode(value.result!);
-        final key = MasterKey.fromJson(jsonD as Map<String, dynamic>);
-        if (key.seed != null) {
-          emit(
-            state.copyWith(
-              key: key,
-              error: null,
-            ),
-          );
-        }
-        return;
-      }
+    final value = await storage.getValue(_masterKeyName);
+    MasterKey? key;
+    if (value.result != null) {
+      key = MasterKey.fromJson(
+        jsonDecode(value.result!) as Map<String, dynamic>,
+      );
+      if (key.seed == null) key = null;
     }
+    emit(state.copyWith(key: key, error: null));
   }
 
-  Future<void> save(
+  Future<void> save(String root, String fingerPrint, String seed) =>
+      _saveMaster(root, fingerPrint, seed, backedUp: true);
+
+  Future<void> saveBackupPending(
+    String seed,
     String root,
     String fingerPrint,
-    String seed,
-  ) async {
+  ) =>
+      _saveMaster(root, fingerPrint, seed, backedUp: false);
+
+  Future<void> _saveMaster(
+    String root,
+    String fingerPrint,
+    String seed, {
+    required bool backedUp,
+  }) async {
     final masterKey = MasterKey(
       seed: seed,
       root: root,
       fingerprint: fingerPrint,
-      network: _chainSelect.state.blockchain.name,
-      backedUp: true,
+      network: _network,
+      backedUp: backedUp,
     );
-    final masterData = masterKey.toJson();
-    if (_chainSelect.state.blockchain.name == 'main') {
-      await storage.saveValue(
-        key: mainkey,
-        value: jsonEncode(masterData),
-      );
-    } else {
-      await storage.saveValue(
-        key: testkey,
-        value: jsonEncode(masterData),
-      );
-    }
-    await Future.delayed(const Duration(milliseconds: 200));
+    await storage.saveValue(
+      key: _masterKeyName,
+      value: jsonEncode(masterKey.toJson()),
+    );
   }
 
-  Future<void> getRecoverkey(
-    String fingerPrint,
-  ) async {
-    if (_chainSelect.state.blockchain.name == 'main') {
-      final value = await storage.getValue(recoverkey + fingerPrint);
-      if (value.result == null) {
-        emit(state.copyWith(rkey: null));
-        return;
-      } else {
-        final jsonD = jsonDecode(value.result!);
-        final key = RecoveredKey.fromJson(jsonD as Map<String, dynamic>);
-        if (key.seed != null) {
-          emit(
-            state.copyWith(
-              rkey: key,
-              error: null,
-            ),
-          );
-        }
-        return;
-      }
-    } else {
-      final value = await storage.getValue(
-        recoverkey + fingerPrint,
+  Future<void> getRecoverkey(String fingerPrint) async {
+    final value = await storage.getValue(recoverkey + fingerPrint);
+    RecoveredKey? key;
+    if (value.result != null) {
+      key = RecoveredKey.fromJson(
+        jsonDecode(value.result!) as Map<String, dynamic>,
       );
-
-      if (value.result == null) {
-        emit(state.copyWith(rkey: null));
-        return;
-      } else {
-        final jsonD = jsonDecode(value.result!);
-        final key = RecoveredKey.fromJson(jsonD as Map<String, dynamic>);
-        if (key.seed != null) {
-          emit(
-            state.copyWith(
-              rkey: key,
-              error: null,
-            ),
-          );
-        }
-        return;
-      }
+      if (key.seed == null) key = null;
     }
+    emit(state.copyWith(rkey: key, error: null));
   }
 
   Future<void> saveRecover(
@@ -155,48 +100,11 @@ class MasterKeyCubit extends Cubit<MasterKeyState> {
       seed: seed,
       root: root,
       fingerprint: fingerPrint,
-      network: _chainSelect.state.blockchain.name,
+      network: _network,
     );
-    final recoverData = recoverKey.toJson();
-    if (_chainSelect.state.blockchain.name == 'main') {
-      await storage.saveValue(
-        key: recoverkey + fingerPrint,
-        value: jsonEncode(recoverData),
-      );
-    } else {
-      await storage.saveValue(
-        key: recoverkey + fingerPrint,
-        value: jsonEncode(recoverData),
-      );
-    }
-    await Future.delayed(const Duration(milliseconds: 200));
-  }
-
-  Future<void> saveBackupPending(
-    String seed,
-    String root,
-    String fingerPrint,
-  ) async {
-    final masterKey = MasterKey(
-      seed: seed,
-      root: root,
-      fingerprint: fingerPrint,
-      network: _chainSelect.state.blockchain.name,
-      backedUp: false,
+    await storage.saveValue(
+      key: recoverkey + fingerPrint,
+      value: jsonEncode(recoverKey.toJson()),
     );
-    final masterData = masterKey.toJson();
-    if (_chainSelect.state.blockchain.name == 'main') {
-      await storage.saveValue(
-        key: mainkey,
-        value: jsonEncode(masterData),
-      );
-    } else {
-      await storage.saveValue(
-        key: testkey,
-        value: jsonEncode(masterData),
-      );
-    }
-
-    await Future.delayed(const Duration(milliseconds: 200));
   }
 }

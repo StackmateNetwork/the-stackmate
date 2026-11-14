@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'seed-import.dart';
@@ -9,18 +9,13 @@ part of 'seed-import.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SeedImportState {
 
-/*
-     * SENSITIVE: the recovery words being entered.
-     */
- List<String> get words; int get wordCount; SeedImportStep get currentStep;/*
-     * SENSITIVE: the full mnemonic, set only once its checksum is valid.
-     */
- String get seed; String get seedError; String get passPhrase; int get accountNumber; String get errPassPhrase; bool get seedReady; String? get masterXpriv; DerivedKeys? get wallet;
+ List<String> get words; int get wordCount; SeedImportStep get currentStep; String get seed; String get seedError; String get passPhrase; int get accountNumber; String get errPassPhrase; bool get seedReady; String? get masterXpriv; DerivedKeys? get wallet;
 /// Create a copy of SeedImportState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -31,16 +26,21 @@ $SeedImportStateCopyWith<SeedImportState> get copyWith => _$SeedImportStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeedImportState&&const DeepCollectionEquality().equals(other.words, words)&&(identical(other.wordCount, wordCount) || other.wordCount == wordCount)&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.seed, seed) || other.seed == seed)&&(identical(other.seedError, seedError) || other.seedError == seedError)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.errPassPhrase, errPassPhrase) || other.errPassPhrase == errPassPhrase)&&(identical(other.seedReady, seedReady) || other.seedReady == seedReady)&&(identical(other.masterXpriv, masterXpriv) || other.masterXpriv == masterXpriv)&&(identical(other.wallet, wallet) || other.wallet == wallet));
+  final _this = this as SeedImportState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeedImportState&&const DeepCollectionEquality().equals(other.words, _this.words)&&(identical(other.wordCount, _this.wordCount) || other.wordCount == _this.wordCount)&&(identical(other.currentStep, _this.currentStep) || other.currentStep == _this.currentStep)&&(identical(other.seed, _this.seed) || other.seed == _this.seed)&&(identical(other.seedError, _this.seedError) || other.seedError == _this.seedError)&&(identical(other.passPhrase, _this.passPhrase) || other.passPhrase == _this.passPhrase)&&(identical(other.accountNumber, _this.accountNumber) || other.accountNumber == _this.accountNumber)&&(identical(other.errPassPhrase, _this.errPassPhrase) || other.errPassPhrase == _this.errPassPhrase)&&(identical(other.seedReady, _this.seedReady) || other.seedReady == _this.seedReady)&&(identical(other.masterXpriv, _this.masterXpriv) || other.masterXpriv == _this.masterXpriv)&&(identical(other.wallet, _this.wallet) || other.wallet == _this.wallet));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(words),wordCount,currentStep,seed,seedError,passPhrase,accountNumber,errPassPhrase,seedReady,masterXpriv,wallet);
+int get hashCode {
+  final _this = this as SeedImportState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.words),_this.wordCount,_this.currentStep,_this.seed,_this.seedError,_this.passPhrase,_this.accountNumber,_this.errPassPhrase,_this.seedReady,_this.masterXpriv,_this.wallet);
+}
 
 @override
 String toString() {
-  return 'SeedImportState(words: $words, wordCount: $wordCount, currentStep: $currentStep, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
+  final _this = this as SeedImportState;
+  return 'SeedImportState(words: ${_this.words}, wordCount: ${_this.wordCount}, currentStep: ${_this.currentStep}, seed: ${_this.seed}, seedError: ${_this.seedError}, passPhrase: ${_this.passPhrase}, accountNumber: ${_this.accountNumber}, errPassPhrase: ${_this.errPassPhrase}, seedReady: ${_this.seedReady}, masterXpriv: ${_this.masterXpriv}, wallet: ${_this.wallet})';
 }
 
 
@@ -69,7 +69,7 @@ class _$SeedImportStateCopyWithImpl<$Res>
 /// Create a copy of SeedImportState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? words = null,Object? wordCount = null,Object? currentStep = null,Object? seed = null,Object? seedError = null,Object? passPhrase = null,Object? accountNumber = null,Object? errPassPhrase = null,Object? seedReady = null,Object? masterXpriv = freezed,Object? wallet = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(SeedImportState(
 words: null == words ? _self.words : words // ignore: cast_nullable_to_non_nullable
 as List<String>,wordCount: null == wordCount ? _self.wordCount : wordCount // ignore: cast_nullable_to_non_nullable
 as int,currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
@@ -222,16 +222,10 @@ return $default(_that.words,_that.wordCount,_that.currentStep,_that.seed,_that.s
 
 
 class _SeedImportState extends SeedImportState {
-  const _SeedImportState({final  List<String> words = const <String>[], this.wordCount = 12, this.currentStep = SeedImportStep.import, this.seed = '', this.seedError = '', this.passPhrase = '', this.accountNumber = 0, this.errPassPhrase = '', this.seedReady = false, this.masterXpriv, this.wallet}): _words = words,super._();
+  const _SeedImportState({ List<String> words = const <String>[], this.wordCount = 12, this.currentStep = SeedImportStep.import, this.seed = '', this.seedError = '', this.passPhrase = '', this.accountNumber = 0, this.errPassPhrase = '', this.seedReady = false, this.masterXpriv, this.wallet}): _words = words,super._();
   
 
-/*
-     * SENSITIVE: the recovery words being entered.
-     */
  final  List<String> _words;
-/*
-     * SENSITIVE: the recovery words being entered.
-     */
 @override@JsonKey() List<String> get words {
   if (_words is EqualUnmodifiableListView) return _words;
   // ignore: implicit_dynamic_type
@@ -240,9 +234,6 @@ class _SeedImportState extends SeedImportState {
 
 @override@JsonKey() final  int wordCount;
 @override@JsonKey() final  SeedImportStep currentStep;
-/*
-     * SENSITIVE: the full mnemonic, set only once its checksum is valid.
-     */
 @override@JsonKey() final  String seed;
 @override@JsonKey() final  String seedError;
 @override@JsonKey() final  String passPhrase;
@@ -262,16 +253,18 @@ _$SeedImportStateCopyWith<_SeedImportState> get copyWith => __$SeedImportStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedImportState&&const DeepCollectionEquality().equals(other._words, _words)&&(identical(other.wordCount, wordCount) || other.wordCount == wordCount)&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.seed, seed) || other.seed == seed)&&(identical(other.seedError, seedError) || other.seedError == seedError)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.errPassPhrase, errPassPhrase) || other.errPassPhrase == errPassPhrase)&&(identical(other.seedReady, seedReady) || other.seedReady == seedReady)&&(identical(other.masterXpriv, masterXpriv) || other.masterXpriv == masterXpriv)&&(identical(other.wallet, wallet) || other.wallet == wallet));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeedImportState&&const DeepCollectionEquality().equals(other.words, _words)&&(identical(other.wordCount, wordCount) || other.wordCount == wordCount)&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.seed, seed) || other.seed == seed)&&(identical(other.seedError, seedError) || other.seedError == seedError)&&(identical(other.passPhrase, passPhrase) || other.passPhrase == passPhrase)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.errPassPhrase, errPassPhrase) || other.errPassPhrase == errPassPhrase)&&(identical(other.seedReady, seedReady) || other.seedReady == seedReady)&&(identical(other.masterXpriv, masterXpriv) || other.masterXpriv == masterXpriv)&&(identical(other.wallet, wallet) || other.wallet == wallet));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_words),wordCount,currentStep,seed,seedError,passPhrase,accountNumber,errPassPhrase,seedReady,masterXpriv,wallet);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_words),wordCount,currentStep,seed,seedError,passPhrase,accountNumber,errPassPhrase,seedReady,masterXpriv,wallet);
+}
 
 @override
 String toString() {
-  return 'SeedImportState(words: $words, wordCount: $wordCount, currentStep: $currentStep, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
+    return 'SeedImportState(words: $words, wordCount: $wordCount, currentStep: $currentStep, seed: $seed, seedError: $seedError, passPhrase: $passPhrase, accountNumber: $accountNumber, errPassPhrase: $errPassPhrase, seedReady: $seedReady, masterXpriv: $masterXpriv, wallet: $wallet)';
 }
 
 

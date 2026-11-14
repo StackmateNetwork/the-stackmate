@@ -82,7 +82,7 @@ class SeedImportCubit extends Cubit<SeedImportState> {
     }
     final words = [
       for (var i = 0; i < count; i++)
-        i < state.words.length ? state.words[i] : '',
+        if (i < state.words.length) state.words[i] else '',
     ];
     _emitWords(words, wordCount: count);
   }

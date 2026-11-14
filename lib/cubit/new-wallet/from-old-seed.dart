@@ -12,7 +12,6 @@ import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
@@ -44,9 +43,7 @@ abstract class SeedImportWalletState with _$SeedImportWalletState {
   }
 
   bool canGoBack() {
-    // if (currentStep == SeedImportWalletSteps.warning)
     return true;
-    // return false;
   }
 
   double completePercent() =>
@@ -64,9 +61,6 @@ abstract class SeedImportWalletState with _$SeedImportWalletState {
       case SeedImportWalletSteps.import:
         return 'Enter Seed';
 
-      // case SeedImportWalletSteps.passphrase:
-      //   return 'Extra Details';
-
       case SeedImportWalletSteps.label:
         return 'Label Wallet';
     }
@@ -81,7 +75,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     this._wallets,
     this._blockchainCubit,
     this._nodeAddressCubit,
-    this._torCubit,
     this._importCubit,
     this._masterKeyCubit, {
     String walletLabel = '',
@@ -108,7 +101,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
   final SeedImportCubit _importCubit;
   late StreamSubscription _importSub;
   final NodeAddressCubit _nodeAddressCubit;
-  final TorCubit _torCubit;
   final MasterKeyCubit _masterKeyCubit;
 
   static const invalidLabelError = 'Invalid Label (must be 3-20 chars).';
@@ -202,10 +194,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
 
       final root = _importCubit.state.masterXpriv!;
 
-      // final fullXPrv =
-      //     '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xprv}'
-      //         .replaceFirst('/m', emptyString);
-
       final fullXPub =
           '[${wallet.fingerPrint}/${wallet.hardenedPath}]${wallet.xpub}'
               .replaceFirst('/m', emptyString);
@@ -222,7 +210,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
       descriptor.orThrow();
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
 
       final dbPath = await walletDbPath(state.walletLabel, uid);
 
@@ -230,7 +217,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
         dbPath: dbPath,
         descriptor: descriptor.result!,
         nodeAddress: nodeAddress,
-        socks5: socks5,
       );
       syncStat.orThrow();
 
@@ -331,11 +317,6 @@ class SeedImportWalletCubit extends Cubit<SeedImportWalletState> {
     }
   }
 
-  // Future<void> updateWalletStorage(Wallet wallet) async {
-  //   await _storage.saveItemAt<Wallet>(
-  //       StoreKeys.Wallet.name, wallet.id!, wallet);
-  //   _wallets.update(wallet);
-  // }
   Future<void> updateWalletStorage(Wallet wallet) async {
     final savedid = await _storage.saveItem<Wallet>(
       StoreKeys.Wallet.name,

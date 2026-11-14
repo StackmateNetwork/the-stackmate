@@ -1,5 +1,4 @@
-// Bitcoin core value types shared by the wallet layer.
-// Formerly provided by package:libstackmate/outputs.dart.
+// Value types returned by the wallet engine (lib/api/libbitcoin.dart).
 
 import 'dart:convert';
 
@@ -7,10 +6,7 @@ class SMError {
   const SMError(this.kind, this.message);
   factory SMError.fromJson(String data) {
     final json = jsonDecode(data) as Map<String, dynamic>;
-    return SMError(
-      json['kind'] as String,
-      json['message'] as String,
-    );
+    return SMError(json['kind'] as String, json['message'] as String);
   }
   final String kind;
   final String message;
@@ -22,27 +18,12 @@ class SMError {
 
 class PSBT {
   const PSBT(this.psbt, this.isFinalized);
-  factory PSBT.fromJson(String data) {
-    final json = jsonDecode(data) as Map<String, dynamic>;
-    return PSBT(
-      json['psbt'] as String,
-      json['is_finalized'] as bool,
-    );
-  }
   final String psbt;
   final bool isFinalized;
 }
 
 class Seed {
   const Seed(this.mnemonic, this.fingerprint, this.xprv);
-  factory Seed.fromJson(String data) {
-    final json = jsonDecode(data) as Map<String, dynamic>;
-    return Seed(
-      json['mnemonic'] as String,
-      json['fingerprint'] as String,
-      json['xprv'] as String,
-    );
-  }
   final String mnemonic;
   final String fingerprint;
   final String xprv;
@@ -51,21 +32,7 @@ class Seed {
 }
 
 class DerivedKeys {
-  const DerivedKeys(
-    this.fingerPrint,
-    this.hardenedPath,
-    this.xprv,
-    this.xpub,
-  );
-  factory DerivedKeys.fromJson(String data) {
-    final json = jsonDecode(data) as Map<String, dynamic>;
-    return DerivedKeys(
-      json['fingerprint'] as String,
-      json['hardened_path'] as String,
-      json['xprv'] as String,
-      json['xpub'] as String,
-    );
-  }
+  const DerivedKeys(this.fingerPrint, this.hardenedPath, this.xprv, this.xpub);
   final String fingerPrint;
   final String hardenedPath;
   final String xprv;
@@ -88,18 +55,7 @@ class DerivedKeys {
 }
 
 class NetworkFees {
-  const NetworkFees(
-    this.rate,
-    this.absolute,
-  );
-
-  factory NetworkFees.fromJson(String data) {
-    final json = jsonDecode(data) as Map<String, dynamic>;
-    return NetworkFees(
-      json['rate'] as double,
-      json['absolute'] as int,
-    );
-  }
+  const NetworkFees(this.rate, this.absolute);
 
   final double rate;
   final int absolute;
@@ -107,12 +63,6 @@ class NetworkFees {
 
 class DecodedTxOutput {
   const DecodedTxOutput(this.value, this.to);
-  factory DecodedTxOutput.fromJson(Map<String, dynamic> json) {
-    return DecodedTxOutput(
-      json['value'] as int,
-      json['to'] as String,
-    );
-  }
 
   final int value;
   final String to;
@@ -120,37 +70,6 @@ class DecodedTxOutput {
 
 class Address {
   const Address(this.address, this.index);
-  factory Address.fromJson(String data) {
-    final json = jsonDecode(data) as Map<String, dynamic>;
-    return Address(
-      json['address'] as String,
-      json['index'] as String,
-    );
-  }
   final String address;
   final String index;
-}
-
-class UTXO {
-  const UTXO(
-    this.txid,
-    this.vout,
-    this.value,
-    this.scriptPubkey,
-    this.keychainKind,
-  );
-  factory UTXO.fromJson(Map<String, dynamic> json) {
-    return UTXO(
-      json['txid'] as String,
-      json['vout'] as int,
-      json['value'] as int,
-      json['script_pubkey'] as String,
-      json['keychain_kind'] as String,
-    );
-  }
-  final String txid;
-  final int vout;
-  final int value;
-  final String scriptPubkey;
-  final String keychainKind;
 }

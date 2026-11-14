@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'chain-select.dart';
@@ -9,6 +9,7 @@ part of 'chain-select.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $BlockchainStateCopyWith<BlockchainState> get copyWith => _$BlockchainStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BlockchainState&&(identical(other.blockchain, blockchain) || other.blockchain == blockchain));
+  final _this = this as BlockchainState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BlockchainState&&(identical(other.blockchain, _this.blockchain) || other.blockchain == _this.blockchain));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,blockchain);
+int get hashCode {
+  final _this = this as BlockchainState;
+  return Object.hash(runtimeType,_this.blockchain);
+}
 
 @override
 String toString() {
-  return 'BlockchainState(blockchain: $blockchain)';
+  final _this = this as BlockchainState;
+  return 'BlockchainState(blockchain: ${_this.blockchain})';
 }
 
 
@@ -63,7 +69,7 @@ class _$BlockchainStateCopyWithImpl<$Res>
 /// Create a copy of BlockchainState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? blockchain = null,}) {
-  return _then(_self.copyWith(
+  return _then(BlockchainState(
 blockchain: null == blockchain ? _self.blockchain : blockchain // ignore: cast_nullable_to_non_nullable
 as Blockchain,
   ));
@@ -221,16 +227,18 @@ _$BlockchainStateCopyWith<_BlockchainState> get copyWith => __$BlockchainStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BlockchainState&&(identical(other.blockchain, blockchain) || other.blockchain == blockchain));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BlockchainState&&(identical(other.blockchain, blockchain) || other.blockchain == blockchain));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,blockchain);
+int get hashCode {
+    return Object.hash(runtimeType,blockchain);
+}
 
 @override
 String toString() {
-  return 'BlockchainState(blockchain: $blockchain)';
+    return 'BlockchainState(blockchain: $blockchain)';
 }
 
 

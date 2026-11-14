@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-import.dart';
 import 'package:sats/cubit/new-wallet/common/words_cubit.dart';

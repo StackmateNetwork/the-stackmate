@@ -6,9 +6,9 @@ import 'package:sats/model/wallet.dart';
 
 /// Resolves the descriptor used to sign transactions for a wallet.
 ///
-/// Signer wallets get a private descriptor rebuilt from the stored mnemonic;
-/// watch-only wallets get their public descriptor back, which yields a PSBT
-/// that still needs external signatures.
+/// The private descriptor is rebuilt from the stored mnemonic. Only wallets
+/// created or recovered from a seed in this app can sign; others (watch-only
+/// or wallet types from much older versions) cannot.
 class WalletSigner {
   WalletSigner(this._core, this._masterKey, this._blockchain);
 
@@ -16,16 +16,19 @@ class WalletSigner {
   final MasterKeyCubit _masterKey;
   final ChainSelectCubit _blockchain;
 
+  static const missingKeyError = 'Signing key for this wallet not found.';
+  static const cannotSignError = "This wallet can't sign transactions.";
+
   Future<String> signingDescriptor(Wallet wallet) async {
-    if (!wallet.canSign) return wallet.descriptor;
+    if (!wallet.canSign) throw cannotSignError;
 
     final isSegwit = wallet.descriptor.startsWith('wpkh');
     final String mnemonic;
     if (isSegwit && wallet.walletType != WalletType.primary) {
       await _masterKey.getRecoverkey(wallet.fingerprint);
-      mnemonic = _masterKey.state.rkey!.seed!;
+      mnemonic = _masterKey.state.rkey?.seed ?? (throw missingKeyError);
     } else {
-      mnemonic = _masterKey.state.key!.seed!;
+      mnemonic = _masterKey.state.key?.seed ?? (throw missingKeyError);
     }
 
     final root = _core

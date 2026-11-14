@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'words_cubit.dart';
@@ -9,6 +9,7 @@ part of 'words_cubit.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $WordsStateCopyWith<WordsState> get copyWith => _$WordsStateCopyWithImpl<WordsSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WordsState&&const DeepCollectionEquality().equals(other.words, words)&&(identical(other.err, err) || other.err == err)&&(identical(other.loading, loading) || other.loading == loading));
+  final _this = this as WordsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WordsState&&const DeepCollectionEquality().equals(other.words, _this.words)&&(identical(other.err, _this.err) || other.err == _this.err)&&(identical(other.loading, _this.loading) || other.loading == _this.loading));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(words),err,loading);
+int get hashCode {
+  final _this = this as WordsState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.words),_this.err,_this.loading);
+}
 
 @override
 String toString() {
-  return 'WordsState(words: $words, err: $err, loading: $loading)';
+  final _this = this as WordsState;
+  return 'WordsState(words: ${_this.words}, err: ${_this.err}, loading: ${_this.loading})';
 }
 
 
@@ -63,7 +69,7 @@ class _$WordsStateCopyWithImpl<$Res>
 /// Create a copy of WordsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? words = null,Object? err = null,Object? loading = null,}) {
-  return _then(_self.copyWith(
+  return _then(WordsState(
 words: null == words ? _self.words : words // ignore: cast_nullable_to_non_nullable
 as List<String>,err: null == err ? _self.err : err // ignore: cast_nullable_to_non_nullable
 as String,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
@@ -208,7 +214,7 @@ return $default(_that.words,_that.err,_that.loading);case _:
 
 
 class _WordsState extends WordsState {
-  const _WordsState({final  List<String> words = const [], this.err = '', this.loading = false}): _words = words,super._();
+  const _WordsState({ List<String> words = const [], this.err = '', this.loading = false}): _words = words,super._();
   
 
  final  List<String> _words;
@@ -231,16 +237,18 @@ _$WordsStateCopyWith<_WordsState> get copyWith => __$WordsStateCopyWithImpl<_Wor
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WordsState&&const DeepCollectionEquality().equals(other._words, _words)&&(identical(other.err, err) || other.err == err)&&(identical(other.loading, loading) || other.loading == loading));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WordsState&&const DeepCollectionEquality().equals(other.words, _words)&&(identical(other.err, err) || other.err == err)&&(identical(other.loading, loading) || other.loading == loading));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_words),err,loading);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_words),err,loading);
+}
 
 @override
 String toString() {
-  return 'WordsState(words: $words, err: $err, loading: $loading)';
+    return 'WordsState(words: $words, err: $err, loading: $loading)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'fees.dart';
@@ -9,6 +9,7 @@ part of 'fees.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $FeesCopyWith<Fees> get copyWith => _$FeesCopyWithImpl<Fees>(this as Fees, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Fees&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.slow, slow) || other.slow == slow)&&(identical(other.medium, medium) || other.medium == medium)&&(identical(other.fast, fast) || other.fast == fast));
+  final _this = this as Fees;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Fees&&(identical(other.timestamp, _this.timestamp) || other.timestamp == _this.timestamp)&&(identical(other.slow, _this.slow) || other.slow == _this.slow)&&(identical(other.medium, _this.medium) || other.medium == _this.medium)&&(identical(other.fast, _this.fast) || other.fast == _this.fast));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,timestamp,slow,medium,fast);
+int get hashCode {
+  final _this = this as Fees;
+  return Object.hash(runtimeType,_this.timestamp,_this.slow,_this.medium,_this.fast);
+}
 
 @override
 String toString() {
-  return 'Fees(timestamp: $timestamp, slow: $slow, medium: $medium, fast: $fast)';
+  final _this = this as Fees;
+  return 'Fees(timestamp: ${_this.timestamp}, slow: ${_this.slow}, medium: ${_this.medium}, fast: ${_this.fast})';
 }
 
 
@@ -66,7 +72,7 @@ class _$FeesCopyWithImpl<$Res>
 /// Create a copy of Fees
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? timestamp = null,Object? slow = null,Object? medium = null,Object? fast = null,}) {
-  return _then(_self.copyWith(
+  return _then(Fees(
 timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as int,slow: null == slow ? _self.slow : slow // ignore: cast_nullable_to_non_nullable
 as double,medium: null == medium ? _self.medium : medium // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Fees&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.slow, slow) || other.slow == slow)&&(identical(other.medium, medium) || other.medium == medium)&&(identical(other.fast, fast) || other.fast == fast));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Fees&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.slow, slow) || other.slow == slow)&&(identical(other.medium, medium) || other.medium == medium)&&(identical(other.fast, fast) || other.fast == fast));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,timestamp,slow,medium,fast);
+int get hashCode {
+    return Object.hash(runtimeType,timestamp,slow,medium,fast);
+}
 
 @override
 String toString() {
-  return 'Fees(timestamp: $timestamp, slow: $slow, medium: $medium, fast: $fast)';
+    return 'Fees(timestamp: $timestamp, slow: $slow, medium: $medium, fast: $fast)';
 }
 
 

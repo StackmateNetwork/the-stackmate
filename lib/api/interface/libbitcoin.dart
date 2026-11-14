@@ -24,27 +24,15 @@ abstract class IStackMateBitcoin {
     required String purpose,
   });
 
-  R<String> compile({
-    required String policy,
-    required String scriptType,
-  });
+  R<String> compile({required String policy, required String scriptType});
 
   R<double> estimateNetworkFee({
     required String targetSize,
     required String network,
     required String nodeAddress,
-    required String socks5,
   });
 
-  R<int> getWeight({
-    required String descriptor,
-    required String psbt,
-  });
-
-  R<NetworkFees> feeAbsoluteToRate({
-    required String feeAbsolute,
-    required String weight,
-  });
+  R<int> getWeight({required String descriptor, required String psbt});
 
   R<NetworkFees> feeRateToAbsolute({
     required String feeRate,
@@ -55,47 +43,21 @@ abstract class IStackMateBitcoin {
     required String dbPath,
     required String descriptor,
     required String nodeAddress,
-    required String socks5,
   });
 
-  R<int> sqliteBalance({
-    required String descriptor,
-    required String dbPath,
-  });
+  R<int> sqliteBalance({required String descriptor, required String dbPath});
 
-  R<int> syncBalance({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-  });
-
-  R<int> getHeight({
-    required String network,
-    required String nodeAddress,
-    required String socks5,
-  });
+  R<int> getHeight({required String network, required String nodeAddress});
 
   R<List<Transaction>> sqliteHistory({
     required String descriptor,
     required String dbPath,
   });
 
-  R<List<Transaction>> getHistory({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-  });
+  /// Whether [address] is a valid address on [network] ('main' or 'test').
+  bool isValidAddress({required String address, required String network});
 
-  R<List<UTXO>> getUTXOSet({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-  });
-
-  R<String> getAddress({
-    required String descriptor,
-    required String index,
-  });
+  R<String> getAddress({required String descriptor, required String index});
 
   R<Address> lastUnusedAddress({
     required String descriptor,
@@ -105,16 +67,6 @@ abstract class IStackMateBitcoin {
   R<PSBT> sqliteBuildTransaction({
     required String descriptor,
     required String dbPath,
-    required String txOutputs,
-    required String feeAbsolute,
-    required String policyPath,
-    required String sweep,
-  });
-
-  R<PSBT> buildTransaction({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
     required String txOutputs,
     required String feeAbsolute,
     required String policyPath,
@@ -134,9 +86,9 @@ abstract class IStackMateBitcoin {
   Future<R<String>> broadcastTransaction({
     required String descriptor,
     required String nodeAddress,
-    required String socks5,
     required String signedPSBT,
   });
+
   /// Builds a replacement (RBF) for an unconfirmed wallet transaction
   /// paying [feeRate] sat/vB. The returned PSBT still needs signing.
   R<PSBT> sqliteBumpFee({
@@ -144,12 +96,5 @@ abstract class IStackMateBitcoin {
     required String dbPath,
     required String txid,
     required String feeRate,
-  });
-
-  Future<R<String>> broadcastTransactionHex({
-    required String descriptor,
-    required String nodeAddress,
-    required String socks5,
-    required String signedHex,
   });
 }

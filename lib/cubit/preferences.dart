@@ -22,11 +22,7 @@ abstract class PreferencesState with _$PreferencesState {
 class PreferencesCubit extends Cubit<PreferencesState> {
   PreferencesCubit(
     this._storage,
-  ) : super(
-          const PreferencesState(
-            
-          ),
-        );
+  ) : super(const PreferencesState());
 
   final IStorage _storage;
 
@@ -68,10 +64,6 @@ class PreferencesCubit extends Cubit<PreferencesState> {
     emit(state.copyWith(incognito: !state.incognito));
   }
 
-  void bitcoinStandardChanged() {
-    emit(state.copyWith(bitcoinStandard: !state.bitcoinStandard));
-  }
-
   void preferredBitcoinUnitChanged() {
     emit(
       state.copyWith(
@@ -79,14 +71,6 @@ class PreferencesCubit extends Cubit<PreferencesState> {
             (state.preferredBitcoinUnit == 'sats') ? 'BTC' : 'sats',
       ),
     );
-  }
-
-  void preferredExchangeChanged(String exchange) {
-    emit(state.copyWith(preferredExchange: exchange));
-  }
-
-  void preferredFiatUnitChanged(String unit) {
-    emit(state.copyWith(preferredFiatUnit: unit));
   }
 
   Future<void> saveClicked() async {
@@ -98,12 +82,6 @@ class PreferencesCubit extends Cubit<PreferencesState> {
       preferredFiatUnit: state.preferredFiatUnit,
     );
 
-    // final cleared =
-    //     await _storage.clearAll<Preferences>(StoreKeys.Preferences.name);
-    // if (cleared.hasError) {
-    //   emit(state.copyWith(errorPreferencesState: cleared.error.toString()));
-    //   return;
-    // }
     final saved = await _storage.saveItemAt<Preferences>(
       StoreKeys.Preferences.name,
       0,
@@ -111,8 +89,6 @@ class PreferencesCubit extends Cubit<PreferencesState> {
     );
     if (saved.hasError) {
       emit(state.copyWith(errorPreferencesState: saved.error.toString()));
-      return;
     }
-    // await Future.delayed(const Duration(milliseconds: 1500));
   }
 }

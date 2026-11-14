@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/new-wallet/derivation.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/ErrorHandler.dart';
@@ -71,18 +71,6 @@ class DeriveLabel extends StatelessWidget {
                       currentFocus.unfocus();
                     }
                     c.read<DeriveWalletCubit>().nextClicked();
-                    // if (state.walletLabelError != '') {
-                    //   handleError(
-                    //     context,
-                    //     state.walletLabelError,
-                    //   );
-                    // }
-                    // if (state.errSavingWallet != '') {
-                    //   handleError(
-                    //     context,
-                    //     state.errSavingWallet,
-                    //   );
-                    // }
                   },
                   child: const Text('Confirm'),
                 ),

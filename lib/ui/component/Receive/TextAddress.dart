@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/wallet/receive.dart';
 import 'package:sats/pkg/extensions.dart';
 
@@ -61,9 +61,9 @@ class TextAddress extends StatelessWidget {
             SizedBox(
               width: c.width / 3,
               child: TextButton(
-                onPressed: () {
-                  c.read<ReceiveCubit>().getLastAddress();
-                },
+                onPressed: loading || index == 0
+                    ? null
+                    : () => c.read<ReceiveCubit>().getLastAddress(),
                 child: Text(
                   '<'.notLocalised(),
                 ),
@@ -83,9 +83,9 @@ class TextAddress extends StatelessWidget {
             SizedBox(
               width: c.width / 3,
               child: TextButton(
-                onPressed: () {
-                  c.read<ReceiveCubit>().getNewAddress();
-                },
+                onPressed: loading
+                    ? null
+                    : () => c.read<ReceiveCubit>().getNewAddress(),
                 child: Text(
                   '>'.notLocalised(),
                 ),

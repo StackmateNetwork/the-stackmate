@@ -43,7 +43,7 @@ Future<RandomAccessFile> getTempRaf(
   FileMode mode = FileMode.read,
 }) async {
   final file = await getTempFile(bytes);
-  return file.open(mode: mode);
+  return await file.open(mode: mode);
 }
 
 Future<Directory> getTempDir() async {
@@ -69,7 +69,7 @@ Future<File> getTempAssetFile(
   final assetFile = getAssetFile(part1, part2, part3, part4);
   final tempFile = await getTempFile();
 
-  return assetFile.copy(tempFile.path);
+  return await assetFile.copy(tempFile.path);
 }
 
 Future<Directory> getAssetDir(

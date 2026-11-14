@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'wallets.dart';
@@ -9,12 +9,13 @@ part of 'wallets.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$WalletsState implements DiagnosticableTreeMixin {
 
- List<Wallet> get wallets; Wallet? get selectedWallet; bool get toggler; String get errDeleting; int get networth;
+ List<Wallet> get wallets; bool get toggler; String get errDeleting; int get networth;
 /// Create a copy of WalletsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -24,23 +25,29 @@ $WalletsStateCopyWith<WalletsState> get copyWith => _$WalletsStateCopyWithImpl<W
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as WalletsState;
   properties
     ..add(DiagnosticsProperty('type', 'WalletsState'))
-    ..add(DiagnosticsProperty('wallets', wallets))..add(DiagnosticsProperty('selectedWallet', selectedWallet))..add(DiagnosticsProperty('toggler', toggler))..add(DiagnosticsProperty('errDeleting', errDeleting))..add(DiagnosticsProperty('networth', networth));
+    ..add(DiagnosticsProperty('wallets', _this.wallets))..add(DiagnosticsProperty('toggler', _this.toggler))..add(DiagnosticsProperty('errDeleting', _this.errDeleting))..add(DiagnosticsProperty('networth', _this.networth));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WalletsState&&const DeepCollectionEquality().equals(other.wallets, wallets)&&(identical(other.selectedWallet, selectedWallet) || other.selectedWallet == selectedWallet)&&(identical(other.toggler, toggler) || other.toggler == toggler)&&(identical(other.errDeleting, errDeleting) || other.errDeleting == errDeleting)&&(identical(other.networth, networth) || other.networth == networth));
+  final _this = this as WalletsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WalletsState&&const DeepCollectionEquality().equals(other.wallets, _this.wallets)&&(identical(other.toggler, _this.toggler) || other.toggler == _this.toggler)&&(identical(other.errDeleting, _this.errDeleting) || other.errDeleting == _this.errDeleting)&&(identical(other.networth, _this.networth) || other.networth == _this.networth));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(wallets),selectedWallet,toggler,errDeleting,networth);
+int get hashCode {
+  final _this = this as WalletsState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.wallets),_this.toggler,_this.errDeleting,_this.networth);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'WalletsState(wallets: $wallets, selectedWallet: $selectedWallet, toggler: $toggler, errDeleting: $errDeleting, networth: $networth)';
+  final _this = this as WalletsState;
+  return 'WalletsState(wallets: ${_this.wallets}, toggler: ${_this.toggler}, errDeleting: ${_this.errDeleting}, networth: ${_this.networth})';
 }
 
 
@@ -51,11 +58,11 @@ abstract mixin class $WalletsStateCopyWith<$Res>  {
   factory $WalletsStateCopyWith(WalletsState value, $Res Function(WalletsState) _then) = _$WalletsStateCopyWithImpl;
 @useResult
 $Res call({
- List<Wallet> wallets, Wallet? selectedWallet, bool toggler, String errDeleting, int networth
+ List<Wallet> wallets, bool toggler, String errDeleting, int networth
 });
 
 
-$WalletCopyWith<$Res>? get selectedWallet;
+
 
 }
 /// @nodoc
@@ -68,29 +75,16 @@ class _$WalletsStateCopyWithImpl<$Res>
 
 /// Create a copy of WalletsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? wallets = null,Object? selectedWallet = freezed,Object? toggler = null,Object? errDeleting = null,Object? networth = null,}) {
-  return _then(_self.copyWith(
+@pragma('vm:prefer-inline') @override $Res call({Object? wallets = null,Object? toggler = null,Object? errDeleting = null,Object? networth = null,}) {
+  return _then(WalletsState(
 wallets: null == wallets ? _self.wallets : wallets // ignore: cast_nullable_to_non_nullable
-as List<Wallet>,selectedWallet: freezed == selectedWallet ? _self.selectedWallet : selectedWallet // ignore: cast_nullable_to_non_nullable
-as Wallet?,toggler: null == toggler ? _self.toggler : toggler // ignore: cast_nullable_to_non_nullable
+as List<Wallet>,toggler: null == toggler ? _self.toggler : toggler // ignore: cast_nullable_to_non_nullable
 as bool,errDeleting: null == errDeleting ? _self.errDeleting : errDeleting // ignore: cast_nullable_to_non_nullable
 as String,networth: null == networth ? _self.networth : networth // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
-/// Create a copy of WalletsState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$WalletCopyWith<$Res>? get selectedWallet {
-    if (_self.selectedWallet == null) {
-    return null;
-  }
 
-  return $WalletCopyWith<$Res>(_self.selectedWallet!, (value) {
-    return _then(_self.copyWith(selectedWallet: value));
-  });
-}
 }
 
 
@@ -172,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Wallet> wallets,  Wallet? selectedWallet,  bool toggler,  String errDeleting,  int networth)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Wallet> wallets,  bool toggler,  String errDeleting,  int networth)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WalletsState() when $default != null:
-return $default(_that.wallets,_that.selectedWallet,_that.toggler,_that.errDeleting,_that.networth);case _:
+return $default(_that.wallets,_that.toggler,_that.errDeleting,_that.networth);case _:
   return orElse();
 
 }
@@ -193,10 +187,10 @@ return $default(_that.wallets,_that.selectedWallet,_that.toggler,_that.errDeleti
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Wallet> wallets,  Wallet? selectedWallet,  bool toggler,  String errDeleting,  int networth)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Wallet> wallets,  bool toggler,  String errDeleting,  int networth)  $default,) {final _that = this;
 switch (_that) {
 case _WalletsState():
-return $default(_that.wallets,_that.selectedWallet,_that.toggler,_that.errDeleting,_that.networth);case _:
+return $default(_that.wallets,_that.toggler,_that.errDeleting,_that.networth);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -213,10 +207,10 @@ return $default(_that.wallets,_that.selectedWallet,_that.toggler,_that.errDeleti
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Wallet> wallets,  Wallet? selectedWallet,  bool toggler,  String errDeleting,  int networth)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Wallet> wallets,  bool toggler,  String errDeleting,  int networth)?  $default,) {final _that = this;
 switch (_that) {
 case _WalletsState() when $default != null:
-return $default(_that.wallets,_that.selectedWallet,_that.toggler,_that.errDeleting,_that.networth);case _:
+return $default(_that.wallets,_that.toggler,_that.errDeleting,_that.networth);case _:
   return null;
 
 }
@@ -228,7 +222,7 @@ return $default(_that.wallets,_that.selectedWallet,_that.toggler,_that.errDeleti
 
 
 class _WalletsState with DiagnosticableTreeMixin implements WalletsState {
-  const _WalletsState({final  List<Wallet> wallets = const [], this.selectedWallet, this.toggler = true, this.errDeleting = '', this.networth = 0}): _wallets = wallets;
+  const _WalletsState({ List<Wallet> wallets = const [], this.toggler = true, this.errDeleting = '', this.networth = 0}): _wallets = wallets;
   
 
  final  List<Wallet> _wallets;
@@ -238,7 +232,6 @@ class _WalletsState with DiagnosticableTreeMixin implements WalletsState {
   return EqualUnmodifiableListView(_wallets);
 }
 
-@override final  Wallet? selectedWallet;
 @override@JsonKey() final  bool toggler;
 @override@JsonKey() final  String errDeleting;
 @override@JsonKey() final  int networth;
@@ -252,23 +245,25 @@ _$WalletsStateCopyWith<_WalletsState> get copyWith => __$WalletsStateCopyWithImp
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'WalletsState'))
-    ..add(DiagnosticsProperty('wallets', wallets))..add(DiagnosticsProperty('selectedWallet', selectedWallet))..add(DiagnosticsProperty('toggler', toggler))..add(DiagnosticsProperty('errDeleting', errDeleting))..add(DiagnosticsProperty('networth', networth));
+    ..add(DiagnosticsProperty('wallets', wallets))..add(DiagnosticsProperty('toggler', toggler))..add(DiagnosticsProperty('errDeleting', errDeleting))..add(DiagnosticsProperty('networth', networth));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WalletsState&&const DeepCollectionEquality().equals(other._wallets, _wallets)&&(identical(other.selectedWallet, selectedWallet) || other.selectedWallet == selectedWallet)&&(identical(other.toggler, toggler) || other.toggler == toggler)&&(identical(other.errDeleting, errDeleting) || other.errDeleting == errDeleting)&&(identical(other.networth, networth) || other.networth == networth));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WalletsState&&const DeepCollectionEquality().equals(other.wallets, _wallets)&&(identical(other.toggler, toggler) || other.toggler == toggler)&&(identical(other.errDeleting, errDeleting) || other.errDeleting == errDeleting)&&(identical(other.networth, networth) || other.networth == networth));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_wallets),selectedWallet,toggler,errDeleting,networth);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_wallets),toggler,errDeleting,networth);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'WalletsState(wallets: $wallets, selectedWallet: $selectedWallet, toggler: $toggler, errDeleting: $errDeleting, networth: $networth)';
+    return 'WalletsState(wallets: $wallets, toggler: $toggler, errDeleting: $errDeleting, networth: $networth)';
 }
 
 
@@ -279,11 +274,11 @@ abstract mixin class _$WalletsStateCopyWith<$Res> implements $WalletsStateCopyWi
   factory _$WalletsStateCopyWith(_WalletsState value, $Res Function(_WalletsState) _then) = __$WalletsStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Wallet> wallets, Wallet? selectedWallet, bool toggler, String errDeleting, int networth
+ List<Wallet> wallets, bool toggler, String errDeleting, int networth
 });
 
 
-@override $WalletCopyWith<$Res>? get selectedWallet;
+
 
 }
 /// @nodoc
@@ -296,30 +291,17 @@ class __$WalletsStateCopyWithImpl<$Res>
 
 /// Create a copy of WalletsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? wallets = null,Object? selectedWallet = freezed,Object? toggler = null,Object? errDeleting = null,Object? networth = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? wallets = null,Object? toggler = null,Object? errDeleting = null,Object? networth = null,}) {
   return _then(_WalletsState(
 wallets: null == wallets ? _self._wallets : wallets // ignore: cast_nullable_to_non_nullable
-as List<Wallet>,selectedWallet: freezed == selectedWallet ? _self.selectedWallet : selectedWallet // ignore: cast_nullable_to_non_nullable
-as Wallet?,toggler: null == toggler ? _self.toggler : toggler // ignore: cast_nullable_to_non_nullable
+as List<Wallet>,toggler: null == toggler ? _self.toggler : toggler // ignore: cast_nullable_to_non_nullable
 as bool,errDeleting: null == errDeleting ? _self.errDeleting : errDeleting // ignore: cast_nullable_to_non_nullable
 as String,networth: null == networth ? _self.networth : networth // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
 
-/// Create a copy of WalletsState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$WalletCopyWith<$Res>? get selectedWallet {
-    if (_self.selectedWallet == null) {
-    return null;
-  }
 
-  return $WalletCopyWith<$Res>(_self.selectedWallet!, (value) {
-    return _then(_self.copyWith(selectedWallet: value));
-  });
-}
 }
 
 // dart format on

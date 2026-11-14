@@ -24,10 +24,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
     defaultConfig {
         applicationId = "com.sats.stackmate.wallet"
         minSdk = 28
@@ -35,8 +31,9 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         ndk {
-            // Targets supported by the BDK and Tor (arti) native libraries.
-            abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
+            // 64-bit ARM only: every current Android phone, and the emulator on
+            // Apple Silicon. Keeps the BDK Rust build to one target.
+            abiFilters += listOf("arm64-v8a")
         }
     }
 
@@ -61,8 +58,25 @@ android {
         }
     }
 
+    packaging {
+        jniLibs {
+            // Store native libraries (BDK) compressed, as the manifest's old
+            // extractNativeLibs="true" did; AGP 9 requires setting it here.
+            useLegacyPackaging = true
+            // Plugins (e.g. mobile_scanner) ship prebuilt libraries for other
+            // ABIs; the app only targets arm64-v8a, so leave those out.
+            excludes += setOf("lib/armeabi-v7a/**", "lib/x86/**", "lib/x86_64/**")
+        }
+    }
+
     lint {
         checkReleaseBuilds = false
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 }
 

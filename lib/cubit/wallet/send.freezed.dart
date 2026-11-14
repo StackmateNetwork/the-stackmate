@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'send.dart';
@@ -9,12 +9,13 @@ part of 'send.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SendState implements DiagnosticableTreeMixin {
 
- Wallet get wallet; SendSteps get currentStep; bool get loadingStart; bool get calculatingFees; bool get buildingTx; bool get sendingTx; bool? get permissionGranted; String get errLoading; String get errAddress; String get errSending; String get errAmount; String get errFees; String get policyPath; String get txOutputs; String get address; String get amount; int get weight; String get fees; int? get feeSlow; int? get feeMedium; int? get feeFast; int? get balance; int get feesOption; String get psbt; String get txId; int? get finalFee; int? get finalAmount; bool get sweepWallet;
+ Wallet get wallet; SendSteps get currentStep; bool get loadingStart; bool get calculatingFees; bool get buildingTx; bool get sendingTx; String get errLoading; String get errAddress; String get errSending; String get errAmount; String get errFees; String get txOutputs; String get address; String get amount; int? get feeSlow; int? get feeMedium; int? get feeFast; int? get balance; int get feesOption; String get psbt; String get txId; int? get finalFee; int? get finalAmount; bool get sweepWallet;
 /// Create a copy of SendState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -24,23 +25,29 @@ $SendStateCopyWith<SendState> get copyWith => _$SendStateCopyWithImpl<SendState>
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as SendState;
   properties
     ..add(DiagnosticsProperty('type', 'SendState'))
-    ..add(DiagnosticsProperty('wallet', wallet))..add(DiagnosticsProperty('currentStep', currentStep))..add(DiagnosticsProperty('loadingStart', loadingStart))..add(DiagnosticsProperty('calculatingFees', calculatingFees))..add(DiagnosticsProperty('buildingTx', buildingTx))..add(DiagnosticsProperty('sendingTx', sendingTx))..add(DiagnosticsProperty('permissionGranted', permissionGranted))..add(DiagnosticsProperty('errLoading', errLoading))..add(DiagnosticsProperty('errAddress', errAddress))..add(DiagnosticsProperty('errSending', errSending))..add(DiagnosticsProperty('errAmount', errAmount))..add(DiagnosticsProperty('errFees', errFees))..add(DiagnosticsProperty('policyPath', policyPath))..add(DiagnosticsProperty('txOutputs', txOutputs))..add(DiagnosticsProperty('address', address))..add(DiagnosticsProperty('amount', amount))..add(DiagnosticsProperty('weight', weight))..add(DiagnosticsProperty('fees', fees))..add(DiagnosticsProperty('feeSlow', feeSlow))..add(DiagnosticsProperty('feeMedium', feeMedium))..add(DiagnosticsProperty('feeFast', feeFast))..add(DiagnosticsProperty('balance', balance))..add(DiagnosticsProperty('feesOption', feesOption))..add(DiagnosticsProperty('psbt', psbt))..add(DiagnosticsProperty('txId', txId))..add(DiagnosticsProperty('finalFee', finalFee))..add(DiagnosticsProperty('finalAmount', finalAmount))..add(DiagnosticsProperty('sweepWallet', sweepWallet));
+    ..add(DiagnosticsProperty('wallet', _this.wallet))..add(DiagnosticsProperty('currentStep', _this.currentStep))..add(DiagnosticsProperty('loadingStart', _this.loadingStart))..add(DiagnosticsProperty('calculatingFees', _this.calculatingFees))..add(DiagnosticsProperty('buildingTx', _this.buildingTx))..add(DiagnosticsProperty('sendingTx', _this.sendingTx))..add(DiagnosticsProperty('errLoading', _this.errLoading))..add(DiagnosticsProperty('errAddress', _this.errAddress))..add(DiagnosticsProperty('errSending', _this.errSending))..add(DiagnosticsProperty('errAmount', _this.errAmount))..add(DiagnosticsProperty('errFees', _this.errFees))..add(DiagnosticsProperty('txOutputs', _this.txOutputs))..add(DiagnosticsProperty('address', _this.address))..add(DiagnosticsProperty('amount', _this.amount))..add(DiagnosticsProperty('feeSlow', _this.feeSlow))..add(DiagnosticsProperty('feeMedium', _this.feeMedium))..add(DiagnosticsProperty('feeFast', _this.feeFast))..add(DiagnosticsProperty('balance', _this.balance))..add(DiagnosticsProperty('feesOption', _this.feesOption))..add(DiagnosticsProperty('psbt', _this.psbt))..add(DiagnosticsProperty('txId', _this.txId))..add(DiagnosticsProperty('finalFee', _this.finalFee))..add(DiagnosticsProperty('finalAmount', _this.finalAmount))..add(DiagnosticsProperty('sweepWallet', _this.sweepWallet));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SendState&&(identical(other.wallet, wallet) || other.wallet == wallet)&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.loadingStart, loadingStart) || other.loadingStart == loadingStart)&&(identical(other.calculatingFees, calculatingFees) || other.calculatingFees == calculatingFees)&&(identical(other.buildingTx, buildingTx) || other.buildingTx == buildingTx)&&(identical(other.sendingTx, sendingTx) || other.sendingTx == sendingTx)&&(identical(other.permissionGranted, permissionGranted) || other.permissionGranted == permissionGranted)&&(identical(other.errLoading, errLoading) || other.errLoading == errLoading)&&(identical(other.errAddress, errAddress) || other.errAddress == errAddress)&&(identical(other.errSending, errSending) || other.errSending == errSending)&&(identical(other.errAmount, errAmount) || other.errAmount == errAmount)&&(identical(other.errFees, errFees) || other.errFees == errFees)&&(identical(other.policyPath, policyPath) || other.policyPath == policyPath)&&(identical(other.txOutputs, txOutputs) || other.txOutputs == txOutputs)&&(identical(other.address, address) || other.address == address)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.fees, fees) || other.fees == fees)&&(identical(other.feeSlow, feeSlow) || other.feeSlow == feeSlow)&&(identical(other.feeMedium, feeMedium) || other.feeMedium == feeMedium)&&(identical(other.feeFast, feeFast) || other.feeFast == feeFast)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.feesOption, feesOption) || other.feesOption == feesOption)&&(identical(other.psbt, psbt) || other.psbt == psbt)&&(identical(other.txId, txId) || other.txId == txId)&&(identical(other.finalFee, finalFee) || other.finalFee == finalFee)&&(identical(other.finalAmount, finalAmount) || other.finalAmount == finalAmount)&&(identical(other.sweepWallet, sweepWallet) || other.sweepWallet == sweepWallet));
+  final _this = this as SendState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SendState&&(identical(other.wallet, _this.wallet) || other.wallet == _this.wallet)&&(identical(other.currentStep, _this.currentStep) || other.currentStep == _this.currentStep)&&(identical(other.loadingStart, _this.loadingStart) || other.loadingStart == _this.loadingStart)&&(identical(other.calculatingFees, _this.calculatingFees) || other.calculatingFees == _this.calculatingFees)&&(identical(other.buildingTx, _this.buildingTx) || other.buildingTx == _this.buildingTx)&&(identical(other.sendingTx, _this.sendingTx) || other.sendingTx == _this.sendingTx)&&(identical(other.errLoading, _this.errLoading) || other.errLoading == _this.errLoading)&&(identical(other.errAddress, _this.errAddress) || other.errAddress == _this.errAddress)&&(identical(other.errSending, _this.errSending) || other.errSending == _this.errSending)&&(identical(other.errAmount, _this.errAmount) || other.errAmount == _this.errAmount)&&(identical(other.errFees, _this.errFees) || other.errFees == _this.errFees)&&(identical(other.txOutputs, _this.txOutputs) || other.txOutputs == _this.txOutputs)&&(identical(other.address, _this.address) || other.address == _this.address)&&(identical(other.amount, _this.amount) || other.amount == _this.amount)&&(identical(other.feeSlow, _this.feeSlow) || other.feeSlow == _this.feeSlow)&&(identical(other.feeMedium, _this.feeMedium) || other.feeMedium == _this.feeMedium)&&(identical(other.feeFast, _this.feeFast) || other.feeFast == _this.feeFast)&&(identical(other.balance, _this.balance) || other.balance == _this.balance)&&(identical(other.feesOption, _this.feesOption) || other.feesOption == _this.feesOption)&&(identical(other.psbt, _this.psbt) || other.psbt == _this.psbt)&&(identical(other.txId, _this.txId) || other.txId == _this.txId)&&(identical(other.finalFee, _this.finalFee) || other.finalFee == _this.finalFee)&&(identical(other.finalAmount, _this.finalAmount) || other.finalAmount == _this.finalAmount)&&(identical(other.sweepWallet, _this.sweepWallet) || other.sweepWallet == _this.sweepWallet));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,wallet,currentStep,loadingStart,calculatingFees,buildingTx,sendingTx,permissionGranted,errLoading,errAddress,errSending,errAmount,errFees,policyPath,txOutputs,address,amount,weight,fees,feeSlow,feeMedium,feeFast,balance,feesOption,psbt,txId,finalFee,finalAmount,sweepWallet]);
+int get hashCode {
+  final _this = this as SendState;
+  return Object.hashAll([runtimeType,_this.wallet,_this.currentStep,_this.loadingStart,_this.calculatingFees,_this.buildingTx,_this.sendingTx,_this.errLoading,_this.errAddress,_this.errSending,_this.errAmount,_this.errFees,_this.txOutputs,_this.address,_this.amount,_this.feeSlow,_this.feeMedium,_this.feeFast,_this.balance,_this.feesOption,_this.psbt,_this.txId,_this.finalFee,_this.finalAmount,_this.sweepWallet]);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'SendState(wallet: $wallet, currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, permissionGranted: $permissionGranted, errLoading: $errLoading, errAddress: $errAddress, errSending: $errSending, errAmount: $errAmount, errFees: $errFees, policyPath: $policyPath, txOutputs: $txOutputs, address: $address, amount: $amount, weight: $weight, fees: $fees, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
+  final _this = this as SendState;
+  return 'SendState(wallet: ${_this.wallet}, currentStep: ${_this.currentStep}, loadingStart: ${_this.loadingStart}, calculatingFees: ${_this.calculatingFees}, buildingTx: ${_this.buildingTx}, sendingTx: ${_this.sendingTx}, errLoading: ${_this.errLoading}, errAddress: ${_this.errAddress}, errSending: ${_this.errSending}, errAmount: ${_this.errAmount}, errFees: ${_this.errFees}, txOutputs: ${_this.txOutputs}, address: ${_this.address}, amount: ${_this.amount}, feeSlow: ${_this.feeSlow}, feeMedium: ${_this.feeMedium}, feeFast: ${_this.feeFast}, balance: ${_this.balance}, feesOption: ${_this.feesOption}, psbt: ${_this.psbt}, txId: ${_this.txId}, finalFee: ${_this.finalFee}, finalAmount: ${_this.finalAmount}, sweepWallet: ${_this.sweepWallet})';
 }
 
 
@@ -51,7 +58,7 @@ abstract mixin class $SendStateCopyWith<$Res>  {
   factory $SendStateCopyWith(SendState value, $Res Function(SendState) _then) = _$SendStateCopyWithImpl;
 @useResult
 $Res call({
- Wallet wallet, SendSteps currentStep, bool loadingStart, bool calculatingFees, bool buildingTx, bool sendingTx, bool? permissionGranted, String errLoading, String errAddress, String errSending, String errAmount, String errFees, String policyPath, String txOutputs, String address, String amount, int weight, String fees, int? feeSlow, int? feeMedium, int? feeFast, int? balance, int feesOption, String psbt, String txId, int? finalFee, int? finalAmount, bool sweepWallet
+ Wallet wallet, SendSteps currentStep, bool loadingStart, bool calculatingFees, bool buildingTx, bool sendingTx, String errLoading, String errAddress, String errSending, String errAmount, String errFees, String txOutputs, String address, String amount, int? feeSlow, int? feeMedium, int? feeFast, int? balance, int feesOption, String psbt, String txId, int? finalFee, int? finalAmount, bool sweepWallet
 });
 
 
@@ -68,26 +75,22 @@ class _$SendStateCopyWithImpl<$Res>
 
 /// Create a copy of SendState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? wallet = null,Object? currentStep = null,Object? loadingStart = null,Object? calculatingFees = null,Object? buildingTx = null,Object? sendingTx = null,Object? permissionGranted = freezed,Object? errLoading = null,Object? errAddress = null,Object? errSending = null,Object? errAmount = null,Object? errFees = null,Object? policyPath = null,Object? txOutputs = null,Object? address = null,Object? amount = null,Object? weight = null,Object? fees = null,Object? feeSlow = freezed,Object? feeMedium = freezed,Object? feeFast = freezed,Object? balance = freezed,Object? feesOption = null,Object? psbt = null,Object? txId = null,Object? finalFee = freezed,Object? finalAmount = freezed,Object? sweepWallet = null,}) {
-  return _then(_self.copyWith(
+@pragma('vm:prefer-inline') @override $Res call({Object? wallet = null,Object? currentStep = null,Object? loadingStart = null,Object? calculatingFees = null,Object? buildingTx = null,Object? sendingTx = null,Object? errLoading = null,Object? errAddress = null,Object? errSending = null,Object? errAmount = null,Object? errFees = null,Object? txOutputs = null,Object? address = null,Object? amount = null,Object? feeSlow = freezed,Object? feeMedium = freezed,Object? feeFast = freezed,Object? balance = freezed,Object? feesOption = null,Object? psbt = null,Object? txId = null,Object? finalFee = freezed,Object? finalAmount = freezed,Object? sweepWallet = null,}) {
+  return _then(SendState(
 wallet: null == wallet ? _self.wallet : wallet // ignore: cast_nullable_to_non_nullable
 as Wallet,currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
 as SendSteps,loadingStart: null == loadingStart ? _self.loadingStart : loadingStart // ignore: cast_nullable_to_non_nullable
 as bool,calculatingFees: null == calculatingFees ? _self.calculatingFees : calculatingFees // ignore: cast_nullable_to_non_nullable
 as bool,buildingTx: null == buildingTx ? _self.buildingTx : buildingTx // ignore: cast_nullable_to_non_nullable
 as bool,sendingTx: null == sendingTx ? _self.sendingTx : sendingTx // ignore: cast_nullable_to_non_nullable
-as bool,permissionGranted: freezed == permissionGranted ? _self.permissionGranted : permissionGranted // ignore: cast_nullable_to_non_nullable
-as bool?,errLoading: null == errLoading ? _self.errLoading : errLoading // ignore: cast_nullable_to_non_nullable
+as bool,errLoading: null == errLoading ? _self.errLoading : errLoading // ignore: cast_nullable_to_non_nullable
 as String,errAddress: null == errAddress ? _self.errAddress : errAddress // ignore: cast_nullable_to_non_nullable
 as String,errSending: null == errSending ? _self.errSending : errSending // ignore: cast_nullable_to_non_nullable
 as String,errAmount: null == errAmount ? _self.errAmount : errAmount // ignore: cast_nullable_to_non_nullable
 as String,errFees: null == errFees ? _self.errFees : errFees // ignore: cast_nullable_to_non_nullable
-as String,policyPath: null == policyPath ? _self.policyPath : policyPath // ignore: cast_nullable_to_non_nullable
 as String,txOutputs: null == txOutputs ? _self.txOutputs : txOutputs // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
-as String,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
-as int,fees: null == fees ? _self.fees : fees // ignore: cast_nullable_to_non_nullable
 as String,feeSlow: freezed == feeSlow ? _self.feeSlow : feeSlow // ignore: cast_nullable_to_non_nullable
 as int?,feeMedium: freezed == feeMedium ? _self.feeMedium : feeMedium // ignore: cast_nullable_to_non_nullable
 as int?,feeFast: freezed == feeFast ? _self.feeFast : feeFast // ignore: cast_nullable_to_non_nullable
@@ -192,10 +195,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Wallet wallet,  SendSteps currentStep,  bool loadingStart,  bool calculatingFees,  bool buildingTx,  bool sendingTx,  bool? permissionGranted,  String errLoading,  String errAddress,  String errSending,  String errAmount,  String errFees,  String policyPath,  String txOutputs,  String address,  String amount,  int weight,  String fees,  int? feeSlow,  int? feeMedium,  int? feeFast,  int? balance,  int feesOption,  String psbt,  String txId,  int? finalFee,  int? finalAmount,  bool sweepWallet)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Wallet wallet,  SendSteps currentStep,  bool loadingStart,  bool calculatingFees,  bool buildingTx,  bool sendingTx,  String errLoading,  String errAddress,  String errSending,  String errAmount,  String errFees,  String txOutputs,  String address,  String amount,  int? feeSlow,  int? feeMedium,  int? feeFast,  int? balance,  int feesOption,  String psbt,  String txId,  int? finalFee,  int? finalAmount,  bool sweepWallet)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SendState() when $default != null:
-return $default(_that.wallet,_that.currentStep,_that.loadingStart,_that.calculatingFees,_that.buildingTx,_that.sendingTx,_that.permissionGranted,_that.errLoading,_that.errAddress,_that.errSending,_that.errAmount,_that.errFees,_that.policyPath,_that.txOutputs,_that.address,_that.amount,_that.weight,_that.fees,_that.feeSlow,_that.feeMedium,_that.feeFast,_that.balance,_that.feesOption,_that.psbt,_that.txId,_that.finalFee,_that.finalAmount,_that.sweepWallet);case _:
+return $default(_that.wallet,_that.currentStep,_that.loadingStart,_that.calculatingFees,_that.buildingTx,_that.sendingTx,_that.errLoading,_that.errAddress,_that.errSending,_that.errAmount,_that.errFees,_that.txOutputs,_that.address,_that.amount,_that.feeSlow,_that.feeMedium,_that.feeFast,_that.balance,_that.feesOption,_that.psbt,_that.txId,_that.finalFee,_that.finalAmount,_that.sweepWallet);case _:
   return orElse();
 
 }
@@ -213,10 +216,10 @@ return $default(_that.wallet,_that.currentStep,_that.loadingStart,_that.calculat
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Wallet wallet,  SendSteps currentStep,  bool loadingStart,  bool calculatingFees,  bool buildingTx,  bool sendingTx,  bool? permissionGranted,  String errLoading,  String errAddress,  String errSending,  String errAmount,  String errFees,  String policyPath,  String txOutputs,  String address,  String amount,  int weight,  String fees,  int? feeSlow,  int? feeMedium,  int? feeFast,  int? balance,  int feesOption,  String psbt,  String txId,  int? finalFee,  int? finalAmount,  bool sweepWallet)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Wallet wallet,  SendSteps currentStep,  bool loadingStart,  bool calculatingFees,  bool buildingTx,  bool sendingTx,  String errLoading,  String errAddress,  String errSending,  String errAmount,  String errFees,  String txOutputs,  String address,  String amount,  int? feeSlow,  int? feeMedium,  int? feeFast,  int? balance,  int feesOption,  String psbt,  String txId,  int? finalFee,  int? finalAmount,  bool sweepWallet)  $default,) {final _that = this;
 switch (_that) {
 case _SendState():
-return $default(_that.wallet,_that.currentStep,_that.loadingStart,_that.calculatingFees,_that.buildingTx,_that.sendingTx,_that.permissionGranted,_that.errLoading,_that.errAddress,_that.errSending,_that.errAmount,_that.errFees,_that.policyPath,_that.txOutputs,_that.address,_that.amount,_that.weight,_that.fees,_that.feeSlow,_that.feeMedium,_that.feeFast,_that.balance,_that.feesOption,_that.psbt,_that.txId,_that.finalFee,_that.finalAmount,_that.sweepWallet);case _:
+return $default(_that.wallet,_that.currentStep,_that.loadingStart,_that.calculatingFees,_that.buildingTx,_that.sendingTx,_that.errLoading,_that.errAddress,_that.errSending,_that.errAmount,_that.errFees,_that.txOutputs,_that.address,_that.amount,_that.feeSlow,_that.feeMedium,_that.feeFast,_that.balance,_that.feesOption,_that.psbt,_that.txId,_that.finalFee,_that.finalAmount,_that.sweepWallet);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -233,10 +236,10 @@ return $default(_that.wallet,_that.currentStep,_that.loadingStart,_that.calculat
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Wallet wallet,  SendSteps currentStep,  bool loadingStart,  bool calculatingFees,  bool buildingTx,  bool sendingTx,  bool? permissionGranted,  String errLoading,  String errAddress,  String errSending,  String errAmount,  String errFees,  String policyPath,  String txOutputs,  String address,  String amount,  int weight,  String fees,  int? feeSlow,  int? feeMedium,  int? feeFast,  int? balance,  int feesOption,  String psbt,  String txId,  int? finalFee,  int? finalAmount,  bool sweepWallet)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Wallet wallet,  SendSteps currentStep,  bool loadingStart,  bool calculatingFees,  bool buildingTx,  bool sendingTx,  String errLoading,  String errAddress,  String errSending,  String errAmount,  String errFees,  String txOutputs,  String address,  String amount,  int? feeSlow,  int? feeMedium,  int? feeFast,  int? balance,  int feesOption,  String psbt,  String txId,  int? finalFee,  int? finalAmount,  bool sweepWallet)?  $default,) {final _that = this;
 switch (_that) {
 case _SendState() when $default != null:
-return $default(_that.wallet,_that.currentStep,_that.loadingStart,_that.calculatingFees,_that.buildingTx,_that.sendingTx,_that.permissionGranted,_that.errLoading,_that.errAddress,_that.errSending,_that.errAmount,_that.errFees,_that.policyPath,_that.txOutputs,_that.address,_that.amount,_that.weight,_that.fees,_that.feeSlow,_that.feeMedium,_that.feeFast,_that.balance,_that.feesOption,_that.psbt,_that.txId,_that.finalFee,_that.finalAmount,_that.sweepWallet);case _:
+return $default(_that.wallet,_that.currentStep,_that.loadingStart,_that.calculatingFees,_that.buildingTx,_that.sendingTx,_that.errLoading,_that.errAddress,_that.errSending,_that.errAmount,_that.errFees,_that.txOutputs,_that.address,_that.amount,_that.feeSlow,_that.feeMedium,_that.feeFast,_that.balance,_that.feesOption,_that.psbt,_that.txId,_that.finalFee,_that.finalAmount,_that.sweepWallet);case _:
   return null;
 
 }
@@ -248,7 +251,7 @@ return $default(_that.wallet,_that.currentStep,_that.loadingStart,_that.calculat
 
 
 class _SendState extends SendState with DiagnosticableTreeMixin {
-  const _SendState({required this.wallet, this.currentStep = SendSteps.address, this.loadingStart = true, this.calculatingFees = false, this.buildingTx = false, this.sendingTx = false, this.permissionGranted, this.errLoading = '', this.errAddress = '', this.errSending = '', this.errAmount = '', this.errFees = '', this.policyPath = '', this.txOutputs = '', this.address = '', this.amount = '', this.weight = 0, this.fees = '', this.feeSlow, this.feeMedium, this.feeFast, this.balance, this.feesOption = 1, this.psbt = '', this.txId = '', this.finalFee, this.finalAmount, this.sweepWallet = false}): super._();
+  const _SendState({required this.wallet, this.currentStep = SendSteps.address, this.loadingStart = true, this.calculatingFees = false, this.buildingTx = false, this.sendingTx = false, this.errLoading = '', this.errAddress = '', this.errSending = '', this.errAmount = '', this.errFees = '', this.txOutputs = '', this.address = '', this.amount = '', this.feeSlow, this.feeMedium, this.feeFast, this.balance, this.feesOption = 1, this.psbt = '', this.txId = '', this.finalFee, this.finalAmount, this.sweepWallet = false}): super._();
   
 
 @override final  Wallet wallet;
@@ -257,18 +260,14 @@ class _SendState extends SendState with DiagnosticableTreeMixin {
 @override@JsonKey() final  bool calculatingFees;
 @override@JsonKey() final  bool buildingTx;
 @override@JsonKey() final  bool sendingTx;
-@override final  bool? permissionGranted;
 @override@JsonKey() final  String errLoading;
 @override@JsonKey() final  String errAddress;
 @override@JsonKey() final  String errSending;
 @override@JsonKey() final  String errAmount;
 @override@JsonKey() final  String errFees;
-@override@JsonKey() final  String policyPath;
 @override@JsonKey() final  String txOutputs;
 @override@JsonKey() final  String address;
 @override@JsonKey() final  String amount;
-@override@JsonKey() final  int weight;
-@override@JsonKey() final  String fees;
 @override final  int? feeSlow;
 @override final  int? feeMedium;
 @override final  int? feeFast;
@@ -289,23 +288,25 @@ _$SendStateCopyWith<_SendState> get copyWith => __$SendStateCopyWithImpl<_SendSt
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'SendState'))
-    ..add(DiagnosticsProperty('wallet', wallet))..add(DiagnosticsProperty('currentStep', currentStep))..add(DiagnosticsProperty('loadingStart', loadingStart))..add(DiagnosticsProperty('calculatingFees', calculatingFees))..add(DiagnosticsProperty('buildingTx', buildingTx))..add(DiagnosticsProperty('sendingTx', sendingTx))..add(DiagnosticsProperty('permissionGranted', permissionGranted))..add(DiagnosticsProperty('errLoading', errLoading))..add(DiagnosticsProperty('errAddress', errAddress))..add(DiagnosticsProperty('errSending', errSending))..add(DiagnosticsProperty('errAmount', errAmount))..add(DiagnosticsProperty('errFees', errFees))..add(DiagnosticsProperty('policyPath', policyPath))..add(DiagnosticsProperty('txOutputs', txOutputs))..add(DiagnosticsProperty('address', address))..add(DiagnosticsProperty('amount', amount))..add(DiagnosticsProperty('weight', weight))..add(DiagnosticsProperty('fees', fees))..add(DiagnosticsProperty('feeSlow', feeSlow))..add(DiagnosticsProperty('feeMedium', feeMedium))..add(DiagnosticsProperty('feeFast', feeFast))..add(DiagnosticsProperty('balance', balance))..add(DiagnosticsProperty('feesOption', feesOption))..add(DiagnosticsProperty('psbt', psbt))..add(DiagnosticsProperty('txId', txId))..add(DiagnosticsProperty('finalFee', finalFee))..add(DiagnosticsProperty('finalAmount', finalAmount))..add(DiagnosticsProperty('sweepWallet', sweepWallet));
+    ..add(DiagnosticsProperty('wallet', wallet))..add(DiagnosticsProperty('currentStep', currentStep))..add(DiagnosticsProperty('loadingStart', loadingStart))..add(DiagnosticsProperty('calculatingFees', calculatingFees))..add(DiagnosticsProperty('buildingTx', buildingTx))..add(DiagnosticsProperty('sendingTx', sendingTx))..add(DiagnosticsProperty('errLoading', errLoading))..add(DiagnosticsProperty('errAddress', errAddress))..add(DiagnosticsProperty('errSending', errSending))..add(DiagnosticsProperty('errAmount', errAmount))..add(DiagnosticsProperty('errFees', errFees))..add(DiagnosticsProperty('txOutputs', txOutputs))..add(DiagnosticsProperty('address', address))..add(DiagnosticsProperty('amount', amount))..add(DiagnosticsProperty('feeSlow', feeSlow))..add(DiagnosticsProperty('feeMedium', feeMedium))..add(DiagnosticsProperty('feeFast', feeFast))..add(DiagnosticsProperty('balance', balance))..add(DiagnosticsProperty('feesOption', feesOption))..add(DiagnosticsProperty('psbt', psbt))..add(DiagnosticsProperty('txId', txId))..add(DiagnosticsProperty('finalFee', finalFee))..add(DiagnosticsProperty('finalAmount', finalAmount))..add(DiagnosticsProperty('sweepWallet', sweepWallet));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SendState&&(identical(other.wallet, wallet) || other.wallet == wallet)&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.loadingStart, loadingStart) || other.loadingStart == loadingStart)&&(identical(other.calculatingFees, calculatingFees) || other.calculatingFees == calculatingFees)&&(identical(other.buildingTx, buildingTx) || other.buildingTx == buildingTx)&&(identical(other.sendingTx, sendingTx) || other.sendingTx == sendingTx)&&(identical(other.permissionGranted, permissionGranted) || other.permissionGranted == permissionGranted)&&(identical(other.errLoading, errLoading) || other.errLoading == errLoading)&&(identical(other.errAddress, errAddress) || other.errAddress == errAddress)&&(identical(other.errSending, errSending) || other.errSending == errSending)&&(identical(other.errAmount, errAmount) || other.errAmount == errAmount)&&(identical(other.errFees, errFees) || other.errFees == errFees)&&(identical(other.policyPath, policyPath) || other.policyPath == policyPath)&&(identical(other.txOutputs, txOutputs) || other.txOutputs == txOutputs)&&(identical(other.address, address) || other.address == address)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.fees, fees) || other.fees == fees)&&(identical(other.feeSlow, feeSlow) || other.feeSlow == feeSlow)&&(identical(other.feeMedium, feeMedium) || other.feeMedium == feeMedium)&&(identical(other.feeFast, feeFast) || other.feeFast == feeFast)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.feesOption, feesOption) || other.feesOption == feesOption)&&(identical(other.psbt, psbt) || other.psbt == psbt)&&(identical(other.txId, txId) || other.txId == txId)&&(identical(other.finalFee, finalFee) || other.finalFee == finalFee)&&(identical(other.finalAmount, finalAmount) || other.finalAmount == finalAmount)&&(identical(other.sweepWallet, sweepWallet) || other.sweepWallet == sweepWallet));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SendState&&(identical(other.wallet, wallet) || other.wallet == wallet)&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.loadingStart, loadingStart) || other.loadingStart == loadingStart)&&(identical(other.calculatingFees, calculatingFees) || other.calculatingFees == calculatingFees)&&(identical(other.buildingTx, buildingTx) || other.buildingTx == buildingTx)&&(identical(other.sendingTx, sendingTx) || other.sendingTx == sendingTx)&&(identical(other.errLoading, errLoading) || other.errLoading == errLoading)&&(identical(other.errAddress, errAddress) || other.errAddress == errAddress)&&(identical(other.errSending, errSending) || other.errSending == errSending)&&(identical(other.errAmount, errAmount) || other.errAmount == errAmount)&&(identical(other.errFees, errFees) || other.errFees == errFees)&&(identical(other.txOutputs, txOutputs) || other.txOutputs == txOutputs)&&(identical(other.address, address) || other.address == address)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.feeSlow, feeSlow) || other.feeSlow == feeSlow)&&(identical(other.feeMedium, feeMedium) || other.feeMedium == feeMedium)&&(identical(other.feeFast, feeFast) || other.feeFast == feeFast)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.feesOption, feesOption) || other.feesOption == feesOption)&&(identical(other.psbt, psbt) || other.psbt == psbt)&&(identical(other.txId, txId) || other.txId == txId)&&(identical(other.finalFee, finalFee) || other.finalFee == finalFee)&&(identical(other.finalAmount, finalAmount) || other.finalAmount == finalAmount)&&(identical(other.sweepWallet, sweepWallet) || other.sweepWallet == sweepWallet));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,wallet,currentStep,loadingStart,calculatingFees,buildingTx,sendingTx,permissionGranted,errLoading,errAddress,errSending,errAmount,errFees,policyPath,txOutputs,address,amount,weight,fees,feeSlow,feeMedium,feeFast,balance,feesOption,psbt,txId,finalFee,finalAmount,sweepWallet]);
+int get hashCode {
+    return Object.hashAll([runtimeType,wallet,currentStep,loadingStart,calculatingFees,buildingTx,sendingTx,errLoading,errAddress,errSending,errAmount,errFees,txOutputs,address,amount,feeSlow,feeMedium,feeFast,balance,feesOption,psbt,txId,finalFee,finalAmount,sweepWallet]);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'SendState(wallet: $wallet, currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, permissionGranted: $permissionGranted, errLoading: $errLoading, errAddress: $errAddress, errSending: $errSending, errAmount: $errAmount, errFees: $errFees, policyPath: $policyPath, txOutputs: $txOutputs, address: $address, amount: $amount, weight: $weight, fees: $fees, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
+    return 'SendState(wallet: $wallet, currentStep: $currentStep, loadingStart: $loadingStart, calculatingFees: $calculatingFees, buildingTx: $buildingTx, sendingTx: $sendingTx, errLoading: $errLoading, errAddress: $errAddress, errSending: $errSending, errAmount: $errAmount, errFees: $errFees, txOutputs: $txOutputs, address: $address, amount: $amount, feeSlow: $feeSlow, feeMedium: $feeMedium, feeFast: $feeFast, balance: $balance, feesOption: $feesOption, psbt: $psbt, txId: $txId, finalFee: $finalFee, finalAmount: $finalAmount, sweepWallet: $sweepWallet)';
 }
 
 
@@ -316,7 +317,7 @@ abstract mixin class _$SendStateCopyWith<$Res> implements $SendStateCopyWith<$Re
   factory _$SendStateCopyWith(_SendState value, $Res Function(_SendState) _then) = __$SendStateCopyWithImpl;
 @override @useResult
 $Res call({
- Wallet wallet, SendSteps currentStep, bool loadingStart, bool calculatingFees, bool buildingTx, bool sendingTx, bool? permissionGranted, String errLoading, String errAddress, String errSending, String errAmount, String errFees, String policyPath, String txOutputs, String address, String amount, int weight, String fees, int? feeSlow, int? feeMedium, int? feeFast, int? balance, int feesOption, String psbt, String txId, int? finalFee, int? finalAmount, bool sweepWallet
+ Wallet wallet, SendSteps currentStep, bool loadingStart, bool calculatingFees, bool buildingTx, bool sendingTx, String errLoading, String errAddress, String errSending, String errAmount, String errFees, String txOutputs, String address, String amount, int? feeSlow, int? feeMedium, int? feeFast, int? balance, int feesOption, String psbt, String txId, int? finalFee, int? finalAmount, bool sweepWallet
 });
 
 
@@ -333,7 +334,7 @@ class __$SendStateCopyWithImpl<$Res>
 
 /// Create a copy of SendState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? wallet = null,Object? currentStep = null,Object? loadingStart = null,Object? calculatingFees = null,Object? buildingTx = null,Object? sendingTx = null,Object? permissionGranted = freezed,Object? errLoading = null,Object? errAddress = null,Object? errSending = null,Object? errAmount = null,Object? errFees = null,Object? policyPath = null,Object? txOutputs = null,Object? address = null,Object? amount = null,Object? weight = null,Object? fees = null,Object? feeSlow = freezed,Object? feeMedium = freezed,Object? feeFast = freezed,Object? balance = freezed,Object? feesOption = null,Object? psbt = null,Object? txId = null,Object? finalFee = freezed,Object? finalAmount = freezed,Object? sweepWallet = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? wallet = null,Object? currentStep = null,Object? loadingStart = null,Object? calculatingFees = null,Object? buildingTx = null,Object? sendingTx = null,Object? errLoading = null,Object? errAddress = null,Object? errSending = null,Object? errAmount = null,Object? errFees = null,Object? txOutputs = null,Object? address = null,Object? amount = null,Object? feeSlow = freezed,Object? feeMedium = freezed,Object? feeFast = freezed,Object? balance = freezed,Object? feesOption = null,Object? psbt = null,Object? txId = null,Object? finalFee = freezed,Object? finalAmount = freezed,Object? sweepWallet = null,}) {
   return _then(_SendState(
 wallet: null == wallet ? _self.wallet : wallet // ignore: cast_nullable_to_non_nullable
 as Wallet,currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
@@ -341,18 +342,14 @@ as SendSteps,loadingStart: null == loadingStart ? _self.loadingStart : loadingSt
 as bool,calculatingFees: null == calculatingFees ? _self.calculatingFees : calculatingFees // ignore: cast_nullable_to_non_nullable
 as bool,buildingTx: null == buildingTx ? _self.buildingTx : buildingTx // ignore: cast_nullable_to_non_nullable
 as bool,sendingTx: null == sendingTx ? _self.sendingTx : sendingTx // ignore: cast_nullable_to_non_nullable
-as bool,permissionGranted: freezed == permissionGranted ? _self.permissionGranted : permissionGranted // ignore: cast_nullable_to_non_nullable
-as bool?,errLoading: null == errLoading ? _self.errLoading : errLoading // ignore: cast_nullable_to_non_nullable
+as bool,errLoading: null == errLoading ? _self.errLoading : errLoading // ignore: cast_nullable_to_non_nullable
 as String,errAddress: null == errAddress ? _self.errAddress : errAddress // ignore: cast_nullable_to_non_nullable
 as String,errSending: null == errSending ? _self.errSending : errSending // ignore: cast_nullable_to_non_nullable
 as String,errAmount: null == errAmount ? _self.errAmount : errAmount // ignore: cast_nullable_to_non_nullable
 as String,errFees: null == errFees ? _self.errFees : errFees // ignore: cast_nullable_to_non_nullable
-as String,policyPath: null == policyPath ? _self.policyPath : policyPath // ignore: cast_nullable_to_non_nullable
 as String,txOutputs: null == txOutputs ? _self.txOutputs : txOutputs // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
-as String,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
-as int,fees: null == fees ? _self.fees : fees // ignore: cast_nullable_to_non_nullable
 as String,feeSlow: freezed == feeSlow ? _self.feeSlow : feeSlow // ignore: cast_nullable_to_non_nullable
 as int?,feeMedium: freezed == feeMedium ? _self.feeMedium : feeMedium // ignore: cast_nullable_to_non_nullable
 as int?,feeFast: freezed == feeFast ? _self.feeFast : feeFast // ignore: cast_nullable_to_non_nullable

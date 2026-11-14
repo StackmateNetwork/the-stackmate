@@ -21,13 +21,14 @@ class PinClassAdapter extends TypeAdapter<_Pin> {
       attemptsLeft: (fields[1] as num).toInt(),
       lastFailure: (fields[2] as num).toInt(),
       isLocked: fields[3] as bool,
+      lockouts: fields[4] == null ? 0 : (fields[4] as num).toInt(),
     );
   }
 
   @override
   void write(BinaryWriter writer, _Pin obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.value)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class PinClassAdapter extends TypeAdapter<_Pin> {
       ..writeByte(2)
       ..write(obj.lastFailure)
       ..writeByte(3)
-      ..write(obj.isLocked);
+      ..write(obj.isLocked)
+      ..writeByte(4)
+      ..write(obj.lockouts);
   }
 
   @override

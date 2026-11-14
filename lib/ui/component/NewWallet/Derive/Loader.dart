@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/cubit/new-wallet/derivation.dart';
 import 'package:sats/pkg/extensions.dart';
 import 'package:sats/ui/component/common/loading.dart';

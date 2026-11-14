@@ -11,7 +11,6 @@ import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/model/blockchain.dart';
 import 'package:sats/model/result.dart';
@@ -42,7 +41,6 @@ abstract class DeriveWalletState with _$DeriveWalletState {
     @Default(false) bool newWalletSaved,
   }) = _DeriveWalletState;
 
-  // bool canGoBack() => true;
 }
 
 class DeriveWalletCubit extends Cubit<DeriveWalletState> {
@@ -53,7 +51,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
     this._wallets,
     this._blockchainCubit,
     this._nodeAddressCubit,
-    this._torCubit,
     this._masterKeyCubit,
   ) : super(const DeriveWalletState());
 
@@ -63,7 +60,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
   final WalletsCubit _wallets;
   final ChainSelectCubit _blockchainCubit;
   final NodeAddressCubit _nodeAddressCubit;
-  final TorCubit _torCubit;
   final MasterKeyCubit _masterKeyCubit;
 
   static const invalidLabelError = 'Invalid Label (must be 3-20 chars)';
@@ -165,9 +161,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       child.orThrow();
       final fingerprint = child.result!.fingerPrint;
       final path = child.result!.hardenedPath;
-      // final xprv = child.result!.xprv;
-      // final fullXPrv =
-      //     '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
       final xpub = child.result!.xpub;
       final fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst(
         '/m',
@@ -188,13 +181,11 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       descriptor.orThrow();
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
       final dbPath = await walletDbPath(state.label, uid);
       final syncStat = await BitcoinWorker.sync(
         dbPath: dbPath,
         descriptor: descriptor.result!,
         nodeAddress: nodeAddress,
-        socks5: socks5,
       );
       syncStat.orThrow();
 
@@ -290,9 +281,6 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       child.orThrow();
       final fingerprint = child.result!.fingerPrint;
       final path = child.result!.hardenedPath;
-      // final xprv = child.result!.xprv;
-      // final fullXPrv =
-      //     '[$fingerprint/$path]$xprv'.replaceFirst('/m', emptyString);
       final xpub = child.result!.xpub;
       final fullXPub = '[$fingerprint/$path]$xpub'.replaceFirst(
         '/m',
@@ -316,14 +304,12 @@ class DeriveWalletCubit extends Cubit<DeriveWalletState> {
       descriptor.orThrow();
 
       final nodeAddress = _nodeAddressCubit.state.getAddress();
-      final socks5 = _torCubit.state.getSocks5();
       final dbPath = await walletDbPath(state.label, uid);
 
       final syncStat = await BitcoinWorker.sync(
         dbPath: dbPath,
         descriptor: descriptor.result!,
         nodeAddress: nodeAddress,
-        socks5: socks5,
       );
 
       syncStat.orThrow();

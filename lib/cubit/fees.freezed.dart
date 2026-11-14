@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'fees.dart';
@@ -9,6 +9,7 @@ part of 'fees.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $FeesStateCopyWith<FeesState> get copyWith => _$FeesStateCopyWithImpl<FeesState>
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as FeesState;
   properties
     ..add(DiagnosticsProperty('type', 'FeesState'))
-    ..add(DiagnosticsProperty('fees', fees))..add(DiagnosticsProperty('updating', updating))..add(DiagnosticsProperty('errUpdating', errUpdating))..add(DiagnosticsProperty('networkStrength', networkStrength));
+    ..add(DiagnosticsProperty('fees', _this.fees))..add(DiagnosticsProperty('updating', _this.updating))..add(DiagnosticsProperty('errUpdating', _this.errUpdating))..add(DiagnosticsProperty('networkStrength', _this.networkStrength));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeesState&&(identical(other.fees, fees) || other.fees == fees)&&(identical(other.updating, updating) || other.updating == updating)&&(identical(other.errUpdating, errUpdating) || other.errUpdating == errUpdating)&&(identical(other.networkStrength, networkStrength) || other.networkStrength == networkStrength));
+  final _this = this as FeesState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeesState&&(identical(other.fees, _this.fees) || other.fees == _this.fees)&&(identical(other.updating, _this.updating) || other.updating == _this.updating)&&(identical(other.errUpdating, _this.errUpdating) || other.errUpdating == _this.errUpdating)&&(identical(other.networkStrength, _this.networkStrength) || other.networkStrength == _this.networkStrength));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,fees,updating,errUpdating,networkStrength);
+int get hashCode {
+  final _this = this as FeesState;
+  return Object.hash(runtimeType,_this.fees,_this.updating,_this.errUpdating,_this.networkStrength);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'FeesState(fees: $fees, updating: $updating, errUpdating: $errUpdating, networkStrength: $networkStrength)';
+  final _this = this as FeesState;
+  return 'FeesState(fees: ${_this.fees}, updating: ${_this.updating}, errUpdating: ${_this.errUpdating}, networkStrength: ${_this.networkStrength})';
 }
 
 
@@ -69,7 +76,7 @@ class _$FeesStateCopyWithImpl<$Res>
 /// Create a copy of FeesState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? fees = null,Object? updating = null,Object? errUpdating = null,Object? networkStrength = null,}) {
-  return _then(_self.copyWith(
+  return _then(FeesState(
 fees: null == fees ? _self.fees : fees // ignore: cast_nullable_to_non_nullable
 as Fees,updating: null == updating ? _self.updating : updating // ignore: cast_nullable_to_non_nullable
 as bool,errUpdating: null == errUpdating ? _self.errUpdating : errUpdating // ignore: cast_nullable_to_non_nullable
@@ -241,23 +248,25 @@ _$FeesStateCopyWith<_FeesState> get copyWith => __$FeesStateCopyWithImpl<_FeesSt
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'FeesState'))
     ..add(DiagnosticsProperty('fees', fees))..add(DiagnosticsProperty('updating', updating))..add(DiagnosticsProperty('errUpdating', errUpdating))..add(DiagnosticsProperty('networkStrength', networkStrength));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeesState&&(identical(other.fees, fees) || other.fees == fees)&&(identical(other.updating, updating) || other.updating == updating)&&(identical(other.errUpdating, errUpdating) || other.errUpdating == errUpdating)&&(identical(other.networkStrength, networkStrength) || other.networkStrength == networkStrength));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeesState&&(identical(other.fees, fees) || other.fees == fees)&&(identical(other.updating, updating) || other.updating == updating)&&(identical(other.errUpdating, errUpdating) || other.errUpdating == errUpdating)&&(identical(other.networkStrength, networkStrength) || other.networkStrength == networkStrength));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,fees,updating,errUpdating,networkStrength);
+int get hashCode {
+    return Object.hash(runtimeType,fees,updating,errUpdating,networkStrength);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'FeesState(fees: $fees, updating: $updating, errUpdating: $errUpdating, networkStrength: $networkStrength)';
+    return 'FeesState(fees: $fees, updating: $updating, errUpdating: $errUpdating, networkStrength: $networkStrength)';
 }
 
 

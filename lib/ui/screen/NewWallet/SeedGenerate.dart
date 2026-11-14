@@ -1,13 +1,12 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sats/api/interface/libbitcoin.dart';
 import 'package:sats/cubit/chain-select.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/master.dart';
 import 'package:sats/cubit/new-wallet/common/seed-generate.dart';
 import 'package:sats/cubit/new-wallet/from-new-seed.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallets.dart';
 import 'package:sats/pkg/_locator.dart';
 import 'package:sats/pkg/extensions.dart';
@@ -33,8 +32,13 @@ class _SeedGenerateState extends State<_SeedGenerate> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext c) {
-    final tor = c.select((TorCubit t) => t.state);
     return BlocConsumer<SeedGenerateWalletCubit, SeedGenerateWalletState>(
       listenWhen: (previous, current) =>
           previous.currentStep != current.currentStep ||
@@ -64,42 +68,6 @@ class _SeedGenerateState extends State<_SeedGenerate> {
           },
           child: Scaffold(
             appBar: AppBar(
-              actions: [
-                if (tor.isConnected) ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Tooltip(
-                      preferBelow: false,
-                      triggerMode: TooltipTriggerMode.tap,
-                      message: (tor.isRunning)
-                          ? 'Torified Natively.'
-                          : 'Torified via External.',
-                      textStyle: c.fonts.bodySmall!.copyWith(
-                        color: c.colours.primary,
-                      ),
-                      decoration: BoxDecoration(
-                        color: c.colours.surface,
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: Icon(
-                        Icons.security_sharp,
-                        color: c.colours.tertiaryContainer,
-                      ),
-                    ),
-                  ),
-                ] else ...[
-                  IconButton(
-                    color: c.colours.error,
-                    onPressed: () {
-                      c.push('/tor-config');
-                    },
-                    icon: Icon(
-                      Icons.security_sharp,
-                      color: c.colours.error,
-                    ),
-                  ),
-                ],
-              ],
               title: const Text('Keygen'),
               leading: Builder(
                 builder: (BuildContext context) {
@@ -164,32 +132,27 @@ class SeedGenerateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final networkSelect = context.select((ChainSelectCubit c) => c);
-    final logger = context.select((Logger c) => c);
-    final wallets = context.select((WalletsCubit c) => c);
-    final masterKey = context.select((MasterKeyCubit c) => c);
-
-    final seedGenerateCubit = SeedGenerateCubit(
-      locator<IStackMateBitcoin>(),
-      masterKey,
-      networkSelect,
-      logger,
-      locator<ILauncher>(),
-    );
-
-    final seedGenerateWalletCubit = SeedGenerateWalletCubit(
-      locator<IStackMateBitcoin>(),
-      locator<IStorage>(),
-      logger,
-      wallets,
-      networkSelect,
-      seedGenerateCubit,
-    );
-
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(value: seedGenerateCubit),
-        BlocProvider.value(value: seedGenerateWalletCubit),
+        BlocProvider(
+          create: (_) => SeedGenerateCubit(
+            locator<IStackMateBitcoin>(),
+            context.read<MasterKeyCubit>(),
+            context.read<ChainSelectCubit>(),
+            context.read<Logger>(),
+            locator<ILauncher>(),
+          ),
+        ),
+        BlocProvider(
+          create: (c) => SeedGenerateWalletCubit(
+            locator<IStackMateBitcoin>(),
+            locator<IStorage>(),
+            c.read<Logger>(),
+            c.read<WalletsCubit>(),
+            c.read<ChainSelectCubit>(),
+            c.read<SeedGenerateCubit>(),
+          ),
+        ),
       ],
       child: _SeedGenerate(),
     );

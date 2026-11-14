@@ -125,6 +125,8 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
         state.copyWith(
           currentStep: SeedBackupSteps.quiz,
           quizSeedCompleted: 0,
+          // A wrong answer restarts the quiz: earlier answers don't count.
+          quizSeedCompletedAnswers: [],
         ),
       );
 
@@ -215,7 +217,7 @@ class SeedBackupCubit extends Cubit<SeedBackupState> {
   void openLink(String url) {
     try {
       _launcher.launchApp(url);
-    } catch (e, _) {
+    } catch (e) {
       emit(
         state.copyWith(
           errMasterKeyUpdate: 'Could not open url',

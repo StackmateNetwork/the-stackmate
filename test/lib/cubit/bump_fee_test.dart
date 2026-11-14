@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sats/cubit/logger.dart';
 import 'package:sats/cubit/node.dart';
-import 'package:sats/cubit/tor.dart';
 import 'package:sats/cubit/wallet/bump-fee.dart';
 import 'package:sats/cubit/wallet/info.dart';
 import 'package:sats/cubit/wallet/signer.dart';
@@ -15,7 +14,6 @@ class _MockSigner extends Mock implements WalletSigner {}
 
 class _MockNode extends Mock implements NodeAddressCubit {}
 
-class _MockTor extends Mock implements TorCubit {}
 
 class _MockLogger extends Mock implements Logger {}
 
@@ -36,7 +34,6 @@ void main() {
         info,
         _MockSigner(),
         _MockNode(),
-        _MockTor(),
         _MockLogger(),
         suggestedFeeRate: suggested,
       );
